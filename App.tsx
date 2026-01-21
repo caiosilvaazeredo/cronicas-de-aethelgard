@@ -75,6 +75,9 @@ const App: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [selectedLoreChapter, setSelectedLoreChapter] = useState(LORE_CHAPTERS[0]);
   
+  // Error State
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  
   // Tutorial State
   const [showTutorial, setShowTutorial] = useState(false);
   
@@ -87,24 +90,18 @@ const App: React.FC = () => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
 
   // Music State
-  const [musicInitialized, setMusicInitialized] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
   // ============ MUSIC SYSTEM ============
   
-  // Inicializa a música na primeira interação do usuário
-  const initMusic = useCallback(() => {
-    if (!musicInitialized) {
-      music.init();
-      setMusicInitialized(true);
-      music.play('menu');
-    }
-  }, [musicInitialized]);
+  // Função para inicializar música e tocar menu
+  const initMusicAndPlay = useCallback(() => {
+    music.init();
+    music.play('menu');
+  }, []);
 
   // Controla a música baseado no estado do jogo
   useEffect(() => {
-    if (!musicInitialized) return;
-
     let targetTrack: MusicTrack = 'menu';
 
     if (menuStep === 'playing' && !gameState.isGameOver) {
@@ -131,7 +128,7 @@ const App: React.FC = () => {
     if (music.getCurrentTrack() !== targetTrack) {
       music.play(targetTrack);
     }
-  }, [menuStep, gameState.currentAct, gameState.isGameOver, musicInitialized]);
+  }, [menuStep, gameState.currentAct, gameState.isGameOver]);
 
   // Toggle mute
   const toggleMute = () => {
@@ -139,7 +136,22 @@ const App: React.FC = () => {
     setIsMuted(newMuteState);
   };
 
+  // Handler para qualquer clique que deve tocar SFX e inicializar música
+  const handleClick = (callback: () => void) => {
+    music.playSfx('click');
+    initMusicAndPlay();
+    callback();
+  };
+
   // ============ END MUSIC SYSTEM ============
+
+  // Limpa mensagem de erro após 5 segundos
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(null), 8000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
 
   useEffect(() => {
     let interval: any;
@@ -155,7 +167,7 @@ const App: React.FC = () => {
 
       timeout = setTimeout(() => {
         setShowRetry(true);
-      }, 10000);
+      }, 15000);
     }
 
     return () => {
@@ -289,9 +301,10 @@ const App: React.FC = () => {
       setLoading(false); 
       setShowDice(true);
       
-    } catch (e) {
+    } catch (e: any) {
       console.error("Action error:", e);
       setLoading(false);
+      setErrorMessage(`Erro na validação: ${e.message || 'Verifique a conexão'}`);
       setShowRetry(true);
     }
   };
@@ -308,9 +321,10 @@ const App: React.FC = () => {
       await processResponse(res);
       setCustomAction("");
       setPendingAction(null);
-    } catch (e) {
+    } catch (e: any) {
       console.error("AI Generation error:", e);
       setLoading(false);
+      setErrorMessage(`Erro na geração: ${e.message || 'Verifique a conexão'}`);
       setShowRetry(true);
     }
   };
@@ -343,6 +357,7 @@ const App: React.FC = () => {
   const startGameSimple = async (pClass: CharacterClass) => {
      setLoading(true);
      setMenuStep('playing');
+     setErrorMessage(null);
      const newChar = { ...INITIAL_CHARACTER, class: pClass, skills: [] };
      setCharacter(newChar);
      setShowTutorial(true);
@@ -350,10 +365,12 @@ const App: React.FC = () => {
      try {
        const res = await startNewGame(`um ${pClass} herói iniciante`, gameConfig, "Nenhuma (Modo Simplificado)");
        await processResponse(res);
-     } catch (e) {
+     } catch (e: any) {
        console.error("Start error:", e);
        setLoading(false);
-       setMenuStep('title');
+       setErrorMessage(`Erro ao iniciar: ${e.message || 'Verifique se o servidor está rodando'}`);
+       // NÃO volta para o menu - deixa o usuário tentar novamente
+       setShowRetry(true);
      }
   };
 
@@ -363,6 +380,7 @@ const App: React.FC = () => {
     music.playSfx('click');
     setLoading(true);
     setMenuStep('playing');
+    setErrorMessage(null);
     
     const baseMp = tempClass === 'Mago' ? 30 : tempClass === 'Ladino' ? 15 : 10;
     
@@ -380,15 +398,19 @@ const App: React.FC = () => {
       const skillsStr = selectedSkills.map(s => `${s.name} (Cost:${s.manaCost} MP)`).join(", ");
       const res = await startNewGame(`um ${tempClass} herói iniciante`, gameConfig, skillsStr);
       await processResponse(res);
-    } catch (e) {
+    } catch (e: any) {
       console.error("Start error:", e);
       setLoading(false);
-      setMenuStep('title');
+      setErrorMessage(`Erro ao iniciar: ${e.message || 'Verifique se o servidor está rodando'}`);
+      // NÃO volta para o menu - deixa o usuário tentar novamente
+      setShowRetry(true);
     }
   };
 
   const handleRetry = () => {
     music.playSfx('click');
+    setErrorMessage(null);
+    
     if (lastAction) {
       handleAction(lastAction.text, lastAction.isCustom);
     } else if (gameState.history.length === 0 && tempClass) {
@@ -403,10 +425,18 @@ const App: React.FC = () => {
     }
   };
 
+  const goBackToMenu = () => {
+    music.playSfx('click');
+    setMenuStep('class');
+    setLoading(false);
+    setShowRetry(false);
+    setErrorMessage(null);
+  };
+
   // Botão de Mute/Unmute flutuante
   const MuteButton = () => (
     <button
-      onClick={toggleMute}
+      onClick={() => { music.playSfx('click'); toggleMute(); }}
       className="fixed bottom-4 right-4 z-50 w-12 h-12 bg-[#1e1e2e] border-2 border-[#c5a059] rounded-full flex items-center justify-center hover:bg-[#c5a059] hover:text-black transition-all shadow-lg group"
       title={isMuted ? "Ativar Música" : "Silenciar Música"}
     >
@@ -415,6 +445,14 @@ const App: React.FC = () => {
       </span>
     </button>
   );
+
+  // Componente de Erro
+  const ErrorBanner = () => errorMessage ? (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[100] bg-red-900 border-2 border-red-500 text-white px-6 py-3 rounded shadow-lg animate-in slide-in-from-top duration-300 max-w-md text-center">
+      <p className="text-sm font-bold mb-1">⚠️ Erro</p>
+      <p className="text-xs">{errorMessage}</p>
+    </div>
+  ) : null;
 
   const renderMenu = () => {
     switch(menuStep) {
@@ -480,7 +518,7 @@ const App: React.FC = () => {
                {/* Call to Action Buttons */}
                <div className="flex flex-col gap-4 mt-8 md:mt-12 w-full max-w-xs px-4">
                   <button 
-                    onClick={() => { initMusic(); music.playSfx('click'); setMenuStep('config'); }} 
+                    onClick={() => handleClick(() => setMenuStep('config'))} 
                     className="group relative bg-[#c5a059] text-[#0f0f1b] font-title font-bold text-lg md:text-xl py-3 md:py-4 px-6 md:px-8 border-4 border-[#fff] shadow-[0_0_20px_rgba(197,160,89,0.4)] hover:bg-[#fff] hover:border-[#c5a059] hover:scale-105 transition-all duration-200 uppercase tracking-wider w-full"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
@@ -491,7 +529,7 @@ const App: React.FC = () => {
                   </button>
 
                   <button 
-                    onClick={() => { initMusic(); music.playSfx('click'); setMenuStep('lore'); }} 
+                    onClick={() => handleClick(() => setMenuStep('lore'))} 
                     className="text-[#c5a059] font-title text-xs uppercase tracking-widest hover:text-white transition-colors py-2 border-b border-transparent hover:border-[#c5a059] text-center"
                   >
                     Manual do Jogo
@@ -517,7 +555,7 @@ const App: React.FC = () => {
              <div className="relative z-10 w-full max-w-5xl h-[90vh] md:h-[80vh] bg-[#1e1e2e] border-4 md:border-8 border-[#2b1b3d] rounded-lg shadow-2xl flex flex-col md:flex-row overflow-hidden animate-in zoom-in duration-500">
                 {/* Close Button */}
                 <button 
-                  onClick={() => { music.playSfx('click'); setMenuStep('title'); }} 
+                  onClick={() => handleClick(() => setMenuStep('title'))} 
                   className="absolute top-2 right-2 md:top-4 md:right-4 z-50 text-[#c5a059] hover:text-white font-bold text-lg md:text-xl bg-[#2b1b3d] w-8 h-8 rounded-full flex items-center justify-center border border-[#c5a059]"
                 >
                   ✕
@@ -533,7 +571,7 @@ const App: React.FC = () => {
                       {LORE_CHAPTERS.map((chapter) => (
                          <button 
                            key={chapter.id}
-                           onClick={() => { music.playSfx('click'); setSelectedLoreChapter(chapter); }}
+                           onClick={() => handleClick(() => setSelectedLoreChapter(chapter))}
                            className={`w-full p-3 md:p-4 text-left border-2 rounded transition-all flex items-center gap-3 group
                               ${selectedLoreChapter.id === chapter.id 
                                  ? 'bg-[#c5a059] border-[#fff] text-[#0f0f1b]' 
@@ -599,7 +637,7 @@ const App: React.FC = () => {
                  </p>
                  <div className="grid md:grid-cols-2 gap-4">
                     <button 
-                       onClick={() => { music.playSfx('click'); setGameConfig({...gameConfig, mode: 'simple'}); }} 
+                       onClick={() => handleClick(() => setGameConfig({...gameConfig, mode: 'simple'}))} 
                        className={`p-6 border-2 rounded-lg text-left transition-all group relative ${gameConfig.mode === 'simple' ? 'bg-[#c5a059] text-black border-white shadow-[0_0_20px_rgba(197,160,89,0.3)] scale-[1.02]' : 'bg-[#14141f] border-[#c5a059]/20 text-zinc-500 hover:border-[#c5a059]/50'}`}
                     >
                        <div className="font-bold font-title uppercase text-lg mb-1">Modo Narrativo</div>
@@ -607,7 +645,7 @@ const App: React.FC = () => {
                        <div className={`text-[8px] font-bold uppercase ${gameConfig.mode === 'simple' ? 'text-black' : 'text-zinc-600'}`}>✓ Sem Gestão de MP • ✓ RPG Casual</div>
                     </button>
                     <button 
-                       onClick={() => { music.playSfx('click'); setGameConfig({...gameConfig, mode: 'complete'}); }} 
+                       onClick={() => handleClick(() => setGameConfig({...gameConfig, mode: 'complete'}))} 
                        className={`p-6 border-2 rounded-lg text-left transition-all group relative ${gameConfig.mode === 'complete' ? 'bg-[#c5a059] text-black border-white shadow-[0_0_20px_rgba(197,160,89,0.3)] scale-[1.02]' : 'bg-[#14141f] border-[#c5a059]/20 text-zinc-500 hover:border-[#c5a059]/50'}`}
                     >
                        <div className="font-bold font-title uppercase text-lg mb-1">Modo Tático</div>
@@ -631,7 +669,7 @@ const App: React.FC = () => {
                   ].map(t => (
                     <button 
                       key={t.id} 
-                      onClick={() => { music.playSfx('click'); setGameConfig({...gameConfig, theme: t.id as GameTheme}); }} 
+                      onClick={() => handleClick(() => setGameConfig({...gameConfig, theme: t.id as GameTheme}))} 
                       className={`group w-full p-3 border-2 rounded text-left transition-all ${gameConfig.theme === t.id ? 'bg-[#2b1b3d] border-[#c5a059] text-[#c5a059]' : 'border-zinc-800 text-zinc-500 hover:bg-white/5'}`}
                     >
                        <div className="flex items-center justify-between">
@@ -658,7 +696,7 @@ const App: React.FC = () => {
                   ].map(l => (
                     <button 
                       key={l.id} 
-                      onClick={() => { music.playSfx('click'); setGameConfig({...gameConfig, length: l.id as GameLength}); }} 
+                      onClick={() => handleClick(() => setGameConfig({...gameConfig, length: l.id as GameLength}))} 
                       className={`group w-full p-3 border-2 rounded text-left transition-all ${gameConfig.length === l.id ? 'bg-[#2b1b3d] border-[#c5a059] text-[#c5a059]' : 'border-zinc-800 text-zinc-500 hover:bg-white/5'}`}
                     >
                        <div className="flex items-center justify-between">
@@ -685,13 +723,13 @@ const App: React.FC = () => {
 
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
               <button 
-                 onClick={() => { music.playSfx('click'); setMenuStep('title'); }} 
+                 onClick={() => handleClick(() => setMenuStep('title'))} 
                  className="flex-1 p-4 border-2 border-[#c5a059]/20 rounded-lg font-title uppercase text-[10px] hover:border-white hover:text-white transition-all text-zinc-500"
               >
                  « Voltar ao Menu
               </button>
               <button 
-                 onClick={() => { music.playSfx('click'); setMenuStep('class'); }} 
+                 onClick={() => handleClick(() => setMenuStep('class'))} 
                  className="flex-[2] p-4 bg-[#c5a059] text-black rounded-lg font-title uppercase text-sm hover:bg-white transition-all shadow-[0_10px_30px_rgba(197,160,89,0.4)] active:translate-y-1 transform"
               >
                  Próximo Passo: O Herói »
@@ -711,7 +749,7 @@ const App: React.FC = () => {
                 </button>
               ))}
             </div>
-            <button onClick={() => { music.playSfx('click'); setMenuStep('config'); }} className="mt-6 text-zinc-500 text-xs hover:text-white uppercase">Voltar</button>
+            <button onClick={() => handleClick(() => setMenuStep('config'))} className="mt-6 text-zinc-500 text-xs hover:text-white uppercase">Voltar</button>
           </div>
         );
       case 'skills':
@@ -801,7 +839,7 @@ const App: React.FC = () => {
               </div>
 
               <div className="mt-6 flex justify-between gap-4 pt-4 border-t border-[#c5a059]/30">
-                 <button onClick={() => { music.playSfx('click'); setMenuStep('class'); }} className="px-6 py-3 border-2 border-[#c5a059]/30 rounded font-title uppercase text-xs hover:border-white transition-all text-zinc-400">Voltar</button>
+                 <button onClick={() => handleClick(() => setMenuStep('class'))} className="px-6 py-3 border-2 border-[#c5a059]/30 rounded font-title uppercase text-xs hover:border-white transition-all text-zinc-400">Voltar</button>
                  <button 
                     onClick={startGameWithSkills} 
                     disabled={!isReady}
@@ -820,6 +858,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#0f0f1b] p-6">
       {renderMenu()}
       <MuteButton />
+      <ErrorBanner />
     </div>
   );
 
@@ -828,6 +867,7 @@ const App: React.FC = () => {
       {showTutorial && <Tutorial onComplete={() => { music.playSfx('click'); setShowTutorial(false); }} />}
       {showDice && <DiceRoll onComplete={onDiceResult} />}
       <MuteButton />
+      <ErrorBanner />
 
       {notification && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-[#d4af37] text-black border-4 border-white px-8 py-4 rounded shadow-[0_0_30px_rgba(212,175,55,0.6)] animate-in slide-in-from-top duration-500 font-title uppercase font-bold text-center">
@@ -869,12 +909,20 @@ const App: React.FC = () => {
               {showRetry && (
                 <div className="mt-8 animate-in zoom-in text-center">
                   <p className="text-zinc-500 text-[10px] uppercase mb-2">Parece que os dados caíram da mesa...</p>
-                  <button 
-                    onClick={handleRetry}
-                    className="bg-[#c5a059] text-black px-6 py-2 rounded font-title uppercase text-xs hover:bg-white transition-all shadow-lg active:scale-95"
-                  >
-                    Tentar Novamente (Retry)
-                  </button>
+                  <div className="flex gap-2 justify-center">
+                    <button 
+                      onClick={handleRetry}
+                      className="bg-[#c5a059] text-black px-6 py-2 rounded font-title uppercase text-xs hover:bg-white transition-all shadow-lg active:scale-95"
+                    >
+                      Tentar Novamente
+                    </button>
+                    <button 
+                      onClick={goBackToMenu}
+                      className="bg-zinc-700 text-white px-4 py-2 rounded font-title uppercase text-xs hover:bg-zinc-600 transition-all"
+                    >
+                      Voltar
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

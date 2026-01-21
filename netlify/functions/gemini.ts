@@ -1,10 +1,7 @@
-import { GoogleGenAI, Type, Chat } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 
 // A chave fica APENAS no servidor - nunca vai pro navegador!
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-
-// Armazenamento de sessões de chat (em memória - resetar a cada deploy)
-const chatSessions: Map<string, Chat> = new Map();
 
 const SYSTEM_INSTRUCTION_MASTER = `
 Você é o MESTRE DE ALUGUEL. Humor metalinguístico (Knights of Pen and Paper), ranzinza e zoeiro.
@@ -115,6 +112,9 @@ const safeParseJson = (text: string) => {
   }
 };
 
+// Armazenamento simples de histórico por sessão
+const sessionHistory: Map<string, Array<{role: string, parts: Array<{text: string}>}>> = new Map();
+
 export default async (request: Request) => {
   // CORS headers
   const headers = {
@@ -158,22 +158,29 @@ export default async (request: Request) => {
       case "startGame": {
         const { playerInfo, config, initialSkillsList, sessionId } = payload;
         
-        const chat = ai.chats.create({
+        // Limpa histórico anterior
+        sessionHistory.delete(sessionId);
+        
+        const systemPrompt = SYSTEM_INSTRUCTION_MASTER + `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.`;
+        const userMessage = `Inicie a aventura para um ${playerInfo}. Comece no Ato 1: O Chamado. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}].`;
+
+        const response = await ai.models.generateContent({
           model: "gemini-2.0-flash",
+          contents: userMessage,
           config: {
-            systemInstruction: SYSTEM_INSTRUCTION_MASTER + `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.`,
+            systemInstruction: systemPrompt,
             responseMimeType: "application/json",
             responseSchema: RESPONSE_SCHEMA,
             maxOutputTokens: 2000
           }
         });
 
-        // Salva a sessão
-        chatSessions.set(sessionId, chat);
+        // Salva no histórico
+        sessionHistory.set(sessionId, [
+          { role: "user", parts: [{ text: userMessage }] },
+          { role: "model", parts: [{ text: response.text || "" }] }
+        ]);
 
-        const response = await chat.sendMessage({
-          message: `Inicie a aventura para um ${playerInfo}. Comece no Ato 1: O Chamado. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}].`
-        });
         result = safeParseJson(response.text || "{}");
         break;
       }
@@ -181,25 +188,35 @@ export default async (request: Request) => {
       case "makeChoice": {
         const { choiceText, context, sessionId } = payload;
         
-        let chat = chatSessions.get(sessionId);
+        const userMessage = `Ação do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno.`;
         
-        // Se não existe sessão, cria uma nova
-        if (!chat) {
-          chat = ai.chats.create({
-            model: "gemini-2.0-flash",
-            config: {
-              systemInstruction: SYSTEM_INSTRUCTION_MASTER,
-              responseMimeType: "application/json",
-              responseSchema: RESPONSE_SCHEMA,
-              maxOutputTokens: 2000
-            }
-          });
-          chatSessions.set(sessionId, chat);
-        }
-
-        const response = await chat.sendMessage({
-          message: `Ação do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno.`
+        // Recupera histórico
+        const history = sessionHistory.get(sessionId) || [];
+        
+        const response = await ai.models.generateContent({
+          model: "gemini-2.0-flash",
+          contents: [
+            ...history,
+            { role: "user", parts: [{ text: userMessage }] }
+          ],
+          config: {
+            systemInstruction: SYSTEM_INSTRUCTION_MASTER,
+            responseMimeType: "application/json",
+            responseSchema: RESPONSE_SCHEMA,
+            maxOutputTokens: 2000
+          }
         });
+
+        // Atualiza histórico (mantém últimas 10 interações)
+        history.push(
+          { role: "user", parts: [{ text: userMessage }] },
+          { role: "model", parts: [{ text: response.text || "" }] }
+        );
+        if (history.length > 20) {
+          history.splice(0, 2);
+        }
+        sessionHistory.set(sessionId, history);
+
         result = safeParseJson(response.text || "{}");
         break;
       }
@@ -209,14 +226,9 @@ export default async (request: Request) => {
         try {
           const response = await ai.models.generateContent({
             model: 'gemini-2.0-flash-preview-image-generation',
-            contents: { 
-              parts: [{ 
-                text: `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}` 
-              }] 
-            },
+            contents: `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}`,
             config: {
-              responseModalities: ["image", "text"],
-              imageSafety: "block_none"
+              responseModalities: ["image", "text"]
             }
           });
           

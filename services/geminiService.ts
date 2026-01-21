@@ -1,7 +1,7 @@
 import { AIResponse, GameConfig, ValidationResponse, GameMode } from "../types";
 
 // Gera um ID único para a sessão do jogo
-const SESSION_ID = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+let SESSION_ID = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 // URL da API - funciona tanto local quanto em produção
 const API_URL = "/.netlify/functions/gemini";
@@ -16,8 +16,8 @@ const callAPI = async (action: string, payload: any) => {
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: "Erro desconhecido" }));
-    throw new Error(error.error || `Erro ${response.status}`);
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || `Erro ${response.status}: Verifique se a função serverless está configurada`);
   }
 
   return response.json();
@@ -40,6 +40,9 @@ export const startNewGame = async (
   config: GameConfig, 
   initialSkillsList: string
 ): Promise<AIResponse> => {
+  // Gera novo ID de sessão para cada novo jogo
+  SESSION_ID = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
   return callAPI("startGame", {
     playerInfo,
     config,

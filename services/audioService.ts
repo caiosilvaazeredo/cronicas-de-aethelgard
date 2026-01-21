@@ -13,6 +13,8 @@ class MusicManager {
   private _volume: number = 0.4;
   private _muted: boolean = false;
   private isInitialized: boolean = false;
+  private pendingTrack: MusicTrack | null = null;
+  private isPlaying: boolean = false;
 
   // Contexto de áudio para efeitos sonoros
   private ctx: AudioContext | null = null;
@@ -44,6 +46,11 @@ class MusicManager {
     this.isInitialized = true;
     
     console.log('🎵 Sistema de música inicializado');
+    
+    // Se tinha uma música pendente, toca agora
+    if (this.pendingTrack) {
+      this.play(this.pendingTrack);
+    }
   }
 
   /**
@@ -92,25 +99,26 @@ class MusicManager {
    * Toca uma faixa de música específica
    */
   public play(track: MusicTrack) {
-    // Inicializa se necessário
+    // Se não está inicializado, guarda para tocar depois
     if (!this.isInitialized) {
-      this.init();
+      this.pendingTrack = track;
+      return;
     }
 
     // Se já está tocando a mesma faixa, não faz nada
-    if (this.currentTrack === track && this.audioElement && !this.audioElement.paused) {
+    if (this.currentTrack === track && this.isPlaying) {
       return;
     }
 
     if (!this.audioElement) return;
 
-    // Para a música atual com fade out suave
-    const oldVolume = this.audioElement.volume;
-    
-    // Troca a faixa
-    this.audioElement.src = MUSIC_FILES[track];
+    // Se a faixa é diferente, troca
+    if (this.currentTrack !== track) {
+      this.audioElement.src = MUSIC_FILES[track];
+      this.currentTrack = track;
+    }
+
     this.audioElement.volume = 0;
-    this.currentTrack = track;
 
     // Tenta tocar
     const playPromise = this.audioElement.play();
@@ -118,12 +126,18 @@ class MusicManager {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Fade in
-          this.fadeIn(oldVolume);
+          this.isPlaying = true;
+          this.pendingTrack = null;
+          this.fadeIn(this._volume);
           console.log(`🎵 Tocando: ${track}`);
         })
         .catch((error) => {
-          console.warn('🎵 Autoplay bloqueado - aguardando interação do usuário', error);
+          this.isPlaying = false;
+          this.pendingTrack = track;
+          // Não loga erro se for apenas autoplay bloqueado
+          if (error.name !== 'AbortError') {
+            console.warn('🎵 Autoplay bloqueado - aguardando interação do usuário');
+          }
         });
     }
   }
@@ -134,7 +148,7 @@ class MusicManager {
   private fadeIn(targetVolume: number) {
     if (!this.audioElement) return;
     
-    const duration = 1000; // 1 segundo
+    const duration = 1000;
     const steps = 20;
     const stepTime = duration / steps;
     const volumeStep = targetVolume / steps;
@@ -160,24 +174,7 @@ class MusicManager {
       this.audioElement.pause();
       this.audioElement.currentTime = 0;
       this.currentTrack = null;
-    }
-  }
-
-  /**
-   * Pausa a música
-   */
-  public pause() {
-    if (this.audioElement) {
-      this.audioElement.pause();
-    }
-  }
-
-  /**
-   * Retoma a música
-   */
-  public resume() {
-    if (this.audioElement && this.audioElement.paused && this.currentTrack) {
-      this.audioElement.play().catch(console.warn);
+      this.isPlaying = false;
     }
   }
 
@@ -186,6 +183,13 @@ class MusicManager {
    */
   public getCurrentTrack(): MusicTrack | null {
     return this.currentTrack;
+  }
+
+  /**
+   * Retorna se está inicializado
+   */
+  public isReady(): boolean {
+    return this.isInitialized;
   }
 
   // ============ EFEITOS SONOROS ============
@@ -224,11 +228,16 @@ class MusicManager {
   }
 
   /**
-   * Toca um efeito sonoro
+   * Toca um efeito sonoro (também inicializa música no primeiro clique)
    */
   public playSfx(type: 'hit' | 'miss' | 'heal' | 'levelup' | 'click') {
     this.initAudioContext();
     if (!this.ctx || !this.masterGain) return;
+    
+    // Inicializa música se ainda não foi (primeiro clique do usuário)
+    if (!this.isInitialized) {
+      this.init();
+    }
     
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();

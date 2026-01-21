@@ -254,18 +254,16 @@ export default async (request: Request) => {
       case "generateImage": {
         const { prompt } = payload;
         try {
-          // Modelo correto: gemini-2.5-flash-image (estável desde outubro 2025)
-          // Documentação: https://ai.google.dev/gemini-api/docs/image-generation
+          // Usando Gemini 3 Pro Image (Nano Banana Pro) - melhor qualidade
           const imagePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: 'gemini-3-pro-image-preview',
             contents: { parts: [{ text: imagePrompt }] },
-            config: {
-              responseModalities: ["image", "text"],
-              imageConfig: {
+            config: { 
+              imageConfig: { 
                 aspectRatio: "16:9"
-              }
+              } 
             }
           });
           

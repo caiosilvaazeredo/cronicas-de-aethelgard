@@ -258,7 +258,7 @@ export default async (request: Request) => {
           const uniquePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}. Variation seed: ${Date.now()}`;
           
           const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-preview-image-generation',
+            model: 'gemini-2.0-flash-exp-image-01-21',
             contents: uniquePrompt,
             config: {
               responseModalities: ["image", "text"]

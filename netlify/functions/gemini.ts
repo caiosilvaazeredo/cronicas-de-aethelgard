@@ -255,30 +255,33 @@ export default async (request: Request) => {
         const { prompt } = payload;
         try {
           // Prompt EXTREMAMENTE específico para forçar estilo pixel art
-          const uniquePrompt = `STRICT REQUIREMENT: Create ONLY pixel art, NOT photorealistic, NOT realistic photography, NOT 3D render.
+          const uniquePrompt = `MANDATORY STYLE: 8-bit or 16-bit pixel art ONLY. NOT a photograph. NOT photorealistic. NOT 3D rendered. NOT smooth or realistic.
 
-STYLE: 16-bit SNES era pixel art game screenshot, retro RPG aesthetic like Final Fantasy VI, Chrono Trigger, or Secret of Mana.
-- VISIBLE PIXELS: Individual square pixels must be clearly visible
-- LIMITED PALETTE: Use only 16-32 colors maximum
-- NO GRADIENTS: Use dithering patterns instead of smooth gradients
-- NO PHOTO TEXTURES: Everything must be hand-pixeled
-- CHUNKY PIXELS: Large blocky pixels, not smooth or blended
-- TILE-BASED: Scene should look like it's made of 8x8 or 16x16 pixel tiles
-- ISOMETRIC or TOP-DOWN view typical of classic RPGs
+Create a deliberately pixelated art style reminiscent of classic 1990s video games like:
+- Super Nintendo RPGs (Final Fantasy VI, Chrono Trigger, Secret of Mana)
+- Sega Genesis games
+- Classic Dragon Quest, Fire Emblem style
 
-MEDIEVAL FANTASY SETTING: Castles, dungeons, taverns, forests, magic, knights, dragons.
+TECHNICAL SPECIFICATIONS (MUST FOLLOW):
+1. CHUNKY SQUARE PIXELS: Every pixel must be a visible square block
+2. LIMITED COLOR PALETTE: Maximum 32 colors total in entire image
+3. NO ANTI-ALIASING: Sharp jagged edges between colors
+4. DITHERING ONLY: Use checkerboard patterns for shading, never smooth gradients
+5. TILE-BASED COMPOSITION: Image looks made from 16x16 pixel tiles/sprites
+6. LOW RESOLUTION: Image should look like 256x224 resolution upscaled
+7. ISOMETRIC or TOP-DOWN perspective like old RPG games
 
-Scene description: ${prompt}
+MEDIEVAL FANTASY: ${prompt}
 
-CRITICAL: The image MUST look like a screenshot from a 1990s Super Nintendo RPG game. If it looks realistic or photographic, it is WRONG.
+ABSOLUTE REQUIREMENT: The result MUST look like a screenshot from a 1992 Super Nintendo game cartridge. Block-shaped pixels should be obvious and visible. Any smooth, realistic, or photographic elements are COMPLETELY UNACCEPTABLE.
 
-Seed: ${Date.now()}`;
+Style seed: ${Date.now()}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp-image-01-21',
+            model: 'gemini-2.5-flash-image',
             contents: uniquePrompt,
             config: {
-              responseModalities: ["image", "text"]
+              responseModalities: ["image"]
             }
           });
           

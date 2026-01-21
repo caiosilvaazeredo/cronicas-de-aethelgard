@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
-import { Character, GameState, AIResponse, MusicMood, GameConfig, GameLength, GameTheme, CharacterClass, Skill, SkillTier } from './types';
+import { Character, GameState, AIResponse, GameConfig, GameLength, GameTheme, CharacterClass, Skill, SkillTier } from './types';
 import { startNewGame, makeChoice, generatePixelArt, validateAction } from './services/geminiService';
 import CharacterCard from './components/CharacterCard';
 import DiceRoll from './components/DiceRoll';
 import Tutorial from './components/Tutorial';
-import { music } from './services/audioService';
+import { music, MusicTrack } from './services/audioService';
 import { SKILL_DATABASE } from './data/skills';
 
 const INITIAL_CHARACTER: Character = {
@@ -72,7 +71,6 @@ const App: React.FC = () => {
   const [showRetry, setShowRetry] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [customAction, setCustomAction] = useState("");
-  const [currentMood, setCurrentMood] = useState<MusicMood>('menu');
   const [lastAction, setLastAction] = useState<{text: string, isCustom: boolean} | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
   const [selectedLoreChapter, setSelectedLoreChapter] = useState(LORE_CHAPTERS[0]);
@@ -87,6 +85,61 @@ const App: React.FC = () => {
   // States for Skill Selection
   const [tempClass, setTempClass] = useState<CharacterClass | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
+
+  // Music State
+  const [musicInitialized, setMusicInitialized] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // ============ MUSIC SYSTEM ============
+  
+  // Inicializa a música na primeira interação do usuário
+  const initMusic = useCallback(() => {
+    if (!musicInitialized) {
+      music.init();
+      setMusicInitialized(true);
+      music.play('menu');
+    }
+  }, [musicInitialized]);
+
+  // Controla a música baseado no estado do jogo
+  useEffect(() => {
+    if (!musicInitialized) return;
+
+    let targetTrack: MusicTrack = 'menu';
+
+    if (menuStep === 'playing' && !gameState.isGameOver) {
+      // Durante o jogo, toca música baseada no ato atual
+      switch (gameState.currentAct) {
+        case 1:
+          targetTrack = 'act1';
+          break;
+        case 2:
+          targetTrack = 'act2';
+          break;
+        case 3:
+          targetTrack = 'act3';
+          break;
+        default:
+          targetTrack = 'act1';
+      }
+    } else {
+      // Menu ou game over - toca música do menu
+      targetTrack = 'menu';
+    }
+
+    // Só troca se for diferente da atual
+    if (music.getCurrentTrack() !== targetTrack) {
+      music.play(targetTrack);
+    }
+  }, [menuStep, gameState.currentAct, gameState.isGameOver, musicInitialized]);
+
+  // Toggle mute
+  const toggleMute = () => {
+    const newMuteState = music.toggleMute();
+    setIsMuted(newMuteState);
+  };
+
+  // ============ END MUSIC SYSTEM ============
 
   useEffect(() => {
     let interval: any;
@@ -146,8 +199,6 @@ const App: React.FC = () => {
   };
 
   const processResponse = useCallback(async (res: AIResponse) => {
-    if (res.musicMood) setCurrentMood(res.musicMood as MusicMood);
-    
     let newSkill: Skill | null = null;
     let maxEvents = 0;
     if (gameConfig.length === 'quick') maxEvents = 1;
@@ -352,6 +403,19 @@ const App: React.FC = () => {
     }
   };
 
+  // Botão de Mute/Unmute flutuante
+  const MuteButton = () => (
+    <button
+      onClick={toggleMute}
+      className="fixed bottom-4 right-4 z-50 w-12 h-12 bg-[#1e1e2e] border-2 border-[#c5a059] rounded-full flex items-center justify-center hover:bg-[#c5a059] hover:text-black transition-all shadow-lg group"
+      title={isMuted ? "Ativar Música" : "Silenciar Música"}
+    >
+      <span className="text-xl group-hover:scale-110 transition-transform">
+        {isMuted ? '🔇' : '🎵'}
+      </span>
+    </button>
+  );
+
   const renderMenu = () => {
     switch(menuStep) {
       case 'title':
@@ -416,7 +480,7 @@ const App: React.FC = () => {
                {/* Call to Action Buttons */}
                <div className="flex flex-col gap-4 mt-8 md:mt-12 w-full max-w-xs px-4">
                   <button 
-                    onClick={() => { music.playSfx('click'); setMenuStep('config'); }} 
+                    onClick={() => { initMusic(); music.playSfx('click'); setMenuStep('config'); }} 
                     className="group relative bg-[#c5a059] text-[#0f0f1b] font-title font-bold text-lg md:text-xl py-3 md:py-4 px-6 md:px-8 border-4 border-[#fff] shadow-[0_0_20px_rgba(197,160,89,0.4)] hover:bg-[#fff] hover:border-[#c5a059] hover:scale-105 transition-all duration-200 uppercase tracking-wider w-full"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
@@ -427,7 +491,7 @@ const App: React.FC = () => {
                   </button>
 
                   <button 
-                    onClick={() => { music.playSfx('click'); setMenuStep('lore'); }} 
+                    onClick={() => { initMusic(); music.playSfx('click'); setMenuStep('lore'); }} 
                     className="text-[#c5a059] font-title text-xs uppercase tracking-widest hover:text-white transition-colors py-2 border-b border-transparent hover:border-[#c5a059] text-center"
                   >
                     Manual do Jogo
@@ -752,12 +816,18 @@ const App: React.FC = () => {
     }
   };
 
-  if (menuStep !== 'playing') return <div className="min-h-screen bg-[#0f0f1b] p-6">{renderMenu()}</div>;
+  if (menuStep !== 'playing') return (
+    <div className="min-h-screen bg-[#0f0f1b] p-6">
+      {renderMenu()}
+      <MuteButton />
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#0f0f1b] p-4 md:p-8 flex flex-col lg:flex-row gap-8 relative overflow-hidden">
       {showTutorial && <Tutorial onComplete={() => { music.playSfx('click'); setShowTutorial(false); }} />}
       {showDice && <DiceRoll onComplete={onDiceResult} />}
+      <MuteButton />
 
       {notification && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-[#d4af37] text-black border-4 border-white px-8 py-4 rounded shadow-[0_0_30px_rgba(212,175,55,0.6)] animate-in slide-in-from-top duration-500 font-title uppercase font-bold text-center">

@@ -1,11 +1,22 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-// A chave fica APENAS no servidor - nunca vai pro navegador!
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
 const SYSTEM_INSTRUCTION_MASTER = `
 Você é o MESTRE DE ALUGUEL. Humor metalinguístico (Knights of Pen and Paper), ranzinza e zoeiro.
-Você deve narrar a história seguindo a Jornada do Herói (Ato 1: Chamado, Ato 2: Provações, Ato 3: Retorno).
+Você deve narrar a história seguindo a Jornada do Herói.
+
+ESTRUTURA DE ATOS (MUITO IMPORTANTE):
+- O contexto incluirá "Turno: X" e "Ato Atual: Y".
+- ATO 1 (O Chamado): Turnos 1-5. Apresente o cenário, o chamado à aventura.
+- ATO 2 (As Provações): Turnos 6-12. Desafios crescentes, combates, descobertas.
+- ATO 3 (O Clímax): Turnos 13+. Confronto final, resolução da história.
+
+REGRA DE TRANSIÇÃO DE ATOS:
+- NÃO mude o ato antes do turno mínimo.
+- Quando for hora de mudar, coloque o NOVO número do ato em "currentAct".
+- NUNCA volte para um ato anterior. Se está no Ato 2, só pode ir para Ato 3.
+- Se a duração for "quick", comprima tudo: Ato 1 (turnos 1-2), Ato 2 (3-4), Ato 3 (5+).
 
 DADOS E RESULTADOS:
 - O input do usuário conterá o resultado de uma rolagem de dado (d20).
@@ -23,7 +34,10 @@ REGRAS DE HABILIDADES & MANA:
 REGRAS GERAIS:
 1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos). 
 2. Não repita o que já aconteceu no campo 'story'.
-3. O campo 'imagePrompt' deve ser uma descrição visual para PIXEL ART MEDIEVAL. Descreva a cena focando em elementos visuais (ex: 'interior de masmorra escura com tochas azuis e um baú mímico').
+3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL. 
+   - SEMPRE descreva algo novo e diferente a cada turno.
+   - Inclua detalhes visuais específicos (cores, iluminação, objetos, personagens).
+   - Exemplo: "interior de taverna medieval com balcão de madeira escura, velas derretendo, um anão barbudo servindo cerveja, luz alaranjada"
 4. Sempre responda no formato JSON válido conforme o esquema.
 `;
 
@@ -162,7 +176,7 @@ export default async (request: Request) => {
         sessionHistory.delete(sessionId);
         
         const systemPrompt = SYSTEM_INSTRUCTION_MASTER + `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.`;
-        const userMessage = `Inicie a aventura para um ${playerInfo}. Comece no Ato 1: O Chamado. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}].`;
+        const userMessage = `Turno: 1. Ato Atual: 1. Inicie a aventura para um ${playerInfo}. Comece no Ato 1: O Chamado. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}]. Lembre-se: currentAct DEVE ser 1 neste primeiro turno.`;
 
         const response = await ai.models.generateContent({
           model: "gemini-2.0-flash",
@@ -182,13 +196,18 @@ export default async (request: Request) => {
         ]);
 
         result = safeParseJson(response.text || "{}");
+        
+        // Força ato 1 no início
+        if (result.statusUpdate) {
+          result.statusUpdate.currentAct = 1;
+        }
         break;
       }
 
       case "makeChoice": {
-        const { choiceText, context, sessionId } = payload;
+        const { choiceText, context, sessionId, turnNumber, currentAct } = payload;
         
-        const userMessage = `Ação do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno.`;
+        const userMessage = `Turno: ${turnNumber || 1}. Ato Atual: ${currentAct || 1}. Ação do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno. IMPORTANTE: currentAct deve ser >= ${currentAct || 1} (nunca menor).`;
         
         // Recupera histórico
         const history = sessionHistory.get(sessionId) || [];
@@ -218,15 +237,29 @@ export default async (request: Request) => {
         sessionHistory.set(sessionId, history);
 
         result = safeParseJson(response.text || "{}");
+        
+        // Garante que o ato nunca volte para trás
+        if (result.statusUpdate && currentAct) {
+          if (result.statusUpdate.currentAct < currentAct) {
+            result.statusUpdate.currentAct = currentAct;
+          }
+          // Limita ao ato 3
+          if (result.statusUpdate.currentAct > 3) {
+            result.statusUpdate.currentAct = 3;
+          }
+        }
         break;
       }
 
       case "generateImage": {
         const { prompt } = payload;
         try {
+          // Adiciona timestamp para garantir unicidade
+          const uniquePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}. Variation seed: ${Date.now()}`;
+          
           const response = await ai.models.generateContent({
             model: 'gemini-2.0-flash-preview-image-generation',
-            contents: `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}`,
+            contents: uniquePrompt,
             config: {
               responseModalities: ["image", "text"]
             }
@@ -240,11 +273,12 @@ export default async (request: Request) => {
           }
           
           if (!result) {
-            result = { image: "https://picsum.photos/800/450?grayscale" };
+            // Fallback com imagem aleatória diferente a cada vez
+            result = { image: `https://picsum.photos/800/450?random=${Date.now()}` };
           }
         } catch (e) {
           console.warn("Erro na geração de imagem:", e);
-          result = { image: "https://picsum.photos/800/450?grayscale" };
+          result = { image: `https://picsum.photos/800/450?random=${Date.now()}` };
         }
         break;
       }

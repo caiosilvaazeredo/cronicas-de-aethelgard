@@ -317,7 +317,7 @@ const App: React.FC = () => {
     const textWithRoll = `${pendingAction.text} (Rolagem de Dado [d20]: ${rollValue})`;
     
     try {
-      const res = await makeChoice(textWithRoll, pendingAction.context);
+      const res = await makeChoice(textWithRoll, pendingAction.context, gameState.currentAct);
       await processResponse(res);
       setCustomAction("");
       setPendingAction(null);

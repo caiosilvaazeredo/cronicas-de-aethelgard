@@ -255,14 +255,18 @@ const App: React.FC = () => {
     }
 
     try {
-      const img = await generatePixelArt(res.imagePrompt);
+      const img = await generatePixelArt(
+        res.imagePrompt,
+        character.class,
+        gameState.currentImage // Passa a imagem anterior para manter consistência
+      );
       setGameState(prev => ({ ...prev, currentImage: img }));
     } catch (e) {
       console.error("Image gen error", e);
     }
     setLoading(false);
     setShowRetry(false);
-  }, [character.class, character.skills, gameConfig.length, gameState.currentAct, gameState.skillsLearnedCount, gameConfig.mode]);
+  }, [character.class, character.skills, gameConfig.length, gameState.currentAct, gameState.skillsLearnedCount, gameConfig.mode, gameState.currentImage]);
 
   const handleAction = async (text: string, isCustom: boolean = false) => {
     if (!text.trim() || loading || showDice) return;

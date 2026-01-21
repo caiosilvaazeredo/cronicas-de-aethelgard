@@ -73,9 +73,17 @@ export const makeChoice = async (
   });
 };
 
-export const generatePixelArt = async (prompt: string): Promise<string> => {
+export const generatePixelArt = async (
+  prompt: string,
+  characterClass?: string,
+  previousImage?: string
+): Promise<string> => {
   try {
-    const result = await callAPI("generateImage", { prompt });
+    const result = await callAPI("generateImage", {
+      prompt,
+      characterClass: characterClass || "Guerreiro",
+      previousImage: previousImage || null
+    });
     return result.image || `https://picsum.photos/800/450?random=${Date.now()}`;
   } catch (e) {
     console.warn("Erro na geração de imagem:", e);

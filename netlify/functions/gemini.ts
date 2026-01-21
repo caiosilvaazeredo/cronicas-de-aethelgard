@@ -32,12 +32,15 @@ REGRAS DE HABILIDADES & MANA:
 - Se for apenas um ataque básico ou ação simples, não gaste Mana.
 
 REGRAS GERAIS:
-1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos). 
+1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos).
 2. Não repita o que já aconteceu no campo 'story'.
-3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL. 
+3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL.
    - SEMPRE descreva algo novo e diferente a cada turno.
-   - Inclua detalhes visuais específicos (cores, iluminação, objetos, personagens).
-   - Exemplo: "interior de taverna medieval com balcão de madeira escura, velas derretendo, um anão barbudo servindo cerveja, luz alaranjada"
+   - OBRIGATÓRIO: O HERÓI deve estar PRESENTE e VISÍVEL na cena descrita.
+   - Descreva a AÇÃO ou POSE do herói na cena (ex: "o herói empunhando espada", "o mago conjurando", "o ladino escondido").
+   - Inclua detalhes visuais específicos (cores, iluminação, objetos, cenário).
+   - Exemplo BOM: "taverna medieval, o herói sentado ao balcão de madeira escura, canecas de cerveja, velas derretendo, luz alaranjada"
+   - Exemplo RUIM: "taverna medieval com balcão" (falta o herói!)
 4. Sempre responda no formato JSON válido conforme o esquema.
 `;
 
@@ -252,33 +255,25 @@ export default async (request: Request) => {
       }
 
       case "generateImage": {
-        const { prompt } = payload;
+        const { prompt, characterClass = "Guerreiro", previousImage } = payload;
         try {
-          // Prompt EXTREMAMENTE específico para forçar estilo pixel art
-          const uniquePrompt = `STRICT REQUIREMENT: Create ONLY pixel art, NOT photorealistic, NOT realistic photography, NOT 3D render.
+          // Descrições visuais do personagem por classe
+          const CHARACTER_DESCRIPTIONS: Record<string, string> = {
+            "Guerreiro": "armored warrior with sword and shield, heavy plate armor, helm with plume, muscular build",
+            "Mago": "robed wizard with staff and pointy hat, long beard, flowing magical robes, arcane symbols",
+            "Ladino": "hooded rogue with daggers, leather armor, dark cloak, agile pose, mysterious face covering"
+          };
 
-STYLE: 16-bit SNES era pixel art game screenshot, retro RPG aesthetic like Final Fantasy VI, Chrono Trigger, or Secret of Mana.
-- VISIBLE PIXELS: Individual square pixels must be clearly visible
-- LIMITED PALETTE: Use only 16-32 colors maximum
-- NO GRADIENTS: Use dithering patterns instead of smooth gradients
-- NO PHOTO TEXTURES: Everything must be hand-pixeled
-- CHUNKY PIXELS: Large blocky pixels, not smooth or blended
-- TILE-BASED: Scene should look like it's made of 8x8 or 16x16 pixel tiles
-- ISOMETRIC or TOP-DOWN view typical of classic RPGs
+          const characterDesc = CHARACTER_DESCRIPTIONS[characterClass] || CHARACTER_DESCRIPTIONS["Guerreiro"];
 
-MEDIEVAL FANTASY SETTING: Castles, dungeons, taverns, forests, magic, knights, dragons.
-
-Scene description: ${prompt}
-
-CRITICAL: The image MUST look like a screenshot from a 1990s Super Nintendo RPG game. If it looks realistic or photographic, it is WRONG.
-
-Seed: ${Date.now()}`;
+          // Prompt simplificado para pixel art com personagem consistente
+          const uniquePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}. Main character: ${characterDesc} (must be visible and prominent in the scene). ${previousImage ? 'Keep the main character visually consistent with their previous appearance.' : ''} Style seed: ${Date.now()}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp-image-01-21',
+            model: 'gemini-3-pro-image-preview',
             contents: uniquePrompt,
             config: {
-              responseModalities: ["image", "text"]
+              responseModalities: ["image"]
             }
           });
           

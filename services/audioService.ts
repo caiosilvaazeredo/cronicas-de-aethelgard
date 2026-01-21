@@ -1,202 +1,168 @@
-export type MusicTrack = 'menu' | 'act1' | 'act2' | 'act3';
 
-const MUSIC_FILES: Record<MusicTrack, string> = {
-  menu: '/music/menu.mp3',
-  act1: '/music/act1.mp3',
-  act2: '/music/act2.mp3',
-  act3: '/music/act3.mp3'
-};
+import { MusicMood } from '../types';
 
 class MusicManager {
-  private audioElement: HTMLAudioElement | null = null;
-  private currentTrack: MusicTrack | null = null;
-  private _volume: number = 0.4;
-  private _muted: boolean = false;
-  private isInitialized: boolean = false;
-  private pendingTrack: MusicTrack | null = null;
-  private isPlaying: boolean = false;
-
-  // Contexto de áudio para efeitos sonoros
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
+  private _volume: number = 0.4;
+  private _isMuted: boolean = false;
+  
+  // Background Music State
+  private bgm: HTMLAudioElement | null = null;
+  private currentTrack: string | null = null;
+  private fadeInterval: any = null;
 
   constructor() {}
 
-  private initAudioContext() {
+  private init() {
     if (!this.ctx) {
       this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       this.masterGain = this.ctx.createGain();
       this.masterGain.connect(this.ctx.destination);
-      this.masterGain.gain.value = this._volume;
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.masterGain.gain.value = this._isMuted ? 0 : this._volume;
     }
   }
 
   /**
-   * Inicializa o sistema de música (deve ser chamado após interação do usuário)
+   * Must be called on the first user interaction (click/keydown)
+   * to unlock the AudioContext and start any blocked BGM.
    */
-  public init() {
-    if (this.isInitialized) return;
+  public async initializeAudio() {
+    // 1. Resume Web Audio API Context (for SFX)
+    if (!this.ctx) this.init();
     
-    this.audioElement = new Audio();
-    this.audioElement.loop = true;
-    this.audioElement.volume = this._volume;
-    this.isInitialized = true;
-    
-    console.log('🎵 Sistema de música inicializado');
-    
-    // Se tinha uma música pendente, toca agora
-    if (this.pendingTrack) {
-      this.play(this.pendingTrack);
+    if (this.ctx && this.ctx.state === 'suspended') {
+      try {
+        await this.ctx.resume();
+      } catch (e) {
+        console.warn("Context resume failed", e);
+      }
+    }
+
+    // 2. Resume HTML5 Audio (for BGM) if it is set but paused (likely due to autoplay block)
+    if (this.bgm && this.bgm.paused && !this._isMuted) {
+      this.bgm.play().catch(e => {
+        // This might happen if the interaction wasn't "trusted" enough by a specific browser, though rare on click.
+        console.warn("BGM start failed in initializeAudio", e);
+      });
     }
   }
 
-  /**
-   * Define o volume da música (0 a 1)
-   */
+  public get isMuted() {
+    return this._isMuted;
+  }
+
+  public toggleMute(): boolean {
+    this._isMuted = !this._isMuted;
+    
+    // Handle SFX Mute
+    if (this.ctx && this.masterGain) {
+      const targetVol = this._isMuted ? 0 : this._volume;
+      this.masterGain.gain.setTargetAtTime(targetVol, this.ctx.currentTime, 0.1);
+    }
+
+    // Handle BGM Mute
+    if (this.bgm) {
+      this.bgm.volume = this._isMuted ? 0 : this._volume;
+    }
+
+    return this._isMuted;
+  }
+
   public setVolume(val: number) {
     this._volume = Math.max(0, Math.min(1, val));
-    
-    if (this.audioElement) {
-      this.audioElement.volume = this._volume;
-    }
-    
+    if (this._isMuted) return;
+
+    // Update SFX Volume
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setTargetAtTime(this._volume, this.ctx.currentTime, 0.05);
     }
+
+    // Update BGM Volume
+    if (this.bgm) {
+      this.bgm.volume = this._volume;
+    }
   }
 
   /**
-   * Retorna o volume atual
+   * Plays a background music track from public/music/ with Fade In/Out
+   * @param filename e.g. 'menu.mp3', 'act1.mp3'
    */
-  public getVolume(): number {
-    return this._volume;
-  }
+  public playBgm(filename: string) {
+    // If the requested track is already playing, do nothing
+    if (this.currentTrack === filename) return;
 
-  /**
-   * Muta/desmuta a música
-   */
-  public toggleMute(): boolean {
-    this._muted = !this._muted;
+    // 1. Fade Out Old Track
+    if (this.bgm) {
+      const oldBgm = this.bgm; // Capture reference
+      const fadeOutStep = 0.05;
+      const fadeOutInterval = setInterval(() => {
+        if (oldBgm.volume > fadeOutStep) {
+          oldBgm.volume -= fadeOutStep;
+        } else {
+          oldBgm.volume = 0;
+          oldBgm.pause();
+          clearInterval(fadeOutInterval);
+        }
+      }, 100);
+    }
+
+    // 2. Prepare New Track
+    this.currentTrack = filename;
+    this.bgm = new Audio(`/music/${filename}`);
+    this.bgm.loop = true; // Ensure loop is active
     
-    if (this.audioElement) {
-      this.audioElement.muted = this._muted;
-    }
-    
-    return this._muted;
-  }
+    // Start at 0 volume for Fade In
+    this.bgm.volume = 0; 
 
-  /**
-   * Retorna se está mutado
-   */
-  public isMuted(): boolean {
-    return this._muted;
-  }
+    // Attempt to play immediately (might be blocked by autoplay policy)
+    const playPromise = this.bgm.play();
 
-  /**
-   * Toca uma faixa de música específica
-   */
-  public play(track: MusicTrack) {
-    // Se não está inicializado, guarda para tocar depois
-    if (!this.isInitialized) {
-      this.pendingTrack = track;
-      return;
-    }
-
-    // Se já está tocando a mesma faixa, não faz nada
-    if (this.currentTrack === track && this.isPlaying) {
-      return;
-    }
-
-    if (!this.audioElement) return;
-
-    // Se a faixa é diferente, troca
-    if (this.currentTrack !== track) {
-      this.audioElement.src = MUSIC_FILES[track];
-      this.currentTrack = track;
-    }
-
-    this.audioElement.volume = 0;
-
-    // Tenta tocar
-    const playPromise = this.audioElement.play();
-    
     if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          this.isPlaying = true;
-          this.pendingTrack = null;
-          this.fadeIn(this._volume);
-          console.log(`🎵 Tocando: ${track}`);
-        })
-        .catch((error) => {
-          this.isPlaying = false;
-          this.pendingTrack = track;
-          // Não loga erro se for apenas autoplay bloqueado
-          if (error.name !== 'AbortError') {
-            console.warn('🎵 Autoplay bloqueado - aguardando interação do usuário');
-          }
-        });
+      playPromise.catch(error => {
+        console.log("Autoplay waiting for user interaction...");
+        // We don't throw here; we wait for initializeAudio() to be called by App.tsx onClick
+      });
     }
+
+    // 3. Fade In New Track
+    // Clear any existing fade intervals on the main tracker to avoid conflicts
+    if (this.fadeInterval) clearInterval(this.fadeInterval);
+
+    this.fadeInterval = setInterval(() => {
+      if (!this.bgm) {
+        clearInterval(this.fadeInterval);
+        return;
+      }
+
+      // If muted, we keep playing (for loop continuity) but force volume to 0
+      if (this._isMuted) {
+        this.bgm.volume = 0;
+        return;
+      }
+
+      const step = 0.02; // Slower fade in for smoothness
+      if (this.bgm.volume < this._volume - step) {
+        this.bgm.volume += step;
+      } else {
+        this.bgm.volume = this._volume;
+        clearInterval(this.fadeInterval);
+      }
+    }, 100);
   }
 
-  /**
-   * Fade in suave
-   */
-  private fadeIn(targetVolume: number) {
-    if (!this.audioElement) return;
-    
-    const duration = 1000;
-    const steps = 20;
-    const stepTime = duration / steps;
-    const volumeStep = targetVolume / steps;
-    let currentStep = 0;
-
-    const fade = setInterval(() => {
-      currentStep++;
-      if (this.audioElement) {
-        this.audioElement.volume = Math.min(volumeStep * currentStep, targetVolume);
-      }
-      
-      if (currentStep >= steps) {
-        clearInterval(fade);
-      }
-    }, stepTime);
-  }
-
-  /**
-   * Para a música
-   */
-  public stop() {
-    if (this.audioElement) {
-      this.audioElement.pause();
-      this.audioElement.currentTime = 0;
+  public stopBgm() {
+    if (this.bgm) {
+      this.bgm.pause();
+      this.bgm = null;
       this.currentTrack = null;
-      this.isPlaying = false;
     }
   }
 
-  /**
-   * Retorna a faixa atual
-   */
-  public getCurrentTrack(): MusicTrack | null {
-    return this.currentTrack;
-  }
-
-  /**
-   * Retorna se está inicializado
-   */
-  public isReady(): boolean {
-    return this.isInitialized;
-  }
-
-  // ============ EFEITOS SONOROS ============
+  // --- SFX Logic (unchanged) ---
 
   private playPluckedString(freq: number, startTime: number, duration: number, vol: number) {
     if (!this.ctx || !this.masterGain) return;
-    
     const osc = this.ctx.createOscillator();
     const sub = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -227,22 +193,18 @@ class MusicManager {
     sub.stop(startTime + duration);
   }
 
-  /**
-   * Toca um efeito sonoro (também inicializa música no primeiro clique)
-   */
   public playSfx(type: 'hit' | 'miss' | 'heal' | 'levelup' | 'click') {
-    this.initAudioContext();
-    if (!this.ctx || !this.masterGain) return;
+    this.init();
+    if (!this.ctx || !this.masterGain || this._isMuted) return;
     
-    // Inicializa música se ainda não foi (primeiro clique do usuário)
-    if (!this.isInitialized) {
-      this.init();
+    // Resume context if suspended (double check for SFX)
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
     }
     
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     const now = this.ctx.currentTime;
-    
     switch (type) {
       case 'hit':
         osc.type = 'sawtooth';
@@ -251,14 +213,10 @@ class MusicManager {
         gain.gain.setValueAtTime(0.4 * this._volume, now);
         break;
       case 'levelup':
-        [440, 554, 659, 880].forEach((f, i) => 
-          this.playPluckedString(f, now + i * 0.1, 2, 0.3 * this._volume)
-        );
+        [440, 554, 659, 880].forEach((f, i) => this.playPluckedString(f, now + i * 0.1, 2, 0.3 * this._volume));
         return;
       case 'heal':
-        [523, 659, 783].forEach((f, i) => 
-          this.playPluckedString(f, now + i * 0.1, 1, 0.3 * this._volume)
-        );
+        [523, 659, 783].forEach((f, i) => this.playPluckedString(f, now + i * 0.1, 1, 0.3 * this._volume));
         return;
       case 'click':
         osc.type = 'triangle';
@@ -270,7 +228,6 @@ class MusicManager {
         osc.frequency.setValueAtTime(600, now);
         gain.gain.setValueAtTime(0.1 * this._volume, now);
     }
-    
     gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
     osc.connect(gain);
     gain.connect(this.masterGain);

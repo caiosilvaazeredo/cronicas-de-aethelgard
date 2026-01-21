@@ -1,11 +1,10 @@
 {
-  "name": "cronicas-de-aethelgard",
+  "name": "crônicas-de-aethelgard",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "netlify dev",
-    "dev:vite": "vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,10 +14,8 @@
     "@google/genai": "^1.34.0"
   },
   "devDependencies": {
-    "@netlify/functions": "^3.0.0",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "netlify-cli": "^21.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

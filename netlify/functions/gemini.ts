@@ -266,38 +266,11 @@ export default async (request: Request) => {
 
           const characterDesc = CHARACTER_DESCRIPTIONS[characterClass] || CHARACTER_DESCRIPTIONS["Guerreiro"];
 
-          // Prompt EXTREMAMENTE específico para forçar estilo pixel art
-          const uniquePrompt = `MANDATORY STYLE: 8-bit or 16-bit pixel art ONLY. NOT a photograph. NOT photorealistic. NOT 3D rendered. NOT smooth or realistic.
-
-Create a deliberately pixelated art style reminiscent of classic 1990s video games like:
-- Super Nintendo RPGs (Final Fantasy VI, Chrono Trigger, Secret of Mana)
-- Sega Genesis games
-- Classic Dragon Quest, Fire Emblem style
-
-TECHNICAL SPECIFICATIONS (MUST FOLLOW):
-1. CHUNKY SQUARE PIXELS: Every pixel must be a visible square block
-2. LIMITED COLOR PALETTE: Maximum 32 colors total in entire image
-3. NO ANTI-ALIASING: Sharp jagged edges between colors
-4. DITHERING ONLY: Use checkerboard patterns for shading, never smooth gradients
-5. TILE-BASED COMPOSITION: Image looks made from 16x16 pixel tiles/sprites
-6. LOW RESOLUTION: Image should look like 256x224 resolution upscaled
-7. ISOMETRIC or TOP-DOWN perspective like old RPG games
-
-MAIN CHARACTER (MUST APPEAR IN SCENE): ${characterDesc}
-- The main character MUST be visible and recognizable in the scene
-- Keep the same character appearance as previous images (same armor/outfit colors and style)
-- Character should be positioned prominently in the scene
-
-SCENE DESCRIPTION: ${prompt}
-
-ABSOLUTE REQUIREMENT: The result MUST look like a screenshot from a 1992 Super Nintendo game cartridge. Block-shaped pixels should be obvious and visible. Any smooth, realistic, or photographic elements are COMPLETELY UNACCEPTABLE. The ${characterClass} hero must be clearly visible in the scene.
-
-${previousImage ? 'IMPORTANT: Keep the main character visually consistent with their previous appearance. Same outfit colors, same armor style, same overall design.' : ''}
-
-Style seed: ${Date.now()}`;
+          // Prompt simplificado para pixel art com personagem consistente
+          const uniquePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}. Main character: ${characterDesc} (must be visible and prominent in the scene). ${previousImage ? 'Keep the main character visually consistent with their previous appearance.' : ''} Style seed: ${Date.now()}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: 'gemini-3-pro-image-preview',
             contents: uniquePrompt,
             config: {
               responseModalities: ["image"]

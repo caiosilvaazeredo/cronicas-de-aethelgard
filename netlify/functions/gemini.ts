@@ -254,31 +254,18 @@ export default async (request: Request) => {
       case "generateImage": {
         const { prompt } = payload;
         try {
-          // Prompt EXTREMAMENTE específico para forçar estilo pixel art
-          const uniquePrompt = `STRICT REQUIREMENT: Create ONLY pixel art, NOT photorealistic, NOT realistic photography, NOT 3D render.
-
-STYLE: 16-bit SNES era pixel art game screenshot, retro RPG aesthetic like Final Fantasy VI, Chrono Trigger, or Secret of Mana.
-- VISIBLE PIXELS: Individual square pixels must be clearly visible
-- LIMITED PALETTE: Use only 16-32 colors maximum
-- NO GRADIENTS: Use dithering patterns instead of smooth gradients
-- NO PHOTO TEXTURES: Everything must be hand-pixeled
-- CHUNKY PIXELS: Large blocky pixels, not smooth or blended
-- TILE-BASED: Scene should look like it's made of 8x8 or 16x16 pixel tiles
-- ISOMETRIC or TOP-DOWN view typical of classic RPGs
-
-MEDIEVAL FANTASY SETTING: Castles, dungeons, taverns, forests, magic, knights, dragons.
-
-Scene description: ${prompt}
-
-CRITICAL: The image MUST look like a screenshot from a 1990s Super Nintendo RPG game. If it looks realistic or photographic, it is WRONG.
-
-Seed: ${Date.now()}`;
+          // Modelo correto: gemini-2.5-flash-image (estável desde outubro 2025)
+          // Documentação: https://ai.google.dev/gemini-api/docs/image-generation
+          const imagePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp-image-01-21',
-            contents: uniquePrompt,
+            model: 'gemini-2.5-flash-image',
+            contents: { parts: [{ text: imagePrompt }] },
             config: {
-              responseModalities: ["image", "text"]
+              responseModalities: ["image", "text"],
+              imageConfig: {
+                aspectRatio: "16:9"
+              }
             }
           });
           

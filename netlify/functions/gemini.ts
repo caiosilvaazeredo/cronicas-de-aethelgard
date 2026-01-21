@@ -32,12 +32,15 @@ REGRAS DE HABILIDADES & MANA:
 - Se for apenas um ataque básico ou ação simples, não gaste Mana.
 
 REGRAS GERAIS:
-1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos). 
+1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos).
 2. Não repita o que já aconteceu no campo 'story'.
-3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL. 
+3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL.
    - SEMPRE descreva algo novo e diferente a cada turno.
-   - Inclua detalhes visuais específicos (cores, iluminação, objetos, personagens).
-   - Exemplo: "interior de taverna medieval com balcão de madeira escura, velas derretendo, um anão barbudo servindo cerveja, luz alaranjada"
+   - OBRIGATÓRIO: O HERÓI deve estar PRESENTE e VISÍVEL na cena descrita.
+   - Descreva a AÇÃO ou POSE do herói na cena (ex: "o herói empunhando espada", "o mago conjurando", "o ladino escondido").
+   - Inclua detalhes visuais específicos (cores, iluminação, objetos, cenário).
+   - Exemplo BOM: "taverna medieval, o herói sentado ao balcão de madeira escura, canecas de cerveja, velas derretendo, luz alaranjada"
+   - Exemplo RUIM: "taverna medieval com balcão" (falta o herói!)
 4. Sempre responda no formato JSON válido conforme o esquema.
 `;
 
@@ -252,8 +255,17 @@ export default async (request: Request) => {
       }
 
       case "generateImage": {
-        const { prompt } = payload;
+        const { prompt, characterClass = "Guerreiro", previousImage } = payload;
         try {
+          // Descrições visuais do personagem por classe
+          const CHARACTER_DESCRIPTIONS: Record<string, string> = {
+            "Guerreiro": "armored warrior with sword and shield, heavy plate armor, helm with plume, muscular build",
+            "Mago": "robed wizard with staff and pointy hat, long beard, flowing magical robes, arcane symbols",
+            "Ladino": "hooded rogue with daggers, leather armor, dark cloak, agile pose, mysterious face covering"
+          };
+
+          const characterDesc = CHARACTER_DESCRIPTIONS[characterClass] || CHARACTER_DESCRIPTIONS["Guerreiro"];
+
           // Prompt EXTREMAMENTE específico para forçar estilo pixel art
           const uniquePrompt = `MANDATORY STYLE: 8-bit or 16-bit pixel art ONLY. NOT a photograph. NOT photorealistic. NOT 3D rendered. NOT smooth or realistic.
 
@@ -271,9 +283,16 @@ TECHNICAL SPECIFICATIONS (MUST FOLLOW):
 6. LOW RESOLUTION: Image should look like 256x224 resolution upscaled
 7. ISOMETRIC or TOP-DOWN perspective like old RPG games
 
-MEDIEVAL FANTASY: ${prompt}
+MAIN CHARACTER (MUST APPEAR IN SCENE): ${characterDesc}
+- The main character MUST be visible and recognizable in the scene
+- Keep the same character appearance as previous images (same armor/outfit colors and style)
+- Character should be positioned prominently in the scene
 
-ABSOLUTE REQUIREMENT: The result MUST look like a screenshot from a 1992 Super Nintendo game cartridge. Block-shaped pixels should be obvious and visible. Any smooth, realistic, or photographic elements are COMPLETELY UNACCEPTABLE.
+SCENE DESCRIPTION: ${prompt}
+
+ABSOLUTE REQUIREMENT: The result MUST look like a screenshot from a 1992 Super Nintendo game cartridge. Block-shaped pixels should be obvious and visible. Any smooth, realistic, or photographic elements are COMPLETELY UNACCEPTABLE. The ${characterClass} hero must be clearly visible in the scene.
+
+${previousImage ? 'IMPORTANT: Keep the main character visually consistent with their previous appearance. Same outfit colors, same armor style, same overall design.' : ''}
 
 Style seed: ${Date.now()}`;
 

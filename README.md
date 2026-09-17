@@ -18,3 +18,24 @@ View your app in AI Studio: https://ai.studio/apps/drive/1ouGXGnBW2uLS4WVuvwCYYA
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Modo Investigação
+
+O modo "Investigação" (fios narrativos paralelos, tabuleiro + grafo de
+auditoria) roda inteiramente via Netlify Functions (`netlify/functions/
+investigacao-*.ts`) e usa Firestore para persistir casos, suspeitos,
+eventos e sessões. Para rodá-lo (localmente com `netlify dev`, ou em
+produção no Netlify), configure estas variáveis de ambiente além de
+`GEMINI_API_KEY`:
+
+- `FIREBASE_SERVICE_ACCOUNT_JSON`: o JSON completo (como string) de uma
+  service account do projeto Firebase/Firestore, com permissão de
+  leitura/escrita no Firestore. Gere em
+  Firebase Console → Configurações do Projeto → Contas de Serviço → Gerar
+  nova chave privada.
+- `FIREBASE_PROJECT_ID`: opcional; se omitido, usa o `project_id` contido
+  na própria service account.
+
+Sem essas variáveis, as telas de RPG clássico continuam funcionando
+normalmente, mas o botão "Investigação" retornará erro ao tentar gerar um
+caso (a função Netlify não conseguirá inicializar o Firestore).

@@ -7,6 +7,7 @@ import DiceRoll from './components/DiceRoll';
 import Tutorial from './components/Tutorial';
 import { music } from './services/audioService';
 import { SKILL_DATABASE } from './data/skills';
+import InvestigationApp from './investigation/InvestigationApp';
 
 const INITIAL_CHARACTER: Character = {
   name: "Herói",
@@ -66,7 +67,7 @@ const App: React.FC = () => {
     skillsLearnedCount: 0
   });
   
-  const [menuStep, setMenuStep] = useState<'title' | 'lore' | 'config' | 'class' | 'skills' | 'playing'>('title');
+  const [menuStep, setMenuStep] = useState<'title' | 'lore' | 'config' | 'class' | 'skills' | 'playing' | 'investigation'>('title');
   const [gameConfig, setGameConfig] = useState<GameConfig>({ length: 'medium', theme: 'classic_high', mode: 'complete' });
   const [loading, setLoading] = useState(false);
   const [showRetry, setShowRetry] = useState(false);
@@ -94,7 +95,7 @@ const App: React.FC = () => {
   // --- MUSIC MANAGEMENT SYSTEM ---
   useEffect(() => {
     // If we are in any menu step (Title, Lore, Config, Class Selection, Skills)
-    if (['title', 'lore', 'config', 'class', 'skills'].includes(menuStep)) {
+    if (['title', 'lore', 'config', 'class', 'skills', 'investigation'].includes(menuStep)) {
       music.playBgm('menu.mp3');
     } 
     // If we are actually playing the game
@@ -481,11 +482,18 @@ const App: React.FC = () => {
                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 animate-pulse"></div>
                   </button>
 
-                  <button 
-                    onClick={() => { music.playSfx('click'); setMenuStep('lore'); }} 
+                  <button
+                    onClick={() => { music.playSfx('click'); setMenuStep('lore'); }}
                     className="text-[#c5a059] font-title text-xs uppercase tracking-widest hover:text-white transition-colors py-2 border-b border-transparent hover:border-[#c5a059] text-center"
                   >
                     Manual do Jogo
+                  </button>
+
+                  <button
+                    onClick={() => { music.playSfx('click'); setMenuStep('investigation'); }}
+                    className="group relative bg-transparent text-[#c5a059] font-title font-bold text-sm md:text-base py-3 px-6 border-2 border-[#c5a059]/50 hover:border-[#c5a059] hover:bg-[#c5a059]/10 hover:scale-105 transition-all duration-200 uppercase tracking-wider w-full"
+                  >
+                    <span className="flex items-center justify-center gap-2">🔍 Investigação</span>
                   </button>
                </div>
             </div>
@@ -803,6 +811,8 @@ const App: React.FC = () => {
               </div>
            </div>
         );
+      case 'investigation':
+        return <InvestigationApp onVoltarMenu={() => { music.playSfx('click'); setMenuStep('title'); }} />;
       default: return null;
     }
   };

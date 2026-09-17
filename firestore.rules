@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Regras apenas para o emulador local de testes. O acesso real do jogo
+// passa exclusivamente pelas Netlify Functions (Admin SDK, que ignora
+// estas regras); nada aqui é usado em produção via client SDK.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

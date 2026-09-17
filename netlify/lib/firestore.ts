@@ -5,15 +5,27 @@ import type { Caso, Suspeito, Evento, Sessao } from '../../investigation/types';
 // Credenciais via variáveis de ambiente (configurar no painel do Netlify):
 // - FIREBASE_SERVICE_ACCOUNT_JSON: conteúdo JSON completo da service account
 // - FIREBASE_PROJECT_ID: opcional, cai no project_id da própria service account
+//
+// Modo emulador/teste: se FIRESTORE_EMULATOR_HOST estiver definido (ex: ao
+// rodar `firebase emulators:start` localmente), nenhuma credencial real é
+// necessária - o Admin SDK conversa direto com o emulador. Basta um
+// projectId (qualquer string, convencionalmente prefixada com "demo-").
 function getFirebaseApp(): App {
   const existing = getApps();
   if (existing.length > 0) return existing[0];
+
+  if (process.env.FIRESTORE_EMULATOR_HOST) {
+    return initializeApp({
+      projectId: process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT || 'demo-aethelgard',
+    });
+  }
 
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
   if (!raw) {
     throw new Error(
       'FIREBASE_SERVICE_ACCOUNT_JSON não configurada. Defina essa variável de ambiente ' +
-      'no Netlify com o JSON da service account do projeto Firebase/Firestore.'
+      'no Netlify com o JSON da service account do projeto Firebase/Firestore (ou defina ' +
+      'FIRESTORE_EMULATOR_HOST para rodar contra o emulador local).'
     );
   }
 

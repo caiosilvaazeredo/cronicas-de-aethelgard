@@ -1,13 +1,21 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Character, GameState, AIResponse, MusicMood, GameConfig, GameLength, GameTheme, CharacterClass, Skill, SkillTier } from './types';
-import { startNewGame, makeChoice, generatePixelArt, validateAction } from './services/geminiService';
+import { Character, GameState, AIResponse, MusicMood, GameConfig, GameLength, GameTheme, CharacterClass, Skill, SkillTier, StoryEvent } from './types';
+import { startNewGame, makeChoice, generatePixelArt, validateAction, gerarFechamentoTrama } from './services/geminiService';
+import { detectarArcos, resumoTramasAbertas } from './services/arcos';
 import CharacterCard from './components/CharacterCard';
 import DiceRoll from './components/DiceRoll';
 import Tutorial from './components/Tutorial';
+import MapaCronica from './components/MapaCronica';
 import { music } from './services/audioService';
 import { SKILL_DATABASE } from './data/skills';
 import InvestigationApp from './investigation/InvestigationApp';
+
+// Limiar de estabilidade usado por detectarArcos: quantos turnos uma trama
+// precisa ficar sem novo evento para virar candidata a fechamento. Fica
+// registrado junto das métricas exportadas, porque é parâmetro do
+// experimento (afeta diretamente a contagem de arcos fechados).
+const LIMIAR_ESTABILIDADE = 3;
 
 const INITIAL_CHARACTER: Character = {
   name: "Herói",
@@ -49,8 +57,8 @@ const LORE_CHAPTERS = [
   {
     id: 4,
     icon: "📈",
-    title: "Progressão e Atos",
-    content: "Uma partida é dividida em 3 Atos (início, meio e fim). \n\n• ATO 1: O Chamado. Equipamentos básicos.\n• ATO 2: O Desafio. Aqui você pode aprender NOVAS HABILIDADES se sobreviver a encontros difíceis. Fique atento às notificações de 'Nova Habilidade Aprendida'.\n• ATO 3: O Clímax. Onde suas escolhas e recursos acumulados definem o final.\n\nGerencie sua Vida e Mana com itens (Poções) ou descansando em momentos narrativos apropriados."
+    title: "Tramas e o Mapa da Crônica",
+    content: "Sua crônica não segue atos fixos: ela é feita de tramas que nascem e se fecham conforme suas ações criam (ou não) as condições causais para isso. Você pode aprender NOVAS HABILIDADES a qualquer momento se sobreviver a encontros difíceis - fique atento às notificações de 'Nova Habilidade Aprendida'.\n\nA qualquer momento você pode abrir o MAPA DA CRÔNICA para ver as tramas que já se fecharam, as que ainda estão em aberto, e pedir ao curador para narrar o fechamento de uma trama estável. Nada é fechado à força: a sessão acaba quando você quiser, a história não necessariamente.\n\nGerencie sua Vida e Mana com itens (Poções) ou descansando em momentos narrativos apropriados."
   }
 ];
 
@@ -62,11 +70,20 @@ const App: React.FC = () => {
     history: [],
     isGameOver: false,
     activeQuests: [],
-    currentAct: 1,
+    eventos: [],
+    tramas: [],
+    metricas: [],
     rejectionMessage: null,
     skillsLearnedCount: 0
   });
-  
+
+  // Uma crônica = uma sessão. sessionId identifica a conversa no backend;
+  // proximoTurno é o número do turno que será atribuído ao próximo evento.
+  const [sessionId] = useState(() => crypto.randomUUID());
+  const [proximoTurno, setProximoTurno] = useState(1);
+  const [showMapaCronica, setShowMapaCronica] = useState(false);
+  const [gerandoTramaId, setGerandoTramaId] = useState<string | null>(null);
+
   const [menuStep, setMenuStep] = useState<'title' | 'lore' | 'config' | 'class' | 'skills' | 'playing' | 'investigation'>('title');
   const [gameConfig, setGameConfig] = useState<GameConfig>({ length: 'medium', theme: 'classic_high', mode: 'complete' });
   const [loading, setLoading] = useState(false);
@@ -102,25 +119,23 @@ const App: React.FC = () => {
     else if (menuStep === 'playing') {
       if (gameState.isGameOver) {
         // Game Over - Return to Menu Music (as requested)
-        music.playBgm('menu.mp3'); 
+        music.playBgm('menu.mp3');
       } else {
-        // Play Act specific music
-        switch (gameState.currentAct) {
-          case 1:
-            music.playBgm('act1.mp3');
-            break;
-          case 2:
-            music.playBgm('act2.mp3');
-            break;
-          case 3:
-            music.playBgm('act3.mp3');
-            break;
-          default:
-            music.playBgm('act1.mp3');
+        // Trilha por intensidade de tensão do evento mais recente, não por
+        // ato: a mesma faixa "sobe" e "desce" conforme a trama em jogo pede,
+        // em vez de progredir por fase fixa.
+        const ultimoEvento = gameState.eventos[gameState.eventos.length - 1];
+        const tensaoAtual = ultimoEvento?.tensao ?? 0;
+        if (tensaoAtual <= 3) {
+          music.playBgm('act1.mp3');
+        } else if (tensaoAtual <= 7) {
+          music.playBgm('act2.mp3');
+        } else {
+          music.playBgm('act3.mp3');
         }
       }
     }
-  }, [menuStep, gameState.currentAct, gameState.isGameOver]);
+  }, [menuStep, gameState.eventos, gameState.isGameOver]);
 
   useEffect(() => {
     let interval: any;
@@ -190,29 +205,51 @@ const App: React.FC = () => {
     return pool[Math.floor(Math.random() * pool.length)];
   };
 
-  const processResponse = useCallback(async (res: AIResponse) => {
+  const processResponse = useCallback(async (res: AIResponse, turnoDoEvento: number) => {
     if (res.musicMood) setCurrentMood(res.musicMood as MusicMood);
-    
+
     let newSkill: Skill | null = null;
     let maxEvents = 0;
     if (gameConfig.length === 'quick') maxEvents = 1;
     else if (gameConfig.length === 'medium') maxEvents = 2;
     else maxEvents = 3;
 
-    if (res.statusUpdate?.learnSkill && gameState.skillsLearnedCount < maxEvents && gameState.currentAct === 2) {
+    if (res.statusUpdate?.learnSkill && gameState.skillsLearnedCount < maxEvents) {
        newSkill = learnNewSkill(character.class, character.skills);
     }
 
-    setGameState(prev => ({
-      ...prev,
-      storyText: res.story,
-      choices: res.choices || [],
-      currentAct: res.statusUpdate?.currentAct || prev.currentAct,
-      isGameOver: res.statusUpdate?.gameOver || false,
-      rejectionMessage: null,
-      history: [...prev.history, res.story].slice(-20),
-      skillsLearnedCount: newSkill ? prev.skillsLearnedCount + 1 : prev.skillsLearnedCount
-    }));
+    setGameState(prev => {
+      const novoEvento: StoryEvent = {
+        id: `evt-${turnoDoEvento}`,
+        turno: turnoDoEvento,
+        conteudo: res.eventoGerado?.conteudo || res.story.slice(0, 140),
+        causadoPor: res.eventoGerado?.causadoPor || [],
+        tramaId: null,
+        tensao: res.eventoGerado?.tensao ?? 0,
+        ehKernel: false,
+      };
+      const eventosAtualizados = [...prev.eventos, novoEvento];
+      const { eventos, tramas, metrica } = detectarArcos(
+        eventosAtualizados,
+        turnoDoEvento,
+        prev.tramas,
+        LIMIAR_ESTABILIDADE
+      );
+
+      return {
+        ...prev,
+        storyText: res.story,
+        choices: res.choices || [],
+        isGameOver: res.statusUpdate?.gameOver || false,
+        rejectionMessage: null,
+        history: [...prev.history, res.story].slice(-20),
+        skillsLearnedCount: newSkill ? prev.skillsLearnedCount + 1 : prev.skillsLearnedCount,
+        eventos,
+        tramas,
+        metricas: [...prev.metricas, metrica],
+      };
+    });
+    setProximoTurno(turnoDoEvento + 1);
 
     if (newSkill) {
       setNotification(`NOVA HABILIDADE APRENDIDA: ${newSkill.name} (${newSkill.tier})!`);
@@ -244,7 +281,7 @@ const App: React.FC = () => {
     }
     setLoading(false);
     setShowRetry(false);
-  }, [character.class, character.skills, gameConfig.length, gameState.currentAct, gameState.skillsLearnedCount, gameConfig.mode]);
+  }, [character.class, character.skills, gameConfig.length, gameState.skillsLearnedCount]);
 
   const handleAction = async (text: string, isCustom: boolean = false) => {
     if (!text.trim() || loading || showDice) return;
@@ -261,7 +298,7 @@ const App: React.FC = () => {
       ? character.inventory.map(i => i.name).join(", ") 
       : "Bolsos vazios";
     
-    const context = `Classe:${character.class}, HP:${character.hp}, MP:${character.mp}/${character.maxMp}, Ato:${gameState.currentAct}, Tema:${gameConfig.theme}, Habilidades: [${skillsText}], Inventário: [${inventoryText}]. Modo: ${gameConfig.mode}`;
+    const context = `Classe:${character.class}, HP:${character.hp}, MP:${character.mp}/${character.maxMp}, Tema:${gameConfig.theme}, Habilidades: [${skillsText}], Inventário: [${inventoryText}]. Modo: ${gameConfig.mode}`;
 
     try {
       if (isCustom) {
@@ -298,8 +335,10 @@ const App: React.FC = () => {
     const textWithRoll = `${pendingAction.text} (Rolagem de Dado [d20]: ${rollValue})`;
     
     try {
-      const res = await makeChoice(textWithRoll, pendingAction.context);
-      await processResponse(res);
+      const tramasAbertas = resumoTramasAbertas(gameState.eventos, gameState.tramas);
+      const historiaRecente = gameState.history.slice(-3);
+      const res = await makeChoice(textWithRoll, pendingAction.context, proximoTurno, tramasAbertas, historiaRecente, gameConfig);
+      await processResponse(res, proximoTurno);
       setCustomAction("");
       setPendingAction(null);
     } catch (e) {
@@ -343,7 +382,7 @@ const App: React.FC = () => {
 
      try {
        const res = await startNewGame(`um ${pClass} herói iniciante`, gameConfig, "Nenhuma (Modo Simplificado)");
-       await processResponse(res);
+       await processResponse(res, 1);
      } catch (e) {
        console.error("Start error:", e);
        setLoading(false);
@@ -373,7 +412,7 @@ const App: React.FC = () => {
     try {
       const skillsStr = selectedSkills.map(s => `${s.name} (Cost:${s.manaCost} MP)`).join(", ");
       const res = await startNewGame(`um ${tempClass} herói iniciante`, gameConfig, skillsStr);
-      await processResponse(res);
+      await processResponse(res, 1);
     } catch (e) {
       console.error("Start error:", e);
       setLoading(false);
@@ -395,6 +434,40 @@ const App: React.FC = () => {
       setLoading(false);
       setShowRetry(false);
     }
+  };
+
+  const handleGerarFechamento = async (tramaId: string) => {
+    setGerandoTramaId(tramaId);
+    try {
+      const { textoFechamento } = await gerarFechamentoTrama(gameState.eventos, tramaId);
+      setGameState(prev => ({
+        ...prev,
+        tramas: prev.tramas.map(t =>
+          t.id === tramaId ? { ...t, status: 'fechada' as const, narracaoFechamento: textoFechamento } : t
+        )
+      }));
+    } catch (e) {
+      console.error("Erro ao gerar fechamento da trama:", e);
+    } finally {
+      setGerandoTramaId(null);
+    }
+  };
+
+  const exportarMetricas = () => {
+    const payload = {
+      sessionId,
+      limiarEstabilidade: LIMIAR_ESTABILIDADE,
+      metricas: gameState.metricas,
+      tramas: gameState.tramas,
+      exportadoEm: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `metricas-convergencia-${sessionId}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   // Reusable Mute Button Component
@@ -650,9 +723,9 @@ const App: React.FC = () => {
                 </p>
                 <div className="grid grid-cols-1 gap-2">
                   {[
-                    {id: 'quick', label: 'Sessão Rápida', desc: '1 Ato • 3-5 Rounds', icon: '⚡'},
-                    {id: 'medium', label: 'Campanha Padrão', desc: '3 Atos • 10-15 Rounds', icon: '📖'},
-                    {id: 'long', label: 'Épico', desc: '3 Atos Longos • 20+ Rounds', icon: '🏺'},
+                    {id: 'quick', label: 'Sessão Rápida', desc: '3-5 Rounds', icon: '⚡'},
+                    {id: 'medium', label: 'Campanha Padrão', desc: '10-15 Rounds', icon: '📖'},
+                    {id: 'long', label: 'Épico', desc: '20+ Rounds', icon: '🏺'},
                     {id: 'endless', label: 'Infinito', desc: 'Sem fim definido', icon: '♾️'}
                   ].map(l => (
                     <button 
@@ -855,10 +928,24 @@ const App: React.FC = () => {
       )}
 
       <div className="flex-1 flex flex-col gap-6">
-        <div className="flex justify-center gap-4">
-          {[1,2,3].map(a => (
-            <div key={a} className={`px-4 py-1 rounded-full border-2 font-title text-[10px] uppercase transition-all duration-500 ${gameState.currentAct === a ? 'bg-[#c5a059] text-black border-white scale-110 shadow-[0_0_15px_rgba(197,160,89,0.5)]' : 'border-[#c5a059]/20 text-zinc-600'}`}>Ato {a}</div>
-          ))}
+        <div className="flex justify-center items-center gap-3 flex-wrap">
+          <span className="px-3 py-1 rounded-full border-2 border-[#c5a059]/20 text-zinc-500 font-title text-[10px] uppercase">
+            Turno {proximoTurno}
+          </span>
+          <span className="px-3 py-1 rounded-full border-2 border-[#c5a059]/20 text-zinc-500 font-title text-[10px] uppercase">
+            {gameState.tramas.filter(t => t.status === 'aberta').length} trama(s) em aberto
+          </span>
+          {gameState.tramas.some(t => t.status !== 'aberta') && (
+            <span className="px-3 py-1 rounded-full border-2 border-emerald-700/40 text-emerald-500 font-title text-[10px] uppercase">
+              {gameState.tramas.filter(t => t.status !== 'aberta').length} fechável/fechada
+            </span>
+          )}
+          <button
+            onClick={() => { music.playSfx('click'); setShowMapaCronica(true); }}
+            className="px-4 py-1 rounded-full border-2 border-[#c5a059] text-[#c5a059] font-title text-[10px] uppercase hover:bg-[#c5a059]/10 transition-colors"
+          >
+            🗺️ Mapa da Crônica
+          </button>
         </div>
 
         <div className="relative aspect-video bg-black rounded border-4 border-[#c5a059]/30 overflow-hidden shadow-2xl">
@@ -927,7 +1014,7 @@ const App: React.FC = () => {
 
       <div className="w-full lg:w-80 space-y-6">
         <CharacterCard character={character} />
-        
+
         <div className="bg-[#1e1e2e] border-2 border-[#c5a059]/30 p-4 rounded h-64 flex flex-col shadow-xl">
            <h4 className="text-[#c5a059] font-title text-[10px] uppercase mb-4 border-b border-[#c5a059]/20 pb-2">Log da Sessão</h4>
            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3">
@@ -939,7 +1026,26 @@ const App: React.FC = () => {
              ))}
            </div>
         </div>
+
+        {gameState.metricas.length > 0 && (
+          <button
+            onClick={exportarMetricas}
+            className="w-full text-[9px] font-title uppercase tracking-wider text-zinc-500 hover:text-[#c5a059] border border-zinc-800 hover:border-[#c5a059]/40 rounded py-2 transition-colors"
+          >
+            ⬇ Exportar métricas de convergência
+          </button>
+        )}
       </div>
+
+      {showMapaCronica && (
+        <MapaCronica
+          eventos={gameState.eventos}
+          tramas={gameState.tramas}
+          onGerarFechamento={handleGerarFechamento}
+          gerandoTramaId={gerandoTramaId}
+          onFechar={() => setShowMapaCronica(false)}
+        />
+      )}
     </div>
   );
 };

@@ -1,22 +1,23 @@
 import { GoogleGenAI, Type } from "@google/genai";
+import { cadeiaCausal } from "../../services/arcos";
+import type { StoryEvent } from "../../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
+// gemini-flash-latest está com alta demanda/instável no momento (503s
+// frequentes); gemini-flash-lite-latest responde de forma rápida e
+// confiável com o mesmo contrato de JSON estruturado.
+const MODELO_TEXTO = "gemini-flash-lite-latest";
+const MODELO_IMAGEM = "gemini-3-pro-image-preview";
+
+// Arcos causais emergentes: início, meio e fim são propriedades calculadas
+// do grafo de causalidade entre eventos (services/arcos.ts), nunca fases
+// declaradas de antemão. Este prompt não menciona, e não pode passar a
+// mencionar, atos, estágios ou qualquer catálogo de estruturas narrativas.
+// Ele também não instrui o modelo a amarrar tramas nem a evitar abrir
+// novas - isso contaminaria a medição de convergência do experimento.
 const SYSTEM_INSTRUCTION_MASTER = `
 Você é o MESTRE DE ALUGUEL. Humor metalinguístico (Knights of Pen and Paper), ranzinza e zoeiro.
-Você deve narrar a história seguindo a Jornada do Herói.
-
-ESTRUTURA DE ATOS (MUITO IMPORTANTE):
-- O contexto incluirá "Turno: X" e "Ato Atual: Y".
-- ATO 1 (O Chamado): Turnos 1-5. Apresente o cenário, o chamado à aventura.
-- ATO 2 (As Provações): Turnos 6-12. Desafios crescentes, combates, descobertas.
-- ATO 3 (O Clímax): Turnos 13+. Confronto final, resolução da história.
-
-REGRA DE TRANSIÇÃO DE ATOS:
-- NÃO mude o ato antes do turno mínimo.
-- Quando for hora de mudar, coloque o NOVO número do ato em "currentAct".
-- NUNCA volte para um ato anterior. Se está no Ato 2, só pode ir para Ato 3.
-- Se a duração for "quick", comprima tudo: Ato 1 (turnos 1-2), Ato 2 (3-4), Ato 3 (5+).
 
 DADOS E RESULTADOS:
 - O input do usuário conterá o resultado de uma rolagem de dado (d20).
@@ -32,13 +33,16 @@ REGRAS DE HABILIDADES & MANA:
 - Se for apenas um ataque básico ou ação simples, não gaste Mana.
 
 REGRAS GERAIS:
-1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos). 
+1. Retorne APENAS o próximo trecho da história (máximo 3 parágrafos).
 2. Não repita o que já aconteceu no campo 'story'.
-3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL. 
+3. O campo 'imagePrompt' deve ser uma descrição visual ÚNICA e ESPECÍFICA para PIXEL ART MEDIEVAL.
    - SEMPRE descreva algo novo e diferente a cada turno.
    - Inclua detalhes visuais específicos (cores, iluminação, objetos, personagens).
-   - Exemplo: "interior de taverna medieval com balcão de madeira escura, velas derretendo, um anão barbudo servindo cerveja, luz alaranjada"
-4. Sempre responda no formato JSON válido conforme o esquema.
+4. Não resolva definitivamente uma trama em andamento a menos que o jogador,
+   através de suas próprias ações, tenha criado as condições causais para
+   isso. Você pode abrir novas tramas livremente a qualquer momento.
+5. Sempre responda no formato JSON válido conforme o esquema, incluindo o
+   campo "eventoGerado" com o evento que acabou de acontecer neste turno.
 `;
 
 const SYSTEM_INSTRUCTION_VALIDATOR_COMPLETE = `
@@ -103,13 +107,29 @@ const RESPONSE_SCHEMA = {
         goldChange: { type: Type.NUMBER },
         xpChange: { type: Type.NUMBER },
         gameOver: { type: Type.BOOLEAN },
-        currentAct: { type: Type.NUMBER },
         learnSkill: { type: Type.BOOLEAN }
       },
-      required: ["currentAct"]
+      required: []
+    },
+    eventoGerado: {
+      type: Type.OBJECT,
+      properties: {
+        conteudo: { type: Type.STRING },
+        causadoPor: { type: Type.ARRAY, items: { type: Type.STRING } },
+        tensao: { type: Type.NUMBER }
+      },
+      required: ["conteudo", "causadoPor", "tensao"]
     }
   },
-  required: ["story", "choices", "imagePrompt", "statusUpdate"]
+  required: ["story", "choices", "imagePrompt", "statusUpdate", "eventoGerado"]
+};
+
+const CURADOR_SCHEMA = {
+  type: Type.OBJECT,
+  properties: {
+    textoFechamento: { type: Type.STRING }
+  },
+  required: ["textoFechamento"]
 };
 
 const safeParseJson = (text: string) => {
@@ -126,11 +146,32 @@ const safeParseJson = (text: string) => {
   }
 };
 
-// Armazenamento simples de histórico por sessão
-const sessionHistory: Map<string, Array<{role: string, parts: Array<{text: string}>}>> = new Map();
+interface TramaAbertaResumo {
+  id: string;
+  tensaoAtual: number;
+  eventosRecentes: { id: string; conteudo: string }[];
+}
+
+// Camada que injeta o estado causal no prompt, no lugar da antiga instrução
+// de ato. Informa o estado; não direciona a forma da narrativa.
+function montarBlocoTramas(tramasAbertas: TramaAbertaResumo[] | undefined): string {
+  if (!tramasAbertas || tramasAbertas.length === 0) {
+    return "Nenhuma trama em andamento ainda.";
+  }
+  const blocos = tramasAbertas.map((t) => {
+    const eventos = t.eventosRecentes
+      .map((e) => `    (${e.id}) ${e.conteudo}`)
+      .join("\n");
+    return `- [id: ${t.id}] tensão atual ${t.tensaoAtual}/10. Eventos recentes:\n${eventos}`;
+  });
+  return `Tramas em andamento:\n${blocos.join("\n")}`;
+}
+
+function montarInstrucaoEvento(): string {
+  return `Ao final, informe o evento que acabou de acontecer no campo "eventoGerado", indicando em "causadoPor" os ids dos eventos acima que tornaram este evento possível. Se o evento não decorre de nenhum deles, deixe "causadoPor" vazio.`;
+}
 
 export default async (request: Request) => {
-  // CORS headers
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -138,7 +179,6 @@ export default async (request: Request) => {
     "Content-Type": "application/json"
   };
 
-  // Handle preflight
   if (request.method === "OPTIONS") {
     return new Response(null, { headers });
   }
@@ -152,12 +192,12 @@ export default async (request: Request) => {
     switch (action) {
       case "validate": {
         const { actionText, context, mode } = payload;
-        const instruction = mode === 'complete' 
-          ? SYSTEM_INSTRUCTION_VALIDATOR_COMPLETE 
+        const instruction = mode === 'complete'
+          ? SYSTEM_INSTRUCTION_VALIDATOR_COMPLETE
           : SYSTEM_INSTRUCTION_VALIDATOR_SIMPLE;
 
         const response = await ai.models.generateContent({
-          model: "gemini-2.0-flash",
+          model: MODELO_TEXTO,
           contents: `Contexto da Ficha e Jogo: ${context}\nAção sugerida pelo Jogador: ${actionText}`,
           config: {
             systemInstruction: instruction,
@@ -170,112 +210,99 @@ export default async (request: Request) => {
       }
 
       case "startGame": {
-        const { playerInfo, config, initialSkillsList, sessionId } = payload;
-        
-        // Limpa histórico anterior
-        sessionHistory.delete(sessionId);
-        
-        const systemPrompt = SYSTEM_INSTRUCTION_MASTER + `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.`;
-        const userMessage = `Turno: 1. Ato Atual: 1. Inicie a aventura para um ${playerInfo}. Comece no Ato 1: O Chamado. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}]. Lembre-se: currentAct DEVE ser 1 neste primeiro turno.`;
+        const { playerInfo, config, initialSkillsList } = payload;
+
+        const userMessage = `Turno: 1. Inicie a aventura para um ${playerInfo}. O jogador possui EXATAMENTE estas Habilidades Iniciais: [${initialSkillsList}]. Nenhuma trama em andamento ainda: este é o evento fundador, então "causadoPor" deve vir vazio em "eventoGerado". ${montarInstrucaoEvento()}`;
 
         const response = await ai.models.generateContent({
-          model: "gemini-2.0-flash",
+          model: MODELO_TEXTO,
           contents: userMessage,
           config: {
-            systemInstruction: systemPrompt,
+            systemInstruction: SYSTEM_INSTRUCTION_MASTER + `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.`,
             responseMimeType: "application/json",
             responseSchema: RESPONSE_SCHEMA,
-            maxOutputTokens: 2000
+            maxOutputTokens: 2000,
           }
         });
-
-        // Salva no histórico
-        sessionHistory.set(sessionId, [
-          { role: "user", parts: [{ text: userMessage }] },
-          { role: "model", parts: [{ text: response.text || "" }] }
-        ]);
-
         result = safeParseJson(response.text || "{}");
-        
-        // Força ato 1 no início
-        if (result.statusUpdate) {
-          result.statusUpdate.currentAct = 1;
-        }
         break;
       }
 
       case "makeChoice": {
-        const { choiceText, context, sessionId, turnNumber, currentAct } = payload;
-        
-        const userMessage = `Turno: ${turnNumber || 1}. Ato Atual: ${currentAct || 1}. Ação do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno. IMPORTANTE: currentAct deve ser >= ${currentAct || 1} (nunca menor).`;
-        
-        // Recupera histórico
-        const history = sessionHistory.get(sessionId) || [];
-        
+        // Cada chamada é independente (sem estado de chat guardado no
+        // servidor entre invocações, que não é confiável em Netlify
+        // Functions): o cliente reenvia o recap recente da história a cada
+        // turno, e é isso que dá continuidade à narrativa.
+        const { choiceText, context, turno, tramasAbertas, historiaRecente, config } = payload;
+
+        const recap = (historiaRecente as string[] | undefined)?.length
+          ? `Recapitulando os últimos acontecimentos:\n${(historiaRecente as string[]).map((h: string) => `- ${h}`).join("\n")}`
+          : "Este é o começo da crônica.";
+
+        const userMessage = `Turno: ${turno}. ${recap}\n\nAção do jogador: "${choiceText}". Contexto Atualizado: ${context}. Prossiga com a narrativa apenas para este turno, sem repetir o recap acima.\n\n${montarBlocoTramas(tramasAbertas)}\n\nContinue a narrativa considerando essas tramas em aberto. ${montarInstrucaoEvento()}`;
+
         const response = await ai.models.generateContent({
-          model: "gemini-2.0-flash",
-          contents: [
-            ...history,
-            { role: "user", parts: [{ text: userMessage }] }
-          ],
+          model: MODELO_TEXTO,
+          contents: userMessage,
           config: {
-            systemInstruction: SYSTEM_INSTRUCTION_MASTER,
+            systemInstruction: SYSTEM_INSTRUCTION_MASTER + (config ? `\nTema: ${config.theme}. Duração: ${config.length}. Use estética medieval clássica de pixel art.` : ""),
             responseMimeType: "application/json",
             responseSchema: RESPONSE_SCHEMA,
-            maxOutputTokens: 2000
+            maxOutputTokens: 2000,
           }
         });
-
-        // Atualiza histórico (mantém últimas 10 interações)
-        history.push(
-          { role: "user", parts: [{ text: userMessage }] },
-          { role: "model", parts: [{ text: response.text || "" }] }
-        );
-        if (history.length > 20) {
-          history.splice(0, 2);
-        }
-        sessionHistory.set(sessionId, history);
-
         result = safeParseJson(response.text || "{}");
-        
-        // Garante que o ato nunca volte para trás
-        if (result.statusUpdate && currentAct) {
-          if (result.statusUpdate.currentAct < currentAct) {
-            result.statusUpdate.currentAct = currentAct;
-          }
-          // Limita ao ato 3
-          if (result.statusUpdate.currentAct > 3) {
-            result.statusUpdate.currentAct = 3;
-          }
+        break;
+      }
+
+      case "curador": {
+        const { eventos, tramaId } = payload as { eventos: StoryEvent[]; tramaId: string };
+        const cadeia = cadeiaCausal(eventos, tramaId);
+        if (cadeia.length === 0) {
+          return new Response(
+            JSON.stringify({ error: "Nenhum evento kernel encontrado para esta trama." }),
+            { status: 400, headers }
+          );
         }
+        const listaEventos = cadeia.map((e) => `(${e.id}) ${e.conteudo}`).join("\n");
+        const prompt = `Narre o fechamento desta linha de acontecimentos. Comece pelo evento que não depende de nenhum outro para fazer sentido, siga pelos eventos que dependem do anterior e tornam possível o seguinte, e termine no evento que encerra a sequência sem exigir nada depois. Use apenas a cadeia causal abaixo. Não mencione atos, fases, capítulos ou estruturas narrativas.\n\n${listaEventos}`;
+
+        const response = await ai.models.generateContent({
+          model: MODELO_TEXTO,
+          contents: prompt,
+          config: {
+            responseMimeType: "application/json",
+            responseSchema: CURADOR_SCHEMA,
+            maxOutputTokens: 1500
+          }
+        });
+        result = safeParseJson(response.text || "{}");
         break;
       }
 
       case "generateImage": {
         const { prompt } = payload;
         try {
-          // Usando Gemini 3 Pro Image (Nano Banana Pro) - melhor qualidade
           const imagePrompt = `High-quality medieval fantasy pixel art, 16-bit retro game aesthetic, isometric view, thick pixel lines, vibrant retro colors, high contrast. Scene: ${prompt}`;
 
           const response = await ai.models.generateContent({
-            model: 'gemini-3-pro-image-preview',
+            model: MODELO_IMAGEM,
             contents: { parts: [{ text: imagePrompt }] },
-            config: { 
-              imageConfig: { 
+            config: {
+              imageConfig: {
                 aspectRatio: "16:9"
-              } 
+              }
             }
           });
-          
+
           for (const part of response.candidates?.[0]?.content?.parts || []) {
             if (part.inlineData) {
               result = { image: `data:image/png;base64,${part.inlineData.data}` };
               break;
             }
           }
-          
+
           if (!result) {
-            // Fallback com imagem aleatória diferente a cada vez
             result = { image: `https://picsum.photos/800/450?random=${Date.now()}` };
           }
         } catch (e) {

@@ -84,11 +84,15 @@ export interface AIResponse {
     goldChange?: number;
     xpChange?: number;
     gameOver?: boolean;
-    currentAct: number;
     newStatus?: StatusEffect[];
     learnSkill?: boolean;
   };
   itemsFound?: Item[];
+  eventoGerado: {
+    conteudo: string;
+    causadoPor: string[]; // ids entre os eventos recentes fornecidos no prompt
+    tensao: number;
+  };
 }
 
 export interface ValidationResponse {
@@ -105,6 +109,40 @@ export interface FloatingText {
   y: number;
 }
 
+// Arcos causais emergentes: início, meio e fim são propriedades calculadas
+// do grafo de causalidade entre eventos (ver services/arcos.ts), nunca
+// fases declaradas de antemão. Nenhum tipo abaixo carrega noção de ato,
+// estágio ou estrutura narrativa pré-definida.
+export type PapelCausal = 'origem' | 'desdobramento' | 'desfecho' | 'ponta' | 'satelite';
+
+export interface StoryEvent {
+  id: string;
+  turno: number;
+  conteudo: string; // resumo curto do que aconteceu, não a prosa inteira
+  causadoPor: string[]; // ids de StoryEvent anteriores; vazio = evento fundador
+  tramaId: string | null; // atribuído pela detecção de componentes, não pela IA
+  tensao: number; // 0 a 10, declarado pela IA no turno
+  ehKernel: boolean; // calculado: true se tem alguma aresta causal
+}
+
+export interface Trama {
+  id: string;
+  eventoInicialId: string;
+  eventoFinalId: string | null; // null enquanto aberta
+  turnosSemNovoEvento: number; // para o limiar de estabilidade
+  status: 'aberta' | 'estavel' | 'fechada';
+  narracaoFechamento?: string | null; // gerada pelo curador quando a trama fecha
+}
+
+export interface MetricaConvergencia {
+  turno: number;
+  componentesAbertos: number; // tramas ainda produzindo desdobramento
+  componentesFechados: number; // com origem e desfecho estável
+  pontasSoltas: number; // eventos de grau de saída zero em tramas abertas
+  eventosFundadores: number; // acumulado de eventos com causadoPor vazio
+  razaoAmarracao: number; // arestas causais / total de eventos
+}
+
 export interface GameState {
   storyText: string;
   choices: GameChoice[];
@@ -112,7 +150,9 @@ export interface GameState {
   isGameOver: boolean;
   history: string[];
   activeQuests: any[];
-  currentAct: number;
+  eventos: StoryEvent[];
+  tramas: Trama[];
+  metricas: MetricaConvergencia[];
   rejectionMessage: {
     text: string;
     motive: string;

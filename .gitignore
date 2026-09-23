@@ -28,3 +28,8 @@ dist-ssr
 
 # Netlify CLI's Deno edge-functions environment (machine-local)
 deno.lock
+
+# Cidade Viva: saídas do simulador e cache de respostas
+saida/
+.cache-llm/
+analise/__pycache__/

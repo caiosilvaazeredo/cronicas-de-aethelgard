@@ -1,0 +1,96 @@
+{
+  "id": "vale-silente",
+  "nome": "Vale Silente",
+  "descricao": "Vale Silente é uma aldeia de pastores e lenhadores isolada nas montanhas do norte de Aethelgard. A única estrada foi soterrada por um deslizamento, o inverno se aproxima e, há algumas noites, rebanhos aparecem mortos na orla da floresta. Todos se conhecem desde sempre, e todos guardam alguma mágoa antiga.",
+  "locais": [
+    { "id": "praca", "nome": "Praça do Poço", "descricao": "Largo de terra batida em volta do poço comunitário, onde se tiram água e notícias." },
+    { "id": "moinho", "nome": "Moinho do Riacho", "descricao": "Moinho de pedra onde se mói o grão do inverno e onde fica guardado o estoque de farinha da aldeia." },
+    { "id": "floresta", "nome": "Orla da Floresta", "descricao": "Limite entre os pastos e a mata densa, onde os rebanhos têm aparecido mortos." },
+    { "id": "casa-conselho", "nome": "Casa do Conselho", "descricao": "Casa comprida de madeira onde os anciãos se reúnem e decidem as questões da aldeia." },
+    { "id": "ermida", "nome": "Ermida da Colina", "descricao": "Capela pequena e fria no alto da colina, com um sino que se ouve em todo o vale." }
+  ],
+  "faccoes": [
+    { "id": "conselho", "nome": "Conselho dos Anciãos", "interesse": "manter a aldeia unida e a própria autoridade sobre as decisões" },
+    { "id": "pastores", "nome": "Famílias Pastoras", "interesse": "proteger os rebanhos, de que depende a sobrevivência no inverno" },
+    { "id": "romeiros", "nome": "Romeiros da Colina", "interesse": "convencer a aldeia de que as mortes são um castigo e que é preciso penitência" }
+  ],
+  "agentes": [
+    {
+      "id": "anselmo",
+      "nome": "Ancião Anselmo",
+      "faccao": "conselho",
+      "objetivo": "continuar sendo ouvido como a voz mais respeitada do vale",
+      "segredo": "vendeu às escondidas parte do estoque de grão da aldeia a um mercador antes do deslizamento",
+      "localInicial": "casa-conselho",
+      "crencas": ["os lobos voltaram da montanha", "Marta quer tomar o seu lugar"]
+    },
+    {
+      "id": "marta",
+      "nome": "Marta Pedregal",
+      "faccao": "pastores",
+      "objetivo": "salvar o que resta do seu rebanho até a primavera",
+      "segredo": "perdeu metade das ovelhas por descuido e culpa os ataques por todas elas",
+      "localInicial": "floresta",
+      "crencas": ["não são lobos que matam os rebanhos", "o ancião esconde alguma coisa sobre o grão"]
+    },
+    {
+      "id": "irma-clara",
+      "nome": "Irmã Clara",
+      "faccao": "romeiros",
+      "objetivo": "levar toda a aldeia a rezar na ermida antes da primeira neve",
+      "segredo": "o sino da ermida está rachado e ela teme que pare de tocar",
+      "localInicial": "ermida",
+      "crencas": ["as mortes são um aviso", "o moleiro nunca vai à ermida porque tem algo a esconder"]
+    },
+    {
+      "id": "joaquim",
+      "nome": "Joaquim Moleiro",
+      "faccao": null,
+      "objetivo": "manter o moinho funcionando e não ser incomodado",
+      "segredo": "abriga no moinho um forasteiro ferido que chegou antes do deslizamento",
+      "localInicial": "moinho",
+      "crencas": ["a aldeia sempre desconfiou dele", "o estoque de farinha não dura o inverno"]
+    },
+    {
+      "id": "benedita",
+      "nome": "Benedita Lenha",
+      "faccao": "pastores",
+      "objetivo": "abrir uma trilha pela montanha até a cidade antes do inverno",
+      "segredo": null,
+      "localInicial": "praca",
+      "crencas": ["esperar pelo conselho é perder tempo", "há rastros de botas perto dos rebanhos mortos"]
+    },
+    {
+      "id": "rui",
+      "nome": "Rui das Cabras",
+      "faccao": "romeiros",
+      "objetivo": "ser aceito pelos outros rapazes da aldeia",
+      "segredo": "viu alguém saindo do moinho de madrugada e não contou a ninguém",
+      "localInicial": "praca",
+      "crencas": ["Irmã Clara sabe o que vai acontecer", "o forasteiro do moinho é um espírito"]
+    },
+    {
+      "id": "custodia",
+      "nome": "Custódia Anciã",
+      "faccao": "conselho",
+      "objetivo": "que o conselho decida racionar o grão já",
+      "segredo": "é parente do mercador que comprou o grão de Anselmo",
+      "localInicial": "casa-conselho",
+      "crencas": ["Anselmo está velho demais para decidir", "Benedita vai se perder na montanha"]
+    },
+    {
+      "id": "damiao",
+      "nome": "Damião Caçador",
+      "faccao": null,
+      "objetivo": "caçar o bastante para pagar o que deve a Marta",
+      "segredo": "matou por engano duas ovelhas de Marta numa caçada noturna",
+      "localInicial": "floresta",
+      "crencas": ["não há lobos nesta montanha há anos", "a Irmã Clara exagera tudo"]
+    }
+  ],
+  "variantes": {
+    "4": ["anselmo", "marta", "irma-clara", "joaquim"],
+    "6": ["anselmo", "marta", "irma-clara", "joaquim", "benedita", "rui"],
+    "8": ["anselmo", "marta", "irma-clara", "joaquim", "benedita", "rui", "custodia", "damiao"]
+  }
+}

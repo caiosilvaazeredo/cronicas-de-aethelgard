@@ -1,0 +1,97 @@
+{
+  "id": "porto-das-brumas",
+  "nome": "Porto das Brumas",
+  "descricao": "Porto das Brumas é uma cidade portuária de Aethelgard, úmida e movimentada, onde a névoa da manhã cobre o cais e os negócios mais lucrativos são acertados longe dos olhos da guarda. O comércio de sal e especiarias sustenta a cidade; o contrabando sustenta metade das famílias.",
+  "locais": [
+    { "id": "cais", "nome": "Cais Velho", "descricao": "Docas de madeira apodrecida, barcos de pesca e navios mercantes, estivadores e fiscais da alfândega." },
+    { "id": "taverna", "nome": "Taverna do Arpão Torto", "descricao": "Salão enfumaçado onde marinheiros bebem, apostam e trocam notícias; há um quarto nos fundos para conversas reservadas." },
+    { "id": "alfandega", "nome": "Casa da Alfândega", "descricao": "Prédio de pedra onde se registram as cargas, se cobram as taxas e se guardam os livros de entrada do porto." },
+    { "id": "mercado", "nome": "Mercado do Sal", "descricao": "Praça coberta de barracas de sal, peixe seco e especiarias; lugar de fofoca e de pequenos furtos." },
+    { "id": "capela", "nome": "Capela da Maré", "descricao": "Pequeno templo à beira-mar onde se reza pelos que estão no mar e se recolhem doações para as viúvas." },
+    { "id": "armazens", "nome": "Armazéns da Ponta", "descricao": "Galpões na ponta do porto, mal iluminados, alugados por comerciantes e por quem precisa guardar coisas sem perguntas." }
+  ],
+  "faccoes": [
+    { "id": "guilda", "nome": "Guilda dos Mercadores do Sal", "interesse": "manter o monopólio do sal e pagar o mínimo possível de taxas" },
+    { "id": "guarda", "nome": "Guarda Portuária", "interesse": "manter a ordem no porto e mostrar à capital que a cidade é bem governada" },
+    { "id": "irmandade", "nome": "Irmandade da Névoa", "interesse": "controlar o contrabando e as rotas noturnas do porto" }
+  ],
+  "agentes": [
+    {
+      "id": "odete",
+      "nome": "Odete Marinho",
+      "faccao": "guilda",
+      "objetivo": "comprar o armazém do falecido mestre Vasco antes que outro mercador o faça",
+      "segredo": "deve uma grande soma à Irmandade da Névoa e está com o pagamento atrasado",
+      "localInicial": "mercado",
+      "crencas": ["o capitão Brás pode ser comprado", "a viúva de Vasco não sabe o valor do armazém"]
+    },
+    {
+      "id": "bras",
+      "nome": "Capitão Brás Ferreira",
+      "faccao": "guarda",
+      "objetivo": "ser promovido a comandante da guarda de toda a costa",
+      "segredo": "aceita suborno para não inspecionar certos navios",
+      "localInicial": "alfandega",
+      "crencas": ["o novo fiscal foi mandado pela capital para vigiá-lo", "a Irmandade é menos perigosa que a Guilda"]
+    },
+    {
+      "id": "lia",
+      "nome": "Lia Sete-Nós",
+      "faccao": "irmandade",
+      "objetivo": "tornar-se a chefe da Irmandade da Névoa",
+      "segredo": "entrega informações à guarda sobre rivais dentro da própria Irmandade",
+      "localInicial": "taverna",
+      "crencas": ["o velho chefe da Irmandade está doente", "Odete vai tentar fugir da dívida"]
+    },
+    {
+      "id": "tomas",
+      "nome": "Tomás Adro",
+      "faccao": null,
+      "objetivo": "juntar dinheiro para reconstruir o telhado da capela",
+      "segredo": "sabe quem esteve no armazém de Vasco na noite em que ele morreu",
+      "localInicial": "capela",
+      "crencas": ["a morte de Vasco não foi acidente", "o capitão Brás protege quem paga"]
+    },
+    {
+      "id": "iracema",
+      "nome": "Iracema Vasco",
+      "faccao": null,
+      "objetivo": "garantir o sustento dos filhos depois da morte do marido",
+      "segredo": null,
+      "localInicial": "armazens",
+      "crencas": ["o marido tinha papéis escondidos no armazém", "a Guilda nunca foi amiga da família"]
+    },
+    {
+      "id": "nuno",
+      "nome": "Nuno Calado",
+      "faccao": "guarda",
+      "objetivo": "descobrir por que as contas da alfândega não batem",
+      "segredo": "foi enviado pela capital para investigar a própria guarda do porto",
+      "localInicial": "cais",
+      "crencas": ["alguém na alfândega altera os livros de entrada", "estivadores sabem mais do que dizem"]
+    },
+    {
+      "id": "gaspar",
+      "nome": "Gaspar Rocha",
+      "faccao": "irmandade",
+      "objetivo": "continuar mandando nas rotas noturnas do porto",
+      "segredo": "está doente e esconde a doença de todos",
+      "localInicial": "armazens",
+      "crencas": ["Lia quer seu lugar", "a guarda não ousa entrar nos Armazéns da Ponta"]
+    },
+    {
+      "id": "celeste",
+      "nome": "Celeste Prado",
+      "faccao": "guilda",
+      "objetivo": "tomar de Odete a presidência da Guilda dos Mercadores do Sal",
+      "segredo": "falsificou o próprio registro de uma carga no ano passado",
+      "localInicial": "taverna",
+      "crencas": ["Odete está falida", "o novo fiscal é incorruptível"]
+    }
+  ],
+  "variantes": {
+    "4": ["odete", "bras", "lia", "tomas"],
+    "6": ["odete", "bras", "lia", "tomas", "iracema", "nuno"],
+    "8": ["odete", "bras", "lia", "tomas", "iracema", "nuno", "gaspar", "celeste"]
+  }
+}

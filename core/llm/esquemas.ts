@@ -43,6 +43,11 @@ export const NarracaoCurador = z.object({
 });
 export type NarracaoCurador = z.infer<typeof NarracaoCurador>;
 
+export const FalaConversa = z.object({
+  fala: z.string().max(600),
+});
+export type FalaConversa = z.infer<typeof FalaConversa>;
+
 /**
  * Resposta do mestre no controle de três atos. Reproduz o contrato do modo
  * antigo (story + currentAct) e acrescenta `eventoGerado`, sem o qual o

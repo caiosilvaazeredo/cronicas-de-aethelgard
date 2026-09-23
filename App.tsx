@@ -10,6 +10,7 @@ import MapaCronica from './components/MapaCronica';
 import { music } from './services/audioService';
 import { SKILL_DATABASE } from './data/skills';
 import InvestigationApp from './investigation/InvestigationApp';
+import CidadeViva from './components/CidadeViva';
 
 // Limiar de estabilidade usado por detectarArcos: quantos turnos uma trama
 // precisa ficar sem novo evento para virar candidata a fechamento. Fica
@@ -84,7 +85,7 @@ const App: React.FC = () => {
   const [showMapaCronica, setShowMapaCronica] = useState(false);
   const [gerandoTramaId, setGerandoTramaId] = useState<string | null>(null);
 
-  const [menuStep, setMenuStep] = useState<'title' | 'lore' | 'config' | 'class' | 'skills' | 'playing' | 'investigation'>('title');
+  const [menuStep, setMenuStep] = useState<'title' | 'lore' | 'config' | 'class' | 'skills' | 'playing' | 'investigation' | 'cidade-viva'>('title');
   const [gameConfig, setGameConfig] = useState<GameConfig>({ length: 'medium', theme: 'classic_high', mode: 'complete' });
   const [loading, setLoading] = useState(false);
   const [showRetry, setShowRetry] = useState(false);
@@ -112,7 +113,7 @@ const App: React.FC = () => {
   // --- MUSIC MANAGEMENT SYSTEM ---
   useEffect(() => {
     // If we are in any menu step (Title, Lore, Config, Class Selection, Skills)
-    if (['title', 'lore', 'config', 'class', 'skills', 'investigation'].includes(menuStep)) {
+    if (['title', 'lore', 'config', 'class', 'skills', 'investigation', 'cidade-viva'].includes(menuStep)) {
       music.playBgm('menu.mp3');
     } 
     // If we are actually playing the game
@@ -568,6 +569,13 @@ const App: React.FC = () => {
                   >
                     <span className="flex items-center justify-center gap-2">🔍 Investigação</span>
                   </button>
+
+                  <button
+                    onClick={() => { music.playSfx('click'); setMenuStep('cidade-viva'); }}
+                    className="group relative bg-transparent text-[#c5a059] font-title font-bold text-sm md:text-base py-3 px-6 border-2 border-[#c5a059]/50 hover:border-[#c5a059] hover:bg-[#c5a059]/10 hover:scale-105 transition-all duration-200 uppercase tracking-wider w-full"
+                  >
+                    <span className="flex items-center justify-center gap-2">🏘️ Cidade Viva</span>
+                  </button>
                </div>
             </div>
 
@@ -886,6 +894,8 @@ const App: React.FC = () => {
         );
       case 'investigation':
         return <InvestigationApp onVoltarMenu={() => { music.playSfx('click'); setMenuStep('title'); }} />;
+      case 'cidade-viva':
+        return <CidadeViva onVoltarMenu={() => { music.playSfx('click'); setMenuStep('title'); }} />;
       default: return null;
     }
   };

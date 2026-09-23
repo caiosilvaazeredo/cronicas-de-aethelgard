@@ -134,6 +134,7 @@ const GERADORES: Record<string, (rng: () => number, d: any) => unknown> = {
   relatos: gerarRelatos,
   curador: gerarNarracao,
   'mestre-controle': gerarMestreControle,
+  conversa: (rng) => ({ fala: rng() < 0.5 ? 'Não sei de nada, forasteiro.' : 'Dizem muita coisa por aqui. Tome cuidado.' }),
 };
 
 function deveFalhar(modo: ModoFalhaSimulado, tentativa: number, rng: () => number): boolean {

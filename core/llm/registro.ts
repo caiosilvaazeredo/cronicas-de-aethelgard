@@ -39,6 +39,19 @@ const ANTHROPIC_SEM_DATA_FIXOS = new Set([
 const DATA_AAAA_MM_DD = /-\d{4}-\d{2}-\d{2}$/;
 const DATA_AAAAMMDD = /-\d{8}$/;
 const VERSAO_GEMINI = /(-\d{3}|-\d{2}-\d{2}|-\d{2}-\d{4})$/;
+// Nome estável da Gemini API a partir da 2.5 (ex.: gemini-3.5-flash,
+// gemini-3.5-flash-lite). A documentação (conferida em 2026-09) diz que
+// nomes estáveis apontam para um modelo fixo; os "-latest" são trocados a
+// cada lançamento e as prévias/experimentais podem mudar.
+const GEMINI_ESTAVEL = /^gemini-(\d+)(?:\.(\d+))?-(?:flash|pro)(?:-lite)?$/;
+
+function geminiEstavel(modelo: string): boolean {
+  const m = modelo.match(GEMINI_ESTAVEL);
+  if (!m) return false;
+  const versao = Number(m[1]) + Number(m[2] ?? 0) / 10;
+  // antes da 2.5, o nome sem sufixo (ex.: gemini-2.0-flash) era alias do -001
+  return versao >= 2.5;
+}
 
 /** Devolve null se o identificador é aceitável, ou o motivo da recusa. */
 export function motivoRecusaModelo(ref: RefModelo): string | null {
@@ -60,8 +73,8 @@ export function motivoRecusaModelo(ref: RefModelo): string | null {
       if (DATA_AAAAMMDD.test(modelo) || ANTHROPIC_SEM_DATA_FIXOS.has(modelo) || confirmado) return null;
       return `"${modelo}" parece alias de um snapshot datado; use o identificador datado ou declare fixadoConfirmado`;
     case 'gemini':
-      if (VERSAO_GEMINI.test(modelo) || confirmado) return null;
-      return `"${modelo}" não tem sufixo de versão (ex.: -001); confirme na documentação que é estável e declare fixadoConfirmado`;
+      if (VERSAO_GEMINI.test(modelo) || geminiEstavel(modelo) || confirmado) return null;
+      return `"${modelo}" não é um nome estável nem tem sufixo de versão (prévias e experimentais podem mudar); declare fixadoConfirmado se a documentação garantir que é fixo`;
     case 'compativel-openai':
       if (/@sha256:[0-9a-f]+$/i.test(modelo)) return null;
       if (/:[^:]+$/.test(modelo) && !/:latest$/i.test(modelo)) return null;

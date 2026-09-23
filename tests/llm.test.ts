@@ -121,9 +121,12 @@ test('aliases móveis e nomes sem versão são recusados', () => {
     motivoRecusaModelo({ provedor, modelo, fixadoConfirmado });
   assert.ok(recusa('gemini', 'gemini-flash-latest'));
   assert.ok(recusa('gemini', 'gemini-flash-lite-latest'));
-  assert.ok(recusa('gemini', 'gemini-2.5-flash'), 'sem sufixo de versão exige confirmação explícita');
-  assert.equal(recusa('gemini', 'gemini-2.5-flash', true), null);
+  assert.equal(recusa('gemini', 'gemini-3.5-flash'), null, 'nome estável é fixo segundo a documentação');
+  assert.equal(recusa('gemini', 'gemini-3.5-flash-lite'), null);
+  assert.ok(recusa('gemini', 'gemini-2.0-flash'), 'antes da 2.5 o nome sem sufixo era alias');
   assert.equal(recusa('gemini', 'gemini-2.0-flash-001'), null);
+  assert.ok(recusa('gemini', 'gemini-3-flash-preview'), 'prévia exige confirmação explícita');
+  assert.equal(recusa('gemini', 'gemini-3-flash-preview', true), null);
   assert.ok(recusa('openai', 'gpt-4o'));
   assert.ok(recusa('openai', 'chatgpt-4o-latest'));
   assert.equal(recusa('openai', 'gpt-4o-2024-08-06'), null);

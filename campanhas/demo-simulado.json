@@ -1,0 +1,21 @@
+{
+  "nome": "demo-simulado",
+  "descricao": "Campanha pequena com o provedor simulado: sem rede, sem custo. Serve para depurar o pipeline campanha -> reanálise -> análise em Python.",
+  "dimensoes": {
+    "modelosAgentes": [{ "provedor": "simulado", "modelo": "simulado-v1" }],
+    "estadoTramas": ["informa", "nao-informa"],
+    "numAgentes": [4, 6],
+    "jogador": ["nenhum", "investigador"],
+    "mundos": ["porto-das-brumas", "vale-silente"],
+    "incluirControle": true
+  },
+  "modelosFixos": {
+    "jogador": { "provedor": "simulado", "modelo": "simulado-v1" },
+    "curador": { "provedor": "simulado", "modelo": "simulado-v1" }
+  },
+  "repeticoes": 5,
+  "dias": 40,
+  "temperatura": 0.7,
+  "sementeBase": 1,
+  "concorrencia": 4
+}

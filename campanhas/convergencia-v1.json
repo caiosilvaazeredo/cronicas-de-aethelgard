@@ -1,0 +1,37 @@
+{
+  "nome": "convergencia-v1",
+  "descricao": "Campanha principal de convergência. Modelos e preços conferidos na documentação dos provedores em 2026-09-23 (Gemini: ai.google.dev/gemini-api/docs/models e /pricing; Anthropic: referência da Messages API). Reconfira antes de rodar e registre qualquer troca como emenda no pre-registro.md.",
+  "dimensoes": {
+    "modelosAgentes": [
+      { "provedor": "gemini", "modelo": "gemini-3.5-flash" },
+      { "provedor": "gemini", "modelo": "gemini-3.5-flash-lite" },
+      { "provedor": "anthropic", "modelo": "claude-sonnet-5" },
+      { "provedor": "anthropic", "modelo": "claude-haiku-4-5-20251001" }
+    ],
+    "estadoTramas": ["informa", "nao-informa"],
+    "numAgentes": [6],
+    "jogador": ["nenhum", "investigador"],
+    "mundos": ["porto-das-brumas", "vale-silente"],
+    "incluirControle": true
+  },
+  "modelosFixos": {
+    "jogador": { "provedor": "gemini", "modelo": "gemini-3.5-flash" },
+    "curador": { "provedor": "gemini", "modelo": "gemini-3.5-flash" }
+  },
+  "repeticoes": 30,
+  "dias": 40,
+  "temperatura": 0.7,
+  "sementeBase": 1000,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "precos": {
+    "gemini/gemini-3.5-flash": { "entradaPorMTok": 1.5, "saidaPorMTok": 9.0 },
+    "gemini/gemini-3.5-flash-lite": { "entradaPorMTok": 0.3, "saidaPorMTok": 2.5 },
+    "anthropic/claude-sonnet-5": { "entradaPorMTok": 2.0, "saidaPorMTok": 10.0 },
+    "anthropic/claude-haiku-4-5-20251001": { "entradaPorMTok": 1.0, "saidaPorMTok": 5.0 }
+  },
+  "concorrencia": 4,
+  "limitesTaxa": { "gemini": 120, "anthropic": 50 },
+  "orcamentoUsd": 150,
+  "cache": true
+}

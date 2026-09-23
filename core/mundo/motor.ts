@@ -45,11 +45,14 @@ export interface ConfigMotor {
   maxTokens: { agentes: number; jogador: number; relatos: number; curador: number };
 }
 
+// Folgados de propósito: em modelos com raciocínio (Gemini 3.x, Claude com
+// thinking adaptativo) os tokens de pensamento contam dentro do limite, e uma
+// resposta cortada vira falha de estrutura. Só se paga o que é gerado.
 export const MAX_TOKENS_PADRAO: ConfigMotor['maxTokens'] = {
-  agentes: 4000,
-  jogador: 800,
-  relatos: 3000,
-  curador: 2000,
+  agentes: 12000,
+  jogador: 4000,
+  relatos: 8000,
+  curador: 6000,
 };
 
 export interface ProvedoresMotor {

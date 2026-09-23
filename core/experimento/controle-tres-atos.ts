@@ -197,7 +197,7 @@ export async function avancarDiaControle(
       esquema: RespostaMestreControle,
       temperatura: config.temperatura,
       semente: sementeDaChamada(config.semente, dia, 'mestre-controle'),
-      maxTokens: 2000,
+      maxTokens: 8000,
       meta: {
         tarefa: 'mestre-controle',
         papel: 'mestre',

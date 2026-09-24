@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1.mestre",
+    "eventoInicialId": "D1.mestre",
+    "eventoFinalId": "D3.mestre",
+    "turnosSemNovoEvento": 12,
+    "status": "fechada",
+    "narracaoFechamento": "O forasteiro chegou às docas nevoentas de Porto das Brumas e tentou puxar conversa com os estivadores, mas foi ignorado com desprezo, e para completar a má recepção, um batedor de carteiras roçou-lhe a bolsa — assim foi 'apresentado' à cidade da pior forma possível.\n\nAinda abalado por esse início, entrou na Taverna do Arpão Torto na esperança de ouvir, dissimuladamente, os marinheiros que comentavam sobre os roubos no cais. Mal se sentou, porém, seu banquinho quebrou no pior momento possível, derrubando a bebida sobre um marinheiro tatuado. O acidente atraiu a hostilidade de todo o recinto, e ele nada conseguiu apurar sobre os tais roubos.\n\nPara apaziguar os ânimos, o forasteiro pagou uma rodada ao marinheiro tatuado. A tensão de fato diminuiu, mas o preço foi alto: os informantes que antes falavam sobre os roubos aproveitaram a distração para desaparecer. E foi justamente ao ver o dinheiro do forasteiro que o taverneiro, de olhar atento, se aproximou e lhe ofereceu um 'trabalhinho' de aparência bastante suspeita."
+  },
+  {
+    "id": "D4.mestre",
+    "eventoInicialId": "D4.mestre",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 2,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D14.mestre",
+    "eventoInicialId": "D14.mestre",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "id": "porto-das-brumas_claude-cli_controle-tres-atos_jog-investigador_s1",
+  "celula": "porto-das-brumas_claude-cli_controle-tres-atos_jog-investigador",
+  "repeticao": 1,
+  "mundo": "porto-das-brumas",
+  "numAgentes": 0,
+  "estadoTramas": "nao-informa",
+  "jogador": "investigador",
+  "controle": true,
+  "modelos": {
+    "agentes": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "dias": 15,
+  "temperatura": 0.7,
+  "semente": 1,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "agentesAtivos": []
+}

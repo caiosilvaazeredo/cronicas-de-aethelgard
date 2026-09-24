@@ -1,0 +1,113 @@
+{
+  "sessao": "porto-das-brumas_claude-cli_controle-tres-atos_jog-investigador_s1",
+  "celula": "porto-das-brumas_claude-cli_controle-tres-atos_jog-investigador",
+  "dias": 15,
+  "eventos": 15,
+  "relatos": 0,
+  "tramasSurgidas": 3,
+  "tramasFechadas": 1,
+  "proporcaoTramasFechadas": 0.3333333333333333,
+  "curvaTramasAbertas": [
+    0,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.5,
+    0.6666666666666666,
+    0.5,
+    0.6,
+    0.8333333333333334,
+    0.8571428571428571,
+    1.125,
+    1.3333333333333333,
+    1.5,
+    1.5454545454545454,
+    1.5833333333333333,
+    1.6153846153846154,
+    1.5,
+    1.4666666666666666
+  ],
+  "razaoAmarracaoFinal": 1.4666666666666666,
+  "eventosFundadores": 3,
+  "narracoes": 1,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 24,
+    "arestas": 22,
+    "descartadas": 2
+  },
+  "estrutura": {
+    "chamadasComEsquema": 31,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1.1290322580645162,
+    "porPapel": {
+      "jogador": {
+        "chamadas": 15,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "mestre": {
+        "chamadas": 15,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "curador": {
+        "chamadas": 1,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 363604,
+    "saida": 41910,
+    "porPapel": {
+      "jogador": {
+        "entrada": 162237,
+        "saida": 7954
+      },
+      "mestre": {
+        "entrada": 199329,
+        "saida": 33458
+      },
+      "curador": {
+        "entrada": 2038,
+        "saida": 498
+      }
+    }
+  },
+  "custoUsd": 1.2824798000000002,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "jogador": [
+      "claude-sonnet-5"
+    ],
+    "mestre": [
+      "claude-sonnet-5"
+    ],
+    "curador": [
+      "claude-sonnet-5"
+    ]
+  },
+  "latenciaTotalMs": 557884
+}

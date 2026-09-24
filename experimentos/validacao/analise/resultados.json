@@ -1,87 +1,2322 @@
 {
  "contagem": {
   "porMetodo": {
-   "M1 Cidade Viva": 0,
-   "M2 Controle três atos": 0,
-   "M3 Teste-reteste": 8,
+   "M1 Cidade Viva": 178,
+   "M2 Controle três atos": 187,
+   "M3 Teste-reteste": 141,
    "M4 Juiz causal": 0,
    "M5 Juiz de relatos": 0
   },
-  "total": 8,
+  "total": 506,
   "porModelo": {
-   "claude-haiku-4-5-20251001": 8
+   "claude-haiku-4-5-20251001": 144,
+   "claude-sonnet-5": 149,
+   "claude-sonnet-4-6": 141,
+   "claude-opus-5": 48,
+   "claude-opus-5-5": 24
   },
   "custoPorModelo": {
-   "claude-haiku-4-5-20251001": 0.40082300000000004
+   "claude-haiku-4-5-20251001": 4.186950599999999,
+   "claude-sonnet-5": 6.1337744,
+   "claude-sonnet-4-6": 11.456823600000003,
+   "claude-opus-5": 5.5852495,
+   "claude-opus-5-5": 1.0563056
   },
-  "custoTotal": 0.40082300000000004,
+  "custoTotal": 28.4191037,
   "itensJulgados": 0
  },
- "sessoes": null,
+ "sessoes": {
+  "sessoes": [
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 41,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.5694444444444444,
+    "fundadores": 6,
+    "curvaAbertas": [
+     0,
+     4,
+     4,
+     3,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     0.7777777777777778,
+     1.0833333333333333,
+     1.2333333333333334,
+     1.3611111111111112,
+     1.4523809523809523,
+     1.4166666666666667,
+     1.4259259259259258,
+     1.5,
+     1.5757575757575757,
+     1.5694444444444444
+    ],
+    "refs": 113,
+    "descartadas": 0,
+    "chamadas": 23,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 23,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 0.516708,
+    "latenciaS": 1342.3419999999999,
+    "tokensEntrada": 80236,
+    "tokensSaida": 140342,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "relatos": [
+      "claude-haiku-4-5-20251001"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 52,
+    "tramas": 2,
+    "fechadas": 1,
+    "proporcaoFechadas": 0.5,
+    "razaoAmarracao": 1.5138888888888888,
+    "fundadores": 6,
+    "curvaAbertas": [
+     0,
+     4,
+     3,
+     3,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.75,
+     1,
+     1.0833333333333333,
+     1.2333333333333334,
+     1.2777777777777777,
+     1.380952380952381,
+     1.4583333333333333,
+     1.4259259259259258,
+     1.4833333333333334,
+     1.4696969696969697,
+     1.5138888888888888
+    ],
+    "refs": 109,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 6,
+    "custoUsd": 0.5827100000000001,
+    "latenciaS": 1432.9149999999997,
+    "tokensEntrada": 84499,
+    "tokensSaida": 150097,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "relatos": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "curador": [
+      "claude-sonnet-5"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": false,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 38,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.625,
+    "fundadores": 8,
+    "curvaAbertas": [
+     0,
+     3,
+     3,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.4166666666666667,
+     0.8333333333333334,
+     1,
+     1.2333333333333334,
+     1.3611111111111112,
+     1.3333333333333333,
+     1.4375,
+     1.537037037037037,
+     1.5833333333333333,
+     1.621212121212121,
+     1.625
+    ],
+    "refs": 117,
+    "descartadas": 0,
+    "chamadas": 21,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 21,
+    "tentativasMedias": 1.0476190476190477,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 3,
+    "custoUsd": 1.225749,
+    "latenciaS": 1467.373,
+    "tokensEntrada": 84403,
+    "tokensSaida": 99018,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-sonnet-4-6"
+     ],
+     "relatos": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": false,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 35,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.9305555555555556,
+    "fundadores": 6,
+    "curvaAbertas": [
+     0,
+     5,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.6666666666666666,
+     1.1666666666666667,
+     1.2916666666666667,
+     1.3666666666666667,
+     1.4166666666666667,
+     1.5952380952380953,
+     1.7083333333333333,
+     1.8333333333333333,
+     1.8833333333333333,
+     1.893939393939394,
+     1.9305555555555556
+    ],
+    "refs": 139,
+    "descartadas": 0,
+    "chamadas": 21,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 21,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 2,
+    "custoUsd": 1.2439679999999997,
+    "latenciaS": 1512.1370000000002,
+    "tokensEntrada": 77853,
+    "tokensSaida": 100893,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-sonnet-4-6"
+     ],
+     "relatos": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "mundo": "vale-silente",
+    "estadoTramas": "informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 33,
+    "tramas": 5,
+    "fechadas": 2,
+    "proporcaoFechadas": 0.4,
+    "razaoAmarracao": 1.1111111111111112,
+    "fundadores": 7,
+    "curvaAbertas": [
+     0,
+     4,
+     5,
+     5,
+     5,
+     5,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "curvaAmarracao": [
+     0,
+     0.4166666666666667,
+     0.6111111111111112,
+     0.7916666666666666,
+     0.9333333333333333,
+     1.0555555555555556,
+     1.0714285714285714,
+     1.1041666666666667,
+     1.1296296296296295,
+     1.1333333333333333,
+     1.121212121212121,
+     1.1111111111111112
+    ],
+    "refs": 80,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 0.404269,
+    "latenciaS": 1115.67,
+    "tokensEntrada": 79095,
+    "tokensSaida": 117919,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "relatos": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "curador": [
+      "claude-sonnet-5"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 41,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.2638888888888888,
+    "fundadores": 7,
+    "curvaAbertas": [
+     0,
+     5,
+     5,
+     5,
+     5,
+     5,
+     3,
+     2,
+     2,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.4166666666666667,
+     0.7222222222222222,
+     0.7916666666666666,
+     0.8333333333333334,
+     0.8611111111111112,
+     0.9523809523809523,
+     1,
+     1.1111111111111112,
+     1.2,
+     1.2575757575757576,
+     1.2638888888888888
+    ],
+    "refs": 91,
+    "descartadas": 0,
+    "chamadas": 22,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 22,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 0.37091799999999997,
+    "latenciaS": 1140.5260000000003,
+    "tokensEntrada": 75670,
+    "tokensSaida": 120800,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-haiku-4-5-20251001"
+     ],
+     "relatos": [
+      "claude-haiku-4-5-20251001"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": false,
+    "mundo": "vale-silente",
+    "estadoTramas": "informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 39,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.8611111111111112,
+    "fundadores": 6,
+    "curvaAbertas": [
+     0,
+     6,
+     6,
+     4,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     0.7222222222222222,
+     0.875,
+     1.3,
+     1.5833333333333333,
+     1.619047619047619,
+     1.6041666666666667,
+     1.6481481481481481,
+     1.6833333333333333,
+     1.803030303030303,
+     1.8611111111111112
+    ],
+    "refs": 134,
+    "descartadas": 0,
+    "chamadas": 21,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 21,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.7680139999999998,
+    "latenciaS": 1308.7500000000002,
+    "tokensEntrada": 79793,
+    "tokensSaida": 85963,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-sonnet-4-6"
+     ],
+     "relatos": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": false,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 72,
+    "relatos": 42,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.9444444444444444,
+    "fundadores": 6,
+    "curvaAbertas": [
+     0,
+     5,
+     4,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.6666666666666666,
+     1.1111111111111112,
+     1.2083333333333333,
+     1.4,
+     1.5555555555555556,
+     1.6904761904761905,
+     1.75,
+     1.8148148148148149,
+     1.9333333333333333,
+     1.9545454545454546,
+     1.9444444444444444
+    ],
+    "refs": 140,
+    "descartadas": 0,
+    "chamadas": 22,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 22,
+    "tentativasMedias": 1,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.791936,
+    "latenciaS": 1293.726,
+    "tokensEntrada": 80039,
+    "tokensSaida": 87460,
+    "modelosEfetivos": {
+     "agentes": [
+      "claude-sonnet-4-6"
+     ],
+     "relatos": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": []
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": true,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 9,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.6666666666666667,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1,
+     1.2,
+     1.2,
+     1.3333333333333333,
+     1.4285714285714286,
+     1.5,
+     1.6666666666666667,
+     1.6666666666666667,
+     1.6666666666666667
+    ],
+    "refs": 15,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 1,
+    "chamadasComEsquema": 20,
+    "tentativasMedias": 1.45,
+    "erros": 4,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 0.6267874,
+    "latenciaS": 493.0270000000001,
+    "tokensEntrada": 155140,
+    "tokensSaida": 45377,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-haiku-4-5-20251001"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-opus-5",
+    "controle": true,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 12,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 2.3333333333333335,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1.5,
+     1.8,
+     2,
+     2.142857142857143,
+     2.25,
+     2.3333333333333335,
+     2.3,
+     2.272727272727273,
+     2.3333333333333335
+    ],
+    "refs": 28,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.4583333333333333,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 2.379991,
+    "latenciaS": 745.3330000000001,
+    "tokensEntrada": 365484,
+    "tokensSaida": 45370,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-opus-5"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": true,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 12,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.5833333333333333,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1.25,
+     1.6,
+     1.5,
+     1.5714285714285714,
+     1.625,
+     1.6666666666666667,
+     1.7,
+     1.6363636363636365,
+     1.5833333333333333
+    ],
+    "refs": 19,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.375,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.3017113999999999,
+    "latenciaS": 754.832,
+    "tokensEntrada": 215343,
+    "tokensSaida": 38957,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-sonnet-5",
+    "controle": true,
+    "mundo": "porto-das-brumas",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 12,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.25,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     0.6666666666666666,
+     0.75,
+     1,
+     1.3333333333333333,
+     1.2857142857142858,
+     1.25,
+     1.2222222222222223,
+     1.2,
+     1.2727272727272727,
+     1.25
+    ],
+    "refs": 15,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.0416666666666667,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.0260812000000001,
+    "latenciaS": 385.53200000000004,
+    "tokensEntrada": 305914,
+    "tokensSaida": 35989,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-sonnet-5"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": true,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 11,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 2.3636363636363638,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1.5,
+     1.8,
+     1.8333333333333333,
+     2,
+     2.125,
+     2.2222222222222223,
+     2.3,
+     2.3636363636363638,
+     2.3636363636363638
+    ],
+    "refs": 26,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 1,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.5,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 0.5429394000000001,
+    "latenciaS": 919.6460000000001,
+    "tokensEntrada": 214298,
+    "tokensSaida": 89220,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-haiku-4-5-20251001"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-opus-5",
+    "controle": true,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 12,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 2.5,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1.5,
+     1.8,
+     2,
+     2.142857142857143,
+     2.25,
+     2.3333333333333335,
+     2.4,
+     2.4545454545454546,
+     2.5
+    ],
+    "refs": 30,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.5,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 2.5148890000000006,
+    "latenciaS": 702.145,
+    "tokensEntrada": 343199,
+    "tokensSaida": 42263,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-opus-5"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-sonnet-4-6",
+    "controle": true,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 12,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.6666666666666667,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     1,
+     1.25,
+     1.2,
+     1.3333333333333333,
+     1.4285714285714286,
+     1.5,
+     1.5555555555555556,
+     1.5,
+     1.5454545454545454,
+     1.6666666666666667
+    ],
+    "refs": 20,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 24,
+    "tentativasMedias": 1.4583333333333333,
+    "erros": 0,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.5013328,
+    "latenciaS": 925.867,
+    "tokensEntrada": 229306,
+    "tokensSaida": 50582,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-sonnet-4-6"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+    "modelo": "claude-sonnet-5",
+    "controle": true,
+    "mundo": "vale-silente",
+    "estadoTramas": "nao-informa",
+    "dias": 12,
+    "eventos": 11,
+    "relatos": 0,
+    "tramas": 1,
+    "fechadas": 0,
+    "proporcaoFechadas": 0,
+    "razaoAmarracao": 1.3636363636363635,
+    "fundadores": 1,
+    "curvaAbertas": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "curvaAmarracao": [
+     0,
+     0.5,
+     0.6666666666666666,
+     0.75,
+     0.8,
+     0.8333333333333334,
+     1.1428571428571428,
+     1.25,
+     1.3333333333333333,
+     1.4,
+     1.3636363636363635,
+     1.3636363636363635
+    ],
+    "refs": 15,
+    "descartadas": 0,
+    "chamadas": 24,
+    "falhasEstrutura": 0,
+    "chamadasComEsquema": 23,
+    "tentativasMedias": 1.391304347826087,
+    "erros": 1,
+    "acoesDescartadas": 0,
+    "agentesSemAcao": 0,
+    "locaisInvalidos": 0,
+    "custoUsd": 1.1716848,
+    "latenciaS": 475.62,
+    "tokensEntrada": 337134,
+    "tokensSaida": 44845,
+    "modelosEfetivos": {
+     "jogador": [
+      "claude-sonnet-5"
+     ],
+     "mestre": [
+      "claude-sonnet-5"
+     ]
+    },
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "porModelo": {
+   "claude-haiku-4-5-20251001": {
+    "cidade-viva": {
+     "sessoes": 4,
+     "tramas": {
+      "n": 4,
+      "media": 2.25,
+      "dp": 1.8929694486000912
+     },
+     "proporcaoFechadas": {
+      "n": 4,
+      "media": 0.225,
+      "dp": 0.2629955639676584
+     },
+     "razaoAmarracao": {
+      "n": 4,
+      "media": 1.3645833333333335,
+      "dp": 0.21497888450239244
+     },
+     "eventos": {
+      "n": 4,
+      "media": 72.0,
+      "dp": 0.0
+     },
+     "relatos": {
+      "n": 4,
+      "media": 41.75,
+      "dp": 7.804912982645397
+     },
+     "taxaFalhaEstrutura": 0.0,
+     "falhasEstrutura": 0,
+     "chamadasComEsquema": 93,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 6,
+     "custoUsd": 1.8746049999999999,
+     "latenciaPorDiaS": 104.8219375,
+     "convergem": "4"
+    },
+    "controle": {
+     "sessoes": 2,
+     "tramas": {
+      "n": 2,
+      "media": 1.0,
+      "dp": 0.0
+     },
+     "proporcaoFechadas": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "razaoAmarracao": {
+      "n": 2,
+      "media": 2.015151515151515,
+      "dp": 0.49283199900880587
+     },
+     "eventos": {
+      "n": 2,
+      "media": 10.0,
+      "dp": 1.4142135623730951
+     },
+     "relatos": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "taxaFalhaEstrutura": 0.045454545454545456,
+     "falhasEstrutura": 2,
+     "chamadasComEsquema": 44,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 0,
+     "custoUsd": 1.1697268,
+     "latenciaPorDiaS": 58.86137500000001,
+     "convergem": "2"
+    }
+   },
+   "claude-sonnet-4-6": {
+    "cidade-viva": {
+     "sessoes": 4,
+     "tramas": {
+      "n": 4,
+      "media": 1.0,
+      "dp": 0.0
+     },
+     "proporcaoFechadas": {
+      "n": 4,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "razaoAmarracao": {
+      "n": 4,
+      "media": 1.8402777777777777,
+      "dp": 0.14807579251592107
+     },
+     "eventos": {
+      "n": 4,
+      "media": 72.0,
+      "dp": 0.0
+     },
+     "relatos": {
+      "n": 4,
+      "media": 38.5,
+      "dp": 2.886751345948129
+     },
+     "taxaFalhaEstrutura": 0.0,
+     "falhasEstrutura": 0,
+     "chamadasComEsquema": 85,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 5,
+     "custoUsd": 6.029666999999999,
+     "latenciaPorDiaS": 116.291375,
+     "convergem": "4"
+    },
+    "controle": {
+     "sessoes": 2,
+     "tramas": {
+      "n": 2,
+      "media": 1.0,
+      "dp": 0.0
+     },
+     "proporcaoFechadas": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "razaoAmarracao": {
+      "n": 2,
+      "media": 1.625,
+      "dp": 0.058925565098879064
+     },
+     "eventos": {
+      "n": 2,
+      "media": 12.0,
+      "dp": 0.0
+     },
+     "relatos": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "taxaFalhaEstrutura": 0.0,
+     "falhasEstrutura": 0,
+     "chamadasComEsquema": 48,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 0,
+     "custoUsd": 2.8030441999999995,
+     "latenciaPorDiaS": 70.029125,
+     "convergem": "1"
+    }
+   },
+   "claude-sonnet-5": {
+    "controle": {
+     "sessoes": 2,
+     "tramas": {
+      "n": 2,
+      "media": 1.0,
+      "dp": 0.0
+     },
+     "proporcaoFechadas": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "razaoAmarracao": {
+      "n": 2,
+      "media": 1.3068181818181817,
+      "dp": 0.08035304331665306
+     },
+     "eventos": {
+      "n": 2,
+      "media": 11.5,
+      "dp": 0.7071067811865476
+     },
+     "relatos": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "taxaFalhaEstrutura": 0.0,
+     "falhasEstrutura": 0,
+     "chamadasComEsquema": 47,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 0,
+     "custoUsd": 2.197766,
+     "latenciaPorDiaS": 35.88133333333333,
+     "convergem": "2"
+    }
+   },
+   "claude-opus-5": {
+    "controle": {
+     "sessoes": 2,
+     "tramas": {
+      "n": 2,
+      "media": 1.0,
+      "dp": 0.0
+     },
+     "proporcaoFechadas": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "razaoAmarracao": {
+      "n": 2,
+      "media": 2.416666666666667,
+      "dp": 0.11785113019775781
+     },
+     "eventos": {
+      "n": 2,
+      "media": 12.0,
+      "dp": 0.0
+     },
+     "relatos": {
+      "n": 2,
+      "media": 0.0,
+      "dp": 0.0
+     },
+     "taxaFalhaEstrutura": 0.0,
+     "falhasEstrutura": 0,
+     "chamadasComEsquema": 48,
+     "taxaDescarte": 0.0,
+     "acoesDescartadas": 0,
+     "locaisInvalidos": 0,
+     "custoUsd": 4.894880000000001,
+     "latenciaPorDiaS": 60.31158333333333,
+     "convergem": "2"
+    }
+   }
+  },
+  "AvsB": {
+   "n_A": 4,
+   "n_B": 4,
+   "mediana_A": 0.0,
+   "mediana_B": 0.0,
+   "media_A": 0.1,
+   "media_B": 0.125,
+   "U": 7.5,
+   "p": 1.0,
+   "tramas_A": 2.0,
+   "tramas_B": 1.25
+  },
+  "cidadeVivaVsControle": {
+   "n_cv": 8,
+   "n_controle": 8,
+   "prop_cv": 0.1125,
+   "prop_controle": 0.0,
+   "U_prop": 40.0,
+   "p_prop": 0.17090352023079747,
+   "razao_cv": 1.6024305555555554,
+   "razao_controle": 1.8409090909090908,
+   "U_razao": 23.0,
+   "p_razao": 0.3716774469130736,
+   "tramas_cv": 1.625,
+   "tramas_controle": 1.0
+  },
+  "kruskalModelos": {
+   "metrica": "razaoAmarracao",
+   "H": 5.333333333333329,
+   "p": 0.020921335337794052
+  },
+  "atosControle": {
+   "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-haiku-4-5-20251001",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-opus-5",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-sonnet-4-6",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "porto-das-brumas_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-sonnet-5",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "vale-silente_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-haiku-4-5-20251001",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "vale-silente_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-opus-5",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-sonnet-4-6",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 6,
+    "diaAto3": null
+   },
+   "vale-silente_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01": {
+    "modelo": "claude-sonnet-5",
+    "atos": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2
+    ],
+    "diaAto2": 8,
+    "diaAto3": null
+   }
+  },
+  "figuras": [
+   "m1_curvas.png",
+   "m2_curvas.png",
+   "m1m2_comparacao.png"
+  ],
+  "narracoesAmostra": [
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramaId": "D1.bras",
+    "dia": 5,
+    "eventos": 2,
+    "texto": "Em Porto das Brumas, o capitão Brás verificou pessoalmente todos os registros da alfândega, certificando-se de que as contas estavam impecáveis antes da chegada do novo fiscal enviado pela capital. Assim, abandonou a alfândega e passou a patrulhar pessoalmente o cais, demonstrando competência e controle antes que o novo fiscal chegasse com suas investigações."
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+    "modelo": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramaId": "D1.anselmo",
+    "dia": 7,
+    "eventos": 5,
+    "texto": "Temendo que a situação escapasse de seu controle, Anselmo convocou uma reunião urgente do conselho para decidir sobre a ameaça que pairava sobre os rebanhos. Ao entardecer, visitou a praça da aldeia, buscando ouvir as notícias que corriam entre os moradores e posicionar-se como o guia sábio a quem todos deveriam recorrer diante da crise. Foi ali, porém, que Marta o confrontou publicamente, questionando por que o ancião escondia informações sobre o estoque de grão enquanto os rebanhos continuavam a morrer. Abalado pela acusação, Anselmo dirigiu-se à casa do conselho para convocar formalmente a reunião deliberativa, aproveitando o caminho para ensaiar sua defesa sobre a venda do grão. Por fim, já reunido com os demais conselheiros na casa-conselho, Anselmo apresentou seus argumentos: afirmou que lobos haviam retornado das montanhas para atacar os rebanhos, negou qualquer negligência de sua parte e propôs a formação de uma patrulha de caçadores para proteger a aldeia.</narracao>\n</invoke>\n"
+   }
+  ]
+ },
  "reteste": {
   "porModelo": {
    "claude-haiku-4-5-20251001": {
-    "chamadas": 8,
-    "validas": 8,
+    "chamadas": 32,
+    "validas": 32,
     "taxaValidade": 1.0,
     "icValidade": [
-     0.6755843804891231,
+     0.8928172849426366,
      1.0
     ],
     "tentativasMedias": 1.0,
     "cobertura": {
-     "n": 8,
+     "n": 32,
+     "media": 1.0,
+     "dp": 0.0
+    },
+    "idsInvalidos": 5,
+    "locaisInvalidos": 12,
+    "referencias": 322,
+    "taxaReferenciasValidas": 1.0,
+    "ligacoesPorAcao": {
+     "n": 32,
+     "media": 1.6376488095238093,
+     "dp": 0.4201134319429989
+    },
+    "tensao": {
+     "n": 32,
+     "media": 7.65625,
+     "dp": 0.46503592545838557
+    },
+    "dpTensaoEntreRepeticoes": {
+     "n": 25,
+     "media": 0.7162906435649962,
+     "dp": 0.3072763408418823
+    },
+    "jaccardCausal": {
+     "n": 682,
+     "media": 0.6598484848484848,
+     "dp": 0.3345248306312174
+    },
+    "jaccardTexto": {
+     "n": 682,
+     "media": 0.13043829687067365,
+     "dp": 0.08291273636034494
+    },
+    "mesmoLocal": {
+     "n": 682,
+     "media": 0.4501466275659824,
+     "dp": 0.4978735772060475
+    },
+    "custoMedioUsd": 0.050400387500000005,
+    "custoTotalUsd": 1.6128124000000001,
+    "latenciaMediaS": 95.8565
+   },
+   "claude-sonnet-4-6": {
+    "chamadas": 32,
+    "validas": 32,
+    "taxaValidade": 1.0,
+    "icValidade": [
+     0.8928172849426366,
+     1.0
+    ],
+    "tentativasMedias": 1.0,
+    "cobertura": {
+     "n": 32,
      "media": 1.0,
      "dp": 0.0
     },
     "idsInvalidos": 0,
-    "locaisInvalidos": 6,
-    "referencias": 91,
+    "locaisInvalidos": 0,
+    "referencias": 352,
     "taxaReferenciasValidas": 1.0,
     "ligacoesPorAcao": {
-     "n": 8,
-     "media": 1.8958333333333335,
-     "dp": 0.4266657366061293
+     "n": 32,
+     "media": 1.8333333333333333,
+     "dp": 0.24318672855696
     },
     "tensao": {
-     "n": 8,
-     "media": 7.416666666666666,
-     "dp": 0.2817180849095053
+     "n": 32,
+     "media": 7.822916666666666,
+     "dp": 0.3437550911972277
     },
     "dpTensaoEntreRepeticoes": {
-     "n": 6,
-     "media": 0.6121296195264881,
-     "dp": 0.12100623522671312
+     "n": 24,
+     "media": 0.6991673309311405,
+     "dp": 0.2413179043462554
     },
     "jaccardCausal": {
-     "n": 168,
-     "media": 0.5783730158730158,
-     "dp": 0.3229034919020439
+     "n": 672,
+     "media": 0.7191220238095238,
+     "dp": 0.3030304624294343
     },
     "jaccardTexto": {
-     "n": 168,
-     "media": 0.12652656406188592,
-     "dp": 0.08210771845241771
+     "n": 672,
+     "media": 0.1430558292758685,
+     "dp": 0.08700355938670183
     },
     "mesmoLocal": {
-     "n": 168,
-     "media": 0.25,
-     "dp": 0.4343072121102964
+     "n": 672,
+     "media": 0.6220238095238095,
+     "dp": 0.48524280280462934
     },
-    "custoMedioUsd": 0.050102875,
-    "custoTotalUsd": 0.400823,
-    "latenciaMediaS": 88.377375
+    "custoMedioUsd": 0.104622675,
+    "custoTotalUsd": 3.3479256,
+    "latenciaMediaS": 94.92699999999999
+   },
+   "claude-sonnet-5": {
+    "chamadas": 29,
+    "validas": 29,
+    "taxaValidade": 1.0,
+    "icValidade": [
+     0.8830264055344442,
+     1.0
+    ],
+    "tentativasMedias": 1.0,
+    "cobertura": {
+     "n": 29,
+     "media": 1.0,
+     "dp": 0.0
+    },
+    "idsInvalidos": 1,
+    "locaisInvalidos": 0,
+    "referencias": 309,
+    "taxaReferenciasValidas": 1.0,
+    "ligacoesPorAcao": {
+     "n": 29,
+     "media": 1.7684729064039406,
+     "dp": 0.3092552832931744
+    },
+    "tensao": {
+     "n": 29,
+     "media": 7.178981937602626,
+     "dp": 0.44655307514005327
+    },
+    "dpTensaoEntreRepeticoes": {
+     "n": 24,
+     "media": 0.5789382295469342,
+     "dp": 0.21462850224322394
+    },
+    "jaccardCausal": {
+     "n": 564,
+     "media": 0.727098108747045,
+     "dp": 0.2964829545205995
+    },
+    "jaccardTexto": {
+     "n": 564,
+     "media": 0.20066933062104758,
+     "dp": 0.12160472734686416
+    },
+    "mesmoLocal": {
+     "n": 564,
+     "media": 0.6932624113475178,
+     "dp": 0.46154885811225416
+    },
+    "custoMedioUsd": 0.06890498620689656,
+    "custoTotalUsd": 1.9982446,
+    "latenciaMediaS": 49.617
+   },
+   "claude-opus-5": {
+    "chamadas": 24,
+    "validas": 24,
+    "taxaValidade": 1.0,
+    "icValidade": [
+     0.8620194241710247,
+     1.0
+    ],
+    "tentativasMedias": 1.0,
+    "cobertura": {
+     "n": 24,
+     "media": 1.0,
+     "dp": 0.0
+    },
+    "idsInvalidos": 0,
+    "locaisInvalidos": 0,
+    "referencias": 282,
+    "taxaReferenciasValidas": 1.0,
+    "ligacoesPorAcao": {
+     "n": 24,
+     "media": 1.9583333333333333,
+     "dp": 0.24202247669803964
+    },
+    "tensao": {
+     "n": 24,
+     "media": 7.395833333333333,
+     "dp": 0.45261585380000896
+    },
+    "dpTensaoEntreRepeticoes": {
+     "n": 18,
+     "media": 0.6455754871774874,
+     "dp": 0.27289713309306507
+    },
+    "jaccardCausal": {
+     "n": 504,
+     "media": 0.7036706349206349,
+     "dp": 0.284977060268534
+    },
+    "jaccardTexto": {
+     "n": 504,
+     "media": 0.17386513026374922,
+     "dp": 0.12047493590916157
+    },
+    "mesmoLocal": {
+     "n": 504,
+     "media": 0.6706349206349206,
+     "dp": 0.4704496322792944
+    },
+    "custoMedioUsd": 0.05975527083333334,
+    "custoTotalUsd": 1.4341265,
+    "latenciaMediaS": 30.209
+   },
+   "claude-opus-5-5": {
+    "chamadas": 24,
+    "validas": 24,
+    "taxaValidade": 1.0,
+    "icValidade": [
+     0.8620194241710247,
+     1.0
+    ],
+    "tentativasMedias": 1.0,
+    "cobertura": {
+     "n": 24,
+     "media": 1.0,
+     "dp": 0.0
+    },
+    "idsInvalidos": 0,
+    "locaisInvalidos": 0,
+    "referencias": 297,
+    "taxaReferenciasValidas": 1.0,
+    "ligacoesPorAcao": {
+     "n": 24,
+     "media": 2.0625,
+     "dp": 0.4279275413856048
+    },
+    "tensao": {
+     "n": 24,
+     "media": 6.993055555555556,
+     "dp": 0.3203227790365934
+    },
+    "dpTensaoEntreRepeticoes": {
+     "n": 18,
+     "media": 0.4463133490802355,
+     "dp": 0.2514889057902012
+    },
+    "jaccardCausal": {
+     "n": 504,
+     "media": 0.7806878306878308,
+     "dp": 0.2583243030415761
+    },
+    "jaccardTexto": {
+     "n": 504,
+     "media": 0.22057185445380392,
+     "dp": 0.1245846136629626
+    },
+    "mesmoLocal": {
+     "n": 504,
+     "media": 0.7400793650793651,
+     "dp": 0.4390265683129958
+    },
+    "custoMedioUsd": 0.04401273333333333,
+    "custoTotalUsd": 1.0563056,
+    "latenciaMediaS": 19.799500000000002
    }
   },
   "snapshots": [
-   "porto-das-brumas_claude-cli_informa_6ag_jog-investigador_s1@dia4"
+   "porto-das-brumas_claude-cli_informa_6ag_jog-investigador_s1@dia10",
+   "porto-das-brumas_claude-cli_informa_6ag_jog-investigador_s1@dia4",
+   "vale-silente_claude-cli_nao-informa_6ag_jog-nenhum_s1@dia10",
+   "vale-silente_claude-cli_nao-informa_6ag_jog-nenhum_s1@dia4"
   ],
-  "repeticoes": 9,
+  "repeticoes": 8,
   "figuras": [
    "m3_reteste.png"
   ]
  },
  "causal": null,
  "relatos": null,
- "nulo": null
+ "nulo": {
+  "sessoes": [
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 0.9861111111111112,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1.6,
+    "tramas_nulo": 1.035,
+    "fechadas_nulo": 0.065,
+    "proporcaoFechadas_nulo": 0.045,
+    "fracaoKernel_nulo": 0.9993055555555556,
+    "abertasFinal_nulo": 0.97,
+    "abertasMediaUltimoTerco_nulo": 0.9959999999999998,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 0.10945273631840796,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 0.06965174129353234
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramas_obs": 2,
+    "fechadas_obs": 1,
+    "proporcaoFechadas_obs": 0.5,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1.01,
+    "fechadas_nulo": 0.01,
+    "proporcaoFechadas_nulo": 0.005,
+    "fracaoKernel_nulo": 0.9992361111111111,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1.007,
+    "tramas_p": 0.029850746268656716,
+    "fechadas_p": 0.029850746268656716,
+    "proporcaoFechadas_p": 0.029850746268656716,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-sonnet-4-6",
+    "controle": false,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 0.9861111111111112,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1.04,
+    "fechadas_nulo": 0.055,
+    "proporcaoFechadas_nulo": 0.0375,
+    "fracaoKernel_nulo": 0.9989583333333333,
+    "abertasFinal_nulo": 0.985,
+    "abertasMediaUltimoTerco_nulo": 0.9929999999999999,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 0.15920398009950248,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-sonnet-4-6",
+    "controle": false,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1.8,
+    "tramas_nulo": 1.005,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 0.9997916666666667,
+    "abertasFinal_nulo": 1.005,
+    "abertasMediaUltimoTerco_nulo": 1.001,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 0.009950248756218905
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramas_obs": 5,
+    "fechadas_obs": 2,
+    "proporcaoFechadas_obs": 0.4,
+    "fracaoKernel_obs": 0.9722222222222222,
+    "abertasFinal_obs": 3,
+    "abertasMediaUltimoTerco_obs": 3,
+    "tramas_nulo": 1.485,
+    "fechadas_nulo": 0.31,
+    "proporcaoFechadas_nulo": 0.1491666666666667,
+    "fracaoKernel_nulo": 0.9965972222222225,
+    "abertasFinal_nulo": 1.175,
+    "abertasMediaUltimoTerco_nulo": 1.2099999999999995,
+    "tramas_p": 0.009950248756218905,
+    "fechadas_p": 0.07960199004975124,
+    "proporcaoFechadas_p": 0.4975124378109453,
+    "fracaoKernel_p": 0.029850746268656716,
+    "abertasFinal_p": 0.029850746268656716,
+    "abertasMediaUltimoTerco_p": 0.01990049751243781
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": false,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 0.9861111111111112,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1.4,
+    "tramas_nulo": 1.165,
+    "fechadas_nulo": 0.225,
+    "proporcaoFechadas_nulo": 0.14833333333333332,
+    "fracaoKernel_nulo": 0.9977083333333333,
+    "abertasFinal_nulo": 0.94,
+    "abertasMediaUltimoTerco_nulo": 1.14,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 0.29850746268656714,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 0.5074626865671642
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+    "gerador": "claude-sonnet-4-6",
+    "controle": false,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1.005,
+    "fechadas_nulo": 0.015,
+    "proporcaoFechadas_nulo": 0.0125,
+    "fracaoKernel_nulo": 0.9995138888888888,
+    "abertasFinal_nulo": 0.99,
+    "abertasMediaUltimoTerco_nulo": 0.9989999999999999,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-opus-5",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-sonnet-4-6",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-sonnet-5",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-haiku-4-5-20251001",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-opus-5",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-sonnet-4-6",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   },
+   {
+    "sessao": "vale-silente_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+    "gerador": "claude-sonnet-5",
+    "controle": true,
+    "tramas_obs": 1,
+    "fechadas_obs": 0,
+    "proporcaoFechadas_obs": 0,
+    "fracaoKernel_obs": 1,
+    "abertasFinal_obs": 1,
+    "abertasMediaUltimoTerco_obs": 1,
+    "tramas_nulo": 1,
+    "fechadas_nulo": 0,
+    "proporcaoFechadas_nulo": 0,
+    "fracaoKernel_nulo": 1,
+    "abertasFinal_nulo": 1,
+    "abertasMediaUltimoTerco_nulo": 1,
+    "tramas_p": 1,
+    "fechadas_p": 1,
+    "proporcaoFechadas_p": 1,
+    "fracaoKernel_p": 1,
+    "abertasFinal_p": 1,
+    "abertasMediaUltimoTerco_p": 1
+   }
+  ],
+  "resumo": {
+   "tramas": {
+    "cidadeViva": {
+     "n": 7,
+     "significativas": 2,
+     "acimaDoNulo": 2,
+     "obsMedio": 1.7142857142857142,
+     "nuloMedio": 1.1064285714285715
+    },
+    "controle": {
+     "n": 8,
+     "significativas": 0,
+     "acimaDoNulo": 0,
+     "obsMedio": 1.0,
+     "nuloMedio": 1.0
+    }
+   },
+   "proporcaoFechadas": {
+    "cidadeViva": {
+     "n": 7,
+     "significativas": 1,
+     "acimaDoNulo": 2,
+     "obsMedio": 0.1285714285714286,
+     "nuloMedio": 0.05678571428571429
+    },
+    "controle": {
+     "n": 8,
+     "significativas": 0,
+     "acimaDoNulo": 0,
+     "obsMedio": 0.0,
+     "nuloMedio": 0.0
+    }
+   },
+   "fracaoKernel": {
+    "cidadeViva": {
+     "n": 7,
+     "significativas": 1,
+     "acimaDoNulo": 3,
+     "obsMedio": 0.990079365079365,
+     "nuloMedio": 0.9987301587301589
+    },
+    "controle": {
+     "n": 8,
+     "significativas": 0,
+     "acimaDoNulo": 0,
+     "obsMedio": 1.0,
+     "nuloMedio": 1.0
+    }
+   },
+   "abertasMediaUltimoTerco": {
+    "cidadeViva": {
+     "n": 7,
+     "significativas": 2,
+     "acimaDoNulo": 6,
+     "obsMedio": 1.542857142857143,
+     "nuloMedio": 1.0494285714285712
+    },
+    "controle": {
+     "n": 8,
+     "significativas": 0,
+     "acimaDoNulo": 0,
+     "obsMedio": 1.0,
+     "nuloMedio": 1.0
+    }
+   }
+  },
+  "n": 200
+ }
 }

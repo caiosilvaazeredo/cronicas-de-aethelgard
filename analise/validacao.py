@@ -111,6 +111,15 @@ def ler_sessoes(raiz: Path) -> list[dict]:
     return sessoes
 
 
+def duracao_real_s(c: dict) -> float:
+    """Duração da chamada sem esperas externas (ex.: reset do limite de uso):
+    usa duration_ms informado pelo claude-cli quando existe."""
+    b = c.get("bruto")
+    brutos = b if isinstance(b, list) else [b]
+    ms = [x.get("duration_ms") for x in brutos if isinstance(x, dict) and isinstance(x.get("duration_ms"), (int, float))]
+    return (sum(ms) if ms else c.get("latenciaMs", 0)) / 1000
+
+
 def resumo_sessao(s: dict) -> dict:
     c, r = s["condicao"], s["resumo"]
     ch = s["chamadas"]
@@ -141,7 +150,7 @@ def resumo_sessao(s: dict) -> dict:
         "agentesSemAcao": r["agentesSemAcao"],
         "locaisInvalidos": r["locaisInvalidos"],
         "custoUsd": r["custoUsd"],
-        "latenciaS": r["latenciaTotalMs"] / 1000,
+        "latenciaS": sum(duracao_real_s(x) for x in ch if not x.get("erro")),
         "tokensEntrada": r["tokens"]["entrada"],
         "tokensSaida": r["tokens"]["saida"],
         "modelosEfetivos": r["modelosEfetivos"],
@@ -356,7 +365,8 @@ def analisar_reteste(linhas: list[dict], destino: Path) -> dict | None:
             "mesmoLocal": media_dp(jac_local),
             "custoMedioUsd": float(np.mean(custos)) if custos else None,
             "custoTotalUsd": float(np.sum(custos)) if custos else None,
-            "latenciaMediaS": float(np.mean(lat)) if lat else None,
+            # mediana: algumas chamadas incluem a espera pelo reset do limite de uso
+            "latenciaMediaS": float(np.median(lat)) if lat else None,
         }
     # figura
     fig, eixos = plt.subplots(1, 3, figsize=(12, 3.6))

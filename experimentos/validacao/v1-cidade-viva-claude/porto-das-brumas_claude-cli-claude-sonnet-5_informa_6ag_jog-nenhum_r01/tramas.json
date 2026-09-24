@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.odete",
+    "eventoInicialId": "D1.odete",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.tomas",
+    "eventoInicialId": "D1.tomas",
+    "eventoFinalId": "D5.tomas",
+    "turnosSemNovoEvento": 7,
+    "status": "fechada",
+    "narracaoFechamento": "Em Porto das Brumas, Tomás reza pelos marinheiros e guarda em segredo o que sabe sobre a noite da morte de Vasco, decidindo por ora não falar, enquanto recolhe doações para o telhado da capela. Em seguida, vai aos Armazéns da Ponta visitar Iracema, oferece consolo e ajuda com o telhado da capela, mas evita mencionar o que viu naquela noite. Depois, volta à Capela da Maré para recolher doações ao telhado, rezando em silêncio e ainda guardando o que viu. Mais tarde, continua a recolher doações na Capela da Maré e a rezar em silêncio, ainda decidido a não revelar o que viu, apesar dos rumores que já circulam sobre o armazém. Por fim, vai ao Mercado do Sal ouvir os boatos sobre o armazém de Vasco, atento mas calado, ainda guardando o que viu na noite da morte dele.</narracao>\n</invoke>\n"
+  }
+]

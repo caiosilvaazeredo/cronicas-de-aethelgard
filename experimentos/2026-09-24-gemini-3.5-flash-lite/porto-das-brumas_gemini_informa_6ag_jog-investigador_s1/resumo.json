@@ -1,0 +1,93 @@
+{
+  "sessao": "porto-das-brumas_gemini_informa_6ag_jog-investigador_s1",
+  "celula": "porto-das-brumas_gemini_informa_6ag_jog-investigador",
+  "dias": 5,
+  "eventos": 35,
+  "relatos": 9,
+  "tramasSurgidas": 3,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    3,
+    3,
+    3,
+    3
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.9285714285714286,
+    1,
+    1.1428571428571428,
+    1.2571428571428571
+  ],
+  "razaoAmarracaoFinal": 1.2571428571428571,
+  "eventosFundadores": 7,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 44,
+    "arestas": 44,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 12,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 5,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "jogador": {
+        "chamadas": 5,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 2,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 9,
+  "tokens": {
+    "entrada": 14666,
+    "saida": 3913,
+    "porPapel": {
+      "agentes": {
+        "entrada": 10435,
+        "saida": 2815
+      },
+      "jogador": {
+        "entrada": 3126,
+        "saida": 419
+      },
+      "relatos": {
+        "entrada": 1105,
+        "saida": 679
+      }
+    }
+  },
+  "custoUsd": 0,
+  "chamadasSemPreco": 12,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "gemini-3.5-flash-lite"
+    ],
+    "jogador": [
+      "gemini-3.5-flash-lite"
+    ],
+    "relatos": [
+      "gemini-3.5-flash-lite"
+    ]
+  },
+  "latenciaTotalMs": 18603
+}

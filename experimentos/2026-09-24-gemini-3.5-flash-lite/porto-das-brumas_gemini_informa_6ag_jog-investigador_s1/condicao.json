@@ -1,0 +1,37 @@
+{
+  "id": "porto-das-brumas_gemini_informa_6ag_jog-investigador_s1",
+  "celula": "porto-das-brumas_gemini_informa_6ag_jog-investigador",
+  "repeticao": 1,
+  "mundo": "porto-das-brumas",
+  "numAgentes": 6,
+  "estadoTramas": "informa",
+  "jogador": "investigador",
+  "controle": false,
+  "modelos": {
+    "agentes": {
+      "provedor": "gemini",
+      "modelo": "gemini-3.5-flash-lite"
+    },
+    "jogador": {
+      "provedor": "gemini",
+      "modelo": "gemini-3.5-flash-lite"
+    },
+    "curador": {
+      "provedor": "gemini",
+      "modelo": "gemini-3.5-flash-lite"
+    }
+  },
+  "dias": 5,
+  "temperatura": 0.7,
+  "semente": 1,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "agentesAtivos": [
+    "odete",
+    "bras",
+    "lia",
+    "tomas",
+    "iracema",
+    "nuno"
+  ]
+}

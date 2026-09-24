@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1.odete",
+    "eventoInicialId": "D1.odete",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.bras",
+    "eventoInicialId": "D1.bras",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.tomas",
+    "eventoInicialId": "D1.tomas",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  }
+]

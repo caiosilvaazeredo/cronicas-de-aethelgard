@@ -1,0 +1,29 @@
+{
+  "nome": "local-ollama",
+  "descricao": "Exemplo com modelos abertos locais via Ollama (sem custo, reprodutível: o digest de cada modelo vai para chamadas.jsonl). Troque os modelos pelos que você instalou (ollama pull <modelo:tag>) e confira com `npm run modelos-locais`. Tags explícitas são obrigatórias; ':latest' é recusado.",
+  "dimensoes": {
+    "modelosAgentes": [
+      { "provedor": "ollama", "modelo": "qwen2.5:7b" },
+      { "provedor": "ollama", "modelo": "llama3.1:8b" }
+    ],
+    "estadoTramas": ["informa", "nao-informa"],
+    "numAgentes": [6],
+    "jogador": ["nenhum", "investigador"],
+    "mundos": ["porto-das-brumas", "vale-silente"],
+    "incluirControle": true
+  },
+  "modelosFixos": {
+    "jogador": { "provedor": "ollama", "modelo": "qwen2.5:7b" },
+    "curador": { "provedor": "ollama", "modelo": "qwen2.5:7b" }
+  },
+  "repeticoes": 5,
+  "dias": 40,
+  "temperatura": 0.7,
+  "sementeBase": 3000,
+  "precos": {
+    "ollama/qwen2.5:7b": { "entradaPorMTok": 0, "saidaPorMTok": 0 },
+    "ollama/llama3.1:8b": { "entradaPorMTok": 0, "saidaPorMTok": 0 }
+  },
+  "concorrencia": 1,
+  "cache": true
+}

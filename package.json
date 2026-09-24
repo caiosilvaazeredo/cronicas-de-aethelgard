@@ -11,7 +11,9 @@
     "campanha": "tsx sim/campanha.ts",
     "reanalisar": "tsx sim/reanalisar.ts",
     "test": "node --import tsx --test tests/*.test.ts",
-    "typecheck": "tsc --noEmit -p ."
+    "typecheck": "tsc --noEmit -p .",
+    "modelos-locais": "tsx sim/modelos-locais.ts",
+    "relatorio": "tsx sim/relatorio.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

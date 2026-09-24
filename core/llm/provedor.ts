@@ -10,7 +10,14 @@
 
 import { z } from 'zod';
 
-export type NomeProvedor = 'gemini' | 'openai' | 'anthropic' | 'compativel-openai' | 'simulado';
+export type NomeProvedor =
+  | 'gemini'
+  | 'openai'
+  | 'anthropic'
+  | 'compativel-openai'
+  | 'ollama'
+  | 'claude-cli'
+  | 'simulado';
 
 export interface ChamadaLLM {
   sistema: string;
@@ -49,6 +56,8 @@ export interface RespostaLLM {
   parametrosEfetivos?: Record<string, unknown>;
   /** true quando a resposta veio do cache e não custou nada */
   doCache?: boolean;
+  /** custo informado pelo próprio provedor (ex.: claude-cli), somado entre tentativas */
+  custoUsd?: number;
 }
 
 export interface ProvedorLLM {
@@ -75,6 +84,7 @@ export interface SaidaTransporte {
   tokensSaida: number;
   bruto: unknown;
   parametrosEfetivos?: Record<string, unknown>;
+  custoUsd?: number;
 }
 
 export type Transporte = (r: RequisicaoTransporte) => Promise<SaidaTransporte>;
@@ -231,6 +241,7 @@ export class ProvedorEstruturado implements ProvedorLLM {
     const brutos: unknown[] = [];
     let tokensEntrada = 0;
     let tokensSaida = 0;
+    let custoUsd: number | undefined;
     let usuario = c.usuario;
     let ultima: SaidaTransporte | null = null;
     let ultimoErro = '';
@@ -250,6 +261,7 @@ export class ProvedorEstruturado implements ProvedorLLM {
       brutos.push(saida.bruto);
       tokensEntrada += saida.tokensEntrada;
       tokensSaida += saida.tokensSaida;
+      if (saida.custoUsd !== undefined) custoUsd = (custoUsd ?? 0) + saida.custoUsd;
 
       const base = {
         texto: saida.texto,
@@ -260,6 +272,7 @@ export class ProvedorEstruturado implements ProvedorLLM {
         tentativas: tentativa,
         bruto: brutos.length === 1 ? brutos[0] : brutos,
         parametrosEfetivos: saida.parametrosEfetivos,
+        ...(custoUsd !== undefined ? { custoUsd } : {}),
       };
 
       if (!c.esquema) return base;
@@ -287,6 +300,7 @@ export class ProvedorEstruturado implements ProvedorLLM {
       tentativas: maxTentativas,
       bruto: brutos,
       parametrosEfetivos: ultima?.parametrosEfetivos,
+      ...(custoUsd !== undefined ? { custoUsd } : {}),
       falhaEstrutura: ultimoErro || 'resposta inválida',
     };
   }

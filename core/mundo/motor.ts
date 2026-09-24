@@ -87,6 +87,8 @@ export interface RegistroChamada {
   erro: string | null;
   doCache: boolean;
   parametrosEfetivos: Record<string, unknown> | null;
+  /** custo informado pelo provedor, quando ele informa (claude-cli) */
+  custoUsd: number | null;
 }
 
 export interface EstatisticasDia {
@@ -160,6 +162,7 @@ export async function chamarERegistrar(
       erro: null,
       doCache: r.doCache === true,
       parametrosEfetivos: r.parametrosEfetivos ?? null,
+      custoUsd: r.doCache ? 0 : r.custoUsd ?? null,
     });
     return r;
   } catch (e) {
@@ -177,6 +180,7 @@ export async function chamarERegistrar(
       erro: (e as Error).message ?? String(e),
       doCache: false,
       parametrosEfetivos: null,
+      custoUsd: null,
     });
     return null;
   }

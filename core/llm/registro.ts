@@ -70,12 +70,14 @@ export function motivoRecusaModelo(ref: RefModelo): string | null {
       if (DATA_AAAA_MM_DD.test(modelo) || confirmado) return null;
       return `"${modelo}" não tem snapshot datado (ex.: -2025-08-07); use o identificador datado ou declare fixadoConfirmado`;
     case 'anthropic':
+    case 'claude-cli':
       if (DATA_AAAAMMDD.test(modelo) || ANTHROPIC_SEM_DATA_FIXOS.has(modelo) || confirmado) return null;
       return `"${modelo}" parece alias de um snapshot datado; use o identificador datado ou declare fixadoConfirmado`;
     case 'gemini':
       if (VERSAO_GEMINI.test(modelo) || geminiEstavel(modelo) || confirmado) return null;
       return `"${modelo}" não é um nome estável nem tem sufixo de versão (prévias e experimentais podem mudar); declare fixadoConfirmado se a documentação garantir que é fixo`;
     case 'compativel-openai':
+    case 'ollama':
       if (/@sha256:[0-9a-f]+$/i.test(modelo)) return null;
       if (/:[^:]+$/.test(modelo) && !/:latest$/i.test(modelo)) return null;
       if (confirmado) return null;
@@ -117,6 +119,14 @@ export async function criarProvedor(ref: RefModelo, opcoes: OpcoesCriacao = {}):
     case 'compativel-openai': {
       const { transporteCompativelOpenAI } = await import('./compativel-openai');
       return new ProvedorEstruturado('compativel-openai', ref.modelo, transporteCompativelOpenAI(ref.modelo), opcoes);
+    }
+    case 'ollama': {
+      const { transporteOllama } = await import('./ollama');
+      return new ProvedorEstruturado('ollama', ref.modelo, transporteOllama(ref.modelo), opcoes);
+    }
+    case 'claude-cli': {
+      const { transporteClaudeCli } = await import('./claude-cli');
+      return new ProvedorEstruturado('claude-cli', ref.modelo, transporteClaudeCli(ref.modelo), opcoes);
     }
     default:
       throw new Error(`Provedor desconhecido: ${(ref as RefModelo).provedor}`);

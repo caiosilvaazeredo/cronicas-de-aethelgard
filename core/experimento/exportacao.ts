@@ -22,6 +22,7 @@ const jsonl = (linhas: unknown[]) => linhas.map((l) => JSON.stringify(l)).join('
 function custoDaChamada(c: RegistroChamada, precos: Record<string, PrecoModelo>): number | null {
   if (c.doCache) return 0;
   if (c.provedor === 'simulado') return 0;
+  if (typeof c.custoUsd === 'number') return c.custoUsd;
   const p = precos[chavePreco({ provedor: c.provedor, modelo: c.modeloSolicitado })];
   if (!p) return null;
   return (c.tokensEntrada * p.entradaPorMTok + c.tokensSaida * p.saidaPorMTok) / 1_000_000;

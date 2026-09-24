@@ -92,12 +92,14 @@ detectados depois pelo `services/arcos.ts`, sem nenhuma alteração nele.
 ```
 core/                 TypeScript puro (sem React, sem Netlify, sem I/O de disco)
   llm/                interface ProvedorLLM, provedores gemini, openai, anthropic,
-                      compativel-openai e simulado; esquemas zod; registro
+                      compativel-openai, ollama, claude-cli e simulado; esquemas zod; registro
   mundo/              tipos, motor de um dia, propagação de relatos
   prompts/            agentes, jogador sintético, relatos, curador, conversa
   experimento/        condições, execução, exportação, reanálise por k e o
                       adaptador do controle de três atos
-sim/                  CLIs em Node: rodar, campanha, reanalisar (+ cache, limite de taxa)
+sim/                  CLIs em Node: rodar, campanha, reanalisar, relatorio, modelos-locais
+                      (+ cache, limite de taxa)
+experimentos/         logs e exportações das sessões de teste com modelos reais
 mundos/               porto-das-brumas.json e vale-silente.json (variantes de 4, 6 e 8 agentes)
 campanhas/            configs de campanha (convergencia-v1, numero-agentes-v1, demo-simulado)
 analise/              Python: convergencia.py, amostra_anotacao.py, requirements.txt
@@ -138,9 +140,55 @@ Outras opções de `sim`: `--estado-tramas informa|nao-informa`, `--agentes 4|6|
 `--provedor-jogador/--modelo-jogador`, `--provedor-curador/--modelo-curador`,
 `--sem-cache`, `--falha-simulada sempre|primeira-tentativa|0.2`.
 
+### Modelos locais (Ollama)
+
+Modelos abertos locais são reprodutíveis e não mudam sem aviso. O provedor
+`ollama` fala com o servidor do Ollama (`OLLAMA_BASE_URL`, padrão
+`http://localhost:11434`) e grava em cada chamada o digest do modelo instalado.
+
+```bash
+# 1. instale e suba o Ollama (https://ollama.com/download) e baixe um modelo com tag explícita
+ollama serve &
+ollama pull qwen2.5:7b
+
+# 2. confira: lista os modelos, o digest e testa uma chamada estruturada em cada um
+npm run modelos-locais
+
+# 3. uma sessão só com o modelo local
+npm run sim -- --mundo vale-silente --provedor ollama --modelo qwen2.5:7b --dias 40
+
+# 4. campanha local (edite os modelos em campanhas/local-ollama.json)
+npm run campanha -- --config campanhas/local-ollama.json --confirmar
+```
+
+`:latest` e nomes sem tag são recusados. Para servidores que não aceitam
+`json_schema` (versões antigas do Ollama), use `OLLAMA_SAIDA=json_object`; a
+validação zod continua valendo. Outros servidores no formato OpenAI (vLLM,
+llama.cpp, LM Studio) usam o provedor `compativel-openai` com
+`OPENAI_COMPAT_BASE_URL`. Em CPU, conte com vários segundos a minutos por
+chamada, conforme o tamanho do modelo; prefira `concorrencia: 1`.
+
+### Claude pelo CLI do Claude Code
+
+Sem `ANTHROPIC_API_KEY`, mas com o CLI `claude` autenticado, o provedor
+`claude-cli` roda o Claude por `claude -p`. O prompt de sistema do Claude Code
+é substituído pelo do simulador, as ferramentas ficam desligadas e as
+configurações do usuário são ignoradas; a saída estruturada usa
+`--json-schema`. O CLI não aceita temperatura nem semente (registrado em
+`parametrosEfetivos`) e informa o custo de cada chamada.
+
+```bash
+npm run sim -- --mundo porto-das-brumas --provedor claude-cli --modelo claude-sonnet-5 --dias 15
+npm run relatorio -- --dir saida/avulsas     # gera LOG.md com o resumo das sessões
+```
+
+Os logs das sessões de teste com modelos reais estão em `experimentos/`.
+
 Variáveis de ambiente: `GEMINI_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
 `OPENAI_COMPAT_BASE_URL` (+ opcionais `OPENAI_COMPAT_API_KEY` e
-`OPENAI_COMPAT_SAIDA=json_object` para servidores sem json_schema). No modo
+`OPENAI_COMPAT_SAIDA=json_object` para servidores sem json_schema),
+`OLLAMA_BASE_URL`, `OLLAMA_SAIDA`, `CLAUDE_CLI` (caminho do executável) e
+`CLAUDE_CLI_ESFORCO`. No modo
 jogável: `CIDADE_VIVA_PROVEDOR` (padrão `gemini`) e `CIDADE_VIVA_MODELO`
 (padrão `gemini-3.5-flash`).
 

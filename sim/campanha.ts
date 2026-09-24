@@ -114,7 +114,10 @@ export async function rodarCampanha(config: ConfigCampanha, o: OpcoesCampanha): 
     return resultadoBase;
   }
   if (orcamento !== undefined) {
-    const semPreco = refsDaCampanha(config).filter((r) => r.provedor !== 'simulado' && !precos[chavePreco(r)]);
+    // simulado não custa; claude-cli informa o custo de cada chamada
+    const semPreco = refsDaCampanha(config).filter(
+      (r) => r.provedor !== 'simulado' && r.provedor !== 'claude-cli' && !precos[chavePreco(r)]
+    );
     if (semPreco.length > 0) {
       throw new Error(
         `Há orçamento, mas falta preço declarado para: ${semPreco.map(chavePreco).join(', ')}. Declare em "precos".`

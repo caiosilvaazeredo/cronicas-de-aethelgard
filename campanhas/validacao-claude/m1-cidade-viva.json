@@ -1,0 +1,73 @@
+{
+  "nome": "v1-cidade-viva-claude",
+  "descricao": "Método 1: Cidade Viva com 4 modelos Claude (via claude -p) nas condições A e B, 2 mundos, 6 agentes, sem jogador, 12 dias. Jogador sintético e curador fixos em claude-sonnet-5. Os preços servem só para a estimativa; o custo real vem do CLI.",
+  "dimensoes": {
+    "modelosAgentes": [
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-haiku-4-5-20251001"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-4-6"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-opus-5"
+      }
+    ],
+    "estadoTramas": [
+      "informa",
+      "nao-informa"
+    ],
+    "numAgentes": [
+      6
+    ],
+    "jogador": [
+      "nenhum"
+    ],
+    "mundos": [
+      "porto-das-brumas",
+      "vale-silente"
+    ]
+  },
+  "modelosFixos": {
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "repeticoes": 1,
+  "dias": 12,
+  "temperatura": 0.7,
+  "sementeBase": 500,
+  "precos": {
+    "claude-cli/claude-haiku-4-5-20251001": {
+      "entradaPorMTok": 1,
+      "saidaPorMTok": 5
+    },
+    "claude-cli/claude-sonnet-4-6": {
+      "entradaPorMTok": 3,
+      "saidaPorMTok": 15
+    },
+    "claude-cli/claude-sonnet-5": {
+      "entradaPorMTok": 2,
+      "saidaPorMTok": 10
+    },
+    "claude-cli/claude-opus-5": {
+      "entradaPorMTok": 5,
+      "saidaPorMTok": 25
+    }
+  },
+  "concorrencia": 6,
+  "orcamentoUsd": 60,
+  "cache": true
+}

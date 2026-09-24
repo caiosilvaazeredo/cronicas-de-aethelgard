@@ -47,6 +47,8 @@ export interface ConfigCampanha {
     mundos: string[];
     /** inclui, para cada modelo x mundo x perfil de jogador, a condição de controle de três atos */
     incluirControle?: boolean;
+    /** gera só as células de controle (para campanhas separadas do controle) */
+    somenteControle?: boolean;
   };
   /** jogador sintético e curador ficam fixos em todas as condições */
   modelosFixos: { jogador: RefModelo; curador: RefModelo };
@@ -108,7 +110,7 @@ export function expandirCampanha(c: ConfigCampanha): CondicaoSessao[] {
   for (const modelo of c.dimensoes.modelosAgentes) {
     const modelos = { agentes: modelo, jogador: c.modelosFixos.jogador, curador: c.modelosFixos.curador };
     for (const mundo of c.dimensoes.mundos) {
-      for (const estadoTramas of c.dimensoes.estadoTramas) {
+      for (const estadoTramas of c.dimensoes.somenteControle ? [] : c.dimensoes.estadoTramas) {
         for (const numAgentes of c.dimensoes.numAgentes) {
           for (const jogador of c.dimensoes.jogador) {
             const celula = [slug(mundo), slug(`${modelo.provedor}-${modelo.modelo}`), estadoTramas, `${numAgentes}ag`, `jog-${jogador}`].join('_');
@@ -116,7 +118,7 @@ export function expandirCampanha(c: ConfigCampanha): CondicaoSessao[] {
           }
         }
       }
-      if (c.dimensoes.incluirControle) {
+      if (c.dimensoes.incluirControle || c.dimensoes.somenteControle) {
         const perfis = c.dimensoes.jogador.filter((j): j is PerfilJogador => j !== 'nenhum');
         for (const perfil of perfis.length > 0 ? perfis : (['investigador'] as PerfilJogador[])) {
           const celula = [slug(mundo), slug(`${modelo.provedor}-${modelo.modelo}`), 'controle-tres-atos', `jog-${perfil}`].join('_');

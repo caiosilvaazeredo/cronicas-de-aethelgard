@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.anselmo",
+    "eventoInicialId": "D1.anselmo",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.marta",
+    "eventoInicialId": "D1.marta",
+    "eventoFinalId": "D3.marta",
+    "turnosSemNovoEvento": 9,
+    "status": "fechada",
+    "narracaoFechamento": "Ao amanhecer, Marta percorreu a orla contando o rebanho que restava e examinando o chão em busca de sinais que não fossem de lobo, desconfiada do grão do ancião. Movida por essa desconfiança, marchou até a Casa do Conselho e exigiu, diante dos anciãos, que Anselmo explicasse o que escondia sobre o grão, insinuando que os lobos eram apenas desculpa. Sem resposta que a satisfizesse, voltou à orla ao amanhecer para vigiar o que restava do rebanho, ainda convencida de que a explicação de Anselmo sobre os lobos escondia a verdade sobre o grão."
+  }
+]

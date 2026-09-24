@@ -1,0 +1,95 @@
+{
+  "sessao": "vale-silente_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01",
+  "celula": "vale-silente_claude-cli-claude-opus-5_informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 45,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    1,
+    1.3888888888888888,
+    1.625,
+    1.8666666666666667,
+    1.9166666666666667,
+    1.9047619047619047,
+    1.9166666666666667,
+    1.9814814814814814,
+    2.033333333333333,
+    2,
+    2.0416666666666665
+  ],
+  "razaoAmarracaoFinal": 2.0416666666666665,
+  "eventosFundadores": 6,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 147,
+    "arestas": 147,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 23,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1.0434782608695652,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 11,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 112967,
+    "saida": 42895,
+    "porPapel": {
+      "agentes": {
+        "entrada": 73422,
+        "saida": 23802
+      },
+      "relatos": {
+        "entrada": 39545,
+        "saida": 19093
+      }
+    }
+  },
+  "custoUsd": 1.9651305000000003,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-opus-5"
+    ],
+    "relatos": [
+      "claude-opus-5"
+    ]
+  },
+  "latenciaTotalMs": 681117
+}

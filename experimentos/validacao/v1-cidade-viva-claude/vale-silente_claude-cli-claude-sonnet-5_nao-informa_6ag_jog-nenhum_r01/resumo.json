@@ -1,0 +1,107 @@
+{
+  "sessao": "vale-silente_claude-cli-claude-sonnet-5_nao-informa_6ag_jog-nenhum_r01",
+  "celula": "vale-silente_claude-cli-claude-sonnet-5_nao-informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 45,
+  "tramasSurgidas": 2,
+  "tramasFechadas": 1,
+  "proporcaoTramasFechadas": 0.5,
+  "curvaTramasAbertas": [
+    0,
+    5,
+    4,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.6666666666666666,
+    1,
+    1.1666666666666667,
+    1.3666666666666667,
+    1.3888888888888888,
+    1.4047619047619047,
+    1.4583333333333333,
+    1.4814814814814814,
+    1.5166666666666666,
+    1.5303030303030303,
+    1.625
+  ],
+  "razaoAmarracaoFinal": 1.625,
+  "eventosFundadores": 6,
+  "narracoes": 1,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 117,
+    "arestas": 117,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 24,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 11,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "curador": {
+        "chamadas": 1,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 199034,
+    "saida": 75060,
+    "porPapel": {
+      "agentes": {
+        "entrada": 150101,
+        "saida": 53563
+      },
+      "relatos": {
+        "entrada": 46797,
+        "saida": 21099
+      },
+      "curador": {
+        "entrada": 2136,
+        "saida": 398
+      }
+    }
+  },
+  "custoUsd": 1.3237407999999997,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-sonnet-5"
+    ],
+    "relatos": [
+      "claude-sonnet-5"
+    ],
+    "curador": [
+      "claude-sonnet-5"
+    ]
+  },
+  "latenciaTotalMs": 716586
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.anselmo",
+    "eventoInicialId": "D1.anselmo",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.irma-clara",
+    "eventoInicialId": "D1.irma-clara",
+    "eventoFinalId": "D6.irma-clara",
+    "turnosSemNovoEvento": 6,
+    "status": "fechada",
+    "narracaoFechamento": "Irmã Clara tocou o sino rachado com cuidado redobrado e preparou um sermão anunciando que as mortes eram um aviso que exigia penitência. Em seguida, desceu à praça e convocou os moradores para um sermão de penitência na ermida antes da primeira neve, sem mencionar que o sino estava rachado. Depois, subiu à ermida para preparar o sermão, testando baixinho o sino rachado e rezando para que ele aguentasse até a primeira neve. Chegada a hora, tocou o sino com força para convocar a aldeia à ermida, rezando para que ele aguentasse até o fim do sermão de penitência. Com o sino ainda inteiro, recebeu os moradores que atenderam ao chamado e pregou que as mortes eram castigo, pedindo penitência antes da neve. Envalentonada pelo sermão bem-sucedido, desceu ao moinho para cobrar de Joaquim que finalmente fosse à ermida fazer penitência pelo que escondia."
+  }
+]

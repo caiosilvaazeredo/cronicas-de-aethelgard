@@ -1,0 +1,37 @@
+{
+  "mundo": "vale-silente",
+  "numAgentes": 6,
+  "estadoTramas": "nao-informa",
+  "jogador": "nenhum",
+  "controle": false,
+  "modelos": {
+    "agentes": {
+      "provedor": "claude-cli",
+      "modelo": "claude-opus-5"
+    },
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "dias": 12,
+  "temperatura": 0.7,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "id": "vale-silente_claude-cli-claude-opus-5_nao-informa_6ag_jog-nenhum_r01",
+  "celula": "vale-silente_claude-cli-claude-opus-5_nao-informa_6ag_jog-nenhum",
+  "repeticao": 1,
+  "semente": 501,
+  "agentesAtivos": [
+    "anselmo",
+    "marta",
+    "irma-clara",
+    "joaquim",
+    "benedita",
+    "rui"
+  ]
+}

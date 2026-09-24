@@ -102,3 +102,11 @@ test('ollama: registra o digest, envia semente e temperatura e recusa :latest', 
     servidor.close();
   }
 });
+
+test('claude-cli: calcula a espera até o reset do limite de uso', async () => {
+  const { esperaAteReset } = await import('../core/llm/claude-cli');
+  const agora = new Date('2026-09-24T13:10:00Z');
+  assert.equal(esperaAteReset("You've hit your session limit · resets 2pm (UTC)", agora), 51 * 60_000);
+  assert.equal(esperaAteReset("You've hit your session limit · resets 1pm (UTC)", agora), (23 * 60 + 51) * 60_000);
+  assert.equal(esperaAteReset('outro erro qualquer', agora), null);
+});

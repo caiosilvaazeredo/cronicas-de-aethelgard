@@ -537,16 +537,18 @@ def analisar_nulo(linhas: list[dict]) -> dict | None:
 
 def contar_chamadas(sessoes, m3, m4, m5) -> dict:
     por_metodo = {
-        "M1 Cidade Viva": sum(len(s["chamadas"]) for s in sessoes if not s["condicao"]["controle"]),
-        "M2 Controle três atos": sum(len(s["chamadas"]) for s in sessoes if s["condicao"]["controle"]),
-        "M3 Teste-reteste": len([l for l in m3 if "chamada" in l or "erro" in l]),
-        "M4 Juiz causal": len(m4),
-        "M5 Juiz de relatos": len(m5),
+        "M1 Cidade Viva": sum(1 for s in sessoes if not s["condicao"]["controle"] for c in s["chamadas"] if not c.get("erro")),
+        "M2 Controle três atos": sum(1 for s in sessoes if s["condicao"]["controle"] for c in s["chamadas"] if not c.get("erro")),
+        "M3 Teste-reteste": len([l for l in m3 if "chamada" in l]),
+        "M4 Juiz causal": len([l for l in m4 if "chamada" in l]),
+        "M5 Juiz de relatos": len([l for l in m5 if "chamada" in l]),
     }
     por_modelo = Counter()
     custo = Counter()
     for s in sessoes:
         for c in s["chamadas"]:
+            if c.get("erro"):
+                continue
             por_modelo[c["modeloSolicitado"]] += 1
             custo[c["modeloSolicitado"]] += c.get("custoUsd") or 0
     for l in m3:

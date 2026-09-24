@@ -59,7 +59,8 @@ export function modeloGerador(condicao: any): string {
 
 export async function idsJaGravados(arquivo: string): Promise<Set<string>> {
   try {
-    return new Set(lerJsonl(await readFile(arquivo, 'utf8')).map((l: any) => l.id));
+    // itens que terminaram em erro (ex.: limite de uso) são refeitos
+    return new Set(lerJsonl(await readFile(arquivo, 'utf8')).filter((l: any) => !l.erro).map((l: any) => l.id));
   } catch {
     return new Set();
   }

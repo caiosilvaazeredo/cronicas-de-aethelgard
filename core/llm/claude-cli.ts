@@ -47,12 +47,30 @@ function executar(cmd: string, args: string[], entrada: string, timeoutMs: numbe
   });
 }
 
+/**
+ * Quando o plano atinge o limite de uso, o CLI responde "You've hit your
+ * session limit · resets 2pm (UTC)". Devolve quantos ms faltam para o reset
+ * (com 1 min de folga), ou null se a mensagem não for de limite.
+ */
+export function esperaAteReset(texto: string, agora = new Date()): number | null {
+  if (!/hit your .*limit/i.test(texto)) return null;
+  const m = texto.match(/resets\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);
+  if (!m) return 30 * 60_000;
+  let hora = Number(m[1]) % 12;
+  if ((m[3] ?? '').toLowerCase() === 'pm') hora += 12;
+  if (!m[3] && Number(m[1]) >= 12) hora = Number(m[1]);
+  const alvo = new Date(agora);
+  alvo.setUTCHours(hora, Number(m[2] ?? 0), 0, 0);
+  if (alvo.getTime() <= agora.getTime()) alvo.setUTCDate(alvo.getUTCDate() + 1);
+  return alvo.getTime() - agora.getTime() + 60_000;
+}
+
 export function transporteClaudeCli(modelo: string, opcoes: OpcoesClaudeCli = {}): Transporte {
   const executavel = opcoes.executavel ?? process.env.CLAUDE_CLI ?? 'claude';
   const timeoutMs = opcoes.timeoutMs ?? 300_000;
   const esforco = opcoes.esforco ?? process.env.CLAUDE_CLI_ESFORCO;
 
-  return async (r) => {
+  const umaVez = async (r: Parameters<Transporte>[0]) => {
     const args = [
       '-p',
       '--output-format', 'json',
@@ -101,5 +119,20 @@ export function transporteClaudeCli(modelo: string, opcoes: OpcoesClaudeCli = {}
         numTurns: d.num_turns ?? null,
       },
     };
+  };
+
+  // Limite de uso do plano: espera o reset e repete (até 3 vezes), em vez
+  // de acumular erros e derrubar a sessão.
+  return async (r) => {
+    for (let tentativa = 0; ; tentativa++) {
+      try {
+        return await umaVez(r);
+      } catch (e) {
+        const espera = esperaAteReset((e as Error).message);
+        if (espera === null || tentativa >= 3) throw e;
+        process.stderr.write(`claude-cli: limite de uso atingido; aguardando ${Math.round(espera / 60000)} min até o reset\n`);
+        await new Promise((ok) => setTimeout(ok, espera));
+      }
+    }
   };
 }

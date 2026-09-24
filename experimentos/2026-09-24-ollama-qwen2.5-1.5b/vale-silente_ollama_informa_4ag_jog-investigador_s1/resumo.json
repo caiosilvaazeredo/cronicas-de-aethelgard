@@ -1,0 +1,81 @@
+{
+  "sessao": "vale-silente_ollama_informa_4ag_jog-investigador_s1",
+  "celula": "vale-silente_ollama_informa_4ag_jog-investigador",
+  "dias": 5,
+  "eventos": 13,
+  "relatos": 0,
+  "tramasSurgidas": 0,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "razaoAmarracaoFinal": 0,
+  "eventosFundadores": 13,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 0,
+    "arestas": 0,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 10,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 5,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "jogador": {
+        "chamadas": 5,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 16,
+  "agentesSemAcao": 12,
+  "locaisInvalidos": 8,
+  "tokens": {
+    "entrada": 9221,
+    "saida": 2370,
+    "porPapel": {
+      "agentes": {
+        "entrada": 6703,
+        "saida": 2133
+      },
+      "jogador": {
+        "entrada": 2518,
+        "saida": 237
+      }
+    }
+  },
+  "custoUsd": 0,
+  "chamadasSemPreco": 10,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "qwen2.5:1.5b"
+    ],
+    "jogador": [
+      "qwen2.5:1.5b"
+    ]
+  },
+  "latenciaTotalMs": 200531
+}

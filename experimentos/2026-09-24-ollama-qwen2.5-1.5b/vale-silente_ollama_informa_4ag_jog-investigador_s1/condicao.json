@@ -1,0 +1,35 @@
+{
+  "id": "vale-silente_ollama_informa_4ag_jog-investigador_s1",
+  "celula": "vale-silente_ollama_informa_4ag_jog-investigador",
+  "repeticao": 1,
+  "mundo": "vale-silente",
+  "numAgentes": 4,
+  "estadoTramas": "informa",
+  "jogador": "investigador",
+  "controle": false,
+  "modelos": {
+    "agentes": {
+      "provedor": "ollama",
+      "modelo": "qwen2.5:1.5b"
+    },
+    "jogador": {
+      "provedor": "ollama",
+      "modelo": "qwen2.5:1.5b"
+    },
+    "curador": {
+      "provedor": "ollama",
+      "modelo": "qwen2.5:1.5b"
+    }
+  },
+  "dias": 5,
+  "temperatura": 0.7,
+  "semente": 1,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "agentesAtivos": [
+    "anselmo",
+    "marta",
+    "irma-clara",
+    "joaquim"
+  ]
+}

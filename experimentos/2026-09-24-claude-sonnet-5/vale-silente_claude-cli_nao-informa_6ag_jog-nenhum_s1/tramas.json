@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.anselmo",
+    "eventoInicialId": "D1.anselmo",
+    "eventoFinalId": "D3.anselmo",
+    "turnosSemNovoEvento": 12,
+    "status": "fechada",
+    "narracaoFechamento": "Anselmo convocou os anciãos para debater as mortes que assolavam o rebanho, insistindo com veemência que a culpa era dos lobos vindos da montanha, e cuidou de evitar qualquer menção ao estoque de grão. Dali, propôs formar uma guarda armada contra os lobos da montanha, o que reforçava sua autoridade perante os demais e, de quebra, desviava toda pergunta que pudesse surgir sobre o estoque de grão. Em seguida, reuniu os homens mais fortes da aldeia para compor essa guarda, falando com firmeza para calar quem ainda ousasse questionar o destino do estoque de grão."
+  },
+  {
+    "id": "D1.marta",
+    "eventoInicialId": "D1.marta",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  }
+]

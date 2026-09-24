@@ -1,0 +1,107 @@
+{
+  "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
+  "celula": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 52,
+  "tramasSurgidas": 2,
+  "tramasFechadas": 1,
+  "proporcaoTramasFechadas": 0.5,
+  "curvaTramasAbertas": [
+    0,
+    4,
+    3,
+    3,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.75,
+    1,
+    1.0833333333333333,
+    1.2333333333333334,
+    1.2777777777777777,
+    1.380952380952381,
+    1.4583333333333333,
+    1.4259259259259258,
+    1.4833333333333334,
+    1.4696969696969697,
+    1.5138888888888888
+  ],
+  "razaoAmarracaoFinal": 1.5138888888888888,
+  "eventosFundadores": 6,
+  "narracoes": 1,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 109,
+    "arestas": 109,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 24,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 11,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "curador": {
+        "chamadas": 1,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 6,
+  "tokens": {
+    "entrada": 84499,
+    "saida": 150097,
+    "porPapel": {
+      "agentes": {
+        "entrada": 56872,
+        "saida": 114367
+      },
+      "relatos": {
+        "entrada": 25775,
+        "saida": 35509
+      },
+      "curador": {
+        "entrada": 1852,
+        "saida": 221
+      }
+    }
+  },
+  "custoUsd": 0.5827100000000001,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 9,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-haiku-4-5-20251001"
+    ],
+    "relatos": [
+      "claude-haiku-4-5-20251001"
+    ],
+    "curador": [
+      "claude-sonnet-5"
+    ]
+  },
+  "latenciaTotalMs": 945501
+}

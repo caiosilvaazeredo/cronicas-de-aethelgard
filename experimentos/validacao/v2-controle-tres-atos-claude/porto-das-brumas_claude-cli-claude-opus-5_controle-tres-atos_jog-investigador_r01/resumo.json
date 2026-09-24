@@ -1,0 +1,95 @@
+{
+  "sessao": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+  "celula": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador",
+  "dias": 12,
+  "eventos": 12,
+  "relatos": 0,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.5,
+    1,
+    1.5,
+    1.8,
+    2,
+    2.142857142857143,
+    2.25,
+    2.3333333333333335,
+    2.3,
+    2.272727272727273,
+    2.3333333333333335
+  ],
+  "razaoAmarracaoFinal": 2.3333333333333335,
+  "eventosFundadores": 1,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 28,
+    "arestas": 28,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 24,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1.4583333333333333,
+    "porPapel": {
+      "jogador": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "mestre": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 365484,
+    "saida": 45370,
+    "porPapel": {
+      "jogador": {
+        "entrada": 105295,
+        "saida": 5621
+      },
+      "mestre": {
+        "entrada": 260189,
+        "saida": 39749
+      }
+    }
+  },
+  "custoUsd": 2.379991,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 6,
+  "modelosEfetivos": {
+    "jogador": [
+      "claude-sonnet-5"
+    ],
+    "mestre": [
+      "claude-opus-5"
+    ]
+  },
+  "latenciaTotalMs": 680703
+}

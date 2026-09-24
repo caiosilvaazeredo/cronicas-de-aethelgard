@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.odete",
+    "eventoInicialId": "D1.odete",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.bras",
+    "eventoInicialId": "D1.bras",
+    "eventoFinalId": "D2.bras",
+    "turnosSemNovoEvento": 10,
+    "status": "fechada",
+    "narracaoFechamento": "Em Porto das Brumas, o capitão Brás verificou pessoalmente todos os registros da alfândega, certificando-se de que as contas estavam impecáveis antes da chegada do novo fiscal enviado pela capital. Assim, abandonou a alfândega e passou a patrulhar pessoalmente o cais, demonstrando competência e controle antes que o novo fiscal chegasse com suas investigações."
+  }
+]

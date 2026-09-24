@@ -1,0 +1,10 @@
+[
+  {
+    "id": "D1.mestre",
+    "eventoInicialId": "D1.mestre",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  }
+]

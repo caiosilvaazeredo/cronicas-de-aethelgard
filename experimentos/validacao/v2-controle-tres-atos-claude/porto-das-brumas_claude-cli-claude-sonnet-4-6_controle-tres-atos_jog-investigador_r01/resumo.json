@@ -1,0 +1,95 @@
+{
+  "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+  "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador",
+  "dias": 12,
+  "eventos": 12,
+  "relatos": 0,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.5,
+    1,
+    1.25,
+    1.6,
+    1.5,
+    1.5714285714285714,
+    1.625,
+    1.6666666666666667,
+    1.7,
+    1.6363636363636365,
+    1.5833333333333333
+  ],
+  "razaoAmarracaoFinal": 1.5833333333333333,
+  "eventosFundadores": 1,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 19,
+    "arestas": 19,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 24,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1.375,
+    "porPapel": {
+      "jogador": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "mestre": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 215343,
+    "saida": 38957,
+    "porPapel": {
+      "jogador": {
+        "entrada": 116979,
+        "saida": 6033
+      },
+      "mestre": {
+        "entrada": 98364,
+        "saida": 32924
+      }
+    }
+  },
+  "custoUsd": 1.3017113999999999,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 1,
+  "modelosEfetivos": {
+    "jogador": [
+      "claude-sonnet-5"
+    ],
+    "mestre": [
+      "claude-sonnet-4-6"
+    ]
+  },
+  "latenciaTotalMs": 788402
+}

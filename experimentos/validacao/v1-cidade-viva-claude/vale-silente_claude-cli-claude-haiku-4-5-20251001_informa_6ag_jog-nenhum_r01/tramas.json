@@ -1,0 +1,42 @@
+[
+  {
+    "id": "D1.anselmo",
+    "eventoInicialId": "D1.anselmo",
+    "eventoFinalId": "D4.anselmo",
+    "turnosSemNovoEvento": 8,
+    "status": "fechada",
+    "narracaoFechamento": "Temendo que a situação escapasse de seu controle, Anselmo convocou uma reunião urgente do conselho para decidir sobre a ameaça que pairava sobre os rebanhos. Ao entardecer, visitou a praça da aldeia, buscando ouvir as notícias que corriam entre os moradores e posicionar-se como o guia sábio a quem todos deveriam recorrer diante da crise. Foi ali, porém, que Marta o confrontou publicamente, questionando por que o ancião escondia informações sobre o estoque de grão enquanto os rebanhos continuavam a morrer. Abalado pela acusação, Anselmo dirigiu-se à casa do conselho para convocar formalmente a reunião deliberativa, aproveitando o caminho para ensaiar sua defesa sobre a venda do grão. Por fim, já reunido com os demais conselheiros na casa-conselho, Anselmo apresentou seus argumentos: afirmou que lobos haviam retornado das montanhas para atacar os rebanhos, negou qualquer negligência de sua parte e propôs a formação de uma patrulha de caçadores para proteger a aldeia.</narracao>\n</invoke>\n"
+  },
+  {
+    "id": "D1.irma-clara",
+    "eventoInicialId": "D1.irma-clara",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.benedita",
+    "eventoInicialId": "D1.benedita",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.rui",
+    "eventoInicialId": "D1.rui",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D2.joaquim",
+    "eventoInicialId": "D2.joaquim",
+    "eventoFinalId": "D4.joaquim",
+    "turnosSemNovoEvento": 8,
+    "status": "fechada",
+    "narracaoFechamento": "Primeiro, Joaquim reforçou as trancas do moinho e cuidou para que seu hóspede ferido tivesse tudo de que precisava, afastando assim qualquer visitante indesejado. Com a segurança garantida, ele passou a trabalhar no moinho moendo grão, mantendo a porta trancada e assegurando que o hóspede ferido permanecesse oculto. Assim, enquanto moía o grão com a porta bem fechada, Joaquim vigiava constantemente para perceber se alguém se aproximava, ao mesmo tempo em que acalmava o hóspede ferido escondido no recanto."
+  }
+]

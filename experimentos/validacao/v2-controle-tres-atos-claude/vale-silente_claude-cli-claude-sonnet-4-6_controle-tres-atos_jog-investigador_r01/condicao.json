@@ -1,0 +1,30 @@
+{
+  "mundo": "vale-silente",
+  "numAgentes": 0,
+  "estadoTramas": "nao-informa",
+  "jogador": "investigador",
+  "controle": true,
+  "modelos": {
+    "agentes": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-4-6"
+    },
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "dias": 12,
+  "temperatura": 0.7,
+  "limiarEstabilidade": 3,
+  "janelaDias": 3,
+  "id": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+  "celula": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador",
+  "repeticao": 1,
+  "semente": 501,
+  "agentesAtivos": []
+}

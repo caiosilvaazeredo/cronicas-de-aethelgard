@@ -1,0 +1,95 @@
+{
+  "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
+  "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 35,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    5,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.6666666666666666,
+    1.1666666666666667,
+    1.2916666666666667,
+    1.3666666666666667,
+    1.4166666666666667,
+    1.5952380952380953,
+    1.7083333333333333,
+    1.8333333333333333,
+    1.8833333333333333,
+    1.893939393939394,
+    1.9305555555555556
+  ],
+  "razaoAmarracaoFinal": 1.9305555555555556,
+  "eventosFundadores": 6,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 139,
+    "arestas": 139,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 21,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 9,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 2,
+  "tokens": {
+    "entrada": 77853,
+    "saida": 100893,
+    "porPapel": {
+      "agentes": {
+        "entrada": 58469,
+        "saida": 74951
+      },
+      "relatos": {
+        "entrada": 19384,
+        "saida": 25942
+      }
+    }
+  },
+  "custoUsd": 1.2439679999999997,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 8,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-sonnet-4-6"
+    ],
+    "relatos": [
+      "claude-sonnet-4-6"
+    ]
+  },
+  "latenciaTotalMs": 966288
+}

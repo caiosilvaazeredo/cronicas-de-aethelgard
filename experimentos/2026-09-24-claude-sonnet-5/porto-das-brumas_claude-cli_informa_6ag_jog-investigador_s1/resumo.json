@@ -1,0 +1,113 @@
+{
+  "sessao": "porto-das-brumas_claude-cli_informa_6ag_jog-investigador_s1",
+  "celula": "porto-das-brumas_claude-cli_informa_6ag_jog-investigador",
+  "dias": 15,
+  "eventos": 105,
+  "relatos": 48,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    4,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "curvaRazaoAmarracao": [
+    0,
+    0.7142857142857143,
+    1.0952380952380953,
+    1.2142857142857142,
+    1.3428571428571427,
+    1.5476190476190477,
+    1.5918367346938775,
+    1.625,
+    1.7301587301587302,
+    1.7,
+    1.7532467532467533,
+    1.7857142857142858,
+    1.835164835164835,
+    1.8265306122448979,
+    1.8285714285714285
+  ],
+  "razaoAmarracaoFinal": 1.8285714285714285,
+  "eventosFundadores": 7,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 192,
+    "arestas": 192,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 43,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 15,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "jogador": {
+        "chamadas": 15,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 13,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 308657,
+    "saida": 109598,
+    "porPapel": {
+      "agentes": {
+        "entrada": 188534,
+        "saida": 78288
+      },
+      "jogador": {
+        "entrada": 79249,
+        "saida": 6961
+      },
+      "relatos": {
+        "entrada": 40874,
+        "saida": 24349
+      }
+    }
+  },
+  "custoUsd": 1.9611348000000006,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 2,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-sonnet-5"
+    ],
+    "jogador": [
+      "claude-sonnet-5"
+    ],
+    "relatos": [
+      "claude-sonnet-5"
+    ]
+  },
+  "latenciaTotalMs": 1066457
+}

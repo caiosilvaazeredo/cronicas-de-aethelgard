@@ -33,3 +33,4 @@ deno.lock
 saida/
 .cache-llm/
 analise/__pycache__/
+*.tmp-*/

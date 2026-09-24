@@ -1,0 +1,87 @@
+{
+ "contagem": {
+  "porMetodo": {
+   "M1 Cidade Viva": 0,
+   "M2 Controle três atos": 0,
+   "M3 Teste-reteste": 8,
+   "M4 Juiz causal": 0,
+   "M5 Juiz de relatos": 0
+  },
+  "total": 8,
+  "porModelo": {
+   "claude-haiku-4-5-20251001": 8
+  },
+  "custoPorModelo": {
+   "claude-haiku-4-5-20251001": 0.40082300000000004
+  },
+  "custoTotal": 0.40082300000000004,
+  "itensJulgados": 0
+ },
+ "sessoes": null,
+ "reteste": {
+  "porModelo": {
+   "claude-haiku-4-5-20251001": {
+    "chamadas": 8,
+    "validas": 8,
+    "taxaValidade": 1.0,
+    "icValidade": [
+     0.6755843804891231,
+     1.0
+    ],
+    "tentativasMedias": 1.0,
+    "cobertura": {
+     "n": 8,
+     "media": 1.0,
+     "dp": 0.0
+    },
+    "idsInvalidos": 0,
+    "locaisInvalidos": 6,
+    "referencias": 91,
+    "taxaReferenciasValidas": 1.0,
+    "ligacoesPorAcao": {
+     "n": 8,
+     "media": 1.8958333333333335,
+     "dp": 0.4266657366061293
+    },
+    "tensao": {
+     "n": 8,
+     "media": 7.416666666666666,
+     "dp": 0.2817180849095053
+    },
+    "dpTensaoEntreRepeticoes": {
+     "n": 6,
+     "media": 0.6121296195264881,
+     "dp": 0.12100623522671312
+    },
+    "jaccardCausal": {
+     "n": 168,
+     "media": 0.5783730158730158,
+     "dp": 0.3229034919020439
+    },
+    "jaccardTexto": {
+     "n": 168,
+     "media": 0.12652656406188592,
+     "dp": 0.08210771845241771
+    },
+    "mesmoLocal": {
+     "n": 168,
+     "media": 0.25,
+     "dp": 0.4343072121102964
+    },
+    "custoMedioUsd": 0.050102875,
+    "custoTotalUsd": 0.400823,
+    "latenciaMediaS": 88.377375
+   }
+  },
+  "snapshots": [
+   "porto-das-brumas_claude-cli_informa_6ag_jog-investigador_s1@dia4"
+  ],
+  "repeticoes": 9,
+  "figuras": [
+   "m3_reteste.png"
+  ]
+ },
+ "causal": null,
+ "relatos": null,
+ "nulo": null
+}

@@ -1,0 +1,256 @@
+{
+  "campanha": "v2-controle-tres-atos-claude",
+  "config": {
+    "nome": "v2-controle-tres-atos-claude",
+    "descricao": "Método 2: controle de três atos com os mesmos 4 modelos Claude como mestre, jogador sintético investigador fixo em claude-sonnet-5, 2 mundos, 12 dias.",
+    "dimensoes": {
+      "modelosAgentes": [
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-haiku-4-5-20251001"
+        },
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-opus-5"
+        }
+      ],
+      "estadoTramas": [
+        "nao-informa"
+      ],
+      "numAgentes": [
+        6
+      ],
+      "jogador": [
+        "investigador"
+      ],
+      "mundos": [
+        "porto-das-brumas",
+        "vale-silente"
+      ],
+      "somenteControle": true
+    },
+    "modelosFixos": {
+      "jogador": {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      },
+      "curador": {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      }
+    },
+    "repeticoes": 1,
+    "dias": 12,
+    "temperatura": 0.7,
+    "sementeBase": 500,
+    "precos": {
+      "claude-cli/claude-haiku-4-5-20251001": {
+        "entradaPorMTok": 1,
+        "saidaPorMTok": 5
+      },
+      "claude-cli/claude-sonnet-4-6": {
+        "entradaPorMTok": 3,
+        "saidaPorMTok": 15
+      },
+      "claude-cli/claude-sonnet-5": {
+        "entradaPorMTok": 2,
+        "saidaPorMTok": 10
+      },
+      "claude-cli/claude-opus-5": {
+        "entradaPorMTok": 5,
+        "saidaPorMTok": 25
+      }
+    },
+    "concorrencia": 6,
+    "orcamentoUsd": 30,
+    "cache": true
+  },
+  "criadoEm": "2026-09-24T10:55:18.428Z",
+  "execucoes": [
+    {
+      "data": "2026-09-24T10:55:18.428Z",
+      "git": {
+        "commit": "dadb9cf3638f5966132085efa1ba769b412ea3df",
+        "modificado": true
+      },
+      "versoes": {
+        "node": "v22.22.2",
+        "zod": "4.6.5",
+        "@google/genai": "1.52.0",
+        "openai": "7.23.0",
+        "@anthropic-ai/sdk": "0.128.0"
+      }
+    }
+  ],
+  "sessoes": [
+    {
+      "id": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-haiku-4-5-20251001"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01",
+      "celula": "vale-silente_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-haiku-4-5-20251001"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador_r01",
+      "celula": "vale-silente_claude-cli-claude-sonnet-4-6_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador_r01",
+      "celula": "vale-silente_claude-cli-claude-sonnet-5_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-opus-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador_r01",
+      "celula": "vale-silente_claude-cli-claude-opus-5_controle-tres-atos_jog-investigador",
+      "semente": 501,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-opus-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    }
+  ],
+  "modelosEfetivos": {}
+}

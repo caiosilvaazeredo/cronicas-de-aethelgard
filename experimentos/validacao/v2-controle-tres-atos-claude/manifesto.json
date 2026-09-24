@@ -88,6 +88,20 @@
         "openai": "7.23.0",
         "@anthropic-ai/sdk": "0.128.0"
       }
+    },
+    {
+      "data": "2026-09-24T14:03:42.177Z",
+      "git": {
+        "commit": "f7aec40fd57eb792dace8ae14042c66ce7525317",
+        "modificado": true
+      },
+      "versoes": {
+        "node": "v22.22.2",
+        "zod": "4.6.5",
+        "@google/genai": "1.52.0",
+        "openai": "7.23.0",
+        "@anthropic-ai/sdk": "0.128.0"
+      }
     }
   ],
   "sessoes": [

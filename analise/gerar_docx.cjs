@@ -199,7 +199,7 @@ const M4 = R.causal;
 if (M4) {
   add(H1('4. Método 4: juiz cego do autorrelato causal'), paragrafos(T.m4_metodo));
   add(tabela(['Juiz', 'Reais', 'Distratores', 'Nota reais', 'Nota distrat.', 'Plausível (reais)', 'Plausível (distrat.)', 'AUC', 'p (reais > distrat.)'],
-    Object.entries(M4.porJuiz).map(([j, x]) => [curto(j), x.reais, x.distratores, md(x.notaReais), md(x.notaDistratores), pct(x.plausivelReais), pct(x.plausivelDistratores), n(x.auc), n(x.p_reais_maior, 4)]),
+    Object.entries(M4.porJuiz).map(([j, x]) => [curto(j), x.reais, x.distratores, md(x.notaReais), md(x.notaDistratores), pct(x.plausivelReais), pct(x.plausivelDistratores), n(x.auc), x.p_reais_maior !== null && x.p_reais_maior < 1e-4 ? '< 0,0001' : n(x.p_reais_maior, 4)]),
     [1100, 800, 950, 1100, 1100, 1100, 1150, 800, 1260]));
   add(H3('Por modelo gerador'));
   const lin = [];

@@ -32,3 +32,27 @@ Observações:
   nunca preencheu `causadoPor` (nenhuma trama), usou ids de agente e de local
   inválidos (16 ações e 8 locais descartados) e o jogador escreveu ações vagas.
   Para os experimentos, use modelos locais de 7B ou mais.
+
+# Validação com modelos Claude (2026-09-24 e 25)
+
+Pasta `validacao/`: **1.056 chamadas bem-sucedidas** a seis modelos Claude pelo
+`claude -p` (Haiku 4.5, Sonnet 4.6, Sonnet 5, Opus 4.8, Opus 5, Opus 5.5),
+1.564 itens julgados, US$ 56,39. Cinco métodos:
+
+| método | pasta | chamadas |
+|---|---|---|
+| 1. Cidade Viva multimodelo (4 modelos × A/B × 2 mundos, 12 dias) | `validacao/v1-cidade-viva-claude/` | 365 |
+| 2. Controle de três atos (mesmos 4 modelos como mestre) | `validacao/v2-controle-tres-atos-claude/` | 187 |
+| 3. Teste-reteste (4 estados × 5 modelos × 8 repetições) | `validacao/m3-reteste/` | 160 |
+| 4. Juiz cego do autorrelato causal (462 pares, 2 juízes) | `validacao/m4-juiz-causal/` | 234 |
+| 5. Fidelidade dos relatos (320 relatos, 2 juízes) | `validacao/m5-juiz-relatos/` | 110 |
+| complemento: modelo nulo (500 reembaralhamentos por sessão) | `validacao/nulo/` | 0 |
+
+- Log consolidado: `validacao/analise/LOG.md`; logs por sessão: `LOG.md` em `v1-*` e `v2-*`.
+- Números usados no relatório: `validacao/analise/resultados.json`; figuras na mesma pasta.
+- **Relatório com análise e debriefing: `validacao/analise/relatorio-validacao-claude.docx`.**
+
+Principal achado: com modelos que ligam muito os eventos, a detecção por
+componentes conectados funde as linhas numa única trama, e a queda da curva
+de tramas abertas passa a medir fusão, não fechamento. A métrica e o
+pré-registro precisam separar os dois antes da campanha real.

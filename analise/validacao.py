@@ -156,6 +156,7 @@ def resumo_sessao(s: dict) -> dict:
         "modelosEfetivos": r["modelosEfetivos"],
         "narracoes": [n for n in s["narracoes"] if n.get("texto")],
         "atos": [m["ato"] for m in s["mestre"]],
+        "diasAtos": [m["dia"] for m in s["mestre"]],
     }
 
 
@@ -240,8 +241,9 @@ def analisar_sessoes(sessoes: list[dict], destino: Path) -> dict:
     for l in ct:
         if l["atos"]:
             atos[l["sessao"]] = {"modelo": l["modelo"], "atos": l["atos"],
-                                 "diaAto2": next((i + 1 for i, x in enumerate(l["atos"]) if x >= 2), None),
-                                 "diaAto3": next((i + 1 for i, x in enumerate(l["atos"]) if x >= 3), None)}
+                                 "dias": l["diasAtos"],
+                                 "diaAto2": next((d for d, x in zip(l["diasAtos"], l["atos"]) if x >= 2), None),
+                                 "diaAto3": next((d for d, x in zip(l["diasAtos"], l["atos"]) if x >= 3), None)}
 
     figs = []
     for tipo, grupo in [("cidade-viva", cv), ("controle", ct)]:

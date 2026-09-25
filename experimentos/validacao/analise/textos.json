@@ -1,0 +1,146 @@
+{
+  "titulo": "Validação experimental da Cidade Viva com modelos Claude",
+  "subtitulo": "Cinco métodos, 1.056 chamadas a seis modelos Claude, análise e debriefing",
+  "autoria": "Preparado para Caio Silva Azeredo (PESC/COPPE/UFRJ) · orientação Prof. Geraldo Xexéo",
+  "data": "Rodadas de 24 e 25 de setembro de 2026 · branch claude/instrucoes-md-tzuy31",
+  "resumo": [
+    "Este relatório valida o instrumento da tese (o modo Cidade Viva) com modelos Claude reais, chamados pelo CLI do Claude Code. Foram feitas **1.056 chamadas bem-sucedidas** a seis modelos (Haiku 4.5, Sonnet 4.6, Sonnet 5, Opus 4.8, Opus 5 e Opus 5.5), distribuídas em cinco métodos de validação, e os juízes avaliaram 1.564 itens. Nenhuma chamada terminou em falha definitiva.",
+    "**O pipeline funciona de ponta a ponta com modelos reais.** Todos os modelos devolveram JSON válido em 100% das 160 chamadas do teste-reteste, e 100% das referências causais apontaram para eventos que existiam no prompt. Nenhuma ligação causadoPor foi descartada nas 24 sessões.",
+    "**O autorrelato causal tem conteúdo.** Dois juízes cegos (Opus 4.8 e Opus 5.5) distinguiram as ligações declaradas pelos modelos de pares distratores da mesma sessão com AUC de 0,79 e 0,81 (p < 10⁻²⁵), com concordância substancial entre eles (κ = 0,64).",
+    "**O achado principal é um problema de medição, não de geração.** Os modelos Claude ligam muito os eventos (1,3 a 2,4 ligações por evento). Com a detecção por componentes conectados, as várias linhas que surgem nos primeiros dias se **fundem** numa única trama até o dia 5 ou 6. A curva de tramas abertas cai, mas por fusão, não por fechamento. Por isso a proporção de tramas fechadas é baixa (0,15 na Cidade Viva; 0 no controle), e a definição de convergência pré-registrada é satisfeita trivialmente em 15 de 16 sessões. Antes da campanha real, o pré-registro e a detecção precisam separar fusão de fechamento.",
+    "**O controle de três atos se comporta como estrutura imposta.** Em 6 das 8 sessões, os modelos passaram ao ato 2 exatamente no turno 6, como o prompt manda, e nenhum chegou ao ato 3 em 12 dias. Cada sessão do controle gerou uma única linha causal.",
+    "**Os relatos são material adequado para o experimento de contradição.** Os juízes consideraram fiéis 55% a 58% das versões contadas. As demais omitem, distorcem ou, em até 10% dos casos (Opus 5), contradizem o evento real. Os dois juízes concordaram com κ = 0,61."
+  ],
+  "desenho": [
+    "Nesta validação, **um teste é uma chamada ao Claude avaliada individualmente**: cada chamada tem prompt, resposta crua, validação de esquema, tokens, custo e duração gravados no repositório. Os métodos 4 e 5 julgam vários itens por chamada, e por isso o relatório também conta os itens julgados.",
+    "Os cinco métodos atacam a validade do experimento por ângulos diferentes: se a geração livre produz estrutura e como ela difere entre modelos (1); se ela difere de uma estrutura imposta (2); se o instrumento é estável e estruturalmente confiável (3); se as ligações causais que os modelos declaram significam algo (4); e se os relatos entre personagens geram o par evento real e versão contada de que o experimento de contradição precisa (5). Um modelo nulo por reembaralhamento das ligações complementa os métodos 1 e 2.",
+    "Todos os modelos foram chamados pelo provedor claude-cli, que substitui o prompt de sistema do Claude Code pelo do simulador, desliga todas as ferramentas e ignora as configurações do usuário. Essa via **não aceita temperatura nem semente**, o que está registrado em cada chamada e é discutido nas limitações."
+  ],
+  "modelos": [
+    "Haiku 4.5, Sonnet 4.6, Sonnet 5 e Opus 5 foram os modelos geradores (a variável experimental). Sonnet 5 ficou fixo como jogador sintético e curador nas campanhas, como o manual determina. Opus 5.5 entrou no teste-reteste e, com o Opus 4.8, atuou como juiz. Os juízes foram escolhidos fora do conjunto de geradores para evitar que um modelo julgasse o próprio texto. O Fable 5.1 não estava disponível: o CLI exigiu créditos adicionais."
+  ],
+  "m1m2_metodo": [
+    "**Método 1 (Cidade Viva):** 4 modelos × 2 condições (A: o prompt informa as tramas abertas; B: só eventos recentes brutos) × 2 mundos (Porto das Brumas e Vale Silente), com 6 agentes, sem jogador e 12 dias, totalizando 16 sessões. **Método 2 (controle):** o modo de três atos rodado pelo mesmo simulador, com os mesmos 4 modelos como mestre e o jogador sintético investigador, nos 2 mundos, com 12 dias, totalizando 8 sessões. Todas usaram a mesma semente-base (sessões pareadas) e o limiar de estabilidade k = 3."
+  ],
+  "m1m2_resultados": [
+    "**Não há falha estrutural a esconder na Cidade Viva:** 0% de falha de esquema, 0% de referências causais descartadas e nenhuma ação descartada. Alguns locais inexistentes foram escolhidos pelo Haiku 4.5 (6) e pelo Sonnet 4.6 (5), e mantidos no local anterior pelo motor. No controle, o Haiku 4.5 teve 4,5% de falha de esquema no papel de mestre.",
+    "**Os modelos diferem de forma mensurável.** A razão de amarração (ligações por evento) varia de 1,36 (Haiku 4.5) a 2,20 (Opus 5), com Kruskal-Wallis p = 0,005. Opus 5 e Sonnet 4.6 fundiram tudo numa única trama em todas as sessões. Haiku 4.5 e Sonnet 5 mantiveram linhas separadas por mais tempo e foram os únicos com tramas fechadas.",
+    "**Condição A × B:** nenhuma diferença detectável (proporção fechadas 0,17 × 0,13; p = 0,75). Com n = 8 por condição e o efeito de fusão dominando, esse teste não tem poder. O resultado não permite afirmar que a condição é irrelevante.",
+    "**Cidade Viva × três atos:** a Cidade Viva gerou mais tramas (1,5 × 1,0) e alguma trama fechada (0,15 × 0,00; p = 0,09). No controle, o mestre encadeia cada evento ao anterior e o grafo é sempre uma única linha. A razão de amarração não difere (1,75 × 1,84; p = 0,60).",
+    "**O que as curvas mostram:** em quase todas as sessões da Cidade Viva, as tramas abertas sobem para 4 a 6 entre os dias 2 e 5 e depois caem para 1. A queda vem da fusão de componentes (um evento novo liga duas linhas), não do fechamento de tramas. É o resultado mais importante deste relatório para a tese."
+  ],
+  "atos": [
+    "Os modelos seguem a estrutura imposta ao pé da letra. A passagem ao ato 2 aconteceu exatamente no turno 6, a regra do prompt, em 6 das 8 sessões. Nas outras duas, ela veio no turno 7, porque a resposta do mestre do turno 6 falhou nessa sessão do Haiku 4.5, e no turno 8, no Sonnet 5 no Vale Silente. Nenhum modelo chegou ao ato 3, reservado pelo prompt para o turno 13 ou depois, em sessões de 12 dias. O controle funciona como controle: a forma da narrativa é ditada de fora."
+  ],
+  "nulo_metodo": [
+    "Para cada sessão, as ligações causais foram reembaralhadas 500 vezes, mantendo o número de causas de cada evento e sorteando-as entre eventos de dias anteriores. As métricas foram recalculadas com o próprio services/arcos.ts. Se a estrutura observada viesse só da quantidade de ligações, as métricas observadas cairiam dentro da distribuição nula."
+  ],
+  "nulo_resultados": [
+    "Com tantas ligações por evento, o grafo reembaralhado quase sempre vira um único componente, e o observado também tende a isso. Ainda assim, em 5 das 16 sessões da Cidade Viva o observado teve **mais tramas que o nulo** com p < 0,05, e em 4 delas a proporção de tramas fechadas também ficou acima do nulo (0,15 × 0,03 em média). Nessas sessões, as ligações dos modelos separam linhas de acontecimento que o acaso fundiria. No controle, observado e nulo coincidem (sempre 1 trama). O modelo nulo confirma que parte da estrutura vem do conteúdo, mas a densidade de ligações limita o quanto dessa estrutura a detecção atual consegue revelar."
+  ],
+  "m3_metodo": [
+    "Quatro estados do mundo congelados (o prompt exato de ações dos agentes nos dias 4 e 10 de duas sessões anteriores, nas condições A e B) foram reenviados 8 vezes a cada um de 5 modelos, somando 160 chamadas. Mede-se a validade estrutural de cada resposta e a estabilidade entre repetições do mesmo estado: Jaccard das ligações causais de cada agente, Jaccard do vocabulário das ações, se o agente escolheu o mesmo local e o desvio-padrão da tensão."
+  ],
+  "m3_resultados": [
+    "**Validade estrutural perfeita:** 160/160 respostas válidas na primeira tentativa, cobertura de 100% (uma ação por agente) e 100% das referências causais apontando para ids que existem no prompt. Os únicos erros foram do Haiku 4.5 (5 ids de agente e 12 locais inválidos) e um id do Sonnet 5.",
+    "**Estabilidade das ligações moderada a alta:** Jaccard das ligações causais entre repetições de 0,66 (Haiku 4.5) a 0,79 (Opus 5.5). Diante do mesmo estado, os modelos tendem a apontar as mesmas causas. **O texto, por outro lado, varia muito:** o Jaccard de vocabulário fica entre 0,13 e 0,25. Isso é desejável num gerador narrativo e mostra que a estabilidade das ligações não vem de repetição literal.",
+    "**Opus 5.5 foi o mais estável** (Jaccard causal 0,79, mesmo local 74%, menor variação de tensão) e também o mais rápido e barato por chamada pelo CLI (mediana de 19 s, US$ 0,04). Os modelos mais novos ligam mais (Opus 5 e Opus 5.5: 2,05 a 2,06 ligações por ação, contra 1,64 do Haiku 4.5). Isso ajuda a explicar a fusão observada no método 1."
+  ],
+  "m4_metodo": [
+    "Das 24 sessões, foram sorteados por modelo gerador até 60 pares (A, B), com A anterior a B: cerca de dois terços eram ligações causadoPor declaradas pelo gerador e um terço distratores, isto é, pares da mesma sessão, a no máximo 4 dias de distância, que o gerador não ligou. Os 462 pares foram embaralhados e julgados às cegas, em lotes de 4, por dois juízes (Opus 4.8 e Opus 5.5). Os juízes não sabiam o modelo gerador nem que havia distratores. Cada par recebeu uma nota de 1 a 5 e um julgamento de plausibilidade."
+  ],
+  "m4_resultados": [
+    "**As ligações declaradas são reconhecidas como causais:** nota média 4,3 e 4,2 (de 5) para as reais, contra 3,2 e 2,9 para os distratores. A AUC foi de 0,79 e 0,81, com p < 10⁻²⁵ nos dois juízes. Os juízes concordam entre si: κ = 0,64 na plausibilidade, 91% de concordância bruta e Spearman das notas de 0,83.",
+    "**A discriminação é maior na Cidade Viva (AUC 0,81 a 0,93) que no controle (0,66 a 0,76).** No controle, a história é uma única linha em que tudo se relaciona com tudo, e os distratores parecem plausíveis.",
+    "**Cuidado com o otimismo dos juízes:** eles aceitaram como plausíveis 62% a 73% dos distratores. A plausibilidade absoluta (93% a 97% das ligações reais) superestima a qualidade; o que informa é a diferença entre reais e distratores. Para o artigo, a anotação humana prevista no pré-registro continua obrigatória. Este método é uma triagem que a antecipa e calibra, não a substitui."
+  ],
+  "m5_metodo": [
+    "Foram sorteados 80 relatos por modelo gerador (320 no total) das sessões da Cidade Viva. Cada item mostra o evento real e a versão contada por um personagem a outro. Dois juízes (Opus 4.8 e Opus 5.5) classificaram cada item, às cegas e em lotes de 6, como fiel, omissão, distorção, contradição ou invenção, e deram uma nota de fidelidade de 1 a 5."
+  ],
+  "m5_resultados": [
+    "**O mecanismo de relatos produz variação suficiente para o experimento de contradição:** 55% a 58% dos relatos foram julgados fiéis, e o restante se divide principalmente entre distorção (22% a 30%) e omissão (9% a 13%). Contradições francas são raras (4% a 5%) e se concentram no Opus 5 (9% a 10%). Invenção quase não aparece (2%).",
+    "A concordância entre juízes foi substancial: κ = 0,61 nas cinco categorias e 0,64 na distinção fiel × não fiel, com Spearman da fidelidade de 0,78.",
+    "Os modelos diferem pouco na fidelidade média (3,4 a 3,8 de 5). O Haiku 4.5 tende mais a omissões e distorções brandas; o Opus 5, a contradições. Com esse perfil, o futuro experimento de contradição tem exemplos positivos em quantidade, mas precisará de amostra maior para os casos de contradição franca."
+  ],
+  "amostras_intro": [
+    "Narrações de tramas que ficaram estáveis, geradas pelo curador (Sonnet 5) a partir da cadeia causal detectada pelo arcos.ts. São usadas pelos experimentos de reconhecimento e de forma narrativa previstos no manual."
+  ],
+  "limitacoes": [
+    "**Uma sessão por célula e 12 dias:** o desenho de coleta pré-registrado prevê 30 repetições e 40 dias. Os testes estatísticos aqui são exploratórios e sem poder para efeitos pequenos.",
+    "**Sem temperatura nem semente:** o claude -p não aceita esses parâmetros. As sessões não são reprodutíveis bit a bit; a variabilidade medida no método 3 é a do modelo com seus padrões. Para a campanha real, use a API (provedor anthropic) com temperatura declarada.",
+    "**Custo e tokens do CLI incluem voltas internas:** para cumprir o --json-schema, o CLI pode dar mais de uma volta interna (num_turns 3), invisível para o simulador. Tokens e custo por chamada ficam maiores que na API direta, e a taxa de novas tentativas visível subestima o esforço real.",
+    "**Resíduo de marcação em 2 de 550 respostas:** duas narrações do curador (Sonnet 5 via CLI) terminam com fragmentos como “</narracao> </invoke>” dentro do texto. Elas passaram pela validação porque o esquema só exige uma string. Os textos estão preservados como vieram, e a recomendação é rejeitar marcação no esquema zod do curador, o que faria essas respostas contarem como falha de estrutura e serem reenviadas.",
+    "**Limite de uso do plano:** as execuções consumiram o limite de uso da conta e pararam três vezes. O provedor passou a esperar o reset automaticamente. Latências foram medidas pela duração que o próprio CLI informa, sem as esperas.",
+    "**Juízes da mesma família dos geradores:** Claude julgando Claude pode compartilhar vieses. Os juízes foram mantidos fora do conjunto de geradores, mas só a anotação humana resolve isso.",
+    "**Método 3 congela estados de sessões do Sonnet 5:** os prompts vêm de sessões geradas por esse modelo, o que pode favorecê-lo ligeiramente.",
+    "**Sem jogador no método 1:** o efeito do jogador sintético não foi testado nesta rodada; ele aparece só no controle."
+  ],
+  "debriefing": [
+    {
+      "titulo": "O que foi feito",
+      "paragrafos": [
+        "Em dois dias, o modo Cidade Viva rodou de ponta a ponta com seis modelos Claude, gerando 24 sessões completas (16 da Cidade Viva e 8 do controle de três atos) e passando por quatro outras verificações independentes. Tudo está em experimentos/validacao/: exportações completas das sessões, JSONL de cada chamada com prompt e resposta crua, resultados.json, figuras, LOG.md e este relatório. Custo total: US$ 56,39, informado pelo próprio CLI."
+      ],
+      "itens": []
+    },
+    {
+      "titulo": "O que a validação confirma",
+      "paragrafos": [],
+      "itens": [
+        "O núcleo técnico está pronto: esquemas, validação, exportação, retomada e espera por limite de uso funcionaram com modelos reais, sem nenhuma falha definitiva em 1.056 chamadas.",
+        "As ligações causais declaradas pelos modelos têm conteúdo: juízes cegos as distinguem de distratores (AUC 0,79 e 0,81), e o modelo nulo mostra estrutura além do acaso em parte das sessões.",
+        "O controle de três atos cumpre seu papel: os modelos seguem a estrutura imposta com exatidão.",
+        "Os modelos diferem em como estruturam a história (razão de amarração, p = 0,005). A variável experimental principal tem efeito mensurável.",
+        "O mecanismo de relatos gera o par evento real e versão contada com distorções e contradições suficientes para o próximo experimento."
+      ]
+    },
+    {
+      "titulo": "O que a validação revelou e precisa ser corrigido antes da campanha real",
+      "paragrafos": [
+        "O ponto central: **com modelos que ligam muito, a detecção por componentes conectados funde as linhas de acontecimento numa única trama**, e a queda da curva de tramas abertas passa a medir fusão, não fechamento. A definição de convergência do pré-registro (tramas abertas param de subir e razão de amarração sobe) é satisfeita trivialmente nesse caso: 15 das 16 sessões convergem por ela, inclusive as que nunca fecharam trama nenhuma. Se a campanha real rodar assim, o resultado principal da tese ficará confundido."
+      ],
+      "itens": [
+        "Registrar as fusões como evento próprio na métrica diária (quantas tramas deixaram de existir por fusão e quantas por estabilidade) e reportar as duas curvas separadamente.",
+        "Emendar o pré-registro antes da primeira campanha real: definir convergência pela razão entre tramas fechadas por estabilidade e tramas surgidas, e não só pela inclinação da curva de abertas.",
+        "Avaliar uma detecção de tramas menos sensível a pontes, como componentes por janela de tempo, arestas ponderadas pela proximidade temporal ou detecção de comunidades, mantendo a versão atual como referência. O manual pede para não alterar o comportamento do arcos.ts, então isso seria uma segunda medida, não uma substituição.",
+        "Rodar a campanha real pela API (provedor anthropic) com temperatura declarada, e não pelo CLI.",
+        "Manter a anotação humana do autorrelato causal: os juízes automáticos aprovam 62% a 73% dos distratores.",
+        "Endurecer os esquemas de texto livre (narração, ações, relatos) para rejeitar resíduos de marcação, que apareceram em 2 de 550 respostas estruturadas."
+      ]
+    },
+    {
+      "titulo": "Surpresas",
+      "paragrafos": [],
+      "itens": [
+        "Os modelos mais novos e maiores (Opus 5, Opus 5.5) ligam mais e fundem mais. Na métrica atual, isso aparece como menos convergência, o que é o oposto do intuitivo.",
+        "A condição A (informar as tramas abertas) não mudou nada detectável nesta amostra. Isso precisa ser testado com o n pré-registrado antes de qualquer conclusão.",
+        "O Opus 5.5 foi, pelo CLI, o mais rápido e mais barato por chamada, apesar do preço por token maior.",
+        "Os relatos contraditórios se concentraram no Opus 5, um candidato natural para o experimento de contradição."
+      ]
+    },
+    {
+      "titulo": "Próximos passos recomendados",
+      "paragrafos": [],
+      "itens": [
+        "Implementar a separação fusão × fechamento na métrica e emendar o pre-registro.md com a data.",
+        "Rerodar o método 1 com essa métrica, 3 repetições e 20 dias, para estimar o tamanho do efeito A × B e dimensionar a campanha real.",
+        "Rodar pela API com os modelos escolhidos e temperatura fixa; usar o CLI só para depuração.",
+        "Preparar a anotação humana com analise/amostra_anotacao.py, usando as notas dos juízes do método 4 para estratificar a amostra.",
+        "Para o artigo de 22/10: as sessões e narrações desta rodada servem como material ilustrativo, não como resultado estatístico."
+      ]
+    }
+  ],
+  "reproducao_intro": [
+    "Todos os comandos rodam a partir da raiz do repositório. As chamadas pelo claude-cli consomem o limite de uso do plano da conta autenticada no CLI."
+  ],
+  "comandos": [
+    "npm run campanha -- --config campanhas/validacao-claude/m1-cidade-viva.json --saida experimentos/validacao --confirmar --concorrencia 4",
+    "npm run campanha -- --config campanhas/validacao-claude/m2-controle.json --saida experimentos/validacao --confirmar --concorrencia 2",
+    "npx tsx sim/validacao/reteste.ts --fontes experimentos/2026-09-24-claude-sonnet-5 --dias 4,10 --modelos claude-haiku-4-5-20251001,claude-sonnet-4-6,claude-sonnet-5,claude-opus-5,claude-opus-5-5 --repeticoes 8 --saida experimentos/validacao/m3-reteste",
+    "npx tsx sim/validacao/juizes.ts --metodo causal --fontes experimentos/validacao/v1-cidade-viva-claude,experimentos/validacao/v2-controle-tres-atos-claude --juizes claude-opus-4-8,claude-opus-5-5 --por-modelo 60 --lote 4 --saida experimentos/validacao/m4-juiz-causal",
+    "npx tsx sim/validacao/juizes.ts --metodo relatos --fontes experimentos/validacao/v1-cidade-viva-claude --juizes claude-opus-4-8,claude-opus-5-5 --por-modelo 80 --lote 6 --saida experimentos/validacao/m5-juiz-relatos",
+    "npx tsx sim/validacao/nulo.ts --fontes experimentos/validacao/v1-cidade-viva-claude,experimentos/validacao/v2-controle-tres-atos-claude --n 500 --saida experimentos/validacao/nulo",
+    "python analise/validacao.py experimentos/validacao",
+    "node analise/gerar_docx.cjs experimentos/validacao"
+  ]
+}

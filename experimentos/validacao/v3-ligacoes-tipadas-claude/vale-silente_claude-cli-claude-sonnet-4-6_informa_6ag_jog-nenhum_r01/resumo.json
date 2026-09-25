@@ -1,0 +1,163 @@
+{
+  "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+  "celula": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 27,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    4,
+    4,
+    4,
+    4,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "linhagem": {
+    "nascidas": 4,
+    "fechadasPorEstabilidade": 0,
+    "fundidasAntesDeFechar": 3,
+    "abertasNoFim": 1,
+    "proporcaoFechadasPorEstabilidade": 0,
+    "proporcaoFundidas": 0.75,
+    "fracaoSaidaPorFechamento": 0,
+    "curvaNascidasAcum": [
+      0,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "curvaFundidasAcum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "curvaFechadasAcum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "grafo": {
+    "eventos": 72,
+    "ligacoes": 151,
+    "pontes": 2,
+    "pontesDeFusao": 1,
+    "articulacoes": 3,
+    "fracaoPontes": 0.013245033112582781,
+    "distanciaMedia": 1.3377483443708609,
+    "ligacoesAlemDe3Dias": 0,
+    "porTipo": {
+      "possibilitou": 34,
+      "motivou": 69,
+      "reagiu": 44,
+      "lembrou": 4
+    },
+    "forcaMedia": 2.377483443708609
+  },
+  "curvaRazaoAmarracao": [
+    0,
+    0.6666666666666666,
+    1.1111111111111112,
+    1.375,
+    1.5,
+    1.6944444444444444,
+    1.7619047619047619,
+    1.9375,
+    2.037037037037037,
+    2.033333333333333,
+    2.106060606060606,
+    2.0972222222222223
+  ],
+  "razaoAmarracaoFinal": 2.0972222222222223,
+  "eventosFundadores": 6,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 151,
+    "arestas": 151,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 19,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 7,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 74216,
+    "saida": 104413,
+    "porPapel": {
+      "agentes": {
+        "entrada": 59306,
+        "saida": 83250
+      },
+      "relatos": {
+        "entrada": 14910,
+        "saida": 21163
+      }
+    }
+  },
+  "custoUsd": 2.01132,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-sonnet-4-6"
+    ],
+    "relatos": [
+      "claude-sonnet-4-6"
+    ]
+  },
+  "latenciaTotalMs": 1537697
+}

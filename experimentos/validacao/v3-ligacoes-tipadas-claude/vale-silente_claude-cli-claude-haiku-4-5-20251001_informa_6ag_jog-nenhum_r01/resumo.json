@@ -1,0 +1,163 @@
+{
+  "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
+  "celula": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum",
+  "dias": 12,
+  "eventos": 72,
+  "relatos": 35,
+  "tramasSurgidas": 1,
+  "tramasFechadas": 0,
+  "proporcaoTramasFechadas": 0,
+  "curvaTramasAbertas": [
+    0,
+    6,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "linhagem": {
+    "nascidas": 6,
+    "fechadasPorEstabilidade": 0,
+    "fundidasAntesDeFechar": 5,
+    "abertasNoFim": 1,
+    "proporcaoFechadasPorEstabilidade": 0,
+    "proporcaoFundidas": 0.8333333333333334,
+    "fracaoSaidaPorFechamento": 0,
+    "curvaNascidasAcum": [
+      0,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "curvaFundidasAcum": [
+      0,
+      0,
+      2,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "curvaFechadasAcum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "grafo": {
+    "eventos": 72,
+    "ligacoes": 141,
+    "pontes": 2,
+    "pontesDeFusao": 0,
+    "articulacoes": 4,
+    "fracaoPontes": 0.014184397163120567,
+    "distanciaMedia": 1.524822695035461,
+    "ligacoesAlemDe3Dias": 0,
+    "porTipo": {
+      "motivou": 68,
+      "possibilitou": 46,
+      "reagiu": 14,
+      "lembrou": 13
+    },
+    "forcaMedia": 2.382978723404255
+  },
+  "curvaRazaoAmarracao": [
+    0,
+    0.5,
+    1,
+    1.25,
+    1.5666666666666667,
+    1.5833333333333333,
+    1.6666666666666667,
+    1.8333333333333333,
+    1.9444444444444444,
+    1.95,
+    1.9545454545454546,
+    1.9583333333333333
+  ],
+  "razaoAmarracaoFinal": 1.9583333333333333,
+  "eventosFundadores": 6,
+  "narracoes": 0,
+  "narracoesComFalha": 0,
+  "causadoPor": {
+    "referencias": 141,
+    "arestas": 141,
+    "descartadas": 0
+  },
+  "estrutura": {
+    "chamadasComEsquema": 22,
+    "falhas": 0,
+    "taxaFalha": 0,
+    "tentativasMedias": 1,
+    "porPapel": {
+      "agentes": {
+        "chamadas": 12,
+        "falhas": 0,
+        "taxaFalha": 0
+      },
+      "relatos": {
+        "chamadas": 10,
+        "falhas": 0,
+        "taxaFalha": 0
+      }
+    }
+  },
+  "errosDeChamada": 0,
+  "acoesDescartadas": 0,
+  "agentesSemAcao": 0,
+  "locaisInvalidos": 0,
+  "tokens": {
+    "entrada": 78308,
+    "saida": 152582,
+    "porPapel": {
+      "agentes": {
+        "entrada": 56588,
+        "saida": 114977
+      },
+      "relatos": {
+        "entrada": 21720,
+        "saida": 37605
+      }
+    }
+  },
+  "custoUsd": 0.890801,
+  "chamadasSemPreco": 0,
+  "chamadasDoCache": 0,
+  "modelosEfetivos": {
+    "agentes": [
+      "claude-haiku-4-5-20251001"
+    ],
+    "relatos": [
+      "claude-haiku-4-5-20251001"
+    ]
+  },
+  "latenciaTotalMs": 1441010
+}

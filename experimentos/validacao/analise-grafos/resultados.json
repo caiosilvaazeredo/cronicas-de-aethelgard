@@ -138,6 +138,16 @@
    "propFundidas": 0.588,
    "propFechadasSemPontes": 0.332
   },
+  "Cidade Viva tipada": {
+   "ligPorEvento": 2.295,
+   "pontes": 1.75,
+   "pontesFusao": 0.125,
+   "articulacoes": 2.375,
+   "nascidas": 4.375,
+   "propFechadas": 0.0,
+   "propFundidas": 0.692,
+   "propFechadasSemPontes": 0.031
+  },
   "três atos": {
    "ligPorEvento": 1.841,
    "pontes": 1.5,
@@ -147,6 +157,117 @@
    "propFechadas": 0.0,
    "propFundidas": 0.0,
    "propFechadasSemPontes": 0.25
+  }
+ },
+ "tipadas": {
+  "pares": 8,
+  "comparacao": {
+   "ligPorEvento": {
+    "sem": 1.7135416666666665,
+    "com": 2.295138888888889,
+    "difMedia": 0.5815972222222222,
+    "p_wilcoxon": 0.0078125
+   },
+   "nascidas": {
+    "sem": 3.875,
+    "com": 4.375,
+    "difMedia": 0.5,
+    "p_wilcoxon": 0.4375
+   },
+   "propFechadas": {
+    "sem": 0.1,
+    "com": 0.0,
+    "difMedia": -0.1,
+    "p_wilcoxon": 0.25
+   },
+   "propFundidas": {
+    "sem": 0.525,
+    "com": 0.6916666666666667,
+    "difMedia": 0.16666666666666669,
+    "p_wilcoxon": 0.09375
+   },
+   "pontesFusao": {
+    "sem": 3.75,
+    "com": 0.125,
+    "difMedia": -3.625,
+    "p_wilcoxon": 0.03125
+   }
+  },
+  "porModelo": {
+   "Haiku 4.5": {
+    "ligPorEvento_sem": 1.34,
+    "ligPorEvento_com": 2.035,
+    "propFechadas_sem": 0.2,
+    "propFechadas_com": 0.0,
+    "propFundidas_sem": 0.5,
+    "propFundidas_com": 0.817
+   },
+   "Opus 5": {
+    "ligPorEvento_sem": 2.132,
+    "ligPorEvento_com": 2.986,
+    "propFechadas_sem": 0.0,
+    "propFechadas_com": 0.0,
+    "propFundidas_sem": 0.25,
+    "propFundidas_com": 0.375
+   },
+   "Sonnet 4.6": {
+    "ligPorEvento_sem": 1.743,
+    "ligPorEvento_com": 2.153,
+    "propFechadas_sem": 0.0,
+    "propFechadas_com": 0.0,
+    "propFundidas_sem": 0.75,
+    "propFundidas_com": 0.775
+   },
+   "Sonnet 5": {
+    "ligPorEvento_sem": 1.639,
+    "ligPorEvento_com": 2.007,
+    "propFechadas_sem": 0.2,
+    "propFechadas_com": 0.0,
+    "propFundidas_sem": 0.6,
+    "propFundidas_com": 0.8
+   }
+  },
+  "distribuicaoTipos": {
+   "lembrou": 0.11195158850226929,
+   "motivou": 0.46747352496217853,
+   "possibilitou": 0.2216338880484115,
+   "reagiu": 0.1989409984871407
+  },
+  "forcaMedia": 2.2863155870793825,
+  "variantes": {
+   "completo": 0.0,
+   "fortes": 0.04583333333333334,
+   "semPontes": 0.03125,
+   "fundidasCompleto": 0.6916666666666667,
+   "fundidasFortes": 0.7395833333333333,
+   "nascidasCompleto": 4.375,
+   "nascidasFortes": 4.875
+  },
+  "porModeloTipos": {
+   "Haiku 4.5": {
+    "possibilitou": 103,
+    "motivou": 136,
+    "lembrou": 24,
+    "reagiu": 30
+   },
+   "Opus 5": {
+    "motivou": 196,
+    "reagiu": 95,
+    "possibilitou": 90,
+    "lembrou": 49
+   },
+   "Sonnet 4.6": {
+    "motivou": 156,
+    "reagiu": 77,
+    "possibilitou": 70,
+    "lembrou": 7
+   },
+   "Sonnet 5": {
+    "motivou": 130,
+    "reagiu": 61,
+    "lembrou": 68,
+    "possibilitou": 30
+   }
   }
  },
  "necessidade": {

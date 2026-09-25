@@ -1,0 +1,73 @@
+{
+  "nome": "v3-ligacoes-tipadas-claude",
+  "descricao": "Método 7: Cidade Viva com ligações tipadas (tipo e força de cada causa), mesmos 4 modelos, mundos, dias e sementes do método 1, só condição A. Pareada com o método 1 para medir o efeito de pedir tipo e força sobre a densidade de ligações e a fusão de tramas.",
+  "dimensoes": {
+    "modelosAgentes": [
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-haiku-4-5-20251001"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-4-6"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-opus-5"
+      }
+    ],
+    "estadoTramas": [
+      "informa"
+    ],
+    "numAgentes": [
+      6
+    ],
+    "jogador": [
+      "nenhum"
+    ],
+    "mundos": [
+      "porto-das-brumas",
+      "vale-silente"
+    ]
+  },
+  "modelosFixos": {
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "repeticoes": 1,
+  "dias": 12,
+  "temperatura": 0.7,
+  "sementeBase": 500,
+  "ligacoesTipadas": true,
+  "precos": {
+    "claude-cli/claude-haiku-4-5-20251001": {
+      "entradaPorMTok": 1,
+      "saidaPorMTok": 5
+    },
+    "claude-cli/claude-sonnet-4-6": {
+      "entradaPorMTok": 3,
+      "saidaPorMTok": 15
+    },
+    "claude-cli/claude-sonnet-5": {
+      "entradaPorMTok": 2,
+      "saidaPorMTok": 10
+    },
+    "claude-cli/claude-opus-5": {
+      "entradaPorMTok": 5,
+      "saidaPorMTok": 25
+    }
+  },
+  "concorrencia": 6,
+  "orcamentoUsd": 40,
+  "cache": true
+}

@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/2026-09-24-ollama-qwen2.5-1.5b
 
-Gerado por `npm run relatorio` em 2026-09-24T09:26:17.065Z.
+Gerado por `npm run relatorio` em 2026-09-25T14:29:12.933Z.
 
 
 ## vale-silente_ollama_informa_4ag_jog-investigador_s1
@@ -31,6 +31,10 @@ Gerado por `npm run relatorio` em 2026-09-24T09:26:17.065Z.
 | eventos fundadores | 13 |
 | causadoPor: referências / arestas / descartadas | 0 / 0 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 16 / 12 / 8 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 0 / 0 / 0 / 0 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 0 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 0.00 / 0 |
 
 **Primeiros eventos**
 

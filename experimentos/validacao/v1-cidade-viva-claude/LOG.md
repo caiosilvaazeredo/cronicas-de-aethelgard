@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/validacao/v1-cidade-viva-claude
 
-Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
+Gerado por `npm run relatorio` em 2026-09-25T14:29:12.937Z.
 
 
 ## porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01
@@ -31,6 +31,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 113 / 113 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 4 / 0 / 4 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 113 / 11 / 4 / 15 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.19 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 11 (por `D11.bras`, `D11.nuno`, `D11.odete`, `D11.tomas`)
+- `D1.iracema` (nasceu no dia 2): absorvida por `D1.odete` no dia 4 (por `D4.iracema`, `D4.lia`)
+- `D1.lia` (nasceu no dia 2): absorvida por `D1.odete` no dia 4 (por `D4.lia`, `D4.odete`)
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.bras` no dia 5 (por `D5.bras`, `D5.nuno`)
+- `D1.odete` (id herdado de fusão no dia 4): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D4.bras` → `D5.bras` (14 | 57); `D4.tomas` → `D5.tomas` (63 | 8); `D5.tomas` → `D6.tomas` (64 | 7); `D6.tomas` → `D7.tomas` (65 | 6)
 
 **Primeiros eventos**
 
@@ -100,6 +114,19 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 109 / 109 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 6 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 4 / 1 / 2 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 25.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 109 / 8 / 2 / 8 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.27 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): fechada por estabilidade no dia 5
+- `D1.lia` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.lia`, `D3.odete`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+- `D1.tomas` (nasceu no dia 2): absorvida por `D1.odete` no dia 5 (por `D5.bras`, `D5.nuno`, `D5.tomas`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D8.tomas` → `D9.tomas` (66 | 4); `D9.tomas` → `D10.tomas` (67 | 3)
 
 **Primeiros eventos**
 
@@ -170,6 +197,15 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 160 / 160 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 2 / 0 / 1 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 160 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.16 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.bras`, `D3.nuno`, `D3.odete`, `D3.tomas`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -239,6 +275,16 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 170 / 170 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 3 / 0 / 2 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 170 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.48 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.bras`, `D3.iracema`, `D3.nuno`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+- `D1.tomas` (nasceu no dia 2): absorvida por `D1.odete` no dia 5 (por `D5.tomas`)
 
 **Primeiros eventos**
 
@@ -308,6 +354,18 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 8 |
 | causadoPor: referências / arestas / descartadas | 117 / 117 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 3 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 3 / 0 / 2 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 117 / 9 / 1 / 9 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.08 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 4 (por `D4.bras`)
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.odete` no dia 5 (por `D5.bras`, `D5.nuno`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.bras` → `D4.bras` (3 | 68)
 
 **Primeiros eventos**
 
@@ -377,6 +435,18 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 139 / 139 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 2 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 0 / 4 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 139 / 4 / 0 / 5 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.13 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 12 (por `D12.bras`, `D12.nuno`)
+- `D1.lia` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.lia`, `D3.odete`)
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.bras` no dia 3 (por `D3.bras`, `D3.nuno`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+- `D1.tomas` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.iracema`, `D3.tomas`)
 
 **Primeiros eventos**
 
@@ -446,6 +516,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 118 / 118 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 1 / 3 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 20.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 118 / 7 / 2 / 8 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.15 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.lia`)
+- `D1.lia` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.bras`, `D3.odete`)
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.bras`, `D3.nuno`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+- `D1.tomas` (nasceu no dia 2): fechada por estabilidade no dia 8
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D8.tomas` → `D9.tomas` (63 | 4); `D9.tomas` → `D10.tomas` (64 | 3)
 
 **Primeiros eventos**
 
@@ -516,6 +600,17 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 9 |
 | causadoPor: referências / arestas / descartadas | 106 / 106 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 2 / 0 / 1 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 106 / 9 / 3 / 10 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.22 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.odete` no dia 5 (por `D5.iracema`, `D5.nuno`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.nuno` → `D4.nuno` (3 | 66); `D8.lia` → `D9.lia` (65 | 4); `D9.lia` → `D10.lia` (66 | 3)
 
 **Primeiros eventos**
 
@@ -585,6 +680,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 7 |
 | causadoPor: referências / arestas / descartadas | 80 / 80 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 2 / 0 / 3 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 40.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 80 / 39 / 19 / 37 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.02 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): fechada por estabilidade no dia 7
+- `D1.benedita` (nasceu no dia 2): aberta no fim da sessão
+- `D1.irma-clara` (nasceu no dia 2): aberta no fim da sessão
+- `D1.rui` (nasceu no dia 2): aberta no fim da sessão
+- `D2.joaquim` (nasceu no dia 3): fechada por estabilidade no dia 7
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.irma-clara` → `D4.irma-clara` (3 | 9); `D3.rui` → `D4.rui` (3 | 17); `D4.irma-clara` → `D5.irma-clara` (4 | 8); `D5.irma-clara` → `D6.irma-clara` (5 | 7); `D6.irma-clara` → `D7.irma-clara` (6 | 6); `D6.joaquim` → `D7.joaquim` (14 | 6); `D6.rui` → `D7.rui` (14 | 6); `D7.irma-clara` → `D8.irma-clara` (7 | 5); `D7.joaquim` → `D8.joaquim` (15 | 5); `D7.rui` → `D8.rui` (15 | 5); `D8.anselmo` → `D9.anselmo` (26 | 4); `D8.irma-clara` → `D9.irma-clara` (8 | 4); `D8.joaquim` → `D9.joaquim` (16 | 4); `D8.rui` → `D9.rui` (16 | 4); `D9.anselmo` → `D10.anselmo` (27 | 3); `D9.benedita` → `D10.benedita` (27 | 3); `D9.irma-clara` → `D10.irma-clara` (9 | 3); `D9.joaquim` → `D10.joaquim` (17 | 3); `D9.rui` → `D10.rui` (17 | 3)
 
 **Primeiros eventos**
 
@@ -657,6 +766,21 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 7 |
 | causadoPor: referências / arestas / descartadas | 91 / 91 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 6 / 0 / 5 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 91 / 31 / 12 / 32 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.24 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 10 (por `D10.anselmo`, `D10.benedita`, `D10.marta`)
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 8 (por `D8.anselmo`, `D8.irma-clara`, `D8.joaquim`, `D8.marta`, `D8.rui`)
+- `D1.joaquim` (nasceu no dia 2): absorvida por `D1.irma-clara` no dia 7 (por `D7.anselmo`, `D7.joaquim`)
+- `D1.marta` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.anselmo`, `D3.marta`)
+- `D2.rui` (nasceu no dia 3): absorvida por `D1.irma-clara` no dia 7 (por `D7.anselmo`, `D7.irma-clara`, `D7.joaquim`, `D7.rui`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D2.marta` → `D3.anselmo` (66 | 5); `D3.benedita` → `D4.benedita` (3 | 68); `D3.irma-clara` → `D6.irma-clara` (5 | 66); `D3.joaquim` → `D4.joaquim` (3 | 68); `D3.marta` → `D4.marta` (8 | 63); `D4.benedita` → `D5.benedita` (4 | 67); `D4.joaquim` → `D5.joaquim` (4 | 67); `D4.marta` → `D5.marta` (9 | 62); `D5.benedita` → `D6.benedita` (5 | 66); `D5.joaquim` → `D6.joaquim` (5 | 66); `D5.marta` → `D6.marta` (10 | 61); `D7.anselmo` → `D8.marta` (39 | 32)
 
 **Primeiros eventos**
 
@@ -726,6 +850,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 147 / 147 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 147 / 0 / 0 / 1 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.14 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -795,6 +927,15 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 157 / 157 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 2 / 0 / 1 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 157 / 0 / 0 / 1 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.25 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.irma-clara`, `D3.joaquim`, `D3.rui`)
 
 **Primeiros eventos**
 
@@ -864,6 +1005,21 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 134 / 134 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 6 / 0 / 5 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 134 / 13 / 3 / 13 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.10 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.anselmo`, `D5.benedita`, `D5.joaquim`, `D5.marta`, `D5.rui`)
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 4 (por `D4.anselmo`)
+- `D1.joaquim` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.joaquim`)
+- `D1.marta` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 4 (por `D4.anselmo`, `D4.marta`)
+- `D1.rui` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.irma-clara`, `D5.marta`, `D5.rui`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D1.irma-clara` → `D4.anselmo` (3 | 69); `D2.anselmo` → `D4.marta` (3 | 69); `D3.joaquim` → `D4.joaquim` (3 | 69)
 
 **Primeiros eventos**
 
@@ -933,6 +1089,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 140 / 140 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 0 / 4 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 140 / 12 / 3 / 13 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.11 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 4 (por `D4.benedita`, `D4.irma-clara`, `D4.rui`)
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 4 (por `D4.rui`)
+- `D1.joaquim` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.joaquim`)
+- `D1.marta` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.anselmo`, `D3.marta`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.irma-clara` → `D4.rui` (3 | 69); `D3.joaquim` → `D4.joaquim` (3 | 69); `D4.joaquim` → `D5.joaquim` (4 | 68)
 
 **Primeiros eventos**
 
@@ -1002,6 +1172,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 118 / 118 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 1 / 3 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 20.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 118 / 10 / 1 / 10 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.08 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.benedita`, `D5.joaquim`, `D5.marta`, `D5.rui`)
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.anselmo`, `D3.irma-clara`, `D3.joaquim`, `D3.rui`)
+- `D1.marta` (nasceu no dia 2): fechada por estabilidade no dia 6
+- `D1.rui` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.anselmo`, `D3.joaquim`, `D3.rui`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D9.irma-clara` → `D10.irma-clara` (66 | 3)
 
 **Primeiros eventos**
 
@@ -1072,6 +1256,20 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.178Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 117 / 117 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 1 / 3 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 20.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 117 / 11 / 2 / 13 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.10 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): aberta no fim da sessão
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 5 (por `D5.benedita`, `D5.joaquim`, `D5.rui`)
+- `D1.irma-clara` (nasceu no dia 2): fechada por estabilidade no dia 9
+- `D1.joaquim` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 4 (por `D4.joaquim`, `D4.marta`)
+- `D1.marta` (nasceu no dia 2): absorvida por `D1.anselmo` no dia 3 (por `D3.anselmo`, `D3.marta`)
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.irma-clara` → `D4.irma-clara` (3 | 3); `D9.marta` → `D10.marta` (63 | 3)
 
 **Primeiros eventos**
 

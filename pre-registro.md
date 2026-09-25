@@ -128,3 +128,44 @@ k = 2, 3 e 5 seguem as seções 4 a 6, agora aplicados às métricas desta emend
 
 **Momento.** Emenda feita antes da primeira campanha com modelo real. As sessões de
 validação que a motivaram não entram na análise confirmatória.
+
+### Emenda 2 (2026-09-25): análises de sensibilidade da detecção e validação causal
+
+**Motivação.** A reanálise da validação com a emenda 1 mostrou que parte
+relevante das fusões é feita por uma única ligação entre duas linhas: nas 24
+sessões houve 56 pontes de fusão, e cortá-las elevou a proporção de tramas
+fechadas por estabilidade de 0,08 para 0,33. Um teste de necessidade causal
+por intervenção (`sim/validacao/necessidade.ts`) mostrou que as ligações
+declaradas são causalmente necessárias segundo um juiz independente
+(necessidade 67 para ligações diretas, 44 para indiretas, 21 para pares não
+ligados), mas que o grau de saída de um evento não prevê sua necessidade
+(Spearman 0,09).
+
+**O que muda.** Nada na análise principal (emenda 1). Passam a ser reportadas,
+como **análises de sensibilidade pré-especificadas**, as mesmas métricas da
+emenda 1 recalculadas com as variantes de detecção de `services/grafo.ts`, sem
+alterar `services/arcos.ts`:
+
+1. `sem-pontes-de-fusao`: remove as pontes cujos dois lados têm 3 ou mais
+   eventos (uma única ligação unindo duas linhas);
+2. `fortes`: considera só ligações tipadas de força 2 ou 3 que não sejam do
+   tipo "lembrou" (aplicável só às campanhas com `ligacoesTipadas`);
+3. `janela3`: ligações que atravessam mais de 3 dias não unem tramas. Com a
+   janela de eventos recentes do prompt em 3 dias (`janelaDias`), esta variante
+   é inócua por construção e só será reportada se a janela do prompt mudar.
+
+A conclusão principal só será considerada robusta se a direção dos efeitos for
+a mesma na detecção completa e em `sem-pontes-de-fusao`.
+
+**Validação causal.** Em cada campanha real, uma amostra de ligações será
+submetida ao teste de necessidade por intervenção (ao menos 30 pares diretos,
+30 indiretos e 30 não ligados por modelo gerador), com juiz fora do conjunto
+de geradores, como complemento (não substituto) da anotação humana prevista na
+seção 6.
+
+**Ligações tipadas.** Se a campanha real usar `ligacoesTipadas`, isso vale para
+todas as condições, e o efeito de pedir tipo e força sobre a densidade de
+ligações será medido primeiro numa rodada de validação pareada (método 7 em
+`experimentos/validacao/`).
+
+**Momento.** Emenda feita antes da primeira campanha com modelo real.

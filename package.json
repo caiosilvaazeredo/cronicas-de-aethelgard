@@ -13,7 +13,8 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit -p .",
     "modelos-locais": "tsx sim/modelos-locais.ts",
-    "relatorio": "tsx sim/relatorio.ts"
+    "relatorio": "tsx sim/relatorio.ts",
+    "log-experimentos": "tsx sim/log-experimentos.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/validacao/v2-controle-tres-atos-claude
 
-Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
+Gerado por `npm run relatorio` em 2026-09-25T14:29:13.110Z.
 
 
 ## porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01
@@ -31,6 +31,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 15 / 15 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 15 / 0 / 0 / 1 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.73 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Falhas registradas**
 
@@ -93,6 +101,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 28 / 28 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 28 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.86 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -147,6 +163,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 19 / 19 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 19 / 2 / 0 / 3 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.47 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -201,6 +225,16 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 15 / 15 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 15 / 6 / 3 / 7 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.33 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D6.mestre` → `D7.mestre` (6 | 6); `D7.mestre` → `D8.mestre` (7 | 5); `D8.mestre` → `D9.mestre` (8 | 4)
 
 **Primeiros eventos**
 
@@ -255,6 +289,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 26 / 26 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 26 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.88 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Falhas registradas**
 
@@ -313,6 +355,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 30 / 30 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 30 / 0 / 0 / 0 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.93 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -367,6 +417,14 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 20 / 20 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 20 / 0 / 0 / 2 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.55 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -421,6 +479,16 @@ Gerado por `npm run relatorio` em 2026-09-25T00:20:03.716Z.
 | eventos fundadores | 1 |
 | causadoPor: referências / arestas / descartadas | 15 / 15 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 1 / 0 / 0 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 15 / 4 / 1 / 4 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.40 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D3.mestre` → `D4.mestre` (3 | 8)
 
 **Falhas registradas**
 

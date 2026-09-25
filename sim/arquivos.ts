@@ -31,7 +31,9 @@ export async function gravarSessao(diretorio: string, arquivos: Record<string, s
 }
 
 export async function sessaoConcluida(diretorio: string): Promise<boolean> {
-  return existe(join(diretorio, 'resumo.json'));
+  // resumo.json é gravado junto com condicao.json; exigir os dois evita
+  // confundir uma pasta de sessão com outras pastas que tenham um resumo.json
+  return (await existe(join(diretorio, 'resumo.json'))) && (await existe(join(diretorio, 'condicao.json')));
 }
 
 export async function carregarMundo(id: string, raiz = process.cwd()): Promise<ConfigMundo> {

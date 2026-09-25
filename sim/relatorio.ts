@@ -11,7 +11,10 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { lerArgs, texto } from './args';
-import { sessaoConcluida } from './arquivos';
+import { existe, sessaoConcluida } from './arquivos';
+import { reanalisar } from '../core/experimento/reanalise';
+import { desfechoDaTrama, resumirLinhagem, type Linhagem, type RegistroTrama } from '../services/linhagem';
+import { metricasDoGrafo, pontesDeFusao } from '../services/grafo';
 
 const lerJsonl = (t: string) => t.split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const pct = (x: number) => `${(100 * x).toFixed(1)}%`;
@@ -31,6 +34,18 @@ export async function gerarRelatorio(dir: string): Promise<string> {
     const narracoes = lerJsonl(await ler('narracoes.jsonl'));
     const chamadas = lerJsonl(await ler('chamadas.jsonl'));
     const porId = new Map(eventos.map((e: any) => [e.id, e]));
+    // linhagem: a gravada pelo motor ou, em sessões antigas, a da reanálise
+    let linhagem: Linhagem;
+    let linhagemRecalculada = false;
+    if (await existe(join(s, 'linhagem.json'))) {
+      linhagem = JSON.parse(await ler('linhagem.json'));
+    } else {
+      linhagem = reanalisar(eventos, condicao.dias, condicao.limiarEstabilidade ?? 3).linhagem;
+      linhagemRecalculada = true;
+    }
+    const lr = resumirLinhagem(linhagem);
+    const mg = metricasDoGrafo(eventos);
+    const pontesF = pontesDeFusao(eventos, 3);
     const m = condicao.modelos;
     const params = [...new Set(chamadas.map((c: any) => JSON.stringify({
       temperatura: c.parametrosEfetivos?.temperatura ?? null,
@@ -65,8 +80,36 @@ export async function gerarRelatorio(dir: string): Promise<string> {
       `| eventos fundadores | ${resumo.eventosFundadores} |`,
       `| causadoPor: referências / arestas / descartadas | ${resumo.causadoPor.referencias} / ${resumo.causadoPor.arestas} / ${resumo.causadoPor.descartadas} |`,
       `| ações descartadas / agentes sem ação / locais inválidos | ${resumo.acoesDescartadas} / ${resumo.agentesSemAcao} / ${resumo.locaisInvalidos} |`,
+      `| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | ${lr.nascidas} / ${lr.fechadasPorEstabilidade} / ${lr.fundidasAntesDeFechar} / ${lr.abertasNoFim}${linhagemRecalculada ? ' (recalculada pela reanálise)' : ''} |`,
+      `| proporção fechadas por estabilidade (emenda 1) | ${pct(lr.proporcaoFechadasPorEstabilidade)} |`,
+      `| grafo: ligações / pontes / pontes de fusão / articulações | ${mg.ligacoes} / ${mg.pontes} / ${mg.pontesDeFusao} / ${mg.articulacoes} |`,
+      `| grafo: distância média das ligações (dias) / além de 3 dias | ${mg.distanciaMedia.toFixed(2)} / ${mg.ligacoesAlemDe3Dias} |`,
+      ...(Object.keys(mg.porTipo).length
+        ? [`| ligações tipadas: por tipo / força média | ${Object.entries(mg.porTipo).map(([t, n]) => `${t} ${n}`).join(', ')} / ${mg.forcaMedia?.toFixed(2)} |`]
+        : []),
       ''
     );
+
+    const regs = Object.values(linhagem.tramas) as RegistroTrama[];
+    if (regs.length) {
+      partes.push('**Linhagem das tramas**\n');
+      regs
+        .sort((a, b) => a.nasceuEm - b.nasceuEm || a.id.localeCompare(b.id))
+        .forEach((r) => {
+          const d = desfechoDaTrama(r);
+          const fim =
+            d === 'fundida'
+              ? `absorvida por \`${r.absorvidaPor}\` no dia ${r.fundiuEm}${r.fundidaPorEventos.length ? ` (por ${r.fundidaPorEventos.map((x) => `\`${x}\``).join(', ')})` : ''}`
+              : d === 'fechada'
+                ? `fechada por estabilidade no dia ${r.fechouEm}`
+                : 'aberta no fim da sessão';
+          partes.push(`- \`${r.id}\` (${r.origem === 'renomeacao' ? 'id herdado de fusão' : 'nasceu'} no dia ${r.nasceuEm}): ${fim}`);
+        });
+      partes.push('');
+    }
+    if (pontesF.length) {
+      partes.push(`**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): ${pontesF.map((p) => `\`${p.a}\` → \`${p.b}\` (${p.ladoA} | ${p.ladoB})`).join('; ')}\n`);
+    }
 
     const falhas = chamadas.filter((c: any) => c.falhaEstrutura || c.erro);
     if (falhas.length) {

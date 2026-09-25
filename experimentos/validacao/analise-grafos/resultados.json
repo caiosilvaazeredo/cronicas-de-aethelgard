@@ -1,0 +1,196 @@
+{
+ "emenda1": {
+  "porTipo": {
+   "Cidade Viva": {
+    "tramas_nascidas_media": 3.938,
+    "prop_fechadas_estab_media": 0.078,
+    "prop_fundidas_media": 0.588,
+    "sessoes_que_convergem_emenda1": 0.125,
+    "prop_fechadas_v01_media": 0.15,
+    "sessoes_que_convergem_v01": 0.938
+   },
+   "três atos": {
+    "tramas_nascidas_media": 1.0,
+    "prop_fechadas_estab_media": 0.0,
+    "prop_fundidas_media": 0.0,
+    "sessoes_que_convergem_emenda1": 0.0,
+    "prop_fechadas_v01_media": 0.0,
+    "sessoes_que_convergem_v01": 0.875
+   }
+  },
+  "porModelo": {
+   "Haiku 4.5": {
+    "tramas_nascidas_media": 4.75,
+    "prop_fechadas_estab_media": 0.162,
+    "prop_fundidas_media": 0.583,
+    "sessoes_que_convergem_emenda1": 0.0
+   },
+   "Opus 5": {
+    "tramas_nascidas_media": 2.0,
+    "prop_fechadas_estab_media": 0.0,
+    "prop_fundidas_media": 0.417,
+    "sessoes_que_convergem_emenda1": 0.0
+   },
+   "Sonnet 4.6": {
+    "tramas_nascidas_media": 4.75,
+    "prop_fechadas_estab_media": 0.0,
+    "prop_fundidas_media": 0.775,
+    "sessoes_que_convergem_emenda1": 0.0
+   },
+   "Sonnet 5": {
+    "tramas_nascidas_media": 4.25,
+    "prop_fechadas_estab_media": 0.15,
+    "prop_fundidas_media": 0.575,
+    "sessoes_que_convergem_emenda1": 0.5
+   }
+  }
+ },
+ "variantes": [
+  {
+   "variante": "completo",
+   "tipo": "cidade-viva",
+   "nascidas_media": 3.938,
+   "prop_fechadas_estab": 0.078,
+   "prop_fundidas": 0.588,
+   "convergem_emenda1": 0.125
+  },
+  {
+   "variante": "completo",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.0,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  },
+  {
+   "variante": "fortes",
+   "tipo": "cidade-viva",
+   "nascidas_media": 3.938,
+   "prop_fechadas_estab": 0.078,
+   "prop_fundidas": 0.588,
+   "convergem_emenda1": 0.125
+  },
+  {
+   "variante": "fortes",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.0,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  },
+  {
+   "variante": "fortes-janela3",
+   "tipo": "cidade-viva",
+   "nascidas_media": 3.938,
+   "prop_fechadas_estab": 0.078,
+   "prop_fundidas": 0.588,
+   "convergem_emenda1": 0.125
+  },
+  {
+   "variante": "fortes-janela3",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.0,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  },
+  {
+   "variante": "janela3",
+   "tipo": "cidade-viva",
+   "nascidas_media": 3.938,
+   "prop_fechadas_estab": 0.078,
+   "prop_fundidas": 0.588,
+   "convergem_emenda1": 0.125
+  },
+  {
+   "variante": "janela3",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.0,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  },
+  {
+   "variante": "sem-pontes-de-fusao",
+   "tipo": "cidade-viva",
+   "nascidas_media": 4.25,
+   "prop_fechadas_estab": 0.332,
+   "prop_fundidas": 0.486,
+   "convergem_emenda1": 0.062
+  },
+  {
+   "variante": "sem-pontes-de-fusao",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.25,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  }
+ ],
+ "grafoPorGrupo": {
+  "Cidade Viva": {
+   "ligPorEvento": 1.75,
+   "pontes": 10.25,
+   "pontesFusao": 3.25,
+   "articulacoes": 10.938,
+   "nascidas": 3.938,
+   "propFechadas": 0.078,
+   "propFundidas": 0.588,
+   "propFechadasSemPontes": 0.332
+  },
+  "três atos": {
+   "ligPorEvento": 1.841,
+   "pontes": 1.5,
+   "pontesFusao": 0.5,
+   "articulacoes": 2.125,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0,
+   "propFechadasSemPontes": 0.25
+  }
+ },
+ "necessidade": {
+  "juiz": "claude-opus-5-5",
+  "pares": 90,
+  "porTipo": {
+   "direta": {
+    "n": 30,
+    "necessidadeMedia": 67
+   },
+   "indireta": {
+    "n": 30,
+    "necessidadeMedia": 44.2
+   },
+   "nao-ligado": {
+    "n": 30,
+    "necessidadeMedia": 21.2
+   }
+  },
+  "aucDiretaVsNaoLigado": 0.9194444444444444,
+  "aucIndiretaVsNaoLigado": 0.8194444444444444,
+  "aucDiretaVsIndireta": 0.74,
+  "spearmanGrauSaidaNecessidade": 0.08837532054080917,
+  "porGerador": {
+   "claude-sonnet-4-6": {
+    "direta": 63.333333333333336,
+    "indireta": 40,
+    "nao-ligado": 12.5
+   },
+   "claude-haiku-4-5-20251001": {
+    "direta": 46,
+    "indireta": 35,
+    "nao-ligado": 14.666666666666666
+   },
+   "claude-sonnet-5": {
+    "direta": 69.28571428571429,
+    "indireta": 48,
+    "nao-ligado": 23.75
+   },
+   "claude-opus-5": {
+    "direta": 76.25,
+    "indireta": 55,
+    "nao-ligado": 28.3
+   }
+  }
+ }
+}

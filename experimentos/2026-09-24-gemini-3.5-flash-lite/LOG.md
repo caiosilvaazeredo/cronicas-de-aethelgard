@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/2026-09-24-gemini-3.5-flash-lite
 
-Gerado por `npm run relatorio` em 2026-09-24T09:29:56.244Z.
+Gerado por `npm run relatorio` em 2026-09-25T14:29:12.924Z.
 
 
 ## porto-das-brumas_gemini_informa_6ag_jog-investigador_s1
@@ -31,6 +31,16 @@ Gerado por `npm run relatorio` em 2026-09-24T09:29:56.244Z.
 | eventos fundadores | 7 |
 | causadoPor: referências / arestas / descartadas | 44 / 44 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 9 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 3 / 0 / 0 / 3 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 44 / 8 / 0 / 5 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.09 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): aberta no fim da sessão
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+- `D1.tomas` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 

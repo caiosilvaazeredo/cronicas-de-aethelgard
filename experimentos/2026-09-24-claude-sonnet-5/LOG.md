@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/2026-09-24-claude-sonnet-5
 
-Gerado por `npm run relatorio` em 2026-09-24T09:39:05.678Z.
+Gerado por `npm run relatorio` em 2026-09-25T14:29:12.860Z.
 
 
 ## porto-das-brumas_claude-cli_controle-tres-atos_jog-investigador_s1
@@ -31,6 +31,16 @@ Gerado por `npm run relatorio` em 2026-09-24T09:39:05.678Z.
 | eventos fundadores | 3 |
 | causadoPor: referências / arestas / descartadas | 24 / 22 / 2 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 3 / 1 / 0 / 2 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 33.3% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 22 / 3 / 0 / 1 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.68 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.mestre` (nasceu no dia 2): fechada por estabilidade no dia 6
+- `D4.mestre` (nasceu no dia 5): aberta no fim da sessão
+- `D14.mestre` (nasceu no dia 15): aberta no fim da sessão
 
 **Primeiros eventos**
 
@@ -86,6 +96,19 @@ Gerado por `npm run relatorio` em 2026-09-24T09:39:05.678Z.
 | eventos fundadores | 7 |
 | causadoPor: referências / arestas / descartadas | 192 / 192 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 4 / 0 / 3 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 0.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 192 / 12 / 1 / 12 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.39 / 5 |
+
+**Linhagem das tramas**
+
+- `D1.bras` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.jogador`)
+- `D1.lia` (nasceu no dia 2): absorvida por `D1.odete` no dia 4 (por `D4.bras`, `D4.odete`)
+- `D1.nuno` (nasceu no dia 2): absorvida por `D1.odete` no dia 3 (por `D3.bras`, `D3.jogador`, `D3.nuno`, `D3.tomas`)
+- `D1.odete` (nasceu no dia 2): aberta no fim da sessão
+
+**Pontes de fusão** (ligação única entre duas linhas com 3+ eventos): `D2.jogador` → `D3.jogador` (102 | 3)
 
 **Primeiros eventos**
 
@@ -155,6 +178,18 @@ Gerado por `npm run relatorio` em 2026-09-24T09:39:05.678Z.
 | eventos fundadores | 6 |
 | causadoPor: referências / arestas / descartadas | 160 / 160 / 0 |
 | ações descartadas / agentes sem ação / locais inválidos | 0 / 0 / 0 |
+| linhagem: nascidas / fechadas por estabilidade / absorvidas por fusão / abertas no fim | 5 / 1 / 3 / 1 (recalculada pela reanálise) |
+| proporção fechadas por estabilidade (emenda 1) | 20.0% |
+| grafo: ligações / pontes / pontes de fusão / articulações | 160 / 7 / 0 / 6 |
+| grafo: distância média das ligações (dias) / além de 3 dias | 1.13 / 0 |
+
+**Linhagem das tramas**
+
+- `D1.anselmo` (nasceu no dia 2): fechada por estabilidade no dia 6
+- `D1.benedita` (nasceu no dia 2): absorvida por `D1.marta` no dia 4 (por `D4.anselmo`, `D4.benedita`, `D4.marta`, `D4.rui`)
+- `D1.irma-clara` (nasceu no dia 2): absorvida por `D1.marta` no dia 3 (por `D3.irma-clara`, `D3.joaquim`)
+- `D1.joaquim` (nasceu no dia 2): absorvida por `D1.marta` no dia 3 (por `D3.irma-clara`, `D3.joaquim`, `D3.marta`)
+- `D1.marta` (nasceu no dia 2): aberta no fim da sessão
 
 **Primeiros eventos**
 

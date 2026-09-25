@@ -90,13 +90,20 @@ async function principal() {
       for (const [aId, d] of anc) {
         const a = porId.get(aId);
         const tipo = d === 1 ? 'direta' : 'indireta';
-        pool[tipo].push({ ...base, tipo, a, ctx, grauSaidaA: (saidaG.get(aId) ?? []).length, distancia: d });
+        const lig = d === 1 ? (b.ligacoes ?? []).find((l: any) => l.id === aId) : undefined;
+        pool[tipo].push({ ...base, tipo, a, ctx, grauSaidaA: (saidaG.get(aId) ?? []).length, distancia: d, ligacao: lig ?? null });
       }
       const naoLigados = s.eventos.filter((a: any) => a.turno < b.turno && b.turno - a.turno <= 4 && !anc.has(a.id));
       for (const a of naoLigados) pool['nao-ligado'].push({ ...base, tipo: 'nao-ligado', a, ctx, grauSaidaA: (saidaG.get(a.id) ?? []).length, distancia: null });
     }
   }
-  const amostra = Object.values(pool).flatMap((lista) => embaralhar(lista, rng).slice(0, porTipo));
+  // quantidades por tipo de par (padrão: --por-tipo para todos)
+  const quanto: Record<string, number> = {
+    direta: numero(args, 'diretas', porTipo),
+    indireta: numero(args, 'indiretas', porTipo),
+    'nao-ligado': numero(args, 'nao-ligados', porTipo),
+  };
+  const amostra = Object.entries(pool).flatMap(([t, lista]) => embaralhar(lista, rng).slice(0, quanto[t]));
   const itens = embaralhar(amostra, rng).map((x, i) => ({ ...x, item: `N${String(i + 1).padStart(4, '0')}` }));
   process.stderr.write(`necessidade: ${itens.length} pares (${Object.entries(pool).map(([k, v]) => `${k}: ${v.length} disponíveis`).join(', ')})\n`);
 
@@ -131,6 +138,7 @@ async function principal() {
         julgamentos: lote.map((x: any) => ({
           item: x.item, tipo: x.tipo, gerador: x.gerador, controle: x.controle, sessao: x.sessao,
           a: x.a.id, b: x.b.id, distancia: x.distancia, grauSaidaA: x.grauSaidaA,
+          tipoLigacao: x.ligacao?.tipo ?? null, forcaLigacao: x.ligacao?.forca ?? null,
           chance: porItem.get(x.item) ?? null,
           necessidade: porItem.has(x.item) ? 100 - (porItem.get(x.item) as number) : null,
         })),
@@ -166,6 +174,19 @@ async function principal() {
     aucIndiretaVsNaoLigado: auc(ind, nl),
     aucDiretaVsIndireta: auc(dir, ind),
     spearmanGrauSaidaNecessidade: spearman(ligados.map((j: any) => j.grauSaidaA), ligados.map((j: any) => j.necessidade)),
+    // com ligações tipadas: a necessidade acompanha o tipo e a força declarados?
+    porTipoLigacao: Object.fromEntries(['motivou', 'possibilitou', 'reagiu', 'lembrou'].map((t) => {
+      const v = js.filter((j: any) => j.tipoLigacao === t).map((j: any) => j.necessidade);
+      return [t, { n: v.length, necessidadeMedia: media(v) }];
+    })),
+    porForca: Object.fromEntries([1, 2, 3].map((f) => {
+      const v = js.filter((j: any) => j.forcaLigacao === f).map((j: any) => j.necessidade);
+      return [f, { n: v.length, necessidadeMedia: media(v) }];
+    })),
+    spearmanForcaNecessidade: (() => {
+      const t = js.filter((j: any) => j.forcaLigacao !== null);
+      return spearman(t.map((j: any) => j.forcaLigacao), t.map((j: any) => j.necessidade));
+    })(),
     porGerador: Object.fromEntries([...new Set(js.map((j: any) => j.gerador))].map((g) => [g, Object.fromEntries(['direta', 'indireta', 'nao-ligado'].map((t) => [t, media(js.filter((j: any) => j.gerador === g && j.tipo === t).map((j: any) => j.necessidade))]))])),
   };
   await writeFile(join(saida, 'resumo.json'), JSON.stringify(resumo, null, 2) + '\n');

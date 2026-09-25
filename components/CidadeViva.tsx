@@ -2,6 +2,41 @@ import React, { useMemo, useState } from 'react';
 import MapaCronica from './MapaCronica';
 import type { ConfigMundo, EstadoMundo, EstadoPersonagem, EventoCidade } from '../core/mundo/tipos';
 import { ID_JOGADOR } from '../core/mundo/tipos';
+import type { StoryEvent, Trama } from '../types';
+import type { Linhagem } from '../services/linhagem';
+
+interface SessaoArquivo {
+  nome: string;
+  eventos: StoryEvent[];
+  tramas: Trama[];
+  linhagem: Linhagem | null;
+}
+
+/**
+ * Lê uma sessão exportada pelo simulador (eventos.jsonl, tramas.json e,
+ * se houver, linhagem.json) ou o JSON exportado pelo próprio modo jogável.
+ */
+async function lerSessaoExportada(arquivos: FileList): Promise<SessaoArquivo> {
+  const porNome = new Map<string, File>();
+  Array.from(arquivos).forEach((f) => porNome.set(f.name, f));
+  const texto = (nome: string) => porNome.get(nome)?.text();
+  const unico = arquivos.length === 1 ? arquivos[0] : null;
+  if (unico && unico.name.endsWith('.json') && !['tramas.json', 'linhagem.json'].includes(unico.name)) {
+    const d = JSON.parse(await unico.text());
+    const estado = d.estado ?? d;
+    return { nome: unico.name, eventos: estado.eventos, tramas: estado.tramas, linhagem: estado.linhagem ?? null };
+  }
+  const ev = await texto('eventos.jsonl');
+  const tr = await texto('tramas.json');
+  if (!ev || !tr) throw new Error('Selecione eventos.jsonl e tramas.json (e linhagem.json, se houver) da pasta da sessão.');
+  const lin = await texto('linhagem.json');
+  return {
+    nome: 'sessão exportada',
+    eventos: ev.split('\n').filter(Boolean).map((l) => JSON.parse(l)),
+    tramas: JSON.parse(tr),
+    linhagem: lin ? JSON.parse(lin) : null,
+  };
+}
 
 // Modo jogável da Cidade Viva: o mundo age sozinho, dia após dia; o jogador
 // humano é só mais um agente. Usa o mesmo núcleo (core/) do simulador em
@@ -48,6 +83,17 @@ const CidadeViva: React.FC<Props> = ({ onVoltarMenu }) => {
   const [fala, setFala] = useState('');
   const [conversas, setConversas] = useState<{ dia: number; quem: string; eu: string; resposta: string }[]>([]);
   const [mostrarCronica, setMostrarCronica] = useState(false);
+  const [sessaoArquivo, setSessaoArquivo] = useState<SessaoArquivo | null>(null);
+
+  const abrirArquivos = async (arquivos: FileList | null) => {
+    if (!arquivos || arquivos.length === 0) return;
+    setErro(null);
+    try {
+      setSessaoArquivo(await lerSessaoExportada(arquivos));
+    } catch (e) {
+      setErro((e as Error).message);
+    }
+  };
 
   const iniciar = async () => {
     setErro(null);
@@ -137,6 +183,20 @@ const CidadeViva: React.FC<Props> = ({ onVoltarMenu }) => {
     a.click();
   };
 
+  if (sessaoArquivo) {
+    return (
+      <MapaCronica
+        eventos={sessaoArquivo.eventos}
+        tramas={sessaoArquivo.tramas}
+        linhagem={sessaoArquivo.linhagem}
+        onGerarFechamento={() => {}}
+        gerandoTramaId={null}
+        onFechar={() => setSessaoArquivo(null)}
+        rotuloFechar="Fechar sessão"
+      />
+    );
+  }
+
   if (!sessao) {
     return (
       <div className="min-h-screen bg-[#0f0f1b] text-zinc-200 flex items-center justify-center p-6">
@@ -185,6 +245,17 @@ const CidadeViva: React.FC<Props> = ({ onVoltarMenu }) => {
               {carregando ?? 'Entrar na cidade'}
             </button>
           </div>
+          <label className="block text-center text-xs text-zinc-400 cursor-pointer hover:text-[#c5a059]">
+            <input
+              type="file"
+              multiple
+              accept=".json,.jsonl"
+              className="hidden"
+              data-testid="abrir-sessao"
+              onChange={(e) => abrirArquivos(e.target.files)}
+            />
+            🗺️ Abrir sessão exportada no Mapa da Crônica (eventos.jsonl, tramas.json, linhagem.json)
+          </label>
         </div>
       </div>
     );
@@ -201,6 +272,7 @@ const CidadeViva: React.FC<Props> = ({ onVoltarMenu }) => {
         <MapaCronica
           eventos={estado.eventos}
           tramas={estado.tramas}
+          linhagem={estado.linhagem ?? null}
           onGerarFechamento={() => {}}
           gerandoTramaId={null}
           onFechar={() => setMostrarCronica(false)}

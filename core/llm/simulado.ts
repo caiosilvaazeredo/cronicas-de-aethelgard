@@ -145,6 +145,7 @@ const GERADORES: Record<string, (rng: () => number, d: any) => unknown> = {
   relatos: gerarRelatos,
   curador: gerarNarracao,
   'mestre-controle': gerarMestreControle,
+  necessidade: (rng, d) => ({ avaliacoes: (d?.ids ?? []).map((id: string) => ({ id, chance: Math.round(rng() * 100) })) }),
   conversa: (rng) => ({ fala: rng() < 0.5 ? 'Não sei de nada, forasteiro.' : 'Dizem muita coisa por aqui. Tome cuidado.' }),
 };
 

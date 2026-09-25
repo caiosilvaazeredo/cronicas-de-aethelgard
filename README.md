@@ -251,6 +251,29 @@ principal passou a ser `linhagem.proporcaoFechadasPorEstabilidade` em
 `resumo.json`, e cada sessão exporta `linhagem.json`. Ver a emenda 1 no
 `pre-registro.md` e `experimentos/validacao/emenda1/`.
 
+### Análises de grafo (services/grafo.ts)
+
+- **Pontes e pontos de articulação** (Tarjan) do grafo de eventos ligados, e
+  **pontes de fusão**: a ligação única que une duas linhas com 3+ eventos cada.
+- **Variantes de detecção** na reanálise, sem alterar o `arcos.ts`: `janela3`
+  (ligações de mais de 3 dias viram ecos e não unem tramas), `fortes` (só
+  ligações tipadas de força 2+ e que não sejam só lembrança),
+  `fortes-janela3` e `sem-pontes-de-fusao`:
+  `npm run reanalisar -- --campanha <dir> --variantes todas`.
+- **Ligações tipadas** (`--ligacoes-tipadas` ou `ligacoesTipadas: true` na
+  campanha): cada causa vem com tipo (motivou, possibilitou, reagiu, lembrou)
+  e força (1 a 3); `causadoPor` é derivado dos ids. Desligado por padrão.
+- **Teste de necessidade causal por intervenção**
+  (`sim/validacao/necessidade.ts`): um juiz estima a chance de B acontecer
+  se A não tivesse acontecido, para ligações diretas, indiretas e pares não
+  ligados. Resultado da validação em `experimentos/validacao/m6-necessidade/`.
+- **Mapa da Crônica** mostra pontes de fusão (seta vermelha), pontos de
+  articulação (borda tracejada), eventos que fundiram tramas (⨝), tipo e força
+  das ligações e a **linhagem** das tramas (botão Linhagem: nascimento,
+  fechamento e absorção por fusão ao longo dos dias). No menu da Cidade Viva,
+  "Abrir sessão exportada" abre no mapa qualquer sessão dos experimentos
+  (eventos.jsonl, tramas.json e linhagem.json).
+
 ### Exportação
 
 ```

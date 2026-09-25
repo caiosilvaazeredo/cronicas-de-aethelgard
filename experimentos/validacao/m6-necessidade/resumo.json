@@ -1,0 +1,44 @@
+{
+  "juiz": "claude-opus-5-5",
+  "pares": 90,
+  "porTipo": {
+    "direta": {
+      "n": 30,
+      "necessidadeMedia": 67
+    },
+    "indireta": {
+      "n": 30,
+      "necessidadeMedia": 44.2
+    },
+    "nao-ligado": {
+      "n": 30,
+      "necessidadeMedia": 21.2
+    }
+  },
+  "aucDiretaVsNaoLigado": 0.9194444444444444,
+  "aucIndiretaVsNaoLigado": 0.8194444444444444,
+  "aucDiretaVsIndireta": 0.74,
+  "spearmanGrauSaidaNecessidade": 0.08837532054080917,
+  "porGerador": {
+    "claude-sonnet-4-6": {
+      "direta": 63.333333333333336,
+      "indireta": 40,
+      "nao-ligado": 12.5
+    },
+    "claude-haiku-4-5-20251001": {
+      "direta": 46,
+      "indireta": 35,
+      "nao-ligado": 14.666666666666666
+    },
+    "claude-sonnet-5": {
+      "direta": 69.28571428571429,
+      "indireta": 48,
+      "nao-ligado": 23.75
+    },
+    "claude-opus-5": {
+      "direta": 76.25,
+      "indireta": 55,
+      "nao-ligado": 28.3
+    }
+  }
+}

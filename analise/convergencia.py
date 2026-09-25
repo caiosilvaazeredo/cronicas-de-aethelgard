@@ -69,6 +69,7 @@ def carregar_reanalise(campanha: Path) -> pd.DataFrame:
             {
                 "sessao": l["sessao"],
                 "k": l["k"],
+                "variante": l.get("variante", "completo"),
                 "celula": c["celula"],
                 "modelo": rotulo_modelo(c),
                 "estadoTramas": c["estadoTramas"],
@@ -301,6 +302,8 @@ def main() -> None:
     ks = [int(k) for k in args.ks.split(",")]
 
     relatorio = [f"# Análise de convergência: {args.campanha.name}\n"]
+    todas = dados
+    dados = todas[todas["variante"] == "completo"]
     for k in ks:
         df = dados[dados["k"] == k]
         if df.empty:
@@ -320,6 +323,19 @@ def main() -> None:
             "\n### Figuras\n",
             "".join(f"- ![{f.name}]({f.name})\n" for f in figs),
         ]
+
+    # variantes de detecção (services/grafo.ts): quanto cada filtro muda o resultado
+    if todas["variante"].nunique() > 1:
+        linhas = []
+        for (variante, k, tipo, modelo), g in todas.groupby(["variante", "k", "tipo", "modelo"]):
+            conv1 = [converge_emenda1(a, f, u) for a, f, u in zip(g["abertas"], g["fechadasAcum"], g["fundidasAcum"])]
+            linhas.append({"variante": variante, "k": k, "tipo": tipo, "modelo": modelo, "sessoes": len(g),
+                           "nascidas_media": g["nascidas"].mean(), "prop_fechadas_estab": g["propFechadasEstab"].mean(),
+                           "prop_fundidas": g["propFundidas"].mean(), "convergem_emenda1": float(np.mean(conv1))})
+        tab = pd.DataFrame(linhas)
+        tab.to_csv(destino / "variantes.csv", index=False)
+        resumo_v = tab.groupby(["variante", "k", "tipo"])[["nascidas_media", "prop_fechadas_estab", "prop_fundidas", "convergem_emenda1"]].mean().reset_index()
+        relatorio += ["\n## Variantes de detecção (média por tipo)\n", para_markdown(resumo_v)]
 
     modelos = resumo_modelos(args.campanha)
     modelos.to_csv(destino / "modelos.csv", index=False)

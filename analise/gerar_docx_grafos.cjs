@@ -26,7 +26,7 @@ const T = JSON.parse(fs.readFileSync(path.join(dirA, 'textos.json'), 'utf8'));
 const FONTE = 'Arial';
 
 const n = (x, c = 2) => (x === null || x === undefined || Number.isNaN(x) ? '–' : Number(x).toFixed(c).replace('.', ','));
-const pct = (x, c = 0) => (x === null || x === undefined ? '–' : `${(100 * x).toFixed(c)}%`);
+const pct = (x, c = 0) => (x === null || x === undefined ? "–" : `${(100 * x).toFixed(Number.isInteger(Math.round(1000 * x) / 10) ? c : 1).replace(".", ",")}%`);
 const pv = (p) => (p === null || p === undefined ? '–' : p < 0.001 ? '< 0,001' : n(p, 3));
 
 function runs(texto, extra = {}) {

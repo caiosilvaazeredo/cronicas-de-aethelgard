@@ -56,3 +56,19 @@ Principal achado: com modelos que ligam muito os eventos, a detecção por
 componentes conectados funde as linhas numa única trama, e a queda da curva
 de tramas abertas passa a medir fusão, não fechamento. A métrica e o
 pré-registro precisam separar os dois antes da campanha real.
+
+# Rodada de grafos (2026-09-25)
+
+Branch `claude/metrica-fusao-fechamento`. Métrica que separa fusão de
+fechamento (emenda 1 do pré-registro), variantes de detecção (emenda 2),
+teste de necessidade causal por intervenção e ligações tipadas:
+
+| pasta | conteúdo | chamadas |
+|---|---|---|
+| `validacao/emenda1/` | reanálise das 24 sessões com a emenda 1 e as variantes de detecção | 0 |
+| `validacao/m6-necessidade/` | necessidade causal: diretas 67, indiretas 44, não ligadas 21 (AUC 0,92) | 23 |
+| `validacao/v3-ligacoes-tipadas-claude/` | método 7: 8 sessões com tipo e força, pareadas com o método 1 | 177 |
+| `validacao/m6b-necessidade-tipadas/` | necessidade × tipo e força declarados | 25 |
+
+- **Relatório: `validacao/analise-grafos/relatorio-grafos.docx`** (com debriefing e o log de todas as sessões no apêndice).
+- Log geral de todos os experimentos: `LOG-GERAL.md` (`npm run log-experimentos`); detalhe por sessão no `LOG.md` de cada pasta.

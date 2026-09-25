@@ -1,0 +1,134 @@
+{
+  "titulo": "Grafos, fusão e causalidade na Cidade Viva",
+  "subtitulo": "Emendas 1 e 2, variantes de detecção, necessidade causal, ligações tipadas e debriefing",
+  "autoria": "Preparado para Caio Silva Azeredo (PESC/COPPE/UFRJ) · orientação Prof. Geraldo Xexéo",
+  "data": "Rodada de 25 de setembro de 2026 · branch claude/metrica-fusao-fechamento",
+  "resumo": [
+    "Esta rodada partiu do principal achado da validação anterior: com os modelos Claude, a queda da curva de tramas abertas vinha de **fusões** entre linhas de acontecimento, não de fechamentos. Separamos fusão de fechamento (emenda 1), declaramos análises de sensibilidade (emenda 2) e acrescentamos ao instrumento análises de grafo e dois novos experimentos com modelos reais: o **teste de necessidade causal por intervenção** e as **ligações tipadas**. Foram 225 novas chamadas ao Claude, a US$ 15,85. Somadas às rodadas anteriores, o registro cobre 37 sessões e 1.409 chamadas (Apêndice A).",
+    "**Fusão × fechamento.** Reanalisadas as 24 sessões da validação, só 2 de 16 sessões da Cidade Viva (12,5%) convergem pela definição da emenda 1, contra 15 de 16 (94%) pela definição original. Das linhas que nascem, 59% são absorvidas por fusão e 8% fecham por estabilidade. A definição original confirmava a hipótese por um artefato.",
+    "**Pontes de fusão.** Nas 24 sessões há 56 pontes de fusão, isto é, ligações únicas que unem duas linhas com 3 ou mais eventos. Cortá-las quadruplica a proporção de tramas fechadas por estabilidade (8% → 33%). A janela temporal de 3 dias não muda nada: nenhuma ligação passa de 3 dias, porque o prompt já só mostra os últimos 3 dias.",
+    "**As ligações declaradas são causalmente necessárias.** Um juiz independente (Opus 5.5) estimou a necessidade de A para B em 67 (de 100) para ligações diretas, 44 para indiretas e 21 para pares não ligados (AUC 0,92). A gradação aparece nos quatro modelos geradores. Porém, **o número de ligações de um evento não prevê sua necessidade** (Spearman 0,09), o que enfraquece a classificação de eventos centrais (kernels) só pelo grau.",
+    "**Ligações tipadas pioram a fusão, mas carregam informação.** Pedir tipo e força de cada causa aumentou a densidade de ligações nas 8 sessões pareadas (1,71 → 2,30 por evento; Wilcoxon p = 0,008), zerou os fechamentos por estabilidade e fez as pontes de fusão quase sumirem (3,75 → 0,13 por sessão): as linhas passam a se unir por muitas ligações de uma vez. Ainda assim, o tipo e a força que o próprio gerador declara acompanham a necessidade medida pelo juiz: possibilitou 68, motivou 60, reagiu 53, lembrou 40; força 3/2/1: 66/52/44 (Spearman 0,31).",
+    "**Recomendação central:** manter a geração sem ligações tipadas na campanha principal e atacar a densidade de ligações pela medição. Pedir menos causas por ação é uma possibilidade, mas precisa de nova rodada de validação; o Debriefing detalha os próximos passos."
+  ],
+  "mudancas": [
+    "Tudo foi implementado sem alterar o comportamento de services/arcos.ts: as análises novas leem a detecção existente ou filtram as ligações antes dela."
+  ],
+  "mudancas_itens": [
+    "**services/linhagem.ts:** nascimento, fusão (com os eventos que a causaram), renomeação e fechamento por estabilidade de cada trama, dia a dia; cada sessão exporta linhagem.json.",
+    "**pre-registro.md:** emenda 1 (nova métrica principal e nova definição de convergência) e emenda 2 (variantes de detecção como sensibilidade, teste de necessidade como validação causal, regras para ligações tipadas), ambas datadas de 2026-09-25 e sem sobrescrever o texto original.",
+    "**services/grafo.ts:** pontes e pontos de articulação (Tarjan), pontes de fusão, filtros por janela temporal, tipo e força, e variantes de detecção na reanálise (npm run reanalisar -- --variantes todas).",
+    "**Ligações tipadas** (opção ligacoesTipadas): cada causa com tipo (motivou, possibilitou, reagiu, lembrou) e força (1 a 3).",
+    "**sim/validacao/necessidade.ts:** teste contrafactual de necessidade causal.",
+    "**Mapa da Crônica:** pontes de fusão, articulações, eventos que fundiram tramas, tipo e força das ligações e painel de linhagem; abre qualquer sessão exportada.",
+    "**Logs:** LOG.md por pasta de sessões, agora com a linhagem de cada trama, e experimentos/LOG-GERAL.md (npm run log-experimentos) com todas as sessões e métodos."
+  ],
+  "emenda1_intro": [
+    "A curva de tramas abertas cai tanto quando uma trama fecha por estabilidade quanto quando ela é absorvida por outra numa fusão. A emenda 1 separa as duas causas. A métrica principal passa a ser a proporção de tramas fechadas por estabilidade sobre tramas nascidas. A convergência exige, no último terço da sessão, curva de abertas sem subir, ao menos um fechamento por estabilidade e fechamentos ao menos tão numerosos quanto as fusões. Abaixo, as 24 sessões da validação (16 da Cidade Viva e 8 do controle de três atos) reanalisadas com k = 3."
+  ],
+  "emenda1_resultados": [
+    "A Figura 1 mostra o mecanismo. Na Cidade Viva nascem em média 3,9 linhas; quase todas somem até o dia 6, e a curva de absorvidas por fusão acompanha a queda das abertas, enquanto os fechamentos por estabilidade ficam perto de zero. O controle de três atos gera uma única linha por sessão e, pela emenda, nunca converge; pela definição antiga, convergia em 88% das sessões.",
+    "Entre os modelos, só o Sonnet 5 teve sessões que convergem pela emenda (2 de 4). Haiku 4.5 e Sonnet 5 fecham cerca de 15% das tramas por estabilidade; Sonnet 4.6 e Opus 5 não fecham nenhuma e têm 78% e 42% das tramas absorvidas por fusão."
+  ],
+  "variantes_intro": [
+    "As variantes de detecção reaplicam a mesma detecção depois de filtrar ligações: janela3 (ligações de mais de 3 dias não unem tramas), fortes (só ligações tipadas de força 2+ e que não sejam só lembrança), fortes-janela3 e sem-pontes-de-fusao (remove a ligação única entre duas linhas com 3+ eventos). A emenda 2 as declara como análises de sensibilidade."
+  ],
+  "variantes_resultados": [
+    "**sem-pontes-de-fusao** é a única variante que muda o resultado nessas sessões: a proporção de fechadas por estabilidade sobe de 8% para 33% e a de absorvidas cai de 59% para 49%. Parte relevante da fusão depende de uma ligação só.",
+    "**janela3 é inócua por construção:** nenhuma das 2.184 ligações atravessa mais de 3 dias, porque o prompt mostra aos agentes só os eventos dos últimos 3 dias (janelaDias = 3). Se a janela do prompt for ampliada, a variante volta a fazer sentido.",
+    "**fortes** não muda nada nessas sessões porque elas não têm ligações tipadas. O efeito nas sessões tipadas está na seção 5."
+  ],
+  "grafo_resultados": [
+    "Os grafos da Cidade Viva sem tipos têm, em média, 10 pontes e 3,3 pontes de fusão por sessão; os tipados, 1,75 pontes e 0,1 ponte de fusão. Com mais ligações por evento, quase nenhuma ligação é crítica: o grafo fica redundante, e é por isso que cortar pontes de fusão ajuda pouco nas sessões tipadas (3%)."
+  ],
+  "necessidade_intro": [
+    "O grau no grafo diz quais eventos têm ligações; o teste de necessidade pergunta se elas são necessárias. Para 90 pares (A, B) das 24 sessões da validação, com A anterior a B, o juiz (Opus 5.5, fora do conjunto de geradores) recebeu a história que leva a B e estimou a chance de B acontecer se A não tivesse acontecido. Necessidade = 100 − chance. Tipos de par: ligação direta declarada pelo gerador, ancestral indireto (2+ ligações) e par não ligado (controle), 30 de cada."
+  ],
+  "necessidade_resultados": [
+    "A gradação direta > indireta > não ligado aparece nos quatro modelos geradores, e os modelos maiores declaram ligações mais necessárias (Opus 5: 76; Sonnet 5: 69; Sonnet 4.6: 63; Haiku 4.5: 46). Isso reforça, por outro método, o resultado da validação anterior (juízes cegos distinguindo ligações reais de distratores com AUC 0,79 a 0,81).",
+    "O grau de saída de A quase não se relaciona com sua necessidade (Spearman 0,09). A classificação de eventos em núcleo e satélite feita pelo arcos.ts, baseada só em ter ou não ligações, é uma aproximação fraca; o teste por intervenção mede algo que o grafo sozinho não mede e pode servir para ponderar as ligações na detecção."
+  ],
+  "tipadas_intro": [
+    "O método 7 repete o método 1 na condição A (os mesmos 4 modelos, 2 mundos, 12 dias e as mesmas sementes), mas pedindo que cada causa venha com tipo e força. Cada uma das 8 sessões tem um par sem tipos no método 1, o que permite comparar sessão a sessão. Foram 177 chamadas, US$ 13,87, sem falhas de estrutura."
+  ],
+  "tipadas_resultados": [
+    "**O efeito é o oposto do esperado.** Com o formato estruturado, todos os modelos listaram mais causas (Opus 5 chegou a 3,0 ligações por evento) e nenhuma sessão teve tramas fechadas por estabilidade. As linhas se fundem por muitas ligações ao mesmo tempo, e por isso as pontes de fusão quase desaparecem.",
+    "O filtro das ligações fortes quase não ajuda (fechadas 0% → 5%), porque os modelos marcam a maioria das ligações como fortes (força média 2,3) e usam pouco o tipo \"lembrou\" (11%). O Sonnet 5 foi quem mais usou \"lembrou\" (68 de 289) e o Sonnet 4.6 quem menos usou (7 de 310).",
+    "Com n = 8 pares, só o aumento de ligações por evento e a queda das pontes de fusão são estatisticamente claros; as demais diferenças são tendências."
+  ],
+  "necessidade_tipos_intro": [
+    "Nas sessões do método 7, o mesmo juiz avaliou 80 ligações diretas tipadas e 20 pares não ligados, para ver se o tipo e a força declarados pelo gerador acompanham a necessidade medida de forma independente."
+  ],
+  "necessidade_tipos_resultados": [
+    "**O rótulo declarado pelo gerador tem conteúdo:** \"possibilitou\" e \"motivou\" são as ligações mais necessárias, \"lembrou\" a menos necessária, e a necessidade cresce com a força declarada. As ligações tipadas seguem distinguíveis dos pares não ligados (AUC 0,93).",
+    "Mas a necessidade média das ligações diretas cai de 67 (sem tipos) para 57 (com tipos): o formato tipado faz o modelo acrescentar ligações mais fracas. O tipo e a força servem como peso de ligação, mas ao custo de mais ligações."
+  ],
+  "mapa": [
+    "O Mapa da Crônica passou a mostrar a estrutura e a história das tramas. No grafo, os eventos que causaram fusões têm borda dupla e símbolo ⨝, os pontos de articulação têm borda tracejada, as pontes de fusão são setas vermelhas e, com ligações tipadas, a espessura indica a força e o pontilhado o tipo \"lembrou\". O painel de linhagem mostra cada trama ao longo dos dias: fechada por estabilidade (verde), absorvida por fusão (âmbar, com seta até a absorvedora) ou aberta (cinza). No menu da Cidade Viva, \"Abrir sessão exportada\" carrega qualquer sessão dos experimentos. A Figura 6 mostra a sessão do Sonnet 5 no Vale Silente, com três tramas absorvidas por D1.anselmo e D1.marta fechada no dia 6."
+  ],
+  "limitacoes": [
+    "**Amostras pequenas:** uma sessão por célula, 12 dias; 8 pares no método 7; 90 e 100 pares nos testes de necessidade. Todos os testes são exploratórios.",
+    "**O juiz é um modelo Claude:** o Opus 5.5 não foi gerador, mas é da mesma família. A necessidade estimada por ele é uma medida de plausibilidade contrafactual, não de causalidade verdadeira; a anotação humana continua necessária.",
+    "**Contexto limitado no teste de necessidade:** o juiz recebe no máximo os 8 ancestrais mais próximos de B, não a sessão inteira.",
+    "**Via CLI:** sem temperatura nem semente controláveis; sessões não se repetem bit a bit.",
+    "**A reanálise das sessões antigas recalcula a linhagem;** as sessões novas (método 7) já a gravam durante a execução, e há teste garantindo que as duas coincidem.",
+    "**Pontes de fusão com tamanho mínimo 3 é uma escolha:** outros tamanhos mudam a variante sem-pontes-de-fusao."
+  ],
+  "debriefing": [
+    {
+      "titulo": "O que foi feito",
+      "paragrafos": [
+        "A métrica que separa fusão de fechamento foi implementada e aplicada; o pré-registro recebeu duas emendas datadas; o instrumento ganhou análises de grafo (pontes, articulações, variantes de detecção), ligações tipadas, um teste de necessidade causal por intervenção e um Mapa da Crônica com linhagem. Dois experimentos novos rodaram com modelos Claude reais, somando 225 chamadas e US$ 15,85. Os logs de todas as 37 sessões estão em experimentos/LOG-GERAL.md e nos LOG.md de cada pasta."
+      ],
+      "itens": []
+    },
+    {
+      "titulo": "O que aprendemos",
+      "paragrafos": [],
+      "itens": [
+        "A fusão, não o fechamento, é o destino típico de uma linha de acontecimento na Cidade Viva com modelos Claude: 59% das linhas são absorvidas, 8% fecham.",
+        "Uma parte das fusões depende de uma única ligação (pontes de fusão); cortá-las eleva os fechamentos a 33%. Outra parte vem de redundância: muitas ligações entre as mesmas linhas.",
+        "As ligações declaradas são necessárias segundo um juiz independente, mas o grau de um evento não diz quão necessário ele é.",
+        "Pedir tipo e força aumenta a densidade de ligações e piora a fusão, embora o rótulo declarado acompanhe a necessidade. É informação útil para ponderar, não um remédio para a densidade.",
+        "A janela temporal da detecção é redundante enquanto o prompt mostrar só 3 dias."
+      ]
+    },
+    {
+      "titulo": "O que muda para a campanha real",
+      "paragrafos": [],
+      "itens": [
+        "Manter a geração sem ligações tipadas na campanha principal: a opção piora a métrica principal e mudaria a condição de geração entre campanhas.",
+        "Reportar sempre a detecção completa e a variante sem-pontes-de-fusao (emenda 2); a conclusão só vale se a direção for a mesma nas duas.",
+        "Rodar o teste de necessidade em cada campanha (30 pares de cada tipo por modelo), com juiz fora do conjunto de geradores, além da anotação humana.",
+        "Decidir, antes da campanha, se a janela de eventos recentes do prompt fica em 3 dias ou aumenta; isso muda o que a variante janela3 mede."
+      ]
+    },
+    {
+      "titulo": "Próximos passos recomendados",
+      "paragrafos": [],
+      "itens": [
+        "Testar uma instrução que limite as causas à principal (ou a no máximo duas) por ação, numa rodada pareada como o método 7, para ver se a densidade cai sem perder a necessidade das ligações.",
+        "Implementar a redução transitiva (remover A→C quando existe A→B→C) e a detecção por comunidades como novas variantes de sensibilidade.",
+        "Usar a necessidade estimada ou o tipo e força como peso das ligações numa variante de detecção ponderada, e comparar com a detecção completa.",
+        "Rerodar o método 1 com 3 repetições e 20 dias, já com a métrica da emenda 1, para estimar o tamanho do efeito e dimensionar a campanha real.",
+        "Preparar a anotação humana (analise/amostra_anotacao.py), estratificando também pelo tipo e força declarados."
+      ]
+    }
+  ],
+  "log_intro": [
+    "Uma linha por sessão de todos os experimentos no repositório, extraída de experimentos/LOG-GERAL.md. As colunas nasc./fech./fund. são as tramas nascidas, fechadas por estabilidade e absorvidas por fusão (emenda 1). O detalhe de cada sessão, com linhagem das tramas, pontes de fusão, falhas, amostras de eventos, relatos e narrações, está no LOG.md da respectiva pasta."
+  ],
+  "reproducao_intro": [
+    "Comandos a partir da raiz do repositório. As chamadas pelo claude-cli consomem o limite de uso do plano da conta autenticada."
+  ],
+  "comandos": [
+    "npm run campanha -- --config campanhas/validacao-claude/m7-ligacoes-tipadas.json --saida experimentos/validacao --confirmar --concorrencia 4",
+    "npx tsx sim/validacao/necessidade.ts --fontes experimentos/validacao/v1-cidade-viva-claude,experimentos/validacao/v2-controle-tres-atos-claude --modelo claude-opus-5-5 --por-tipo 30 --saida experimentos/validacao/m6-necessidade",
+    "npx tsx sim/validacao/necessidade.ts --fontes experimentos/validacao/v3-ligacoes-tipadas-claude --modelo claude-opus-5-5 --diretas 80 --indiretas 0 --nao-ligados 20 --saida experimentos/validacao/m6b-necessidade-tipadas",
+    "npm run reanalisar -- --campanha <diretório com as sessões> --variantes todas",
+    "python analise/convergencia.py <diretório com as sessões>",
+    "python analise/grafos.py experimentos/validacao",
+    "npm run log-experimentos",
+    "node analise/gerar_docx_grafos.cjs experimentos/validacao experimentos/LOG-GERAL.md"
+  ]
+}

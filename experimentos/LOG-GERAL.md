@@ -1,6 +1,6 @@
 # Log geral dos experimentos
 
-Gerado por `npm run log-experimentos` em 2026-09-25T15:18:15.463Z. Cada pasta tem o seu LOG.md com o detalhe de cada sessão (condição, modelos, chamadas, falhas, custo, grafo, linhagem das tramas, amostras de eventos, relatos e narrações).
+Gerado por `npm run log-experimentos` em 2026-09-25T15:19:26.469Z. Cada pasta tem o seu LOG.md com o detalhe de cada sessão (condição, modelos, chamadas, falhas, custo, grafo, linhagem das tramas, amostras de eventos, relatos e narrações).
 
 Colunas: **nasc./fech./fund.** = tramas nascidas / fechadas por estabilidade / absorvidas por fusão (emenda 1 do pré-registro); **pontes F** = pontes de fusão.
 
@@ -91,5 +91,6 @@ Detalhe: [validacao/v3-ligacoes-tipadas-claude/LOG.md](validacao/v3-ligacoes-tip
 | Método 4: juiz cego do autorrelato causal | `validacao/m4-juiz-causal/julgamentos.jsonl` | 234 | 924 | 7.25 |
 | Método 5: fidelidade dos relatos | `validacao/m5-juiz-relatos/julgamentos.jsonl` | 110 | 640 | 6.40 |
 | Método 6: necessidade causal por intervenção | `validacao/m6-necessidade/julgamentos.jsonl` | 23 | 90 | 0.96 |
+| Método 6b: necessidade × tipo e força das ligações | `validacao/m6b-necessidade-tipadas/julgamentos.jsonl` | 25 | 100 | 1.02 |
 
-**Total:** 37 sessões, 1384 chamadas de IA registradas, US$ 75.83 (custo informado pelos provedores; sessões com provedor sem preço declarado contam 0).
+**Total:** 37 sessões, 1409 chamadas de IA registradas, US$ 76.84 (custo informado pelos provedores; sessões com provedor sem preço declarado contam 0).

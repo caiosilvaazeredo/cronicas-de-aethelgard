@@ -14,7 +14,7 @@ Resultado com k = 3 (médias por sessão):
 
 | | tramas nascidas | fechadas por estabilidade / nascidas | absorvidas por fusão / nascidas | convergem (emenda 1) | convergem (v0.1) |
 |---|---|---|---|---|---|
-| Cidade Viva (n=16) | 3,94 | 0,08 | 0,59 | 12% | 94% |
+| Cidade Viva (n=16) | 3,94 | 0,08 | 0,59 | 12,5% (2 de 16) | 94% |
 | Três atos (n=8) | 1,00 | 0,00 | 0,00 | 0% | 88% |
 
 Por modelo (Cidade Viva, k = 3): Sonnet 5 é o único com convergência pela
@@ -38,9 +38,9 @@ acumuladas) e `reanalise.jsonl` (linhagem dia a dia de cada sessão).
 
 | variante | Cidade Viva: nascidas | fechadas por estab. | absorvidas por fusão | convergem (emenda 1) |
 |---|---|---|---|---|
-| completo (referência) | 3,94 | 0,08 | 0,59 | 12% |
-| janela3 | 3,94 | 0,08 | 0,59 | 12% |
-| fortes | 3,94 | 0,08 | 0,59 | 12% |
+| completo (referência) | 3,94 | 0,08 | 0,59 | 12,5% |
+| janela3 | 3,94 | 0,08 | 0,59 | 12,5% |
+| fortes | 3,94 | 0,08 | 0,59 | 12,5% |
 | sem-pontes-de-fusao | 4,25 | 0,33 | 0,49 | 6% |
 
 - **janela3 não muda nada porque nenhuma ligação atravessa mais de 3 dias**:

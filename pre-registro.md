@@ -79,4 +79,52 @@ a análise reaplica k = 2, 3 e 5 sobre as mesmas sessões (`npm run reanalisar`)
 
 ## Emendas
 
-(nenhuma)
+### Emenda 1 (2026-09-25): fusão separada de fechamento
+
+**Motivação.** A rodada de validação com seis modelos Claude (24 sessões de 12 dias,
+em `experimentos/validacao/`, anterior a qualquer campanha real) mostrou que, com
+modelos que ligam muitos eventos (1,3 a 2,4 ligações por evento), as linhas de
+acontecimento que surgem nos primeiros dias se **fundem** num único componente
+conectado. A curva de tramas abertas A(d) cai, mas por fusão, não por fechamento.
+A definição de convergência da seção 2 foi satisfeita em 15 de 16 sessões, inclusive
+em sessões que nunca fecharam trama nenhuma. Sem esta emenda, o teste principal da
+hipótese ficaria confundido.
+
+**O que muda.** O texto original das seções 2 e 3 permanece como está e continua
+sendo calculado e reportado, como análise secundária, para comparabilidade. Passam a
+valer, como análise principal, as definições abaixo, calculadas por
+`services/linhagem.ts` sobre a mesma detecção do `services/arcos.ts` (que não muda):
+
+- **Nascimento**: surge uma trama cujos eventos não pertenciam a nenhuma trama no dia
+  anterior. Um id novo que herda eventos de tramas anteriores (renomeação) não é
+  nascimento.
+- **Fusão**: uma trama deixa de existir porque seus eventos passaram a pertencer a
+  outra trama.
+- **Fechamento por estabilidade**: a trama fica sem consequência por k dias
+  (status estável) pela primeira vez.
+
+**Nova métrica principal (substitui a da seção 3 como principal):** proporção de
+tramas **fechadas por estabilidade** sobre tramas **nascidas**
+(`linhagem.proporcaoFechadasPorEstabilidade` em `resumo.json`). Métricas associadas,
+sempre reportadas junto: proporção de tramas absorvidas por fusão antes de fechar
+(`proporcaoFundidas`) e fração das saídas que ocorreram por fechamento
+(`fracaoSaidaPorFechamento`).
+
+**Nova definição de convergência (substitui a da seção 2 como principal):** a sessão
+converge se, no último terço (dias ⌈2D/3⌉ a D):
+
+1. a curva de tramas abertas não sobe (inclinação da regressão linear ≤ 0);
+2. ao menos uma trama fecha por estabilidade; e
+3. as tramas que fecham por estabilidade são ao menos tantas quanto as absorvidas
+   por fusão.
+
+**Curvas reportadas por condição:** A(d), razão de amarração R(d), nascidas
+acumuladas, fechadas por estabilidade acumuladas e absorvidas por fusão acumuladas,
+todas com IC de 95% por bootstrap.
+
+**O que não muda.** Condições, número de repetições, coleta, testes estatísticos
+(Mann-Whitney com correção de Holm, curvas com IC por bootstrap) e reanálise com
+k = 2, 3 e 5 seguem as seções 4 a 6, agora aplicados às métricas desta emenda.
+
+**Momento.** Emenda feita antes da primeira campanha com modelo real. As sessões de
+validação que a motivaram não entram na análise confirmatória.

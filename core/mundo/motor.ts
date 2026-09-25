@@ -11,6 +11,7 @@
  */
 
 import { cadeiaCausal, detectarArcos, resumoTramasAbertas } from '../../services/arcos';
+import { atualizarLinhagem, linhagemVazia, mapaDeTramas } from '../../services/linhagem';
 import type { Trama } from '../../types';
 import { AcaoDoJogador, AcoesDoDia, NarracaoCurador, RelatosDoDia } from '../llm/esquemas';
 import type { ChamadaLLM, ProvedorLLM, RespostaLLM } from '../llm/provedor';
@@ -493,10 +494,12 @@ export async function detectarECurar(
   curador: ProvedorLLM,
   registrar: Registrador
 ): Promise<void> {
+  const antes = mapaDeTramas(estado.eventos);
   const r = detectarArcos(estado.eventos, dia, estado.tramas, params.limiarEstabilidade);
   estado.eventos = r.eventos as EventoCidade[];
   estado.tramas = r.tramas;
   estado.metricas.push(r.metrica);
+  estado.linhagem = atualizarLinhagem(estado.linhagem ?? linhagemVazia(), dia, antes, r.eventos, r.tramas);
 
   const estaveis = r.tramas.filter((t) => t.status === 'estavel').sort((a, b) => a.id.localeCompare(b.id));
   for (const trama of estaveis) {

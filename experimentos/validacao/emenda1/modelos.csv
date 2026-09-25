@@ -1,0 +1,9 @@
+modelo,tipo,chamadas_com_esquema,falhas_estrutura,tentativas_medias,erros_chamada,causadoPor_refs,causadoPor_descartadas,tokens_entrada,tokens_saida,custo_usd,sessoes,taxa_falha_estrutura,taxa_descarte_causadoPor
+claude-cli/claude-haiku-4-5-20251001,cidade-viva,93,0,1.0,0,393,0,319500,529158,1.8746049999999999,4,0.0,0.0
+claude-cli/claude-haiku-4-5-20251001,controle-tres-atos,44,2,1.475,4,41,0,369438,134597,1.1697268,2,0.045454545454545456,0.0
+claude-cli/claude-opus-5,cidade-viva,92,0,1.0108695652173914,0,634,0,437880,172982,7.820845,4,0.0,0.0
+claude-cli/claude-opus-5,controle-tres-atos,48,0,1.4791666666666665,0,58,0,708683,87633,4.894880000000001,2,0.0,0.0
+claude-cli/claude-sonnet-4-6,cidade-viva,85,0,1.0119047619047619,0,530,0,322088,373334,6.029667,4,0.0,0.0
+claude-cli/claude-sonnet-4-6,controle-tres-atos,48,0,1.4166666666666665,0,39,0,444649,89539,2.8030441999999995,2,0.0,0.0
+claude-cli/claude-sonnet-5,cidade-viva,95,0,1.0,0,459,0,824361,322843,5.602418199999999,4,0.0,0.0
+claude-cli/claude-sonnet-5,controle-tres-atos,47,0,1.216485507246377,1,30,0,643048,80834,2.197766,2,0.0,0.0

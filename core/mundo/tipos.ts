@@ -5,6 +5,7 @@
  */
 
 import type { StoryEvent, Trama, MetricaConvergencia } from '../../types';
+import type { Linhagem } from '../../services/linhagem';
 
 export interface Local {
   id: string;
@@ -91,4 +92,6 @@ export interface EstadoMundo {
   tramas: Trama[];
   metricas: MetricaConvergencia[];
   narracoes: Narracao[];
+  /** nascimentos, fusões e fechamentos de tramas, dia a dia (services/linhagem.ts) */
+  linhagem?: Linhagem;
 }

@@ -9,9 +9,12 @@ próprio services/arcos.ts) e os resumo.json de cada sessão. Para cada k:
 
 - curvas médias de tramas abertas e de razão de amarração por dia, por nível
   de cada dimensão experimental, com IC de 95% por bootstrap sobre sessões;
-- proporção de tramas fechadas sobre surgidas por condição (métrica principal);
-- proporção de sessões que convergem (definição do pre-registro.md: no último
-  terço, inclinação de tramas abertas <= 0 e da razão de amarração > 0);
+- proporção de tramas fechadas POR ESTABILIDADE sobre tramas NASCIDAS por condição
+  (métrica principal da emenda 1 do pre-registro.md, que separa fusão de
+  fechamento); a proporção da versão 0.1 é mantida como secundária;
+- proporção de sessões que convergem pela definição da emenda 1 (último terço:
+  abertas não sobem, ao menos um fechamento por estabilidade e fechamentos >=
+  fusões) e, como secundária, pela definição original da versão 0.1;
 - Mann-Whitney U entre níveis de cada dimensão e entre Cidade Viva e o controle
   de três atos, com correção de Holm e correlação bisserial de postos.
 
@@ -79,6 +82,15 @@ def carregar_reanalise(campanha: Path) -> pd.DataFrame:
                 "proporcaoTramasFechadas": l["proporcaoTramasFechadas"],
                 "abertas": [m["componentesAbertos"] for m in l["metricas"]],
                 "amarracao": [m["razaoAmarracao"] for m in l["metricas"]],
+                # emenda 1 (2026-09-25): fusão separada de fechamento
+                "nascidas": l["linhagem"]["nascidas"],
+                "fechadasEstab": l["linhagem"]["fechadasPorEstabilidade"],
+                "fundidas": l["linhagem"]["fundidasAntesDeFechar"],
+                "propFechadasEstab": l["linhagem"]["proporcaoFechadasPorEstabilidade"],
+                "propFundidas": l["linhagem"]["proporcaoFundidas"],
+                "fechadasAcum": [d["fechadasAcum"] for d in l["linhagemDias"]],
+                "fundidasAcum": [d["fundidasAcum"] for d in l["linhagemDias"]],
+                "nascidasAcum": [d["nascidasAcum"] for d in l["linhagemDias"]],
             }
         )
     return pd.DataFrame(registros)
@@ -92,9 +104,25 @@ def inclinacao(serie: list[float]) -> float:
 
 
 def converge(abertas: list[float], amarracao: list[float]) -> bool:
+    """Definição original do pré-registro (v0.1), mantida como secundária."""
     d = len(abertas)
     inicio = int(np.ceil(2 * d / 3)) - 1  # dia ceil(2D/3), índice base 0
     return inclinacao(abertas[inicio:]) <= 0 and inclinacao(amarracao[inicio:]) > 0
+
+
+def converge_emenda1(abertas: list[float], fechadas_acum: list[float], fundidas_acum: list[float]) -> bool:
+    """Definição da emenda 1 (2026-09-25). No último terço da sessão:
+    (a) a curva de tramas abertas não sobe (inclinação <= 0);
+    (b) ao menos uma trama fecha por estabilidade;
+    (c) as saídas por fechamento são ao menos tantas quanto as saídas por fusão.
+    """
+    d = len(abertas)
+    i = int(np.ceil(2 * d / 3)) - 1
+    base_f = fechadas_acum[i - 1] if i > 0 else 0
+    base_u = fundidas_acum[i - 1] if i > 0 else 0
+    fechou = fechadas_acum[-1] - base_f
+    fundiu = fundidas_acum[-1] - base_u
+    return inclinacao(abertas[i:]) <= 0 and fechou >= 1 and fechou >= fundiu
 
 
 def bootstrap_ic(matriz: np.ndarray, n: int, rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
@@ -132,8 +160,8 @@ def comparacoes(df: pd.DataFrame, k: int) -> pd.DataFrame:
     for dim in ["modelo", "estadoTramas", "numAgentes", "jogador", "mundo"]:
         niveis = sorted(cv[dim].unique(), key=str)
         for a, b in itertools.combinations(niveis, 2):
-            xa = cv.loc[cv[dim] == a, "proporcaoTramasFechadas"].to_numpy()
-            xb = cv.loc[cv[dim] == b, "proporcaoTramasFechadas"].to_numpy()
+            xa = cv.loc[cv[dim] == a, "propFechadasEstab"].to_numpy()
+            xb = cv.loc[cv[dim] == b, "propFechadasEstab"].to_numpy()
             if len(xa) == 0 or len(xb) == 0:
                 continue
             u, p = stats.mannwhitneyu(xa, xb, alternative="two-sided")
@@ -146,8 +174,8 @@ def comparacoes(df: pd.DataFrame, k: int) -> pd.DataFrame:
     if len(controle) > 0 and len(cv) > 0:
         # cada modelo na Cidade Viva contra o controle do mesmo modelo
         for modelo in sorted(cv["modelo"].unique()):
-            xa = cv.loc[cv["modelo"] == modelo, "proporcaoTramasFechadas"].to_numpy()
-            xb = controle.loc[controle["modelo"] == modelo, "proporcaoTramasFechadas"].to_numpy()
+            xa = cv.loc[cv["modelo"] == modelo, "propFechadasEstab"].to_numpy()
+            xb = controle.loc[controle["modelo"] == modelo, "propFechadasEstab"].to_numpy()
             if len(xa) == 0 or len(xb) == 0:
                 continue
             u, p = stats.mannwhitneyu(xa, xb, alternative="two-sided")
@@ -166,16 +194,21 @@ def comparacoes(df: pd.DataFrame, k: int) -> pd.DataFrame:
 def por_condicao(df: pd.DataFrame, k: int, n_boot: int, rng: np.random.Generator) -> pd.DataFrame:
     linhas = []
     for celula, g in df.groupby("celula"):
-        props = g["proporcaoTramasFechadas"].to_numpy()
+        props = g["propFechadasEstab"].to_numpy()
         lo, hi = ic_media(props, n_boot, rng)
         conv = [converge(a, r) for a, r in zip(g["abertas"], g["amarracao"])]
+        conv1 = [converge_emenda1(a, f, u) for a, f, u in zip(g["abertas"], g["fechadasAcum"], g["fundidasAcum"])]
         primeira = g.iloc[0]
         linhas.append(
             {"k": k, "celula": celula, **{d: primeira[d] for d in DIMENSOES}, "sessoes": len(g),
-             "prop_fechadas_media": props.mean(), "ic95_inf": lo, "ic95_sup": hi,
-             "prop_fechadas_mediana": np.median(props),
-             "tramas_surgidas_media": g["tramasSurgidas"].mean(),
-             "sessoes_que_convergem": float(np.mean(conv))}
+             "prop_fechadas_estab_media": props.mean(), "ic95_inf": lo, "ic95_sup": hi,
+             "prop_fechadas_estab_mediana": np.median(props),
+             "prop_fundidas_media": g["propFundidas"].mean(),
+             "tramas_nascidas_media": g["nascidas"].mean(),
+             "sessoes_que_convergem_emenda1": float(np.mean(conv1)),
+             # métricas da versão 0.1, mantidas como secundárias
+             "prop_fechadas_v01_media": g["proporcaoTramasFechadas"].mean(),
+             "sessoes_que_convergem_v01": float(np.mean(conv))}
         )
     return pd.DataFrame(linhas).sort_values("celula")
 
@@ -186,12 +219,14 @@ def figuras(df: pd.DataFrame, k: int, destino: Path, n_boot: int, rng: np.random
         niveis = sorted(df[dim].unique(), key=str)
         if len(niveis) < 2:
             continue
-        fig, eixos = plt.subplots(1, 2, figsize=(12, 4.2))
+        fig, eixos = plt.subplots(1, 4, figsize=(20, 4.2))
         for nivel in niveis:
             g = df[df[dim] == nivel]
             for eixo, coluna, titulo in [
                 (eixos[0], "abertas", "Tramas abertas"),
                 (eixos[1], "amarracao", "Razão de amarração"),
+                (eixos[2], "fechadasAcum", "Fechadas por estabilidade (acum.)"),
+                (eixos[3], "fundidasAcum", "Absorvidas por fusão (acum.)"),
             ]:
                 comprimento = min(len(s) for s in g[coluna])
                 matriz = np.array([s[:comprimento] for s in g[coluna]], dtype=float)

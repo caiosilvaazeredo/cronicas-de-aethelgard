@@ -12,6 +12,7 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { reanalisar } from '../core/experimento/reanalise';
+import { resumirLinhagem } from '../services/linhagem';
 import type { StoryEvent } from '../types';
 import { lerArgs, texto } from './args';
 import { sessaoConcluida } from './arquivos';
@@ -38,6 +39,9 @@ export async function reanalisarCampanha(dir: string, ks: number[]): Promise<num
           tramasFechadas: fechadas,
           proporcaoTramasFechadas: r.tramas.length ? fechadas / r.tramas.length : 0,
           metricas: r.metricas,
+          // emenda 1: fusão separada de fechamento
+          linhagem: resumirLinhagem(r.linhagem),
+          linhagemDias: r.linhagem.dias,
         })
       );
     }

@@ -14,6 +14,7 @@ const ARQUIVOS = [
   'relatos.jsonl',
   'metricas.jsonl',
   'tramas.json',
+  'linhagem.json',
   'narracoes.jsonl',
   'chamadas.jsonl',
   'resumo.json',
@@ -108,8 +109,21 @@ test('fumaça: sessão de 10 dias gera todos os arquivos e métricas coerentes',
   assert.equal(resumo.custoUsd, 0);
   assert.equal(resumo.causadoPor.referencias - resumo.causadoPor.arestas, resumo.causadoPor.descartadas);
 
-  // a reanálise com o mesmo k reproduz exatamente as métricas gravadas
-  assert.deepEqual(reanalisar(eventos, 10, 3).metricas, metricas);
+  // a reanálise com o mesmo k reproduz exatamente as métricas e a linhagem gravadas
+  const re = reanalisar(eventos, 10, 3);
+  assert.deepEqual(re.metricas, metricas);
+  const linhagem = JSON.parse(await ler('linhagem.json'));
+  assert.deepEqual(re.linhagem, linhagem);
+
+  // invariantes da linhagem: abertas coincide com a métrica do arcos.ts e as
+  // contagens batem com os registros por trama
+  linhagem.dias.forEach((d: any, i: number) => assert.equal(d.abertas, metricas[i].componentesAbertos));
+  const regs: any[] = Object.values(linhagem.tramas);
+  const ultLin = linhagem.dias[9];
+  assert.equal(ultLin.nascidasAcum, regs.filter((r) => r.origem === 'nascimento').length);
+  assert.equal(ultLin.fundidasAcum, regs.filter((r) => r.fundiuEm !== null).length);
+  assert.equal(ultLin.fechadasAcum, regs.filter((r) => r.fechouEm !== null).length);
+  assert.ok(resumo.linhagem.proporcaoFechadasPorEstabilidade >= 0 && resumo.linhagem.proporcaoFechadasPorEstabilidade <= 1);
 });
 
 test('sem jogador: o mundo roda sozinho', async () => {

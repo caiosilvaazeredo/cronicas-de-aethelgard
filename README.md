@@ -240,6 +240,17 @@ Quem estava no mesmo local ao fim do dia testemunha o que aconteceu lá.
   `precos`; a campanha para ao atingi-lo e a sessão em curso é refeita na
   retomada.
 
+### Fusão × fechamento (emenda 1 do pré-registro)
+
+`services/linhagem.ts` acompanha, dia a dia, o que acontece com cada trama
+detectada pelo `arcos.ts` (sem alterar o comportamento dele): **nascimento**
+(uma linha nova), **fusão** (a trama é absorvida por outra quando um evento
+liga as duas) e **fechamento por estabilidade**. A curva de tramas abertas cai
+nos dois últimos casos, e só o fechamento conta para a convergência. A métrica
+principal passou a ser `linhagem.proporcaoFechadasPorEstabilidade` em
+`resumo.json`, e cada sessão exporta `linhagem.json`. Ver a emenda 1 no
+`pre-registro.md` e `experimentos/validacao/emenda1/`.
+
 ### Exportação
 
 ```
@@ -249,7 +260,7 @@ saida/<campanha>/
   pre-registro.md
   <sessao>/
     condicao.json eventos.jsonl relatos.jsonl metricas.jsonl tramas.json
-    narracoes.jsonl chamadas.jsonl resumo.json  (+ mestre.jsonl no controle)
+    linhagem.json narracoes.jsonl chamadas.jsonl resumo.json  (+ mestre.jsonl no controle)
 ```
 
 ### Controle de três atos

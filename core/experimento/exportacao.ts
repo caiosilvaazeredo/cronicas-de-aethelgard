@@ -7,6 +7,7 @@
  *   relatos.jsonl    relatos, ligados ao evento real
  *   metricas.jsonl   uma MetricaConvergencia por dia
  *   tramas.json      estado final das tramas
+ *   linhagem.json    nascimento, fusão e fechamento de cada trama, e contagens por dia
  *   narracoes.jsonl  narração de cada trama fechada, com a cadeia causal usada
  *   chamadas.jsonl   toda chamada de IA: prompt, resposta bruta, tokens, latência, tentativas
  *   resumo.json      indicadores da sessão
@@ -16,6 +17,7 @@ import type { RegistroChamada } from '../mundo/motor';
 import { chavePreco, type PrecoModelo } from './condicoes';
 import type { RegistroSessao } from './execucao';
 import { contarDescartes } from './reanalise';
+import { resumirLinhagem, type ResumoLinhagem } from '../../services/linhagem';
 
 const jsonl = (linhas: unknown[]) => linhas.map((l) => JSON.stringify(l)).join('\n') + (linhas.length ? '\n' : '');
 
@@ -49,6 +51,16 @@ export interface ResumoSessao {
   tramasFechadas: number;
   proporcaoTramasFechadas: number;
   curvaTramasAbertas: number[];
+  /**
+   * Emenda 1 (2026-09-25): fusão separada de fechamento. A proporção principal
+   * passa a ser linhagem.proporcaoFechadasPorEstabilidade; as curvas diárias
+   * permitem ver quanto da queda de tramas abertas veio de cada causa.
+   */
+  linhagem: ResumoLinhagem & {
+    curvaNascidasAcum: number[];
+    curvaFundidasAcum: number[];
+    curvaFechadasAcum: number[];
+  } | null;
   curvaRazaoAmarracao: number[];
   razaoAmarracaoFinal: number;
   eventosFundadores: number;
@@ -112,6 +124,14 @@ export function calcularResumo(reg: RegistroSessao, precos: Record<string, Preco
     tramasFechadas,
     proporcaoTramasFechadas: estado.tramas.length ? tramasFechadas / estado.tramas.length : 0,
     curvaTramasAbertas: estado.metricas.map((m) => m.componentesAbertos),
+    linhagem: estado.linhagem
+      ? {
+          ...resumirLinhagem(estado.linhagem),
+          curvaNascidasAcum: estado.linhagem.dias.map((d) => d.nascidasAcum),
+          curvaFundidasAcum: estado.linhagem.dias.map((d) => d.fundidasAcum),
+          curvaFechadasAcum: estado.linhagem.dias.map((d) => d.fechadasAcum),
+        }
+      : null,
     curvaRazaoAmarracao: estado.metricas.map((m) => m.razaoAmarracao),
     razaoAmarracaoFinal: ultima?.razaoAmarracao ?? 0,
     eventosFundadores: ultima?.eventosFundadores ?? 0,
@@ -150,6 +170,7 @@ export function arquivosDaSessao(reg: RegistroSessao, precos: Record<string, Pre
     'relatos.jsonl': jsonl(estado.relatos),
     'metricas.jsonl': jsonl(estado.metricas),
     'tramas.json': JSON.stringify(estado.tramas, null, 2) + '\n',
+    'linhagem.json': JSON.stringify(estado.linhagem ?? null, null, 2) + '\n',
     'narracoes.jsonl': jsonl(estado.narracoes),
     'chamadas.jsonl': jsonl(reg.chamadas),
     'resumo.json': JSON.stringify(calcularResumo(reg, precos), null, 2) + '\n',

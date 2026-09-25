@@ -20,6 +20,31 @@ export const AcoesDoDia = z.object({
 });
 export type AcoesDoDia = z.infer<typeof AcoesDoDia>;
 
+/**
+ * Ligações tipadas (opção ligacoesTipadas): em vez de uma lista de ids, cada
+ * causa traz o tipo da relação e a força. O motor deriva causadoPor dos ids,
+ * então a detecção do arcos.ts não muda.
+ */
+export const Causa = z.object({
+  id: z.string(),
+  tipo: z.enum(['motivou', 'possibilitou', 'reagiu', 'lembrou']),
+  forca: z.number().int().min(1).max(3),
+});
+export type Causa = z.infer<typeof Causa>;
+
+export const AcoesDoDiaTipadas = z.object({
+  acoes: z.array(
+    z.object({
+      agenteId: z.string(),
+      local: z.string(),
+      acao: z.string().max(280),
+      causas: z.array(Causa),
+      tensao: z.number().min(0).max(10),
+    })
+  ),
+});
+export type AcoesDoDiaTipadas = z.infer<typeof AcoesDoDiaTipadas>;
+
 export const AcaoDoJogador = z.object({
   local: z.string(),
   acao: z.string().max(280),
@@ -27,6 +52,14 @@ export const AcaoDoJogador = z.object({
   tensao: z.number().min(0).max(10),
 });
 export type AcaoDoJogador = z.infer<typeof AcaoDoJogador>;
+
+export const AcaoDoJogadorTipada = z.object({
+  local: z.string(),
+  acao: z.string().max(280),
+  causas: z.array(Causa),
+  tensao: z.number().min(0).max(10),
+});
+export type AcaoDoJogadorTipada = z.infer<typeof AcaoDoJogadorTipada>;
 
 export const RelatosDoDia = z.object({
   relatos: z.array(

@@ -9,6 +9,7 @@
  *         --temperatura 0.7  --limiar 3  --janela 3  --saida saida/avulsas
  *         --provedor-jogador/--modelo-jogador  --provedor-curador/--modelo-curador
  *         --fixado-confirmado  --sem-cache  --falha-simulada sempre|primeira-tentativa|0.2
+ *         --ligacoes-tipadas (cada causa com tipo e força)
  */
 
 import { join } from 'node:path';
@@ -70,6 +71,7 @@ async function principal() {
     semente,
     limiarEstabilidade: numero(args, 'limiar', 3),
     janelaDias: numero(args, 'janela', 3),
+    ...(args['ligacoes-tipadas'] === true ? { ligacoesTipadas: true } : {}),
   };
 
   const mundo = await carregarMundo(mundoId);

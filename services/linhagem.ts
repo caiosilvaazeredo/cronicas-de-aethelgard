@@ -37,6 +37,8 @@ export interface RegistroTrama {
   fechouEm: number | null; // primeiro dia como estável/fechada
   fundiuEm: number | null; // dia em que foi absorvida
   absorvidaPor: string | null;
+  /** eventos novos do dia da fusão que ligaram esta trama à absorvedora */
+  fundidaPorEventos: string[];
   /** tramas que ela absorveu, com o dia */
   absorveu: { id: string; dia: number }[];
 }
@@ -109,7 +111,12 @@ export function atualizarLinhagem(
     const absorvedora = membro ? agora.get(membro)! : null;
     const reg = tramasAtuais[id];
     if (!reg || reg.fundiuEm !== null) return;
-    tramasAtuais[id] = { ...reg, fundiuEm: dia, absorvidaPor: absorvedora };
+    const membros = new Set(membrosAntes.get(id)!);
+    const pontes = depois
+      .filter((e) => !antes.has(e.id) && e.tramaId === absorvedora && (e.causadoPor ?? []).some((o) => membros.has(o)))
+      .map((e) => e.id)
+      .sort();
+    tramasAtuais[id] = { ...reg, fundiuEm: dia, absorvidaPor: absorvedora, fundidaPorEventos: pontes };
     fundidas += 1;
     if (reg.fechouEm !== null) fundidasAposFechar += 1;
   });
@@ -125,6 +132,7 @@ export function atualizarLinhagem(
       fechouEm: null,
       fundiuEm: null,
       absorvidaPor: null,
+      fundidaPorEventos: [],
       absorveu: [],
     };
     if (!herdou) nascidas += 1;

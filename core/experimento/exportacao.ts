@@ -18,6 +18,7 @@ import { chavePreco, type PrecoModelo } from './condicoes';
 import type { RegistroSessao } from './execucao';
 import { contarDescartes } from './reanalise';
 import { resumirLinhagem, type ResumoLinhagem } from '../../services/linhagem';
+import { metricasDoGrafo, type MetricasGrafo } from '../../services/grafo';
 
 const jsonl = (linhas: unknown[]) => linhas.map((l) => JSON.stringify(l)).join('\n') + (linhas.length ? '\n' : '');
 
@@ -61,6 +62,8 @@ export interface ResumoSessao {
     curvaFundidasAcum: number[];
     curvaFechadasAcum: number[];
   } | null;
+  /** pontes, articulações, distância das ligações e tipos (services/grafo.ts) */
+  grafo: MetricasGrafo;
   curvaRazaoAmarracao: number[];
   razaoAmarracaoFinal: number;
   eventosFundadores: number;
@@ -132,6 +135,7 @@ export function calcularResumo(reg: RegistroSessao, precos: Record<string, Preco
           curvaFechadasAcum: estado.linhagem.dias.map((d) => d.fechadasAcum),
         }
       : null,
+    grafo: metricasDoGrafo(estado.eventos),
     curvaRazaoAmarracao: estado.metricas.map((m) => m.razaoAmarracao),
     razaoAmarracaoFinal: ultima?.razaoAmarracao ?? 0,
     eventosFundadores: ultima?.eventosFundadores ?? 0,

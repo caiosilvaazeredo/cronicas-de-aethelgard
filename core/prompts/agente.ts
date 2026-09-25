@@ -7,6 +7,7 @@
 
 import type { ConfigMundo, EventoCidade, Relato, EstadoPersonagem } from '../mundo/tipos';
 import type { TramaAbertaResumo } from '../../services/arcos';
+import { INSTRUCAO_CAUSAS } from './causas';
 
 export type EstadoTramasNoPrompt = 'informa' | 'nao-informa';
 
@@ -22,15 +23,19 @@ export interface EntradaPromptAgentes {
   tramasAbertas: TramaAbertaResumo[];
 }
 
-export function sistemaAgentes(mundo: ConfigMundo): string {
+export function sistemaAgentes(mundo: ConfigMundo, ligacoesTipadas = false): string {
+  const causas = ligacoesTipadas
+    ? INSTRUCAO_CAUSAS
+    : 'Em "causadoPor", indique os ids dos eventos listados que tornaram a ação possível. Se a ação não decorre de nenhum deles, deixe a lista vazia.';
+  const campo = ligacoesTipadas ? '"causas"' : '"causadoPor"';
   return `Você simula os habitantes de ${mundo.nome}. A cada dia, decide o que cada personagem listado faz.
 
 Cada personagem age de acordo com o que quer, o que esconde, no que acredita e o que sabe. Um personagem só age sobre o que ele próprio sabe.
 Cada ação acontece em um dos locais do mundo; o personagem pode permanecer onde está ou ir para outro local.
 Descreva cada ação em uma ou duas frases concretas (até 280 caracteres), em português.
-Em "causadoPor", indique os ids dos eventos listados que tornaram a ação possível. Se a ação não decorre de nenhum deles, deixe a lista vazia.
+${causas}
 Em "tensao", indique de 0 a 10 o quão carregado é o momento para quem age.
-Responda apenas com JSON no formato {"acoes": [{"agenteId", "local", "acao", "causadoPor", "tensao"}]}, com uma ação para cada personagem listado.`;
+Responda apenas com JSON no formato {"acoes": [{"agenteId", "local", "acao", ${campo}, "tensao"}]}, com uma ação para cada personagem listado.`;
 }
 
 function linhaEvento(e: EventoCidade, nomes: Map<string, string>): string {

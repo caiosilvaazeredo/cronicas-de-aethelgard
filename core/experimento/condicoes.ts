@@ -29,6 +29,8 @@ export interface CondicaoSessao {
   semente: number;
   limiarEstabilidade: number;
   janelaDias: number;
+  /** pede tipo e força de cada causa (services/grafo.ts) */
+  ligacoesTipadas?: boolean;
 }
 
 export interface PrecoModelo {
@@ -58,6 +60,8 @@ export interface ConfigCampanha {
   sementeBase: number;
   limiarEstabilidade?: number;
   janelaDias?: number;
+  /** aplica a todas as sessões: pede tipo e força de cada causa */
+  ligacoesTipadas?: boolean;
   /** preços declarados por "provedor/modelo", em USD por milhão de tokens */
   precos?: Record<string, PrecoModelo>;
   concorrencia?: number;
@@ -92,6 +96,7 @@ export function expandirCampanha(c: ConfigCampanha): CondicaoSessao[] {
     temperatura: c.temperatura,
     limiarEstabilidade: limiar,
     janelaDias: janela,
+    ...(c.ligacoesTipadas ? { ligacoesTipadas: true } : {}),
   };
 
   const adicionar = (celula: string, parcial: Omit<CondicaoSessao, 'id' | 'celula' | 'repeticao' | 'semente' | keyof typeof base>) => {

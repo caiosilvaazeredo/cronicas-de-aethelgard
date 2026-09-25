@@ -159,3 +159,24 @@ test('controle de três atos roda pelo simulador e exporta o mesmo formato', asy
   assert.ok(chamadas.some((c: any) => c.papel === 'mestre' && /ESTRUTURA DE ATOS/.test(c.sistema)));
   assert.ok(chamadas.some((c: any) => c.papel === 'jogador'));
 });
+
+test('ligações tipadas: eventos trazem tipo e força, e causadoPor é derivado das causas', async () => {
+  const dir = await rodar(await dirTemporario('tipadas'), { dias: 8, ligacoesTipadas: true });
+  const eventos = lerJsonl(await readFile(join(dir, 'eventos.jsonl'), 'utf8'));
+  const comCausa = eventos.filter((e: any) => e.causadoPor.length > 0);
+  assert.ok(comCausa.length > 0);
+  comCausa.forEach((e: any) => {
+    assert.deepEqual(e.ligacoes.map((l: any) => l.id), e.causadoPor);
+    e.ligacoes.forEach((l: any) => {
+      assert.ok(['motivou', 'possibilitou', 'reagiu', 'lembrou'].includes(l.tipo));
+      assert.ok(l.forca >= 1 && l.forca <= 3);
+    });
+  });
+  const chamadas = lerJsonl(await readFile(join(dir, 'chamadas.jsonl'), 'utf8'));
+  const agentes = chamadas.find((c: any) => c.papel === 'agentes');
+  assert.match(agentes.sistema, /"causas"/);
+  assert.doesNotMatch(agentes.sistema, /causadoPor/);
+  const resumo = JSON.parse(await readFile(join(dir, 'resumo.json'), 'utf8'));
+  assert.ok(Object.keys(resumo.grafo.porTipo).length > 0);
+  assert.ok(resumo.grafo.forcaMedia >= 1);
+});

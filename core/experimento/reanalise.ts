@@ -12,6 +12,7 @@
 import { construirArestas, detectarArcos } from '../../services/arcos';
 import type { MetricaConvergencia, StoryEvent, Trama } from '../../types';
 import { atualizarLinhagem, linhagemVazia, mapaDeTramas, type Linhagem } from '../../services/linhagem';
+import { filtrarLigacoes, type EventoGrafo, type OpcoesFiltro } from '../../services/grafo';
 
 export interface ResultadoReanalise {
   k: number;
@@ -20,14 +21,19 @@ export interface ResultadoReanalise {
   linhagem: Linhagem;
 }
 
-export function reanalisar(eventos: StoryEvent[], dias: number, k: number): ResultadoReanalise {
+/**
+ * @param filtro variante de detecção (services/grafo.ts): filtra as ligações
+ *   antes de cada detecção diária; sem filtro, é a detecção de referência.
+ */
+export function reanalisar(eventos: StoryEvent[], dias: number, k: number, filtro?: OpcoesFiltro): ResultadoReanalise {
   const limpos = eventos.map((e) => ({ ...e, tramaId: null, ehKernel: false }));
   let tramas: Trama[] = [];
   const metricas: MetricaConvergencia[] = [];
   let linhagem = linhagemVazia();
   let anotados: StoryEvent[] = [];
   for (let d = 1; d <= dias; d++) {
-    const ate = limpos.filter((e) => e.turno <= d);
+    const ateDia = limpos.filter((e) => e.turno <= d);
+    const ate = filtro ? filtrarLigacoes(ateDia as EventoGrafo[], filtro).eventos : ateDia;
     const antes = mapaDeTramas(anotados);
     const r = detectarArcos(ate, d, tramas, k);
     metricas.push(r.metrica);

@@ -7,6 +7,7 @@
  */
 
 import type { ConfigMundo, EventoCidade, Relato, PerfilJogador } from '../mundo/tipos';
+import { INSTRUCAO_CAUSAS } from './causas';
 
 export const DESCRICAO_PERFIL: Record<PerfilJogador, string> = {
   investigador: 'Você costuma fazer perguntas às pessoas e seguir as pistas do que viu e ouviu.',
@@ -14,13 +15,17 @@ export const DESCRICAO_PERFIL: Record<PerfilJogador, string> = {
   passivo: 'Você costuma observar o que acontece ao seu redor sem se envolver muito.',
 };
 
-export function sistemaJogador(mundo: ConfigMundo, perfil: PerfilJogador): string {
+export function sistemaJogador(mundo: ConfigMundo, perfil: PerfilJogador, ligacoesTipadas = false): string {
+  const causas = ligacoesTipadas
+    ? INSTRUCAO_CAUSAS
+    : 'Em "causadoPor", indique os ids dos eventos que você conhece e que motivaram a ação. Se nenhum motivou, deixe a lista vazia.';
+  const campo = ligacoesTipadas ? '"causas"' : '"causadoPor"';
   return `Você é um forasteiro que acabou de chegar a ${mundo.nome}. Você só sabe o que viu com os próprios olhos e o que ouviram lhe contar.
 ${DESCRICAO_PERFIL[perfil]}
 A cada dia você escolhe uma ação: onde estar e o que fazer lá, em uma ou duas frases concretas (até 280 caracteres), em português.
-Em "causadoPor", indique os ids dos eventos que você conhece e que motivaram a ação. Se nenhum motivou, deixe a lista vazia.
+${causas}
 Em "tensao", indique de 0 a 10 o quão carregado é o momento para você.
-Responda apenas com JSON no formato {"local", "acao", "causadoPor", "tensao"}.`;
+Responda apenas com JSON no formato {"local", "acao", ${campo}, "tensao"}.`;
 }
 
 export interface EntradaPromptJogador {

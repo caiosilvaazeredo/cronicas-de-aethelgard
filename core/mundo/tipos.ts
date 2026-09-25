@@ -6,6 +6,7 @@
 
 import type { StoryEvent, Trama, MetricaConvergencia } from '../../types';
 import type { Linhagem } from '../../services/linhagem';
+import type { LigacaoTipada } from '../../services/grafo';
 
 export interface Local {
   id: string;
@@ -53,6 +54,8 @@ export interface EventoCidade extends StoryEvent {
   autorId: string; // id do agente, ou 'jogador'
   local: string;
   testemunhas: string[]; // quem estava no mesmo local ao fim do dia
+  /** tipo e força de cada causa (só com a opção ligacoesTipadas) */
+  ligacoes?: LigacaoTipada[];
 }
 
 /** A versão contada de um evento real, de um agente a outro. */

@@ -13,7 +13,15 @@
 import { cadeiaCausal, detectarArcos, resumoTramasAbertas } from '../../services/arcos';
 import { atualizarLinhagem, linhagemVazia, mapaDeTramas } from '../../services/linhagem';
 import type { Trama } from '../../types';
-import { AcaoDoJogador, AcoesDoDia, NarracaoCurador, RelatosDoDia } from '../llm/esquemas';
+import {
+  AcaoDoJogador,
+  AcaoDoJogadorTipada,
+  AcoesDoDia,
+  AcoesDoDiaTipadas,
+  NarracaoCurador,
+  RelatosDoDia,
+  type Causa,
+} from '../llm/esquemas';
 import type { ChamadaLLM, ProvedorLLM, RespostaLLM } from '../llm/provedor';
 import { sistemaAgentes, usuarioAgentes, type EstadoTramasNoPrompt } from '../prompts/agente';
 import { sistemaCurador, usuarioCurador } from '../prompts/curador';
@@ -44,6 +52,8 @@ export interface ConfigMotor {
   /** quantos dias de eventos entram como "recentes" no prompt */
   janelaDias: number;
   maxTokens: { agentes: number; jogador: number; relatos: number; curador: number };
+  /** pede tipo e força de cada causa (services/grafo.ts); padrão: só ids */
+  ligacoesTipadas?: boolean;
 }
 
 // Folgados de propósito: em modelos com raciocínio (Gemini 3.x, Claude com
@@ -225,9 +235,9 @@ async function passoAgentes(
   const resposta = await chamarERegistrar(
     provedor,
     {
-      sistema: sistemaAgentes(config.mundo),
+      sistema: sistemaAgentes(config.mundo, config.ligacoesTipadas),
       usuario,
-      esquema: AcoesDoDia,
+      esquema: config.ligacoesTipadas ? AcoesDoDiaTipadas : AcoesDoDia,
       temperatura: config.temperatura,
       semente: sementeDaChamada(config.semente, dia, 'acoes-agentes'),
       maxTokens: config.maxTokens.agentes,
@@ -243,6 +253,7 @@ async function passoAgentes(
           })),
           locais: config.mundo.locais.map((l) => l.id),
           eventosVisiveis: [...idsVisiveis].sort(),
+          tipadas: config.ligacoesTipadas === true,
         },
       },
     },
@@ -250,7 +261,7 @@ async function passoAgentes(
     registrar
   );
 
-  const json = resposta?.json as AcoesDoDia | undefined;
+  const json = normalizarAcoes(resposta?.json as AcoesDoDia | AcoesDoDiaTipadas | undefined);
   if (!json) {
     stats.agentesSemAcao += config.agentesAtivos.length;
     return [];
@@ -282,10 +293,25 @@ async function passoAgentes(
       autorId: a.agenteId,
       local: personagem.local,
       testemunhas: [],
+      ...(a.ligacoes ? { ligacoes: a.ligacoes } : {}),
     });
   });
   stats.agentesSemAcao += config.agentesAtivos.filter((id) => !jaAgiram.has(id)).length;
   return novos;
+}
+
+/** Com ligações tipadas, causadoPor é derivado dos ids das causas. */
+function paraCausadoPor(causas: Causa[]) {
+  return { causadoPor: causas.map((c) => c.id), ligacoes: causas.map((c) => ({ id: c.id, tipo: c.tipo, forca: c.forca })) };
+}
+
+type AcaoNormalizada = AcoesDoDia['acoes'][number] & { ligacoes?: Causa[] };
+
+function normalizarAcoes(json: AcoesDoDia | AcoesDoDiaTipadas | undefined): { acoes: AcaoNormalizada[] } | undefined {
+  if (!json) return undefined;
+  return {
+    acoes: json.acoes.map((a) => ('causas' in a ? { ...a, ...paraCausadoPor(a.causas) } : a)) as AcaoNormalizada[],
+  };
 }
 
 /** Monta o prompt do jogador sintético só com o que ele viu e ouviu. */
@@ -304,7 +330,7 @@ export function montarPromptJogador(estado: EstadoMundo, dia: number, config: Co
     .map((p) => config.mundo.agentes.find((a) => a.id === p.id)?.nome ?? p.id);
 
   return {
-    sistema: sistemaJogador(config.mundo, perfil),
+    sistema: sistemaJogador(config.mundo, perfil, config.ligacoesTipadas),
     usuario: usuarioJogador({
       mundo: config.mundo,
       dia,
@@ -323,6 +349,7 @@ export interface AcaoJogadorEntrada {
   acao: string;
   causadoPor: string[];
   tensao: number;
+  ligacoes?: Causa[];
 }
 
 function eventoDoJogador(
@@ -347,6 +374,7 @@ function eventoDoJogador(
     autorId: ID_JOGADOR,
     local: eu.local,
     testemunhas: [],
+    ...(a.ligacoes ? { ligacoes: a.ligacoes } : {}),
   };
 }
 
@@ -366,7 +394,7 @@ async function passoJogadorSintetico(
     {
       sistema: p.sistema,
       usuario: p.usuario,
-      esquema: AcaoDoJogador,
+      esquema: config.ligacoesTipadas ? AcaoDoJogadorTipada : AcaoDoJogador,
       temperatura: config.temperatura,
       semente: sementeDaChamada(config.semente, dia, 'acao-jogador'),
       maxTokens: config.maxTokens.jogador,
@@ -379,14 +407,16 @@ async function passoJogadorSintetico(
           localAtual: estado.personagens[ID_JOGADOR].local,
           eventosConhecidos: p.conhecidos,
           perfil,
+          tipadas: config.ligacoesTipadas === true,
         },
       },
     },
     'jogador',
     registrar
   );
-  const json = resposta?.json as AcaoDoJogador | undefined;
-  if (!json) return null;
+  const bruto = resposta?.json as AcaoDoJogador | AcaoDoJogadorTipada | undefined;
+  if (!bruto) return null;
+  const json: AcaoJogadorEntrada = 'causas' in bruto ? { ...bruto, ...paraCausadoPor(bruto.causas) } : bruto;
   return eventoDoJogador(estado, dia, config, json, stats);
 }
 

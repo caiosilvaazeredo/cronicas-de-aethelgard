@@ -54,6 +54,15 @@ interface AgenteSim {
   local: string;
 }
 
+const TIPOS = ['motivou', 'possibilitou', 'reagiu', 'lembrou'] as const;
+
+/** Com ligações tipadas, troca causadoPor por causas com tipo e força. */
+function tipar<T extends { causadoPor: string[] }>(rng: () => number, x: T, tipadas: boolean) {
+  if (!tipadas) return x;
+  const { causadoPor, ...resto } = x;
+  return { ...resto, causas: causadoPor.map((id) => ({ id, tipo: escolher(rng, [...TIPOS]), forca: 1 + Math.floor(rng() * 3) })) };
+}
+
 function gerarAcoesAgentes(rng: () => number, d: any) {
   const agentes: AgenteSim[] = d?.agentes ?? [];
   const locais: string[] = d?.locais ?? [];
@@ -64,13 +73,11 @@ function gerarAcoesAgentes(rng: () => number, d: any) {
       const liga = visiveis.length > 0 && rng() < 0.65;
       const causadoPor = liga ? amostra(rng, visiveis, 1 + Math.floor(rng() * 2)) : [];
       if (rng() < 0.05) causadoPor.push('D999.inexistente');
-      return {
-        agenteId: a.id,
-        local,
-        acao: `${a.nome} ${escolher(rng, VERBOS)}.`,
-        causadoPor,
-        tensao: Math.round(rng() * 10),
-      };
+      return tipar(
+        rng,
+        { agenteId: a.id, local, acao: `${a.nome} ${escolher(rng, VERBOS)}.`, causadoPor, tensao: Math.round(rng() * 10) },
+        d?.tipadas === true
+      );
     }),
   };
 }
@@ -87,12 +94,16 @@ function gerarAcaoJogador(rng: () => number, d: any) {
       : perfil === 'intrometido'
         ? 'interfere na conversa alheia'
         : 'observa o movimento';
-  return {
-    local: rng() < chanceMover && locais.length > 0 ? escolher(rng, locais) : d?.localAtual ?? locais[0] ?? '',
-    acao: `O forasteiro ${verbo}.`,
-    causadoPor: conhecidos.length > 0 && rng() < chanceLigar ? amostra(rng, conhecidos, 1) : [],
-    tensao: Math.round(rng() * 10),
-  };
+  return tipar(
+    rng,
+    {
+      local: rng() < chanceMover && locais.length > 0 ? escolher(rng, locais) : d?.localAtual ?? locais[0] ?? '',
+      acao: `O forasteiro ${verbo}.`,
+      causadoPor: conhecidos.length > 0 && rng() < chanceLigar ? amostra(rng, conhecidos, 1) : [],
+      tensao: Math.round(rng() * 10),
+    },
+    d?.tipadas === true
+  );
 }
 
 function gerarRelatos(rng: () => number, d: any) {

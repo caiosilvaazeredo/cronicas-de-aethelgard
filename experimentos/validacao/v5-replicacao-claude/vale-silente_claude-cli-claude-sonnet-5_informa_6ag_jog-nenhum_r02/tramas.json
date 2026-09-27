@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.anselmo",
+    "eventoInicialId": "D1.anselmo",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  },
+  {
+    "id": "D1.joaquim",
+    "eventoInicialId": "D1.joaquim",
+    "eventoFinalId": "D3.joaquim",
+    "turnosSemNovoEvento": 17,
+    "status": "fechada",
+    "narracaoFechamento": "Joaquim trancou melhor a porta lateral do moinho e, em silêncio, levou água e pão ao forasteiro escondido, tomando cuidado para que nenhum barulho atraísse visitas. Depois, passou a moer grão abertamente na frente do moinho, de modo a parecer ocupado e afastar quem se aproximasse, enquanto mantinha a porta lateral trancada e continuava, à noite, levando comida ao forasteiro sem fazer ruído. Assim, voltou a moer grão na frente do moinho para os poucos que passavam, e, ao cair da noite, levava pão e água pela porta lateral trancada ao forasteiro escondido, sempre em silêncio."
+  }
+]

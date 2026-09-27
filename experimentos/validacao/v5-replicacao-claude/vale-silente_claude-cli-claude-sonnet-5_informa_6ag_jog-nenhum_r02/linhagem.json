@@ -1,0 +1,300 @@
+{
+  "tramas": {
+    "D1.anselmo": {
+      "id": "D1.anselmo",
+      "nasceuEm": 2,
+      "origem": "nascimento",
+      "fechouEm": null,
+      "fundiuEm": null,
+      "absorvidaPor": null,
+      "fundidaPorEventos": [],
+      "absorveu": [
+        {
+          "id": "D1.marta",
+          "dia": 3
+        },
+        {
+          "id": "D1.benedita",
+          "dia": 4
+        },
+        {
+          "id": "D1.irma-clara",
+          "dia": 6
+        }
+      ]
+    },
+    "D1.benedita": {
+      "id": "D1.benedita",
+      "nasceuEm": 2,
+      "origem": "nascimento",
+      "fechouEm": null,
+      "fundiuEm": 4,
+      "absorvidaPor": "D1.anselmo",
+      "fundidaPorEventos": [
+        "D4.benedita",
+        "D4.joaquim",
+        "D4.marta",
+        "D4.rui"
+      ],
+      "absorveu": []
+    },
+    "D1.irma-clara": {
+      "id": "D1.irma-clara",
+      "nasceuEm": 2,
+      "origem": "nascimento",
+      "fechouEm": null,
+      "fundiuEm": 6,
+      "absorvidaPor": "D1.anselmo",
+      "fundidaPorEventos": [
+        "D6.irma-clara",
+        "D6.rui"
+      ],
+      "absorveu": []
+    },
+    "D1.joaquim": {
+      "id": "D1.joaquim",
+      "nasceuEm": 2,
+      "origem": "nascimento",
+      "fechouEm": 6,
+      "fundiuEm": null,
+      "absorvidaPor": null,
+      "fundidaPorEventos": [],
+      "absorveu": []
+    },
+    "D1.marta": {
+      "id": "D1.marta",
+      "nasceuEm": 2,
+      "origem": "nascimento",
+      "fechouEm": null,
+      "fundiuEm": 3,
+      "absorvidaPor": "D1.anselmo",
+      "fundidaPorEventos": [
+        "D3.anselmo",
+        "D3.marta"
+      ],
+      "absorveu": []
+    }
+  },
+  "dias": [
+    {
+      "dia": 1,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 0,
+      "nascidasAcum": 0,
+      "fundidasAcum": 0,
+      "fechadasAcum": 0,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 2,
+      "nascidas": 5,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 5,
+      "nascidasAcum": 5,
+      "fundidasAcum": 0,
+      "fechadasAcum": 0,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 3,
+      "nascidas": 0,
+      "fundidas": 1,
+      "fechadas": 0,
+      "abertas": 4,
+      "nascidasAcum": 5,
+      "fundidasAcum": 1,
+      "fechadasAcum": 0,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 4,
+      "nascidas": 0,
+      "fundidas": 1,
+      "fechadas": 0,
+      "abertas": 3,
+      "nascidasAcum": 5,
+      "fundidasAcum": 2,
+      "fechadasAcum": 0,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 5,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 3,
+      "nascidasAcum": 5,
+      "fundidasAcum": 2,
+      "fechadasAcum": 0,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 6,
+      "nascidas": 0,
+      "fundidas": 1,
+      "fechadas": 1,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 7,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 8,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 9,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 10,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 11,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 12,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 13,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 14,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 15,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 16,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 17,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 18,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 19,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    },
+    {
+      "dia": 20,
+      "nascidas": 0,
+      "fundidas": 0,
+      "fechadas": 0,
+      "abertas": 1,
+      "nascidasAcum": 5,
+      "fundidasAcum": 3,
+      "fechadasAcum": 1,
+      "fundidasAposFecharAcum": 0
+    }
+  ]
+}

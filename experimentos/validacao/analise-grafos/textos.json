@@ -150,5 +150,14 @@
   "anotacao": [
     "A anotação humana prevista na seção 6 do pré-registro está pronta para ser feita. analise/amostra_anotacao.py sorteou 25 ligações por estrato (4 modelos × 2 mundos) das 16 sessões Cidade Viva do método 1, mais 16 distratores (pares da mesma sessão que o modelo não ligou), num total de 216 pares.",
     "Cada anotador recebe uma planilha própria (A ou B), com os mesmos pares em ordem diferente e sem modelo, mundo ou sessão, e marca se o efeito é plausivelmente consequência da causa. As instruções estão no README da pasta experimentos/validacao/anotacao-humana/. Com as duas planilhas preenchidas, o comando kappa dá a concordância entre anotadores e a taxa de plausibilidade por estrato e nos distratores, que pode ser comparada com o juiz automático (método 4) e com o teste de necessidade (métodos 6, 6b e 6c)."
+  ],
+  "causas_intro": [
+    "O método 8 repete o método 1 na condição A (os mesmos 4 modelos, 2 mundos, 12 dias e as mesmas sementes), mas o prompt pede no máximo duas causas por ação, só aquelas sem as quais a ação não aconteceria. O motor descarta o excedente e conta as descartadas. A hipótese era que menos ligações por evento reduziriam as fusões entre linhas."
+  ],
+  "causas_resultados": [
+    "**Os modelos obedecem, mas a densidade quase não cai.** Nenhuma causa precisou ser descartada, e as ligações por evento passaram de 1,71 para 1,57, diferença não significativa. Sem o limite, 82% dos eventos já tinham até duas causas (43% exatamente duas) e só 17% tinham três ou quatro; com o limite, esses viram eventos de duas causas, e a fração com exatamente duas sobe para 66%.",
+    "**A fusão não diminui.** Nas sessões pareadas, a proporção de absorvidas por fusão foi de 53% para 69% e a de fechadas por estabilidade de 10% para 2,5% (8 pares, nenhuma diferença significativa). As pontes de fusão caem de 3,8 para 2,1 por sessão: com menos ligações, as que sobram tendem a ser justamente as que unem linhas.",
+    "**As ligações não ficam mais necessárias.** O juiz (Opus 5.5) deu 63 de necessidade às ligações diretas do método 8, contra 67 sem limite e 20 aos pares não ligados (AUC 0,96). Pedir “só as causas necessárias” não muda a qualidade do que o modelo declara.",
+    "Conclusão: a fusão não vem do número de causas, mas de **quais** eventos os modelos ligam: eles escolhem, como causa principal, justamente eventos de outras linhas. A emenda 3 registra a decisão de não usar o limite de causas na campanha real."
   ]
 }

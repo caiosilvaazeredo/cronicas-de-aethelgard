@@ -1,0 +1,77 @@
+{
+  "juiz": "claude-opus-5-5",
+  "pares": 60,
+  "porTipo": {
+    "direta": {
+      "n": 40,
+      "necessidadeMedia": 63.025
+    },
+    "indireta": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "nao-ligado": {
+      "n": 20,
+      "necessidadeMedia": 20.15
+    }
+  },
+  "aucDiretaVsNaoLigado": 0.964375,
+  "aucIndiretaVsNaoLigado": null,
+  "aucDiretaVsIndireta": null,
+  "spearmanGrauSaidaNecessidade": 0.3228825554549102,
+  "porTipoLigacao": {
+    "motivou": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "possibilitou": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "reagiu": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "lembrou": {
+      "n": 0,
+      "necessidadeMedia": null
+    }
+  },
+  "porForca": {
+    "1": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "2": {
+      "n": 0,
+      "necessidadeMedia": null
+    },
+    "3": {
+      "n": 0,
+      "necessidadeMedia": null
+    }
+  },
+  "spearmanForcaNecessidade": null,
+  "porGerador": {
+    "claude-sonnet-5": {
+      "direta": 63.125,
+      "indireta": null,
+      "nao-ligado": 18.75
+    },
+    "claude-sonnet-4-6": {
+      "direta": 60.375,
+      "indireta": null,
+      "nao-ligado": 19.6
+    },
+    "claude-opus-5": {
+      "direta": 67.6875,
+      "indireta": null,
+      "nao-ligado": 20.5
+    },
+    "claude-haiku-4-5-20251001": {
+      "direta": 56.25,
+      "indireta": null,
+      "nao-ligado": 21.142857142857142
+    }
+  }
+}

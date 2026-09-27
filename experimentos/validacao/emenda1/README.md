@@ -41,7 +41,17 @@ acumuladas) e `reanalise.jsonl` (linhagem dia a dia de cada sessão).
 | completo (referência) | 3,94 | 0,08 | 0,59 | 12,5% |
 | janela3 | 3,94 | 0,08 | 0,59 | 12,5% |
 | fortes | 3,94 | 0,08 | 0,59 | 12,5% |
-| sem-pontes-de-fusao | 4,25 | 0,33 | 0,49 | 6% |
+| sem-pontes-de-fusao | 4,25 | 0,20 | 0,60 | 6% |
+| reducao-transitiva | 3,94 | 0,08 | 0,59 | 12,5% |
+| comunidades (Louvain) | 4,88 | 0,41 | 0,46 | 19% |
+
+Correção de 2026-09-27: numa primeira versão desta tabela, `sem-pontes-de-fusao`
+aparecia com 0,33 de fechadas. O número estava inflado: as variantes que
+removem ligações podem **separar** uma trama em duas (cisão), e a parte que se
+separava contava como trama fechada sem contar como linha nova. A linhagem
+agora registra a cisão como origem própria e a divide no denominador
+(`linhas = nascidas + cisões`). Na detecção completa não há cisão (componentes
+só crescem ou se juntam), e os números da emenda 1 não mudaram.
 
 - **janela3 não muda nada porque nenhuma ligação atravessa mais de 3 dias**:
   o prompt só mostra aos agentes os eventos dos últimos 3 dias (`janelaDias`),
@@ -50,9 +60,16 @@ acumuladas) e `reanalise.jsonl` (linhagem dia a dia de cada sessão).
 - **fortes** não muda porque estas sessões não têm ligações tipadas (a opção
   `ligacoesTipadas` foi criada depois).
 - **sem-pontes-de-fusao** (56 pontes de fusão nas 24 sessões): cortar a
-  ligação única que une duas linhas com 3+ eventos quadruplica a proporção de
-  tramas fechadas por estabilidade (0,08 → 0,33). Parte relevante da fusão é
-  feita por uma única ligação.
+  ligação única que une duas linhas com 3+ eventos eleva a proporção de tramas
+  fechadas por estabilidade de 0,08 para 0,20, mas a de absorvidas por fusão
+  não cai (0,59 → 0,60): as linhas separadas acabam se juntando por outras
+  ligações. A fusão é redundante, não depende de uma ligação só.
+- **reducao-transitiva** não muda nada: remover a ligação A→C quando existe
+  A→B→C nunca desconecta o grafo, então as tramas são as mesmas.
+- **comunidades** (Louvain, ligações entre comunidades cortadas) é a
+  leitura mais permissiva: 0,41 fechadas e 0,46 absorvidas. Mesmo cortando
+  tudo o que liga comunidades densas, a fusão continua do tamanho do
+  fechamento.
 
 ![Mapa da Crônica com linhagem: Sonnet 5, Vale Silente, condição A](mapa-linhagem-sonnet5-vale.png)
 

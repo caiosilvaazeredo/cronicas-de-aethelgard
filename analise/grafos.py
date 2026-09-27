@@ -62,13 +62,14 @@ for (const dir of process.argv.slice(2)) {
     const c = JSON.parse(readFileSync(join(p, 'condicao.json'), 'utf8'));
     const ev = readFileSync(join(p, 'eventos.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
     const k = c.limiarEstabilidade ?? 3;
-    const completo = resumirLinhagem(reanalisar(ev, c.dias, k).linhagem);
-    const semPontes = resumirLinhagem(reanalisar(ev, c.dias, k, VARIANTES_DETECCAO['sem-pontes-de-fusao']).linhagem);
-    const fortes = resumirLinhagem(reanalisar(ev, c.dias, k, VARIANTES_DETECCAO['fortes']).linhagem);
+    const variantes = Object.fromEntries(Object.entries(VARIANTES_DETECCAO).map(([nome, filtro]) =>
+      [nome, resumirLinhagem(reanalisar(ev, c.dias, k, nome === 'completo' ? undefined : filtro).linhagem)]));
     const g = metricasDoGrafo(ev);
+    const resumo = JSON.parse(readFileSync(join(p, 'resumo.json'), 'utf8'));
     saida.push({ sessao: s, pasta: dir, modelo: c.modelos.agentes.modelo, mundo: c.mundo, controle: c.controle,
-      estadoTramas: c.estadoTramas, tipadas: !!c.ligacoesTipadas, semente: c.semente, eventos: ev.length,
-      grafo: g, completo, semPontes, fortes });
+      estadoTramas: c.estadoTramas, tipadas: !!c.ligacoesTipadas, causasMaximas: c.causasMaximas ?? null,
+      causasExcedentes: resumo.causasExcedentes ?? 0, semente: c.semente, eventos: ev.length, grafo: g, variantes,
+      completo: variantes.completo, semPontes: variantes['sem-pontes-de-fusao'], fortes: variantes.fortes });
   }
 }
 console.log(JSON.stringify(saida));
@@ -93,6 +94,10 @@ console.log(JSON.stringify(saida));
             "propFechadasSemPontes": sp["proporcaoFechadasPorEstabilidade"], "propFundidasSemPontes": sp["proporcaoFundidas"],
             "propFechadasFortes": f["proporcaoFechadasPorEstabilidade"], "propFundidasFortes": f["proporcaoFundidas"],
             "nascidasFortes": f["nascidas"],
+            "causasMaximas": r["causasMaximas"], "causasExcedentes": r["causasExcedentes"],
+            **{f"prop_{v}": x["proporcaoFechadasPorEstabilidade"] for v, x in r["variantes"].items()},
+            **{f"fund_{v}": x["proporcaoFundidas"] for v, x in r["variantes"].items()},
+            **{f"nasc_{v}": x["nascidas"] for v, x in r["variantes"].items()},
         })
     return pd.DataFrame(linhas)
 
@@ -122,16 +127,41 @@ def main() -> None:
     res["variantes"] = var.groupby(["variante", "tipo"])[["nascidas_media", "prop_fechadas_estab", "prop_fundidas", "convergem_emenda1"]].mean().round(3).reset_index().to_dict("records")
 
     # 2. métricas de grafo das sessões (métodos 1, 2 e 7)
-    dirs = [raiz / "v1-cidade-viva-claude", raiz / "v2-controle-tres-atos-claude", raiz / "v3-ligacoes-tipadas-claude"]
+    dirs = [raiz / "v1-cidade-viva-claude", raiz / "v2-controle-tres-atos-claude", raiz / "v3-ligacoes-tipadas-claude",
+            raiz / "v4-causas-maximas-claude"]
     df = metricas_sessoes([d for d in dirs if d.exists()])
+    df["grupo"] = np.where(df["controle"], "três atos", np.where(df["tipadas"], "Cidade Viva tipada",
+                           np.where(df["causasMaximas"].notna(), "Cidade Viva ≤2 causas", "Cidade Viva")))
     df.to_csv(destino / "sessoes.csv", index=False)
     cv = df[~df["controle"]]
-    res["grafoPorGrupo"] = (df.assign(grupo=np.where(df["controle"], "três atos", np.where(df["tipadas"], "Cidade Viva tipada", "Cidade Viva")))
-                            .groupby("grupo")[["ligPorEvento", "pontes", "pontesFusao", "articulacoes", "nascidas", "propFechadas", "propFundidas", "propFechadasSemPontes"]]
+    variantes_nomes = [c[5:] for c in df.columns if c.startswith("prop_")]
+    res["variantesPorGrupo"] = [
+        {"grupo": g, "variante": v, "sessoes": int(len(x)), "nascidas": float(x[f"nasc_{v}"].mean()),
+         "propFechadas": float(x[f"prop_{v}"].mean()), "propFundidas": float(x[f"fund_{v}"].mean())}
+        for g, x in df.groupby("grupo") for v in variantes_nomes
+    ]
+    res["grafoPorGrupo"] = (df.groupby("grupo")[["ligPorEvento", "pontes", "pontesFusao", "articulacoes", "nascidas", "propFechadas", "propFundidas", "propFechadasSemPontes"]]
                             .mean().round(3).to_dict("index"))
 
-    # 3. método 7: pareado com o método 1 (mesmo modelo, mundo, condição A e semente)
-    base = cv[(~cv["tipadas"]) & (cv["estadoTramas"] == "informa")].set_index(["modelo", "mundo"])
+    # 3. métodos 7 e 8: pareados com o método 1 (mesmo modelo, mundo, condição A e semente)
+    base = cv[(cv["grupo"] == "Cidade Viva") & (cv["estadoTramas"] == "informa")].set_index(["modelo", "mundo"])
+    res["pareados"] = {}
+    for nome, grupo in [("tipadas", "Cidade Viva tipada"), ("causas2", "Cidade Viva ≤2 causas")]:
+        trat = cv[cv["grupo"] == grupo].set_index(["modelo", "mundo"])
+        p = base.join(trat, lsuffix="_sem", rsuffix="_com", how="inner").reset_index()
+        if not len(p):
+            continue
+        comp = {}
+        for m in ["ligPorEvento", "nascidas", "propFechadas", "propFundidas", "pontesFusao"]:
+            a, b = p[f"{m}_sem"].to_numpy(float), p[f"{m}_com"].to_numpy(float)
+            try:
+                w = stats.wilcoxon(a, b) if np.any(a != b) else None
+            except ValueError:
+                w = None
+            comp[m] = {"sem": float(a.mean()), "com": float(b.mean()), "difMedia": float((b - a).mean()),
+                       "p_wilcoxon": float(w.pvalue) if w is not None else None}
+        res["pareados"][nome] = {"pares": int(len(p)), "comparacao": comp,
+                                 "causasExcedentes": float(trat["causasExcedentes"].mean())}
     tip = cv[cv["tipadas"]].set_index(["modelo", "mundo"])
     pares = base.join(tip, lsuffix="_sem", rsuffix="_com", how="inner").reset_index()
     if len(pares):
@@ -178,8 +208,55 @@ def main() -> None:
         fig.savefig(destino / "tipadas_pareado.png", dpi=140)
         plt.close(fig)
 
+    # figura: sem limite × tipadas × no máximo 2 causas, por modelo
+    grupos3 = [("Cidade Viva", "sem tipos (método 1)", "#9ca3af"), ("Cidade Viva tipada", "tipo e força (método 7)", "#3a7ca5"),
+               ("Cidade Viva ≤2 causas", "no máximo 2 causas (método 8)", "#3a9a5b")]
+    cvA = cv[cv["estadoTramas"] == "informa"]
+    ms = [m for m in ORDEM if m in set(cvA["modelo"])]
+    if cvA["grupo"].nunique() >= 2:
+        fig, eixos = plt.subplots(1, 3, figsize=(14, 3.9))
+        x = np.arange(len(ms))
+        presentes = [g for g in grupos3 if g[0] in set(cvA["grupo"])]
+        larg = 0.8 / len(presentes)
+        for e, chave, titulo in [(eixos[0], "ligPorEvento", "Ligações por evento"), (eixos[1], "propFechadas", "Fechadas por estabilidade / nascidas"),
+                                 (eixos[2], "propFundidas", "Absorvidas por fusão / nascidas")]:
+            for i, (g, rot, cor) in enumerate(presentes):
+                vals = [cvA[(cvA["modelo"] == m) & (cvA["grupo"] == g)][chave].mean() for m in ms]
+                e.bar(x + (i - (len(presentes) - 1) / 2) * larg, vals, larg, label=rot, color=cor)
+            e.set_xticks(x, [curto(m) for m in ms], fontsize=8)
+            e.set_title(titulo, fontsize=10)
+            e.grid(axis="y", alpha=0.3)
+        eixos[0].legend(fontsize=7)
+        fig.suptitle("Cidade Viva, condição A: sessões pareadas (mesmo modelo, mundo e semente)")
+        fig.tight_layout()
+        fig.savefig(destino / "pareados.png", dpi=140)
+        plt.close(fig)
+
+    # figura: variantes de detecção por grupo
+    vg = pd.DataFrame(res["variantesPorGrupo"])
+    if len(vg):
+        ordem_v = ["completo", "reducao-transitiva", "janela3", "fortes", "fortes-janela3", "sem-pontes-de-fusao", "comunidades"]
+        ordem_v = [v for v in ordem_v if v in set(vg["variante"])]
+        gs = [g for g in ["Cidade Viva", "Cidade Viva tipada", "Cidade Viva ≤2 causas", "três atos"] if g in set(vg["grupo"])]
+        fig, eixos = plt.subplots(1, 2, figsize=(14, 4))
+        x = np.arange(len(ordem_v))
+        larg = 0.8 / len(gs)
+        cores_g = {"Cidade Viva": "#9ca3af", "Cidade Viva tipada": "#3a7ca5", "Cidade Viva ≤2 causas": "#3a9a5b", "três atos": "#d1495b"}
+        for e, chave, titulo in [(eixos[0], "propFechadas", "Fechadas por estabilidade / nascidas"), (eixos[1], "propFundidas", "Absorvidas por fusão / nascidas")]:
+            for i, g in enumerate(gs):
+                vals = [vg[(vg["grupo"] == g) & (vg["variante"] == v)][chave].mean() for v in ordem_v]
+                e.bar(x + (i - (len(gs) - 1) / 2) * larg, vals, larg, label=g, color=cores_g[g])
+            e.set_xticks(x, ordem_v, fontsize=8, rotation=20)
+            e.set_title(titulo, fontsize=10)
+            e.grid(axis="y", alpha=0.3)
+        eixos[0].legend(fontsize=7)
+        fig.tight_layout()
+        fig.savefig(destino / "variantes_grupos.png", dpi=140)
+        plt.close(fig)
+
     # 4. necessidade causal (m6) e necessidade × tipo (m6b)
-    for chave, pasta in [("necessidade", "m6-necessidade"), ("necessidadeTipadas", "m6b-necessidade-tipadas")]:
+    for chave, pasta in [("necessidade", "m6-necessidade"), ("necessidadeTipadas", "m6b-necessidade-tipadas"),
+                         ("necessidadeCausas2", "m6c-necessidade-causas-maximas")]:
         arq = raiz / pasta / "resumo.json"
         if arq.exists():
             res[chave] = json.loads(arq.read_text(encoding="utf8"))

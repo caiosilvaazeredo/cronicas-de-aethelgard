@@ -79,3 +79,27 @@ test('satélite antigo que passa a ligar duas linhas: renomeação, não nascime
   assert.equal(lin.dias[2].nascidas, 0);
   assert.equal(r.abertasNoFim, 1);
 });
+
+test('cisão (variante que remove ligação): conta como linha nova e a proporção não passa de 1', () => {
+  // a->b->c->d nasce como uma linha; do dia 3 em diante a ligação b->c some
+  // (como numa variante de detecção), e c->d segue sozinha
+  const base = [ev('a', 1), ev('b', 1, ['a']), ev('c', 2, ['b']), ev('d', 2, ['c'])];
+  const semLigacao = base.map((e) => (e.id === 'c' ? { ...e, causadoPor: [] } : e));
+  let lin = linhagemVazia();
+  let tramas: Trama[] = [];
+  let anotados: StoryEvent[] = [];
+  for (let d = 1; d <= 8; d++) {
+    const eventos = (d >= 3 ? semLigacao : base).filter((e) => e.turno <= d);
+    const antes = mapaDeTramas(anotados);
+    const r = detectarArcos(eventos, d, tramas, 3);
+    lin = atualizarLinhagem(lin, d, antes, r.eventos, r.tramas);
+    anotados = r.eventos;
+    tramas = r.tramas.map((t) => (t.status === 'estavel' ? { ...t, status: 'fechada' as const } : t));
+  }
+  const r = resumirLinhagem(lin);
+  assert.equal(r.nascidas, 1);
+  assert.equal(r.cisoes, 1);
+  assert.equal(Object.values(lin.tramas).filter((t) => t.origem === 'cisao').length, 1);
+  assert.equal(r.fechadasPorEstabilidade, 2);
+  assert.equal(r.proporcaoFechadasPorEstabilidade, 1);
+});

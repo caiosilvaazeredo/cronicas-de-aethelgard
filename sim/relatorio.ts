@@ -103,7 +103,7 @@ export async function gerarRelatorio(dir: string): Promise<string> {
               : d === 'fechada'
                 ? `fechada por estabilidade no dia ${r.fechouEm}`
                 : 'aberta no fim da sessão';
-          partes.push(`- \`${r.id}\` (${r.origem === 'renomeacao' ? 'id herdado de fusão' : 'nasceu'} no dia ${r.nasceuEm}): ${fim}`);
+          partes.push(`- \`${r.id}\` (${r.origem === 'renomeacao' ? 'id herdado de fusão' : r.origem === 'cisao' ? 'separou-se por cisão' : 'nasceu'} no dia ${r.nasceuEm}): ${fim}`);
         });
       partes.push('');
     }

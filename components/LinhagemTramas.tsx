@@ -61,7 +61,7 @@ const LinhagemTramas: React.FC<Props> = ({ linhagem }) => {
                 stroke={cor}
                 strokeWidth={6}
                 strokeLinecap="round"
-                strokeDasharray={r.origem === 'renomeacao' ? '4 3' : undefined}
+                strokeDasharray={r.origem === 'renomeacao' ? '4 3' : r.origem === 'cisao' ? '1 3' : undefined}
               >
                 <title>
                   {`${r.id}: nasceu no dia ${r.nasceuEm}` +

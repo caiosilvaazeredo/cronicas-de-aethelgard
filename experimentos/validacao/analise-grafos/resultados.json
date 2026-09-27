@@ -127,6 +127,176 @@
    "convergem_emenda1": 0.0
   }
  ],
+ "variantesPorGrupo": [
+  {
+   "grupo": "Cidade Viva",
+   "variante": "completo",
+   "sessoes": 16,
+   "nascidas": 3.9375,
+   "propFechadas": 0.078125,
+   "propFundidas": 0.5875
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "janela3",
+   "sessoes": 16,
+   "nascidas": 3.9375,
+   "propFechadas": 0.078125,
+   "propFundidas": 0.5875
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "fortes",
+   "sessoes": 16,
+   "nascidas": 3.9375,
+   "propFechadas": 0.078125,
+   "propFundidas": 0.5875
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "fortes-janela3",
+   "sessoes": 16,
+   "nascidas": 3.9375,
+   "propFechadas": 0.078125,
+   "propFundidas": 0.5875
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "sem-pontes-de-fusao",
+   "sessoes": 16,
+   "nascidas": 4.25,
+   "propFechadas": 0.2028138528138528,
+   "propFundidas": 0.6030844155844155
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "reducao-transitiva",
+   "sessoes": 16,
+   "nascidas": 3.9375,
+   "propFechadas": 0.078125,
+   "propFundidas": 0.5875
+  },
+  {
+   "grupo": "Cidade Viva",
+   "variante": "comunidades",
+   "sessoes": 16,
+   "nascidas": 4.875,
+   "propFechadas": 0.4134875541125541,
+   "propFundidas": 0.46094946719946717
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "completo",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.0,
+   "propFundidas": 0.6916666666666667
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "janela3",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.0,
+   "propFundidas": 0.6916666666666667
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "fortes",
+   "sessoes": 8,
+   "nascidas": 4.875,
+   "propFechadas": 0.04583333333333334,
+   "propFundidas": 0.7395833333333333
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "fortes-janela3",
+   "sessoes": 8,
+   "nascidas": 4.875,
+   "propFechadas": 0.04583333333333334,
+   "propFundidas": 0.7395833333333333
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "sem-pontes-de-fusao",
+   "sessoes": 8,
+   "nascidas": 4.5,
+   "propFechadas": 0.025,
+   "propFundidas": 0.7666666666666667
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "reducao-transitiva",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.0,
+   "propFundidas": 0.6916666666666667
+  },
+  {
+   "grupo": "Cidade Viva tipada",
+   "variante": "comunidades",
+   "sessoes": 8,
+   "nascidas": 4.875,
+   "propFechadas": 0.39151785714285714,
+   "propFundidas": 0.4472222222222222
+  },
+  {
+   "grupo": "três atos",
+   "variante": "completo",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0
+  },
+  {
+   "grupo": "três atos",
+   "variante": "janela3",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0
+  },
+  {
+   "grupo": "três atos",
+   "variante": "fortes",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0
+  },
+  {
+   "grupo": "três atos",
+   "variante": "fortes-janela3",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0
+  },
+  {
+   "grupo": "três atos",
+   "variante": "sem-pontes-de-fusao",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.125,
+   "propFundidas": 0.0625
+  },
+  {
+   "grupo": "três atos",
+   "variante": "reducao-transitiva",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.0,
+   "propFundidas": 0.0
+  },
+  {
+   "grupo": "três atos",
+   "variante": "comunidades",
+   "sessoes": 8,
+   "nascidas": 1.0,
+   "propFechadas": 0.5520833333333333,
+   "propFundidas": 0.44791666666666663
+  }
+ ],
  "grafoPorGrupo": {
   "Cidade Viva": {
    "ligPorEvento": 1.75,
@@ -136,7 +306,7 @@
    "nascidas": 3.938,
    "propFechadas": 0.078,
    "propFundidas": 0.588,
-   "propFechadasSemPontes": 0.332
+   "propFechadasSemPontes": 0.203
   },
   "Cidade Viva tipada": {
    "ligPorEvento": 2.295,
@@ -146,7 +316,7 @@
    "nascidas": 4.375,
    "propFechadas": 0.0,
    "propFundidas": 0.692,
-   "propFechadasSemPontes": 0.031
+   "propFechadasSemPontes": 0.025
   },
   "três atos": {
    "ligPorEvento": 1.841,
@@ -156,7 +326,45 @@
    "nascidas": 1.0,
    "propFechadas": 0.0,
    "propFundidas": 0.0,
-   "propFechadasSemPontes": 0.25
+   "propFechadasSemPontes": 0.125
+  }
+ },
+ "pareados": {
+  "tipadas": {
+   "pares": 8,
+   "comparacao": {
+    "ligPorEvento": {
+     "sem": 1.7135416666666665,
+     "com": 2.295138888888889,
+     "difMedia": 0.5815972222222222,
+     "p_wilcoxon": 0.0078125
+    },
+    "nascidas": {
+     "sem": 3.875,
+     "com": 4.375,
+     "difMedia": 0.5,
+     "p_wilcoxon": 0.4375
+    },
+    "propFechadas": {
+     "sem": 0.1,
+     "com": 0.0,
+     "difMedia": -0.1,
+     "p_wilcoxon": 0.25
+    },
+    "propFundidas": {
+     "sem": 0.525,
+     "com": 0.6916666666666667,
+     "difMedia": 0.16666666666666669,
+     "p_wilcoxon": 0.09375
+    },
+    "pontesFusao": {
+     "sem": 3.75,
+     "com": 0.125,
+     "difMedia": -3.625,
+     "p_wilcoxon": 0.03125
+    }
+   },
+   "causasExcedentes": 0.0
   }
  },
  "tipadas": {
@@ -237,7 +445,7 @@
   "variantes": {
    "completo": 0.0,
    "fortes": 0.04583333333333334,
-   "semPontes": 0.03125,
+   "semPontes": 0.025,
    "fundidasCompleto": 0.6916666666666667,
    "fundidasFortes": 0.7395833333333333,
    "nascidasCompleto": 4.375,

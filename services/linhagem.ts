@@ -32,8 +32,13 @@ export type DesfechoLinhagem = 'aberta' | 'fechada' | 'fundida';
 export interface RegistroTrama {
   id: string;
   nasceuEm: number; // dia
-  /** 'nascimento' = linha nova; 'renomeacao' = id novo herdado de fusão */
-  origem: 'nascimento' | 'renomeacao';
+  /**
+   * 'nascimento' = linha nova; 'renomeacao' = id novo herdado de fusão;
+   * 'cisao' = id novo que se separou de uma trama que continua existindo
+   * (só ocorre em variantes de detecção que removem ligações, nunca na
+   * detecção completa, em que componentes só crescem ou se juntam)
+   */
+  origem: 'nascimento' | 'renomeacao' | 'cisao';
   fechouEm: number | null; // primeiro dia como estável/fechada
   fundiuEm: number | null; // dia em que foi absorvida
   absorvidaPor: string | null;
@@ -124,11 +129,13 @@ export function atualizarLinhagem(
   // 2. nascimentos e renomeações: ids de hoje que não existiam ontem
   [...idsAgora].sort().forEach((id) => {
     if (tramasAtuais[id]) return;
-    const herdou = [...agora.entries()].some(([e, t]) => t === id && antes.has(e));
+    const herdados = [...agora.entries()].filter(([e, t]) => t === id && antes.has(e)).map(([e]) => e);
+    const herdou = herdados.length > 0;
+    const cisao = herdados.some((e) => idsAgora.has(antes.get(e)!));
     tramasAtuais[id] = {
       id,
       nasceuEm: dia,
-      origem: herdou ? 'renomeacao' : 'nascimento',
+      origem: cisao ? 'cisao' : herdou ? 'renomeacao' : 'nascimento',
       fechouEm: null,
       fundiuEm: null,
       absorvidaPor: null,
@@ -177,12 +184,17 @@ export function desfechoDaTrama(r: RegistroTrama): DesfechoLinhagem {
 }
 
 export interface ResumoLinhagem {
-  /** linhas de acontecimento que nasceram (sem contar renomeações) */
+  /** linhas de acontecimento que nasceram (sem contar renomeações nem cisões) */
   nascidas: number;
+  /** linhas criadas por cisão (0 na detecção completa) */
+  cisoes: number;
   fechadasPorEstabilidade: number;
   fundidasAntesDeFechar: number;
   abertasNoFim: number;
-  /** métrica principal da emenda 1: fechadas por estabilidade / nascidas */
+  /**
+   * métrica principal da emenda 1: fechadas por estabilidade / linhas
+   * (linhas = nascidas + cisões; na detecção completa, linhas = nascidas)
+   */
   proporcaoFechadasPorEstabilidade: number;
   proporcaoFundidas: number;
   /** das tramas que deixaram de estar abertas, quantas foi por fechamento */
@@ -192,19 +204,22 @@ export interface ResumoLinhagem {
 export function resumirLinhagem(l: Linhagem): ResumoLinhagem {
   const regs = Object.values(l.tramas);
   const nascidas = regs.filter((r) => r.origem === 'nascimento').length;
+  const cisoes = regs.filter((r) => r.origem === 'cisao').length;
+  const linhas = nascidas + cisoes;
   // renomeações contam no desfecho: a linha que continua sob o id novo
   const desfechos = regs.map(desfechoDaTrama);
   const fechadas = desfechos.filter((d) => d === 'fechada').length;
-  const fundidas = regs.filter((r) => r.origem === 'nascimento' && desfechoDaTrama(r) === 'fundida').length;
+  const fundidas = regs.filter((r) => r.origem !== 'renomeacao' && desfechoDaTrama(r) === 'fundida').length;
   const abertas = desfechos.filter((d) => d === 'aberta').length;
   const saidas = fechadas + fundidas;
   return {
     nascidas,
+    cisoes,
     fechadasPorEstabilidade: fechadas,
     fundidasAntesDeFechar: fundidas,
     abertasNoFim: abertas,
-    proporcaoFechadasPorEstabilidade: nascidas ? fechadas / nascidas : 0,
-    proporcaoFundidas: nascidas ? fundidas / nascidas : 0,
+    proporcaoFechadasPorEstabilidade: linhas ? fechadas / linhas : 0,
+    proporcaoFundidas: linhas ? fundidas / linhas : 0,
     fracaoSaidaPorFechamento: saidas ? fechadas / saidas : null,
   };
 }

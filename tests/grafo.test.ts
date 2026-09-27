@@ -72,3 +72,30 @@ test('linhagem registra o evento que causou a fusão', () => {
   const fundida = Object.values(r.linhagem.tramas).find((t) => t.fundiuEm !== null)!;
   assert.deepEqual(fundida.fundidaPorEventos, ['y']);
 });
+
+test('redução transitiva: remove A→C quando existe A→B→C, e só isso', async () => {
+  const { ligacoesRedundantes } = await import('../services/grafo');
+  const eventos = [ev('a', 1), ev('b', 2, ['a']), ev('c', 3, ['a', 'b']), ev('d', 4, ['c', 'a'])];
+  assert.deepEqual([...ligacoesRedundantes(eventos)].sort(), ['a>c', 'a>d']);
+  const { eventos: f } = filtrarLigacoes(eventos, VARIANTES_DETECCAO['reducao-transitiva']);
+  assert.deepEqual(f.map((e) => e.causadoPor), [[], ['a'], ['b'], ['c']]);
+  // a conectividade (e, portanto, as tramas) não muda
+  assert.equal(reanalisar(eventos, 4, 3).tramas.length, reanalisar(eventos, 4, 3, VARIANTES_DETECCAO['reducao-transitiva']).tramas.length);
+});
+
+test('comunidades: dois grupos densos unidos por uma ligação viram duas tramas', async () => {
+  const { comunidadesLouvain } = await import('../services/grafo');
+  // dois grupos de 4 eventos totalmente ligados entre si, unidos por a4 -> b4
+  const eventos = [
+    ev('a1', 1), ev('a2', 2, ['a1']), ev('a3', 3, ['a1', 'a2']), ev('a4', 4, ['a1', 'a2', 'a3']),
+    ev('b1', 1), ev('b2', 2, ['b1']), ev('b3', 3, ['b1', 'b2']), ev('b4', 5, ['b1', 'b2', 'b3', 'a4']),
+  ];
+  const c = comunidadesLouvain(eventos);
+  assert.equal(new Set(['a1', 'a2', 'a3', 'a4'].map((id) => c.get(id))).size, 1);
+  assert.equal(new Set(['b1', 'b2', 'b3', 'b4'].map((id) => c.get(id))).size, 1);
+  assert.notEqual(c.get('a1'), c.get('b1'));
+  assert.equal(reanalisar(eventos, 5, 3).tramas.length, 1);
+  assert.equal(reanalisar(eventos, 5, 3, VARIANTES_DETECCAO.comunidades).tramas.length, 2);
+  // determinismo
+  assert.deepEqual([...comunidadesLouvain(eventos)], [...c]);
+});

@@ -180,3 +180,13 @@ test('ligações tipadas: eventos trazem tipo e força, e causadoPor é derivado
   assert.ok(Object.keys(resumo.grafo.porTipo).length > 0);
   assert.ok(resumo.grafo.forcaMedia >= 1);
 });
+
+test('causasMaximas: o prompt pede no máximo N causas e o motor corta o excedente', async () => {
+  const dir = await rodar(await dirTemporario('causasmax'), { dias: 8, causasMaximas: 1 });
+  const eventos = lerJsonl(await readFile(join(dir, 'eventos.jsonl'), 'utf8'));
+  eventos.forEach((e: any) => assert.ok(e.causadoPor.length <= 1));
+  const resumo = JSON.parse(await readFile(join(dir, 'resumo.json'), 'utf8'));
+  assert.ok(resumo.causasExcedentes > 0, 'o simulado gera até 3 causas, então algo foi cortado');
+  const chamadas = lerJsonl(await readFile(join(dir, 'chamadas.jsonl'), 'utf8'));
+  assert.match(chamadas.find((c: any) => c.papel === 'agentes').sistema, /no máximo um id/);
+});

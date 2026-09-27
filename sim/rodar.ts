@@ -10,6 +10,7 @@
  *         --provedor-jogador/--modelo-jogador  --provedor-curador/--modelo-curador
  *         --fixado-confirmado  --sem-cache  --falha-simulada sempre|primeira-tentativa|0.2
  *         --ligacoes-tipadas (cada causa com tipo e força)
+ *         --causas-maximas N (no máximo N causas por ação)
  */
 
 import { join } from 'node:path';
@@ -72,6 +73,7 @@ async function principal() {
     limiarEstabilidade: numero(args, 'limiar', 3),
     janelaDias: numero(args, 'janela', 3),
     ...(args['ligacoes-tipadas'] === true ? { ligacoesTipadas: true } : {}),
+    ...(args['causas-maximas'] ? { causasMaximas: numero(args, 'causas-maximas', 2) } : {}),
   };
 
   const mundo = await carregarMundo(mundoId);

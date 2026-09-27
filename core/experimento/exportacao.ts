@@ -79,6 +79,8 @@ export interface ResumoSessao {
   };
   errosDeChamada: number;
   acoesDescartadas: number;
+  /** causas cortadas pelo limite causasMaximas */
+  causasExcedentes: number;
   agentesSemAcao: number;
   locaisInvalidos: number;
   tokens: { entrada: number; saida: number; porPapel: Record<string, { entrada: number; saida: number }> };
@@ -151,6 +153,7 @@ export function calcularResumo(reg: RegistroSessao, precos: Record<string, Preco
     },
     errosDeChamada: chamadas.filter((c) => c.erro).length,
     acoesDescartadas: soma('acoesDescartadas'),
+    causasExcedentes: reg.estatisticasDias.reduce((n, d) => n + (d.causasExcedentes ?? 0), 0),
     agentesSemAcao: soma('agentesSemAcao'),
     locaisInvalidos: soma('locaisInvalidos'),
     tokens: {

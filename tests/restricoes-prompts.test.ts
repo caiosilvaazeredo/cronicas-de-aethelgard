@@ -83,7 +83,7 @@ for (const [rotulo, termos] of [
       for (const estadoTramas of ['informa', 'nao-informa'] as const) {
         const p = await criarProvedor(SIMULADO);
         const reg = await executarSessao(
-          condicao({ mundo: id, dias: 20, estadoTramas, numAgentes: estadoTramas === 'informa' ? 8 : 4, ligacoesTipadas: estadoTramas === 'nao-informa' }),
+          condicao({ mundo: id, dias: 20, estadoTramas, numAgentes: estadoTramas === 'informa' ? 8 : 4, ligacoesTipadas: estadoTramas === 'nao-informa', ...(id === 'vale-silente' && estadoTramas === 'informa' ? { causasMaximas: 2 } : {}) }),
           mundo(id),
           { agentes: p, jogador: p, curador: p }
         );

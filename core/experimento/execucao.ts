@@ -62,6 +62,7 @@ export function configMotorDaCondicao(c: CondicaoSessao, mundo: ConfigMundo): Co
     janelaDias: c.janelaDias,
     maxTokens: MAX_TOKENS_PADRAO,
     ligacoesTipadas: c.ligacoesTipadas === true,
+    ...(c.causasMaximas ? { causasMaximas: c.causasMaximas } : {}),
   };
 }
 

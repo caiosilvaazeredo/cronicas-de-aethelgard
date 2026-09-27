@@ -31,6 +31,8 @@ export interface CondicaoSessao {
   janelaDias: number;
   /** pede tipo e força de cada causa (services/grafo.ts) */
   ligacoesTipadas?: boolean;
+  /** pede no máximo N causas por ação */
+  causasMaximas?: number;
 }
 
 export interface PrecoModelo {
@@ -62,6 +64,8 @@ export interface ConfigCampanha {
   janelaDias?: number;
   /** aplica a todas as sessões: pede tipo e força de cada causa */
   ligacoesTipadas?: boolean;
+  /** aplica a todas as sessões: no máximo N causas por ação */
+  causasMaximas?: number;
   /** preços declarados por "provedor/modelo", em USD por milhão de tokens */
   precos?: Record<string, PrecoModelo>;
   concorrencia?: number;
@@ -97,6 +101,7 @@ export function expandirCampanha(c: ConfigCampanha): CondicaoSessao[] {
     limiarEstabilidade: limiar,
     janelaDias: janela,
     ...(c.ligacoesTipadas ? { ligacoesTipadas: true } : {}),
+    ...(c.causasMaximas ? { causasMaximas: c.causasMaximas } : {}),
   };
 
   const adicionar = (celula: string, parcial: Omit<CondicaoSessao, 'id' | 'celula' | 'repeticao' | 'semente' | keyof typeof base>) => {

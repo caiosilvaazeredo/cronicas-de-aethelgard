@@ -54,6 +54,8 @@ export interface ConfigMotor {
   maxTokens: { agentes: number; jogador: number; relatos: number; curador: number };
   /** pede tipo e força de cada causa (services/grafo.ts); padrão: só ids */
   ligacoesTipadas?: boolean;
+  /** pede no máximo N causas por ação; o excedente é cortado e contado */
+  causasMaximas?: number;
 }
 
 // Folgados de propósito: em modelos com raciocínio (Gemini 3.x, Claude com
@@ -104,6 +106,8 @@ export interface RegistroChamada {
 
 export interface EstatisticasDia {
   acoesDescartadas: number; // agente desconhecido, inativo ou repetido
+  /** causas além de causasMaximas, cortadas pelo motor */
+  causasExcedentes?: number;
   agentesSemAcao: number;
   locaisInvalidos: number;
 }
@@ -235,7 +239,7 @@ async function passoAgentes(
   const resposta = await chamarERegistrar(
     provedor,
     {
-      sistema: sistemaAgentes(config.mundo, config.ligacoesTipadas),
+      sistema: sistemaAgentes(config.mundo, config.ligacoesTipadas, config.causasMaximas),
       usuario,
       esquema: config.ligacoesTipadas ? AcoesDoDiaTipadas : AcoesDoDia,
       temperatura: config.temperatura,
@@ -254,6 +258,7 @@ async function passoAgentes(
           locais: config.mundo.locais.map((l) => l.id),
           eventosVisiveis: [...idsVisiveis].sort(),
           tipadas: config.ligacoesTipadas === true,
+          causasMaximas: config.causasMaximas ?? null,
         },
       },
     },
@@ -286,7 +291,7 @@ async function passoAgentes(
       turno: dia,
       dia,
       conteudo: a.acao,
-      causadoPor: a.causadoPor,
+      causadoPor: limitarCausas(a.causadoPor, config, stats),
       tensao: a.tensao,
       tramaId: null,
       ehKernel: false,
@@ -298,6 +303,13 @@ async function passoAgentes(
   });
   stats.agentesSemAcao += config.agentesAtivos.filter((id) => !jaAgiram.has(id)).length;
   return novos;
+}
+
+/** Com causasMaximas, mantém as primeiras N causas e conta o excedente. */
+function limitarCausas(causas: string[], config: ConfigMotor, stats: EstatisticasDia): string[] {
+  if (!config.causasMaximas || causas.length <= config.causasMaximas) return causas;
+  stats.causasExcedentes = (stats.causasExcedentes ?? 0) + causas.length - config.causasMaximas;
+  return causas.slice(0, config.causasMaximas);
 }
 
 /** Com ligações tipadas, causadoPor é derivado dos ids das causas. */
@@ -330,7 +342,7 @@ export function montarPromptJogador(estado: EstadoMundo, dia: number, config: Co
     .map((p) => config.mundo.agentes.find((a) => a.id === p.id)?.nome ?? p.id);
 
   return {
-    sistema: sistemaJogador(config.mundo, perfil, config.ligacoesTipadas),
+    sistema: sistemaJogador(config.mundo, perfil, config.ligacoesTipadas, config.causasMaximas),
     usuario: usuarioJogador({
       mundo: config.mundo,
       dia,
@@ -367,7 +379,7 @@ function eventoDoJogador(
     turno: dia,
     dia,
     conteudo: a.acao.slice(0, 280),
-    causadoPor: a.causadoPor,
+    causadoPor: limitarCausas(a.causadoPor, config, stats),
     tensao: Math.max(0, Math.min(10, a.tensao)),
     tramaId: null,
     ehKernel: false,
@@ -408,6 +420,7 @@ async function passoJogadorSintetico(
           eventosConhecidos: p.conhecidos,
           perfil,
           tipadas: config.ligacoesTipadas === true,
+          causasMaximas: config.causasMaximas ?? null,
         },
       },
     },

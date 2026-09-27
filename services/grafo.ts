@@ -14,7 +14,11 @@
  *    (cadeias simples são feitas só de pontes, por isso o tamanho mínimo);
  *  - janela temporal: ligações que atravessam mais de N dias viram "ecos"
  *    (continuam registradas, mas não unem tramas);
- *  - ligações tipadas: filtrar por força mínima e por tipo.
+ *  - ligações tipadas: filtrar por força mínima e por tipo;
+ *  - redução transitiva: remove A→C quando já existe outro caminho A→…→C
+ *    (a ligação direta é redundante para a conectividade causal);
+ *  - comunidades (Louvain): remove as ligações entre comunidades, de modo que
+ *    grupos densos unidos por poucas ligações contem como tramas distintas.
  */
 
 import { construirArestas } from './arcos';
@@ -40,12 +44,16 @@ export interface OpcoesFiltro {
   excluirTipos?: TipoLigacao[];
   /** remove pontes cujos dois lados têm ao menos minLado eventos */
   removerPontesDeFusao?: { minLado: number };
+  /** remove ligações redundantes (há outro caminho entre as mesmas pontas) */
+  reducaoTransitiva?: boolean;
+  /** remove ligações entre comunidades de Louvain (resolução padrão 1) */
+  cortarEntreComunidades?: { resolucao?: number };
 }
 
 export interface LigacaoRemovida {
   origem: string;
   destino: string;
-  motivo: 'janela' | 'forca' | 'tipo' | 'ponte-de-fusao';
+  motivo: 'janela' | 'forca' | 'tipo' | 'ponte-de-fusao' | 'transitiva' | 'entre-comunidades';
 }
 
 export const VARIANTES_DETECCAO: Record<string, OpcoesFiltro> = {
@@ -54,6 +62,8 @@ export const VARIANTES_DETECCAO: Record<string, OpcoesFiltro> = {
   fortes: { forcaMin: 2, excluirTipos: ['lembrou'] },
   'fortes-janela3': { forcaMin: 2, excluirTipos: ['lembrou'], janelaMaxDias: 3 },
   'sem-pontes-de-fusao': { removerPontesDeFusao: { minLado: 3 } },
+  'reducao-transitiva': { reducaoTransitiva: true },
+  comunidades: { cortarEntreComunidades: {} },
 };
 
 // ------------------------------------------------------------ pontes e articulações
@@ -204,7 +214,151 @@ export function filtrarLigacoes(
     }));
   }
 
+  if (opcoes.reducaoTransitiva) {
+    const redundantes = ligacoesRedundantes(filtrados);
+    filtrados = filtrados.map((e) => ({
+      ...e,
+      causadoPor: e.causadoPor.filter((o) => {
+        if (!redundantes.has(`${o}>${e.id}`)) return true;
+        removidas.push({ origem: o, destino: e.id, motivo: 'transitiva' });
+        return false;
+      }),
+    }));
+  }
+
+  if (opcoes.cortarEntreComunidades) {
+    const comunidade = comunidadesLouvain(filtrados, opcoes.cortarEntreComunidades.resolucao ?? 1);
+    filtrados = filtrados.map((e) => ({
+      ...e,
+      causadoPor: e.causadoPor.filter((o) => {
+        const a = comunidade.get(o);
+        const b = comunidade.get(e.id);
+        if (a === undefined || b === undefined || a === b) return true;
+        removidas.push({ origem: o, destino: e.id, motivo: 'entre-comunidades' });
+        return false;
+      }),
+    }));
+  }
+
   return { eventos: filtrados, removidas };
+}
+
+// ------------------------------------------------------------ redução transitiva
+
+/**
+ * Ligações A→B para as quais existe outro caminho dirigido A→…→B (com duas ou
+ * mais ligações). Busca a partir de cada origem, sem usar a ligação direta.
+ */
+export function ligacoesRedundantes(eventos: StoryEvent[]): Set<string> {
+  const { saida } = construirArestas(eventos);
+  const redundantes = new Set<string>();
+  saida.forEach((destinos, a) => {
+    if (destinos.length < 2) return;
+    const alvos = new Set(destinos);
+    // alcançáveis a partir de a por caminhos de comprimento >= 2
+    const visitados = new Set<string>();
+    const pilha = [...destinos];
+    const primeiroPasso = new Set(destinos);
+    while (pilha.length) {
+      const v = pilha.pop()!;
+      for (const w of saida.get(v) ?? []) {
+        if (visitados.has(w)) continue;
+        visitados.add(w);
+        pilha.push(w);
+      }
+    }
+    alvos.forEach((b) => {
+      if (visitados.has(b) && primeiroPasso.has(b)) redundantes.add(`${a}>${b}`);
+    });
+  });
+  return redundantes;
+}
+
+// ------------------------------------------------------------ comunidades (Louvain)
+
+/**
+ * Comunidades de Louvain no grafo não dirigido das ligações válidas.
+ * Implementação determinística (ordem fixa dos vértices, desempate pelo
+ * menor id de comunidade), com as duas fases clássicas: mover vértices
+ * enquanto a modularidade sobe e agregar comunidades em supervértices.
+ * Devolve evento -> id da comunidade (só eventos com alguma ligação).
+ */
+export function comunidadesLouvain(eventos: StoryEvent[], resolucao = 1): Map<string, number> {
+  const { entrada } = construirArestas(eventos);
+  const ids = eventos.map((e) => e.id).filter((id) => (entrada.get(id)?.length ?? 0) > 0 || [...entrada.values()].some((o) => o.includes(id)));
+  const indice = new Map(ids.map((id, i) => [id, i]));
+  // pesos não dirigidos
+  let adj: Map<number, number>[] = ids.map(() => new Map());
+  entrada.forEach((origens, destino) => {
+    const b = indice.get(destino);
+    if (b === undefined) return;
+    origens.forEach((o) => {
+      const a = indice.get(o)!;
+      if (a === b) return;
+      adj[a].set(b, (adj[a].get(b) ?? 0) + 1);
+      adj[b].set(a, (adj[b].get(a) ?? 0) + 1);
+    });
+  });
+  let membro = ids.map((_, i) => i); // vértice original -> comunidade final
+  for (let nivel = 0; nivel < 20; nivel++) {
+    const n = adj.length;
+    const grau = adj.map((m) => [...m.values()].reduce((s, w) => s + w, 0) + (m.get(-1) ?? 0));
+    const m2 = grau.reduce((s, g) => s + g, 0);
+    if (m2 === 0) break;
+    const com = Array.from({ length: n }, (_, i) => i);
+    const totCom = [...grau];
+    let melhorou = true;
+    let moveu = false;
+    for (let volta = 0; volta < 50 && melhorou; volta++) {
+      melhorou = false;
+      for (let v = 0; v < n; v++) {
+        const cv = com[v];
+        const pesos = new Map<number, number>();
+        adj[v].forEach((w, u) => {
+          if (u < 0 || u === v) return;
+          pesos.set(com[u], (pesos.get(com[u]) ?? 0) + w);
+        });
+        totCom[cv] -= grau[v];
+        let melhor = cv;
+        let ganhoMelhor = (pesos.get(cv) ?? 0) - (resolucao * totCom[cv] * grau[v]) / m2;
+        [...pesos.keys()].sort((x, y) => x - y).forEach((c) => {
+          const ganho = (pesos.get(c) ?? 0) - (resolucao * totCom[c] * grau[v]) / m2;
+          if (ganho > ganhoMelhor + 1e-12) {
+            ganhoMelhor = ganho;
+            melhor = c;
+          }
+        });
+        totCom[melhor] += grau[v];
+        if (melhor !== cv) {
+          com[v] = melhor;
+          melhorou = true;
+          moveu = true;
+        }
+      }
+    }
+    if (!moveu) break;
+    // renumera e agrega
+    const novos = new Map<number, number>();
+    com.forEach((c) => {
+      if (!novos.has(c)) novos.set(c, novos.size);
+    });
+    membro = membro.map((c) => novos.get(com[c])!);
+    const agregado: Map<number, number>[] = Array.from({ length: novos.size }, () => new Map());
+    adj.forEach((m, v) => {
+      const cv = novos.get(com[v])!;
+      m.forEach((w, u) => {
+        if (u < 0) {
+          agregado[cv].set(-1, (agregado[cv].get(-1) ?? 0) + w);
+          return;
+        }
+        const cu = novos.get(com[u])!;
+        if (cu === cv) agregado[cv].set(-1, (agregado[cv].get(-1) ?? 0) + w); // laço interno (conta no grau)
+        else agregado[cv].set(cu, (agregado[cv].get(cu) ?? 0) + w);
+      });
+    });
+    adj = agregado;
+  }
+  return new Map(ids.map((id, i) => [id, membro[i]]));
 }
 
 // ------------------------------------------------------------ métricas estruturais

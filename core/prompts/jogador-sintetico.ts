@@ -7,7 +7,7 @@
  */
 
 import type { ConfigMundo, EventoCidade, Relato, PerfilJogador } from '../mundo/tipos';
-import { INSTRUCAO_CAUSAS } from './causas';
+import { INSTRUCAO_CAUSAS, instrucaoCausasLimitadas } from './causas';
 
 export const DESCRICAO_PERFIL: Record<PerfilJogador, string> = {
   investigador: 'Você costuma fazer perguntas às pessoas e seguir as pistas do que viu e ouviu.',
@@ -15,10 +15,12 @@ export const DESCRICAO_PERFIL: Record<PerfilJogador, string> = {
   passivo: 'Você costuma observar o que acontece ao seu redor sem se envolver muito.',
 };
 
-export function sistemaJogador(mundo: ConfigMundo, perfil: PerfilJogador, ligacoesTipadas = false): string {
+export function sistemaJogador(mundo: ConfigMundo, perfil: PerfilJogador, ligacoesTipadas = false, causasMaximas?: number): string {
   const causas = ligacoesTipadas
     ? INSTRUCAO_CAUSAS
-    : 'Em "causadoPor", indique os ids dos eventos que você conhece e que motivaram a ação. Se nenhum motivou, deixe a lista vazia.';
+    : causasMaximas
+      ? instrucaoCausasLimitadas(causasMaximas, 'voce')
+      : 'Em "causadoPor", indique os ids dos eventos que você conhece e que motivaram a ação. Se nenhum motivou, deixe a lista vazia.';
   const campo = ligacoesTipadas ? '"causas"' : '"causadoPor"';
   return `Você é um forasteiro que acabou de chegar a ${mundo.nome}. Você só sabe o que viu com os próprios olhos e o que ouviram lhe contar.
 ${DESCRICAO_PERFIL[perfil]}

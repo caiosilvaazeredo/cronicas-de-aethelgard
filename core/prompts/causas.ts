@@ -11,3 +11,11 @@ export const INSTRUCAO_CAUSAS = `Em "causas", liste os eventos que levaram à a�
 - "reagiu": a ação é uma resposta direta ao evento;
 - "lembrou": o evento só é lembrado ou mencionado, sem influir de fato na ação.
 Força: 1 (fraca), 2 (média), 3 (forte). Se a ação não decorre de nenhum evento, deixe a lista vazia.`;
+
+/** Instrução com limite de causas por ação (opção causasMaximas). */
+export function instrucaoCausasLimitadas(n: number, sujeito: 'acao' | 'voce'): string {
+  const ids = n === 1 ? 'o id do evento' : `os ids de até ${n} eventos`;
+  const sem = n === 1 ? 'sem o qual' : 'sem os quais';
+  const quem = sujeito === 'acao' ? 'a ação' : 'a sua ação';
+  return `Em "causadoPor", indique no máximo ${n === 1 ? 'um id' : `${n} ids`}: ${ids} ${sem} ${quem} não aconteceria. Se ${quem} não decorre de nenhum evento, deixe a lista vazia.`;
+}

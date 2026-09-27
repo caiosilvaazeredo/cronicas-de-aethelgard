@@ -7,7 +7,7 @@
 
 import type { ConfigMundo, EventoCidade, Relato, EstadoPersonagem } from '../mundo/tipos';
 import type { TramaAbertaResumo } from '../../services/arcos';
-import { INSTRUCAO_CAUSAS } from './causas';
+import { INSTRUCAO_CAUSAS, instrucaoCausasLimitadas } from './causas';
 
 export type EstadoTramasNoPrompt = 'informa' | 'nao-informa';
 
@@ -23,10 +23,12 @@ export interface EntradaPromptAgentes {
   tramasAbertas: TramaAbertaResumo[];
 }
 
-export function sistemaAgentes(mundo: ConfigMundo, ligacoesTipadas = false): string {
+export function sistemaAgentes(mundo: ConfigMundo, ligacoesTipadas = false, causasMaximas?: number): string {
   const causas = ligacoesTipadas
     ? INSTRUCAO_CAUSAS
-    : 'Em "causadoPor", indique os ids dos eventos listados que tornaram a ação possível. Se a ação não decorre de nenhum deles, deixe a lista vazia.';
+    : causasMaximas
+      ? instrucaoCausasLimitadas(causasMaximas, 'acao')
+      : 'Em "causadoPor", indique os ids dos eventos listados que tornaram a ação possível. Se a ação não decorre de nenhum deles, deixe a lista vazia.';
   const campo = ligacoesTipadas ? '"causas"' : '"causadoPor"';
   return `Você simula os habitantes de ${mundo.nome}. A cada dia, decide o que cada personagem listado faz.
 

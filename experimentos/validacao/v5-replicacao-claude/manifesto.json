@@ -1,0 +1,319 @@
+{
+  "campanha": "v5-replicacao-claude",
+  "config": {
+    "nome": "v5-replicacao-claude",
+    "descricao": "Método 9: replicação ampliada do método 1 com os dois modelos de resultado oposto (Sonnet 5 fechou tramas; Sonnet 4.6 fundiu 78% e não fechou nenhuma), condição A, 2 mundos, 3 repetições com sementes novas e 20 dias por sessão (em vez de 12), para ver se o contraste se mantém em sessões mais longas. Jogador sintético e curador fixos em claude-sonnet-5.",
+    "dimensoes": {
+      "modelosAgentes": [
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      ],
+      "estadoTramas": [
+        "informa"
+      ],
+      "numAgentes": [
+        6
+      ],
+      "jogador": [
+        "nenhum"
+      ],
+      "mundos": [
+        "porto-das-brumas",
+        "vale-silente"
+      ]
+    },
+    "modelosFixos": {
+      "jogador": {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      },
+      "curador": {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      }
+    },
+    "repeticoes": 3,
+    "dias": 20,
+    "temperatura": 0.7,
+    "sementeBase": 600,
+    "precos": {
+      "claude-cli/claude-sonnet-4-6": {
+        "entradaPorMTok": 3,
+        "saidaPorMTok": 15
+      },
+      "claude-cli/claude-sonnet-5": {
+        "entradaPorMTok": 2,
+        "saidaPorMTok": 10
+      }
+    },
+    "concorrencia": 6,
+    "orcamentoUsd": 40,
+    "cache": true
+  },
+  "criadoEm": "2026-09-27T17:15:02.537Z",
+  "execucoes": [
+    {
+      "data": "2026-09-27T17:15:02.537Z",
+      "git": {
+        "commit": "af6d86a4ae07c62613ff14d2c6eaf155bad87651",
+        "modificado": true
+      },
+      "versoes": {
+        "node": "v22.22.2",
+        "zod": "4.6.5",
+        "@google/genai": "1.52.0",
+        "openai": "7.23.0",
+        "@anthropic-ai/sdk": "0.128.0"
+      }
+    }
+  ],
+  "sessoes": [
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 601,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 602,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 603,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
+      "celula": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 601,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
+      "celula": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 602,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03",
+      "celula": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum",
+      "semente": 603,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-4-6"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 601,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 602,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
+      "celula": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 603,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
+      "celula": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 601,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02",
+      "celula": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 602,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    },
+    {
+      "id": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
+      "celula": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum",
+      "semente": 603,
+      "temperatura": 0.7,
+      "modelos": {
+        "agentes": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "jogador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        },
+        "curador": {
+          "provedor": "claude-cli",
+          "modelo": "claude-sonnet-5"
+        }
+      }
+    }
+  ],
+  "modelosEfetivos": {}
+}

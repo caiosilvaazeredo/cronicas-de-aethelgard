@@ -1,0 +1,56 @@
+{
+  "nome": "v5-replicacao-claude",
+  "descricao": "Método 9: replicação ampliada do método 1 com os dois modelos de resultado oposto (Sonnet 5 fechou tramas; Sonnet 4.6 fundiu 78% e não fechou nenhuma), condição A, 2 mundos, 3 repetições com sementes novas e 20 dias por sessão (em vez de 12), para ver se o contraste se mantém em sessões mais longas. Jogador sintético e curador fixos em claude-sonnet-5.",
+  "dimensoes": {
+    "modelosAgentes": [
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-4-6"
+      },
+      {
+        "provedor": "claude-cli",
+        "modelo": "claude-sonnet-5"
+      }
+    ],
+    "estadoTramas": [
+      "informa"
+    ],
+    "numAgentes": [
+      6
+    ],
+    "jogador": [
+      "nenhum"
+    ],
+    "mundos": [
+      "porto-das-brumas",
+      "vale-silente"
+    ]
+  },
+  "modelosFixos": {
+    "jogador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    },
+    "curador": {
+      "provedor": "claude-cli",
+      "modelo": "claude-sonnet-5"
+    }
+  },
+  "repeticoes": 3,
+  "dias": 20,
+  "temperatura": 0.7,
+  "sementeBase": 600,
+  "precos": {
+    "claude-cli/claude-sonnet-4-6": {
+      "entradaPorMTok": 3,
+      "saidaPorMTok": 15
+    },
+    "claude-cli/claude-sonnet-5": {
+      "entradaPorMTok": 2,
+      "saidaPorMTok": 10
+    }
+  },
+  "concorrencia": 6,
+  "orcamentoUsd": 40,
+  "cache": true
+}

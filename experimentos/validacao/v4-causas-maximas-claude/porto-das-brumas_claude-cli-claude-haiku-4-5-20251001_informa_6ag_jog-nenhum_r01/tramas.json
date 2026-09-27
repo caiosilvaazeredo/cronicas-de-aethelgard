@@ -1,0 +1,18 @@
+[
+  {
+    "id": "D1.odete",
+    "eventoInicialId": "D1.odete",
+    "eventoFinalId": "D4.odete",
+    "turnosSemNovoEvento": 8,
+    "status": "fechada",
+    "narracaoFechamento": "Em Porto das Brumas, Odete foi primeiro à Casa da Alfândega em busca do capitão Brás, na esperança de negociar seu apoio discreto para vencer a concorrência pela compra do armazém de Vasco. Dali, seguiu para os Armazéns da Ponta, onde procurou Iracema Vasco a fim de fazer uma oferta confidencial pelo armazém do falecido Vasco. Não tardou, porém, a voltar à procura do capitão Brás, agora premida por outra urgência: negociar proteção contra os cobradores da Irmandade, oferecendo-lhe um suborno maior em troca de sua discreta influência. Assegurada essa proteção, retornou por fim aos Armazéns para fechar rapidamente a compra com Iracema, tratando de resolver seus negócios antes que a perseguição de Lia a alcançasse.</narracao>\n</invoke>\n"
+  },
+  {
+    "id": "D1.lia",
+    "eventoInicialId": "D1.lia",
+    "eventoFinalId": null,
+    "turnosSemNovoEvento": 0,
+    "status": "aberta",
+    "narracaoFechamento": null
+  }
+]

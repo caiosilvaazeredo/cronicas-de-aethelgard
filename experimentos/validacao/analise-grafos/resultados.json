@@ -273,6 +273,62 @@
    "propFundidas": 0.4472222222222222
   },
   {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "completo",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.6875
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "janela3",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.6875
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "fortes",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.6875
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "fortes-janela3",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.6875
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "sem-pontes-de-fusao",
+   "sessoes": 8,
+   "nascidas": 4.625,
+   "propFechadas": 0.22842261904761904,
+   "propFundidas": 0.5211309523809524
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "reducao-transitiva",
+   "sessoes": 8,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.6875
+  },
+  {
+   "grupo": "Cidade Viva ≤2 causas",
+   "variante": "comunidades",
+   "sessoes": 8,
+   "nascidas": 4.75,
+   "propFechadas": 0.44641296203796205,
+   "propFundidas": 0.5221882284382284
+  },
+  {
    "grupo": "três atos",
    "variante": "completo",
    "sessoes": 8,
@@ -350,6 +406,16 @@
    "propFundidas": 0.692,
    "propFechadasSemPontes": 0.025
   },
+  "Cidade Viva ≤2 causas": {
+   "ligPorEvento": 1.571,
+   "pontes": 9.125,
+   "pontesFusao": 2.125,
+   "articulacoes": 10.375,
+   "nascidas": 4.375,
+   "propFechadas": 0.025,
+   "propFundidas": 0.688,
+   "propFechadasSemPontes": 0.228
+  },
   "três atos": {
    "ligPorEvento": 1.841,
    "pontes": 1.5,
@@ -394,6 +460,42 @@
      "com": 0.125,
      "difMedia": -3.625,
      "p_wilcoxon": 0.03125
+    }
+   },
+   "causasExcedentes": 0.0
+  },
+  "causas2": {
+   "pares": 8,
+   "comparacao": {
+    "ligPorEvento": {
+     "sem": 1.7135416666666665,
+     "com": 1.5711805555555556,
+     "difMedia": -0.1423611111111111,
+     "p_wilcoxon": 0.1953125
+    },
+    "nascidas": {
+     "sem": 3.875,
+     "com": 4.375,
+     "difMedia": 0.5,
+     "p_wilcoxon": 0.34375
+    },
+    "propFechadas": {
+     "sem": 0.1,
+     "com": 0.025,
+     "difMedia": -0.07500000000000001,
+     "p_wilcoxon": 0.5
+    },
+    "propFundidas": {
+     "sem": 0.525,
+     "com": 0.6875,
+     "difMedia": 0.1625,
+     "p_wilcoxon": 0.21875
+    },
+    "pontesFusao": {
+     "sem": 3.75,
+     "com": 2.125,
+     "difMedia": -1.625,
+     "p_wilcoxon": 1.0
     }
    },
    "causasExcedentes": 0.0

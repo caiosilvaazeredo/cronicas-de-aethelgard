@@ -169,3 +169,45 @@ ligações será medido primeiro numa rodada de validação pareada (método 7 e
 `experimentos/validacao/`).
 
 **Momento.** Emenda feita antes da primeira campanha com modelo real.
+
+### Emenda 3 (2026-09-27): correção da contagem nas variantes, novas variantes e limite de causas
+
+**Correção.** A emenda 2 relatou que cortar as pontes de fusão elevava a
+proporção de fechadas por estabilidade de 0,08 para 0,33. O número estava
+inflado: variantes que removem ligações podem **separar** uma trama em duas
+(cisão), e a parte separada contava como trama fechada sem contar como linha
+nova. `services/linhagem.ts` passou a registrar a cisão como origem própria.
+Nas variantes, a métrica passa a ser fechadas por estabilidade / **linhas**,
+com linhas = nascidas + cisões. Na detecção completa não há cisão
+(componentes só crescem ou se juntam), então a métrica principal da emenda 1
+não muda. Com a correção, `sem-pontes-de-fusao` dá 0,20 de fechadas e 0,60
+de absorvidas (contra 0,08 e 0,59 na detecção completa).
+
+**Novas variantes de sensibilidade** (`services/grafo.ts`), somadas às da
+emenda 2 e reportadas do mesmo modo:
+
+1. `reducao-transitiva`: remove A→C quando existe A→B→C. Não muda a
+   conectividade e, portanto, dá as mesmas tramas que a detecção completa;
+   é reportada só como controle de densidade.
+2. `comunidades`: comunidades de Louvain (determinístico) sobre o grafo não
+   dirigido; ligações entre comunidades não unem tramas. É lida como limite
+   superior de fechamento, não como leitura principal: na validação ela
+   também "fecha" linhas no controle de três atos (0,55), que tem uma trama
+   só, ou seja, mede a modularidade do grafo mais do que o encerramento.
+
+A regra de robustez da emenda 2 continua a mesma (mesma direção na detecção
+completa e em `sem-pontes-de-fusao`).
+
+**Limite de causas.** A rodada pareada do método 8 (no máximo 2 causas por
+ação, `causasMaximas`) não reduziu a fusão: ligações por evento 1,71 → 1,57,
+fechadas 0,10 → 0,03, absorvidas 0,53 → 0,69 (8 pares, nenhuma diferença
+significativa), e a necessidade das ligações diretas segundo o juiz não
+subiu (63, contra 67 sem limite). **A campanha real não usa `causasMaximas`
+nem `ligacoesTipadas`**; o prompt dos agentes fica o da versão 0.1.
+
+**Anotação humana.** A amostra da seção 6 foi preparada nas sessões de
+validação (`experimentos/validacao/anotacao-humana/`) para treinar os
+anotadores e estimar a concordância antes da campanha real; a amostra
+confirmatória será sorteada da campanha real com o mesmo procedimento.
+
+**Momento.** Emenda feita antes da primeira campanha com modelo real.

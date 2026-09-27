@@ -69,6 +69,19 @@ teste de necessidade causal por intervenção e ligações tipadas:
 | `validacao/m6-necessidade/` | necessidade causal: diretas 67, indiretas 44, não ligadas 21 (AUC 0,92) | 23 |
 | `validacao/v3-ligacoes-tipadas-claude/` | método 7: 8 sessões com tipo e força, pareadas com o método 1 | 177 |
 | `validacao/m6b-necessidade-tipadas/` | necessidade × tipo e força declarados | 25 |
+| `validacao/v4-causas-maximas-claude/` | método 8: 8 sessões com no máximo 2 causas por ação, pareadas com o método 1 | 175 |
+| `validacao/m6c-necessidade-causas-maximas/` | necessidade no método 8: diretas 63, não ligadas 20 (AUC 0,96) | 15 |
+| `validacao/v5-replicacao-claude/` | método 9: replicação, Sonnet 4.6 × Sonnet 5, 3 repetições, 20 dias (12 sessões) | 421 |
+| `validacao/anotacao-humana/` | planilhas cegas para 2 anotadores (216 pares, 16 distratores) | 0 |
+
+Achados da etapa de 2026-09-27 (emenda 3 do pré-registro):
+
+- Correção: variantes que cortam ligações criam cisões; com a contagem
+  corrigida, `sem-pontes-de-fusao` dá 20% de fechadas (não 33%).
+- Limitar as causas a duas por ação não reduz a fusão.
+- Em 20 dias, todas as 12 sessões terminam com uma única trama; 99,7% dos
+  eventos depois do dia 1 citam causa, então nenhuma linha nasce depois do
+  dia 2. A unidade de análise precisa ser decidida antes da campanha real.
 
 - **Relatório: `validacao/analise-grafos/relatorio-grafos.docx`** (com debriefing e o log de todas as sessões no apêndice).
 - Log geral de todos os experimentos: `LOG-GERAL.md` (`npm run log-experimentos`); detalhe por sessão no `LOG.md` de cada pasta.

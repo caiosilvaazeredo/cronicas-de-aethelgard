@@ -9,13 +9,15 @@
     "**Pontes de fusão.** Nas 24 sessões há 56 pontes de fusão, isto é, ligações únicas que unem duas linhas com 3 ou mais eventos. Cortá-las eleva a proporção de tramas fechadas por estabilidade de 8% para 20%, mas a de absorvidas por fusão não cai (59% → 60%): as linhas separadas se juntam por outras ligações. (Uma versão anterior deste relatório dava 33%; o número estava inflado por um erro de contagem corrigido nesta rodada, descrito na seção 3.) A janela temporal de 3 dias não muda nada: nenhuma ligação passa de 3 dias, porque o prompt já só mostra os últimos 3 dias.",
     "**As ligações declaradas são causalmente necessárias.** Um juiz independente (Opus 5.5) estimou a necessidade de A para B em 67 (de 100) para ligações diretas, 44 para indiretas e 21 para pares não ligados (AUC 0,92). A gradação aparece nos quatro modelos geradores. Porém, **o número de ligações de um evento não prevê sua necessidade** (Spearman 0,09), o que enfraquece a classificação de eventos centrais (kernels) só pelo grau.",
     "**Ligações tipadas pioram a fusão, mas carregam informação.** Pedir tipo e força de cada causa aumentou a densidade de ligações nas 8 sessões pareadas (1,71 → 2,30 por evento; Wilcoxon p = 0,008), zerou os fechamentos por estabilidade e fez as pontes de fusão quase sumirem (3,75 → 0,13 por sessão): as linhas passam a se unir por muitas ligações de uma vez. Ainda assim, o tipo e a força que o próprio gerador declara acompanham a necessidade medida pelo juiz: possibilitou 68, motivou 60, reagiu 53, lembrou 40; força 3/2/1: 66/52/44 (Spearman 0,31).",
-    "**Recomendação central:** manter a geração sem ligações tipadas na campanha principal e atacar a densidade de ligações pela medição. Pedir menos causas por ação é uma possibilidade, mas precisa de nova rodada de validação; o Debriefing detalha os próximos passos."
+    "**Métodos 8 e 9: nem limitar causas nem alongar a sessão produz fechamento.** Pedir no máximo duas causas por ação quase não reduz a densidade (1,71 → 1,57 ligações por evento) e não reduz a fusão. Na replicação com 20 dias e 3 repetições, a diferença entre Sonnet 5 e Sonnet 4.6 desaparece (3% × 0% de fechadas, p = 0,40), a fusão chega a 79% e todas as 12 sessões terminam com uma única trama: só 0,3% dos eventos depois do primeiro dia não citam causa, então nenhuma linha nasce depois do dia 2.",
+    "**Recomendação central:** manter a geração da versão 0.1 (sem ligações tipadas e sem limite de causas) e decidir, antes da campanha real, a unidade de análise: com componentes conectados, sessões longas convergem para uma trama única por construção. As alternativas (detecção por comunidades ou com janela temporal, ou sessões mais curtas) estão no debriefing."
   ],
   "mudancas": [
     "Tudo foi implementado sem alterar o comportamento de services/arcos.ts: as análises novas leem a detecção existente ou filtram as ligações antes dela."
   ],
   "mudancas_itens": [
     "**services/linhagem.ts:** nascimento, fusão (com os eventos que a causaram), renomeação e fechamento por estabilidade de cada trama, dia a dia; cada sessão exporta linhagem.json.",
+    "**pre-registro.md, emenda 3:** correção da contagem nas variantes (cisão), variantes reducao-transitiva e comunidades, decisão de não usar limite de causas nem ligações tipadas, e observação sobre a replicação de 20 dias.",
     "**pre-registro.md:** emenda 1 (nova métrica principal e nova definição de convergência) e emenda 2 (variantes de detecção como sensibilidade, teste de necessidade como validação causal, regras para ligações tipadas), ambas datadas de 2026-09-25 e sem sobrescrever o texto original.",
     "**services/grafo.ts:** pontes e pontos de articulação (Tarjan), pontes de fusão, filtros por janela temporal, tipo e força, e variantes de detecção na reanálise (npm run reanalisar -- --variantes todas).",
     "**Correção da linhagem:** cisão como origem própria de trama nas variantes que removem ligações; teste novo em tests/linhagem.test.ts.",
@@ -71,19 +73,20 @@
     "O Mapa da Crônica passou a mostrar a estrutura e a história das tramas. No grafo, os eventos que causaram fusões têm borda dupla e símbolo ⨝, os pontos de articulação têm borda tracejada, as pontes de fusão são setas vermelhas e, com ligações tipadas, a espessura indica a força e o pontilhado o tipo \"lembrou\". O painel de linhagem mostra cada trama ao longo dos dias: fechada por estabilidade (verde), absorvida por fusão (âmbar, com seta até a absorvedora) ou aberta (cinza). No menu da Cidade Viva, \"Abrir sessão exportada\" carrega qualquer sessão dos experimentos. A Figura 6 mostra a sessão do Sonnet 5 no Vale Silente, com três tramas absorvidas por D1.anselmo e D1.marta fechada no dia 6."
   ],
   "limitacoes": [
-    "**Amostras pequenas:** uma sessão por célula, 12 dias; 8 pares no método 7; 90 e 100 pares nos testes de necessidade. Todos os testes são exploratórios.",
+    "**Amostras pequenas:** uma sessão por célula e 12 dias nos métodos 1, 7 e 8 (8 pares); 12 sessões no método 9; 60 a 100 pares nos testes de necessidade. Todos os testes são exploratórios.",
     "**O juiz é um modelo Claude:** o Opus 5.5 não foi gerador, mas é da mesma família. A necessidade estimada por ele é uma medida de plausibilidade contrafactual, não de causalidade verdadeira; a anotação humana continua necessária.",
     "**Contexto limitado no teste de necessidade:** o juiz recebe no máximo os 8 ancestrais mais próximos de B, não a sessão inteira.",
     "**Via CLI:** sem temperatura nem semente controláveis; sessões não se repetem bit a bit.",
     "**A reanálise das sessões antigas recalcula a linhagem;** as sessões novas (método 7) já a gravam durante a execução, e há teste garantindo que as duas coincidem.",
     "**Pontes de fusão com tamanho mínimo 3 é uma escolha:** outros tamanhos mudam a variante sem-pontes-de-fusao.",
-    "**Variantes que cortam ligações criam linhas por cisão:** as proporções delas usam linhas = nascidas + cisões e não são diretamente comparáveis à métrica principal, que usa só nascidas (na detecção completa as duas coincidem)."
+    "**Variantes que cortam ligações criam linhas por cisão:** as proporções delas usam linhas = nascidas + cisões e não são diretamente comparáveis à métrica principal, que usa só nascidas (na detecção completa as duas coincidem).",
+    "**Só modelos Claude:** a ausência de linhas novas depois do dia 2 pode ser um traço desses modelos; os provedores locais (Ollama) e o Gemini estão prontos para testar isso."
   ],
   "debriefing": [
     {
       "titulo": "O que foi feito",
       "paragrafos": [
-        "A métrica que separa fusão de fechamento foi implementada e aplicada; o pré-registro recebeu duas emendas datadas; o instrumento ganhou análises de grafo (pontes, articulações, variantes de detecção), ligações tipadas, um teste de necessidade causal por intervenção e um Mapa da Crônica com linhagem. Dois experimentos novos rodaram com modelos Claude reais, somando 225 chamadas e US$ 15,85. Os logs de todas as 37 sessões estão em experimentos/LOG-GERAL.md e nos LOG.md de cada pasta."
+        "A métrica que separa fusão de fechamento foi implementada e aplicada; o pré-registro recebeu três emendas datadas; o instrumento ganhou análises de grafo (pontes, articulações, pontes de fusão, redução transitiva, comunidades), ligações tipadas, limite de causas, teste de necessidade causal por intervenção e o Mapa da Crônica com linhagem. Foram rodadas 57 sessões e cerca de 2.000 chamadas de IA ao todo, 28 delas nesta última etapa (métodos 7, 8 e 9), além de 250 pares julgados no teste de necessidade. Um erro de contagem nas variantes foi encontrado e corrigido, com teste. As planilhas de anotação humana estão prontas."
       ],
       "itens": []
     },
@@ -91,32 +94,34 @@
       "titulo": "O que aprendemos",
       "paragrafos": [],
       "itens": [
-        "A fusão, não o fechamento, é o destino típico de uma linha de acontecimento na Cidade Viva com modelos Claude: 59% das linhas são absorvidas, 8% fecham.",
-        "Uma parte das fusões depende de uma única ligação (pontes de fusão); cortá-las eleva os fechamentos a 33%. Outra parte vem de redundância: muitas ligações entre as mesmas linhas.",
-        "As ligações declaradas são necessárias segundo um juiz independente, mas o grau de um evento não diz quão necessário ele é.",
-        "Pedir tipo e força aumenta a densidade de ligações e piora a fusão, embora o rótulo declarado acompanhe a necessidade. É informação útil para ponderar, não um remédio para a densidade.",
-        "A janela temporal da detecção é redundante enquanto o prompt mostrar só 3 dias."
+        "A fusão, não o fechamento, é o destino típico de uma linha de acontecimento na Cidade Viva com modelos Claude: 59% das linhas são absorvidas em 12 dias, 79% em 20 dias; 8% e 2% fecham.",
+        "Depois do primeiro dia, praticamente todo evento cita uma causa (99,7%). Por isso nenhuma linha nasce depois do dia 2, e a sessão converge para uma única trama. Esse é o achado estrutural mais importante da rodada.",
+        "A fusão é redundante: cortar as pontes de fusão eleva os fechamentos a 20%, mas as linhas separadas voltam a se juntar por outras ligações (absorvidas: 59% → 60%). (A versão anterior dava 33%, por um erro de contagem já corrigido.)",
+        "As ligações declaradas são necessárias segundo um juiz independente (63 a 67 contra 20 a 21 dos pares não ligados), mas o grau de um evento não diz quão necessário ele é.",
+        "Nem pedir tipo e força nem limitar as causas a duas reduz a fusão; o tipo declarado acompanha a necessidade e pode servir de peso.",
+        "O contraste entre modelos do método 1 (Sonnet 5 fecha, Sonnet 4.6 não) não se repetiu em 20 dias com 3 repetições.",
+        "A janela temporal da detecção é redundante enquanto o prompt mostrar só 3 dias; a redução transitiva nunca muda as tramas."
       ]
     },
     {
       "titulo": "O que muda para a campanha real",
       "paragrafos": [],
       "itens": [
-        "Manter a geração sem ligações tipadas na campanha principal: a opção piora a métrica principal e mudaria a condição de geração entre campanhas.",
-        "Reportar sempre a detecção completa e a variante sem-pontes-de-fusao (emenda 2); a conclusão só vale se a direção for a mesma nas duas.",
-        "Rodar o teste de necessidade em cada campanha (30 pares de cada tipo por modelo), com juiz fora do conjunto de geradores, além da anotação humana.",
-        "Decidir, antes da campanha, se a janela de eventos recentes do prompt fica em 3 dias ou aumenta; isso muda o que a variante janela3 mede."
+        "Manter a geração da versão 0.1: sem ligações tipadas e sem limite de causas (emenda 3).",
+        "**Decidir a unidade de análise antes da campanha** (decisão do pesquisador): com componentes conectados e 40 dias, a métrica principal deve ficar perto de zero em todas as condições. Opções: (a) manter e reportar o resultado negativo como achado; (b) adotar como principal uma detecção com localidade (comunidades, ou tramas por janela deslizante de dias); (c) encurtar as sessões. Qualquer mudança exige emenda antes da primeira sessão real.",
+        "Reportar sempre a detecção completa e a variante sem-pontes-de-fusao (emenda 2); comunidades como limite superior (emenda 3).",
+        "Rodar o teste de necessidade em cada campanha (30 pares de cada tipo por modelo), com juiz fora do conjunto de geradores, além da anotação humana."
       ]
     },
     {
       "titulo": "Próximos passos recomendados",
       "paragrafos": [],
       "itens": [
-        "Testar uma instrução que limite as causas à principal (ou a no máximo duas) por ação, numa rodada pareada como o método 7, para ver se a densidade cai sem perder a necessidade das ligações.",
-        "Implementar a redução transitiva (remover A→C quando existe A→B→C) e a detecção por comunidades como novas variantes de sensibilidade.",
-        "Usar a necessidade estimada ou o tipo e força como peso das ligações numa variante de detecção ponderada, e comparar com a detecção completa.",
-        "Rerodar o método 1 com 3 repetições e 20 dias, já com a métrica da emenda 1, para estimar o tamanho do efeito e dimensionar a campanha real.",
-        "Preparar a anotação humana (analise/amostra_anotacao.py), estratificando também pelo tipo e força declarados."
+        "Aplicar a anotação humana já preparada (216 pares, 2 anotadores) e calcular o kappa; comparar com o juiz do método 4 e com a necessidade dos métodos 6.",
+        "Testar se a ausência de linhas novas é traço dos modelos Claude: uma rodada curta com Gemini e com um modelo local (Ollama), já suportados.",
+        "Se a opção (b) for escolhida, implementar a detecção por janela deslizante e pré-registrar os parâmetros com base nesta validação, sem olhar dados da campanha real.",
+        "Usar o tipo e a força (ou a necessidade estimada) como peso das ligações numa variante ponderada.",
+        "Estudar mudanças na geração que permitam linhas novas (por exemplo, acontecimentos externos sem causa injetados pelo mundo), como condição experimental e não como direção narrativa."
       ]
     }
   ],
@@ -158,6 +163,15 @@
     "**Os modelos obedecem, mas a densidade quase não cai.** Nenhuma causa precisou ser descartada, e as ligações por evento passaram de 1,71 para 1,57, diferença não significativa. Sem o limite, 82% dos eventos já tinham até duas causas (43% exatamente duas) e só 17% tinham três ou quatro; com o limite, esses viram eventos de duas causas, e a fração com exatamente duas sobe para 66%.",
     "**A fusão não diminui.** Nas sessões pareadas, a proporção de absorvidas por fusão foi de 53% para 69% e a de fechadas por estabilidade de 10% para 2,5% (8 pares, nenhuma diferença significativa). As pontes de fusão caem de 3,8 para 2,1 por sessão: com menos ligações, as que sobram tendem a ser justamente as que unem linhas.",
     "**As ligações não ficam mais necessárias.** O juiz (Opus 5.5) deu 63 de necessidade às ligações diretas do método 8, contra 67 sem limite e 20 aos pares não ligados (AUC 0,96). Pedir “só as causas necessárias” não muda a qualidade do que o modelo declara.",
-    "Conclusão: a fusão não vem do número de causas, mas de **quais** eventos os modelos ligam: eles escolhem, como causa principal, justamente eventos de outras linhas. A emenda 3 registra a decisão de não usar o limite de causas na campanha real."
+    "Conclusão: a fusão não depende de quantas causas cada evento tem. Com uma ou duas causas por evento, basta que uma delas venha de outra linha para as duas se juntarem, e, como quase todo evento cita alguma causa (seção 7), essas ligações entre linhas aparecem cedo em toda sessão. A emenda 3 registra a decisão de não usar o limite de causas na campanha real."
+  ],
+  "replicacao_intro": [
+    "O método 9 amplia o método 1 com os dois modelos que tiveram resultados opostos nele (Sonnet 5 fechou 20% das linhas; Sonnet 4.6 nenhuma): condição A, 2 mundos, 3 repetições com sementes novas e 20 dias por sessão, em vez de 12. São 12 sessões, 1.440 eventos, sem nenhuma falha."
+  ],
+  "replicacao_resultados": [
+    "**O contraste entre modelos não se repete.** Com 20 dias, o Sonnet 5 fechou 3% das linhas (uma trama, numa das 6 sessões) e o Sonnet 4.6 nenhuma; a diferença não é significativa (Mann-Whitney p = 0,40, bisserial 0,17). Nenhuma das 12 sessões converge pela emenda 1. A proporção absorvida por fusão sobe para 79% (contra 59% em 12 dias).",
+    "**Todas as sessões terminam com uma única trama.** Em todas as 12, nascem 5 ou 6 linhas no dia 2 e, até o dia 7 (em duas sessões, até os dias 15 e 18), todas menos uma foram absorvidas. Nenhuma linha nova nasce depois do dia 2.",
+    "**Por que nenhuma linha nasce depois do dia 2.** Depois do primeiro dia, praticamente todo evento cita alguma causa: somando todas as rodadas da Cidade Viva, só 9 de 3.480 eventos (0,3%) têm causadoPor vazio, embora o prompt diga explicitamente que a lista pode ficar vazia. Como a detecção junta tudo que está conectado, um evento com causa nunca inicia uma trama nova. As linhas são só as que o primeiro dia semeia; o resto da sessão é a história delas se juntando.",
+    "Isso muda a leitura da hipótese. Com a detecção por componentes conectados, a Cidade Viva com modelos Claude produz uma única história que se unifica, não uma sucessão de tramas que abrem e fecham, e a métrica principal da emenda 1 tende a zero à medida que a sessão se alonga. Com 40 dias por sessão, como prevê o pré-registro, é provável que ela fique no chão em todas as condições. As variantes sem-pontes-de-fusao (17% de fechadas) e comunidades (46%) continuam encontrando sublinhas que se encerram dentro da história única, o que indica que a unidade “trama” precisa de uma definição com localidade temporal ou estrutural para medir o que a hipótese pergunta. Essa é uma decisão de desenho para o pesquisador, registrada como observação na emenda 3, não como mudança."
   ]
 }

@@ -87,6 +87,7 @@ async function principal() {
     ['validacao/m5-juiz-relatos/julgamentos.jsonl', 'Método 5: fidelidade dos relatos'],
     ['validacao/m6-necessidade/julgamentos.jsonl', 'Método 6: necessidade causal por intervenção'],
     ['validacao/m6b-necessidade-tipadas/julgamentos.jsonl', 'Método 6b: necessidade × tipo e força das ligações'],
+    ['validacao/m6c-necessidade-causas-maximas/julgamentos.jsonl', 'Método 6c: necessidade com no máximo 2 causas por ação'],
   ];
   L.push('## Métodos de validação que não são sessões', '', '| método | arquivo | chamadas | itens julgados | custo US$ |', '|---|---|---|---|---|');
   for (const [arq, nome] of extras) {

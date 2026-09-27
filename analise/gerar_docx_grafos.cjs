@@ -124,7 +124,7 @@ if (R.variantesPorGrupo) {
   const grupos = [...new Set(VG.map((x) => x.grupo))];
   const vars = ['completo', 'sem-pontes-de-fusao', 'reducao-transitiva', 'comunidades', 'fortes'];
   add(H2('Todas as variantes por grupo de sessões'), Ps(T.variantes_grupos_intro));
-  add(tabela(['Grupo', 'Variante', 'Sessões', 'Linhas (nasc. + cisões)', 'Fechadas por estab.', 'Absorvidas por fusão'],
+  add(tabela(['Grupo', 'Variante', 'Sessões', 'Linhas nascidas', 'Fechadas por estab.', 'Absorvidas por fusão'],
     grupos.flatMap((g) => vars.map((v) => VG.find((x) => x.grupo === g && x.variante === v)).filter(Boolean)
       .map((x) => [x.grupo, x.variante, x.sessoes, n(x.nascidas, 2), pct(x.propFechadas), pct(x.propFundidas)])),
     [2200, 2000, 900, 1500, 1400, 1360], 16));

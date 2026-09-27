@@ -1,6 +1,6 @@
 # Log de sessões: experimentos/validacao/v2-controle-tres-atos-claude
 
-Gerado por `npm run relatorio` em 2026-09-25T15:19:26.780Z.
+Gerado por `npm run relatorio` em 2026-09-27T19:15:14.347Z.
 
 
 ## porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_controle-tres-atos_jog-investigador_r01

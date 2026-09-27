@@ -217,6 +217,62 @@
    "propFundidas": 0.46094946719946717
   },
   {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "completo",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.016666666666666666,
+   "propFundidas": 0.7861111111111111
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "janela3",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.016666666666666666,
+   "propFundidas": 0.7861111111111111
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "fortes",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.016666666666666666,
+   "propFundidas": 0.7861111111111111
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "fortes-janela3",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.016666666666666666,
+   "propFundidas": 0.7861111111111111
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "sem-pontes-de-fusao",
+   "sessoes": 12,
+   "nascidas": 5.25,
+   "propFechadas": 0.17328042328042326,
+   "propFundidas": 0.6641865079365079
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "reducao-transitiva",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.016666666666666666,
+   "propFundidas": 0.7861111111111111
+  },
+  {
+   "grupo": "Cidade Viva 20 dias",
+   "variante": "comunidades",
+   "sessoes": 12,
+   "nascidas": 5.083333333333333,
+   "propFechadas": 0.4638887027431919,
+   "propFundidas": 0.5877131880131107
+  },
+  {
    "grupo": "Cidade Viva tipada",
    "variante": "completo",
    "sessoes": 8,
@@ -396,6 +452,16 @@
    "propFundidas": 0.588,
    "propFechadasSemPontes": 0.203
   },
+  "Cidade Viva 20 dias": {
+   "ligPorEvento": 1.772,
+   "pontes": 11.083,
+   "pontesFusao": 2.417,
+   "articulacoes": 12.0,
+   "nascidas": 5.083,
+   "propFechadas": 0.017,
+   "propFundidas": 0.786,
+   "propFechadasSemPontes": 0.173
+  },
   "Cidade Viva tipada": {
    "ligPorEvento": 2.295,
    "pontes": 1.75,
@@ -425,6 +491,51 @@
    "propFechadas": 0.0,
    "propFundidas": 0.0,
    "propFechadasSemPontes": 0.125
+  }
+ },
+ "replicacao": {
+  "sessoes": 12,
+  "dias": 20,
+  "porModelo": {
+   "Sonnet 4.6": {
+    "sessoes": 6,
+    "ligPorEvento": 1.8416666666666668,
+    "nascidas": 5.166666666666667,
+    "propFechadas": 0.0,
+    "propFundidas": 0.8055555555555557,
+    "propFechadasSemPontes": 0.1415343915343915,
+    "propFechadasComunidades": 0.48209385428812673,
+    "sessoesComFechamento": 0,
+    "convergem": 0.0,
+    "metodo1": {
+     "sessoes": 2,
+     "propFechadas": 0.0,
+     "propFundidas": 0.75
+    }
+   },
+   "Sonnet 5": {
+    "sessoes": 6,
+    "ligPorEvento": 1.7027777777777782,
+    "nascidas": 5.0,
+    "propFechadas": 0.03333333333333333,
+    "propFundidas": 0.7666666666666667,
+    "propFechadasSemPontes": 0.20502645502645503,
+    "propFechadasComunidades": 0.44568355119825703,
+    "sessoesComFechamento": 1,
+    "convergem": 0.0,
+    "metodo1": {
+     "sessoes": 2,
+     "propFechadas": 0.2,
+     "propFundidas": 0.6
+    }
+   }
+  },
+  "mannWhitneyFechadas": {
+   "a": "Sonnet 4.6",
+   "b": "Sonnet 5",
+   "U": 15.0,
+   "p": 0.40465676192728617,
+   "rankBiserial": 0.16666666666666663
   }
  },
  "pareados": {
@@ -730,6 +841,83 @@
     "direta": 67.16666666666667,
     "indireta": null,
     "nao-ligado": 18
+   }
+  }
+ },
+ "necessidadeCausas2": {
+  "juiz": "claude-opus-5-5",
+  "pares": 60,
+  "porTipo": {
+   "direta": {
+    "n": 40,
+    "necessidadeMedia": 63.025
+   },
+   "indireta": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "nao-ligado": {
+    "n": 20,
+    "necessidadeMedia": 20.15
+   }
+  },
+  "aucDiretaVsNaoLigado": 0.964375,
+  "aucIndiretaVsNaoLigado": null,
+  "aucDiretaVsIndireta": null,
+  "spearmanGrauSaidaNecessidade": 0.3228825554549102,
+  "porTipoLigacao": {
+   "motivou": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "possibilitou": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "reagiu": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "lembrou": {
+    "n": 0,
+    "necessidadeMedia": null
+   }
+  },
+  "porForca": {
+   "1": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "2": {
+    "n": 0,
+    "necessidadeMedia": null
+   },
+   "3": {
+    "n": 0,
+    "necessidadeMedia": null
+   }
+  },
+  "spearmanForcaNecessidade": null,
+  "porGerador": {
+   "claude-sonnet-5": {
+    "direta": 63.125,
+    "indireta": null,
+    "nao-ligado": 18.75
+   },
+   "claude-sonnet-4-6": {
+    "direta": 60.375,
+    "indireta": null,
+    "nao-ligado": 19.6
+   },
+   "claude-opus-5": {
+    "direta": 67.6875,
+    "indireta": null,
+    "nao-ligado": 20.5
+   },
+   "claude-haiku-4-5-20251001": {
+    "direta": 56.25,
+    "indireta": null,
+    "nao-ligado": 21.142857142857142
    }
   }
  }

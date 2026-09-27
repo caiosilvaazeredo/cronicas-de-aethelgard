@@ -1,6 +1,6 @@
 # Log geral dos experimentos
 
-Gerado por `npm run log-experimentos` em 2026-09-25T15:19:26.469Z. Cada pasta tem o seu LOG.md com o detalhe de cada sessão (condição, modelos, chamadas, falhas, custo, grafo, linhagem das tramas, amostras de eventos, relatos e narrações).
+Gerado por `npm run log-experimentos` em 2026-09-27T19:15:14.024Z. Cada pasta tem o seu LOG.md com o detalhe de cada sessão (condição, modelos, chamadas, falhas, custo, grafo, linhagem das tramas, amostras de eventos, relatos e narrações).
 
 Colunas: **nasc./fech./fund.** = tramas nascidas / fechadas por estabilidade / absorvidas por fusão (emenda 1 do pré-registro); **pontes F** = pontes de fusão.
 
@@ -83,6 +83,40 @@ Detalhe: [validacao/v3-ligacoes-tipadas-claude/LOG.md](validacao/v3-ligacoes-tip
 | vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 12 | 72 | 27 | 19 | 0% | 2.01 | 4/0/3 | 0% | 151 | 1 | sim |
 | vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 12 | 72 | 31 | 22 | 0% | 1.40 | 5/0/4 | 0% | 146 | 0 | sim |
 
+## validacao/v4-causas-maximas-claude
+
+Detalhe: [validacao/v4-causas-maximas-claude/LOG.md](validacao/v4-causas-maximas-claude/LOG.md)
+
+| sessão | modelo (agentes) | tipo | cond. | dias | eventos | relatos | chamadas | falha estr. | custo US$ | nasc./fech./fund. | fechadas (em. 1) | ligações | pontes F | tipadas |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01 | claude-cli/claude-haiku-4-5-20251001 | Cidade Viva | informa | 12 | 72 | 49 | 24 | 0% | 0.92 | 5/1/3 | 20% | 107 | 5 | não |
+| porto-das-brumas_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-opus-5 | Cidade Viva | informa | 12 | 72 | 40 | 22 | 0% | 1.86 | 3/0/2 | 0% | 127 | 1 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 12 | 72 | 22 | 18 | 0% | 1.71 | 5/0/4 | 0% | 128 | 0 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 12 | 72 | 43 | 23 | 0% | 1.27 | 2/0/1 | 0% | 106 | 2 | não |
+| vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01 | claude-cli/claude-haiku-4-5-20251001 | Cidade Viva | informa | 12 | 72 | 38 | 23 | 0% | 0.85 | 5/0/3 | 0% | 96 | 3 | não |
+| vale-silente_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-opus-5 | Cidade Viva | informa | 12 | 72 | 41 | 22 | 0% | 1.82 | 3/0/2 | 0% | 125 | 1 | não |
+| vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 12 | 72 | 35 | 22 | 0% | 1.91 | 6/0/5 | 0% | 108 | 2 | não |
+| vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 12 | 72 | 33 | 21 | 0% | 1.02 | 6/0/5 | 0% | 108 | 3 | não |
+
+## validacao/v5-replicacao-claude
+
+Detalhe: [validacao/v5-replicacao-claude/LOG.md](validacao/v5-replicacao-claude/LOG.md)
+
+| sessão | modelo (agentes) | tipo | cond. | dias | eventos | relatos | chamadas | falha estr. | custo US$ | nasc./fech./fund. | fechadas (em. 1) | ligações | pontes F | tipadas |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 61 | 32 | 0% | 2.97 | 5/0/4 | 0% | 229 | 5 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 47 | 33 | 0% | 3.13 | 5/0/4 | 0% | 221 | 0 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 49 | 37 | 0% | 2.97 | 5/0/4 | 0% | 206 | 3 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 58 | 35 | 0% | 1.94 | 5/0/4 | 0% | 205 | 0 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 61 | 35 | 0% | 1.78 | 5/0/4 | 0% | 206 | 0 | não |
+| porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 70 | 36 | 0% | 1.73 | 5/0/4 | 0% | 214 | 3 | não |
+| vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 76 | 37 | 0% | 3.31 | 6/0/5 | 0% | 228 | 2 | não |
+| vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 53 | 35 | 0% | 2.73 | 5/0/4 | 0% | 211 | 5 | não |
+| vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03 | claude-cli/claude-sonnet-4-6 | Cidade Viva | informa | 20 | 120 | 64 | 35 | 0% | 3.18 | 5/0/4 | 0% | 231 | 0 | não |
+| vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 62 | 35 | 0% | 1.73 | 5/0/4 | 0% | 207 | 5 | não |
+| vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 68 | 37 | 0% | 1.67 | 5/1/3 | 20% | 208 | 2 | não |
+| vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03 | claude-cli/claude-sonnet-5 | Cidade Viva | informa | 20 | 120 | 40 | 34 | 0% | 1.55 | 5/0/4 | 0% | 186 | 4 | não |
+
 ## Métodos de validação que não são sessões
 
 | método | arquivo | chamadas | itens julgados | custo US$ |
@@ -92,5 +126,6 @@ Detalhe: [validacao/v3-ligacoes-tipadas-claude/LOG.md](validacao/v3-ligacoes-tip
 | Método 5: fidelidade dos relatos | `validacao/m5-juiz-relatos/julgamentos.jsonl` | 110 | 640 | 6.40 |
 | Método 6: necessidade causal por intervenção | `validacao/m6-necessidade/julgamentos.jsonl` | 23 | 90 | 0.96 |
 | Método 6b: necessidade × tipo e força das ligações | `validacao/m6b-necessidade-tipadas/julgamentos.jsonl` | 25 | 100 | 1.02 |
+| Método 6c: necessidade com no máximo 2 causas por ação | `validacao/m6c-necessidade-causas-maximas/julgamentos.jsonl` | 15 | 60 | 0.62 |
 
-**Total:** 37 sessões, 1409 chamadas de IA registradas, US$ 76.84 (custo informado pelos provedores; sessões com provedor sem preço declarado contam 0).
+**Total:** 57 sessões, 2020 chamadas de IA registradas, US$ 117.50 (custo informado pelos provedores; sessões com provedor sem preço declarado contam 0).

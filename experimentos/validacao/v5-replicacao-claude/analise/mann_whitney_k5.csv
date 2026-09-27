@@ -1,0 +1,3 @@
+k,dimensao,a,b,n_a,n_b,mediana_a,mediana_b,U,p,bisserial_postos,p_holm,significativo_0.05
+5,modelo,claude-cli/claude-sonnet-4-6,claude-cli/claude-sonnet-5,6,6,0.0,0.0,15.0,0.40465676192728617,0.16666666666666663,0.8093135238545723,False
+5,mundo,porto-das-brumas,vale-silente,6,6,0.0,0.0,15.0,0.40465676192728617,0.16666666666666663,0.8093135238545723,False

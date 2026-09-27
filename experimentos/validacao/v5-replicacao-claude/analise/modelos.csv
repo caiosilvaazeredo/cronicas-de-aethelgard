@@ -1,0 +1,3 @@
+modelo,tipo,chamadas_com_esquema,falhas_estrutura,tentativas_medias,erros_chamada,causadoPor_refs,causadoPor_descartadas,tokens_entrada,tokens_saida,custo_usd,sessoes,taxa_falha_estrutura,taxa_descarte_causadoPor
+claude-cli/claude-sonnet-4-6,cidade-viva,209,0,1.0,0,1326,0,800873,900799,18.270936,6,0.0,0.0
+claude-cli/claude-sonnet-5,cidade-viva,212,0,1.0,0,1226,0,1266732,617794,10.4002176,6,0.0,0.0

@@ -274,7 +274,7 @@ def main() -> None:
         fig, eixos = plt.subplots(1, 2, figsize=(14, 4))
         x = np.arange(len(ordem_v))
         larg = 0.8 / len(gs)
-        cores_g = {"Cidade Viva": "#9ca3af", "Cidade Viva tipada": "#3a7ca5", "Cidade Viva ≤2 causas": "#3a9a5b", "três atos": "#d1495b"}
+        cores_g = {"Cidade Viva": "#9ca3af", "Cidade Viva tipada": "#3a7ca5", "Cidade Viva ≤2 causas": "#3a9a5b", "Cidade Viva 20 dias": "#8e6cc0", "três atos": "#d1495b"}
         for e, chave, titulo in [(eixos[0], "propFechadas", "Fechadas por estabilidade / nascidas"), (eixos[1], "propFundidas", "Absorvidas por fusão / nascidas")]:
             for i, g in enumerate(gs):
                 vals = [vg[(vg["grupo"] == g) & (vg["variante"] == v)][chave].mean() for v in ordem_v]
@@ -335,7 +335,7 @@ def main() -> None:
     x = np.arange(len(v))
     e.bar(x - 0.2, v["prop_fechadas_estab"], 0.4, label="fechadas por estabilidade / nascidas", color="#3a9a5b")
     e.bar(x + 0.2, v["prop_fundidas"], 0.4, label="absorvidas por fusão / nascidas", color="#f59e0b")
-    e.set_xticks(x, v["variante"], fontsize=8)
+    e.set_xticks(x, v["variante"], fontsize=8, rotation=25, ha="right")
     e.set_title("Variantes de detecção, Cidade Viva (k = 3)")
     e.legend(fontsize=8)
     e.grid(axis="y", alpha=0.3)

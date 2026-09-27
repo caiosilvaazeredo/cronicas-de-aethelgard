@@ -211,3 +211,13 @@ anotadores e estimar a concordância antes da campanha real; a amostra
 confirmatória será sorteada da campanha real com o mesmo procedimento.
 
 **Momento.** Emenda feita antes da primeira campanha com modelo real.
+
+**Observação (sem mudança de desenho): replicação de 20 dias.** No método 9
+(Sonnet 4.6 e Sonnet 5, condição A, 2 mundos, 3 repetições, 20 dias), todas
+as 12 sessões terminaram com uma única trama: as 5 ou 6 linhas nascem no dia
+2 e são absorvidas até o dia 7 (no máximo até o dia 18), e nenhuma linha nasce
+depois do dia 2, porque 99,7% dos eventos posteriores ao primeiro dia citam
+alguma causa. Com 40 dias por sessão, a métrica principal da emenda 1 tende a
+ficar perto de zero em todas as condições. Esta emenda não altera a unidade de
+análise; se ela for alterada (por exemplo, para uma detecção com localidade
+temporal), isso será feito em emenda própria, antes da primeira sessão real.

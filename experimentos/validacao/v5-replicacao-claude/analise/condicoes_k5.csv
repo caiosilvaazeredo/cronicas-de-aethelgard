@@ -1,0 +1,5 @@
+k,celula,modelo,estadoTramas,numAgentes,jogador,mundo,tipo,sessoes,prop_fechadas_estab_media,ic95_inf,ic95_sup,prop_fechadas_estab_mediana,prop_fundidas_media,tramas_nascidas_media,sessoes_que_convergem_emenda1,prop_fechadas_v01_media,sessoes_que_convergem_v01
+5,porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum,claude-cli/claude-sonnet-4-6,informa,6,nenhum,porto-das-brumas,cidade-viva,3,0.0,0.0,0.0,0.0,0.8000000000000002,5.0,0.0,0.0,0.3333333333333333
+5,porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum,claude-cli/claude-sonnet-5,informa,6,nenhum,porto-das-brumas,cidade-viva,3,0.0,0.0,0.0,0.0,0.8000000000000002,5.0,0.0,0.0,0.0
+5,vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum,claude-cli/claude-sonnet-4-6,informa,6,nenhum,vale-silente,cidade-viva,3,0.0,0.0,0.0,0.0,0.8111111111111112,5.333333333333333,0.0,0.0,0.0
+5,vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum,claude-cli/claude-sonnet-5,informa,6,nenhum,vale-silente,cidade-viva,3,0.06666666666666667,0.0,0.20000000000000004,0.0,0.7333333333333334,5.0,0.0,0.16666666666666666,0.3333333333333333

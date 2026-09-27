@@ -68,7 +68,7 @@ for (const dir of process.argv.slice(2)) {
     const resumo = JSON.parse(readFileSync(join(p, 'resumo.json'), 'utf8'));
     saida.push({ sessao: s, pasta: dir, modelo: c.modelos.agentes.modelo, mundo: c.mundo, controle: c.controle,
       estadoTramas: c.estadoTramas, tipadas: !!c.ligacoesTipadas, causasMaximas: c.causasMaximas ?? null,
-      causasExcedentes: resumo.causasExcedentes ?? 0, semente: c.semente, eventos: ev.length, grafo: g, variantes,
+      causasExcedentes: resumo.causasExcedentes ?? 0, semente: c.semente, dias: c.dias, eventos: ev.length, grafo: g, variantes,
       completo: variantes.completo, semPontes: variantes['sem-pontes-de-fusao'], fortes: variantes.fortes });
   }
 }
@@ -85,7 +85,7 @@ console.log(JSON.stringify(saida));
         g, c, sp, f = r["grafo"], r["completo"], r["semPontes"], r["fortes"]
         linhas.append({
             "sessao": r["sessao"], "modelo": r["modelo"], "mundo": r["mundo"], "controle": r["controle"],
-            "estadoTramas": r["estadoTramas"], "tipadas": r["tipadas"], "semente": r["semente"], "eventos": r["eventos"],
+            "estadoTramas": r["estadoTramas"], "tipadas": r["tipadas"], "semente": r["semente"], "dias": r["dias"], "eventos": r["eventos"],
             "ligacoes": g["ligacoes"], "ligPorEvento": g["ligacoes"] / max(1, g["eventos"]), "pontes": g["pontes"],
             "pontesFusao": g["pontesDeFusao"], "articulacoes": g["articulacoes"], "porTipo": g["porTipo"],
             "forcaMedia": g["forcaMedia"],
@@ -128,10 +128,11 @@ def main() -> None:
 
     # 2. métricas de grafo das sessões (métodos 1, 2 e 7)
     dirs = [raiz / "v1-cidade-viva-claude", raiz / "v2-controle-tres-atos-claude", raiz / "v3-ligacoes-tipadas-claude",
-            raiz / "v4-causas-maximas-claude"]
+            raiz / "v4-causas-maximas-claude", raiz / "v5-replicacao-claude"]
     df = metricas_sessoes([d for d in dirs if d.exists()])
     df["grupo"] = np.where(df["controle"], "três atos", np.where(df["tipadas"], "Cidade Viva tipada",
-                           np.where(df["causasMaximas"].notna(), "Cidade Viva ≤2 causas", "Cidade Viva")))
+                           np.where(df["causasMaximas"].notna(), "Cidade Viva ≤2 causas",
+                                    np.where(df["dias"] > 12, "Cidade Viva 20 dias", "Cidade Viva"))))
     df.to_csv(destino / "sessoes.csv", index=False)
     cv = df[~df["controle"]]
     variantes_nomes = [c[5:] for c in df.columns if c.startswith("prop_")]
@@ -142,6 +143,38 @@ def main() -> None:
     ]
     res["grafoPorGrupo"] = (df.groupby("grupo")[["ligPorEvento", "pontes", "pontesFusao", "articulacoes", "nascidas", "propFechadas", "propFundidas", "propFechadasSemPontes"]]
                             .mean().round(3).to_dict("index"))
+
+    # 2b. método 9: replicação com 20 dias, 3 repetições, Sonnet 4.6 × Sonnet 5
+    rep = cv[cv["grupo"] == "Cidade Viva 20 dias"]
+    if len(rep):
+        conv = {}
+        cond_rep = raiz / "v5-replicacao-claude" / "analise" / "condicoes_k3.csv"
+        if cond_rep.exists():
+            cr = pd.read_csv(cond_rep)
+            conv = {curto(m.split("/")[-1]): float(v) for m, v in cr.groupby("modelo")["sessoes_que_convergem_emenda1"].mean().items()}
+        orig = cv[(cv["grupo"] == "Cidade Viva") & (cv["estadoTramas"] == "informa") & (cv["modelo"].isin(set(rep["modelo"])))]
+        por_modelo = {}
+        for m, g in rep.groupby("modelo"):
+            o = orig[orig["modelo"] == m]
+            por_modelo[curto(m)] = {
+                "sessoes": int(len(g)), "ligPorEvento": float(g["ligPorEvento"].mean()), "nascidas": float(g["nascidas"].mean()),
+                "propFechadas": float(g["propFechadas"].mean()), "propFundidas": float(g["propFundidas"].mean()),
+                "propFechadasSemPontes": float(g["propFechadasSemPontes"].mean()),
+                "propFechadasComunidades": float(g["prop_comunidades"].mean()),
+                "sessoesComFechamento": int((g["fechadas"] > 0).sum()), "convergem": conv.get(curto(m)),
+                "metodo1": {"sessoes": int(len(o)), "propFechadas": float(o["propFechadas"].mean()) if len(o) else None,
+                            "propFundidas": float(o["propFundidas"].mean()) if len(o) else None},
+            }
+        ms = sorted(set(rep["modelo"]))
+        mw = None
+        if len(ms) == 2:
+            a = rep[rep["modelo"] == ms[0]]["propFechadas"].to_numpy(float)
+            b = rep[rep["modelo"] == ms[1]]["propFechadas"].to_numpy(float)
+            if np.any(np.concatenate([a, b]) != a[0]):
+                u = stats.mannwhitneyu(a, b, alternative="two-sided")
+                mw = {"a": curto(ms[0]), "b": curto(ms[1]), "U": float(u.statistic), "p": float(u.pvalue),
+                      "rankBiserial": float(1 - 2 * u.statistic / (len(a) * len(b)))}
+        res["replicacao"] = {"sessoes": int(len(rep)), "dias": int(rep["dias"].max()), "porModelo": por_modelo, "mannWhitneyFechadas": mw}
 
     # 3. métodos 7 e 8: pareados com o método 1 (mesmo modelo, mundo, condição A e semente)
     base = cv[(cv["grupo"] == "Cidade Viva") & (cv["estadoTramas"] == "informa")].set_index(["modelo", "mundo"])
@@ -237,7 +270,7 @@ def main() -> None:
     if len(vg):
         ordem_v = ["completo", "reducao-transitiva", "janela3", "fortes", "fortes-janela3", "sem-pontes-de-fusao", "comunidades"]
         ordem_v = [v for v in ordem_v if v in set(vg["variante"])]
-        gs = [g for g in ["Cidade Viva", "Cidade Viva tipada", "Cidade Viva ≤2 causas", "três atos"] if g in set(vg["grupo"])]
+        gs = [g for g in ["Cidade Viva", "Cidade Viva tipada", "Cidade Viva ≤2 causas", "Cidade Viva 20 dias", "três atos"] if g in set(vg["grupo"])]
         fig, eixos = plt.subplots(1, 2, figsize=(14, 4))
         x = np.arange(len(ordem_v))
         larg = 0.8 / len(gs)

@@ -119,6 +119,17 @@ add(H2('Estrutura do grafo por grupo'), tabela(
   Object.entries(G).map(([g, x]) => [g, n(x.ligPorEvento), n(x.pontes, 1), n(x.pontesFusao, 1), n(x.articulacoes, 1), pct(x.propFechadas), pct(x.propFechadasSemPontes)]),
   [1900, 1200, 1000, 1200, 1200, 1300, 1560]
 ), P(''), Ps(T.grafo_resultados));
+if (R.variantesPorGrupo) {
+  const VG = R.variantesPorGrupo;
+  const grupos = [...new Set(VG.map((x) => x.grupo))];
+  const vars = ['completo', 'sem-pontes-de-fusao', 'reducao-transitiva', 'comunidades', 'fortes'];
+  add(H2('Todas as variantes por grupo de sessões'), Ps(T.variantes_grupos_intro));
+  add(tabela(['Grupo', 'Variante', 'Sessões', 'Linhas (nasc. + cisões)', 'Fechadas por estab.', 'Absorvidas por fusão'],
+    grupos.flatMap((g) => vars.map((v) => VG.find((x) => x.grupo === g && x.variante === v)).filter(Boolean)
+      .map((x) => [x.grupo, x.variante, x.sessoes, n(x.nascidas, 2), pct(x.propFechadas), pct(x.propFundidas)])),
+    [2200, 2000, 900, 1500, 1400, 1360], 16));
+  add(P(''), figura('variantes_grupos.png', 'Figura 2b. Fechadas por estabilidade e absorvidas por fusão em cada variante de detecção, por grupo de sessões (k = 3).', 620), Ps(T.variantes_grupos_resultados));
+}
 
 // 4. necessidade
 const N = R.necessidade;
@@ -154,11 +165,48 @@ if (NT) {
   add(figura('necessidade_tipos.png', 'Figura 5. Necessidade avaliada pelo juiz conforme o tipo e a força que o próprio gerador declarou.', 540), Ps(T.necessidade_tipos_resultados));
 }
 
-// 6. mapa
-add(H1('6. Mapa da Crônica com linhagem'), Ps(T.mapa), figura('mapa_linhagem.png', 'Figura 6. Mapa da Crônica da sessão do Sonnet 5 no Vale Silente (condição A), com o painel de linhagem.', 620));
+// 6. limite de causas (método 8)
+const C2 = R.pareados && R.pareados.causas2;
+add(H1('6. No máximo duas causas por ação (método 8)'), Ps(T.causas_intro));
+if (C2) {
+  const nome = { ligPorEvento: 'Ligações por evento', nascidas: 'Tramas nascidas', propFechadas: 'Fechadas por estabilidade / linhas', propFundidas: 'Absorvidas por fusão / linhas', pontesFusao: 'Pontes de fusão' };
+  add(tabela(['Métrica (média de ' + C2.pares + ' pares)', 'Sem limite (método 1)', 'Até 2 causas (método 8)', 'Diferença', 'p (Wilcoxon)'],
+    Object.entries(C2.comparacao).map(([k, x]) => [nome[k] || k, k.startsWith('prop') ? pct(x.sem) : n(x.sem), k.startsWith('prop') ? pct(x.com) : n(x.com), k.startsWith('prop') ? `${(100 * x.difMedia).toFixed(0)} p.p.` : n(x.difMedia), pv(x.p_wilcoxon)]),
+    [3000, 1600, 1800, 1400, 1560]));
+  add(P(`Causas descartadas pelo motor por excederem o limite: ${n(C2.causasExcedentes, 1)} por sessão, em média.`));
+  add(figura('pareados.png', 'Figura 7. Sessões pareadas (mesmo modelo, mundo e semente, condição A): sem instrução extra, com tipo e força (método 7) e com no máximo duas causas (método 8).', 620));
+}
+const N2 = R.necessidadeCausas2;
+if (N2) {
+  add(tabela(['Par (A → B), sessões do método 8', 'n', 'Necessidade média (0-100)'],
+    [['ligação direta declarada', N2.porTipo.direta.n, n(N2.porTipo.direta.necessidadeMedia, 1)], ['não ligado (controle)', N2.porTipo['nao-ligado'].n, n(N2.porTipo['nao-ligado'].necessidadeMedia, 1)]],
+    [4200, 1500, 3660]));
+  add(P(`AUC direta × não ligado = ${n(N2.aucDiretaVsNaoLigado)}.`));
+}
+add(Ps(T.causas_resultados));
 
-add(H1('7. Limitações'), Bs(T.limitacoes));
-add(H1('8. Debriefing'));
+// 7. replicação (método 9)
+const RP = R.replicacao;
+add(H1('7. Replicação com 20 dias (método 9)'), Ps(T.replicacao_intro));
+if (RP) {
+  add(tabela(['Modelo', 'Sessões', 'Ligações por evento', 'Linhas nascidas', 'Fechadas', 'Absorvidas', 'Sessões com algum fechamento', 'Convergem (emenda 1)', 'Fechadas no método 1 (12 dias)'],
+    Object.entries(RP.porModelo).map(([m, x]) => [m, x.sessoes, n(x.ligPorEvento), n(x.nascidas, 1), pct(x.propFechadas), pct(x.propFundidas), `${x.sessoesComFechamento} de ${x.sessoes}`, pct(x.convergem), pct(x.metodo1.propFechadas)]),
+    [1300, 800, 1000, 1000, 950, 1050, 1150, 1050, 1060], 15));
+  if (RP.mannWhitneyFechadas) {
+    const w = RP.mannWhitneyFechadas;
+    add(P(`Mann-Whitney (fechadas por estabilidade, ${w.a} × ${w.b}): U = ${n(w.U, 1)}, p = ${pv(w.p)}, correlação bisserial de postos = ${n(w.rankBiserial)}.`));
+  }
+}
+add(Ps(T.replicacao_resultados));
+
+// 8. anotação humana
+add(H1('8. Anotação humana preparada'), Ps(T.anotacao));
+
+// 9. mapa
+add(H1('9. Mapa da Crônica com linhagem'), Ps(T.mapa), figura('mapa_linhagem.png', 'Figura 8. Mapa da Crônica da sessão do Sonnet 5 no Vale Silente (condição A), com o painel de linhagem.', 620));
+
+add(H1('10. Limitações'), Bs(T.limitacoes));
+add(H1('11. Debriefing'));
 for (const s of T.debriefing) add(H2(s.titulo), Ps(s.paragrafos), Bs(s.itens));
 
 // apêndice: log das sessões

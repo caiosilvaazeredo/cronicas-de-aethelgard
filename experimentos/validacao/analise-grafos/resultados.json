@@ -63,6 +63,22 @@
    "convergem_emenda1": 0.0
   },
   {
+   "variante": "comunidades",
+   "tipo": "cidade-viva",
+   "nascidas_media": 4.875,
+   "prop_fechadas_estab": 0.413,
+   "prop_fundidas": 0.461,
+   "convergem_emenda1": 0.188
+  },
+  {
+   "variante": "comunidades",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.552,
+   "prop_fundidas": 0.448,
+   "convergem_emenda1": 0.375
+  },
+  {
    "variante": "fortes",
    "tipo": "cidade-viva",
    "nascidas_media": 3.938,
@@ -104,6 +120,22 @@
   },
   {
    "variante": "janela3",
+   "tipo": "controle-tres-atos",
+   "nascidas_media": 1.0,
+   "prop_fechadas_estab": 0.0,
+   "prop_fundidas": 0.0,
+   "convergem_emenda1": 0.0
+  },
+  {
+   "variante": "reducao-transitiva",
+   "tipo": "cidade-viva",
+   "nascidas_media": 3.938,
+   "prop_fechadas_estab": 0.078,
+   "prop_fundidas": 0.588,
+   "convergem_emenda1": 0.125
+  },
+  {
+   "variante": "reducao-transitiva",
    "tipo": "controle-tres-atos",
    "nascidas_media": 1.0,
    "prop_fechadas_estab": 0.0,
@@ -114,16 +146,16 @@
    "variante": "sem-pontes-de-fusao",
    "tipo": "cidade-viva",
    "nascidas_media": 4.25,
-   "prop_fechadas_estab": 0.332,
-   "prop_fundidas": 0.486,
+   "prop_fechadas_estab": 0.203,
+   "prop_fundidas": 0.603,
    "convergem_emenda1": 0.062
   },
   {
    "variante": "sem-pontes-de-fusao",
    "tipo": "controle-tres-atos",
    "nascidas_media": 1.0,
-   "prop_fechadas_estab": 0.25,
-   "prop_fundidas": 0.0,
+   "prop_fechadas_estab": 0.125,
+   "prop_fundidas": 0.062,
    "convergem_emenda1": 0.0
   }
  ],

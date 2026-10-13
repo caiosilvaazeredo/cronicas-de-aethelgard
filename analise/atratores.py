@@ -359,6 +359,16 @@ def main() -> None:
     res["premissasNulo"] = nulo_premissas(sessoes)
     res["lugaresNulo"] = nulo_lugares(sessoes)
     res["grau"] = {"gini": float(np.mean(ginis)), "top5": float(np.mean(top5))}
+    # saídas acumuladas por linha nascida (sessões de 12 dias)
+    acum = {"fundidas": [], "fechadas": []}
+    for s in sessoes:
+        if s["dias"] != 12:
+            continue
+        dias = s["linhagem"]["dias"]
+        nasc = max(1, dias[-1]["nascidasAcum"])
+        acum["fundidas"].append([d["fundidasAcum"] / nasc for d in dias])
+        acum["fechadas"].append([d["fechadasAcum"] / nasc for d in dias])
+    res["saidas12dias"] = {k: np.mean(np.array(v), axis=0).round(3).tolist() for k, v in acum.items()}
     (destino / "resultados.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf8")
     (destino / "primeiras_fusoes.json").write_text(json.dumps(exemplos_primeiras, ensure_ascii=False, indent=2), encoding="utf8")
     (destino / "premissas.json").write_text(json.dumps({m: {f"{a}-{b}": t for (a, b), t in p.items()} for m, p in PREMISSAS.items()},
@@ -396,6 +406,22 @@ def figuras(res: dict, destino: Path) -> None:
     e.legend(frameon=False, fontsize=8)
     fig.tight_layout()
     fig.savefig(destino / "bacia.png", dpi=200)
+    plt.close(fig)
+
+    # fusão × fechamento acumulados
+    sa = res["saidas12dias"]
+    fig, e = plt.subplots(figsize=(6.4, 3.2))
+    x = range(1, len(sa["fundidas"]) + 1)
+    e.plot(x, sa["fundidas"], color=LARANJA, linewidth=2, marker="o", markersize=4, label="absorbed by fusion")
+    e.plot(x, sa["fechadas"], color=AZUL, linewidth=2, marker="o", markersize=4, label="closed by stability")
+    e.set_xticks(range(1, 13))
+    e.set_xlabel("day")
+    e.set_ylabel("cumulative share of storylines")
+    e.set_ylim(0, 1)
+    estilo(e)
+    e.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(destino / "fusao_fechamento.png", dpi=200)
     plt.close(fig)
 
     # premissas: primeiras fusões × base

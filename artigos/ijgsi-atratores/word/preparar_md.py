@@ -51,7 +51,7 @@ md = re.sub(r":{3,} \{#(tab:[^}]+)\}\n(.*?)\n:{3,}", tabela, md, flags=re.S)
 # figuras: ![legenda](arq){#fig:x width=..} -> **Figure n** / *legenda* / imagem
 def figura(m):
     leg, arq, rot = m.group(1), m.group(2), m.group(3)
-    largura = "9cm" if "premissas" in arq else "15cm"
+    largura = "9cm" if ("premissas" in arq or "tabuleiro" in arq) else "15cm"
     return f"**{rotulos[rot]}**\n\n*{leg.strip()}*\n\n![]({arq}){{width=\"{largura}\"}}"
 md = re.sub(r"!\[(.*?)\]\(([^)]+)\)\{#(fig:[^ }]+)[^}]*\}", figura, md)
 
@@ -69,14 +69,17 @@ md = re.sub(r"^\|\s+\|\s+\|\s+\|\s+\|$", "| *Descriptive measures (no null compa
 # matemática em linha -> texto com itálico e subscrito (estilo APA: *p* = .036)
 def sem_math(m):
     t = m.group(1)
-    t = t.replace(r"\dots", "…").replace(r"\in", "∈").replace(r"\rightarrow", "→").replace(" ", " ")
+    t = t.replace(r"\dots", "…").replace(r"\in", "∈").replace(r"\rightarrow", "→").replace(r"\times", "×")
+    t = t.replace(r"\left", "").replace(r"\right", "")
+    t = re.sub(r"\^\{([^}]*)\}", r"^\1^", t)
+    t = re.sub(r"\^(\w)", r"^\1^", t)
     t = re.sub(r"_\{([^}]*)\}", lambda x: "~" + x.group(1).replace("-", "−") + "~", t)
     t = re.sub(r"_(\w)", r"~\1~", t)
     t = re.sub(r"(?<![A-Za-z])([A-Za-z])(?![A-Za-z])", r"*\1*", t)
     t = t.replace(" ", "\\ ") if False else t
     assert "\\" not in t, t
     return t
-md = re.sub(r"\$([^$]+)\$", sem_math, md)
+md = re.sub(r"(?<!\$)\$([^$]+)\$(?!\$)", sem_math, md)  # $$...$$ (equações em destaque) fica para o pandoc
 
 md = md.replace("{#data-and-code-availability .unnumbered}", "")
 md = md.replace(r"\[link removed for review\]", r"\[repository link removed for anonymous review\]")

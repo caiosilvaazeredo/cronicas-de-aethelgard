@@ -197,12 +197,21 @@ ORDEM = {
                 "decimalSymbol listSeparator",
 }
 W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+M = "{http://schemas.openxmlformats.org/officeDocument/2006/math}"
+# equações (OMML): ordem dos filhos nas propriedades de delimitador e de n-ário
+ORDEM_M = {"dPr": "begChr sepChr endChr grow shp ctrlPr",
+           "naryPr": "chr limLoc grow subHide supHide ctrlPr"}
 
 
 def reordenar(raiz) -> None:
-    for nome, ordem in ORDEM.items():
+    for ns, tabela in ((W, ORDEM), (M, ORDEM_M)):
+        _reordenar(raiz, ns, tabela)
+
+
+def _reordenar(raiz, ns, tabela) -> None:
+    for nome, ordem in tabela.items():
         pos = {n: i for i, n in enumerate(ordem.split())}
-        for el in raiz.iter(W + nome):
+        for el in raiz.iter(ns + nome):
             filhos = list(el)
             filhos.sort(key=lambda c: pos.get(c.tag.split("}")[-1], len(pos)))
             for c in filhos:

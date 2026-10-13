@@ -64,6 +64,8 @@ REVISOES = {
             "I2: the study analyses the structure, diversity, coherence, convergence or plot of the generated narratives, OR involves multiple interacting agents/characters in a shared story world, OR models stories as graphs of events/causes;",
             "I3: peer-reviewed article, conference paper or preprint, in English, published 2020-2026.",
         ],
+        "rotulos": {"E1": "LM not used to generate narrative", "E2": "narrative incidental to the study",
+                    "E3": "not about narrative", "E4": "not a research contribution", "E5": "not in English"},
         "exclusao": {
             "E1": "language models not used to generate narrative (e.g., only classification, summarisation, QA, code)",
             "E2": "narrative is incidental: no analysis of narrative structure, diversity or convergence, no multi-agent story world, no event/causal representation",
@@ -94,6 +96,8 @@ REVISOES = {
             "I2: the game targets media, information, news or AI literacy, misinformation/disinformation, critical thinking about information, OR combines tabletop/role-play with generative AI or language models;",
             "I3: peer-reviewed article, conference paper or preprint, in English, published 2015-2026.",
         ],
+        "rotulos": {"E1": "not an analogue or tabletop game", "E2": "no literacy or generative-AI focus",
+                    "E3": "AI plays a board game as a benchmark", "E4": "not a research contribution", "E5": "not in English"},
         "exclusao": {
             "E1": "not an analogue or tabletop game (purely digital/video game, gamified app, or no game)",
             "E2": "game unrelated to media/information/AI literacy or misinformation, and not combined with generative AI",
@@ -150,8 +154,9 @@ def coletar_openalex(cfg, pasta: Path) -> list[dict]:
         d = json.loads(baixar(url))
         (pasta / f"openalex_{len(regs):05d}.json").write_bytes(json.dumps(d).encode())
         for w in d["results"]:
-            regs.append({"fonte": "OpenAlex", "id": w["id"], "doi": (w.get("doi") or "").replace("https://doi.org/", "").lower(),
-                         "arxiv": "", "titulo": w.get("title") or "", "resumo": resumo_openalex(w.get("abstract_inverted_index")),
+            doi_oa = (w.get("doi") or "").replace("https://doi.org/", "").lower()
+            regs.append({"fonte": "OpenAlex", "id": w["id"], "doi": doi_oa,
+                         "arxiv": doi_oa.split("arxiv.", 1)[1] if doi_oa.startswith("10.48550/arxiv.") else "", "titulo": w.get("title") or "", "resumo": resumo_openalex(w.get("abstract_inverted_index")),
                          "ano": w.get("publication_year"), "tipo": w.get("type") or "", "lingua": w.get("language") or "",
                          "veiculo": ((w.get("primary_location") or {}).get("source") or {}).get("display_name") or "",
                          "autores": "; ".join(a["author"]["display_name"] for a in (w.get("authorships") or [])[:8])})
@@ -230,6 +235,19 @@ def coletar(rid: str) -> None:
 # ---------------------------------------------------------------------------
 # 2. duplicatas e registros sem resumo
 # ---------------------------------------------------------------------------
+def mesmo_trabalho(a: dict, b: dict) -> bool:
+    """Versões do mesmo trabalho (preprint e anais) com títulos ligeiramente diferentes."""
+    import difflib
+    ta, tb = norm_titulo(a["titulo"]), norm_titulo(b["titulo"])
+    if not ta or not tb:
+        return False
+    if difflib.SequenceMatcher(None, ta, tb).ratio() >= 0.9:
+        return True
+    pa, pb = norm_titulo(a["titulo"].split(":")[0]), norm_titulo(b["titulo"].split(":")[0])
+    sob = lambda r: norm_titulo((r.get("autores") or "").split(";")[0]).split(" ")[-1:]  # noqa: E731
+    return len(pa) >= 6 and pa == pb and sob(a) == sob(b)
+
+
 def deduplicar(regs: list[dict]) -> tuple[list[dict], int]:
     unicos, chaves = [], {}
     removidos = 0
@@ -237,6 +255,8 @@ def deduplicar(regs: list[dict]) -> tuple[list[dict], int]:
         ks = [k for k in (("doi:" + r["doi"]) if r["doi"] else "", ("arxiv:" + r["arxiv"]) if r["arxiv"] else "",
                           "t:" + norm_titulo(r["titulo"])) if k and k != "t:"]
         alvo = next((chaves[k] for k in ks if k in chaves), None)
+        if alvo is None:
+            alvo = next((i for i, u in enumerate(unicos) if mesmo_trabalho(u, r)), None)
         if alvo is None:
             unicos.append(dict(r, fontes=[r["fonte"]]))
             alvo = len(unicos) - 1
@@ -391,16 +411,16 @@ def diagrama(rid: str, c: dict, destino: Path) -> None:
     caixa(9, 72, 44, 12, f"Records screened\n(title and abstract)\n(n = {c['triados']})")
     seta(31, 92, 31, 84)
     exc_t = c["excluidosTriagem"]
-    caixa(60, 72, 38, 12, f"Records excluded\n(n = {sum(exc_t.values())})", cor=LADO)
+    caixa(60, 70, 38, 16, f"Records excluded (n = {sum(exc_t.values())}):\n" + "\n".join(
+        f"{cfg['rotulos'].get(k, k)} (n = {v})" for k, v in sorted(exc_t.items())), cor=LADO)
     seta(53, 78, 60, 78)
-    caixa(9, 50, 44, 14, f"Records assessed for eligibility\n(n = {c['avaliados']})")
+    caixa(9, 50, 44, 14, f"Reports assessed for eligibility\n(n = {c['avaliados']})")
     seta(31, 72, 31, 64)
     exc_e = c["excluidosElegibilidade"]
-    texto_exc = f"Records excluded (n = {sum(exc_e.values())}):\n" + "\n".join(
-        f"{k}: {cfg['exclusao'].get(k, k)[:46]}{'…' if len(cfg['exclusao'].get(k, k)) > 46 else ''} (n = {v})"
-        for k, v in sorted(exc_e.items()))
-    caixa(56, 42, 42, 24, texto_exc, cor=LADO)
-    seta(53, 57, 56, 57)
+    texto_exc = f"Reports excluded (n = {sum(exc_e.values())}):\n" + "\n".join(
+        f"{cfg['rotulos'].get(k, k)} (n = {v})" for k, v in sorted(exc_e.items()))
+    caixa(60, 46, 38, 20, texto_exc, cor=LADO)
+    seta(53, 57, 60, 57)
     caixa(9, 12, 44, 14, f"Studies included in the review\n(n = {c['incluidos']})", peso="bold")
     seta(31, 50, 31, 26)
     ax.text(50, 4, "Screening and eligibility assisted by a language model applying the stated criteria;\n"
@@ -412,9 +432,10 @@ def diagrama(rid: str, c: dict, destino: Path) -> None:
 
 def bibtex_de(r: dict) -> str | None:
     if r.get("doi"):
-        try:
-            b = baixar("https://api.crossref.org/works/" + urllib.parse.quote(r["doi"], safe="") +
-                       "/transform/application/x-bibtex").decode("utf8")
+        try:  # negociação de conteúdo no doi.org: funciona para Crossref e DataCite (arXiv)
+            req = urllib.request.Request("https://doi.org/" + r["doi"], headers={"Accept": "application/x-bibtex",
+                                                                                  "User-Agent": "prisma-review-script"})
+            b = urllib.request.urlopen(req, timeout=60).read().decode("utf8")
             if b.strip().startswith("@"):
                 return b
         except Exception:  # noqa: BLE001
@@ -423,7 +444,11 @@ def bibtex_de(r: dict) -> str | None:
         autores = " and ".join(a.strip() for a in r["autores"].split(";") if a.strip())
         return (f"@misc{{x,\n  title={{{r['titulo']}}},\n  author={{{autores}}},\n  year={{{r['ano']}}},\n"
                 f"  eprint={{{r['arxiv']}}},\n  eprinttype={{arxiv}},\n  howpublished={{arXiv preprint}}\n}}")
-    return None
+    # sem DOI nem arXiv: entrada a partir dos metadados da base, com o endereço do registro
+    autores = " and ".join(a.strip() for a in r["autores"].split(";") if a.strip())
+    url = r["id"] if str(r["id"]).startswith("http") else ""
+    return (f"@misc{{x,\n  title={{{r['titulo']}}},\n  author={{{autores}}},\n  year={{{r['ano']}}},\n"
+            f"  howpublished={{{r['veiculo']}}}" + (f",\n  url={{{url}}}" if url else "") + "\n}")
 
 
 def relatorio(rid: str) -> None:
@@ -432,6 +457,12 @@ def relatorio(rid: str) -> None:
     triaveis, c = preparar(rid)
     ler = lambda nome: {json.loads(l)["uid"]: json.loads(l) for l in (pasta / nome).read_text(encoding="utf8").splitlines() if l.strip()}  # noqa: E731
     tri, ele = ler("triagem.jsonl"), ler("elegibilidade.jsonl")
+    # correções da conferência manual (registradas em revisao_manual.json, com justificativa)
+    manual = pasta / "revisao_manual.json"
+    if manual.exists():
+        for uid, d in json.loads(manual.read_text(encoding="utf8")).items():
+            if not uid.startswith("_") and uid in ele:
+                ele[uid] = dict(ele[uid], **d, modelo="revisão manual")
     exc_t, exc_e = {}, {}
     for r in triaveis:
         d = tri.get(r["uid"])

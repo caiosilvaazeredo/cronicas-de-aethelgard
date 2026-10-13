@@ -1,0 +1,8 @@
+{
+  "_nota": "Decisões de elegibilidade alteradas na conferência manual. Cada entrada substitui a decisão do modelo para o registro indicado.",
+  "10.48448/5n26-6735": {
+    "decisao": "exclude",
+    "motivo": "E4",
+    "justificativa": "Record is a conference-talk listing (Underline, DataCite DOI) with incomplete metadata; no verifiable paper (ACL Anthology, arXiv or Crossref) was found for it (checked 2026-10-13)."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "porFonte": {
+    "OpenAlex": 192,
+    "arXiv": 58,
+    "Semantic Scholar": 138
+  },
+  "identificados": 388,
+  "duplicatas": 188,
+  "semResumo": 19,
+  "foraDoPeriodo": 0,
+  "triados": 181,
+  "excluidosTriagem": {
+    "E1": 9,
+    "E4": 17,
+    "E3": 32,
+    "E2": 26
+  },
+  "avaliados": 97,
+  "excluidosElegibilidade": {
+    "E2": 38,
+    "E4": 8,
+    "E1": 4,
+    "E5": 1,
+    "E3": 2
+  },
+  "incluidos": 44,
+  "naoTriados": 0,
+  "naoAvaliados": 0
+}

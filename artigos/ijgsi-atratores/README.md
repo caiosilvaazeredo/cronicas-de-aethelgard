@@ -12,7 +12,7 @@
 
 ## Arquivos
 
-- `main.tex` — manuscrito **anonimizado** (revisão duplo-cega), em inglês, APA 7 via `biblatex-apa`.
+- `main.tex` — manuscrito **anonimizado** (revisão duplo-cega), em inglês, APA 7 via `biblatex-apa`. Fonte única: a versão Word é gerada dele.
 - `titlepage.tex` — folha de rosto com autores, afiliação, ORCID, bios (separada, exigência da revista).
 - `referencias.bib` — cópia de `../referencias-base.bib` (entradas com DOI geradas do Crossref).
 - `figuras/` — geradas por `python analise/atratores.py experimentos/validacao`.
@@ -23,37 +23,40 @@ Suba a pasta inteira (ou importe o repositório). Compilador pdfLaTeX; a bibliog
 usa **biber** (o Overleaf escolhe sozinho). Citações: `\textcite{}` (narrativa) e
 `\parencite{}` (entre parênteses).
 
-## Exigências da revista que o LaTeX não cobre
+## Versão Word para submissão (a revista só aceita Word/RTF)
 
-- **A revista aceita só Word ou RTF**, sem template próprio. Para submeter, converta:
-  ```bash
-  pandoc main.tex --citeproc --bibliography=referencias.bib \
-    --csl=apa.csl -o main.docx
-  ```
-  (baixe `apa.csl` de https://www.zotero.org/styles/apa) e confira tabelas e figuras no Word.
-  As imagens também vão como arquivos separados (PNG), numeradas na ordem de aparição.
-- Times New Roman 12, espaço 1,5, margens 2,54 cm, número de página no canto superior direito:
-  já configurado no `main.tex`.
-- Título em negrito, itálico e maiúsculas, até duas linhas (o atual ocupa quatro na
-  capa do LaTeX: considere encurtar, p. ex. "NARRATIVE ATTRACTORS IN SHARED-WORLD
-  ROLE-PLAY WITH LANGUAGE-MODEL AGENTS").
-- Resumo com menos de 300 palavras; as instruções também citam **menos de 1.000 caracteres**.
-  O resumo do `main.tex` tem 193 palavras e 1.185 caracteres. Versão curta (787 caracteres)
-  para o formulário, se o limite de caracteres valer:
+Pronta em `word/submissao/` (e compactada em `../ijgsi-submissao-word.zip`):
 
-  > Generative AI is entering classrooms as co-author and game master. We asked whether a
-  > shared fictional world where language-model agents act freely produces many storylines
-  > or collapses into one. From the causal graphs of 44 simulated sessions (3,744 events,
-  > four models, two worlds), storylines vanish by fusion, not closure: 64% merge into
-  > another and under 5% reach a stable end. Almost all are born on day two, and most sessions
-  > keep a single story by day five. Convergence is driven by density, as almost every
-  > event cites a cause, and its path is shaped by attractors: first fusions join
-  > characters whose premises already referred to each other (75% vs. 61% under a null
-  > model) in the places those premises name. We discuss implications for critical AI
-  > literacy and educational role-play.
+| arquivo | o que é |
+|---|---|
+| `manuscript-anonymous.docx` | manuscrito anônimo (propriedades do arquivo sem autor) |
+| `title-page.docx` | folha de rosto separada: autores, afiliação, e-mail, ORCID, bios, conflito de interesse, autoria (CRediT) |
+| `figures/Figure1.png` … `Figure4.png` | figuras como arquivos separados, na ordem de aparição |
 
-- Palavras-chave: 5 a 7 (o manuscrito tem 7).
-- Contagem: 6.000–8.000 palavras **incluindo referências**. Versão atual: ≈ 6.300.
+Gerada a partir do `main.tex` por `bash word/gerar.sh` (pandoc + citeproc com APA 7 + ajustes de
+formato em `word/montar_docx.py`). Edite o `main.tex` e rode o script de novo; não edite o .docx à
+mão se ainda for mudar o texto.
+
+Conferido contra o checklist da IJGSI:
+
+- 6.232 palavras incluindo referências (exigido: 6.000–8.000);
+- Times New Roman 12, espaço 1,5, margens de 2,54 cm, A4, número de página no canto superior direito;
+- título em negrito, itálico, maiúsculas e justificado, em até duas linhas (96 caracteres);
+- resumo com 130 palavras e 794 caracteres (exigido: < 300 palavras e < 1.000 caracteres);
+- 7 palavras-chave em itálico, espaço simples, justificadas;
+- tabelas como texto editável, no estilo APA (número em negrito e título em itálico acima);
+- referências APA 7 em página nova, espaço duplo, recuo deslocado de 1,25 cm;
+- nenhum nome, instituição ou nome do projeto no manuscrito; link do repositório substituído por
+  "[repository link removed for anonymous review]";
+- os dois .docx passam no validador de esquema OOXML.
+
+**Falta preencher na folha de rosto:** ORCIDs, e-mail do orientador, minibiografias (100–150
+palavras), agradecimentos/financiamento, papéis de autoria (confirmar) e a declaração sobre uso de
+IA generativa na escrita e na análise.
+
+Não consegui abrir o .docx no LibreOffice neste ambiente; a verificação visual foi feita por
+conversão para HTML. Vale abrir no Word uma vez antes de enviar para conferir quebras de página e o
+tamanho das figuras.
 
 ## De onde vem cada número
 

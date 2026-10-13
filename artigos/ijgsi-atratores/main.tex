@@ -35,7 +35,7 @@
 % the generated stories are in Portuguese; quotes are translated
 \newcommand{\pt}[1]{\textit{#1}}
 
-\title{\textbf{\textit{NARRATIVE ATTRACTORS: WHY STORIES CONVERGE IN A SHARED-WORLD ROLE-PLAYING GAME PLAYED BY LANGUAGE-MODEL AGENTS}}}
+\title{\textbf{\textit{NARRATIVE ATTRACTORS: WHY STORIES CONVERGE WHEN LANGUAGE-MODEL AGENTS SHARE A ROLE-PLAYING WORLD}}}
 \author{[Anonymised for review]}
 \date{}
 
@@ -45,23 +45,17 @@
 
 \begin{abstract}
 \noindent
-Generative AI is entering classrooms as a co-author of stories and as a game
-master for role-playing games. We ask whether a shared fictional world, in
-which several language-model agents act freely with no plot structure
-imposed on them, produces many storylines that open and close or collapses
-into a single story. Using a pre-registered instrument that records every
-event and its declared causes, we built the causal graph of 44 simulated
-sessions (3,744 events, four versioned models, two worlds). Storylines
-disappear mostly by fusion, not by closure: 64\% of them are absorbed into
-another storyline and fewer than 5\% reach a stable ending. Almost all storylines
-are born on the second day, and in 36 of 44 sessions a single storyline
-remains, typically by day five. Convergence is driven first by density
-(almost every event cites a cause), and its course is shaped by attractors:
-the first fusions join characters whose premises already referred to each
-other (75\% against 61\% under a density-preserving null model) and happen
-in the places those premises name. We discuss what this means for critical
-AI literacy and for the design of educational role-play with generative
-agents.
+Generative AI is entering classrooms as co-author and game master. We asked
+whether a shared fictional world where language-model agents act freely
+produces many storylines or collapses into one. From the causal graphs of 44
+simulated sessions (3,744 events, four models, two worlds), storylines vanish
+by fusion, not closure: 64\% merge into another and under 5\% reach a stable
+end. Almost all are born on day two, and most sessions keep a single story by
+day five. Convergence is driven by density, as almost every event cites a
+cause, and its path is shaped by attractors: first fusions join characters
+whose premises already referred to each other (75\% vs.\ 61\% under a null
+model) in the places those premises name. We discuss implications for
+critical AI literacy and educational role-play.
 \end{abstract}
 
 \noindent\textit{Keywords: generative AI; role-playing games; emergent narrative; causal graphs; attractors; AI literacy; media literacy}
@@ -285,17 +279,17 @@ being absorbed. All amendments are dated and public in the repository.
 Formally, let $G_d = (V_d, E_d)$ be the causal graph at the end of day $d$,
 where $V_d$ holds the events of days $1,\dots,d$ and $(u, v) \in E_d$ when
 event $v$ declares $u$ as a cause and $u$ is not later than $v$. Let
-$\mathcal{T}_d$ be the set of connected components of the subgraph of events
-that have at least one causal connection. A storyline $T \in \mathcal{T}_d$
+$L_d$ be the set of connected components of the subgraph of events
+that have at least one causal connection. A storyline $T \in L_d$
 is \emph{born} on day $d$ if none of its events belonged to a storyline in
-$\mathcal{T}_{d-1}$; it \emph{fuses} on day $d$ if its events belong, on day
+$L_{d-1}$; it \emph{fuses} on day $d$ if its events belong, on day
 $d$, to a storyline with a different identifier; and it \emph{closes} on day
 $d$ if it is stable on day $d$ for the first time. A storyline that keeps its
 events but receives a new identifier because of a fusion is a
 \emph{renaming}, not a birth. If $N$ storylines are born in a session, $C$ of
 them close before fusing and $F$ fuse before closing, the main metric is
 $C/N$ and its companion is $F/N$. Because components only grow or merge as
-events are added, $\mathcal{T}_d$ can only lose members by fusion or gain
+events are added, $L_d$ can only lose members by fusion or gain
 them by birth; closure does not remove a storyline from the graph, it only
 marks it as having stopped growing. The number of open storylines falls by
 one both when a storyline closes and when two of them merge, which is why

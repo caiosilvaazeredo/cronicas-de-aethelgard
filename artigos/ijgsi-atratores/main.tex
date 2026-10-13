@@ -536,7 +536,12 @@ average degree passes a threshold \parencite{newman2018}. The null model
 shows that density alone would merge the storylines even more completely. This
 layer explains \emph{that} the story becomes one. It is a property of how
 the agents relate their actions to the past, not of a particular model:
-it appears with every model we tested and under every instruction we tried.
+it appears with every model we tested and under every instruction we tried. A design choice of the simulator reinforces it: a single model
+call decides what every character does, and that call sees all the recent
+events of the town. The characters are told to act only on what they know,
+but nothing prevents the author behind them from connecting everything it
+sees. In a role-playing game around a table, by contrast, players know only
+what their characters witnessed or were told.
 
 The second layer is the path. Within the time the story takes to become
 one, which storylines meet, where and over what is not random. Fusions
@@ -646,7 +651,10 @@ All agents were models of a single family; models from other providers,
 including open models run locally, are supported by the instrument and are
 the obvious next step. The sessions are short and few per condition, and
 they come from a validation stage: the confirmatory campaign registered in
-advance has not yet been run. The storyline is defined by graph
+advance has not yet been run. Because one call decides all characters
+and sees all recent events, the agents are not informationally separated;
+a version in which each character receives only what it could know is the
+natural next experiment. The storyline is defined by graph
 connectivity, a standard but debatable operationalisation of
 \enquote{storyline}; we reported alternative definitions for that reason. The
 premise coding was done by a single coder from the world texts; a second,

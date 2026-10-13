@@ -1,0 +1,12 @@
+{
+  "data_da_busca": "2026-10-13",
+  "periodo": [
+    "2015-01-01",
+    "2026-10-13"
+  ],
+  "strings": {
+    "OpenAlex (title_and_abstract.search)": "(\"board game\" OR \"tabletop game\" OR \"role-playing game\" OR \"card game\" OR \"tabletop role-playing\") AND (\"media literacy\" OR \"information literacy\" OR misinformation OR disinformation OR \"fake news\" OR \"AI literacy\" OR \"large language model\" OR \"generative AI\")",
+    "arXiv (abstract)": "(abs:\"board game\" OR abs:\"tabletop game\" OR abs:\"tabletop role-playing\" OR abs:\"role-playing game\" OR abs:\"card game\") AND (abs:\"media literacy\" OR abs:\"information literacy\" OR abs:misinformation OR abs:disinformation OR abs:\"fake news\" OR abs:\"AI literacy\" OR abs:\"language model\" OR abs:\"generative AI\")",
+    "Semantic Scholar (bulk search)": "(\"board game\" | \"tabletop game\" | \"role-playing game\" | \"card game\" | \"tabletop role-playing\") + (\"media literacy\" | \"information literacy\" | misinformation | disinformation | \"fake news\" | \"AI literacy\" | \"large language model\" | \"generative AI\")"
+  }
+}

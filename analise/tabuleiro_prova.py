@@ -84,7 +84,7 @@ class UF:
             self.p[ra] = rb
 
 
-def simular(rng, dias=12, onisciente=False, raio=2, boato=0.5, atracao=0.5, cartas=0, foco=0.0):
+def simular(rng, dias=12, onisciente=False, raio=2, boato=0.5, atracao=0.5, cartas=0, foco=0.0, devolver=False):
     casas = list(LUGARES)
     pos = [LUGARES[casas[i]] for i in range(AGENTES)]
     casa = [casas[i] for i in range(AGENTES)]
@@ -175,8 +175,12 @@ def simular(rng, dias=12, onisciente=False, raio=2, boato=0.5, atracao=0.5, cart
                     nascimentos_tarde += 1
         tramas_ontem = {m: r for r, ms in comp.items() for m in ms}
         linhas_vivas.append(len(comp))
-    return {"vivas": linhas_vivas, "nascidas": nascidas, "nascidasDepoisDoDia2": nascimentos_tarde,
-            "fusoes": fusoes, "fusoesEmAtrator": fusoes_em_atrator}
+    res = {"vivas": linhas_vivas, "nascidas": nascidas, "nascidasDepoisDoDia2": nascimentos_tarde,
+           "fusoes": fusoes, "fusoesEmAtrator": fusoes_em_atrator}
+    if devolver:  # para figuras: eventos (id, dia, autor, casa, causas) e trama final de cada evento ligado
+        res["eventos"] = eventos
+        res["trama"] = {e[0]: uf.find(e[0]) for e in eventos if e[0] in ligados}
+    return res
 
 
 CONDICOES = {

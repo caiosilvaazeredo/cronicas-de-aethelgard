@@ -1,0 +1,12 @@
+{
+  "data_da_busca": "2026-10-13",
+  "periodo": [
+    "2020-01-01",
+    "2026-10-13"
+  ],
+  "strings": {
+    "OpenAlex (title_and_abstract.search)": "(\"large language model\" OR LLM OR \"language model\" OR \"generative agents\") AND (\"emergent narrative\" OR \"interactive narrative\" OR \"story generation\" OR \"narrative generation\" OR storytelling) AND (\"multi-agent\" OR \"role-playing\" OR tabletop OR \"shared world\" OR \"plot diversity\" OR homogenization OR convergence OR \"narrative structure\" OR \"causal graph\")",
+    "arXiv (abstract)": "(abs:\"language model\" OR abs:\"generative agents\") AND (abs:\"emergent narrative\" OR abs:\"interactive narrative\" OR abs:\"story generation\" OR abs:\"narrative generation\" OR abs:storytelling) AND (abs:\"multi-agent\" OR abs:\"role-playing\" OR abs:tabletop OR abs:\"plot diversity\" OR abs:homogenization OR abs:convergence OR abs:\"narrative structure\" OR abs:\"causal graph\")",
+    "Semantic Scholar (bulk search)": "(\"large language model\" | LLM | \"language model\" | \"generative agents\") + (\"emergent narrative\" | \"interactive narrative\" | \"story generation\" | \"narrative generation\" | storytelling) + (\"multi-agent\" | \"role-playing\" | tabletop | \"plot diversity\" | homogenization | convergence | \"narrative structure\" | \"causal graph\")"
+  }
+}

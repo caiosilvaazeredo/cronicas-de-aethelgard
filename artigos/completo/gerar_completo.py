@@ -24,6 +24,21 @@ ARTIGOS = AQUI.parent
 sys.path.insert(0, str(ARTIGOS / "ijgsi-atratores" / "word"))
 from montar_docx import bordas_apa, campo_pagina, referencia_doc, sanear  # noqa: E402
 
+sys.path.insert(0, str(ARTIGOS.parent / "analise"))
+import suplemento_revisao as sup  # noqa: E402
+
+REVISAO_DO_ARTIGO = {"ijgsi-atratores": "atratores", "ijgsi-tabuleiro": "tabuleiro"}
+
+
+def apendice(nome: str) -> str:
+    rid = REVISAO_DO_ARTIGO[nome]
+    c = __import__("json").loads((ARTIGOS.parent / "experimentos" / "revisao" / rid / "contagens.json").read_text(encoding="utf8"))
+    return (QUEBRA + "# Appendix. Systematic review: search, criteria and included studies\n\n"
+            + "**Table A1.** Databases and search strings\n\n" + sup.strings(rid) + "\n\n"
+            + sup.criterios(rid) + "\n\n"
+            + f"**Table A2.** Studies included in the review (n = {c['incluidos']}), by category\n\n"
+            + sup.tabela_incluidos(rid) + "\n")
+
 REPO = "https://github.com/caiosilvaazeredo/cronicas-de-aethelgard"
 ORDEM = [("ijgsi-atratores", "Article 1"), ("ijgsi-tabuleiro", "Article 2")]
 QUEBRA = '\n\n```{=openxml}\n<w:p><w:r><w:br w:type="page"/></w:r></w:p>\n```\n\n'
@@ -83,6 +98,7 @@ def main() -> None:
         partes = [capa()]
         for nome, rotulo in ORDEM:
             partes.append(QUEBRA + artigo_em_markdown(ARTIGOS / nome, tmp))
+            partes.append(apendice(nome))
         md = tmp / "completo.md"
         md.write_text("\n".join(partes), encoding="utf8")
         ref = tmp / "ref.docx"
@@ -135,7 +151,7 @@ def main() -> None:
                     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
                     for r in p.runs:
                         r.font.name = "Times New Roman"
-                        r.font.size = Pt(11)
+                        r.font.size = Pt(11 if len(tb.rows) < 30 else 8.5)
     cp = doc.core_properties
     cp.author = "Caio Silva Azeredo; Geraldo Xexéo"
     cp.title = "Narrative attractors and board-based world models"

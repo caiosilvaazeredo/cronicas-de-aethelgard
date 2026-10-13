@@ -423,8 +423,9 @@ def diagrama(rid: str, c: dict, destino: Path) -> None:
     seta(53, 57, 60, 57)
     caixa(9, 12, 44, 14, f"Studies included in the review\n(n = {c['incluidos']})", peso="bold")
     seta(31, 50, 31, 26)
-    ax.text(50, 4, "Screening and eligibility assisted by a language model applying the stated criteria;\n"
-            "every decision is logged for verification by human reviewers.", ha="center", fontsize=7.2, color=TINTA)
+    ax.text(55, 4, "Screening (claude-sonnet-5) and eligibility (claude-opus-5-5) assisted by language models applying\n"
+            f"the stated criteria; second-reviewer check changed {c['decisoesManuais']} eligibility decision(s). "
+            "All decisions are logged.", ha="center", fontsize=7.2, color=TINTA)
     fig.tight_layout()
     fig.savefig(destino, dpi=220)
     plt.close(fig)
@@ -459,10 +460,12 @@ def relatorio(rid: str) -> None:
     tri, ele = ler("triagem.jsonl"), ler("elegibilidade.jsonl")
     # correções da conferência manual (registradas em revisao_manual.json, com justificativa)
     manual = pasta / "revisao_manual.json"
+    n_manual = 0
     if manual.exists():
         for uid, d in json.loads(manual.read_text(encoding="utf8")).items():
             if not uid.startswith("_") and uid in ele:
                 ele[uid] = dict(ele[uid], **d, modelo="revisão manual")
+                n_manual += 1
     exc_t, exc_e = {}, {}
     for r in triaveis:
         d = tri.get(r["uid"])
@@ -478,7 +481,7 @@ def relatorio(rid: str) -> None:
             incluidos.append(dict(r, justificativa=d["justificativa"]))
     c.update({"excluidosTriagem": exc_t, "avaliados": len(passaram), "excluidosElegibilidade": exc_e,
               "incluidos": len(incluidos), "naoTriados": len([r for r in triaveis if r["uid"] not in tri]),
-              "naoAvaliados": len([r for r in passaram if r["uid"] not in ele])})
+              "naoAvaliados": len([r for r in passaram if r["uid"] not in ele]), "decisoesManuais": n_manual})
     (pasta / "contagens.json").write_text(json.dumps(c, ensure_ascii=False, indent=2), encoding="utf8")
     diagrama(rid, c, pasta / "prisma.png")
     with open(pasta / "registros.csv", "w", newline="", encoding="utf8") as fh:

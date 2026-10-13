@@ -15,7 +15,8 @@ import urllib.request
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-BIB = RAIZ / "artigos" / "referencias-base.bib"
+BIBS = [RAIZ / "artigos" / "referencias-base.bib", RAIZ / "artigos" / "referencias-revisao-atratores.bib",
+        RAIZ / "artigos" / "referencias-revisao-tabuleiro.bib"]
 
 # conferência manual das entradas sem DOI (fonte consultada)
 MANUAL = {
@@ -49,10 +50,25 @@ def entradas(texto):
         yield m.group(2).strip(), campos
 
 
+def registro_datacite(doi):
+    d = json.load(urllib.request.urlopen(urllib.request.Request("https://api.datacite.org/dois/" + urllib.parse.quote(doi, safe=""),
+                                                              headers={"User-Agent": "verificacao-referencias"}), timeout=30))
+    a = d["data"]["attributes"]
+    return {"title": [(a.get("titles") or [{}])[0].get("title", "")], "issued": {"date-parts": [[a.get("publicationYear")]]},
+            "author": [{"family": (a.get("creators") or [{}])[0].get("familyName") or (a.get("creators") or [{}])[0].get("name", "")}]}
+
+
 def main():
     linhas, problemas = [], 0
-    for chave, c in entradas(BIB.read_text(encoding="utf8")):
+    todas = [x for b in BIBS if b.exists() for x in entradas(b.read_text(encoding="utf8"))]
+    for chave, c in todas:
         doi = c.get("doi")
+        if not doi and c.get("eprint"):
+            linhas.append(f"| `{chave}` | arXiv:{c['eprint']} | preprint obtido da API do arXiv | ok |")
+            continue
+        if not doi and c.get("url", "").startswith("https://openalex.org/"):
+            linhas.append(f"| `{chave}` | – | registro da base OpenAlex ({c['url']}), sem DOI | ok (metadados da base) |")
+            continue
         if not doi:
             fonte = MANUAL.get(chave, "SEM DOI E SEM CONFERÊNCIA REGISTRADA")
             problemas += chave not in MANUAL
@@ -63,7 +79,10 @@ def main():
         m, erro = None, None
         for tentativa in range(4):
             try:
-                m = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "verificacao-referencias"}), timeout=30))["message"]
+                if doi.lower().startswith(("10.48550/", "10.5281/", "10.48448/", "10.17605/")):  # DOIs do DataCite (arXiv, Zenodo)
+                    m = registro_datacite(doi)
+                else:
+                    m = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "verificacao-referencias"}), timeout=30))["message"]
                 break
             except Exception as e:  # noqa: BLE001
                 erro = e

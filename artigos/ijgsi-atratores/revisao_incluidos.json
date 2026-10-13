@@ -1,0 +1,398 @@
+[
+  {
+    "chave": "revatr01",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2026,
+    "titulo": "A Persona-Augmented Multi-Agent System for Varied Narrative Generation",
+    "veiculo": "ACM SIGCHI Symposium on Engineering Interactive Computing Systems (EICS)",
+    "doi": "10.1145/3807968.3810931",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr02",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "A Structured Reasoning Framework for Causally Consistent Narrative Generation via Evidence-Conditioned Candidate-Set Control",
+    "veiculo": "Knowledge-Based Systems",
+    "doi": "10.1016/j.knosys.2026.117032",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr03",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "AdaMARP: An Adaptive Multi-Agent Interaction Framework for General Immersive Role-Playing",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2601.11007",
+    "arxiv": "2601.11007"
+  },
+  {
+    "chave": "revatr04",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2026,
+    "titulo": "Algorithmic Narrative Structures: How Large Language Models Mimic and Disrupt Classical Structuralist Literary Syntax",
+    "veiculo": "Liberal Journal of Language & Literature Review",
+    "doi": "",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr05",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "Archaeological-prototyping-based story generation with large language models: Envisioning technology development through science fiction",
+    "veiculo": "Entertainment Computing",
+    "doi": "10.1016/j.entcom.2026.101172",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr06",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2026,
+    "titulo": "Creative Convergence or Imitation? Genre-Specific Homogeneity in LLM-Generated Chinese Literature",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2603.14430",
+    "arxiv": "2603.14430"
+  },
+  {
+    "chave": "revatr07",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2026,
+    "titulo": "DiaryPlay: AI-Assisted Creation of Interactive Story Vignettes for Everyday Storytelling",
+    "veiculo": "CHI Conference on Human Factors in Computing Systems",
+    "doi": "10.1145/3772318.3790572",
+    "arxiv": "2507.11628"
+  },
+  {
+    "chave": "revatr08",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "Fabula: Building a Narrative Storytelling Sidekick with the Writers' Community",
+    "veiculo": "arXiv",
+    "doi": "",
+    "arxiv": "2606.14411"
+  },
+  {
+    "chave": "revatr09",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "From Personas to Plot: Character-Grounded Multi-Agent Story Generation for Long-Form Narratives",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2607.00918",
+    "arxiv": "2607.00918"
+  },
+  {
+    "chave": "revatr10",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "From World-Gen to Quest-Line: A Dependency-Driven Prompt Pipeline for Coherent RPG Generation",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2604.25482",
+    "arxiv": "2604.25482"
+  },
+  {
+    "chave": "revatr11",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2026,
+    "titulo": "Fun-Aware Modeling and Narrative Generation Using LLMs for Role-Playing Games",
+    "veiculo": "IEEE Access",
+    "doi": "10.1109/access.2026.3710747",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr12",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2026,
+    "titulo": "Guiding, Not Railroading: Design and Evaluation of a Multi-Agent System for Narrative Redirection in Role-playing Games",
+    "veiculo": "ACM International Conference on Intelligent User Interfaces (IUI)",
+    "doi": "10.1145/3742413.3789218",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr13",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "LLM-Driven MCTS for Conditional Story Generation via Logic-Guided Evidence Tree Optimization",
+    "veiculo": "IEEE Transactions on Audio Speech and Language Processing",
+    "doi": "10.1109/taslpro.2026.3687020",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr14",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "Multi-Agent Framework for Interactive Storytelling using Large Language Models",
+    "veiculo": "2026 International Conference on Smart Futuristic Technology",
+    "doi": "10.1109/icsft66733.2026.11507464",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr15",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2026,
+    "titulo": "Noise Steering for Controlled Text Generation: Improving Diversity and Reading-Level Fidelity in Arabic Educational Story Generation",
+    "veiculo": "Workshop on Innovative Use of NLP for Building Educational Applications",
+    "doi": "10.18653/v1/2026.bea-1.41",
+    "arxiv": "2604.03380"
+  },
+  {
+    "chave": "revatr16",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "One Sentence, One Drama: Personalized Short-Form Drama Generation via Multi-Agent Systems",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2605.22144",
+    "arxiv": "2605.22144"
+  },
+  {
+    "chave": "revatr17",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "Staying In Character: Perspective-Bounded Memory For Book-Based Role-Playing Agents",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2606.25632",
+    "arxiv": "2606.25632"
+  },
+  {
+    "chave": "revatr18",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2026,
+    "titulo": "StoryBox: Collaborative Multi-Agent Simulation for Hybrid Bottom-Up Long-Form Story Generation Using Large Language Models",
+    "veiculo": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "doi": "10.1609/aaai.v40i36.40288",
+    "arxiv": "2510.11618"
+  },
+  {
+    "chave": "revatr19",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2026,
+    "titulo": "Trait-guided detective story generation in seven classic investigative styles with Large Language Models",
+    "veiculo": "Entertainment Computing",
+    "doi": "10.1016/j.entcom.2026.101166",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr20",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2026,
+    "titulo": "Which India Survives Translation? Narrative Homogenisation Across Indian Oral Traditions in LLMs",
+    "veiculo": "SSRN Electronic Journal",
+    "doi": "10.2139/ssrn.7133858",
+    "arxiv": "2608.26123"
+  },
+  {
+    "chave": "revatr21",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2025,
+    "titulo": "Alignment, Exploration, and Novelty in Human-AI Interaction",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2512.17117",
+    "arxiv": "2512.17117"
+  },
+  {
+    "chave": "revatr22",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2025,
+    "titulo": "All Stories Are One Story: Emotional Arc Guided Procedural Game Level Generation",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2508.02132",
+    "arxiv": "2508.02132"
+  },
+  {
+    "chave": "revatr23",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "BOOKWORLD: From Novels to Interactive Agent Societies for Story Creation",
+    "veiculo": "Annual Meeting of the Association for Computational Linguistics (ACL)",
+    "doi": "10.18653/v1/2025.acl-long.773",
+    "arxiv": "2504.14538"
+  },
+  {
+    "chave": "revatr24",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2025,
+    "titulo": "CML-Bench: A Framework for Evaluating and Enhancing LLM-Powered Movie Scripts Generation",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2510.06231",
+    "arxiv": "2510.06231"
+  },
+  {
+    "chave": "revatr25",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2025,
+    "titulo": "COS(M+O)S: Curiosity and RL-Enhanced MCTS for Exploring Story Space via Language Models",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2501.17104",
+    "arxiv": "2501.17104"
+  },
+  {
+    "chave": "xu2025",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2025,
+    "titulo": "Echoes in AI: Quantifying lack of plot diversity in LLM outputs",
+    "veiculo": "Proceedings of the National Academy of Sciences",
+    "doi": "10.1073/pnas.2504966122",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr27",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "Event-Driven Storytelling with Multiple Lifelike Humans in a 3D scene",
+    "veiculo": "Seoul National University Open Repository (Seoul National University)",
+    "doi": "10.1109/iccv51701.2025.01084",
+    "arxiv": "2507.19232"
+  },
+  {
+    "chave": "revatr28",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2025,
+    "titulo": "Exploring Gender Bias in LLM-Generated Hero and Heroine Narratives",
+    "veiculo": "Lecture notes in computer science",
+    "doi": "10.1007/978-3-032-02534-0_3",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr29",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "GENOME: A Multi-Agent NeuroSymbolic Simulation Framework for Coherent, Memory-Evolved Long-Form Story Generation",
+    "veiculo": "2025 International Conference on Emerging Research in Computational Science (ICERCS)",
+    "doi": "10.1109/icercs65898.2025.11580934",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr30",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatrics",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2507.15518",
+    "arxiv": "2507.15518"
+  },
+  {
+    "chave": "revatr31",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2025,
+    "titulo": "Individualized Cognitive Simulation in Large Language Models: Evaluating Different Cognitive Representation Methods",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2510.20252",
+    "arxiv": "2510.20252"
+  },
+  {
+    "chave": "revatr32",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2025,
+    "titulo": "Long Story Generation via Knowledge Graph and Literary Theory",
+    "veiculo": "arXiv",
+    "doi": "10.48550/arxiv.2508.03137",
+    "arxiv": "2508.03137"
+  },
+  {
+    "chave": "revatr33",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2025,
+    "titulo": "Many Stories, One Shape: Narrative Convergence in AI-Generated Fiction",
+    "veiculo": "Digital Kenyon (Kenyon College)",
+    "doi": "",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr34",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "MemAGent: A Cognitive-Hierarchical Multi-Agent System for Long-Form Story Generation",
+    "veiculo": "2025 IEEE 3rd International Conference on Computer, Vision and Intelligent Technology (ICCVIT)",
+    "doi": "10.1109/iccvit67848.2025.11391379",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr35",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2025,
+    "titulo": "RPGBENCH: Evaluating Large Language Models as Role-Playing Game Engines",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2502.00595",
+    "arxiv": "2502.00595"
+  },
+  {
+    "chave": "revatr36",
+    "categoria": "Multi-agent and simulation-based story generation",
+    "ano": 2025,
+    "titulo": "StoryWriter: A Multi-Agent Framework for Long Story Generation",
+    "veiculo": "ACM International Conference on Information and Knowledge Management (CIKM)",
+    "doi": "10.1145/3746252.3761616",
+    "arxiv": "2506.16445"
+  },
+  {
+    "chave": "tian2024",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2024,
+    "titulo": "Are Large Language Models Capable of Generating Human-Level Narratives?",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2407.13248",
+    "arxiv": "2407.13248"
+  },
+  {
+    "chave": "revatr38",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2024,
+    "titulo": "From Role-Play to Drama-Interaction: An LLM Solution",
+    "veiculo": "Annual Meeting of the Association for Computational Linguistics",
+    "doi": "10.18653/v1/2024.findings-acl.196",
+    "arxiv": "2405.14231"
+  },
+  {
+    "chave": "revatr39",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2024,
+    "titulo": "GENEVA: GENErating and Visualizing branching narratives using LLMs",
+    "veiculo": "IEEE Conference on Games (CoG)",
+    "doi": "10.1109/cog60054.2024.10645625",
+    "arxiv": "2311.09213"
+  },
+  {
+    "chave": "revatr40",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2024,
+    "titulo": "Improving Linguistic Diversity of Large Language Models with Possibility Exploration Fine-Tuning",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2412.03343",
+    "arxiv": "2412.03343"
+  },
+  {
+    "chave": "revatr41",
+    "categoria": "Homogenisation and diversity of generated narratives",
+    "ano": 2024,
+    "titulo": "Once Upon a GPT-4: Enhancing Diversity in Automated Reading Comprehension Story Generation with Classic Tales",
+    "veiculo": "IEEE International Conference on Advanced Learning Technologies (ICALT)",
+    "doi": "10.1109/icalt61570.2024.00063",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr42",
+    "categoria": "Structural, causal and planning representations of stories",
+    "ano": 2024,
+    "titulo": "Planning Stories Neurally",
+    "veiculo": "",
+    "doi": "10.36227/techrxiv.171085113.35202301/v1",
+    "arxiv": ""
+  },
+  {
+    "chave": "revatr43",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2024,
+    "titulo": "You Have Thirteen Hours in Which to Solve the Labyrinth: Enhancing AI Game Masters with Function Calling",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2409.06949",
+    "arxiv": "2409.06949"
+  },
+  {
+    "chave": "revatr44",
+    "categoria": "Language models as game masters and in interactive role-play",
+    "ano": 2023,
+    "titulo": "NarrativePlay: Interactive Narrative Understanding",
+    "veiculo": "arXiv (Cornell University)",
+    "doi": "10.48550/arxiv.2310.01459",
+    "arxiv": "2310.01459"
+  }
+]

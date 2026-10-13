@@ -1,0 +1,57 @@
+{
+  "_nota": "Categorias temáticas atribuídas pelo segundo revisor a partir do título e do resumo de cada estudo incluído.",
+  "categorias": {
+    "Homogenisation and diversity of generated narratives": [
+      "revatr01",
+      "revatr04",
+      "revatr06",
+      "revatr15",
+      "revatr20",
+      "revatr22",
+      "revatr26",
+      "revatr28",
+      "revatr33",
+      "revatr37",
+      "revatr40",
+      "revatr41"
+    ],
+    "Multi-agent and simulation-based story generation": [
+      "revatr03",
+      "revatr09",
+      "revatr14",
+      "revatr16",
+      "revatr17",
+      "revatr18",
+      "revatr23",
+      "revatr27",
+      "revatr29",
+      "revatr30",
+      "revatr34",
+      "revatr36"
+    ],
+    "Structural, causal and planning representations of stories": [
+      "revatr02",
+      "revatr05",
+      "revatr08",
+      "revatr10",
+      "revatr13",
+      "revatr19",
+      "revatr24",
+      "revatr25",
+      "revatr32",
+      "revatr35",
+      "revatr39",
+      "revatr42"
+    ],
+    "Language models as game masters and in interactive role-play": [
+      "revatr07",
+      "revatr11",
+      "revatr12",
+      "revatr21",
+      "revatr31",
+      "revatr38",
+      "revatr43",
+      "revatr44"
+    ]
+  }
+}

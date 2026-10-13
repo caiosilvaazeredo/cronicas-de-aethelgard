@@ -1,0 +1,1378 @@
+[
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7167928266",
+    "doi": "10.3390/socsci15070467",
+    "arxiv": "",
+    "titulo": "Board Game Experiential Learning for Media and Information Literacy: Teachers’ and Facilitators’ Perspectives in Contemporary Information Environments",
+    "resumo": "The rapid growth of social media and artificial intelligence (AI) has intensified information disorder, highlighting the need for comprehensive Media and Information Literacy (MIL) education. While game-based approaches are increasingly explored in MIL, research has largely focused on student outcomes, with limited attention to teachers’ and facilitators’ experiences of implementing non-digital experiential learning interventions, despite the critical role of facilitation and reflection helping learners navigate information environments. This study adopts a qualitative exploratory design to explore teachers’ and facilitators’ perspectives on a board game-based experiential learning intervention for MIL in Malaysian educational settings. Grounded in Kolb’s Experiential Learning Theory and social constructivist principles, the board game was designed to simulate real-world media dynamics, such as information circulation, audience influence, and ethical decision-making. Data were collected through four open-ended teacher feedback forms and one face-to-face semi-structured reflective group interview involving eight facilitators, and analysed using thematic analysis. Four themes emerged: (1) perceived pedagogical value for supporting learner engagement, critical discussion, and applied understanding of MIL concepts; (2) observed experiential and social learning processes characterised by peer interaction, negotiation, and reflection; and (3) implementation challenges related to facilitation demands, time constraints, and balancing competition with learning objectives and (4) recommendations for enhancing implementation. Findings highlight the importance of teacher facilitation and reflective debriefing in transforming gameplay into meaningful MIL learning experiences and reveal key implementation challenges.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Social Sciences",
+    "autores": "Huey Shyh Tan; Huey Shyh Tan; Heidi Yeen-Ju Tan; Heidi Yeen-Ju Tan; Soon Hin Hew",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.3390/socsci15070467",
+    "justificativa": "Qualitative study of teachers' and facilitators' views on a non-digital board game for media and information literacy covering information disorder and AI.",
+    "chave": "revtab01"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7160270941",
+    "doi": "10.33093/ijcm.2026.7.1.16",
+    "arxiv": "",
+    "titulo": "Board Game-Based Experiential Learning as a Sustainable Innovation for Media and Information Literacy",
+    "resumo": "The rapid spread of misinformation within digital media ecosystems poses a significant challenge to sustainable development, democratic participation, and informed civic engagement, highlighting the critical role of Media and Information Literacy (MIL) in achieving the United Nations Sustainable Development Goals (SDGs), particularly SDG 4 (Quality Education) and SDG 16 (Peace, Justice, and Strong Institutions). However, traditional MIL instruction often relies on didactic approaches that limit learner engagement and experiential depth. This study investigates the critical success factors of a board game-based experiential learning approach as a sustainable and innovative intervention for MIL education. An MIL workshop was conducted with 422 students using a board game designed around Kolb’s Experiential Learning Theory (ELT), enabling structured cycles of experience, reflection, conceptualisation, and action. A convergent parallel mixed-methods design was employed, combining Exploratory Factor Analysis (EFA) and correlation analysis with qualitative reflections collected through open-ended questionnaires. Five key factors were identified: (F1) Experiential Skills Development, (F2) Affective Motivation, (F3) Social Learning, (F4) Game Engagement, and (F5) Active Participation. The findings demonstrate that experiential learning plays a central role, strongly influencing motivational, social, and engagement-related factors. The intervention strengthened cognitive and affective MIL competencies, indicating that continued experiential engagement may further support the progression from awareness to active participation in addressing misinformation. This paper contributes a scalable, low-cost, and non-digital educational innovation, offering practical insights for educators and policymakers seeking to design inclusive, learner-centred MIL interventions that support long-term social resilience and sustainable development.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "International Journal of Creative Multimedia",
+    "autores": "Huey Shyh Tan; Heidi Yeen-Ju Tan; Soon Hin Hew",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.33093/ijcm.2026.7.1.16",
+    "justificativa": "Mixed-methods evaluation of a board game for media and information literacy and misinformation with 422 students.",
+    "chave": "revtab02"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7133216686",
+    "doi": "10.17605/osf.io/zfhcs",
+    "arxiv": "",
+    "titulo": "Empowerment through Game-Based Learning? An Experimental Study on the Effectiveness of Games for Teaching News Media Literacy and News Engagement.",
+    "resumo": "The declining news consumption among young adults poses risks to informed democratic participation. For policymakers, researchers, and media practitioners alike, this raises the question of how news can once again spark greater interest. Educational games offer a largely untapped potential in this regard: they are among young people’s most popular leisure activities, foster cognitive skills, and enable engagement with journalistic processes without direct exposure to negatively perceived news coverage. This article examines the effects of the educational board game NewsMaker, which simulates key mechanisms of journalistic work. Using an experimental framework, the study investigates the extent to which playing the game contributes to higher levels of news literacy (RQ1) and motivation for news consumption (RQ2). The findings provide empirical evidence on how playful formats can promote news literacy.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "",
+    "veiculo": "",
+    "autores": "Franziska Oehmer; Stefano Pedrazzi",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "10.17605/osf.io/zfhcs",
+    "justificativa": "An experimental study evaluates the educational board game NewsMaker for its effects on news literacy and news engagement.",
+    "chave": "revtab03"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7167489473",
+    "doi": "10.3390/app16136769",
+    "arxiv": "",
+    "titulo": "Evaluating Moral and Ethical Alignment in Large Language Models: A Dungeons & Dragons Benchmark",
+    "resumo": "(1) Background: Large language models (LLMs) are increasingly used to generate morally distinct non-player characters in interactive fiction and tabletop role-playing games. However, prior work shows that reinforcement learning from human feedback (RLHF) safety training suppresses morally extreme expression. Hence, whether models can reliably generate and evaluate speech with a fixed moral–ethical alignment, within an assigned fictional persona, remains an open question. (2) Methods: To explore this issue, eight generator LLMs each produced three-turn role-play conversations for 37 Dungeons & Dragons 5th Edition deities spanning all nine cells of the 3 × 3 moral–ethical alignment grid (888 conversations by design, 885 obtained after one generator’s midexperiment deprecation). Next, eight evaluator LLMs classified each conversation on both alignment axes using structured output evaluation (6951 evaluation records), assessed across 17 analysis metrics. (3) Results: The obtained results can be summarised as follows. Moral-axis accuracy (Good/Neutral/Evil) exceeded ethical-axis accuracy (Lawful/Neutral/Chaotic) by approximately 10 percentage points on average across all 64 generator–evaluator pairs, with the pair-level gap ranging up to 32 points and reversing sign for one generator (nemotron-120b). Moreover, the alignment-cell hardness ranged 27.6-fold, from Lawful Good (0.910) to Neutral Neutral (0.033). Furthermore, a strong good-ward moral drift, consistent with RLHF suppression effects reported in prior work, was observed for nemotron-120b (0.931 of Evil-target outputs classified as Good) and was near-absent for grok-4.1-fast (0.024). Finally, deity wiki prominence did not predict per-deity accuracy after controlling for alignment cell (partial ρ < 0.20, p > 0.20). (4) Conclusions: In summary, good-ward drift, consistent with RLHF suppression of morally extreme expression, turned out to be graded and model-specific. Moreover, iconic characters override it (Cyric, Chaotic Evil: 0.947, nearly matching the top Lawful Good score). Finally, alignment-cell identity is the dominant accuracy predictor, not the deity familiarity, within the role-played persona setting studied here.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Applied Sciences",
+    "autores": "Jan Sawicki; Maria Ganzha; Marcin Paprzycki",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.3390/app16136769",
+    "justificativa": "Evaluates LLMs generating and classifying Dungeons & Dragons role-play personas, a tabletop role-playing setting with generative AI.",
+    "chave": "revtab04"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7167387106",
+    "doi": "",
+    "arxiv": "",
+    "titulo": "Exploring the efficacy of games-based learning and pedagogy in visual literacy education",
+    "resumo": "The World Economic Forum’s Global Risks Report 2025 identifies misinformation and disinformation as the most significant short-term global threat. At the same time, visual media — particularly images circulating through digital platforms — has become a powerful vehicle for spreading misleading information. Despite this shift toward image-driven communication, educational debates often emphasise technological developments rather than the critical skills needed to interpret and evaluate visual media. Visual literacy education, which encourages critical reflection on the ethics of image creation, production, and dissemination, offers a promising response. However, educators currently have limited pedagogical tools for teaching visual ethics. This study explores whether a tabletop card game can support the development of visual and ethical literacy in university classrooms. Using a mixed-methods approach — including participant observation during game play and student surveys — the research evaluates the game’s effectiveness as a teaching tool. Findings aim to expand game-based learning strategies and support visual literacy education across disciplines and educational levels.",
+    "ano": 2026,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Research Portal (Queen's University Belfast)",
+    "autores": "Savannah; id_orcid 0000-0002-3076-9932 Dodd; Dana Statton Thompson; Carol Record",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "t:exploring the efficacy of games based learning and pedagogy in visual literacy education",
+    "justificativa": "A mixed-methods study evaluates a tabletop card game for visual and ethical literacy, explicitly framed as a response to misinformation and disinformation.",
+    "chave": "revtab05"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7168432720",
+    "doi": "10.1145/3831305",
+    "arxiv": "2607.11837",
+    "titulo": "FIERO: Empowering Creative Writing Through Collaborative Game Play",
+    "resumo": "Creativity often flourishes in collaboration, such as when designers brainstorm a new app together, or storytellers collectively build a world with elements of each person's narrative. However, collaborative storytelling can have challenges for its participants, such as when they disagree about the plot proposed, or when different ideas become fragmented when voiced individually. While current tools for creative collaboration focus on synchronous online text sharing, they often neglect the social dynamics of in-person collaboration critical to creative synergy. To address this, we created FIERO, a multiplayer web-based card game. Physical cards provide tangible scaffolding and social interaction, while the digital interface generates contextual visuals, facilitate group decisions, ensure narrative coherence, and synthesize different idea contributions using generative AI. Compared against online collaborative writing alone, the game significantly enhanced intuitive stimulation, idea fluency, and novelty generation, and also improved the content of the stories produced, leading to greater plot coherence (N=60). The cards provided creative structure and social engagement, while the interface provided contextualized augmentation without affecting player agency. This work shows how collaborative play can be utilized to foster creative support.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Chu Zhang; XiaoKe Zeng; Zhang, Jin; Ruoyu Wen; Vince Siu; Richard William Allen; Ray LC",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.1145/3831305",
+    "justificativa": "A hybrid physical card game that uses generative AI for collaborative storytelling is evaluated (N=60), so it meets the 'tabletop combined with generative AI' criterion.",
+    "chave": "revtab06"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7139035365",
+    "doi": "10.1609/aaai.v40i47.41530",
+    "arxiv": "",
+    "titulo": "From Embeddings to Chatbots: Playful NLP Activities for Middle School AI Literacy",
+    "resumo": "As large language models (LLMs) and chatbots become increasingly prevalent, there is an urgent need to create engaging, age-appropriate learning activities that foster foundational AI literacy with a focus on natural language processing (NLP). This paper presents the iterative design and implementation of three instructional activities that introduce middle school learners (ages 11--14) to NLP concepts through playful, hands-on experiences aligned with the AI4K12 Big Idea of Natural Interaction. These activities include: (1) an unplugged card game that develops students' understanding of embeddings and similarity, (2) an unplugged collaborative sentence-generation challenge that illustrates how language models work, and (3) a web-based educational game in which students design and interact with chatbots. Each activity was implemented and refined across multiple educational contexts, including teacher professional development workshops, summer camps, and classroom implementations. All activities are designed to be easy to set up, requiring only commonly available classroom technology (e.g., laptops) and a few inexpensive materials (e.g., decks of cards), and are supported with facilitation guides and reflection prompts. Early implementations revealed areas for refinement, leading to clearer scaffolding that helped students connect gameplay to underlying NLP concepts, and post-refinement surveys indicated that students found the activities both enjoyable and educational. Findings suggest that blending unplugged and digital formats enhances comprehension, and that tailoring content to students' local contexts supports engagement. By making these activities openly available, this work contributes to the growing ecosystem of K–12 AI education resources and offers practical guidance for integrating NLP concepts into classroom instruction.",
+    "ano": 2026,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "autores": "Jessica L. Vandenberg; Alex Goslen; Claire Aguiar; Wookhee Min; Veronica Cateté; Bradford Mott",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1609/aaai.v40i47.41530",
+    "justificativa": "Includes an unplugged card game teaching embeddings/NLP concepts as part of AI literacy activities for middle schoolers.",
+    "chave": "revtab07"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2604.27972v1",
+    "doi": "",
+    "arxiv": "2604.27972",
+    "titulo": "From LLM-Driven Trading Card Generation to Procedural Relatedness: A Pokémon Case Study",
+    "resumo": "Since the dawn of Trading Card Games, the genre has grown into a multi-billion-dollar industry engaging millions of analog and digital players worldwide. Popular TCGs rely on regular updates, balance adjustments, and rotating constraints to sustain engagement. Yet, as metagames stabilize, predictable strategies dominate and viable card options diminish, often resulting in repetitive and impaired player experiences. This paper investigates the use of Large Language Models and Image Diffusion Models for Procedural Content Generation of TCG cards, addressing these challenges by enabling a personalized infinity of card designs. Modern generative AI not only enables large-scale content creation but could even introduce procedural relatedness, fostering unique connections between players and their cards. We present a pipeline combining player-centric co-creation, fine-tuned embeddings, local LLMs, and Diffusion Models to generate dynamic, personalized cards while potentially expanding creative range. We evaluated the pipeline in a user study with 49 participants who generated 196 Pokémon card samples. Participants rated aesthetics and representativeness of visuals and mechanics, and provided qualitative feedback. Results show high satisfaction and indicate that most participants successfully realized their own ideas through prompt adjustments. These findings lay groundwork for future content generation systems and alternatives to conventional metagame evolution through procedural relatedness.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Johannes Pfau; Panagiotis Vrettis",
+    "fontes": [
+      "arXiv"
+    ],
+    "uid": "arxiv:2604.27972",
+    "justificativa": "Uses LLMs and diffusion models to generate personalized trading cards for a physical card game, evaluated in a user study, combining an analogue card game with generative AI.",
+    "chave": "revtab08"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7206190295",
+    "doi": "10.52731/liir.v007.508",
+    "arxiv": "",
+    "titulo": "From Virtual Romance to Tangible Risk Awareness: De-signing a Board Game to Physicalize Online Dating Fraud Scenarios",
+    "resumo": "To enhance online dating safety awareness among university students, this study developed a board game, Boundary of the Heart, based on romance scam experiences of Chinese women. The game materializes virtual dating interactions—such as matching and messaging—into cards and tokens representing emotions, self-esteem, and safety awareness, guiding players through risk-based decision-making scenarios. Using a single-group post-test design with 21 university students, the study examined flow experience, ARCS learning motivation, and activity-related anxiety. Results indicated that participants experienced high levels of immersion and learning motivation, while reporting low anxiety. Most participants also perceived improved judgment regarding safe online and offline dating practices. These findings suggest that board game–based fraud scenarios can effectively enhance emotional engagement and risk perception, and demon-strate the potential of tangible, scenario-based learning for media literacy and relationship edu-cation from a female perspective.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "IIAI Letters on Informatics and Interdisciplinary Research",
+    "autores": "Yu‐Chi Chen; Yunlu Cui; Chiou-Yan Tzeng; Ngoc Khanh Tran",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "10.52731/liir.v007.508",
+    "justificativa": "A board game is designed and evaluated to raise awareness of online dating fraud, framed explicitly as tangible scenario-based media literacy education.",
+    "chave": "revtab09"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7128074372",
+    "doi": "10.48550/arxiv.2602.05636",
+    "arxiv": "2602.05636",
+    "titulo": "Generative Ontology: When Structured Knowledge Learns to Create",
+    "resumo": "Traditional ontologies describe domain structure but cannot generate novel artifacts. Large language models generate fluently but produce outputs lacking structural validity, hallucinating mechanisms without components, goals without end conditions. We introduce Generative Ontology, a framework synthesizing these complementary strengths: ontology provides the grammar; the LLM provides the creativity. Generative Ontology encodes domain knowledge as executable Pydantic schemas constraining LLM generation via DSPy signatures. A multi-agent pipeline assigns specialized roles: a Mechanics Architect designs game systems, a Theme Weaver integrates narrative, a Balance Critic identifies exploits, each carrying a professional \"anxiety\" that prevents shallow outputs. Retrieval-augmented generation grounds designs in precedents from existing exemplars. We demonstrate the framework through GameGrammar, generating complete tabletop game designs, and present three empirical studies. An ablation study (120 designs, 4 conditions) shows multi-agent specialization produces the largest quality gains (fun d=1.12, depth d=1.59; p<.001), while schema validation eliminates structural errors (d=4.78). A benchmark against 20 published board games reveals structural parity but a bounded creative gap (fun d=1.86): generated designs score 7-8 while published games score 8-9. A test-retest study (50 evaluations) validates the LLM-based evaluator, with 7/9 metrics achieving Good-to-Excellent reliability (ICC 0.836-0.989). The pattern generalizes beyond games. Any domain with expert vocabulary, validity constraints, and accumulated exemplars is a candidate for Generative Ontology.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Benny Cheung",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2602.05636",
+    "justificativa": "This preprint combines generative AI with tabletop games by using an LLM multi-agent framework to generate and evaluate complete tabletop game designs.",
+    "chave": "revtab10"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7162751509",
+    "doi": "10.48550/arxiv.2605.29625",
+    "arxiv": "2605.29625",
+    "titulo": "Improving Collaborative Storytelling with a Multi-Agent Framework Based on Large Language Models",
+    "resumo": "The topic of Co-creation, i.e., AI agents interacting with humans to generate outputs (e.g., art), has gained significant attention recently. However, most studies focus on adult-human interactions in a digital setting. This paper explores a novel ludic co-creation scenario involving children and Large Language Models (LLMs) interacting through a physical board game to create written stories. Our goal is to develop a multi-agent framework capable of producing high-quality narratives suitable for young players. At the core of our approach is an iterative Writer-Editor process in which one LLM generates stories while another evaluates them and provides feedback for refinement. Through a simulation study involving multiple LLMs, we show that this iterative interaction consistently improves the perceived quality of generated stories across successive loops. The results indicate that a small number of refinement steps may be sufficient to achieve high-quality outputs in interactive storytelling systems.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Arturo Valdivia; Paolo Burelli",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2605.29625",
+    "justificativa": "Children co-create stories with an LLM multi-agent framework through a physical board game, combining analogue play with LLMs.",
+    "chave": "revtab11"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7155419877",
+    "doi": "10.55041/ijsrem61180",
+    "arxiv": "",
+    "titulo": "Interactive Role-Playing Game System Using Dice-Based Mechanics and AI Narration",
+    "resumo": "Abstract—Tabletop role-playing games such as Dungeons & Dragons depend on a human Game Master to adjudicate rules, resolve player decisions through probabilistic dice mechanics, and weave a coherent narrative across sessions. Automating this role using Large Language Models (LLMs) alone leads to severe reliability problems: unconstrained generative models hallucinate game state, permit physically impossible player actions, and fail to maintain consistent numerical variables over extended play. This paper presents a hybrid software architecture that cleanly separates deterministic game logic from constrained narrative generation. The backend employs a programmatic Python rules engine grounded in a comprehensive static rulebook covering 20 monsters, 18 weapons, 26 spells, 13 NPC archetypes, and 8 puzzle templates to resolve all combat, skill checks, and state mutations with absolute mathematical precision. Six specialized LLM micro-agents—a Validator, Parser, Story Engine, Director, Enemy AI, and Narrator—handle only semantic tasks, each constrained by typed Pydantic schemas and post-generation rulebook validation. A React-based frontend communicates with this backend via both REST endpoints and WebSocket channels, enabling both single-player and real-time multiplayer sessions with up to four concurrent players. Empirical benchmarks over 100 adversarial and valid test prompts demonstrate that the hybrid Validator intercepts 95.0% of rule-violating inputs while incorrectly rejecting only 2.5% of legitimate gameplay actions, compared to an unconstrained LLM baseline that permitted 88% of adversarial inputs. Deterministic rule execution achieves sub- millisecond latency (≈0.19 ms), representing a speedup exceeding 6,000× over equivalent LLM-mediated resolution. Keywords: Large Language Models, Tabletop RPG Au- tomation, Deterministic Game Engines, WebSocket Communi- cation, Pydantic Schema Validation, Prompt Injection Defense.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "",
+    "veiculo": "INTERANTIONAL JOURNAL OF SCIENTIFIC RESEARCH IN ENGINEERING AND MANAGEMENT",
+    "autores": "Kema Uday Kiran; Chiluka Pawan Kumar; N Bhanu Prasad; Dr. Md Jaffar Sadiq; Naadem Divya",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.55041/ijsrem61180",
+    "justificativa": "The paper builds a hybrid system that uses LLM agents to take over the Game Master role in a tabletop RPG with dice mechanics, so it combines tabletop role-play with generative AI (borderline because the system is largely software).",
+    "chave": "revtab12"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2601.07251v5",
+    "doi": "",
+    "arxiv": "2601.07251",
+    "titulo": "MeepleLM: A Virtual Playtester Simulating Diverse Subjective Experiences",
+    "resumo": "Recent advancements have expanded the role of Large Language Models in board games from playing agents to creative co-designers. However, a critical gap remains: current systems lack the capacity to offer constructive critique grounded in the emergent user experience. Bridging this gap is fundamental for harmonizing Human-AI collaboration, as it empowers designers to refine their creations via external perspectives while steering models away from biased or unpredictable outcomes. Automating critique for board games presents two challenges: inferring the latent dynamics connecting rules to gameplay without an explicit engine, and modeling the subjective heterogeneity of diverse player groups. To address these, we curate a dataset of 1,727 structurally corrected rulebooks and 150K reviews selected via quality scoring and facet-aware sampling. We augment this data with Mechanics-Dynamics-Aesthetics (MDA) reasoning to explicitly bridge the causal gap between written rules and player experience. We further distill player personas and introduce MeepleLM, a specialized model that internalizes persona-specific reasoning patterns to accurately simulate the subjective feedback of diverse player archetypes. Experiments demonstrate that MeepleLM significantly outperforms latest commercial models (e.g., GPT-5.1, Gemini3-Pro) in community alignment and critique quality, achieving a 70% preference rate in user studies assessing utility. MeepleLM serves as a reliable virtual playtester for general interactive systems, marking a pivotal step towards audience-aligned, experience-aware Human-AI collaboration.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Zizhen Li; Chuanhao Li; Yibin Wang; Yukang Feng; Jianwen Sun; Jiaxin Ai; Fanrui Zhang; Mingzhu Sun",
+    "fontes": [
+      "arXiv"
+    ],
+    "uid": "arxiv:2601.07251",
+    "justificativa": "Develops an LLM-based virtual playtester trained on board game rulebooks and reviews, combining analogue board game design with generative AI.",
+    "chave": "revtab13"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7165767714",
+    "doi": "10.7759/cureus.111426",
+    "arxiv": "",
+    "titulo": "Novel AI-Assisted Quest-Based Therapeutic Framework for Enhancing Engagement and Executive Functioning in Attention-Deficit/Hyperactivity Disorder (ADHD): A Case Report",
+    "resumo": "Youth with attention-deficit/hyperactivity disorder (ADHD) may experience persistent barriers to engagement in individual psychotherapy despite adequate pharmacologic treatment and evidence-based therapeutic content. Existing gamified approaches often rely on fixed protocols, specialized materials, or group-based formats to address interfering symptoms such as distractibility, low frustration tolerance, and difficulty sustaining mental effort, with mixed feasibility and clinical outcomes. This case describes a novel, individualized gamified intervention designed to address limitations of existing approaches and support ADHD treatment engagement. An otherwise healthy 11-year-old male with ADHD, combined type, was referred for outpatient psychotherapy to address difficulties with organization and emotional self-regulation while receiving methylphenidate extended-release 18 mg daily. Early sessions used established approaches, including gamified interventions, but were marked by distractibility, fidgeting, and disengagement. Treatment was reorganized into a structured, therapist-led, quest-based gamified framework delivered across 21 completed 60-minute sessions over approximately 24 weeks. ChatGPT-4o was used to assist with narrative creation and maintenance and to support integration of therapist-selected psycho-education, behavioral skills training, cognitive-behavioral strategies, mindfulness, and parent management principles into a tabletop role-playing structure. Over time, the patient demonstrated progressively improved engagement, emotional awareness, organization, and coping skills, corroborated by parent-informed improvements on the \"Hyperactive/Impulsive\" and \"Conduct\" items of the National Institute for Children's Health Quality (NICHQ) Vanderbilt Assessment Scale, third edition. This case illustrates how therapist-led gamification may function as a pragmatic delivery framework for evidence-based individual psychotherapy in youth with ADHD when engagement is a primary treatment barrier. The intervention emphasized therapist-guided skills coaching, flexibility, narrative reinforcement, and repeated practice. A large language model was used to make the intervention feasible, primarily as a preparatory narrative support tool under full therapist oversight. Further study is needed to evaluate the feasibility, acceptability, and generalizability of individualized gamified psychotherapy frameworks in outpatient ADHD treatment.",
+    "ano": 2026,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Cureus",
+    "autores": "Brody Montoya; Christian F Mauro",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.7759/cureus.111426",
+    "justificativa": "Peer-reviewed case report in which ChatGPT-4o supports the narrative of a tabletop role-playing structure, a direct combination of a tabletop RPG with generative AI.",
+    "chave": "revtab14"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7214753965",
+    "doi": "10.34190/ecgbl.20.1.4928",
+    "arxiv": "",
+    "titulo": "Prompt’n’Play: Improving Teachers’ AI literacy through Secondary Learning Outcomes of a Serious Game",
+    "resumo": "The increasing diffusion of generative artificial intelligence in educational contexts calls for strengthening teachers’ AI literacy. AI literacy is increasingly understood as a multidimensional construct encompassing cognitive, operational, critical, and ethical competencies, including understanding AI systems, evaluating their outputs, and applying them responsibly in educational settings (Ranieri et al., 2024; Chiu et al., 2024; Tenberga & Daniela, 2024; Pei et al., 2026). In line with self-efficacy theory (Bandura, 1997), teachers’ perceived competence and confidence are crucial for translating such knowledge into pedagogical practices. However, while many studies focus on students, research examining how interventions designed for pupils may also produce professional learning benefits for the teachers who implement them remains limited (Traga Philippakos & Rocconi, 2025). This study addresses this gap by analyzing the indirect effects of Prompt’n’Play, a serious board game designed to develop primary school students’ skills in prompt engineering, understanding generative models, bias awareness, and responsible AI use. The intervention builds on evidence highlighting the significant impact of serious games and game-based learning on motivation, cognitive engagement, and deep learning (Schrader, 2023), as well as on situated teacher professional development (Pozzi & Persico, 2024). After a short introductory training session, teachers implemented the game in their classrooms as facilitators. A single-group pre–post design with repeated measures was adopted with 15 primary school teachers. Data were collected through Likert-scale instruments measuring perceived understanding of AI, instructional use of AI tools, self-efficacy in AI integration, and intention for future use, in line with technology acceptance models (Davis, 1989; Venkatesh et al., 2012). Paired-sample analyses and regression analyses were conducted to examine pre–post changes and the predictive role of perceived understanding and self-efficacy on teachers’ intention to integrate AI into future practice. The results suggest that facilitating AI-focused game-based activities, although designed for students, can also constitute a form of situated professional learning for teachers, strengthening AI literacy and teaching agency.",
+    "ano": 2026,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "European Conference on Games Based Learning",
+    "autores": "Massimiliano Andreoletti; Andrea Tinterri; Maria Concetta Carruba; Anna Dipace; Maria Clara Dicataldo; Marika Lamacchia; Francesco Facciorusso",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34190/ecgbl.20.1.4928",
+    "justificativa": "Evaluates Prompt'n'Play, a serious board game on generative AI, prompting and bias, and its effect on teachers' AI literacy.",
+    "chave": "revtab15"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7214733572",
+    "doi": "10.34190/ecgbl.20.1.5374",
+    "arxiv": "",
+    "titulo": "Students as Game Designers: Fostering AI Literacy through Project-Based Learning and Design Thinking",
+    "resumo": "Artificial Intelligence (AI) is rapidly reshaping the digital landscape, highlighting the importance of cultivating AI literacy from an early age. Recognising the need to equip students with the competences required to navigate this new reality, contemporary educational curricula, including those in primary education, consider constructivist, innovative pedagogical approaches particularly effective. Among these, Project-Based Learning (PBL) is widely adopted, as it actively engages learners in processes of responding to authentic challenges, making decisions, and collaboratively creating meaningful outputs in the form of physical, digital, or hybrid artefacts. However, PBL usually follows linear pathways, which does not fully align with the inherently iterative nature of design and construction processes. Consequently, the integration of complementary methodologies that emphasise iteration and creative problem-solving is considered beneficial. Design Thinking (DT), which shares common pedagogical foundations with PBL, can be smoothly aligned with project-based practices, enriching them through iterative cycles of ideation, prototyping, and refinement. This study explores whether a combined PBL-DT approach can foster AI literacy in primary education through game design. The methodology was implemented in the context of an e-course lab delivered to primary school students and was further enriched with design tactics proposed by the Room2Educ8 framework. The students assumed the role of designers and collaboratively developed an augmented escape board game, addressing key aspects of AI literacy. The intervention adopted a pre/post-test design, and its findings indicate that engagement in the PBL-DT workflows seem to support the enhancement of students’ AI literacy effectively. This work contributes by proposing a practical and scalable instructional model that aligns with current educational priorities. It also contributes empirical evidence to the growing field of education for AI literacy and provides insights for researchers and practitioners interested in fostering AI competences using curriculum-aligned, student-centred, game-design methodologies at early stages of education.",
+    "ano": 2026,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "European Conference on Games Based Learning",
+    "autores": "Vasiliki Karampa; Vagia Kakava; Ageliki Mellou; Foteini Paraskeva",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34190/ecgbl.20.1.5374",
+    "justificativa": "Students designed an augmented (hybrid) escape board game on AI literacy, and pre/post tests show gains in AI literacy.",
+    "chave": "revtab16"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7208834372",
+    "doi": "10.67388/sym.0004",
+    "arxiv": "",
+    "titulo": "Teaching AI Concepts Without Devices: Unplugged AI Literacy Practice in the Classroom",
+    "resumo": "The growing relevance of AI in education has underscored the need for AI literacy amongst learners globally. Nonetheless, many basic schools in Ghana are unable to offer AI education due to several factors, including a lack of digital infrastructure, computers, and adequate teacher training. In this paper, we describe a practitioner reflective classroom intervention on AI that taught some basics on AI without any use of digital technology. In the classroom, we incorporated a Turing Test role-play game into a grammar lesson on nouns, in which the learners compared human and AI intelligences through discussion, active participation, and problem-solving exercises. It is important to note that the study was conducted in a less-endowed public basic school with no computers or internet access. Our findings show that unplugged AI learning promoted active participation among learners and enabled them to engage effectively in language discussions while also acquiring foundational knowledge of AI. The findings suggest that learners understood that AI requires human commands and operates on patterns.",
+    "ano": 2026,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "Proceedings of AIE Symposium 1, Understanding AI in the Classroom: Pupil Perspectives and Practice",
+    "autores": "Samuel Sankpo; Percy Kyei Asamoa",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.67388/sym.0004",
+    "justificativa": "Uses a device-free (analogue) Turing Test role-play game in the classroom to build basic AI literacy.",
+    "chave": "revtab17"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7165742550",
+    "doi": "10.5281/zenodo.20837217",
+    "arxiv": "",
+    "titulo": "The Fidelity Ladder Agentic Monte-Carlo Playtesting for Tabletop-RPG Encounter Calibration An experience report",
+    "resumo": "Balancing a tabletop role-playing game (TTRPG) combat encounter increasingly relies on an abstract Monte-Carlo simulator: thousands of dice rolls under a scripted policy, read off as a party win rate. We estimate one level-9 Level Up: Advanced 5E boss fight at four rising levels of difficulty-estimation fidelity: (i) the static Challenge-Rating / encounter-XP budget; (ii) an abstract, positionless Monte-Carlo model with scripted \"competence-band\" policies; (iii) an agentic simulation in which each player character is driven by a large-language-model (LLM) policy on a 2D grid, coordinating with allies, while a deterministic engine resolves all dice; and (iv) a human playtest. Our central observation: raising fidelity does not merely shift the difficulty level, it re-ranks party compositions. Holding the boss fixed, the positionless model's confident ordering is overturned -- the composition it rates third (an archer trio, 24%) the agentic model rates at 70% (tied for second), and that trio won at the table -- because low-fidelity models cannot credit value that is positional. We use the agentic tier to calibrate the boss along two axes, lethality and table-time, to a designer target; the final design produced a clutch table win (two of three characters down, one at 10 HP), confirming the estimate and surfacing a further mechanism the simulation under-modeled. We claim no novelty for the agentic architecture, the balancing loop, or the fidelity-hierarchy idea -- each is cited prior art. The contribution is the conjunction: a concrete four-tier instantiation for TTRPG encounter design, a measurement of how far and in which direction estimates move between tiers, and a reusable open artifact.",
+    "ano": 2026,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "Zenodo (CERN European Organization for Nuclear Research)",
+    "autores": "Caio Gomes",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "10.5281/zenodo.20837217",
+    "justificativa": "This preprint uses LLM-driven agents to playtest and calibrate a TTRPG combat encounter, which is a design use of language models in a tabletop role-playing setting rather than a plain AI benchmark.",
+    "chave": "revtab18"
+  },
+  {
+    "fonte": "Semantic Scholar",
+    "id": "54bb8996db599ac731a963172cae9026577a3502",
+    "doi": "10.1109/icir70631.2026.11628274",
+    "arxiv": "",
+    "titulo": "Toward Inclusive Tabletop Gaming: A Prototype System Using LLMs, Computer Vision, and Extended Reality to Support Autistic Players with Neurotypical Peers",
+    "resumo": "This paper presents a technological solution designed to support social interaction and inclusion for individuals with Autism Spectrum Disorder (ASD) during tabletop gameplay with neurotypical and autistic peers. The work explores the integration of large language models (LLMs), computer vision (CV), and Extended Reality (XR) to create an assistive system that reduces barriers to participation in social gaming contexts. A prototype is developed that augments Dixit, a narrativebased card game, with a voice-activated virtual assistant that provides contextual guidance, rule clarification, and decision support throughout gameplay. The system employs OpenAI's realtime model for conversational interaction, YOLOv8n-based CV for detecting physical game components, and GPT-4o for card interpretation. The implementation demonstrates the technical feasibility of this multi-modal approach and establishes a foundation for future user-centered evaluation and stakeholder engagement to assess its effectiveness in promoting autonomy and social participation for individuals with ASD.",
+    "ano": 2026,
+    "tipo": "Conference",
+    "lingua": "",
+    "veiculo": "International Conference Industrial Revolution",
+    "autores": "Pietro Ammaturo; Francesco Torella; M. Caramazza; Pietro Gianasi; Giulia Valcamonica; Franca Garzotto",
+    "fontes": [
+      "Semantic Scholar"
+    ],
+    "uid": "10.1109/icir70631.2026.11628274",
+    "justificativa": "Augments the physical card game Dixit with an LLM/GPT-4o assistant, a hybrid analogue game combined with generative AI.",
+    "chave": "revtab19"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4415717584",
+    "doi": "10.17083/dnza4k90",
+    "arxiv": "",
+    "titulo": "AI Odyssey: Designing and Evaluating a Board Game for Family-Based AI Literacy",
+    "resumo": "AI is becoming an increasingly integral part of society and daily life, making AI literacy more essential for the general population. Current research on AI literacy instruction is still in its infancy, primarily focusing on formal learning, and many require digital devices to participate. Moreover, there is a limited number of qualified teachers, and available instructional materials may not always be sufficient. These challenges can have an outsized impact on children and families of lower socioeconomic status, exacerbating the digital divide. Therefore, we created a non-digital board game called AI Odyssey, intended to promote AI literacy by providing an accessible learning experience without requiring a qualified teacher or digital device. This study outlines the process of creating the game and an in-depth analysis of an initial exploratory study. A variety of data, including pre- and post-tests of AI literacy, surveys of self-efficacy, interest, parental support, and career choice, as well as video recordings of playing sessions and interviews, are analyzed. The results paint a positive picture of using AI Odyssey to increase understanding and interest in AI literacy. Lessons learned and future directions are also discussed.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "International Journal of Serious Games",
+    "autores": "Lu Ding; Steven Holland",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.17083/dnza4k90",
+    "justificativa": "Designs and evaluates a non-digital board game for family-based AI literacy, with pre- and post-tests.",
+    "chave": "revtab20"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7124153891",
+    "doi": "10.1109/cyberscitech68397.2025.00113",
+    "arxiv": "",
+    "titulo": "AI to replace players who temporarily leave the table in online tabletop RPGs",
+    "resumo": "This study presents an AI agent designed to temporarily replace absent players in online, text-based Chinese Tabletop Role-Playing Games (TRPGs). The goal is to maintain narrative continuity and improve the overall player experience. We fine-tuned large language models, including DeepSeek and ChatGPT, using five full-length TRPG session transcripts (3–8 hours each), enabling the AI to mimic player dialogue and in-character behavior. The agent supports basic interactions and helps sustain game flow during player absences. While the system performs well in conversational contexts, it currently struggles with generating longer descriptive texts, which are important for immersive storytelling. This ongoing research aims to enhance accessibility and fluidity in distributed TRPG play through adaptive language model integration.",
+    "ano": 2025,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "2025 IEEE Cyber Science and Technology Congress (CyberSciTech)",
+    "autores": "Tong Xin; Fujisawa Kimiya",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1109/cyberscitech68397.2025.00113",
+    "justificativa": "Fine-tuned LLMs stand in for absent players in text-based tabletop RPGs, which combines a tabletop role-playing setting with generative AI.",
+    "chave": "revtab21"
+  },
+  {
+    "fonte": "Semantic Scholar",
+    "id": "6f524f0e765ca49cf9b103cb40682999d2658b33",
+    "doi": "10.1145/3789859.3789923",
+    "arxiv": "",
+    "titulo": "An AI-Driven Multi-Modal Framework for Creative Game Design Education",
+    "resumo": "This paper proposes an AI-driven multimodal framework for creative practice teaching in game design education. Unlike previous studies that rely on single AI tools, the framework orchestrates multiple generative services—ChatGPT, DeepSeek, and Stable Diffusion—within a three-dimensional fusion model that integrates classroom interaction optimization, adaptive learning analytics, and dynamic resource management. The framework was implemented in the undergraduate course Creative Game Design, involving 30 students organized into six project groups who collaboratively developed tabletop game prototypes. Through project logs, learning analytics, and student feedback, the study demonstrates that multimodal AI integration significantly enhanced creative productivity, design diversity, and pedagogical engagement. Students adopting a balanced combination of AI services achieved higher evaluation scores and produced more diverse creative outputs compared with previous cohorts. Qualitative reflections indicated that AI was perceived as a “cognitive partner,” accelerating brainstorming, narrative construction, rule balancing, and visual prototyping, while also raising important concerns about critical evaluation and over-reliance. The results suggest that the proposed framework provides a scalable and adaptable model for AI-supported creative education. By aligning generative AI with project-based learning, the study contributes both practical strategies for enhancing classroom instruction and theoretical insights into AI-driven pedagogy. The findings further highlight the potential for extending this approach to related fields such as animation, digital comics, and interactive media, thereby redefining creative education in the era of generative intelligence.",
+    "ano": 2025,
+    "tipo": "Book,Conference",
+    "lingua": "",
+    "veiculo": "Proceedings of the 2025 9th International Conference on Education and E-Learning",
+    "autores": "Zhi-Ming Chen",
+    "fontes": [
+      "Semantic Scholar"
+    ],
+    "uid": "10.1145/3789859.3789923",
+    "justificativa": "Students designed tabletop game prototypes using ChatGPT, DeepSeek and Stable Diffusion, combining analogue game design with generative AI and noting concerns about critical evaluation.",
+    "chave": "revtab22"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2510.01189v2",
+    "doi": "",
+    "arxiv": "2510.01189",
+    "titulo": "Beyond Value Elicitation: Towards Moral Profiles in Early Requirements Engineering via Role-Playing Games and Anthropologist LLMs",
+    "resumo": "This study presents a proof of concept for eliciting and representing the moral profiles of digital system users in Requirements Engineering (RE) by combining immersive role-playing games (RPGs) with large language model (LLM) analysis. While existing approaches rely on predefined value taxonomies and explicit articulation, values are often tacit, context-dependent, and difficult to express directly. To address these limitations, we propose moving from the elicitation of discrete moral values to the narrative reconstruction and representation of users' moral profiles. Grounded in phenomenological and narrative anthropology, the approach focuses on capturing users' moral orientations as they emerge through situated decision-making. RPG sessions generate context-rich narrative data, which are then analyzed by a specialized LLM (GPT-A) to produce individual anthropological moral profiles (IAMPs). A validation process based on cross-comparison between model outputs and participants' responses in unseen moral scenarios assesses the adequacy of the generated representations. Results indicate that RPG environments effectively support the generation of rich, context-dependent data for eliciting tacit values, and that an anthropologically grounded LLM can transform such data into coherent narrative representations of users' moral profiles. These representations enable the contextual interpretation of users' preferences and values within the given domain, with improved performance when interpretive framing captures relationships between actions, underlying motivations, and individual domain expertise. From an RE perspective, this approach enables the analysis of user preferences and trade-offs while preserving their situated and dynamic nature, providing a foundation for integrating human moral values into the early stages of RE.",
+    "ano": 2025,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Gianluca De Ninno; Paola Inverardi; Francesca Belotti",
+    "fontes": [
+      "arXiv"
+    ],
+    "uid": "arxiv:2510.01189",
+    "justificativa": "Combines immersive role-playing game sessions with LLM analysis to build moral profiles, a role-play plus generative AI combination meeting I2.",
+    "chave": "revtab23"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4409048142",
+    "doi": "10.48550/arxiv.2503.20623",
+    "arxiv": "2503.20623",
+    "titulo": "Collaborative Storytelling and LLM: A Linguistic Analysis of Automatically-Generated Role-Playing Game Sessions",
+    "resumo": "Role-playing games (RPG) are games in which players interact with one another to create narratives. The role of players in the RPG is largely based on the interaction between players and their characters. This emerging form of shared narrative, primarily oral, is receiving increasing attention. In particular, many authors investigated the use of an LLM as an actor in the game. In this paper, we aim to discover to what extent the language of Large Language Models (LLMs) exhibit oral or written features when asked to generate an RPG session without human interference. We will conduct a linguistic analysis of the lexical and syntactic features of the generated texts and compare the results with analyses of conversations, transcripts of human RPG sessions, and books. We found that LLMs exhibit a pattern that is distinct from all other text categories, including oral conversations, human RPG sessions and books. Our analysis has shown how training influences the way LLMs express themselves and provides important indications of the narrative capabilities of these tools.",
+    "ano": 2025,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Alessandro Maisto",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2503.20623",
+    "justificativa": "Analyses LLM-generated tabletop role-playing game sessions, directly addressing the combination of tabletop role-play with generative AI.",
+    "chave": "revtab24"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7125226060",
+    "doi": "10.55003/ijiet.7212",
+    "arxiv": "",
+    "titulo": "DEVELOPMENT OF ELECTRONIC BOARD GAME TO ENHANCE DIGITAL MEDIA LITERACY AMONG THE ELDERLY IN CHANTHABURI PROVINCE",
+    "resumo": "This research was an application of microcontroller technology in collaboration with board game mechanics by building interactions through light, color and sound. Gameplay mechanics were designed based on a random reward system in order to motivate learning. The players would get moving on the board when answering the questions correctly. There were also other various auxiliary components to increase challenge and interest throughout the game. These mechanics aimed at creating positive interactions and enhancing digital media literacy absorption among the elderly. The sample used in this research was a group of 30 elderly from Elderly School, Plap Phla subdistrict, Mueang district, Chanthaburi province gaining from simple random sampling. The research instruments included a set of an electronic board game, a digital media literacy test and a satisfaction questionnaire with 15 items. Statistics consisted of mean, standard deviation, percentage and statistical hypothesis testing (t-test). The results found that: 1) the quality of the electronic board game as a whole was at the excellence level (𝑥̅ = 4.84, SD = 0.93), 2) the elderly’s digital media literacy test score after playing the game was higher than before playing the game with statistical significance at the .05 level, and 3) the elderly’s satisfaction towards the electronic board game to enhancing digital media literacy was at the highest level (𝑥̅ = 4.53, SD = 0.55). The results of the study can be summarized that the electronic board game is an effective instrument to enhance digital media literacy for the elderly.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "International Journal of Industrial Education and Technology",
+    "autores": "Nathee Yongyut; Sunitta Yentour",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.55003/ijiet.7212",
+    "justificativa": "Hybrid analogue-digital electronic board game shown to improve digital media literacy among older adults (pre/post test).",
+    "chave": "revtab25"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4412712297",
+    "doi": "10.32890/mjli2025.22.2.1",
+    "arxiv": "",
+    "titulo": "ENHANCING MEDIA AND INFORMATION LITERACY THROUGH EXPERIENTIAL GAME-BASED LEARNING",
+    "resumo": "Purpose – Media and Information Literacy (MIL) education plays a crucial role in combating misinformation and disinformation in the digital era. This study explores an innovative pedagogical approach by integrating Experiential Learning Theory (ELT) into non-digital game-based learning to bridge gaps in MIL knowledge and skills among Malaysian secondary and tertiary students, while also addressing the digital divide. Given that current MIL interventions often rely solely on self-assessment, this study emphasises the need for more objective assessment methods to measure actual learning outcomes. Methodology – A one-group pre-post-test mixed-methods research design was employed. A total of 95 participants from secondary and tertiary educational institutions in Malaysia engaged in an ELT-informed MIL board game intervention. The impact on MIL knowledge was assessed using a structured MIL knowledge test and a qualitative feedback survey. Findings – Results indicate that the intervention positively influenced MIL knowledge acquisition, as indicated by statistically significant improvements in post-test scores. Qualitative feedback further revealed enhanced understanding of MIL concepts, strengthened sense of responsible digital citizenship, and affirmation of the experiential game-based approach as an effective learning method. Significance – This study offers valuable insights into the application of ELT within non-digital game-based MIL education, particularly across diverse educational levels in Malaysia. It presents a scalable and cost-effective model for fostering critical thinking and ethical media engagement, offering practical recommendations for educators, community-based organisations, and policymakers in advancing MIL education nationwide.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Malaysian Journal of Learning and Instruction",
+    "autores": "Huey Shyh Tan; Soon Hin Hew; Heidi Yeen-Ju Tan",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.32890/mjli2025.22.2.1",
+    "justificativa": "Evaluates a non-digital board game intervention improving media and information literacy knowledge among Malaysian students.",
+    "chave": "revtab26"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7203671748",
+    "doi": "10.58459/icce.2025.6057",
+    "arxiv": "",
+    "titulo": "Effects of integrating image-GenAI with game-based learning and argumentation- based instruction on students' learning effectiveness, computational thinking, skills, and metacognitive awareness",
+    "resumo": "This study investigates a novel approach integrating image-based generative AI (GenAI), game-based learning (GBL), and argumentation-based instruction to enhance junior high school students’ AI learning. Twenty-six students completed a two-day AI program combining lectures, hands-on activities, and a computational thinking (CT) board game with structured argumentation support. Results revealed significant gains in learning effectiveness, CT skills, and GenAI-related metacognition, demonstrating the approach’s potential to foster higher-order thinking and computational competencies in AI education. As an exploratory study, the findings provide initial evidence and lay the groundwork for future large-scale investigations.",
+    "ano": 2025,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Computers in Education",
+    "autores": "Ying-Chieh Lin; Ting-Chia Hsu",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.58459/icce.2025.6057",
+    "justificativa": "An analogue computational-thinking board game is combined with image-based generative AI in an AI education programme, and the study measures learning and GenAI metacognition.",
+    "chave": "revtab27"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4410842928",
+    "doi": "10.15847/obsobs19520252698",
+    "arxiv": "",
+    "titulo": "Enhancing Media Literacy through two ludic tools",
+    "resumo": "This study examines the potential of game-based learning to address the growing challenges contemporary youth face in navigating misinformation and critically engaging with digital media. Drawing on existing research and data collected from a benchmarking analysis of 21 tabletop games and in-depth interviews with 29 experts, the article highlights the importance of media literacy as a key skill for evaluating information in today’s unfiltered social media environment. The benchmarking data were examined through comparative content analysis to identify game mechanics conducive to media literacy, while the interview data were analyzed using a Grounded Theory approach to extract thematic insights on critical skills, effective pedagogical strategies, and youth preferences in gameplay. These analytical strategies ensured methodological rigor and guided the development of two educational games designed to foster critical thinking, collaboration, and ethical decision-making. Social Media Puppeteers immerses players in roles such as politicians, journalists, and scientists, encouraging strategic discussions about social media dynamics. By incorporating simplified role-playing game mechanics, it aligns with the literature on experiential learning, fostering interdisciplinary skills and collaboration. In parallel, Social Media Fake News uses structured card-based gameplay to teach players how to identify and deconstruct misinformation. This hands-on approach supports research on the effectiveness of interactive tools in enhancing media literacy and critical analysis. Both games demonstrate the cognitive, social, and emotional benefits of tabletop games by promoting empathy, teamwork, and face-to-face collaboration. Through emotionally resonant narratives and role-based decision-making, players engage in immersive experiences that reinforce critical media skills. Adaptable designs and comprehensive guidelines allow educators to tailor these games to various classroom contexts, addressing pressing issues like digital ethics and media manipulation. This study contributes to the growing body of literature on game-based learning, offering a scalable and adaptable model for integrating media literacy education into pedagogical settings.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Observatorio (OBS*)",
+    "autores": "Ruth S. Contreras-Espinosa; José Luís Eguia Gómez",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.15847/obsobs19520252698",
+    "justificativa": "Develops tabletop role-playing and card games to foster media literacy and misinformation identification.",
+    "chave": "revtab28"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4412955938",
+    "doi": "10.3390/engproc2025103004",
+    "arxiv": "",
+    "titulo": "Integrating Sustainable Development Goals into Renewable Energy Monopoly: A Generative AI Approach to Sustainable Development Education",
+    "resumo": "This research aims to develop an educational board game, “Sustainable Home: Energy Challenge,” based on Monopoly by integrating sustainable development goals and renewable energy to use ChatGPT in human–computer collaboration. ChatGPT was used for game conceptualization, rule development, board creation, card design, and simulation in an iterative design. The developed board game demonstrated ChatGPT’s efficiency in educational game design and the benefits of human–computer collaboration. Game simulations validated the board game’s potential as a simulation tool to enhance diversity, cooperation, and strategic depth. The game effectively promoted SDG engagement and sustainable development education in gamified learning.",
+    "ano": 2025,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "",
+    "autores": "Hung-Cheng Chen",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "10.3390/engproc2025103004",
+    "justificativa": "Uses ChatGPT, working with humans, to design and simulate an educational board game, which directly shows an analogue game being combined with generative AI.",
+    "chave": "revtab29"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7131385648",
+    "doi": "10.1109/bts-i2c67944.2025.11399472",
+    "arxiv": "",
+    "titulo": "Jury, Judge, and Executioner: Using LLMs to Steer Gamified Multi-Agent Decision-Making",
+    "resumo": "We present a language-conditioned control loop for large language model (LLM) multi-agent systems that separates proposing from executing actions. Each agent runs an LLM Policy that emits exactly one valid intent under a moves mask, while a non-writing Agent Director audit all state changes through three gates: Jury (self-audit against persona and memory), Judge (rule, budget, and conflict checks), and Executioner (state write). Rather than introducing a new learning algorithm, we contribute a governance framework that makes LLM agents auditable and race-free by construction, assisted with gamified steering to shape coordination. We instantiate the loop in a tabletop game (DD 5e) domain with four agent roles, white-box validators, and tools for and arithmetic. Across controlled ablations (FSM, policy-only, and LLM-only), the governed loop achieves 76% task success (vs. 15–48% for baselines), reduces rule violations to 4.6 per 100 turns (vs. 12.4), and increases coordination entropy to 2.32 bits, preventing hallucinated actions from ever reaching the environment.",
+    "ano": 2025,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "2025 2nd Beyond Technology Summit on Informatics International Conference (BTS-I2C)",
+    "autores": "Lauda Dhia Raka; Kemas Muslim Lhaksmana",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1109/bts-i2c67944.2025.11399472",
+    "justificativa": "An LLM multi-agent governance framework is built and tested in a D&D 5e tabletop role-playing setting, which combines a tabletop RPG with language models.",
+    "chave": "revtab30"
+  },
+  {
+    "fonte": "Semantic Scholar",
+    "id": "0c7d18e04209ac7d6a9ef4f4a5a9a553e0596a6c",
+    "doi": "10.1145/3746058.3758392",
+    "arxiv": "",
+    "titulo": "OzLand: Exploring Dynamic Generative Game Design with Multi-level Runtime Authorization",
+    "resumo": "The advent of Generative AI has introduced new opportunities into game design by enabling the dynamic creation of content during gameplay. However, runtime generation of the game components faces two critical challenges: ensuring the quality of dynamically generated content and managing latency in real-time interactions. We present OzLand, a dynamic generative game co-directed by a human Game Master (GM) and a generative AI assistant. OzLand is a text-based role-playing game in which players freely interact with the game through text inputs, and the LLM-based system progresses the game in response, interpreting players’ actions and generating output dialogues. OzLand introduces two core strategies to ensure player experience while providing dynamically emerging content. First, we designate distinct roles for GMs and players, involving GMs to supervise content quality and trigger the generation of complex assets on demand at runtime. Second, we adopt a multi-level generation framework that separates pre-play and runtime sessions, enhancing lightweight generation during runtime and preparing resource-intensive content beforehand. OzLand explores a design approach empowering users to co-create emergent gameplay while mitigating the uncertainty of dynamic content generation.",
+    "ano": 2025,
+    "tipo": "Book,JournalArticle",
+    "lingua": "",
+    "veiculo": "UIST Adjunct",
+    "autores": "Minji Kim; Youngki Lee",
+    "fontes": [
+      "Semantic Scholar"
+    ],
+    "uid": "10.1145/3746058.3758392",
+    "justificativa": "Presents a role-playing game co-directed by a human Game Master and an LLM assistant, a tabletop-style role-play setting with generative AI.",
+    "chave": "revtab31"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2504.07304v1",
+    "doi": "",
+    "arxiv": "2504.07304",
+    "titulo": "PAYADOR: A Minimalist Approach to Grounding Language Models on Structured Data for Interactive Storytelling and Role-playing Games",
+    "resumo": "Every time an Interactive Storytelling (IS) system gets a player input, it is facing the world-update problem. Classical approaches to this problem consist in mapping that input to known preprogrammed actions, what can severely constrain the free will of the player. When the expected experience has a strong focus on improvisation, like in Role-playing Games (RPGs), this problem is critical. In this paper we present PAYADOR, a different approach that focuses on predicting the outcomes of the actions instead of representing the actions themselves. To implement this approach, we ground a Large Language Model to a minimal representation of the fictional world, obtaining promising results. We make this contribution open-source, so it can be adapted and used for other related research on unleashing the co-creativity power of RPGs.",
+    "ano": 2025,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Santiago Góngora; Luis Chiruzzo; Gonzalo Méndez; Pablo Gervás",
+    "fontes": [
+      "arXiv"
+    ],
+    "uid": "arxiv:2504.07304",
+    "justificativa": "Grounds an LLM for improvisational role-playing games (world-update problem), directly addressing how tabletop-style role-play is combined with generative AI.",
+    "chave": "revtab32"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4417098501",
+    "doi": "10.48550/arxiv.2510.09874",
+    "arxiv": "2510.09874",
+    "titulo": "ROBOPSY PL[AI]: Using Role-Play to Investigate how LLMs Present Collective Memory",
+    "resumo": "The paper presents the first results of an artistic research project investigating how Large Language Models (LLMs) curate and present collective memory. In a public installation exhibited during two months in Vienna in 2025, visitors could interact with five different LLMs (ChatGPT with GPT 4o and GPT 4o mini, Mistral Large, DeepSeek-Chat, and a locally run Llama 3.1 model), which were instructed to act as narrators, implementing a role-playing game revolving around the murder of Austrian philosopher Moritz Schlick in 1936. Results of the investigation include protocols of LLM-user interactions during the game and qualitative conversations after the play experience to get insight into the players' reactions to the game. In a quantitative analysis 115 introductory texts for role-playing generated by the LLMs were examined by different methods of natural language processing, including semantic similarity and sentiment analysis. While the qualitative player feedback allowed to distinguish three distinct types of users, the quantitative text analysis showed significant differences between how the different LLMs presented the historical content. Our study thus adds to ongoing efforts to analyse LLM performance, but also suggests a way of how these efforts can be disseminated in a playful way to a general audience.",
+    "ano": 2025,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Margarete Jahrmann; Thomas Brandstetter; Stefan Glasauer",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2510.09874",
+    "justificativa": "LLMs act as role-playing game narrators, and the study looks at how the models present collective memory to the public, which is relevant to role-play with generative AI and to AI literacy.",
+    "chave": "revtab33"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7106810881",
+    "doi": "10.48448/3qe4-dd75",
+    "arxiv": "",
+    "titulo": "TRPG Game Mastering Using LLM-Based Multi-Agent System",
+    "resumo": "Tabletop role-playing games (TRPGs) require game masters (GMs) to manage complex scenarios, enforce rules, and maintain narrative consistency. Large language models (LLMs) have shown promise as automated GMs, but preliminary experiments reveal challenges such as rule violations, scenario deviations, and giving spoilers. To address these issues, we propose a multi-agent system in which specialized LLM agents provide feedback to refine GM responses.Experimental evaluation with experienced TRPG players showed that the multi-agent approach improved scenario progression, but also led to increased rule violations and spoilers due to inappropriate feedback from agent. Furthermore, response times were slower, negatively impacting conversational smoothness. These results highlight both the potential and current limitations of multi-agent LLM-based TRPG game mastering, suggesting directions for future improvement.",
+    "ano": 2025,
+    "tipo": "other",
+    "lingua": "",
+    "veiculo": "Underline Science Inc.",
+    "autores": "Association for Computational Linguistics 2025; Lee, Akinobu; Minari, Yukito; Ueno, Sei",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "10.48448/3qe4-dd75",
+    "justificativa": "An LLM-based multi-agent system acts as game master for TRPGs and is evaluated with players, which directly combines tabletop role-play with language models.",
+    "chave": "revtab34"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4410790594",
+    "doi": "10.1007/s10639-025-13624-3",
+    "arxiv": "",
+    "titulo": "Teaching AI with games: the impact of generative AI drawing on computational thinking skills",
+    "resumo": "While computational thinking (CT) is crucial for modern education, integrating artificial intelligence (AI) into learning poses challenges due to its complexity. Generative AI Drawing (GAID) offers an intuitive method for teaching AI concepts, but barriers such as restrictive access for younger students and limited instructional frameworks hinder its potential. This study proposes combining GAID with game-based learning (GBL) to create an engaging, hands-on approach for teaching CT and AI literacy. A GBL environment was developed where students designed and refined robot-control board game cards. This study involved a total of 56 sixth-grade students from two elementary schools in northern Taiwan. One group, consisting of 28 students using GAID and block-based coding to foster AI literacy, was assigned as the experimental group. The other group, consisting of 28 students who did not employ GAID but relied only on a Google search engine in their learning, was assigned as the control group. The results showed that the experimental group enhanced algorithmic thinking and AI literacy, particularly in the “Create AI” dimension, compared to the control group. However, the control group excelled in CT concept mastery, suggesting that the beginners need conventional learning first to better support foundational CT learning. Consequently, a balanced educational approach blending automated tools like GAID with exploratory, project-based activities is recommended to maximize learning outcomes.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Education and Information Technologies",
+    "autores": "Ting‐Chia Hsu; Tai-Ping Hsu; Tai-Ping Hsu; Tai-Ping Hsu",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1007/s10639-025-13624-3",
+    "justificativa": "Students use generative AI drawing to design board game cards, with AI literacy evaluated in a controlled study.",
+    "chave": "revtab35"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2504.13969v2",
+    "doi": "10.48550/arxiv.2504.13969",
+    "arxiv": "2504.13969",
+    "titulo": "Tinker Tales: Interactive Storytelling Framework for Early Childhood Narrative Development and AI Literacy",
+    "resumo": "This paper presents Tinker Tales, an interactive storytelling framework in the format of a board game, designed to support both narrative development and AI literacy in early childhood. The framework integrates tangible and speech-based interactions with AI through NFC chip-attached pawns and tokens, along with a speaker and microphone. Children select and define key story elements-such as characters, places, items, and emotions-using the pawns and tokens, providing further details to the AI and receiving proper assistance, similar to how adults prompt AI for specific tasks (e.g., writing). For evaluation, several game sessions were simulated with a child AI agent, and the quality and safety of the generated stories were assessed from various perspectives. This work highlights the potential of combining physical and digital elements in AI literacy, offering a safe and engaging way for children to learn how to effectively collaborate with AI.",
+    "ano": 2025,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Nayoung Choi; Peace Cyebukayire; Jinho D. Choi",
+    "fontes": [
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2504.13969",
+    "justificativa": "Hybrid board game with NFC pawns and tokens, designed to build AI literacy in young children through storytelling with generative AI.",
+    "chave": "revtab36"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W7117531844",
+    "doi": "10.1109/iisa66859.2025.11311301",
+    "arxiv": "",
+    "titulo": "Trustworthiness of an LLM in the Classroom Through a Role-Playing Game: The Case of ChatGPT",
+    "resumo": "This paper presents the research design and results of an appropriately designed role-playing game for students, involving large language models (LLMs) in the context of classrooms in a public model high school. The activity included structured, guided tasks in which students worked in pairs to interact with the AI tool. The study investigated students' interactions and experiences with ChatGPT as a representative case of an LLM, focusing on their perceptions of the learning process and the development of trust in AI systems. Data were collected through post-activity questionnaires and classroom observations, enabling both qualitative and quantitative analysis. Findings suggest that integrating ChatGPT into a role-playing pedagogical framework can enhance student engagement and positively influence perceived learning outcomes. A modest increase in students' trust in LLMs was observed. However, a considerable number of AI-generated responses were accepted without critical evaluation on the part of students, indicating gaps in their evaluative reasoning. The results underscore the necessity of embedding AI literacy and critical thinking into secondary education. Although the activity did not explicitly focus on the limitations of LLMs, the study highlights the essential role of educational institutions in preparing students for responsible and informed engagement with AI technologies. A larger-scale subsequent study is planned to validate and expand these findings.",
+    "ano": 2025,
+    "tipo": "conference-paper",
+    "lingua": "",
+    "veiculo": "International Conference on Information, Intelligence, Systems and Applications",
+    "autores": "Panagiota Ismini Matthe; Maria K. Virvou",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1109/iisa66859.2025.11311301",
+    "justificativa": "Secondary students played a classroom role-playing game with ChatGPT, and the study looked at trust in the AI, students' critical evaluation of its answers and AI literacy.",
+    "chave": "revtab37"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4411389168",
+    "doi": "10.3389/frai.2025.1582287",
+    "arxiv": "2412.04937",
+    "titulo": "Who speaks next? Multi-party AI discussion leveraging the systematics of turn-taking in Murder Mystery games",
+    "resumo": "Introduction: Multi-agent systems utilizing large language models (LLMs) have shown great promise in achieving natural dialogue. However, smooth dialogue control and autonomous decision making among agents still remain challenging. Methods: In this study, we focus on conversational norms such as adjacency pairs and turn-taking found in conversation analysis and propose a new framework called \"Murder Mystery Agents\" that applies these norms to AI agents' dialogue control. As an evaluation target, we employed the \"Murder Mystery\" game, a reasoning-type table-top role-playing game that requires complex social reasoning and information manipulation. The proposed framework integrates next speaker selection based on adjacency pairs and a self-selection mechanism that takes agents' internal states into account to achieve more natural and strategic dialogue. Results: To verify the effectiveness of this new approach, we analyzed utterances that led to dialogue breakdowns and conducted automatic evaluation using LLMs, as well as human evaluation using evaluation criteria developed for the Murder Mystery game. Experimental results showed that the implementation of the next speaker selection mechanism significantly reduced dialogue breakdowns and improved the ability of agents to share information and perform logical reasoning. Discussion: The results of this study demonstrate that the systematics of turn-taking in human conversation are also effective in controlling dialogue among AI agents, and provide design guidelines for more advanced multi-agent dialogue systems.",
+    "ano": 2025,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Frontiers in Artificial Intelligence",
+    "autores": "Ryota Nonomura; Hiroyuki Mori",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.3389/frai.2025.1582287",
+    "justificativa": "LLM agents play a Murder Mystery tabletop role-playing game, which is a tabletop role-play setting combined with language models.",
+    "chave": "revtab38"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4405087009",
+    "doi": "10.34190/icair.4.1.3081",
+    "arxiv": "",
+    "titulo": "An Exploratory Study on the Role of Generative AI in Designing Educational Board Games",
+    "resumo": "The educational landscape is transforming due to new skill demands, fragmented attention spans, evolving communication patterns, and increased information access. Game-based learning (GBL) has emerged as a potential solution, fostering subject competency and broader skills. However, integrating games into education faces challenges for educators and schools. This study examines Generative AI's (GenAI) role in facilitating board game use in education, based on a case study in an Italian high school implementing a GenAI-enhanced board game for foreign language teaching. Two state-of-the-art GenAI technologies assisted in the whole GBL design process. Findings indicate GenAI can streamline board game integration through flexible rule adaptation, customized artifact production, and rapid content creation, reducing educator workload, as well as extend their capabilities with novel, creative solutions. Benefits are more pronounced when GenAI use is based on an overarching educational strategy. Study's findings have implications for educators and researchers seeking to effectively integrate GBL and GenAI in educational settings.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Proceedings of the International Conference on AI Research.",
+    "autores": "Fabrizio Amarilli; Oxana Timakova",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34190/icair.4.1.3081",
+    "justificativa": "Case study of generative AI used to design and implement an educational board game, combining analogue games with GenAI.",
+    "chave": "revtab39"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4401943406",
+    "doi": "10.1109/cog60054.2024.10645667",
+    "arxiv": "",
+    "titulo": "Controlled Chain of Thought: Eliciting Role-Play Understanding in LLM Through Prompts",
+    "resumo": "Tabletop Role Playing Games (TRPG) are games that require players to become the characters they play through engaging in role-play. The challenge of training AI lies in the requirement of it not only understanding the explicitly stated game rules, but also the implicit ones that come with role-playing. Previous studies endeavouring said challenge allude to aspects of role-play, but do not emphasise its role in their methods, indicating that the definition of role-play and how it is to be employed remains unclear. This short paper aims to investigate a proposed definition of role-play based on previous research and employ its use on Large Language Model LLM, eliciting an understanding thereof through a novel prompting method dubbed Controlled Chain of Thought (CCoT). CCoT allows for the LLM to highlight absence of information in inputs given to it by generating questions, which become the template for its chain of thoughts when answered. This paper presents an initial pilot testing of CCoT as well as opens up the discussion of how a definition of role-play can be beneficial for future studies.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "IEEE Conference on Games (CoG)",
+    "autores": "Deborah Carlander; Kiyoshiro Okada; Henrik Engström; Shuichi Kurabayashi",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1109/cog60054.2024.10645667",
+    "justificativa": "The paper applies a new prompting method to LLMs so they can understand role-play in tabletop role-playing games, which directly combines a tabletop RPG with language models.",
+    "chave": "revtab40"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4402670355",
+    "doi": "10.18653/v1/2024.findings-acl.490",
+    "arxiv": "2312.00746",
+    "titulo": "Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games",
+    "resumo": "In this study, we explore the application of Large Language Models (LLMs) in \\textit{Jubensha}, a Chinese detective role-playing game and a novel area in Artificial Intelligence (AI) driven gaming. We introduce the first dataset specifically for Jubensha, including character scripts and game rules, to foster AI agent development in this complex narrative environment. Our work also presents a unique multi-agent interaction framework using LLMs, allowing AI agents to autonomously engage in this game. To evaluate the gaming performance of these AI agents, we developed novel methods measuring their mastery of case information and reasoning skills. Furthermore, we incorporated the latest advancements in in-context learning to improve the agents' performance in information gathering, murderer identification, and logical reasoning. The experimental results validate the effectiveness of our proposed methods. This work aims to offer a novel perspective on understanding LLM capabilities and establish a new benchmark for evaluating large language model-based agents.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Dekun Wu; Haochen Shi; Zhiyuan Sun; Bang Liu",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.18653/v1/2024.findings-acl.490",
+    "justificativa": "LLM agents play Jubensha, a narrative detective role-playing game, so this is a role-play setting combined with LLMs rather than a pure board-game benchmark like chess.",
+    "chave": "revtab41"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4406621489",
+    "doi": "10.58459/icce.2024.4898",
+    "arxiv": "",
+    "titulo": "Designing an Educational Game for Facilitating Development of Media and Information Literacy",
+    "resumo": "This study describes the development and formative evaluation of a board game intended to facilitate players' development of awareness, knowledge and strategies related to media and information literacy in the post-truth era. Preliminary data were obtained from one gameplay session with nine players, and we analyzed how they understood and interacted with news issues in a simulated post-truth context. The results of qualitative analysis reveal the strengths and weaknesses of current design in terms of whether expected game experience and learning experience were achieved. The findings contribute to further revision on game design and unlock the educational potentials for adopting a game-based approach to promote media and information literacy.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Computers in Education",
+    "autores": "Jun XIE; Xiang Li; Kotomi HASEGAWA; Zhenyu Liu; Frank Reichert",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.58459/icce.2024.4898",
+    "justificativa": "Designs and gives a formative evaluation of a board game to build media and information literacy in a post-truth context.",
+    "chave": "revtab42"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4406621345",
+    "doi": "10.58459/icce.2024.4933",
+    "arxiv": "",
+    "titulo": "Learning Effectiveness and Reflections on AI Literacy in Junior High School Students with Game-Based Learning and Problem-Based Learning",
+    "resumo": "This research attempts to cultivate the AI literacy of junior high sci-ml students and aims to evaluate the learning effectiveness of integrating game-based learning with problem-based learning to improve their A1 literacy. using a self- developed board game on Naive Bayes Classifier and Generative AI applications as teaching material, students engage in a problem-based learning approach through group The results of the research show a significant improvement in students' AI literacy, particularly in their understanding of AI, and a significant increase in their behavioral intentions and engagement. The results confirm the effectiveness of this pedagogical approach for promoting AI literacy at the high level.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Computers in Education",
+    "autores": "Shih-Hua HUANG; Ting‐Chia Hsu",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.58459/icce.2024.4933",
+    "justificativa": "Evaluates a self-developed board game on Naive Bayes and generative AI for junior high students' AI literacy, with measured gains.",
+    "chave": "revtab43"
+  },
+  {
+    "fonte": "Semantic Scholar",
+    "id": "9e25a259e1e7bf01e342a29c1d82e33e65c7d7b7",
+    "doi": "10.63317/53phvu862rxj",
+    "arxiv": "",
+    "titulo": "Leveraging Large Language Models for Spell-Generation in Dungeons & Dragons",
+    "resumo": "Dungeons & Dragons (D&D) is a classic tabletop game with a 50-year history. Its intricate and customizable gameplay allows players to create endless worlds and stories. Due to the highly narrative component of this game, D&D and many other interactive games represent a challenging setting for the Natural Language Generation (NLG) capabilities of LLMs. This paper explores using LLMs to generate new spells, which are one of the most captivating aspects of D&D gameplay. Due to the scarcity of resources available for such a specific task, we build a dataset of 3,259 instances by combining official and fan-made D&D spells. We considered several LLMs in generating spells, which underwent a quantitative and qualitative evaluation. Metrics including Bleu and BertScore were computed for quantitative assessments. Subsequently, we also conducted an in-vivo evaluation with a survey involving D&D players, which could assess the quality of the generated spells as well as their adherence to the rules. Furthermore, the paper emphasizes the open-sourcing of all models, datasets, and findings, aiming to catalyze further research on this topic.",
+    "ano": 2024,
+    "tipo": "Review",
+    "lingua": "",
+    "veiculo": "Games",
+    "autores": "Elio Musacchio; Lucia Siciliani; Pierpaolo Basile; G. Semeraro",
+    "fontes": [
+      "Semantic Scholar"
+    ],
+    "uid": "10.63317/53phvu862rxj",
+    "justificativa": "Uses LLMs to generate Dungeons & Dragons spells evaluated by players, directly combining a tabletop RPG with generative AI.",
+    "chave": "revtab44"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4404370632",
+    "doi": "10.48550/arxiv.2411.03948",
+    "arxiv": "2411.03948",
+    "titulo": "Long-Form Text-to-Music Generation with Adaptive Prompts: A Case Study in Tabletop Role-Playing Games Soundtracks",
+    "resumo": "This paper investigates the capabilities of text-to-audio music generation models in producing long-form music with prompts that change over time, focusing on soundtrack generation for Tabletop Role-Playing Games (TRPGs). We introduce Babel Bardo, a system that uses Large Language Models (LLMs) to transform speech transcriptions into music descriptions for controlling a text-to-music model. Four versions of Babel Bardo were compared in two TRPG campaigns: a baseline using direct speech transcriptions, and three LLM-based versions with varying approaches to music description generation. Evaluations considered audio quality, story alignment, and transition smoothness. Results indicate that detailed music descriptions improve audio quality while maintaining consistency across consecutive descriptions enhances story alignment and transition smoothness.",
+    "ano": 2024,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Marra, Felipe; Lucas N. Ferreira",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2411.03948",
+    "justificativa": "The paper combines tabletop role-playing game sessions with LLMs and generative text-to-music models to create adaptive soundtracks.",
+    "chave": "revtab45"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4403499409",
+    "doi": "10.34190/ecgbl.18.1.3055",
+    "arxiv": "",
+    "titulo": "Towards AI-assisted Board Game-based Learning: Assessing LLMs in Game Personalisation",
+    "resumo": "Board games are used in different educational settings to promote acquisition of disciplinary content, soft skills, foster engagement towards learning content, and sustain motivation. However, designing and conducting effective educational activities with board games requires instructional design skills, knowledge of games, as well as the ability to align the player's internal goals with the learning objectives. Board game-based learning (bGBL) design includes choosing appropriate games and personalising them to better fit with the educational setting and the students' individual needs. This complexity, coupled with a general lack of teacher familiarity with games and game culture, is likely a reason for the relatively low use of board games in formal instructional settings such as schools. Artificial Intelligence (AI) has long been used in education, but the recent diffusion of user-friendly tools for large language models (LLM) opens a new range of possibilities to assist teachers and educators in instructional design: This includes the design and implementation of bGBL. In a preliminary study, we explored the ability of a well-known chatbot, ChatGPT, to select board games and suggest modifications to better align with the classroom context and personal student needs. However, this study was limited to a sample learning unit and was based on a posteriori evaluation by experts. In this contribution, we develop a new testing protocol to assess the reliability, effectiveness, and context sensitivity of several LLMs to adapt given board games to different classroom scenarios. The methodology features blind comparison of AI and human experts. The results suggest that general-purpose AI tools such as Copilot, Claude, and ChatGPT can provide quality and context-sensitive board game modification suggestions, to the point of slightly overperforming human experts in aligning personalisation suggestions to instructional goals. This study represents a first foray in the use of general Artificial Intelligence to assist the modding, or personalisation, of board game-based learning activities and, despite its limitations as a pilot experiment, might pave the way for successful integration of assistive technologies in game-based learning and facilitating its integration in the school curriculum.",
+    "ano": 2024,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "European Conference on Games Based Learning",
+    "autores": "Andrea Tinterri; Federica Pelizzari; Giordano Vignoli; Francesco Palladino; Marilena di Padova",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34190/ecgbl.18.1.3055",
+    "justificativa": "Tests how well several LLMs can personalise board games for classroom learning, which directly combines analogue games with generative AI.",
+    "chave": "revtab46"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4403621211",
+    "doi": "10.48550/arxiv.2409.06949",
+    "arxiv": "2409.06949",
+    "titulo": "You Have Thirteen Hours in Which to Solve the Labyrinth: Enhancing AI Game Masters with Function Calling",
+    "resumo": "Developing a consistent and reliable AI game master for text-based games is a challenging task due to the limitations of large language models (LLMs) and the complexity of the game master's role. This paper presents a novel approach to enhance AI game masters by leveraging function calling in the context of the table-top role-playing game \"Jim Henson's Labyrinth: The Adventure Game.\" Our methodology involves integrating game-specific controls through functions, which we show improves the narrative quality and state update consistency of the AI game master. The experimental results, based on human evaluations and unit tests, demonstrate the effectiveness of our approach in enhancing gameplay experience and maintaining coherence with the game state. This work contributes to the advancement of game AI and interactive storytelling, offering insights into the design of more engaging and consistent AI-driven game masters.",
+    "ano": 2024,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Jaewoo Song; Andrew Zhu; Chris Callison-Burch",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2409.06949",
+    "justificativa": "The paper improves an LLM-based AI game master for a tabletop role-playing game using function calling, with human evaluations.",
+    "chave": "revtab47"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4382317629",
+    "doi": "10.1609/aaai.v37i13.26897",
+    "arxiv": "2305.17910",
+    "titulo": "AI Audit: A Card Game to Reflect on Everyday AI Systems",
+    "resumo": "An essential element of K-12 AI literacy is educating learners about the ethical and societal implications of AI systems. Previous work in AI ethics literacy have developed curriculum and classroom activities that engage learners in reflecting on the ethical implications of AI systems and developing responsible AI. There is little work in using game-based learning methods in AI literacy. Games are known to be compelling media to teach children about complex STEM concepts. In this work, we developed a competitive card game for middle and high school students called “AI Audit” where they play as AI start-up founders building novel AI-powered technology. Players can challenge other players with potential harms of their technology or defend their own businesses by features that mitigate these harms. The game mechanics reward systems that are ethically developed or that take steps to mitigate potential harms. In this paper, we present the game design, teacher resources for classroom deployment and early playtesting results. We discuss our reflections about using games as teaching tools for AI literacy in K-12 classrooms.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "autores": "Safinah Ali; Vishesh Kumar; Cynthia Breazeal",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.1609/aaai.v37i13.26897",
+    "justificativa": "The paper designs and playtests a competitive card game that teaches K-12 students AI literacy and AI ethics.",
+    "chave": "revtab48"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4387394580",
+    "doi": "10.1609/aiide.v19i1.27534",
+    "arxiv": "2308.07540",
+    "titulo": "CALYPSO: LLMs as Dungeon Master's Assistants",
+    "resumo": "The role of a Dungeon Master, or DM, in the game Dungeons & Dragons is to perform multiple tasks simultaneously. The DM must digest information about the game setting and monsters, synthesize scenes to present to other players, and respond to the players' interactions with the scene. Doing all of these tasks while maintaining consistency within the narrative and story world is no small feat of human cognition, making the task tiring and unapproachable to new players. Large language models (LLMs) like GPT-3 and ChatGPT have shown remarkable abilities to generate coherent natural language text. In this paper, we conduct a formative evaluation with DMs to establish the use cases of LLMs in D&D and tabletop gaming generally. We introduce CALYPSO, a system of LLM-powered interfaces that support DMs with information and inspiration specific to their own scenario. CALYPSO distills game context into bite-sized prose and helps brainstorm ideas without distracting the DM from the game. When given access to CALYPSO, DMs reported that it generated high-fidelity text suitable for direct presentation to players, and low-fidelity ideas that the DM could develop further while maintaining their creative agency. We see CALYPSO as exemplifying a paradigm of AI-augmented tools that provide synchronous creative assistance within established game worlds, and tabletop gaming more broadly.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment",
+    "autores": "Andrew Zhu; Lara J. Martin; Andrew Head; Chris Callison-Burch",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.1609/aiide.v19i1.27534",
+    "justificativa": "CALYPSO is a set of LLM-powered tools for D&D Dungeon Masters, evaluated with DMs, so it combines tabletop role-play with generative AI.",
+    "chave": "revtab49"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4381334605",
+    "doi": "10.1016/j.tsc.2023.101354",
+    "arxiv": "",
+    "titulo": "Developing critical thinking skills through gamification",
+    "resumo": "Misinformation as well as the proliferation of fake news has been a problem during COVID-19 pandemic. This has affected many vulnerable communities in Brazil. The ability to understand and sort out pieces of reliable information and fake news has become a fundamental cognitive skill. In this study we report on the development of a serious game (a card-based role-playing game) using Brazilian folk heroes aimed to develop critical thinking skills to empower vulnerable communities affected by misinformation and fake news. Four groups located in the city of Goiânia (Brazil) participated in this research: one group of people experiencing homelessness; two groups of favela residents (one urban and one in the suburbs) and one group of recyclable material collectors from a cooperative. We gained entry and built trust with each of these groups and worked together for 10 months during the pandemic. We conducted participatory observations, individual interviews with each participant and discussed their daily interaction with information, specifically in the context of the covid-19 pandemic. The analyses of the observations and interview data gave us a glimpse of the communicative needs of the groups. Inserting players into a narrative where they can make decisions based on critical thinking and their own reflections on the pandemic was important for building knowledge and developing critical thinking in these communities. The nature of the game (interactive and cooperative) allowed participants to focus on problem-solving skills and group work. It encouraged them to use real-life knowledge and skills to solve the fictional problems presented by the narrative.",
+    "ano": 2023,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Thinking Skills and Creativity",
+    "autores": "Claudia Viviana Angelelli; Geisa Müller de Campos Ribeiro; Maico Roris Severino; Eilidh Johnstone; Ganna Borzenkova; Dayane Costa Oliveira da Silva",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1016/j.tsc.2023.101354",
+    "justificativa": "A card-based role-playing game is developed to build critical thinking against misinformation and fake news in vulnerable Brazilian communities.",
+    "chave": "revtab50"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4406619357",
+    "doi": "10.58459/icce.2023.1449",
+    "arxiv": "",
+    "titulo": "Exploring Motivational Differences in Competitive and Cooperative Game-Based Learning through Educational Board Games",
+    "resumo": "The purpose of this study was to determine whether educational board games have a significant impact on learning motivation by developing the information media literacy educational board game Hi-Life. It also examined the differences in learning motivation between the competitive group and the cooperative learning group through a randomized experimental design. A total of 26 students from a national university in northern Taiwan participated in the study, 14 students in the control group for cooperative game-based learning and 12 students in the experimental group for competitive game-based learning. Through the analysis of the Mann-Whitney U test, the results showed that the dimension of Relevance was significant in both the experimental and control groups. Although the rest of the dimensions are not significant, the overall data showed that the average values of the three dimensions of Relevance, Confidence and Satisfaction were all higher than 3.5. The students demonstrated a favorable learning motivation in the ARCS model after playing the educational board game.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Computers in Education",
+    "autores": "Tai-Ping Hsu; Yu-Ming Chiang",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.58459/icce.2023.1449",
+    "justificativa": "The study develops and evaluates an educational board game (Hi-Life) on information media literacy, comparing competitive and cooperative play.",
+    "chave": "revtab51"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4389109092",
+    "doi": "10.1145/3628454.3628457",
+    "arxiv": "",
+    "titulo": "Exploring the Potential of ChatGPT as a Dungeon Master in Dungeons & Dragons tabletop game",
+    "resumo": "The emergence of advanced AI language models has opened up new possibilities for the integration of artificial intelligence in various domains, including tabletop role-playing games. This research explores the potential of ChatGPT, a widely-used large language model, as a Dungeon Master (DM) in the popular role-playing game Dungeons & Dragons (D&D). The study aims to evaluate the narrative generation capabilities, player engagement, and overall player satisfaction when ChatGPT is employed as the DM. Data analysis involved reviewing the recorded gameplay sessions, transcribing dialogue, and categorizing qualitative feedback provided by both the new players and experienced DMs. The preliminary study demonstrates that ChatGPT has the potential to act as a Dungeon Master (DM) and provide a fast introduction to the experience of playing Dungeons & Dragons for new players. It can quickly generate engaging content and stimulate new players to further study and delve into advanced gameplay rules in the future.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Advances in Information Technology",
+    "autores": "Tuul Triyason",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1145/3628454.3628457",
+    "justificativa": "Evaluates ChatGPT as Dungeon Master in Dungeons & Dragons, which directly combines a tabletop role-playing game with generative AI.",
+    "chave": "revtab52"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4389002521",
+    "doi": "10.17083/ijsg.v10i4.645",
+    "arxiv": "",
+    "titulo": "How ChatGPT can inspire and improve serious board game design",
+    "resumo": "Designing engaging serious board games that effectively address students' diverse and complex needs presents a significant challenge for educators. As a possible solution, Large Language Models (LLMs) such as ChatGPT can assist educators in designing and evaluating game-based learning experiences. This study explores three primary ways ChatGPT can enhance educators' game design process. Firstly, ChatGPT can assist with brainstorming, suggesting game themes and mechanisms aligned with curriculum and learning goals. Secondly, it can provide templates or exemplars of game components, allowing educators to create customized games that offer what their students need. Lastly, ChatGPT can offer valuable feedback on game prototypes, identifying areas for improvement and guidance to enhance the game's efficacy as an educational tool. We attempted to advance the ongoing discourse on the roles of artificial intelligence and board games in education by providing valuable insights into the potential of these tools.",
+    "ano": 2023,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "International Journal of Serious Games",
+    "autores": "Wilian Gatti; Emily Marasco; Beaumie Kim; Laleh Behjat; Marjan Eggermont",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.17083/ijsg.v10i4.645",
+    "justificativa": "Examines how ChatGPT supports designing and evaluating serious board games, directly combining analogue games with generative AI.",
+    "chave": "revtab53"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4391481438",
+    "doi": "10.32523/2616-7174-2023-145-4-96-106",
+    "arxiv": "",
+    "titulo": "Integration of associative board games into the university learning process when studying media literacy (using the example of the board game «Media Labyrinth»)",
+    "resumo": "The presented research paper examines the phenomenon of gamification, its importance for the educational process in higher educational institutions of the Republic of Kazakhstan, where work is systematically carried out to improve the level of media literacy of students, undergraduates of faculties and departments of journalism. The main purpose of this publication is to describe the game mechanisms that are most suitable for introduction into the educational process in the study of media literacy. According to the authors, these include a set of rules and designations underlying verbal and team associative games. Using a number of successful ideas of modern game design in the above direction, the team of the Department of Journalism of a regional university created an educational board game «Media Labyrinth». The theoretical significance of the article lies in the fact that the data revealed during the research can be used by teachers of higher educational institutions of the Republic of Kazakhstan in the process of writing research papers, teaching aids within the framework of the studied issues, as well as in the preparation of lecture materials on the discipline «Media Literacy». The practical significance of this scientific work lies in the possibility of introducing the research results into the educational process in higher education (using the board game «Media Labyrinth» in the practical classes of journalism students). At the same time, the board game «Media Labyrinth» has the potential to become a universal means of increasing the level of media literacy, since it can have a positive impact not only on students studying Journalism, but also on students of other humanities, high school students with in-depth study of information technology.",
+    "ano": 2023,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Bulletin of L N Gumilyov Eurasian National University JOURNALISM Series",
+    "autores": "З.С. Тайшыбай; А.Zh. Shaikenova; V.V. Chinishlov",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.32523/2616-7174-2023-145-4-96-106",
+    "justificativa": "The paper describes an associative board game, 'Media Labyrinth', designed to teach media literacy in university courses.",
+    "chave": "revtab54"
+  },
+  {
+    "fonte": "arXiv",
+    "id": "2304.01860v1",
+    "doi": "",
+    "arxiv": "2304.01860",
+    "titulo": "Rolling the Dice: Imagining Generative AI as a Dungeons &amp; Dragons Storytelling Companion",
+    "resumo": "AI Advancements have augmented casual writing and story generation, but their usage poses challenges in collaborative storytelling. In role-playing games such as Dungeons &amp; Dragons (D&amp;D), composing prompts using generative AI requires a technical understanding to generate ideal results, which is difficult for novices. Thus, emergent narratives organically developed based on player actions and decisions have yet to be fully utilized. This paper envisions the use of generative AI in transforming storytelling into an interactive drama using dynamic and immersive narratives. First, we describe scenarios where narratives are created and character conversations are designed within an overarching fantasy disposition. Then, we recommend design guidelines to help create tools using generative AI in interactive storytelling. Lastly, we raise questions on its potential impact on player immersion and cognitive load. Our contributions may be expanded within the broader interactive storytelling domain, such as speech-conversational AI and persona-driven chatbots.",
+    "ano": 2023,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv",
+    "autores": "Jose Ma. Santiago; Richard Lance Parayno; Jordan Aiko Deja; Briane Paul V. Samson",
+    "fontes": [
+      "arXiv"
+    ],
+    "uid": "arxiv:2304.01860",
+    "justificativa": "Explores and offers design guidelines for generative AI as a storytelling companion in Dungeons & Dragons, a tabletop RPG combined with generative AI.",
+    "chave": "revtab55"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4385261769",
+    "doi": "10.48550/arxiv.2307.12573",
+    "arxiv": "2307.12573",
+    "titulo": "Tachikuma: Understading Complex Interactions with Multi-Character and Novel Objects by Large Language Models",
+    "resumo": "Recent advancements in natural language and Large Language Models (LLMs) have enabled AI agents to simulate human-like interactions within virtual worlds. However, these interactions still face limitations in complexity and flexibility, particularly in scenarios involving multiple characters and novel objects. Pre-defining all interactable objects in the agent's world model presents challenges, and conveying implicit intentions to multiple characters through complex interactions remains difficult. To address these issues, we propose integrating virtual Game Masters (GMs) into the agent's world model, drawing inspiration from Tabletop Role-Playing Games (TRPGs). GMs play a crucial role in overseeing information, estimating players' intentions, providing environment descriptions, and offering feedback, compensating for current world model deficiencies. To facilitate future explorations for complex interactions, we introduce a benchmark named Tachikuma, comprising a Multiple character and novel Object based interaction Estimation (MOE) task and a supporting dataset. MOE challenges models to understand characters' intentions and accurately determine their actions within intricate contexts involving multi-character and novel object interactions. Besides, the dataset captures log data from real-time communications during gameplay, providing diverse, grounded, and complex interactions for further explorations. Finally, we present a simple prompting baseline and evaluate its performance, demonstrating its effectiveness in enhancing interaction understanding. We hope that our dataset and task will inspire further research in complex interactions with natural language, fostering the development of more advanced AI agents.",
+    "ano": 2023,
+    "tipo": "preprint",
+    "lingua": "en",
+    "veiculo": "arXiv (Cornell University)",
+    "autores": "Yuanzhi Liang; Linchao Zhu; Yi Yang",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar",
+      "arXiv"
+    ],
+    "uid": "10.48550/arxiv.2307.12573",
+    "justificativa": "Proposes a TRPG-inspired Game Master benchmark for LLM agents built from tabletop role-playing gameplay logs, combining TRPG with LLMs.",
+    "chave": "revtab56"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4406618972",
+    "doi": "10.58459/icce.2023.1445",
+    "arxiv": "",
+    "titulo": "The Impact of an Educational Board Game on Students' Learning Achievement and Flow State in Media and Information Literacy",
+    "resumo": "Given the increasing international emphasis on the importance of identifying and critiquing media content and the proper use of information and communication software, it is imperative to enhance students’ media and information literacy education. In this study, an educational board game for media and information literacy was developed to cultivate the basic knowledge of media and information literacy among university school students in Taiwan. A quasi-experimental study was conducted to investigate the effects of the educational board game on students' learning achievement and flow state. Results showed that the educational board game increased students' learning achievement and flow state, but no difference was found between the collaborative-team gaming group and the competitive-multiplayer gaming group in terms of learning achievement and flow state.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on Computers in Education",
+    "autores": "Ting‐Chia Hsu; Ya-Xuan ZHANG",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.58459/icce.2023.1445",
+    "justificativa": "Quasi-experimental study of an educational board game for media and information literacy among university students.",
+    "chave": "revtab57"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4363651284",
+    "doi": "10.1145/3582437.3587202",
+    "arxiv": "",
+    "titulo": "Towards Computational Support with Language Models for TTRPG Game Masters",
+    "resumo": "Tabletop role-playing games require game masters to mediate between the desires of a group of players and the affordances of a mechanically rich game world. In this paper, we explore the potential for large language models like GPT-3 to assist with the improvisational needs of a game master. We build upon Shoelace, a computational assistant for the GUMSHOE One-2-One role-playing framework; using GPT-3, we extend Shoelace to provide dialogue suggestions for non-player characters as well as to highlight relevant game module information. We emphasize the potential for language models to facilitate new role-playing tools and mechanics and suggest that the user experience problems presented by language models and role-playing are still underexplored and unresolved.",
+    "ano": 2023,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "International Conference on the Foundations of Digital Games (FDG)",
+    "autores": "Jack Kelly; Michael Mateas; Noah Wardrip–Fruin",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1145/3582437.3587202",
+    "justificativa": "This paper extends a TTRPG game-master assistant (Shoelace) with GPT-3, which directly combines tabletop role-play with a language model.",
+    "chave": "revtab58"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4382244225",
+    "doi": "10.34135/mlar-23-01-04",
+    "arxiv": "",
+    "titulo": "With Games Against Fake News – Developing Critical Thinking with the Help of the Card Game Follow Me",
+    "resumo": "Recent serious events, such as the coronavirus pandemic and the war conflict in Ukraine, have significantly increased the amount of fake news in the online space. This news contributes to society’s radicalization, destabilizes democratic regimes, and can result in violence and damage to health and property. The most effective approach to address fake news is prevention and the education associated with it. The current education system is not ready for these challenges, which is why more and more attention is being paid to alternative solutions such as game-based learning. Game-based learning enables the acquisition of new knowledge and skills in a fun yet effective way. These games include a game developed by Impact Games studio named Follow me, which is focused on developing critical thinking skills in the context of countering fake news. This study aims to validate the contribution of the game Follow me in building resilience to fake news through an experiment on a sample of 130 secondary school students from six different schools. The results suggest that although there was no global statistically significant improvement measured in students’ ability to recognize fake news, students are healthily skeptical of information, this is also indicated by the fact that on average they were more likely to label news as untrustworthy despite varying attitudes towards the selected topics. We also managed to make findings based on the data acquired from this experiment, which provide a deeper look into students’ attitudes toward fake news and therefore can improve games and experiments prepared in the future.",
+    "ano": 2023,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Media Literacy and Academic Research",
+    "autores": "Vajk Pomichal; Andrej Trnka",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34135/mlar-23-01-04",
+    "justificativa": "Journal article that tests the card game Follow Me with 130 secondary students to measure resilience to fake news.",
+    "chave": "revtab59"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4284889950",
+    "doi": "10.1145/3502717.3532128",
+    "arxiv": "",
+    "titulo": "Data Detectives",
+    "resumo": "Youth regularly interface with AI technology that leverages supervised machine learning. However, it is well-known that biased training data can result in harmful algorithmic bias. Thus, it is important that youth and families understand training data in machine learning. We present Data Detectives, a child-friendly tabletop card game about training data. Based on three research-based design principles: low-stakes experimentation to support curiosity, games facilitating conversation, and tangible and embodied learning for abstract concepts, the game supports learning the high-level mechanics of training data in supervised machine learning, as well as practicing critical discussion of training data related to algorithmic bias. Contributing to AI literacy opportunities, this game aims to facilitate playful peer-peer and child-parent learning.",
+    "ano": 2022,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "Annual Conference on Innovation and Technology in Computer Science Education",
+    "autores": "Jaemarie Solyst; Jennifer S. Kim; Amy Ogan; Jessica Hammer",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1145/3502717.3532128",
+    "justificativa": "Data Detectives is a tabletop card game designed to build children's and families' AI literacy about training data and algorithmic bias.",
+    "chave": "revtab60"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4293870773",
+    "doi": "10.52731/liir.v001.014",
+    "arxiv": "",
+    "titulo": "Designing a Library-use Instruction Educational Board Game with Situated History Story to Enhance Information Literacy Learning",
+    "resumo": "These instructions give you guidelines for preparing papers for IIAI Open Conference Publication Series. Use this document as a template if you are using Microsoft Word. Otherwise, use this document as an instruction set. The electronic file of your paper will be edited further at IIAI. Define all symbols used in the abstract. Do not cite references in the abstract. Do not delete the blank line immediately above the abstract. Use only English to write a paper.",
+    "ano": 2022,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "IIAI Letters on Informatics and Interdisciplinary Research",
+    "autores": "Chih-Chen Kuo; Huei‐Tse Hou",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.52731/liir.v001.014",
+    "justificativa": "The abstract is only placeholder template text, but the title states plainly that the paper designs an educational board game for information literacy; check the full text to confirm.",
+    "chave": "revtab61"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4306251368",
+    "doi": "10.34190/ecgbl.16.1.586",
+    "arxiv": "",
+    "titulo": "Fighting against Fake News Using the Card Game \"Follow Me”",
+    "resumo": "The increasing presence of fake news in the media, especially on social media poses significant damage to our society. Disinformation undermines the credibility of conventional media and the authority of government officials, contributing to the destabilization of democratic systems. The coronavirus pandemic has accelerated these processes; people have been forced to function intensively in the online space, with a related increase in the time spent on social networking sites. At the same time, the so-called infodemic has been unleashed. The amount of fake news – especially dubious information related to the coronavirus – has increased significantly. The most effective protection against fake news is continuous education and the development of critical thinking. Traditional educational approaches are not always sufficient and fail to adapt quickly enough to the dynamic development of technology and society. Educational games can effectively reach young audiences, and therefore they are coming to the fore. These educational games include the card game Follow Me, which focuses on introducing the dynamics of social media. The target audience of the game is primarily secondary school students, and it has been developed with an emphasis on effective use within the high school educational process. In the game, players take on the role of social media users in order to gain as many followers as possible, while trying to maintain their credibility and detect fake news published by other players. The game features articles covering four different domains (health, science, geopolitics, and society), and due to this diversity, topics from different domains inevitably emerge during gameplay. The game was published by the Slovak game development studio Impact Games and is currently available in print in Slovak language, with English, Croatian and Slovenian translations already available online. The aim of this paper is to introduce the game Follow Me and analyse its game mechanics, mainly focusing on the educational elements. The main contribution of the study is a deeper understanding of game mechanics that can develop critical thinking and an estimation of their effectiveness in educating players about the safe use of social media.",
+    "ano": 2022,
+    "tipo": "conference-paper",
+    "lingua": "en",
+    "veiculo": "European Conference on Games Based Learning",
+    "autores": "Vajk Pomichal; Andrej Trnka",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.34190/ecgbl.16.1.586",
+    "justificativa": "Peer-reviewed conference paper analysing the mechanics of the card game Follow Me, designed to build critical thinking against fake news.",
+    "chave": "revtab62"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W4283820191",
+    "doi": "10.5920/jpa.1034",
+    "arxiv": "",
+    "titulo": "Playing with Copyright",
+    "resumo": "Copyright education has become an important aspect of librarians’ information literacy and scholarly communications activities. These include providing support and delivering teaching sessions for teaching and professional services colleagues, as well as students, researchers and other library users. Since the Covid-19 pandemic and the shift to online and hybrid teaching, it has become increasingly important for lecturers and teachers to understand how licences and copyright exceptions apply to teaching and learning activities. The need for this has been documented by practitioners and scholars around the world (Hudson and Wragg, 2020; Craig and Tarantino, 2020; Morrison and Secker, 2020).In this paper we will briefly outline the concept of ‘copyright literacy’ as defined by IFLA (2018) and how it has many parallels with teaching other aspects of information literacy. This includes taking a more ‘critical’ approach, where students are encouraged to explore power dynamics within the systems of creation and consumption of information. Copyright education has traditionally been approached in a rather dry, lecture style format. This approach often serves to reinforce the perception of copyright education as the communication of a set of rigid rules to follow. We argue that the creation and use of copyright games, including Copyright the Card Game and The Publishing Trap, has transformed approaches to teaching copyright in recent years and supported a broader, more critical conception of copyright literacy. Both games are licensed as open educational resources and have been adapted and re-used by others in the UK and in other countries around the world. They have also sparked the creation of other copyright games, which are showcased at an annual conference: ICEPOPS – the International Copyright Literacy Event with Playful Opportunities for Practitioners and Scholars.The paper will explore the pedagogic principles behind our games as well as considering the value of games and playfulness when teaching about a subject such as copyright that is known to cause uncertainty and anxiety. We will also reflect on how we adapted both our games for teaching online during the Covid-19 pandemic. Through this process it was important to retain the learning outcomes of the game but also the pedagogical approaches used including the use of teams and point scoring, peer learning, the use of scenarios and of discussion and critical thinking. Finally we will discuss feedback we’ve collected from librarians and others who have played or used our games in their own teaching. We will conclude considering how a critical approach to copyright education aligns with a signature pedagogy of playful learning.",
+    "ano": 2022,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "The Journal of Play in Adulthood",
+    "autores": "Jane Secker; Chris Morrison",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.5920/jpa.1034",
+    "justificativa": "Peer-reviewed paper on card and board games (Copyright the Card Game, The Publishing Trap) used to teach copyright literacy as part of critical information literacy.",
+    "chave": "revtab63"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W3095099709",
+    "doi": "10.1016/j.bodyim.2020.09.010",
+    "arxiv": "",
+    "titulo": "‘Everybody’s Different: The Appearance Game’. A randomised controlled trial evaluating an appearance-related board game intervention with children aged 9–11 years",
+    "resumo": "This study evaluated the effectiveness of an educational board game aimed at increasing knowledge of appearance-related issues, positive body image, media literacy, and acceptance of appearance diversity with British school children. Two hundred and fifty-nine children, aged 9-11 (Mage = 10.26), from three primary schools in South-West England participated in a two-arm matched cluster randomised controlled trial. Outcome measures were collected pre-, post- and at two-week follow-up. Knowledge of appearance-related issues significantly increased in the intervention group, compared to the control group post-intervention, but was not maintained at follow-up. There were no significant differences between groups for body appreciation, media literacy or acceptance of visible difference. Of the intervention arm, 78 % (n=117) they would like to play again and 85.3 % (n=128) thought other children would like to play. Qualitative data suggests participants learned the key messages of the game. The findings suggest 'Everybody's Different: The Appearance Game' is an enjoyable way to increase knowledge of appearance-related issues. In future, researchers should consider how to increase body appreciation, media literacy and acceptance of appearance diversity, for example by increasing the dosage of the game or using it in conjunction with discussions and lessons surrounding appearance diversity and appearance-altering conditions.",
+    "ano": 2020,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Body Image",
+    "autores": "Ella Guest; Hannah K. Jarman; Nicholas David Sharratt; Heidi Williamson; Paul White; Diana M. Harcourt; Amy Slater",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1016/j.bodyim.2020.09.010",
+    "justificativa": "A randomised controlled trial evaluates an educational board game whose targeted outcomes explicitly include media literacy.",
+    "chave": "revtab64"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W2944908252",
+    "doi": "10.1108/rsr-10-2018-0066",
+    "arxiv": "",
+    "titulo": "Commercial tabletop games to teach information literacy",
+    "resumo": "Purpose This paper aims to demonstrate how commercially available tabletop games can be effective tools to teach information literacy and present a list of best practices to improve instructor’s chances of success with this pedagogical method. Design/methodology/approach Librarians from two separate institutions with complementary experiences analyze the theory of game-based learning with tabletop games, present an example of game-based information literacy instruction in practice and suggest four best practices for this method of instruction. Findings This paper demonstrates that educators by combining sound pedagogical practices to connect the educational content to what rules of games ask of students can effectively find a balance between enthusiastic engagement and higher-order information literacy learning outcomes. Practical implications This paper can be used to guide librarians looking for creative and sound methods to engage students using tabletop games to teach information literacy. Originality/value The authors have unique theoretical and practical knowledge with joining pedagogy and tabletop games in the information literacy classroom. While there is a lot of literature on games in academic libraries, there is only one other paper on using a commercially available tabletop game to teach information literacy.",
+    "ano": 2019,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Reference Services Review",
+    "autores": "Carl O. DiNardo; Mary J. Snyder Broussard",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "10.1108/rsr-10-2018-0066",
+    "justificativa": "Peer-reviewed article on using commercial tabletop games to teach information literacy.",
+    "chave": "revtab65"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W2903300412",
+    "doi": "",
+    "arxiv": "",
+    "titulo": "The Information Mapping Board Game: a Collaborative Investigation of Asylum Seekers and Refugees’ Information Practices in England, UK",
+    "resumo": "Introduction. This paper discusses the use of an information mapping board game for collaboratively identifying information practices of a small group of asylum seekers and refugees in the North East of England, UK. \\n \\nMethod. Drawing on participatory visual methods, an original information mapping board game was designed. \\n \\nAnalysis. Qualitative results are discussed and analysed using grounded theory, \\nconstant comparative analysis, and situational mapping. \\n \\nResults. The use of an information mapping board game allows participants going through the asylum process to become actively involved in mapping and sharing their own information practices, sources and barriers within a playful collaborative environment. It enables participants to become aware of their acquired information literacy by sharing knowledge, and to adapt the game to reflect their needs and knowledge. \\n \\nConclusion. This study indicates that participatory techniques such as the information mapping board game have the potential to engage hard to reach populations in the research process, to foster their agency, confidence, and capacities, and to inform actions at a local level.",
+    "ano": 2019,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Northumbria Research Link (Northumbria University)",
+    "autores": "Kahina Le Louvier; Perla Innocenti",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "t:the information mapping board game a collaborative investigation of asylum seekers and refugees information practices in england uk",
+    "justificativa": "An original information-mapping board game is used with asylum seekers to surface and build awareness of their information practices and information literacy.",
+    "chave": "revtab66"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W1223442966",
+    "doi": "",
+    "arxiv": "",
+    "titulo": "A Role-Play Game to Facilitate the Development of Students' Reflective Internet Skills.",
+    "resumo": "Introduction Even though they are members of a digital generation, many youngsters are digitally illiterate because they still have great difficulties with critical, reflective, and responsible use of Internet (e.g., van Deursen & van Diepen, 2013; Kuiper, Volman, & Terwel, 2005; Squire, Devane, & Durga, 2008; Walraven, Brand-Gruwel, & Boshuizen, 2009). Students need to develop their ability to determine accuracy of online resources and credibility of other users, to know their online audience and how to present themselves accordingly, and to understand social norms and online communication rules (cf. Litt, 2013). In curricula of Dutch primary and secondary education, little attention is paid to development of this kind of reflective Internet skills of students. Students have to develop these skills implicitly, during their free time or school time while completing school assignments. Teaching students these reflective Internet skills more explicitly might facilitate development of these skills. In this paper, we present results of an evaluation of teaching with a role-play game to promote students' reflective Internet skills. Reflective internet skills With rapid development of information and communication technologies and online communication technologies in particular, adolescents are currently most frequent users of Internet. They spend more time online than adults do, and they use Internet more for social interaction. Although studies from 1990s showed that adolescents' online communication increased their online relationships with strangers (e.g., Nie, 2001), recent studies provide evidence that adolescents use Internet more to maintain their existing friendships, become less concerned how others perceive them, and feel fewer inhibitions in disclosing intimate information (cf. Valkenburg & Peter, 2009). Obviously, when media use changes, its outcomes may change. Using Internet for more and more intimate communication demands more and different Internet skills of user. In a recent review of measurements of Internet skills, Litt (2013) concluded that most studies focused on information and technical skills and that more attention is needed to study communicative and socio-emotional skills, such as ability to determine credibility of other users, to know one's online audience and how to present oneself accordingly, and to understand social norms of sites and services. Various concepts have been used to describe these reflective Internet skills, of which media literacy is widely used in Dutch primary and secondary education. Buckingham, Banaji, Burn, Carr, Cranmer, & Willett (2005) defines media literacy as the ability to access, understand and create communications in a variety of contexts (p. 9). This definition implies that media-literate students know what information is available and how they can retrieve it; use and process information in a wide range of ways; make judgments about authenticity, honesty, relevance, or accuracy of information; and create new products, and present, share and transfer information in suitable forms. The latter is also explored by Litt (2012) as notion of an imagined audience--a person's mental conceptualization of people with whom he or she is communicating. Studies on Internet skills of secondary school students in Netherlands (van Deursen & van Diepen, 2013; van Deursen, van Dijk, & Peters, 2011; Kuiper, Volman, & Terwel, 2009; Walraven et al., 2009) show that students possess technical skills to use Internet, but that they have problems with, among other things, accurate search queries, critical evaluation of Internet sources, and awareness of their online audience. Many students appeared to be inconsistent, impulsive, and impatient Internet users. These findings align with conclusions about reflective Internet skills of secondary school students in other countries (e. …",
+    "ano": 2015,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Leiden Repository (Leiden University)",
+    "autores": "Wilfried Admiraal",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "t:a role play game to facilitate the development of students reflective internet skills",
+    "justificativa": "The paper evaluates a classroom role-play game that teaches reflective Internet skills, such as judging how accurate online sources are and how credible other users are, which fits information literacy.",
+    "chave": "revtab67"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W2528689296",
+    "doi": "",
+    "arxiv": "",
+    "titulo": "Helping Mothers Defend their Decision to Breastfeed",
+    "resumo": "The United States has established breastfeeding as an important health indicator within the Healthy People agenda. Healthy People target goals for breastfeeding initiation, duration, and exclusivity remain unmet. The US Surgeon General's Office reports that lack of knowledge and widespread misinformation about breastfeeding are barriers to meeting Healthy People goals. Breastfeeding mothers are vulnerable to messages that cast doubt on their ability to breastfeed. Very little research has examined specific approaches to help people resist negative messages about health beliefs and behaviors. The objective of this quasi-experimental study was to test an intervention designed to help mothers defend their breastfeeding decisions and resist influences that attempted to persuade them to give formula to their babies. Women attending prenatal breastfeeding classes were recruited and assigned to comparison and intervention groups. The intervention was a board game based on McGuire's inoculation theory of resistance to influence. Controlling for intention to breastfed, intervention and comparison groups were examined for differences in maternal self-efficacy to resist persuasion to give formula and breastfeeding rates for initiation, duration, and exclusivity. Data analyses consisted of analysis of covariance and logistic regression. There was no significant difference between comparison and intervention groups, both groups had high self-efficacy to resist giving formula to their babies; nor were there significant differences regarding breastfeeding initiation, duration and exclusivity. The lack of significant differences may have been influenced by ceiling effects in all of the breastfeeding variables, possibly due to the high socioeconomic level of the sample. The intervention may have worked better in women who were more prone to dissuasive influence, such as those with lower education.",
+    "ano": 2015,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "Journal of International Crisis and Risk Communication Research",
+    "autores": "Kandis Natoli",
+    "fontes": [
+      "OpenAlex"
+    ],
+    "uid": "t:helping mothers defend their decision to breastfeed",
+    "justificativa": "Quasi-experimental evaluation of a board game based on inoculation theory that helps mothers resist breastfeeding misinformation and persuasion.",
+    "chave": "revtab68"
+  },
+  {
+    "fonte": "OpenAlex",
+    "id": "https://openalex.org/W1768591373",
+    "doi": "",
+    "arxiv": "",
+    "titulo": "Play a Game, Make a Game: Getting Creative with Professional Development for Library Instruction",
+    "resumo": "Using games in the library classroom is an active learning strategy that can increase student engagement. However, not all librarians are equally familiar and comfortable with bringing game-based learning to the library. Game On for Information Literacy is a brainstorming card game to help librarians create games for information literacy and library instruction. Inspired by other successful brainstorming card games, this game was developed, playtested, and iterated over several years in workshops, graduate-level MLIS courses, and professional development programs. Game materials are all available to download, use, remix, and share.",
+    "ano": 2015,
+    "tipo": "article",
+    "lingua": "en",
+    "veiculo": "CUNY Academic Works (City University of New York)",
+    "autores": "Maura A. Smale",
+    "fontes": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "uid": "t:play a game make a game getting creative with professional development for library instruction",
+    "justificativa": "An analogue brainstorming card game was developed and playtested over several years to help librarians create information literacy games, so it falls within the review's focus on analogue games for information literacy.",
+    "chave": "revtab69"
+  }
+]

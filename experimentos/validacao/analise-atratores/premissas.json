@@ -1,0 +1,26 @@
+{
+  "porto-das-brumas": {
+    "odete-iracema": "Odete quer o armazém de Vasco; Iracema é a viúva de Vasco",
+    "odete-bras": "Odete crê que o capitão Brás pode ser comprado",
+    "odete-lia": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida",
+    "bras-nuno": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda",
+    "bras-lia": "Lia entrega informações à guarda de Brás",
+    "tomas-iracema": "Tomás sabe quem esteve no armazém na noite da morte de Vasco",
+    "tomas-bras": "Tomás crê que o capitão Brás protege quem paga",
+    "odete-celeste": "Celeste quer tomar de Odete a presidência da Guilda",
+    "lia-gaspar": "Lia quer o lugar de Gaspar; Gaspar crê que Lia quer seu lugar",
+    "celeste-nuno": "Celeste crê que o novo fiscal é incorruptível"
+  },
+  "vale-silente": {
+    "anselmo-marta": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão",
+    "irma-clara-joaquim": "Irmã Clara crê que o moleiro tem algo a esconder",
+    "rui-joaquim": "Rui viu alguém saindo do moinho; crê que o forasteiro do moinho é um espírito",
+    "rui-irma-clara": "Rui crê que Irmã Clara sabe o que vai acontecer",
+    "benedita-marta": "Benedita viu rastros de botas perto dos rebanhos mortos (de Marta)",
+    "benedita-anselmo": "Benedita crê que esperar pelo conselho de Anselmo é perder tempo",
+    "custodia-anselmo": "Custódia é parente do mercador que comprou o grão de Anselmo",
+    "custodia-benedita": "Custódia crê que Benedita vai se perder na montanha",
+    "damiao-marta": "Damião deve a Marta e matou duas ovelhas dela",
+    "damiao-irma-clara": "Damião crê que a Irmã Clara exagera tudo"
+  }
+}

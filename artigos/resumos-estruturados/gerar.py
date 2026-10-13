@@ -10,7 +10,7 @@ from docx.shared import Cm, Pt
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "ijgsi-atratores" / "word"))
 from montar_docx import sanear  # noqa: E402  (corrige a ordem do XML do modelo do pandoc)
 
-for md in sorted(Path(__file__).parent.glob("resumo-*.md")):
+for md in sorted(p for p in Path(__file__).parent.glob("*.md") if p.name != "README.md"):
     saida = md.with_suffix(".docx")
     subprocess.run(["pandoc", str(md), "-o", str(saida)], check=True)
     doc = Document(saida)
@@ -31,7 +31,7 @@ for md in sorted(Path(__file__).parent.glob("resumo-*.md")):
                 r.font.size = Pt(14)
                 r.font.bold = True
             continue
-        if texto.startswith("Referências"):
+        if texto.startswith("Referências") or texto == "References":
             em_refs = True
             p.paragraph_format.space_before = Pt(12)
             continue

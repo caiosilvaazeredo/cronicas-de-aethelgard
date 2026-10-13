@@ -175,6 +175,36 @@
     "maximo6Lugares": 2.584962500721156,
     "maximo5Lugares": 2.321928094887362
   },
+  "geracao": {
+    "eventos": 3744,
+    "eventosAposDia1": 3480,
+    "semCausaAposDia1": 9,
+    "causasPorEvento": 1.952873563218391,
+    "nascimentos": 194,
+    "nascimentosAposDia2": 3
+  },
+  "premissasNulo": {
+    "observada": 0.75,
+    "nObservada": 56,
+    "nulo": 0.6078062678062678,
+    "reamostragensPorSessao": 500,
+    "nulo95": [
+      0.4482531760435572,
+      0.7586206896551724
+    ],
+    "p_unilateral": 0.0358
+  },
+  "lugaresNulo": {
+    "observada": 0.5695364238410596,
+    "nObservada": 302,
+    "nulo": 0.5167713088320065,
+    "nulo95": [
+      0.46963562753036436,
+      0.5637882743242508
+    ],
+    "p_unilateral": 0.0144,
+    "todosOsEventos": 0.4906517094017094
+  },
   "grau": {
     "gini": 0.33263493767425867,
     "top5": 0.12931202861248384

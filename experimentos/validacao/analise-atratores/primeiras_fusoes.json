@@ -2,7 +2,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 5,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -10,7 +9,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -18,7 +16,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -26,7 +23,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-opus-5_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -34,7 +30,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 4,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -42,7 +37,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -50,7 +44,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -58,7 +51,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -66,7 +58,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 5,
     "a": "nuno",
     "b": "odete",
     "premissa": null
@@ -74,7 +65,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -82,7 +72,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 7,
     "a": "joaquim",
     "b": "irma-clara",
     "premissa": "Irmã Clara crê que o moleiro tem algo a esconder"
@@ -90,7 +79,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-opus-5_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -98,7 +86,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 4,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -106,7 +93,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -114,7 +100,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -122,7 +107,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_nao-informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -130,7 +114,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -138,7 +121,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -146,7 +128,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -154,7 +135,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -162,7 +142,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -170,7 +149,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "rui",
     "b": "irma-clara",
     "premissa": "Rui crê que Irmã Clara sabe o que vai acontecer"
@@ -178,7 +156,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 6,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -186,7 +163,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -194,7 +170,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 6,
     "a": "iracema",
     "b": "lia",
     "premissa": null
@@ -202,7 +177,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 4,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -210,7 +184,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -218,7 +191,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -226,7 +198,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -234,7 +205,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 4,
     "a": "joaquim",
     "b": "irma-clara",
     "premissa": "Irmã Clara crê que o moleiro tem algo a esconder"
@@ -242,7 +212,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-haiku-4-5-20251001_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 5,
     "a": "benedita",
     "b": "marta",
     "premissa": "Benedita viu rastros de botas perto dos rebanhos mortos (de Marta)"
@@ -250,7 +219,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-opus-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 4,
     "a": "joaquim",
     "b": "anselmo",
     "premissa": null
@@ -258,7 +226,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -266,7 +233,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "rui",
     "b": "irma-clara",
     "premissa": "Rui crê que Irmã Clara sabe o que vai acontecer"
@@ -274,7 +240,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "irma-clara",
     "b": "anselmo",
     "premissa": null
@@ -282,7 +247,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "rui",
     "b": "benedita",
     "premissa": null
@@ -290,7 +254,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -298,7 +261,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 4,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -306,7 +268,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -314,7 +275,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "tomas",
     "b": "odete",
     "premissa": null
@@ -322,7 +282,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -330,7 +289,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -338,7 +296,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "bras",
     "premissa": "Lia entrega informações à guarda de Brás"
@@ -346,7 +303,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "porto-das-brumas",
-    "dia": 4,
     "a": "tomas",
     "b": "odete",
     "premissa": null
@@ -354,7 +310,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "bras",
     "b": "odete",
     "premissa": "Odete crê que o capitão Brás pode ser comprado"
@@ -362,7 +317,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "lia",
     "b": "odete",
     "premissa": "Odete deve à Irmandade; Lia crê que Odete vai fugir da dívida"
@@ -370,7 +324,6 @@
   {
     "sessao": "porto-das-brumas_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
     "mundo": "porto-das-brumas",
-    "dia": 3,
     "a": "nuno",
     "b": "bras",
     "premissa": "Brás crê que o novo fiscal veio vigiá-lo; Nuno investiga a guarda"
@@ -378,7 +331,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -386,7 +338,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 4,
     "a": "rui",
     "b": "irma-clara",
     "premissa": "Rui crê que Irmã Clara sabe o que vai acontecer"
@@ -394,7 +345,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "benedita",
     "b": "joaquim",
     "premissa": null
@@ -402,7 +352,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r02",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -410,7 +359,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-4-6_informa_6ag_jog-nenhum_r03",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -418,7 +366,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r01",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -426,7 +373,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r02",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"
@@ -434,7 +380,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "benedita",
     "b": "irma-clara",
     "premissa": null
@@ -442,7 +387,6 @@
   {
     "sessao": "vale-silente_claude-cli-claude-sonnet-5_informa_6ag_jog-nenhum_r03",
     "mundo": "vale-silente",
-    "dia": 3,
     "a": "marta",
     "b": "anselmo",
     "premissa": "Anselmo crê que Marta quer seu lugar; Marta crê que ele esconde o grão"

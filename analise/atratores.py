@@ -74,6 +74,9 @@ PREMISSAS = {
         ("damiao", "irma-clara"): "Damião crê que a Irmã Clara exagera tudo",
     },
 }
+# lugares citados nas premissas de mais de um agente (armazém de Vasco e livros da
+# alfândega; o moinho, o moleiro e o forasteiro)
+LUGARES_PREMISSA = {"porto-das-brumas": {"armazens", "alfandega"}, "vale-silente": {"moinho"}}
 # objetos e lugares que aparecem nas premissas de mais de um agente
 OBJETOS = {
     "porto-das-brumas": r"armaz|vasco|d[íi]vida|livros|contas|papé?e?is|suborno",
@@ -91,7 +94,10 @@ def carregar(raiz: Path) -> list[dict]:
     script = r"""
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { detectarArcos } from './services/arcos';
+import { construirArestas, detectarArcos } from './services/arcos';
+import { reanalisar } from './core/experimento/reanalise';
+import { criarRng, hashTexto } from './core/util/aleatorio';
+const N_NULO = Number(process.env.N_NULO ?? 500);
 import { atualizarLinhagem, linhagemVazia, mapaDeTramas } from './services/linhagem';
 const saida = [];
 for (const dir of process.argv.slice(2)) {
@@ -112,8 +118,26 @@ for (const dir of process.argv.slice(2)) {
       mapas.push(Object.fromEntries(mapaDeTramas(anot)));
       tramas = r.tramas.map((t) => (t.status === 'estavel' ? { ...t, status: 'fechada' } : t));
     }
+    // modelo nulo (igual ao de sim/validacao/nulo.ts): mesmo número de causas válidas, sorteadas entre dias anteriores
+    const { entrada } = construirArestas(ev);
+    const rng = criarRng(hashTexto(`atratores|${s}`));
+    const autorDe = Object.fromEntries(ev.map((e) => [e.id, e.autorId]));
+    const nulo = [];
+    for (let i = 0; i < N_NULO; i++) {
+      const re = ev.map((e) => {
+        const k = entrada.get(e.id)?.length ?? 0;
+        const ant = ev.filter((x) => x.turno < e.turno);
+        const esc = new Set();
+        while (esc.size < Math.min(k, ant.length)) esc.add(ant[Math.floor(rng() * ant.length)].id);
+        return { ...e, causadoPor: [...esc] };
+      });
+      const r = reanalisar(re, c.dias, 3);
+      nulo.push(Object.fromEntries(Object.values(r.linhagem.tramas).map((t) => [t.id,
+        { id: t.id, origem: t.origem, fundiuEm: t.fundiuEm, absorvidaPor: t.absorvidaPor, autor: autorDe[t.id] ?? null,
+          fundidaPorEventos: t.fundidaPorEventos }])));
+    }
     saida.push({ sessao: s, metodo: dir.split('/').pop(), mundo: c.mundo, modelo: c.modelos.agentes.modelo, dias: c.dias,
-      eventos: ev, mapas, linhagem: lin });
+      eventos: ev, mapas, linhagem: lin, nulo });
   }
 }
 console.log(JSON.stringify(saida));
@@ -126,6 +150,71 @@ console.log(JSON.stringify(saida));
     finally:
         arq.unlink(missing_ok=True)
     return json.loads(out)
+
+
+def primeiras_fusoes(T: dict, autor) -> list[tuple[str, str]]:
+    """Pares de autores-raiz nas fusões entre duas linhas originais (nascidas, não
+    renomeadas) que ainda não tinham participado de fusão nenhuma."""
+    pares, tocadas = [], set()
+    for r in sorted(T.values(), key=lambda r: (r["fundiuEm"] or 999, r["id"])):
+        if r["fundiuEm"] is None:
+            continue
+        a, b = r["id"], r["absorvidaPor"]
+        if r["origem"] == "nascimento" and T.get(b, {}).get("origem") == "nascimento" and a not in tocadas and b not in tocadas:
+            ra, rb = autor(a), autor(b)
+            if ra and rb and ra != rb:
+                pares.append((ra, rb))
+        tocadas.update([a, b])
+    return pares
+
+
+def nulo_premissas(sessoes: list[dict], semente: int = 7) -> dict:
+    """Taxa de primeiras fusões ligadas por premissa sob o modelo nulo de
+    sim/validacao/nulo.ts (mesmo número de causas por evento, causas sorteadas
+    entre eventos de dias anteriores), medida com a mesma detecção e linhagem."""
+    rng = np.random.default_rng(semente)
+    por_sessao = []
+    for s in sessoes:
+        taxas = []
+        for T in s["nulo"]:
+            pares = primeiras_fusoes(T, lambda t: T[t]["autor"])
+            taxas.append([ligados(s["mundo"], a, b) for a, b in pares])
+        por_sessao.append(taxas)
+    obs = [ligados(s["mundo"], a, b) for s in sessoes
+           for a, b in primeiras_fusoes(s["linhagem"]["tramas"], lambda t, ev={e["id"]: e for e in s["eventos"]}: ev[t]["autorId"] if t in ev else None)]
+    # distribuição nula da taxa agregada: uma reamostragem nula por sessão, 5000 vezes
+    n_rep = len(por_sessao[0]) if por_sessao else 0
+    reps = []
+    for _ in range(5000):
+        vals = [x for taxas in por_sessao for x in taxas[rng.integers(n_rep)]]
+        if vals:
+            reps.append(float(np.mean(vals)))
+    todos = [x for taxas in por_sessao for t in taxas for x in t]
+    return {"observada": float(np.mean(obs)), "nObservada": len(obs), "nulo": float(np.mean(todos)),
+            "reamostragensPorSessao": n_rep, "nulo95": [float(np.percentile(reps, 2.5)), float(np.percentile(reps, 97.5))],
+            "p_unilateral": float(np.mean(np.array(reps) >= np.mean(obs)))}
+
+
+def nulo_lugares(sessoes: list[dict], semente: int = 11) -> dict:
+    """Fração dos eventos de fusão que ocorrem nos lugares das premissas, observada
+    e sob o mesmo modelo nulo (os eventos e seus lugares ficam; mudam as ligações)."""
+    rng = np.random.default_rng(semente)
+    obs, por_sessao = [], []
+    for s in sessoes:
+        lug = {e["id"]: e.get("local") for e in s["eventos"]}
+        alvo = LUGARES_PREMISSA[s["mundo"]]
+        fus = {f for r in s["linhagem"]["tramas"].values() for f in r["fundidaPorEventos"]}
+        obs += [lug[f] in alvo for f in fus]
+        por_sessao.append([[lug[f] in alvo for f in {f for r in T.values() for f in r["fundidaPorEventos"]}] for T in s["nulo"]])
+    n_rep = len(por_sessao[0])
+    reps = []
+    for _ in range(5000):
+        vals = [x for taxas in por_sessao for x in taxas[rng.integers(n_rep)]]
+        reps.append(float(np.mean(vals)))
+    todos_ev = [lug_ok for s in sessoes for lug_ok in [e.get("local") in LUGARES_PREMISSA[s["mundo"]] for e in s["eventos"]]]
+    return {"observada": float(np.mean(obs)), "nObservada": len(obs), "nulo": float(np.mean([x for t in por_sessao for r in t for x in r])),
+            "nulo95": [float(np.percentile(reps, 2.5)), float(np.percentile(reps, 97.5))],
+            "p_unilateral": float(np.mean(np.array(reps) >= np.mean(obs))), "todosOsEventos": float(np.mean(todos_ev))}
 
 
 def gini(v: np.ndarray) -> float:
@@ -173,21 +262,15 @@ def main() -> None:
         origens = [t for t, r in T.items() if r["origem"] == "nascimento"]
         autores = sorted({autor(t) for t in origens if autor(t)})
         base += [ligados(m, a, b) for a, b in itertools.combinations(autores, 2)]
-        tocadas: set[str] = set()
+        for ra, rb in primeiras_fusoes(T, autor):
+            primeiras.append(ligados(m, ra, rb))
+            exemplos_primeiras.append({"sessao": s["sessao"], "mundo": m, "a": ra, "b": rb,
+                                       "premissa": PREMISSAS[m].get((ra, rb)) or PREMISSAS[m].get((rb, ra))})
         for r in sorted(T.values(), key=lambda r: (r["fundiuEm"] or 999, r["id"])):
             if r["fundiuEm"] is None:
                 continue
             dias_fusao.append(r["fundiuEm"])
-            a, b = r["id"], r["absorvidaPor"]
-            orig_b = T.get(b, {}).get("origem") == "nascimento"
-            if r["origem"] == "nascimento" and orig_b and a not in tocadas and b not in tocadas:
-                ra, rb = autor(a), autor(b)
-                if ra and rb and ra != rb:
-                    primeiras.append(ligados(m, ra, rb))
-                    if len(exemplos_primeiras) < 400:
-                        exemplos_primeiras.append({"sessao": s["sessao"], "mundo": m, "dia": r["fundiuEm"], "a": ra, "b": rb,
-                                                   "premissa": PREMISSAS[m].get((ra, rb)) or PREMISSAS[m].get((rb, ra))})
-            tocadas.update([a, b])
+            a = r["id"]
 
             # 2. direta × indireta, com o mapa de tramas do dia anterior
             antes = s["mapas"][r["fundiuEm"] - 2] if r["fundiuEm"] >= 2 else {}
@@ -264,13 +347,24 @@ def main() -> None:
                               "dias1a2": float(np.mean([x for d in (1, 2) for x in entropia_dia.get(d, [])])),
                               "dias6a12": float(np.mean([x for d in range(6, 13) for x in entropia_dia.get(d, [])])),
                               "maximo6Lugares": float(np.log2(6)), "maximo5Lugares": float(np.log2(5))}
+    apos1 = [e for s in sessoes for e in s["eventos"] if e["turno"] > 1]
+    res["geracao"] = {
+        "eventos": sum(len(s["eventos"]) for s in sessoes),
+        "eventosAposDia1": len(apos1),
+        "semCausaAposDia1": sum(1 for e in apos1 if not e.get("causadoPor")),
+        "causasPorEvento": float(np.mean([len(e.get("causadoPor") or []) for e in apos1])),
+        "nascimentos": sum(1 for s in sessoes for r in s["linhagem"]["tramas"].values() if r["origem"] == "nascimento"),
+        "nascimentosAposDia2": sum(1 for s in sessoes for r in s["linhagem"]["tramas"].values() if r["origem"] == "nascimento" and r["nasceuEm"] > 2),
+    }
+    res["premissasNulo"] = nulo_premissas(sessoes)
+    res["lugaresNulo"] = nulo_lugares(sessoes)
     res["grau"] = {"gini": float(np.mean(ginis)), "top5": float(np.mean(top5))}
     (destino / "resultados.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf8")
     (destino / "primeiras_fusoes.json").write_text(json.dumps(exemplos_primeiras, ensure_ascii=False, indent=2), encoding="utf8")
     (destino / "premissas.json").write_text(json.dumps({m: {f"{a}-{b}": t for (a, b), t in p.items()} for m, p in PREMISSAS.items()},
                                                        ensure_ascii=False, indent=2), encoding="utf8")
     figuras(res, destino)
-    print(json.dumps({k: res[k] for k in ["sessoes", "bacia", "premissas", "fusoes", "colocalizacao", "objetos", "grau"]},
+    print(json.dumps({k: res[k] for k in ["sessoes", "geracao", "premissasNulo", "lugaresNulo", "premissas", "fusoes", "colocalizacao", "objetos", "grau"]},
                      ensure_ascii=False, indent=1)[:3000])
 
 

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { GestureInput } from './gesture';
+import { settings } from './settings';
 import type { TouchPad } from './touch';
 
 /** O que o personagem quer fazer neste quadro (vem do teclado, do controle, do toque ou da IA). */
@@ -194,7 +195,7 @@ export class PlayerController implements Controller {
     // Pique: tocar duas vezes na mesma direção (rápido) e segurar.
     const now = this.scene.time.now;
     if (move !== 0 && this.prevMove === 0) {
-      if (move === this.lastTapDir && now - this.lastTapAt < 300) this.sprinting = true;
+      if (move === this.lastTapDir && now - this.lastTapAt < 300 && settings().doubleTapSprint) this.sprinting = true;
       this.lastTapDir = move;
       this.lastTapAt = now;
     }

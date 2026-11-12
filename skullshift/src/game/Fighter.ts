@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CROUCH_SCALE } from './crouch';
+import { sfx } from './settings';
 import { DEPTH, FONT, GUARD_WALK_SPEED, INVULN_TIME, JUMP_V } from '../config';
 import { CHARS, type CharDef, type CharId } from './characters';
 import { emptyIntent, type Intent } from './controls';
@@ -92,6 +93,8 @@ export class Fighter {
   private lastGhost = 0;
   /** Cor do rastro do dash (cor do jogador). */
   ghostTint = 0xffffff;
+  /** Jogador (toca sons); inimigos ficam em silêncio. */
+  isPlayer = false;
 
   constructor(
     private scene: Phaser.Scene,
@@ -111,6 +114,7 @@ export class Fighter {
     // Quem não tem escudo no sprite defende com uma bolha de energia (estilo jogo de luta de plataforma).
     this.shield = scene.add.image(x, feetY, 'bubble').setDepth(DEPTH.fighters + 1).setVisible(false).setTint(color ?? 0x9fe3ff);
     if (color !== undefined) {
+      this.isPlayer = true;
       this.ghostTint = color;
       this.buildMarkers(color, tagText ?? label);
     }
@@ -315,10 +319,12 @@ export class Fighter {
             this.setCrouch(false);
             this.body.setVelocityY(-JUMP_V);
             this.jumps = 1;
+            if (this.isPlayer) sfx('jump');
           } else if (this.jumps < 2 && !d.fly && !this.swimming) {
             // Pulo duplo: um segundo impulso no ar, com uma cambalhota.
             this.body.setVelocityY(-JUMP_V * DOUBLE_JUMP);
             this.jumps = 2;
+            if (this.isPlayer) sfx('jump');
             this.onDoubleJump?.(this);
             this.scene.tweens.add({
               targets: this.sprite,
@@ -538,6 +544,7 @@ export class Fighter {
     this.released = false;
     this.attackHits.clear();
     this.attackId++;
+    if (this.isPlayer) sfx('attack');
     this.sprite.play(this.crouching && this.hasCrouchPose ? `${this.def.id}_crouch_attack` : `${this.def.id}_attack`);
   }
 

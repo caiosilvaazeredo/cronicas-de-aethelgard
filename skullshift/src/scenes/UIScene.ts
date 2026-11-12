@@ -3,6 +3,7 @@ import { DEPTH, BODY_FONT, FONT, PORTRAIT, SPLIT, VIEW, W } from '../config';
 import { Hud } from '../game/Hud';
 import { TouchPad } from '../game/touch';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
+import { sfx } from '../game/settings';
 import type { GameScene } from './GameScene';
 
 export interface VictoryInfo {
@@ -77,7 +78,7 @@ export class UIScene extends Phaser.Scene {
     };
     const area = { top: panelTop, h: VIEW.h - panelTop };
     this.pads = [new TouchPad(this, 'full', PLAYER_TINT[0], area, false), new TouchPad(this, 'full', PLAYER_TINT[1], area, true)];
-    this.menuButton = pillButton(this, W / 2, half, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 120)
+    this.menuButton = pillButton(this, W / 2, half, 'MENU', () => this.togglePause(), 120)
       .setScale(1)
       .setDepth(DEPTH.hud + 4)
       .setAlpha(0.9);
@@ -85,6 +86,13 @@ export class UIScene extends Phaser.Scene {
 
   create(): void {
     this.input.addPointer(4);
+    this.pauseBox = undefined;
+    const kb = this.input.keyboard!;
+    for (const k of ['UP', 'W']) kb.on(`keydown-${k}`, () => this.pauseBox && this.selectPause(this.pauseSel - 1));
+    for (const k of ['DOWN', 'S']) kb.on(`keydown-${k}`, () => this.pauseBox && this.selectPause(this.pauseSel + 1));
+    for (const k of ['ENTER', 'SPACE']) kb.on(`keydown-${k}`, () => this.pauseBox && this.pauseRows[this.pauseSel]?.act());
+    kb.on('keydown-ESC', () => this.togglePause());
+    kb.on('keydown-P', () => this.togglePause());
     const g = this.g;
     if (g.split) {
       this.createSplit();
@@ -126,7 +134,7 @@ export class UIScene extends Phaser.Scene {
     this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i]) : undefined));
 
     const menuY = VIEW.portrait ? 120 + PORTRAIT.topPad : 720 - 34;
-    this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 120)
+    this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => this.togglePause(), 120)
       .setScale(VIEW.portrait ? 1.2 : 0.7)
       .setDepth(DEPTH.hud + 4)
       .setAlpha(0.9);
@@ -219,6 +227,112 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({ targets: c, alpha: 1, duration: 200, delay: 250 });
     this.tweens.add({ targets: label, scale: s0, duration: 300, delay: 250, ease: 'Back.easeOut' });
     this.tweens.add({ targets: c, alpha: 0, delay: hold, duration: 400, onComplete: () => c.destroy() });
+  }
+
+  // ---------- pausa ----------
+
+  private pauseBox?: Phaser.GameObjects.Container;
+  private pauseSel = 0;
+  private pauseRows: Array<{ label: string; act: () => void; t?: Phaser.GameObjects.Text; bg?: Phaser.GameObjects.Graphics }> = [];
+  private prevPausePad = { u: true, d: true, a: true, b: true, s: true };
+
+  get paused(): boolean {
+    return !!this.pauseBox;
+  }
+
+  togglePause(): void {
+    if (this.pauseBox) this.closePause();
+    else this.openPause();
+  }
+
+  /** Pausa: o jogo congela e abre o menu (continuar, configurações, reiniciar, sair). */
+  openPause(): void {
+    const g = this.g;
+    if (this.pauseBox || g.ended) return;
+    g.scene.pause();
+    sfx('select');
+    const P = VIEW.portrait;
+    const H = this.scale.height;
+    const story = g.mode === 'story';
+    this.pauseRows = [
+      { label: 'CONTINUAR', act: () => this.closePause() },
+      {
+        label: 'CONFIGURAÇÕES',
+        act: () => {
+          this.scene.launch('settings', { from: 'pause' });
+          this.scene.bringToTop('settings');
+          this.scene.pause();
+        },
+      },
+      { label: 'REINICIAR FASE', act: () => g.restartMatch() },
+      { label: story ? 'SAIR PARA O MAPA' : 'SAIR PARA O MENU', act: () => (story ? g.scene.start('map', { devices: g.devices }) : g.scene.start('menu', { stage: 'modes' })) },
+    ];
+    const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.65).setInteractive()];
+    const pw = P ? 760 : 520;
+    const rh = P ? 110 : 74;
+    const ph = this.pauseRows.length * rh + (P ? 200 : 140);
+    const panel = this.add.graphics();
+    panel.fillStyle(0x1d1a2b, 1).fillRoundedRect(-pw / 2 - 6, -ph / 2 - 6, pw + 12, ph + 12, 26);
+    panel.fillStyle(0x10223a, 0.97).fillRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    panel.lineStyle(4, 0xfff7dc, 0.8).strokeRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    items.push(panel);
+    items.push(this.add.text(0, -ph / 2 + (P ? 70 : 48), 'PAUSA', { fontFamily: FONT, fontSize: P ? '64px' : '46px', color: '#ffe066', stroke: '#1d1a2b', strokeThickness: 10 }).setOrigin(0.5));
+    this.pauseRows.forEach((r, i) => {
+      const y = -ph / 2 + (P ? 170 : 116) + i * rh + rh / 2;
+      const bg = this.add.graphics();
+      const t = this.add.text(0, y, r.label, { fontFamily: FONT, fontSize: P ? '40px' : '28px', color: '#fff7dc' }).setOrigin(0.5);
+      const z = this.add
+        .zone(0, y, pw - 60, rh - 12)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => this.selectPause(i))
+        .on('pointerdown', () => r.act());
+      r.t = t;
+      r.bg = bg;
+      bg.setData('y', y).setData('w', pw - 60).setData('h', rh - 12);
+      items.push(bg, t, z);
+    });
+    const cy = P ? PORTRAIT.hudH + PORTRAIT.worldH / 2 : 360;
+    this.pauseBox = this.add.container(W / 2, cy, items).setDepth(DEPTH.hud + 20);
+    this.pauseSel = 0;
+    this.prevPausePad = { u: true, d: true, a: true, b: true, s: true };
+    this.selectPause(0);
+  }
+
+  private selectPause(i: number): void {
+    this.pauseSel = Phaser.Math.Wrap(i, 0, this.pauseRows.length);
+    this.pauseRows.forEach((r, k) => {
+      const on = k === this.pauseSel;
+      const bg = r.bg!;
+      const w = bg.getData('w') as number;
+      const h = bg.getData('h') as number;
+      const y = bg.getData('y') as number;
+      bg.clear();
+      if (on) bg.fillStyle(0xffe066, 1).fillRoundedRect(-w / 2, y - h / 2, w, h, 14);
+      r.t?.setColor(on ? '#10223a' : '#fff7dc');
+    });
+  }
+
+  closePause(): void {
+    if (!this.pauseBox) return;
+    this.pauseBox.destroy();
+    this.pauseBox = undefined;
+    this.g.scene.resume();
+  }
+
+  /** Navegação da pausa pelo teclado e controle (o jogo está parado, então a interface lê). */
+  update(): void {
+    if (!this.pauseBox || this.scene.isActive('settings')) return;
+    const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
+    if (!pad) return;
+    const b = (i: number) => !!pad.buttons[i]?.pressed;
+    const ay = pad.axes[1]?.getValue() ?? 0;
+    const st = { u: b(12) || ay < -0.5, d: b(13) || ay > 0.5, a: b(0), b: b(1), s: b(9) };
+    const p = this.prevPausePad;
+    if (st.u && !p.u) this.selectPause(this.pauseSel - 1);
+    if (st.d && !p.d) this.selectPause(this.pauseSel + 1);
+    if (st.a && !p.a) this.pauseRows[this.pauseSel]?.act();
+    if ((st.b && !p.b) || (st.s && !p.s)) this.closePause();
+    this.prevPausePad = st;
   }
 
   private bossBox?: Phaser.GameObjects.Container;

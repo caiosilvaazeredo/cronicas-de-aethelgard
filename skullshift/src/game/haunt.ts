@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BODY_FONT, DEPTH, FLOOR_Y, FONT, TILE, W } from '../config';
 import type { Fighter } from './Fighter';
 import type { DoorDef, HauntDef, Level } from './level';
+import { sfx } from './settings';
 
 /** O que a cena do jogo oferece para as casas assombradas. */
 export interface HauntHost {
@@ -205,6 +206,7 @@ export class HauntSystem {
     p.body.setVelocity(0, 0);
     p.body.moves = false;
     d.sprite.setTexture('door_open');
+    sfx('door');
     const cam = s.cameras.main;
     s.tweens.add({ targets: p.sprite, alpha: 0, duration: 200 });
     cam.fadeOut(220, 7, 4, 12);
@@ -250,6 +252,7 @@ export class HauntSystem {
     if (!this.hasKey) {
       if (p.alive && Math.abs(p.x - k.x) < 36 && Math.abs(p.feet - 40 - k.y) < 60) {
         this.hasKey = true;
+        sfx('pick');
         this.host.scene.tweens.killTweensOf(k);
         this.host.popText(k.x, k.y - 40, 'CHAVE!', '#ffe066');
       }

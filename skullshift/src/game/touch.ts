@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { settings } from './settings';
 import { DEPTH, FONT, VIEW, W, portraitPanelTop } from '../config';
 
 type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick';
@@ -129,11 +130,15 @@ export class TouchPad {
         sp[2] = VIEW.h - sp[2];
       }
     }
-    for (const [id, x, y, r] of specs) {
+    const st = settings();
+    const op = st.touchOpacity / 10;
+    const size = [0.82, 1, 1.15][st.touchSize] ?? 1;
+    for (const [id, x, y, r0] of specs) {
+      const r = r0 * size;
       const text = LABELS[id];
       const bg = scene.add
-        .circle(x, y, r, 0x10223a, 0.42)
-        .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8)
+        .circle(x, y, r, 0x10223a, 0.42 * op)
+        .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8 * op)
         .setDepth(DEPTH.hud + 5);
       const label = scene.add
         .text(x, y, text, {
@@ -143,6 +148,7 @@ export class TouchPad {
         })
         .setOrigin(0.5)
         .setDepth(DEPTH.hud + 6)
+        .setAlpha(Math.max(0.35, op))
         .setRotation(flip ? Math.PI : 0);
       this.buttons.push({ id, x, y, r, bg, label, down: false });
     }

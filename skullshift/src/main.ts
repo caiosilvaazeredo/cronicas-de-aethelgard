@@ -9,6 +9,8 @@ import { UIScene } from './scenes/UIScene';
 import { MapScene } from './scenes/MapScene';
 import { StoryScene } from './scenes/StoryScene';
 import { SlotsScene } from './scenes/SlotsScene';
+import { SettingsScene } from './scenes/SettingsScene';
+import { applySettings } from './game/settings';
 
 Object.assign(VIEW, computeView());
 
@@ -43,9 +45,10 @@ function boot(): void {
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
     input: { gamepad: true, activePointers: 5 },
-    scene: [BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, StoryScene, GameScene, UIScene],
+    scene: [BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, StoryScene, GameScene, UIScene, SettingsScene],
   });
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
+  game.events.once('ready', () => applySettings());
 }
 loadFont().finally(boot);
 
@@ -65,7 +68,7 @@ function onResize(): void {
     for (const s of game.scene.getScenes(true)) {
       const key = s.scene.key;
       if (key === 'game') (s as GameScene).relayout();
-      else if (key === 'menu' || key === 'slots' || key === 'controls' || key === 'howto' || key === 'map' || key === 'vn') {
+      else if (key === 'menu' || key === 'slots' || key === 'settings' || key === 'controls' || key === 'howto' || key === 'map' || key === 'vn') {
         s.scene.restart((s as unknown as { lastData?: object }).lastData);
       }
     }

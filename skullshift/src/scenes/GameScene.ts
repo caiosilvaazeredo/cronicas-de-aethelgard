@@ -9,6 +9,8 @@ import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
+import { playerName } from '../game/names';
+import { settings, sfx } from '../game/settings';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
@@ -70,6 +72,7 @@ export class GameScene extends Phaser.Scene {
   private hangers: Hanger[] = [];
   /** Cena de conversa: o jogo congela enquanto os balões aparecem. */
   private cutscene = false;
+  private prevStart = true;
   /** Casa assombrada (portas, chave, alavancas, velas, escuridão). */
   private haunt?: HauntSystem;
   /** Chefe da fase (modo história) e estado da arena. */
@@ -98,7 +101,7 @@ export class GameScene extends Phaser.Scene {
   private checkpointX = 0;
   private deaths = 0;
   private startTime = 0;
-  private ended = false;
+  ended = false;
   private winner?: Fighter;
   /** Recorta o que estiver abaixo da superfície da água (personagem afundando). */
   private aboveWater!: Phaser.Display.Masks.GeometryMask;
@@ -155,7 +158,7 @@ export class GameScene extends Phaser.Scene {
       const [sc, tile] = def.storyStart;
       this.screen = sc;
       const x = this.level.tileX(sc, tile);
-      this.addPlayer(new Fighter(this, x, ground(x), 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
+      this.addPlayer(new Fighter(this, x, ground(x), 'skull', 0, playerName(0), PLAYER_TINT[0], 'P1'), this.devices[0]);
       this.checkpointX = x;
       def.screens.forEach((s, si) => {
         for (const [t, char] of s.enemies ?? []) {
@@ -189,9 +192,9 @@ export class GameScene extends Phaser.Scene {
       this.screen = Math.floor(def.screens.length / 2);
       // Em pé a câmera mostra menos: os dois começam mais perto, na plataforma longa.
       const [a, b] = VIEW.portrait ? [4, 10] : def.versusStart;
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), ground(this.level.tileX(this.screen, a)), 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), ground(this.level.tileX(this.screen, a)), 'skull', 0, playerName(0), PLAYER_TINT[0], 'P1'), this.devices[0]);
       // Os dois começam como esqueleto; cor, aura e etiqueta diferenciam.
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), ground(this.level.tileX(this.screen, b)), 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1]);
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), ground(this.level.tileX(this.screen, b)), 'skull', 1, playerName(1), PLAYER_TINT[1], 'P2'), this.devices[1]);
       this.players[1].facing = -1;
       def.screens.forEach((s, si) => {
         for (const [t, kind, h] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
@@ -214,7 +217,6 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? `Fase ${this.levelIndex + 1} — ${def.name}` : `VERSUS · ${def.name}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
-    kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
     kb.on('keydown-R', () => this.ended && this.restartMatch());
     kb.on('keydown-ENTER', () => {
       if (!this.ended) return;
@@ -327,6 +329,10 @@ export class GameScene extends Phaser.Scene {
       this.updateVictory(delta);
       return;
     }
+    // Start do controle: pausa.
+    const anyStart = (this.input.gamepad?.gamepads ?? []).some((p) => p && p.connected && p.buttons[9]?.pressed);
+    if (anyStart && !this.prevStart) this.ui?.openPause();
+    this.prevStart = anyStart;
     if (this.cutscene) {
       // Tudo parado; só o cenário respira. Atacar/pular (ou tocar) passa a fala.
       const it = this.controllers[0].read();
@@ -659,6 +665,7 @@ export class GameScene extends Phaser.Scene {
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
     const dropped = cause === 'hit' ? victim.def.drops : undefined;
     const x = victim.x;
+    sfx(victim.isPlayer ? 'death' : 'hit');
     victim.kill(cause === 'water' ? 'water' : 'hit', dir);
 
     if (cause === 'water' && this.level.isLava) {
@@ -1317,7 +1324,7 @@ export class GameScene extends Phaser.Scene {
       void this.shamanExplains(p, char);
       return;
     }
-    if (hasSeen(`shift-${char}`)) return;
+    if (hasSeen(`shift-${char}`) || !settings().quips) return;
     markSeen(`shift-${char}`);
     const text = SHIFT_QUIPS[char];
     if (!text) return;
@@ -1394,6 +1401,7 @@ export class GameScene extends Phaser.Scene {
 
   private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
+    sfx('pick');
     // Nuvem de fumaça cobre o personagem; a troca acontece escondida nela.
     this.smokeBurst(p.x, p.feet, PLAYER_TINT[pi], 1);
     this.time.delayedCall(90, () => {
@@ -1561,9 +1569,9 @@ export class GameScene extends Phaser.Scene {
     const [p1, p2] = this.players;
     if (p1.alive && p1.x >= end) {
       if (this.mode === 'story') this.storyWin(LEVELS[this.levelIndex].winText ?? 'Fragmento da coroa recuperado!');
-      else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
+      else this.victory(0, `${playerName(0).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
-      this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');
+      this.victory(1, `${playerName(1).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     }
   }
 

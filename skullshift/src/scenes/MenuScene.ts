@@ -3,11 +3,13 @@ import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { LEVELS } from '../game/level';
 import { setFreePlay } from '../game/progress';
+import { sfx } from '../game/settings';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
   { label: 'VERSUS  ·  2 jogadores', mode: 'versus' },
   { label: 'LIVRE  ·  testes', mode: 'free' },
+  { label: 'CONFIGURAÇÕES', mode: 'settings' },
 ] as const;
 
 export class MenuScene extends Phaser.Scene {
@@ -82,6 +84,8 @@ export class MenuScene extends Phaser.Scene {
           .setOrigin(0.5);
       }
       const play = pillButton(this, W / 2, P ? (gy + 140 + HH) / 2 - 60 : 618, 'JOGAR', () => this.toModes(), 300, 0xffe066).setScale(P ? 2 : 1.3);
+      // Engrenagem: configurações direto da tela inicial.
+      pillButton(this, P ? W - 170 : W - 120, P ? 120 : 50, '⚙ AJUSTES', () => this.scene.start('settings', { from: 'menu' }), 190).setScale(P ? 1.4 : 0.85);
       this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.add
         .text(W / 2, P ? (gy + 140 + HH) / 2 + 110 : 690, 'Enter · Espaço · botão A · toque', {
@@ -96,8 +100,8 @@ export class MenuScene extends Phaser.Scene {
     }
 
     if (hasLogo) {
-      const lw = P ? 900 : 430;
-      this.add.image(W / 2, P ? 320 : 128, 'logo').setDisplaySize(lw, (lw * 640) / 1200);
+      const lw = P ? 900 : 360;
+      this.add.image(W / 2, P ? 320 : 112, 'logo').setDisplaySize(lw, (lw * 640) / 1200);
     } else {
       this.add
         .text(W / 2, P ? 400 : 140, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '128px' : '96px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 14 })
@@ -105,7 +109,7 @@ export class MenuScene extends Phaser.Scene {
     }
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, P ? 680 + i * 130 : 284 + i * 54, o.label, {
+        .text(W / 2, P ? 660 + i * 120 : 270 + i * 46, o.label, {
           fontFamily: FONT,
           fontSize: P ? '58px' : '36px',
           color: '#fff7dc',
@@ -121,7 +125,7 @@ export class MenuScene extends Phaser.Scene {
     });
 
     // Escolha da fase: ◀ FASE 1 · ILHAS DA MARÉ ▶
-    const ly = P ? 1110 : 446;
+    const ly = P ? 1170 : 470;
     this.levelText = this.add
       .text(W / 2, ly, '', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: P ? 10 : 7 })
       .setOrigin(0.5);
@@ -204,6 +208,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private select(i: number): void {
+    if (this.index !== Phaser.Math.Wrap(i, 0, OPTIONS.length)) sfx('select');
     this.index = Phaser.Math.Wrap(i, 0, OPTIONS.length);
     // Versus: escolhe a fase aqui. História: escolhe a dificuldade (a fase vem do mapa).
     this.refreshRow();
@@ -242,6 +247,10 @@ export class MenuScene extends Phaser.Scene {
 
   private start(i: number): void {
     const mode = OPTIONS[i].mode;
+    if (mode === 'settings') {
+      this.scene.start('settings', { from: 'menu' });
+      return;
+    }
     if (mode === 'story') {
       setFreePlay(false);
       this.scene.start('slots');

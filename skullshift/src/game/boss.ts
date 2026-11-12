@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { DEPTH, FONT } from '../config';
 import type { CharId } from './characters';
 import type { Fighter } from './Fighter';
+import { sfx } from './settings';
 
 /** O que a cena do jogo oferece a um chefe. */
 export interface BossHost {
@@ -133,6 +134,7 @@ export abstract class Boss {
     const bar = this.host.bar();
     this.host.freeze(true);
     bar?.bossWarning();
+    sfx('boss');
     await this.wait(1700);
     this.sprite.setVisible(true).setPosition(this.x, this.host.ceiling - 200);
     this.play(this.idleAnim);
@@ -262,6 +264,7 @@ export abstract class Boss {
 
   private hit(time: number): void {
     this.hp--;
+    sfx('hit');
     this.hurtUntil = time + 420;
     this.host.bar()?.setBossHp(this.hp / this.maxHp);
     this.scene.cameras.main.shake(90, 0.004);
@@ -337,6 +340,7 @@ export abstract class Boss {
   }
 
   protected boom(x: number, y: number, scale = 1): void {
+    sfx('boom');
     const b = this.scene.add.sprite(x, y, 'boom').setScale(scale).setDepth(DEPTH.fx + 1).play('boom');
     b.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => b.destroy());
   }

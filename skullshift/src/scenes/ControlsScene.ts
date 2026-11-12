@@ -3,6 +3,7 @@ import { BODY_FONT, FONT, VIEW, W, wantsTouchControls } from '../config';
 import { DEVICES, connectedPads, padOrdinal, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import { isFreePlay } from '../game/progress';
+import { askName, nameMode, nameModes, playerName, setNameMode, tempName } from '../game/names';
 import {
   PLAYER_TINT,
   gamepadArt,
@@ -91,7 +92,7 @@ export class ControlsScene extends Phaser.Scene {
     const P = VIEW.portrait;
     const HH = this.scale.height;
     this.add
-      .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.', {
+      .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.  ·  Nome: ◀ ▶ ou ✎ (teclas N / M)', {
         fontFamily: BODY_FONT,
         fontSize: P ? '30px' : '18px',
         color: '#fff7dc',
@@ -120,6 +121,8 @@ export class ControlsScene extends Phaser.Scene {
       kb.on('keydown-LEFT', () => this.cycle(1, -1));
       kb.on('keydown-RIGHT', () => this.cycle(1, 1));
     }
+    kb.on('keydown-N', () => this.cycleName(0, 1));
+    kb.on('keydown-M', () => this.cycleName(1, 1));
     kb.on('keydown-ENTER', () => this.confirm());
     kb.on('keydown-SPACE', () => this.confirm());
     kb.on('keydown-ESC', () => this.back());
@@ -152,7 +155,7 @@ export class ControlsScene extends Phaser.Scene {
   }
 
   private cycle(i: number, dir: number): void {
-    if (i >= this.players) return;
+    if (i >= this.players || this.typing) return;
     const opts = this.options(i);
     if (opts.length === 0) return;
     const at = opts.indexOf(this.choice[i]);
@@ -220,11 +223,34 @@ export class ControlsScene extends Phaser.Scene {
         .on('pointerdown', () => this.cycle(i, dir));
       items.push(a);
     }
-    const hint = this.mode === 'story' ? 'A / D' : i === 0 ? 'A / D' : '← / →';
+    // Nome do jogador: ◀ padrão / Steam / novo ▶ e lápis para digitar (tecla N para o P1, M para o P2).
+    const ny = cy + 148;
+    const plate = this.add.graphics();
+    plate.fillStyle(0x10223a, 1).fillRoundedRect(cx - 220, ny - 18, 440, 36, 10);
+    items.push(plate);
+    const mode = nameMode(i);
+    const tag = mode === 'steam' ? 'STEAM' : mode === 'temp' ? 'NOVO' : 'PADRÃO';
+    items.push(
+      this.add.text(cx - 206, ny, tag, { fontFamily: FONT, fontSize: '14px', color: '#8fd9ff' }).setOrigin(0, 0.5),
+      this.add.text(cx + 10, ny, playerName(i), { fontFamily: FONT, fontSize: '20px', color: '#fff7dc' }).setOrigin(0.5),
+    );
+    for (const dir of [-1, 1]) {
+      items.push(
+        this.add
+          .text(cx + dir * 120 + 10, ny, dir < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: '18px', color: '#ffe066' })
+          .setOrigin(0.5)
+          .setPadding(10)
+          .setInteractive({ useHandCursor: true })
+          .on('pointerdown', () => this.cycleName(i, dir)),
+      );
+    }
     items.push(
       this.add
-        .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: BODY_FONT, fontSize: '15px', color: '#6b7f90' })
-        .setOrigin(0.5),
+        .text(cx + 196, ny, '✎', { fontFamily: 'Arial, sans-serif', fontSize: '22px', color: '#ffe066' })
+        .setOrigin(0.5)
+        .setPadding(10)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => void this.typeName(i)),
     );
     return this.add.container(px, py, items).setScale(sc);
   }
@@ -271,11 +297,41 @@ export class ControlsScene extends Phaser.Scene {
     return this.add.container(W / 2, P ? 1780 * k : 584, items).setScale(P ? 1.6 * Math.min(1, k * 1.1) : 0.9);
   }
 
+  /** ◀ ▶ no nome: padrão → Steam (se houver) → novo (abre a caixa para digitar). */
+  private cycleName(i: number, dir: number): void {
+    if (this.typing) return;
+    const modes = nameModes();
+    const at = modes.indexOf(nameMode(i));
+    const next = modes[Phaser.Math.Wrap(at + dir, 0, modes.length)];
+    if (next === 'temp' && !tempName(i)) {
+      void this.typeName(i);
+      return;
+    }
+    setNameMode(i, next);
+    this.refresh();
+  }
+
+  private typing = false;
+
+  private async typeName(i: number): Promise<void> {
+    if (this.typing) return;
+    this.typing = true;
+    // Deixa as teclas chegarem na caixa de texto (o jogo costuma capturar WASD/espaço).
+    this.input.keyboard?.disableGlobalCapture();
+    const name = await askName(`NOME DO JOGADOR ${i + 1}`, tempName(i) || '');
+    this.input.keyboard?.enableGlobalCapture();
+    this.typing = false;
+    if (name) setNameMode(i, 'temp', name);
+    if (this.scene.isActive()) this.refresh();
+  }
+
   private confirm(): void {
+    if (this.typing) return;
     this.scene.start('howto', { mode: this.mode, devices: [...this.choice], level: this.level });
   }
 
   private back(): void {
+    if (this.typing) return;
     if (this.mode === 'story' && !isFreePlay()) this.scene.start('slots');
     else this.scene.start('menu', { stage: 'modes', level: this.level });
   }

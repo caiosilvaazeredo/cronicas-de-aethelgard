@@ -5,6 +5,7 @@ import { CHARS } from '../game/characters';
 import type { DeviceId } from '../game/controls';
 import { LEVELS } from '../game/level';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
+import { typeDelay } from '../game/settings';
 
 const INK = 0x1d1a2b;
 
@@ -191,8 +192,13 @@ export class StoryScene extends Phaser.Scene {
     this.text.setText('');
     this.arrow.setVisible(false);
     let n = 0;
+    if (typeDelay() === 0) {
+      this.text.setText(this.full);
+      this.arrow.setVisible(true);
+      return;
+    }
     this.typing = this.time.addEvent({
-      delay: 22,
+      delay: typeDelay(),
       repeat: this.full.length - 1,
       callback: () => {
         n++;

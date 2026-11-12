@@ -181,7 +181,8 @@ export class UIScene extends Phaser.Scene {
     const by = VIEW.portrait ? PORTRAIT.hudH + PORTRAIT.worldH + 200 : 640;
     const sc = VIEW.portrait ? 1.5 : 1;
     this.time.delayedCall(d(1200), () => {
-      pillButton(this, VIEW.portrait ? W / 2 : W / 2 - 160, by, 'JOGAR DE NOVO', () => g.restartMatch(), 280, 0xffe066)
+      const next = g.hasNextLevel;
+      pillButton(this, VIEW.portrait ? W / 2 : W / 2 - 160, by, next ? 'PRÓXIMA FASE' : 'JOGAR DE NOVO', () => (next ? g.nextLevel() : g.restartMatch()), 280, 0xffe066)
         .setScale(sc)
         .setDepth(DEPTH.hud + 4);
       pillButton(this, VIEW.portrait ? W / 2 : W / 2 + 160, VIEW.portrait ? by + 150 : by, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 200)

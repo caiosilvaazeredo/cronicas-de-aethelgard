@@ -5,8 +5,6 @@ import { emptyIntent, type Intent } from './controls';
 
 type State = 'idle' | 'run' | 'guard' | 'attack' | 'stun' | 'dead';
 
-/** Altura aproximada da cabeça acima dos pés (para a etiqueta e a aura). */
-const HEAD_HEIGHT: Record<CharId, number> = { skull: 72, lizard: 118, gnoll: 76, shark: 76, goblin: 108 };
 
 const BODY_W = 30;
 const BODY_H = 50;
@@ -197,7 +195,7 @@ export class Fighter {
     if (this.state === 'stun') {
       this.body.setVelocityX(this.body.velocity.x * 0.85);
       // Estrelinhas girando sobre a cabeça.
-      const head = HEAD_HEIGHT[d.id];
+      const head = d.head;
       this.stars.forEach((s, i) => {
         const a = now / 160 + (i * Math.PI * 2) / 3;
         s.setPosition(this.x + Math.cos(a) * 22, this.feet - head - 6 + Math.sin(a) * 6).setAngle(now / 3);
@@ -406,7 +404,7 @@ export class Fighter {
 
   private updateMarkers(): void {
     if (!this.aura || !this.ring || !this.tag) return;
-    const head = HEAD_HEIGHT[this.def.id] * (this.crouching ? CROUCH_SCALE : 1);
+    const head = this.def.head * (this.crouching ? CROUCH_SCALE : 1);
     const visible = this.sprite.visible && this.alive;
     this.aura.setPosition(this.x, this.feet - head * 0.45).setScale(1.05, (head + 40) / 100).setVisible(visible);
     this.ring.setPosition(this.x, this.feet - 2).setVisible(visible);

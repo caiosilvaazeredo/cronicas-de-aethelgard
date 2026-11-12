@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
+import { LEVELS } from '../game/level';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
@@ -19,10 +20,15 @@ export class MenuScene extends Phaser.Scene {
   }
 
   /** Dados para recriar a cena quando o celular gira. */
-  lastData: { stage?: 'title' | 'modes' } = {};
+  lastData: { stage?: 'title' | 'modes'; level?: number } = {};
+  /** Fase escolhida (0, 1, 2). */
+  private level = 0;
+  private prevLR = { l: false, r: false };
+  private levelText?: Phaser.GameObjects.Text;
 
-  init(data: { stage?: 'title' | 'modes' }): void {
+  init(data: { stage?: 'title' | 'modes'; level?: number }): void {
     this.lastData = data;
+    this.level = data.level ?? this.level;
     this.stage = data.stage ?? 'title';
     this.prevPad = { up: false, down: false, ok: true };
   }
@@ -95,9 +101,9 @@ export class MenuScene extends Phaser.Scene {
     }
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, P ? 680 + i * 130 : 300 + i * 66, o.label, {
+        .text(W / 2, P ? 680 + i * 130 : 268 + i * 58, o.label, {
           fontFamily: FONT,
-          fontSize: P ? '58px' : '38px',
+          fontSize: P ? '58px' : '36px',
           color: '#fff7dc',
           stroke: '#10223a',
           strokeThickness: P ? 12 : 8,
@@ -110,6 +116,21 @@ export class MenuScene extends Phaser.Scene {
       this.texts.push(t);
     });
 
+    // Escolha da fase: ◀ FASE 1 · ILHAS DA MARÉ ▶
+    const ly = P ? 980 : 388;
+    this.levelText = this.add
+      .text(W / 2, ly, '', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: P ? 10 : 7 })
+      .setOrigin(0.5);
+    for (const dir of [-1, 1]) {
+      this.add
+        .text(W / 2 + dir * (P ? 520 : 330), ly, dir < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? '56px' : '34px', color: '#ffe066', stroke: '#10223a', strokeThickness: 8 })
+        .setOrigin(0.5)
+        .setPadding(16)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => this.setLevel(this.level + dir));
+    }
+    this.setLevel(this.level);
+
     this.add
       .text(
         W / 2,
@@ -117,7 +138,7 @@ export class MenuScene extends Phaser.Scene {
         [
           'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
           'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
-          'Segure para TRÁS para andar defendendo. Sobre osso, arpão, lança ou crista, aperte PEGAR para se transformar.',
+          'Segure para TRÁS para andar defendendo. Sobre o item de outro personagem, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
           fontFamily: BODY_FONT,
@@ -139,6 +160,8 @@ export class MenuScene extends Phaser.Scene {
     kb.on('keydown-ESC', () => this.scene.restart({ stage: 'title' }));
     kb.on('keydown-SPACE', () => this.start(this.index));
     kb.on('keydown-F', () => this.start(this.index));
+    for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.setLevel(this.level - 1));
+    for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.setLevel(this.level + 1));
     kb.on('keydown-ONE', () => this.start(0));
     kb.on('keydown-TWO', () => this.start(1));
 
@@ -165,6 +188,12 @@ export class MenuScene extends Phaser.Scene {
     if (up && !this.prevPad.up) this.select(this.index - 1);
     if (down && !this.prevPad.down) this.select(this.index + 1);
     if (ok && !this.prevPad.ok) this.start(this.index);
+    const lr = (pad.axes[0]?.getValue() ?? 0);
+    const left = !!pad.buttons[14]?.pressed || lr < -0.5;
+    const right = !!pad.buttons[15]?.pressed || lr > 0.5;
+    if (left && !this.prevLR.l) this.setLevel(this.level - 1);
+    if (right && !this.prevLR.r) this.setLevel(this.level + 1);
+    this.prevLR = { l: left, r: right };
     this.prevPad = { up, down, ok };
   }
 
@@ -177,7 +206,13 @@ export class MenuScene extends Phaser.Scene {
     });
   }
 
+  private setLevel(n: number): void {
+    this.level = Phaser.Math.Wrap(n, 0, LEVELS.length);
+    const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
+    this.levelText?.setText(`FASE ${this.level + 1} · ${name}`);
+  }
+
   private start(i: number): void {
-    this.scene.start('controls', { mode: OPTIONS[i].mode });
+    this.scene.start('controls', { mode: OPTIONS[i].mode, level: this.level });
   }
 }

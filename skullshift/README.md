@@ -38,7 +38,15 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 ## Fases
 
-Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. Os buracos entre as plataformas dão na água, e cair neles mata.
+Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. A fase é escolhida no menu, depois do modo (◀ ▶, A/D ou ←/→). No modo história, a vitória leva à fase seguinte.
+
+| Fase | Ambiente | Personagens (item que transforma) |
+|---|---|---|
+| 1 · Ilhas da Maré | Praia com ilhas; os buracos dão na água | Lagarto (crista), Gnoll (osso), Tubarão-Arpão (arpão), Goblin Lanceiro (lança) |
+| 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos | Aranha (teia), Morcego Gigante (asa), Goblin da Tocha (tocha) |
+| 3 · Reino das Nuvens | Ilhas flutuantes, pontes e plataformas de nuvem; cair no vazio mata | Abelhão (favo de mel), Diabrete (brasa, baforada de fogo), Gnomo do Estilingue (bolota) |
+
+As plataformas altas são blocos maciços: dá para subir pulando, e elas bloqueiam pelos lados. Degraus de 2 tiles e as plataformas flutuantes mais altas pedem pulo duplo. As flutuantes se atravessam por baixo e seguram quem cai em cima, como num jogo de plataforma clássico. Ossos, arpões e bolotas arremessados caem no chão e viram item.
 
 ## Modos
 
@@ -99,7 +107,7 @@ Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, c
 
 - `src/config.ts` — medidas do mundo e constantes de física.
 - `src/game/characters.ts` — dados de cada personagem: quadros, velocidade, golpe ou projétil e item que solta.
-- `src/game/level.ts` — fases com 5 cenários em tiles. Novas fases entram aqui.
+- `src/game/level.ts` — as 3 fases (5 cenários cada) em tiles, com altura das plataformas, flutuantes e tema (praia, caverna, céu). Novas fases entram aqui.
 - `src/game/Fighter.ts` — estados, ataque, defesa, morte e transformação.
 - `src/game/ai.ts` — IA dos inimigos.
 - `src/game/Hud.ts` — avatares, indicador dos 5 cenários e seta "VAI".

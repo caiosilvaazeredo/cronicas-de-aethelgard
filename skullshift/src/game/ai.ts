@@ -62,7 +62,11 @@ export class EnemyAI implements Controller {
       return it;
     }
 
-    const safe = (step: number) => this.level.isGround(me.x + step * 28);
+    // Só anda onde há chão na mesma altura (não despenca de degraus nem cai em buracos).
+    const safe = (step: number) => {
+      const g = this.level.groundY(me.x + step * 28);
+      return g !== null && Math.abs(g - me.feet) < 12;
+    };
 
     if (me.def.projectile) {
       if (dist < 200 && safe(-dir)) it.move = -dir * 0.8;

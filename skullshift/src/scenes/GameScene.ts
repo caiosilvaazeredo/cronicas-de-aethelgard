@@ -4,7 +4,7 @@ import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
-import { LEVEL_1, Level } from '../game/level';
+import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 
@@ -16,6 +16,8 @@ interface Item {
   glow: Phaser.GameObjects.Ellipse;
   /** Aviso "E pegar" que aparece quando um jogador está em cima. */
   prompt: Phaser.GameObjects.Text;
+  /** Altura do chão onde o item está (para checar se o jogador está nele). */
+  floor: number;
   home: boolean;
   active: boolean;
   respawnAt: number;
@@ -77,7 +79,11 @@ export class GameScene extends Phaser.Scene {
     super('game');
   }
 
-  init(data: { mode?: Mode; devices?: DeviceId[] }): void {
+  /** Fase atual (0, 1, 2). */
+  levelIndex = 0;
+
+  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number }): void {
+    this.levelIndex = Phaser.Math.Clamp(data.level ?? 0, 0, LEVELS.length - 1);
     this.mode = data.mode ?? 'story';
     this.devices = data.devices ?? (this.mode === 'story' ? ['kb-full'] : ['kb-left', 'kb-right']);
     this.players = [];
@@ -94,11 +100,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const def = LEVEL_1;
+    const def = LEVELS[this.levelIndex];
     this.level = new Level(this, def);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
+    const ground = (x: number) => this.level.groundY(x) ?? FLOOR_Y;
     const mg = this.make.graphics({}, false);
     mg.fillStyle(0xffffff).fillRect(-W, -2000, this.level.width + 2 * W, 2000 + WATER_Y + 3);
     this.aboveWater = mg.createGeometryMask();
@@ -107,28 +114,29 @@ export class GameScene extends Phaser.Scene {
       const [sc, tile] = def.storyStart;
       this.screen = sc;
       const x = this.level.tileX(sc, tile);
-      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
+      this.addPlayer(new Fighter(this, x, ground(x), 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
       this.checkpointX = x;
       def.screens.forEach((s, si) => {
         for (const [t, char] of s.enemies ?? []) {
-          const f = new Fighter(this, this.level.tileX(si, t), FLOOR_Y, char, 1, 'enemy');
+          const ex = this.level.tileX(si, t);
+          const f = new Fighter(this, ex, ground(ex), char, 1, 'enemy');
           f.facing = -1;
           f.onProjectile = (ff) => this.spawnProjectile(ff);
           this.physics.add.collider(f.sprite, this.level.ground);
           this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
         }
-        for (const [t, kind] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
+        for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
     } else {
       this.screen = Math.floor(def.screens.length / 2);
       // Em pé a câmera mostra menos: os dois começam mais perto, na plataforma longa.
       const [a, b] = VIEW.portrait ? [4, 10] : def.versusStart;
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), ground(this.level.tileX(this.screen, a)), 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
       // Os dois começam como esqueleto; cor, aura e etiqueta diferenciam.
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1]);
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), ground(this.level.tileX(this.screen, b)), 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1]);
       this.players[1].facing = -1;
       def.screens.forEach((s, si) => {
-        for (const [t, kind] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
+        for (const [t, kind, h] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
     }
     this.camX = this.cameraTarget();
@@ -137,12 +145,16 @@ export class GameScene extends Phaser.Scene {
     // Interface em uma cena por cima (sem o zoom da câmera do mundo).
     this.scene.launch('ui', { game: this });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
-    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : 'VERSUS', 1600));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : `VERSUS · ${def.name.split('—')[1]?.trim() ?? ''}`, 1600));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
     kb.on('keydown-R', () => this.ended && this.restartMatch());
-    kb.on('keydown-ENTER', () => this.ended && this.scene.start('menu', { stage: 'modes' }));
+    kb.on('keydown-ENTER', () => {
+      if (!this.ended) return;
+      if (this.hasNextLevel) this.nextLevel();
+      else this.scene.start('menu', { stage: 'modes' });
+    });
 
     this.startTime = this.time.now;
   }
@@ -201,8 +213,17 @@ export class GameScene extends Phaser.Scene {
     return [...this.players, ...this.enemies.map((e) => e.f)];
   }
 
+  /** Modo história: segue para a próxima fase com os mesmos controles. */
+  get hasNextLevel(): boolean {
+    return this.mode === 'story' && this.levelIndex < LEVELS.length - 1;
+  }
+
+  nextLevel(): void {
+    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex + 1 });
+  }
+
   restartMatch(): void {
-    this.scene.restart({ mode: this.mode, devices: this.devices });
+    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex });
   }
 
   update(time: number, delta: number): void {
@@ -230,7 +251,9 @@ export class GameScene extends Phaser.Scene {
     this.applyCamera();
 
     for (const f of this.fighters) {
-      if (f.alive && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
+      if (!f.alive) continue;
+      if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
+      else if (!this.level.hasWater && f.feet > SKY_FALL_Y) this.killFighter(f, null, 'fall');
     }
 
     this.resolveMelee();
@@ -442,13 +465,18 @@ export class GameScene extends Phaser.Scene {
       else if (p.kind === 'harpoon') p.sprite.setAngle(45 * Math.sign(p.vx) + Math.atan2(p.vy, Math.abs(p.vx)) * (180 / Math.PI) * Math.sign(p.vx));
       p.glow?.setPosition(p.sprite.x, p.sprite.y).setVisible(!p.bounced);
       // Caiu: no chão vira item que dá para pegar; na água, some com um respingo.
-      if (p.vy > 0 && p.sprite.y >= FLOOR_Y - 10 && this.level.isGround(p.sprite.x)) {
-        if (p.kind) this.spawnItem(p.sprite.x, p.kind, false, 9000);
-        else this.fx('dust', p.sprite.x, FLOOR_Y - 8, 0.8);
+      const landY = p.vy > 0 ? this.level.landingY(p.sprite.x, p.sprite.y - p.vy * dt + 10, p.sprite.y + 10) : null;
+      if (landY !== null) {
+        if (p.kind) this.spawnItem(p.sprite.x, p.kind, false, 9000, undefined, landY);
+        else this.fx('dust', p.sprite.x, landY - 8, 0.8);
         p.life = 0;
         continue;
       }
-      if (p.sprite.y > WATER_Y + 4) {
+      if (!this.level.hasWater && p.sprite.y > SKY_FALL_Y) {
+        p.life = 0;
+        continue;
+      }
+      if (this.level.hasWater && p.sprite.y > WATER_Y + 4) {
         const sp = this.add.sprite(p.sprite.x, WATER_Y + 2, 'splash').setScale(0.5).setDepth(DEPTH.fx).play('splash');
         sp.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => sp.destroy());
         p.life = 0;
@@ -483,21 +511,25 @@ export class GameScene extends Phaser.Scene {
     p.life = 2;
   }
 
-  private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water'): void {
+  private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water' | 'fall'): void {
     if (!victim.alive) return;
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
     const dropped = cause === 'hit' ? victim.def.drops : undefined;
     const x = victim.x;
-    victim.kill(cause, dir);
+    victim.kill(cause === 'fall' ? 'hit' : cause, dir);
 
     if (cause === 'water') {
       this.waterSplash(x, victim);
+    } else if (cause === 'fall') {
+      // Caiu do céu: some num sopro de nuvem.
+      this.smokeBurst(x, SKY_FALL_Y - 20, 0xffffff, 1.2);
     } else {
       this.fx('dust', x, victim.feet - 20, 1.6);
       this.sparks(x, victim.feet - 34);
       this.cameras.main.shake(120, 0.006);
     }
-    if (dropped && this.level.isGround(x)) this.spawnItem(x, dropped, false);
+    const dropY = this.level.landingY(x, victim.feet - 40, victim.feet + 4);
+    if (dropped && dropY !== null) this.spawnItem(x, dropped, false, 0, undefined, dropY);
 
     const pi = this.players.indexOf(victim);
     if (pi === -1) {
@@ -572,7 +604,8 @@ export class GameScene extends Phaser.Scene {
     const color = PLAYER_TINT[pi];
     const from = p.team === 0 ? -1 : 1; // chega por trás de quem vai renascer
     const x = spawnX();
-    const hoverY = FLOOR_Y - 190;
+    const floor = this.level.groundY(x) ?? FLOOR_Y;
+    const hoverY = floor - 190;
     const d = CHARS[p.baseChar];
     const ghostFeet = 150; // pés do espírito abaixo do centro da nuvem
     const ghostY = ghostFeet - (d.feetY - d.frame / 2);
@@ -607,13 +640,13 @@ export class GameScene extends Phaser.Scene {
           ghost.setAngle(0);
           this.tweens.add({
             targets: [ghost, glow],
-            y: `+=${FLOOR_Y - hoverY - ghostFeet}`,
+            y: `+=${floor - hoverY - ghostFeet}`,
             duration: 240,
             ease: 'Quad.easeIn',
             onComplete: () => {
               ghost.setVisible(false);
               glow.setVisible(false);
-              p.respawn(rig.x, FLOOR_Y);
+              p.respawn(rig.x, this.level.groundY(rig.x) ?? floor);
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
@@ -643,9 +676,10 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- itens / transformação ----------
 
-  private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0): void {
-    const y = FLOOR_Y - 24;
-    const glow = this.add.ellipse(x, FLOOR_Y - 2, 46, 12, 0xfff7a8, 0.45).setDepth(DEPTH.items);
+  private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0, h?: number, floorY?: number): void {
+    const floor = floorY ?? (h !== undefined ? FLOOR_Y - h * 64 : this.level.groundY(x) ?? FLOOR_Y);
+    const y = floor - 24;
+    const glow = this.add.ellipse(x, floor - 2, 46, 12, 0xfff7a8, 0.45).setDepth(DEPTH.items);
     const sprite = this.add.sprite(x, y, ITEM_TEXTURE[kind], 0).setDepth(DEPTH.items);
     if (kind === 'harpoon') sprite.setAngle(45);
     this.tweens.add({ targets: sprite, y: y - 8, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
@@ -663,7 +697,7 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 1)
       .setVisible(false);
-    this.items.push({ kind, sprite, glow, prompt, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0 });
+    this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0 });
   }
 
   /**
@@ -699,7 +733,7 @@ export class GameScene extends Phaser.Scene {
       for (let i = 0; i < this.players.length; i++) {
         const p = this.players[i];
         if (!p.alive || p.def.id === char) continue;
-        if (Math.abs(p.x - it.sprite.x) > 40 || Math.abs(p.feet - FLOOR_Y) > 30) continue;
+        if (Math.abs(p.x - it.sprite.x) > 40 || Math.abs(p.feet - it.floor) > 30) continue;
         if (p.intent.pick) {
           this.transform(i, char);
           it.active = false;
@@ -714,7 +748,7 @@ export class GameScene extends Phaser.Scene {
           it.prompt
             .setText(`${PICK_LABEL[this.devices[i]]}  pegar\n${CHARS[char].name}`)
             .setBackgroundColor(PLAYER_HEX[i])
-            .setPosition(it.sprite.x, FLOOR_Y + 46)
+            .setPosition(it.sprite.x, it.floor + 46)
             .setVisible(true);
           shown = true;
         }
@@ -762,7 +796,7 @@ export class GameScene extends Phaser.Scene {
     if (p1.alive && p1.x >= end) {
       if (this.mode === 'story') {
         const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
-        this.victory(0, 'FASE CONCLUÍDA!', `Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
       } else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');

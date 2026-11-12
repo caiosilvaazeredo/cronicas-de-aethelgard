@@ -27,6 +27,19 @@ char lizard 'Lizard'        'Lizard'        Idle Run  Attack
 char gnoll  'Gnoll'         'Gnoll'         Idle Walk Throw
 char shark  'Harpoon Shark' 'Harpoon Shark' Idle Run  Throw
 char goblin 'Spear Goblin'  'Spear Goblin'  Idle Run  'Attack Fast'
+# Fase 2 (caverna) e fase 3 (céu)
+char spider   'Spider'          'Spider'          Idle Run  Attack
+char bat      'Giant Bat'       'Giant Bat'       Idle Move Attack
+char torchgob 'Torch Goblin'    'Torch Goblin'    Idle Run  Attack
+char bee      'Bumblebee'       'Bumblebee'       Idle Move Attack
+char sgnome   'Slingshot Gnome' 'Slingshot Gnome' Idle Run  Shoot
+cp "$E/Imp/Imp_Idle.png" "$A/chars/imp_idle.png"
+cp "$E/Imp/Imp_Move.png" "$A/chars/imp_run.png"
+cp "$E/Imp/Imp_Avatar.png" "$A/chars/imp_avatar.png"
+cp "$E/Imp/Imp_Attack_Start.png" "$A/chars/imp_attack_start.png"
+cp "$E/Imp/Imp_Attack_Loop.png" "$A/chars/imp_attack_loop.png"
+cp "$E/Imp/Imp_Attack_End.png" "$A/chars/imp_attack_end.png"
+cp "$E/Slingshot Gnome/Acorn_Projectile.png" "$A/chars/acorn.png"
 cp "$E/Extra/Skull Guard/Skull_Guard.png" "$A/chars/skull_guard.png"
 cp "$E/Gnoll/Gnoll_Bone.png" "$A/chars/bone.png"
 cp "$E/Harpoon Shark/Harpoon.png" "$A/chars/harpoon.png"
@@ -38,6 +51,8 @@ cp "$E/Hex Shaman/Hex Shaman_Attack.png" "$A/chars/shaman_attack.png"
 cp "$F/Terrain/Tileset/Water Foam.png" "$A/terrain/water_foam.png"
 
 cp "$F/Terrain/Tileset/Tilemap_color1.png" "$A/terrain/tilemap.png"
+cp "$F/Terrain/Tileset/Tilemap_color5.png" "$A/terrain/tiles_cave.png"
+cp "$F/Terrain/Tileset/Tilemap_color3.png" "$A/terrain/tiles_sky.png"
 cp "$F/Terrain/Decorations/Rocks in the Water/Water Rocks_01.png" "$A/terrain/water_rocks.png"
 cp "$F/Terrain/Decorations/Bushes/Bushe1.png" "$A/terrain/bush.png"
 for i in 01 02 03 04 05 06 07 08; do cp "$F/Terrain/Decorations/Clouds/Clouds_$i.png" "$A/terrain/cloud_$i.png"; done

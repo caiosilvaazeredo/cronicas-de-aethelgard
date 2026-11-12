@@ -18,7 +18,8 @@ export class BootScene extends Phaser.Scene {
       const fs = { frameWidth: d.frame, frameHeight: d.frame };
       this.load.spritesheet(`${id}_idle`, `chars/${id}_idle.png`, fs);
       this.load.spritesheet(`${id}_run`, `chars/${id}_run.png`, fs);
-      this.load.spritesheet(`${id}_attack`, `chars/${id}_attack.png`, fs);
+      if (d.attackSheets) for (const p of d.attackSheets) this.load.spritesheet(p.key, `chars/${p.key}.png`, fs);
+      else this.load.spritesheet(`${id}_attack`, `chars/${id}_attack.png`, fs);
       this.load.image(`${id}_avatar`, `chars/${id}_avatar.png`);
     }
     this.load.spritesheet('skull_guard', 'chars/skull_guard.png', { frameWidth: 192, frameHeight: 192 });
@@ -26,6 +27,9 @@ export class BootScene extends Phaser.Scene {
     this.load.image('harpoon', 'chars/harpoon.png');
 
     this.load.spritesheet('tilemap', 'terrain/tilemap.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('tiles_cave', 'terrain/tiles_cave.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('tiles_sky', 'terrain/tiles_sky.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('acorn', 'chars/acorn.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('water_rocks', 'terrain/water_rocks.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bush', 'terrain/bush.png', { frameWidth: 128, frameHeight: 128 });
     for (let i = 1; i <= 8; i++) this.load.image(`cloud_0${i}`, `terrain/cloud_0${i}.png`);
@@ -55,7 +59,15 @@ export class BootScene extends Phaser.Scene {
       const d = CHARS[id];
       this.anim(`${id}_idle`, d.idle.n, d.idle.fps, -1);
       this.anim(`${id}_run`, d.run.n, d.run.fps, -1);
-      this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
+      if (d.attackSheets) {
+        // Ataque montado de várias folhas, em sequência.
+        this.anims.create({
+          key: `${id}_attack`,
+          frames: d.attackSheets.flatMap((p) => this.anims.generateFrameNumbers(p.key, { start: 0, end: p.n - 1 })),
+          frameRate: d.attack.fps,
+          repeat: 0,
+        });
+      } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
     }
     this.anim('skull_guard', 7, 10, -1);
     this.anim('bone', 4, 16, -1);
@@ -70,9 +82,12 @@ export class BootScene extends Phaser.Scene {
     this.anim('water_foam', 16, 10, -1);
 
     this.makeSky();
+    this.makeCaveAndHighSky();
+    this.anim('acorn', 4, 14, -1);
     this.makeShield();
     this.makeSpear();
     this.makeCrest();
+    this.makeNewItems();
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
@@ -227,6 +242,102 @@ export class BootScene extends Phaser.Scene {
   }
 
   /** Crista do lagarto (item que vira o Lagarto): leque verde com bordas douradas e pontas. */
+  /** Fundo da caverna (estalactites) e céu alto (fase 3), mais a gota que pinga. */
+  private makeCaveAndHighSky(): void {
+    const cave = this.textures.createCanvas('cave_bg', W, H)!;
+    const c = cave.getContext();
+    const g = c.createLinearGradient(0, 0, 0, 520);
+    g.addColorStop(0, '#0b1d24');
+    g.addColorStop(0.6, '#163a44');
+    g.addColorStop(1, '#0f2a32');
+    c.fillStyle = g;
+    c.fillRect(0, 0, W, H);
+    // Estalactites (silhuetas penduradas do teto) em duas camadas.
+    const rnd = new Phaser.Math.RandomDataGenerator(['stalactites']);
+    for (const [color, maxH] of [['#1e4a55', 260], ['#0e252d', 170]] as const) {
+      c.fillStyle = color;
+      for (let x = -20; x < W; x += rnd.between(40, 90)) {
+        const w = rnd.between(30, 70);
+        const h = rnd.between(60, maxH);
+        c.beginPath();
+        c.moveTo(x, 0);
+        c.lineTo(x + w, 0);
+        c.quadraticCurveTo(x + w * 0.65, h * 0.6, x + w / 2, h);
+        c.quadraticCurveTo(x + w * 0.35, h * 0.6, x, 0);
+        c.fill();
+      }
+    }
+    cave.refresh();
+
+    const sky = this.textures.createCanvas('sky_high', W, H)!;
+    const k = sky.getContext();
+    const sg = k.createLinearGradient(0, 0, 0, H);
+    sg.addColorStop(0, '#7fd3ff');
+    sg.addColorStop(0.55, '#a9e2ff');
+    sg.addColorStop(1, '#e3f6ff');
+    k.fillStyle = sg;
+    k.fillRect(0, 0, W, H);
+    sky.refresh();
+
+    const d = this.make.graphics({}, false);
+    d.fillStyle(0xbfe9ff).fillEllipse(3, 6, 5, 10);
+    d.generateTexture('drop', 6, 12);
+    d.destroy();
+  }
+
+  /** Itens das fases 2 e 3: teia, asa, tocha, favo de mel e brasa. */
+  private makeNewItems(): void {
+    const ink = 0x1d1a2b;
+    const g = this.make.graphics({}, false);
+    // Teia (Aranha)
+    g.lineStyle(4, ink).strokeCircle(32, 32, 22).strokeCircle(32, 32, 12);
+    g.lineStyle(2, 0xf2f2f2);
+    g.strokeCircle(32, 32, 22).strokeCircle(32, 32, 12);
+    for (let i = 0; i < 8; i++) {
+      const a = (i * Math.PI) / 4;
+      g.lineStyle(4, ink).lineBetween(32, 32, 32 + Math.cos(a) * 26, 32 + Math.sin(a) * 26);
+      g.lineStyle(2, 0xf2f2f2).lineBetween(32, 32, 32 + Math.cos(a) * 26, 32 + Math.sin(a) * 26);
+    }
+    g.generateTexture('web_item', 64, 64);
+    g.clear();
+    // Asa (Morcego): membrana roxa com pontas
+    const wing = [8, 24, 30, 12, 56, 18, 50, 30, 42, 26, 36, 38, 28, 30, 18, 40];
+    g.fillStyle(ink).fillPoints(wing.reduce<Phaser.Types.Math.Vector2Like[]>((acc, v, i) => (i % 2 ? (acc[acc.length - 1].y = v + 2, acc) : [...acc, { x: v, y: 0 }]), []), true);
+    g.fillStyle(0x7a57a8).fillPoints(wing.reduce<Phaser.Types.Math.Vector2Like[]>((acc, v, i) => (i % 2 ? (acc[acc.length - 1].y = v, acc) : [...acc, { x: v, y: 0 }]), []), true);
+    g.lineStyle(2, 0x4a3470).lineBetween(30, 14, 30, 30).lineBetween(30, 14, 44, 26);
+    g.generateTexture('wing_item', 64, 64);
+    g.clear();
+    // Tocha (Goblin da Tocha)
+    g.fillStyle(ink).fillRect(27, 26, 10, 32);
+    g.fillStyle(0x8a5a35).fillRect(29, 28, 6, 28);
+    g.fillStyle(ink).fillCircle(32, 20, 12);
+    g.fillStyle(0xff9f1c).fillCircle(32, 20, 10);
+    g.fillStyle(0xffe066).fillCircle(32, 23, 6);
+    g.fillStyle(0xff9f1c).fillTriangle(24, 18, 40, 18, 32, 2);
+    g.generateTexture('torch_item', 64, 64);
+    g.clear();
+    // Favo de mel (Abelhão)
+    const hex = (cx: number, cy: number, r: number, color: number) => {
+      const pts = [];
+      for (let i = 0; i < 6; i++) pts.push({ x: cx + Math.cos((i * Math.PI) / 3) * r, y: cy + Math.sin((i * Math.PI) / 3) * r });
+      g.fillStyle(color).fillPoints(pts, true);
+    };
+    for (const [x, y] of [[24, 24], [40, 24], [32, 38], [16, 38], [48, 38]]) {
+      hex(x, y, 10, ink);
+      hex(x, y, 8, 0xf2c230);
+      hex(x, y - 1, 4, 0xffe28a);
+    }
+    g.generateTexture('honey_item', 64, 64);
+    g.clear();
+    // Brasa (Diabrete): chama viva
+    g.fillStyle(ink).fillCircle(32, 38, 15).fillTriangle(17, 36, 47, 36, 32, 6);
+    g.fillStyle(0xe5533d).fillCircle(32, 38, 13).fillTriangle(20, 36, 44, 36, 32, 10);
+    g.fillStyle(0xff9f1c).fillCircle(32, 41, 9).fillTriangle(25, 40, 39, 40, 32, 20);
+    g.fillStyle(0xffe066).fillCircle(32, 44, 5);
+    g.generateTexture('ember_item', 64, 64);
+    g.destroy();
+  }
+
   private makeCrest(): void {
     const g = this.make.graphics({}, false);
     const cx = 32;

@@ -18,10 +18,12 @@ export class HowToScene extends Phaser.Scene {
     super('howto');
   }
 
-  lastData?: { mode: Mode; devices: DeviceId[] };
+  lastData?: { mode: Mode; devices: DeviceId[]; level?: number };
+  private level = 0;
 
-  init(data: { mode: Mode; devices: DeviceId[] }): void {
+  init(data: { mode: Mode; devices: DeviceId[]; level?: number }): void {
     this.lastData = data;
+    this.level = data.level ?? 0;
     this.mode = data.mode;
     this.devices = data.devices;
     // Evita que o botão "confirmar" da tela anterior pule esta tela.
@@ -121,7 +123,7 @@ export class HowToScene extends Phaser.Scene {
         this.add.rectangle(rx, ry, (w + 1) * k, 12 * k, color).setOrigin(0);
       }
     }
-    this.add.image(px, py, 'keyboard_sil').setDisplaySize(280 * k, 120 * k).setTint(PLAYER_TINT[i]);
+    this.add.image(px, py, 'keyboard_sil').setDisplaySize(280 * k, 120 * k).setTint(0x1d1a2b);
 
     // Legenda em 3 colunas: etiqueta na cor da tecla acesa + ação.
     rows.forEach(([label, color, chip], n) => {
@@ -285,7 +287,7 @@ export class HowToScene extends Phaser.Scene {
       ['shield', 'Segure para TRÁS: defesa.\nColado no rival, o golpe\nQUEBRA a defesa.'],
       ['crouch', 'Agachado: desvia de tiros\ne dá golpe baixo.'],
       ['double', 'Aperte pular no ar:\npulo duplo.'],
-      ['items', 'Osso, arpão, lança ou\ncrista: PEGAR transforma.'],
+      ['items', 'Item de outro personagem\nno chão: PEGAR transforma.'],
       ['goal', this.mode === 'story' ? '5 cenários: chegue ao\nfim do lado oposto.' : 'Matou? Ganhou a vez.\nChegue ao seu fim!'],
     ];
     const rows = Math.ceil(tips.length / cols);
@@ -323,10 +325,10 @@ export class HowToScene extends Phaser.Scene {
   }
 
   private play(): void {
-    this.scene.start('game', { mode: this.mode, devices: this.devices });
+    this.scene.start('game', { mode: this.mode, devices: this.devices, level: this.level });
   }
 
   private back(): void {
-    this.scene.start('controls', { mode: this.mode, devices: this.devices });
+    this.scene.start('controls', { mode: this.mode, devices: this.devices, level: this.level });
   }
 }

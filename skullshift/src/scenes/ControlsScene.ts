@@ -33,10 +33,12 @@ export class ControlsScene extends Phaser.Scene {
     super('controls');
   }
 
-  lastData: { mode?: Mode; devices?: DeviceId[] } = {};
+  lastData: { mode?: Mode; devices?: DeviceId[]; level?: number } = {};
+  private level = 0;
 
-  init(data: { mode?: Mode; devices?: DeviceId[] }): void {
+  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number }): void {
     this.lastData = data;
+    this.level = data.level ?? 0;
     this.mode = data.mode ?? 'story';
     this.columns = [];
     this.tray = undefined;
@@ -260,11 +262,11 @@ export class ControlsScene extends Phaser.Scene {
   }
 
   private confirm(): void {
-    this.scene.start('howto', { mode: this.mode, devices: [...this.choice] });
+    this.scene.start('howto', { mode: this.mode, devices: [...this.choice], level: this.level });
   }
 
   private back(): void {
-    this.scene.start('menu', { stage: 'modes' });
+    this.scene.start('menu', { stage: 'modes', level: this.level });
   }
 }
 

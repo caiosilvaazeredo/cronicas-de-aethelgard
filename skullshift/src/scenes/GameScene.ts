@@ -5,8 +5,9 @@ import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
-import { completeLevel } from '../game/progress';
-import { REVIVE_LINES } from '../data/lore';
+import { completeLevel, hasSeen, markSeen } from '../game/progress';
+import { SpeechBubble } from '../game/speech';
+import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 
@@ -63,6 +64,11 @@ export class GameScene extends Phaser.Scene {
   private controllers: Controller[] = [];
   private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
   private hangers: Hanger[] = [];
+  /** Cena de conversa: o jogo congela enquanto os balões aparecem. */
+  private cutscene = false;
+  private skipLine?: () => void;
+  private prevSkip = true;
+  private quip?: SpeechBubble;
   /** Teias fixas no teto (área de cada uma), onde o morcego gruda. */
   private webs: Phaser.Geom.Rectangle[] = [];
   private items: Item[] = [];
@@ -280,6 +286,16 @@ export class GameScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     if (this.ended) {
       this.updateVictory(delta);
+      return;
+    }
+    if (this.cutscene) {
+      // Tudo parado; só o cenário respira. Atacar/pular (ou tocar) passa a fala.
+      const it = this.controllers[0].read();
+      const skip = it.attack || it.jump || it.pick;
+      if (skip && !this.prevSkip) this.skipLine?.();
+      this.prevSkip = skip;
+      this.level.update(time, delta);
+      this.applyCamera();
       return;
     }
     const dt = delta / 1000;
@@ -1181,6 +1197,89 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  /** Primeira transformação: o Xamã explica. Depois, cada forma nova ganha um comentário. */
+  private firstShift(p: Fighter, char: CharId): void {
+    if (!hasSeen('first-shift')) {
+      markSeen('first-shift');
+      markSeen(`shift-${char}`);
+      void this.shamanExplains(p, char);
+      return;
+    }
+    if (hasSeen(`shift-${char}`)) return;
+    markSeen(`shift-${char}`);
+    const text = SHIFT_QUIPS[char];
+    if (!text) return;
+    this.quip?.close();
+    const b = new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.def.head - 52 }), text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+    this.quip = b;
+    this.time.delayedCall(Math.max(2600, text.length * 55), () => {
+      b.close();
+      if (this.quip === b) this.quip = undefined;
+    });
+  }
+
+  /** O Xamã desce na nuvem, conversa em balões com o jogo congelado e vai embora. */
+  private async shamanExplains(p: Fighter, char: CharId): Promise<void> {
+    this.cutscene = true;
+    this.prevSkip = true;
+    this.physics.world.pause();
+    this.quip?.close();
+    const side = p.facing; // chega à frente da caveira
+    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
+    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(side > 0);
+    const hx = p.x + side * 170;
+    const hy = p.feet - 150;
+    const rig = this.add.container(hx + side * 500, hy - 260, [cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
+    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    await this.tweenP({ targets: rig, x: hx, y: hy, alpha: 1, duration: 800, ease: 'Sine.easeOut' });
+
+    const lines: Line[] = [...FIRST_SHIFT];
+    const quip = SHIFT_QUIPS[char];
+    if (quip) lines.push({ who: 'skull', side: 'left', text: quip });
+    for (const line of lines) {
+      if (!this.scene.isActive()) return;
+      const shamanLine = line.who === 'shaman';
+      const bubble = shamanLine
+        ? new SpeechBubble(this, () => ({ x: rig.x, y: rig.y - 74 }), line.text, SPEAKER_NAME.shaman, 0x9b6bf0)
+        : new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.def.head - 52 }), line.text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+      if (shamanLine) shaman.play('shaman_attack').once('animationcomplete', () => shaman.play('shaman_idle'));
+      await this.lineWait(Math.max(2400, line.text.length * 60));
+      bubble.close();
+      await this.waitP(140);
+    }
+    await this.tweenP({ targets: rig, x: hx - side * 500, y: hy - 300, alpha: 0, duration: 800, ease: 'Sine.easeIn' });
+    bob.stop();
+    rig.destroy();
+    this.physics.world.resume();
+    this.cutscene = false;
+  }
+
+  private waitP(ms: number): Promise<void> {
+    return new Promise((r) => this.time.delayedCall(ms, r));
+  }
+
+  private tweenP(cfg: Phaser.Types.Tweens.TweenBuilderConfig): Promise<void> {
+    return new Promise((r) => this.tweens.add({ ...cfg, onComplete: () => r() }));
+  }
+
+  /** Espera o tempo da fala, ou menos se o jogador apertar para passar. */
+  private lineWait(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        timer.remove();
+        this.input.off('pointerdown', finish);
+        this.skipLine = undefined;
+        resolve();
+      };
+      const timer = this.time.delayedCall(ms, finish);
+      this.input.once('pointerdown', finish);
+      this.skipLine = finish;
+    });
+  }
+
   private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
     // Nuvem de fumaça cobre o personagem; a troca acontece escondida nela.
@@ -1191,6 +1290,7 @@ export class GameScene extends Phaser.Scene {
       p.sprite.setTintFill(0xffffff);
       this.time.delayedCall(120, () => p.sprite.clearTint());
       this.ui?.hud?.setChar(pi, char);
+      if (this.mode === 'story' && pi === 0 && char !== 'skull') this.firstShift(p, char);
     });
     const t = this.add
       .text(p.x, p.feet - 110, CHARS[char].name.toUpperCase() + '!', {

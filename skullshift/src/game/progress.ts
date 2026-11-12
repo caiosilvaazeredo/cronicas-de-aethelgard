@@ -25,3 +25,31 @@ export function completeLevel(index: number): void {
     /* sem armazenamento: o progresso vale só nesta sessão */
   }
 }
+
+/** Falas que só aparecem uma vez (primeira transformação, primeira vez em cada forma). */
+const SEEN_KEY = 'skullshift.seen.v1';
+let seenMemory = new Set<string>();
+
+function loadSeen(): Set<string> {
+  try {
+    const raw = window.localStorage.getItem(SEEN_KEY);
+    if (raw) for (const k of JSON.parse(raw) as string[]) seenMemory.add(k);
+  } catch {
+    /* sem armazenamento */
+  }
+  return seenMemory;
+}
+
+export function hasSeen(key: string): boolean {
+  return loadSeen().has(key);
+}
+
+export function markSeen(key: string): void {
+  seenMemory = loadSeen();
+  seenMemory.add(key);
+  try {
+    window.localStorage.setItem(SEEN_KEY, JSON.stringify([...seenMemory]));
+  } catch {
+    /* vale só nesta sessão */
+  }
+}

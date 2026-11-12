@@ -1,3 +1,4 @@
+import type { CharId } from '../game/characters';
 /**
  * Lore do Skullshift — "O Barqueiro de Nuvens".
  *
@@ -137,3 +138,28 @@ export const REVIVE_LINES = [
   'Não é a tua hora... de ir.',
   'Quase te perdi.',
 ];
+
+/** Primeira transformação: o Xamã aparece e explica (o jogo pausa). */
+export const FIRST_SHIFT: Line[] = [
+  X('Isso, Ossian! Tocaste a essência de outra criatura e vestiste a forma dela.'),
+  S('Hex?! De onde você saiu? E por que eu tenho... isto?'),
+  X('O dom que te emprestei. Tua alma está solta dos ossos, por isso cabe em qualquer forma.'),
+  X('Um corpo vivo jamais faria isso. ...Quer dizer, um corpo comum.'),
+  S('"Solta"? Como assim, solta?'),
+  X('Detalhes. Pega o objeto de uma criatura e serás ela. Se caíres, voltas a ser osso, e eu te busco. Vai!'),
+];
+
+/** Comentário sarcástico da caveira na primeira vez em cada forma. */
+export const SHIFT_QUIPS: Partial<Record<CharId, string>> = {
+  lizard: 'Escamas. Finalmente uma pele. Pena que não é a minha.',
+  gnoll: 'Ótimo, agora eu tenho pulgas. Nem sabia que osso pegava pulga.',
+  shark: 'Um tubarão de pé, de arpão na mão. Faz todo o sentido. Nada aqui faz.',
+  goblin: 'Baixinho, verde e com uma lança. Me sinto... perfeitamente normal.',
+  spider: 'Oito pernas. Eu mal sabia o que fazer com duas.',
+  bat: 'Morcego. Claro. A coisa mais natural para um esqueleto.',
+  torchgob: 'Uma tocha no meio da caverna. Que ideia brilhante. Literalmente.',
+  imp: 'Virei o Diabrete. Se eu me encontrar, prometo me dar um soco.',
+  minotaur: 'Chifres, músculos, cheiro de estábulo. Duas de três não é ruim.',
+  bee: 'Zumbindo e com ferrão. Se eu tivesse dignidade, ela teria acabado agora.',
+  sgnome: 'Um gnomo de estilingue. Ainda assim, mais alto do que eu esperava.',
+};

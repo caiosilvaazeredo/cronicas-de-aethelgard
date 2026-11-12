@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { FONT, H, VIEW, W } from '../config';
+import { BODY_FONT, FONT, H, VIEW, W } from '../config';
+import { pillButton } from '../ui/devices';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
@@ -9,14 +10,22 @@ const OPTIONS = [
 export class MenuScene extends Phaser.Scene {
   private index = 0;
   private texts: Phaser.GameObjects.Text[] = [];
-  private prevPad = { up: false, down: false, ok: false };
+  private prevPad = { up: false, down: false, ok: true };
+  /** Tela inicial (logo + JOGAR) ou escolha de modo. */
+  private stage: 'title' | 'modes' = 'title';
 
   constructor() {
     super('menu');
   }
 
   /** Dados para recriar a cena quando o celular gira. */
-  lastData = {};
+  lastData: { stage?: 'title' | 'modes' } = {};
+
+  init(data: { stage?: 'title' | 'modes' }): void {
+    this.lastData = data;
+    this.stage = data.stage ?? 'title';
+    this.prevPad = { up: false, down: false, ok: true };
+  }
 
   create(): void {
     this.texts = [];
@@ -47,21 +56,46 @@ export class MenuScene extends Phaser.Scene {
       this.add.sprite(x as number, feet + (96 - 126) * sk, 'skull_idle').setScale(sk).play('skull_idle').setFlipX(flip as boolean);
     });
 
-    if (P) this.add.image(W / 2, 190, 'skull_avatar').setScale(0.75).setAngle(-8);
-    else this.add.image(W / 2 - 300, 140, 'skull_avatar').setScale(0.55).setAngle(-8);
-    this.add
-      .text(P ? W / 2 : W / 2 + 60, P ? 400 : 140, 'SKULLSHIFT', {
-        fontFamily: FONT,
-        fontSize: P ? '128px' : '96px',
-        color: '#fff7dc',
-        stroke: '#10223a',
-        strokeThickness: P ? 18 : 14,
-      })
-      .setOrigin(0.5);
+    const hasLogo = this.textures.exists('logo');
+    if (this.stage === 'title') {
+      // Tela inicial: logo grande respirando + JOGAR.
+      if (hasLogo) {
+        const lw = P ? 1180 : 700;
+        const logo = this.add.image(W / 2, P ? Math.round(HH * 0.24) : 196, 'logo').setDisplaySize(lw, (lw * 640) / 1200);
+        const sc = logo.scale;
+        logo.setScale(0);
+        this.tweens.add({ targets: logo, scale: sc, duration: 700, ease: 'Back.easeOut' });
+        this.tweens.add({ targets: logo, y: logo.y - 8, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut', delay: 700 });
+      } else {
+        this.add
+          .text(W / 2, P ? 500 : 180, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '128px' : '96px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 14 })
+          .setOrigin(0.5);
+      }
+      const play = pillButton(this, W / 2, P ? (gy + 140 + HH) / 2 - 60 : 618, 'JOGAR', () => this.toModes(), 300, 0xffe066).setScale(P ? 2 : 1.3);
+      this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.add
+        .text(W / 2, P ? (gy + 140 + HH) / 2 + 110 : 690, 'Enter · Espaço · botão A · toque', {
+          fontFamily: BODY_FONT,
+          fontSize: P ? '34px' : '18px',
+          color: '#0b2236',
+        })
+        .setOrigin(0.5);
+      const kb = this.input.keyboard!;
+      for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.toModes());
+      return;
+    }
 
+    if (hasLogo) {
+      const lw = P ? 900 : 430;
+      this.add.image(W / 2, P ? 320 : 128, 'logo').setDisplaySize(lw, (lw * 640) / 1200);
+    } else {
+      this.add
+        .text(W / 2, P ? 400 : 140, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '128px' : '96px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 14 })
+        .setOrigin(0.5);
+    }
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, P ? 620 + i * 130 : 290 + i * 66, o.label, {
+        .text(W / 2, P ? 680 + i * 130 : 300 + i * 66, o.label, {
           fontFamily: FONT,
           fontSize: P ? '58px' : '38px',
           color: '#fff7dc',
@@ -86,7 +120,7 @@ export class MenuScene extends Phaser.Scene {
           'Segure para TRÁS para andar defendendo. Sobre osso, arpão, lança ou crista, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
-          fontFamily: FONT,
+          fontFamily: BODY_FONT,
           fontSize: P ? '36px' : '19px',
           color: '#0b2236',
           align: 'center',
@@ -102,6 +136,7 @@ export class MenuScene extends Phaser.Scene {
     kb.on('keydown-DOWN', () => this.select(this.index + 1));
     kb.on('keydown-S', () => this.select(this.index + 1));
     kb.on('keydown-ENTER', () => this.start(this.index));
+    kb.on('keydown-ESC', () => this.scene.restart({ stage: 'title' }));
     kb.on('keydown-SPACE', () => this.start(this.index));
     kb.on('keydown-F', () => this.start(this.index));
     kb.on('keydown-ONE', () => this.start(0));
@@ -110,9 +145,19 @@ export class MenuScene extends Phaser.Scene {
     this.select(this.index);
   }
 
+  private toModes(): void {
+    this.scene.restart({ stage: 'modes' });
+  }
+
   update(): void {
     const pad = this.input.gamepad?.gamepads.find(Boolean);
     if (!pad) return;
+    if (this.stage === 'title') {
+      const ok = !!pad.buttons[0]?.pressed || !!pad.buttons[9]?.pressed;
+      if (ok && !this.prevPad.ok) this.toModes();
+      this.prevPad.ok = ok;
+      return;
+    }
     const b = (i: number) => !!pad.buttons[i]?.pressed;
     const up = b(12) || (pad.axes[1]?.getValue() ?? 0) < -0.5;
     const down = b(13) || (pad.axes[1]?.getValue() ?? 0) > 0.5;

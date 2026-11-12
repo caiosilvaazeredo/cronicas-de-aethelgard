@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copia os sprites do Tiny Swords (Pixel Frog) para public/assets.
 # Os PNGs não vão para o Git: a licença do pacote não permite redistribuir os arquivos.
-# Uso: scripts/import-assets.sh <Tiny_Swords_Enemy_Pack.zip> <Tiny_Swords_Free_Pack.zip> [anak_manja.zip]
+# Uso: scripts/import-assets.sh <Tiny_Swords_Enemy_Pack.zip> <Tiny_Swords_Free_Pack.zip> [anak_manja.zip] [matcha_style.zip]
 # O terceiro zip (fonte Anak Manja) é opcional; requer python3 + fonttools para gerar os acentos.
 set -euo pipefail
 ENEMY_ZIP=${1:?informe o zip do Enemy Pack}
@@ -55,4 +55,12 @@ if [ -n "${3:-}" ]; then
   unzip -q "$3" -d "$TMP/font"
   TTF=$(find "$TMP/font" -iname '*.ttf' | head -1)
   python3 "$ROOT/scripts/build-font.py" "$TTF"
+fi
+
+# Fonte das instruções (já tem os acentos do português).
+if [ -n "${4:-}" ]; then
+  mkdir -p "$TMP/font2" "$ROOT/public/fonts"
+  unzip -q "$4" -d "$TMP/font2"
+  cp "$(find "$TMP/font2" -iname '*.ttf' | head -1)" "$ROOT/public/fonts/matcha-style.ttf"
+  echo "Fonte das instruções copiada"
 fi

@@ -36,6 +36,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('rock1', 'terrain/rock1.png');
     this.load.image('rock2', 'terrain/rock2.png');
     this.load.image('stump', 'terrain/stump.png');
+    // Logo (opcional: gerada por scripts/build-logo.py). Carregada em 2x para ficar nítida em pé.
+    this.load.svg('logo', 'logo/logo.svg', { width: 2400, height: 1280 });
 
     this.load.spritesheet('splash', 'fx/splash.png', { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('dust', 'fx/dust.png', { frameWidth: 64, frameHeight: 64 });
@@ -71,6 +73,7 @@ export class BootScene extends Phaser.Scene {
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
+    this.makePuff();
     this.makeWindAndWaves();
 
     this.scene.start('menu');
@@ -184,6 +187,19 @@ export class BootScene extends Phaser.Scene {
     g.fillPoints(pts.reduce<Phaser.Types.Math.Vector2Like[]>((acc, v, i) => (i % 2 ? (acc[acc.length - 1].y = v, acc) : [...acc, { x: v, y: 0 }]), []), true);
     g.generateTexture('star', 16, 16);
     g.destroy();
+  }
+
+  /** Bolinha de fumaça macia (tingida de cinza claro na transformação). */
+  private makePuff(): void {
+    const tex = this.textures.createCanvas('puff', 64, 64)!;
+    const ctx = tex.getContext();
+    const g = ctx.createRadialGradient(32, 30, 4, 32, 32, 31);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(0.6, 'rgba(255,255,255,0.85)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 64, 64);
+    tex.refresh();
   }
 
   /** Brilho radial branco (tingido com a cor do jogador). */

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FONT, VIEW, W, wantsTouchControls } from '../config';
+import { BODY_FONT, FONT, VIEW, W, wantsTouchControls } from '../config';
 import { DEVICES, connectedPads, padOrdinal, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import {
@@ -83,7 +83,7 @@ export class ControlsScene extends Phaser.Scene {
     const HH = this.scale.height;
     this.add
       .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.', {
-        fontFamily: FONT,
+        fontFamily: BODY_FONT,
         fontSize: P ? '30px' : '18px',
         color: '#fff7dc',
         wordWrap: { width: 1100 },
@@ -190,7 +190,7 @@ export class ControlsScene extends Phaser.Scene {
     );
     items.push(
       this.add
-        .text(cx, cy + 116, info.detail, { fontFamily: FONT, fontSize: '19px', color: '#3c5368' })
+        .text(cx, cy + 116, info.detail, { fontFamily: BODY_FONT, fontSize: '19px', color: '#3c5368' })
         .setOrigin(0.5),
     );
     // Setas para trocar.
@@ -212,7 +212,7 @@ export class ControlsScene extends Phaser.Scene {
     const hint = this.mode === 'story' ? 'A / D' : i === 0 ? 'A / D' : '← / →';
     items.push(
       this.add
-        .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: FONT, fontSize: '15px', color: '#6b7f90' })
+        .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: BODY_FONT, fontSize: '15px', color: '#6b7f90' })
         .setOrigin(0.5),
     );
     return this.add.container(px, py, items).setScale(sc);
@@ -264,7 +264,7 @@ export class ControlsScene extends Phaser.Scene {
   }
 
   private back(): void {
-    this.scene.start('menu');
+    this.scene.start('menu', { stage: 'modes' });
   }
 }
 

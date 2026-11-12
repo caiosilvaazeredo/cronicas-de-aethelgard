@@ -10,16 +10,22 @@ import { UIScene } from './scenes/UIScene';
 Object.assign(VIEW, computeView());
 
 /** Carrega a fonte antes de desenhar qualquer texto (sem ela, usa a reserva). */
-async function loadFont(): Promise<void> {
+async function loadFace(family: string, url: string): Promise<void> {
   try {
-    const res = await fetch('./fonts/anak-manja-pt.ttf');
+    const res = await fetch(url);
     if (!res.ok) return;
-    const face = new FontFace('Anak Manja PT', await res.arrayBuffer());
+    const face = new FontFace(family, await res.arrayBuffer());
     await face.load();
     (document.fonts as unknown as { add(f: FontFace): void }).add(face);
   } catch {
     /* fonte reserva */
   }
+}
+async function loadFont(): Promise<void> {
+  await Promise.all([
+    loadFace('Anak Manja PT', './fonts/anak-manja-pt.ttf'),
+    loadFace('Matcha Style', './fonts/matcha-style.ttf'),
+  ]);
 }
 let game: Phaser.Game;
 

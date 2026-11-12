@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEPTH, FONT, PORTRAIT, VIEW, W } from '../config';
+import { DEPTH, BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { Hud } from '../game/Hud';
 import { TouchPad } from '../game/touch';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
@@ -53,7 +53,7 @@ export class UIScene extends Phaser.Scene {
       if (!anyTouch) {
         this.add
           .text(W / 2, top + (VIEW.h - top) / 2, 'Escolha "Toque na tela"\nna tela de controles\npara jogar pelo celular', {
-            fontFamily: FONT,
+            fontFamily: BODY_FONT,
             fontSize: '40px',
             color: '#9fb4c8',
             align: 'center',
@@ -74,7 +74,7 @@ export class UIScene extends Phaser.Scene {
     this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i]) : undefined));
 
     const menuY = VIEW.portrait ? 120 : 720 - 34;
-    this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => g.scene.start('menu'), 120)
+    this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 120)
       .setScale(VIEW.portrait ? 1.2 : 0.7)
       .setDepth(DEPTH.hud + 4)
       .setAlpha(0.9);
@@ -184,7 +184,7 @@ export class UIScene extends Phaser.Scene {
       pillButton(this, VIEW.portrait ? W / 2 : W / 2 - 160, by, 'JOGAR DE NOVO', () => g.restartMatch(), 280, 0xffe066)
         .setScale(sc)
         .setDepth(DEPTH.hud + 4);
-      pillButton(this, VIEW.portrait ? W / 2 : W / 2 + 160, VIEW.portrait ? by + 150 : by, 'MENU', () => g.scene.start('menu'), 200)
+      pillButton(this, VIEW.portrait ? W / 2 : W / 2 + 160, VIEW.portrait ? by + 150 : by, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 200)
         .setScale(sc)
         .setDepth(DEPTH.hud + 4);
     });

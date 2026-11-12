@@ -35,6 +35,8 @@ export const DEPTH = {
 
 /** Fonte do jogo: Anak Manja (com acentos do português) e reserva para setas e símbolos. */
 export const FONT = '"Anak Manja PT", "Arial Black", "Arial Bold", Arial, sans-serif';
+/** Fonte das instruções (textos explicativos, legendas, avisos): Matcha Style. */
+export const BODY_FONT = '"Matcha Style", "Trebuchet MS", Arial, sans-serif';
 
 /** Mostra os controles na tela: aparelho com toque, ou ?touch=1 na URL (para testar no PC). */
 export function wantsTouchControls(): boolean {

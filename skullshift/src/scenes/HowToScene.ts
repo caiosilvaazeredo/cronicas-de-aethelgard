@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
-import { FONT, VIEW, W } from '../config';
+import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { DEVICES, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import { PLAYER_TINT, gamepadArt, keycap, panel, phoneArt, pillButton, playerBadge } from '../ui/devices';
 
 type Mode = 'story' | 'versus';
 
-const CAPTION = { fontFamily: FONT, fontSize: '17px', color: '#10223a' };
+const CAPTION = { fontFamily: BODY_FONT, fontSize: '17px', color: '#10223a' };
 
 /** Tela "Como jogar": mostra o mapa de botões do dispositivo escolhido por cada jogador. */
 export class HowToScene extends Phaser.Scene {
@@ -131,7 +131,7 @@ export class HowToScene extends Phaser.Scene {
     if (d === 'kb-full') {
       this.add
         .text(cx + 120, cy + 98, 'Também: setas, Espaço,\nJ (atacar), K (defender), L (pegar)', {
-          fontFamily: FONT,
+          fontFamily: BODY_FONT,
           fontSize: '12px',
           color: '#3c5368',
           align: 'center',
@@ -147,7 +147,7 @@ export class HowToScene extends Phaser.Scene {
       [0x3f7fd9, 'X', 'Atacar'],
       [0xe5533d, 'B', 'Defender (ou LB/RB)'],
       [0xf2c230, 'Y', 'Pegar item'],
-      [0x5a6472, '◉', 'Mover (analógico ou direcional)'],
+      [0x5a6472, '◉', 'Mover (analógico)'],
       [0x5a6472, '▼', 'Agachar (para baixo)'],
     ];
     rows.forEach(([c, glyph, text], k) => {
@@ -178,7 +178,7 @@ export class HowToScene extends Phaser.Scene {
     });
     this.add
       .text(cx, cy + 112, 'Celular deitado ou em pé. Dá para usar vários dedos ao mesmo tempo.', {
-        fontFamily: FONT,
+        fontFamily: BODY_FONT,
         fontSize: '14px',
         color: '#3c5368',
       })
@@ -222,7 +222,7 @@ export class HowToScene extends Phaser.Scene {
         this.add.image(18, 0, icon).setScale(0.26);
       }
       this.add
-        .text(46, 0, text, { fontFamily: FONT, fontSize: '13px', color: '#fff7dc', lineSpacing: 2 })
+        .text(46, 0, text, { fontFamily: BODY_FONT, fontSize: '13px', color: '#fff7dc', lineSpacing: 2 })
         .setOrigin(0, 0.5);
       const made = this.children.list.slice(before);
       const cx = W / 2 - w / 2 + (P ? 40 : 30) + (k % cols) * (w / cols);

@@ -48,7 +48,7 @@ const RIGHT_1: ScreenDef = {
 };
 const RIGHT_2: ScreenDef = {
   segments: [[0, 8], [11, 2], [14, 6]],
-  deco: [[3, 'dead_tree'], [12, 'rock2'], [15, 'bones'], [18, 'skull_spike'], [19, 'skull_spike']],
+  deco: [[3, 'dead_tree'], [12, 'rock2'], [15, 'rock1'], [18, 'skull_spike'], [19, 'skull_spike']],
   versusItems: [[5, 'harpoon']],
 };
 
@@ -289,7 +289,6 @@ export class Level {
     for (const x of [TILE / 2 + 8, this.width - TILE / 2 - 8]) {
       this.addDeco(x - 22, 'skull_spike', 0);
       this.addDeco(x + 22, 'skull_spike', 0);
-      this.addDeco(x, 'bones', 0);
     }
   }
 

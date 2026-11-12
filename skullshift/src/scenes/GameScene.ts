@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEATH_Y, DEPTH, FLOOR_Y, FONT, H, PORTRAIT, RESPAWN_DELAY, VIEW, W, WATER_Y } from '../config';
+import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, VIEW, W, WATER_Y } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -19,10 +19,15 @@ interface Item {
   home: boolean;
   active: boolean;
   respawnAt: number;
+  /** Itens que caíram de arremessos somem depois de um tempo (0 = não somem). */
+  expireAt: number;
 }
 
 interface Projectile {
   sprite: Phaser.GameObjects.Sprite;
+  /** Item em que o projétil vira ao cair no chão (osso, arpão). */
+  kind?: ItemId;
+  gravity: number;
   glow?: Phaser.GameObjects.Image;
   owner: Fighter;
   vx: number;
@@ -135,9 +140,9 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : 'VERSUS', 1600));
 
     const kb = this.input.keyboard!;
-    kb.on('keydown-ESC', () => this.scene.start('menu'));
+    kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
     kb.on('keydown-R', () => this.ended && this.restartMatch());
-    kb.on('keydown-ENTER', () => this.ended && this.scene.start('menu'));
+    kb.on('keydown-ENTER', () => this.ended && this.scene.start('menu', { stage: 'modes' }));
 
     this.startTime = this.time.now;
   }
@@ -421,21 +426,35 @@ export class GameScene extends Phaser.Scene {
       f.color !== undefined
         ? this.add.image(s.x, s.y, 'aura').setTint(f.color).setScale(0.55, 0.4).setDepth(DEPTH.projectiles - 1).setBlendMode(Phaser.BlendModes.ADD)
         : undefined;
-    this.projectiles.push({ sprite: s, glow, owner: f, vx: pd.speed * f.facing, vy: 0, life: 1.6, bounced: false });
+    // Osso sai em arco e cai; o arpão vai quase reto. Os dois viram item ao cair no chão.
+    const arc = pd.tex === 'bone' ? { vy: -150, g: 430 } : { vy: -30, g: 110 };
+    const kind: ItemId | undefined = pd.tex === 'bone' ? 'bone' : pd.tex === 'harpoon' ? 'harpoon' : undefined;
+    this.projectiles.push({ sprite: s, glow, kind, gravity: arc.g, owner: f, vx: pd.speed * f.facing, vy: arc.vy, life: 3, bounced: false });
   }
 
   private updateProjectiles(dt: number): void {
     for (const p of this.projectiles) {
       p.life -= dt;
       p.sprite.x += p.vx * dt;
+      p.vy += (p.bounced ? 1400 : p.gravity) * dt;
+      p.sprite.y += p.vy * dt;
+      if (p.bounced) p.sprite.angle += 720 * dt;
+      else if (p.kind === 'harpoon') p.sprite.setAngle(45 * Math.sign(p.vx) + Math.atan2(p.vy, Math.abs(p.vx)) * (180 / Math.PI) * Math.sign(p.vx));
       p.glow?.setPosition(p.sprite.x, p.sprite.y).setVisible(!p.bounced);
-      if (p.bounced) {
-        p.vy += 1400 * dt;
-        p.sprite.y += p.vy * dt;
-        p.sprite.angle += 720 * dt;
-        p.sprite.alpha = Math.max(0, p.life / 0.6);
+      // Caiu: no chão vira item que dá para pegar; na água, some com um respingo.
+      if (p.vy > 0 && p.sprite.y >= FLOOR_Y - 10 && this.level.isGround(p.sprite.x)) {
+        if (p.kind) this.spawnItem(p.sprite.x, p.kind, false, 9000);
+        else this.fx('dust', p.sprite.x, FLOOR_Y - 8, 0.8);
+        p.life = 0;
         continue;
       }
+      if (p.sprite.y > WATER_Y + 4) {
+        const sp = this.add.sprite(p.sprite.x, WATER_Y + 2, 'splash').setScale(0.5).setDepth(DEPTH.fx).play('splash');
+        sp.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => sp.destroy());
+        p.life = 0;
+        continue;
+      }
+      if (p.bounced) continue;
       for (const b of this.fighters) {
         if (!b.alive || b.team === p.owner.team || b.invulnerable) continue;
         if (!overlap(projBox(p), bodyBox(b))) continue;
@@ -461,7 +480,7 @@ export class GameScene extends Phaser.Scene {
     p.bounced = true;
     p.vx *= -0.25;
     p.vy = -380;
-    p.life = 0.6;
+    p.life = 2;
   }
 
   private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water'): void {
@@ -565,7 +584,8 @@ export class GameScene extends Phaser.Scene {
     const glow = this.add.image(0, ghostY - 10, 'aura').setTint(color).setScale(0.9, 1).setAlpha(0.6);
     const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
     const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(from > 0);
-    const rig = this.add.container(x + from * 420, hoverY - 300, [rope, glow, ghost, cloud, shaman]).setDepth(DEPTH.fx + 3).setAlpha(0);
+    // Atrás dos personagens: o xamã nunca cobre ninguém.
+    const rig = this.add.container(x + from * 420, hoverY - 300, [rope, glow, ghost, cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
     const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: [ghost, glow], angle: { from: -6, to: 6 }, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
 
@@ -623,7 +643,7 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- itens / transformação ----------
 
-  private spawnItem(x: number, kind: ItemId, home: boolean): void {
+  private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0): void {
     const y = FLOOR_Y - 24;
     const glow = this.add.ellipse(x, FLOOR_Y - 2, 46, 12, 0xfff7a8, 0.45).setDepth(DEPTH.items);
     const sprite = this.add.sprite(x, y, ITEM_TEXTURE[kind], 0).setDepth(DEPTH.items);
@@ -632,7 +652,7 @@ export class GameScene extends Phaser.Scene {
     this.tweens.add({ targets: glow, alpha: 0.15, duration: 700, yoyo: true, repeat: -1 });
     const prompt = this.add
       .text(x, y - 46, '', {
-        fontFamily: FONT,
+        fontFamily: BODY_FONT,
         fontSize: '16px',
         color: '#ffffff',
         stroke: '#10223a',
@@ -643,7 +663,7 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 1)
       .setVisible(false);
-    this.items.push({ kind, sprite, glow, prompt, home, active: true, respawnAt: 0 });
+    this.items.push({ kind, sprite, glow, prompt, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0 });
   }
 
   /**
@@ -660,6 +680,19 @@ export class GameScene extends Phaser.Scene {
           it.glow.setVisible(true);
         }
         continue;
+      }
+      // Item de arremesso: pisca no fim e some.
+      if (it.expireAt) {
+        const left = it.expireAt - time;
+        const blink = left < 2000 && Math.floor(time / 120) % 2 === 0;
+        it.sprite.setAlpha(blink ? 0.3 : 1);
+        if (left <= 0) {
+          it.active = false;
+          it.sprite.setVisible(false);
+          it.glow.setVisible(false);
+          it.prompt.setVisible(false);
+          continue;
+        }
       }
       const char = ITEM_TO_CHAR[it.kind];
       let shown = false;
@@ -699,9 +732,15 @@ export class GameScene extends Phaser.Scene {
 
   private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
-    this.fx('transform', p.x, p.feet - 40, 1, PLAYER_TINT[pi]);
-    p.applyChar(char);
-    this.ui?.hud?.setChar(pi, char);
+    // Nuvem de fumaça cobre o personagem; a troca acontece escondida nela.
+    this.smokeBurst(p.x, p.feet, PLAYER_TINT[pi], 1);
+    this.time.delayedCall(90, () => {
+      if (!p.alive) return;
+      p.applyChar(char);
+      p.sprite.setTintFill(0xffffff);
+      this.time.delayedCall(120, () => p.sprite.clearTint());
+      this.ui?.hud?.setChar(pi, char);
+    });
     const t = this.add
       .text(p.x, p.feet - 110, CHARS[char].name.toUpperCase() + '!', {
         fontFamily: FONT,
@@ -784,7 +823,7 @@ export class GameScene extends Phaser.Scene {
   /** Renascimento: efeito na cor do jogador + "P1!"/"P2!" saltando sobre ele. */
   private announce(pi: number): void {
     const p = this.players[pi];
-    this.fx('transform', p.x, p.feet - 40, 0.8, PLAYER_TINT[pi]);
+    this.smokeBurst(p.x, p.feet, PLAYER_TINT[pi], 0.7);
     const t = this.add
       .text(p.x, p.feet - 120, `P${pi + 1}!`, {
         fontFamily: FONT,
@@ -798,6 +837,44 @@ export class GameScene extends Phaser.Scene {
       .setScale(0);
     this.tweens.add({ targets: t, scale: 1, duration: 300, ease: 'Back.easeOut' });
     this.tweens.add({ targets: t, y: t.y - 30, alpha: 0, delay: 700, duration: 500, onComplete: () => t.destroy() });
+  }
+
+  /** Fumaça (bolinhas cinza que crescem e sobem) + faíscas na cor do jogador + anel no chão. */
+  private smokeBurst(x: number, feet: number, tint: number, size: number): void {
+    const n = Math.round(14 * size);
+    for (let i = 0; i < n; i++) {
+      const px = x + Phaser.Math.Between(-30, 30) * size;
+      const py = feet - Phaser.Math.Between(4, 70) * size;
+      const shade = Phaser.Math.RND.pick([0xf2f2ee, 0xdde3e6, 0xc9d1d6, 0xe9e4da]);
+      const puff = this.add.image(px, py, 'puff').setTint(shade).setDepth(DEPTH.fighters + 2).setScale(0.15).setAlpha(0.95);
+      this.tweens.add({
+        targets: puff,
+        x: px + (px - x) * 0.8 + Phaser.Math.Between(-10, 10),
+        y: py - Phaser.Math.Between(25, 60) * size,
+        scale: Phaser.Math.FloatBetween(0.8, 1.35) * size,
+        alpha: 0,
+        delay: Phaser.Math.Between(0, 90),
+        duration: Phaser.Math.Between(650, 950),
+        ease: 'Quad.easeOut',
+        onComplete: () => puff.destroy(),
+      });
+    }
+    for (let i = 0; i < Math.round(10 * size); i++) {
+      const s = this.add.image(x, feet - 36, 'spark').setTint(tint).setDepth(DEPTH.fighters + 3).setScale(0.45);
+      const a = Phaser.Math.FloatBetween(0, Math.PI * 2);
+      const r = Phaser.Math.Between(40, 80) * size;
+      this.tweens.add({
+        targets: s,
+        x: x + Math.cos(a) * r,
+        y: feet - 36 + Math.sin(a) * r * 0.7,
+        scale: 0,
+        duration: 520,
+        ease: 'Cubic.easeOut',
+        onComplete: () => s.destroy(),
+      });
+    }
+    const ring = this.add.ellipse(x, feet - 2, 50, 14).setStrokeStyle(3, tint, 0.9).setDepth(DEPTH.fighters - 1).setScale(0.4);
+    this.tweens.add({ targets: ring, scale: 2.4, alpha: 0, duration: 500, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
   }
 
   private sparks(x: number, y: number): void {

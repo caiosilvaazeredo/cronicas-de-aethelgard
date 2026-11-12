@@ -13,10 +13,10 @@ Jogo de duelo 2D de ação, feito com Phaser 3, TypeScript e Vite. Você começa
 2. Importe os sprites (eles não ficam no Git, veja **Sprites** abaixo):
 
    ```bash
-   scripts/import-assets.sh caminho/Tiny_Swords_Enemy_Pack.zip caminho/Tiny_Swords_Free_Pack.zip caminho/anak_manja.zip
+   scripts/import-assets.sh caminho/Tiny_Swords_Enemy_Pack.zip caminho/Tiny_Swords_Free_Pack.zip caminho/anak_manja.zip caminho/matcha_style.zip
    ```
 
-   O terceiro zip é a fonte **Anak Manja** (Khurasan Studio), livre para uso pessoal e comercial. O script gera uma versão com os acentos do português, que a fonte original não tem, e para isso precisa do `fonttools` (`pip install fonttools`). Sem a fonte, o jogo usa Arial Black.
+   O terceiro zip é a fonte **Anak Manja** (títulos), e o quarto, opcional, é a **Matcha Style** (textos de instrução). A Anak Manja é da Khurasan Studio e é livre para uso pessoal e comercial. O script gera uma versão com os acentos do português, que a fonte original não tem, e para isso precisa do `fonttools` (`pip install fonttools`). Sem a fonte, o jogo usa Arial Black.
 
 3. Inicie o servidor de desenvolvimento:
 
@@ -25,6 +25,16 @@ Jogo de duelo 2D de ação, feito com Phaser 3, TypeScript e Vite. Você começa
    ```
 
 O comando `npm run build` gera a versão final em `dist/`. Os caminhos são relativos, então o build pode ser hospedado na web ou empacotado com Electron para a Steam.
+
+### Logo
+
+A logo (`public/assets/logo/logo.svg`) é montada a partir dos SVGs do Esqueleto e do Xamã e da fonte Anak Manja. O nome vira contorno, então a logo não depende da fonte instalada. Para gerar, copie `Skull_frame1.svg` e `Hex_Shaman_frame1.svg` para `public/assets/logo/` e rode:
+
+```bash
+python3 scripts/build-logo.py public/assets/logo/skull.svg public/assets/logo/shaman.svg public/fonts/anak-manja-pt.ttf
+```
+
+Sem a logo, a tela inicial mostra o nome em texto.
 
 ## Fases
 

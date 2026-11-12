@@ -358,7 +358,9 @@ export class MapScene extends Phaser.Scene {
       const node = this.add.container(x, y, items).setDepth(10).setSize(70, 70);
       node.setInteractive({ useHandCursor: !locked }).on('pointerdown', () => {
         if (locked) return;
-        if (i === this.current) this.enter();
+        // Segundo clique na fase para onde já está indo: o esqueleto acelera.
+        if (this.walking && i === this.walkTarget) this.hurry();
+        else if (i === this.current && !this.walking) this.enter();
         else this.walkTo(i);
       });
       if (!locked && !cleared) this.tweens.add({ targets: node, scale: 1.12, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
@@ -387,9 +389,23 @@ export class MapScene extends Phaser.Scene {
   }
 
   /** O esqueleto anda pela trilha, ponto a ponto, até a fase escolhida. */
+  /** Destino da caminhada atual e se está correndo (clique duplo / Enter durante a caminhada). */
+  private walkTarget = -1;
+  private fast = false;
+  private walkTween?: Phaser.Tweens.Tween;
+
+  private hurry(): void {
+    if (this.fast) return;
+    this.fast = true;
+    this.hero.anims.timeScale = 2.5;
+    if (this.walkTween) this.walkTween.timeScale = 4;
+  }
+
   private walkTo(to: number): void {
     if (this.walking || to === this.current) return;
     this.walking = true;
+    this.walkTarget = to;
+    this.fast = false;
     const a = NODE_AT[this.current];
     const b = NODE_AT[to];
     const dir = Math.sign(b - a);
@@ -399,6 +415,10 @@ export class MapScene extends Phaser.Scene {
     const next = (k: number) => {
       if (k >= pts.length) {
         this.walking = false;
+        this.walkTarget = -1;
+        this.fast = false;
+        this.walkTween = undefined;
+        this.hero.anims.timeScale = 1;
         this.current = to;
         this.hero.play('skull_idle');
         this.updateInfo();
@@ -407,13 +427,14 @@ export class MapScene extends Phaser.Scene {
       const [x, y] = pts[k];
       this.hero.setFlipX(x < this.hero.x);
       const dist = Math.hypot(x - this.hero.x, y - 34 - this.hero.y);
-      this.tweens.add({
+      this.walkTween = this.tweens.add({
         targets: [this.hero, this.heroAura],
         x,
         y: (t: Phaser.GameObjects.GameObject) => (t === this.hero ? y - 34 : y - 44),
         duration: Math.max(120, dist * 4),
         onComplete: () => next(k + 1),
       });
+      if (this.fast) this.walkTween.timeScale = 4;
     };
     next(0);
   }
@@ -425,7 +446,8 @@ export class MapScene extends Phaser.Scene {
   }
 
   private enter(): void {
-    if (this.walking) return;
+    // Enter / A durante a caminhada: acelera em vez de entrar.
+    if (this.walking) return this.hurry();
     // Modo livre (testes): direto para a fase, sem a visual novel.
     if (isFreePlay()) this.scene.start('game', { mode: 'story', devices: this.devices, level: this.current });
     else this.scene.start('vn', { devices: this.devices, level: this.current });

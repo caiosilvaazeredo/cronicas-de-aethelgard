@@ -95,6 +95,8 @@ A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor 
 
 ## Saves, dificuldade e vidas (modo história)
 
+No mapa, clicar (ou tocar) duas vezes na fase de destino faz o esqueleto correr até ela, 4× mais rápido; Enter / A durante a caminhada também acelera.
+
 **HISTÓRIA** abre a tela de saves: 3 slots, cada um com a fase em que parou, os medalhões das fases concluídas, a dificuldade e a data do último jogo. CONTINUAR segue de onde parou; APAGAR pede confirmação. Slot vazio: NOVO JOGO em Normal ou Difícil (cada save tem a sua dificuldade e as suas falas já vistas). Saves antigos viram o Save 1.
 
 - **Normal:** se morrer mais de 5 vezes na mesma fase, a fase recomeça do início.

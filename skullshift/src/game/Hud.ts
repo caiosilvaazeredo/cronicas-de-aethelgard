@@ -20,17 +20,22 @@ export class Hud {
 
   constructor(
     private scene: Phaser.Scene,
-    players: Array<{ name: string; char: CharId }>,
+    players: Array<{ name: string; char: CharId; color: number }>,
     screens: number,
     touchLayout: boolean,
   ) {
     const y = touchLayout ? 64 : H - 86;
     const scale = touchLayout ? 0.36 : 0.62;
     const fontSize = touchLayout ? '28px' : '44px';
-    const labelGap = touchLayout ? 70 : 98;
+    const labelGap = touchLayout ? 62 : 96;
     players.forEach((p, i) => {
       const right = i === 1;
       const ax = right ? W - (touchLayout ? 58 : 92) : touchLayout ? 58 : 92;
+      // Disco na cor do jogador atrás do avatar.
+      const r = touchLayout ? 46 : 74;
+      scene.add.circle(ax, y, r + 5, 0x10223a).setScrollFactor(0).setDepth(DEPTH.hud);
+      const disc = scene.add.circle(ax, y, r, p.color).setScrollFactor(0).setDepth(DEPTH.hud);
+      scene.tweens.add({ targets: disc, alpha: { from: 1, to: 0.7 }, duration: 650, yoyo: true, repeat: -1 });
       const avatar = scene.add
         .image(ax, y, `${p.char}_avatar`)
         .setScale(scale)
@@ -42,9 +47,9 @@ export class Hud {
           fontFamily: FONT,
           fontStyle: 'bold',
           fontSize,
-          color: touchLayout ? '#fff7dc' : '#0b0b0b',
+          color: '#' + p.color.toString(16).padStart(6, '0'),
           stroke: '#10223a',
-          strokeThickness: touchLayout ? 6 : 0,
+          strokeThickness: 8,
         })
         .setOrigin(right ? 1 : 0, 0.5)
         .setScrollFactor(0)

@@ -1,9 +1,12 @@
 import Phaser from 'phaser';
-import { DEPTH, GUARD_WALK_SPEED, INVULN_TIME, JUMP_V } from '../config';
+import { DEPTH, FONT, GUARD_WALK_SPEED, INVULN_TIME, JUMP_V } from '../config';
 import { CHARS, type CharDef, type CharId } from './characters';
 import { emptyIntent, type Intent } from './controls';
 
 type State = 'idle' | 'run' | 'guard' | 'attack' | 'dead';
+
+/** Altura aproximada da cabeça acima dos pés (para a etiqueta e a aura). */
+const HEAD_HEIGHT: Record<CharId, number> = { skull: 72, lizard: 118, gnoll: 76, shark: 76, goblin: 108 };
 
 const BODY_W = 30;
 const BODY_H = 50;
@@ -50,11 +53,16 @@ export class Fighter {
     readonly baseChar: CharId,
     readonly team: number,
     readonly label: string,
+    /** Cor do jogador (aura, anel e etiqueta). Inimigos não têm. */
+    readonly color?: number,
+    /** Texto da etiqueta sobre a cabeça ("P1", "P2"). */
+    tagText?: string,
   ) {
     this.def = CHARS[baseChar];
     this.sprite = scene.physics.add.sprite(x, 0, `${baseChar}_idle`, 0);
     this.sprite.setDepth(DEPTH.fighters);
     this.shield = scene.add.image(x, feetY, 'shield').setDepth(DEPTH.fighters + 1).setVisible(false);
+    if (color !== undefined) this.buildMarkers(color, tagText ?? label);
     this.applyChar(baseChar, feetY);
   }
 
@@ -184,6 +192,7 @@ export class Fighter {
 
     // Pisca enquanto invulnerável.
     this.sprite.setAlpha(this.invulnerable ? (Math.floor(this.scene.time.now / 80) % 2 ? 0.35 : 1) : 1);
+    this.updateMarkers();
   }
 
   private attackFrame(): number {
@@ -215,6 +224,7 @@ export class Fighter {
     this.alive = false;
     this.state = 'dead';
     this.shield.setVisible(false);
+    this.setMarkersVisible(false);
     this.body.setVelocity(0, 0);
     this.body.setEnable(false);
     this.sprite.anims.stop();
@@ -244,9 +254,57 @@ export class Fighter {
     this.applyChar(this.baseChar, feetY);
     this.body.setVelocity(0, 0);
     this.invulnUntil = this.scene.time.now + INVULN_TIME;
+    this.setMarkersVisible(true);
+    this.updateMarkers();
+  }
+
+  // ---------- identificação do jogador ----------
+
+  private aura?: Phaser.GameObjects.Image;
+  private ring?: Phaser.GameObjects.Ellipse;
+  private tag?: Phaser.GameObjects.Container;
+
+  /** Aura atrás do corpo, anel nos pés e etiqueta "P1/P2" sobre a cabeça. */
+  private buildMarkers(color: number, text: string): void {
+    const s = this.scene;
+    this.aura = s.add.image(0, 0, 'aura').setTint(color).setDepth(DEPTH.fighters - 1);
+    s.tweens.add({ targets: this.aura, alpha: { from: 0.9, to: 0.55 }, duration: 650, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.ring = s.add.ellipse(0, 0, 58, 16).setStrokeStyle(3, color, 0.95).setFillStyle(color, 0.22).setDepth(DEPTH.fighters - 1);
+
+    const hex = '#' + color.toString(16).padStart(6, '0');
+    const label = s.add
+      .text(0, 0, text, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#ffffff' })
+      .setOrigin(0.5);
+    const w = label.width + 14;
+    const g = s.add.graphics();
+    g.fillStyle(0x10223a, 1).fillRoundedRect(-w / 2 - 2, -12, w + 4, 24, 8);
+    g.fillStyle(color, 1).fillRoundedRect(-w / 2, -10, w, 20, 7);
+    g.fillStyle(0x10223a, 1).fillTriangle(-7, 12, 7, 12, 0, 20);
+    g.fillStyle(color, 1).fillTriangle(-5, 10, 5, 10, 0, 16);
+    this.tag = s.add.container(0, 0, [g, label]).setDepth(DEPTH.fx + 1);
+    this.tag.setData('hex', hex);
+  }
+
+  private updateMarkers(): void {
+    if (!this.aura || !this.ring || !this.tag) return;
+    const head = HEAD_HEIGHT[this.def.id];
+    const visible = this.sprite.visible && this.alive;
+    this.aura.setPosition(this.x, this.feet - head * 0.45).setScale(1.05, (head + 40) / 100).setVisible(visible);
+    this.ring.setPosition(this.x, this.feet - 2).setVisible(visible);
+    const bob = Math.sin(this.scene.time.now / 220) * 3;
+    this.tag.setPosition(this.x, this.feet - head - 26 + bob).setVisible(visible);
+  }
+
+  private setMarkersVisible(v: boolean): void {
+    this.aura?.setVisible(v);
+    this.ring?.setVisible(v);
+    this.tag?.setVisible(v);
   }
 
   destroy(): void {
+    this.aura?.destroy();
+    this.ring?.destroy();
+    this.tag?.destroy();
     this.shield.destroy();
     this.sprite.destroy();
   }

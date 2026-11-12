@@ -31,7 +31,14 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 ## Modos
 
 - **História (1 jogador):** comece na ponta esquerda e chegue ao fim do lado oposto, atravessando os 5 cenários contra inimigos controlados pela IA. Ao morrer, você volta ao último checkpoint. Quando o cenário fica sem inimigos, aparece "VAI ➜".
-- **Versus (2 jogadores locais):** a partida começa no cenário central, como no mockup. O P1 (esqueleto) vai para a direita e o P2 (lagarto) para a esquerda. Quem mata ganha a vez: só ele pode sair pela borda da tela e levar a câmera para o próximo cenário. O outro renasce à frente dele. Vence quem chegar ao fim do lado oposto.
+- **Versus (2 jogadores locais):** a partida começa no cenário central, como no mockup. Os dois começam como esqueleto. O P1 vai para a direita e o P2 para a esquerda. Quem mata ganha a vez: só ele pode sair pela borda da tela e levar a câmera para o próximo cenário. O outro renasce à frente dele. Vence quem chegar ao fim do lado oposto.
+
+**Quem é quem:** o P1 é **azul** e o P2 é **vermelho**. Cada personagem tem:
+- uma aura pulsando atrás do corpo;
+- um anel no chão sob os pés;
+- uma etiqueta "P1"/"P2" sobre a cabeça.
+
+Também ficam na cor do jogador o disco do avatar e o nome no HUD, o efeito de transformação, o "P1!"/"P2!" ao renascer, o brilho dos projéteis, as metades do teclado e os botões de toque.
 
 A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor comemorando e uma faixa com o avatar.
 

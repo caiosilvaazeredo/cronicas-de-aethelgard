@@ -22,6 +22,7 @@ interface Item {
 
 interface Projectile {
   sprite: Phaser.GameObjects.Sprite;
+  glow?: Phaser.GameObjects.Image;
   owner: Fighter;
   vx: number;
   vy: number;
@@ -88,7 +89,7 @@ export class GameScene extends Phaser.Scene {
       const [sc, tile] = def.storyStart;
       this.screen = sc;
       const x = this.level.tileX(sc, tile);
-      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1'), this.devices[0], 'full');
+      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0], 'full');
       this.checkpointX = x;
       def.screens.forEach((s, si) => {
         for (const [t, char] of s.enemies ?? []) {
@@ -103,8 +104,9 @@ export class GameScene extends Phaser.Scene {
     } else {
       this.screen = Math.floor(def.screens.length / 2);
       const [a, b] = def.versusStart;
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1'), this.devices[0], 'left');
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'lizard', 1, 'Player 2'), this.devices[1], 'right');
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0], 'left');
+      // Os dois começam como esqueleto; cor, aura e etiqueta diferenciam.
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1], 'right');
       this.players[1].facing = -1;
       def.screens.forEach((s, si) => {
         for (const [t, kind] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
@@ -115,7 +117,7 @@ export class GameScene extends Phaser.Scene {
     const touchLayout = this.pads.length > 0;
     this.hud = new Hud(
       this,
-      this.players.map((p) => ({ name: p.label, char: p.baseChar })),
+      this.players.map((p, i) => ({ name: p.label, char: p.baseChar, color: PLAYER_TINT[i] })),
       this.level.screenCount,
       touchLayout,
     );
@@ -227,7 +229,7 @@ export class GameScene extends Phaser.Scene {
     if (other && other.alive) {
       other.respawn(this.versusSpawnX(1 - this.leader), FLOOR_Y);
       this.hud.setChar(1 - this.leader, other.def.id);
-      this.fx('transform', other.x, FLOOR_Y - 40, 1);
+      this.announce(1 - this.leader);
     }
   }
 
@@ -329,13 +331,19 @@ export class GameScene extends Phaser.Scene {
     if (pd.spin) s.play(pd.tex);
     s.setFlipX(f.facing < 0);
     s.setAngle(pd.angle * f.facing);
-    this.projectiles.push({ sprite: s, owner: f, vx: pd.speed * f.facing, vy: 0, life: 1.6, bounced: false });
+    // Brilho na cor de quem atirou (jogadores).
+    const glow =
+      f.color !== undefined
+        ? this.add.image(s.x, s.y, 'aura').setTint(f.color).setScale(0.55, 0.4).setDepth(DEPTH.projectiles - 1).setBlendMode(Phaser.BlendModes.ADD)
+        : undefined;
+    this.projectiles.push({ sprite: s, glow, owner: f, vx: pd.speed * f.facing, vy: 0, life: 1.6, bounced: false });
   }
 
   private updateProjectiles(dt: number): void {
     for (const p of this.projectiles) {
       p.life -= dt;
       p.sprite.x += p.vx * dt;
+      p.glow?.setPosition(p.sprite.x, p.sprite.y).setVisible(!p.bounced);
       if (p.bounced) {
         p.vy += 1400 * dt;
         p.sprite.y += p.vy * dt;
@@ -359,6 +367,7 @@ export class GameScene extends Phaser.Scene {
     this.projectiles = this.projectiles.filter((p) => {
       if (p.life > 0 && p.sprite.y < H + 50) return true;
       p.sprite.destroy();
+      p.glow?.destroy();
       return false;
     });
   }
@@ -401,7 +410,7 @@ export class GameScene extends Phaser.Scene {
         if (this.ended) return;
         victim.respawn(this.checkpointX, FLOOR_Y);
         this.hud.setChar(0, victim.def.id);
-        this.fx('transform', victim.x, FLOOR_Y - 40, 1);
+        this.announce(0);
       });
     } else {
       this.leader = 1 - pi;
@@ -410,7 +419,7 @@ export class GameScene extends Phaser.Scene {
         if (this.ended || victim.alive) return;
         victim.respawn(this.versusSpawnX(pi), FLOOR_Y);
         this.hud.setChar(pi, victim.def.id);
-        this.fx('transform', victim.x, FLOOR_Y - 40, 1);
+        this.announce(pi);
       });
     }
   }
@@ -461,7 +470,7 @@ export class GameScene extends Phaser.Scene {
 
   private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
-    this.fx('transform', p.x, p.feet - 40, 1);
+    this.fx('transform', p.x, p.feet - 40, 1, PLAYER_TINT[pi]);
     p.applyChar(char);
     this.hud.setChar(pi, char);
     const t = this.add
@@ -630,9 +639,30 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- efeitos ----------
 
-  private fx(key: string, x: number, y: number, scale: number): void {
+  private fx(key: string, x: number, y: number, scale: number, tint?: number): void {
     const s = this.add.sprite(x, y, key).setDepth(DEPTH.fx).setScale(scale).play(key);
+    if (tint !== undefined) s.setTint(tint);
     s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
+  }
+
+  /** Renascimento: efeito na cor do jogador + "P1!"/"P2!" saltando sobre ele. */
+  private announce(pi: number): void {
+    const p = this.players[pi];
+    this.fx('transform', p.x, p.feet - 40, 1, PLAYER_TINT[pi]);
+    const t = this.add
+      .text(p.x, p.feet - 120, `P${pi + 1}!`, {
+        fontFamily: FONT,
+        fontStyle: 'bold',
+        fontSize: '34px',
+        color: PLAYER_HEX[pi],
+        stroke: '#10223a',
+        strokeThickness: 8,
+      })
+      .setOrigin(0.5)
+      .setDepth(DEPTH.fx + 2)
+      .setScale(0);
+    this.tweens.add({ targets: t, scale: 1, duration: 300, ease: 'Back.easeOut' });
+    this.tweens.add({ targets: t, y: t.y - 30, alpha: 0, delay: 700, duration: 500, onComplete: () => t.destroy() });
   }
 
   private sparks(x: number, y: number): void {

@@ -2,8 +2,8 @@ import Phaser from 'phaser';
 import { FONT } from '../config';
 
 /** Cores dos jogadores (badges, metades do teclado, metade do controle). */
-export const PLAYER_TINT = [0x3d8bd9, 0x58b947];
-export const PLAYER_HEX = ['#3d8bd9', '#58b947'];
+export const PLAYER_TINT = [0x2f86e0, 0xe5463a];
+export const PLAYER_HEX = ['#2f86e0', '#e5463a'];
 
 const INK = 0x1d1a2b;
 const CAP = 0xe8dfcf;

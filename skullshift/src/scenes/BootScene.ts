@@ -63,6 +63,7 @@ export class BootScene extends Phaser.Scene {
     this.makeSpear();
     this.makeSpark();
     this.makeConfetti();
+    this.makeAura();
 
     this.scene.start('menu');
   }
@@ -125,6 +126,19 @@ export class BootScene extends Phaser.Scene {
     g.fillRect(44, 29, 3, 6);
     g.generateTexture('spear_item', 64, 64);
     g.destroy();
+  }
+
+  /** Brilho radial branco (tingido com a cor do jogador). */
+  private makeAura(): void {
+    const tex = this.textures.createCanvas('aura', 110, 110)!;
+    const ctx = tex.getContext();
+    const g = ctx.createRadialGradient(55, 55, 4, 55, 55, 54);
+    g.addColorStop(0, 'rgba(255,255,255,0.95)');
+    g.addColorStop(0.55, 'rgba(255,255,255,0.6)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 110, 110);
+    tex.refresh();
   }
 
   private makeConfetti(): void {

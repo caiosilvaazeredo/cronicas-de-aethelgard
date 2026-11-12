@@ -27,8 +27,16 @@ export class MenuScene extends Phaser.Scene {
       this.add.image(i * 64, 432, 'tilemap', 27 + col).setOrigin(0);
       this.add.image(i * 64, 496, 'tilemap', 45 + col).setOrigin(0);
     }
-    this.add.sprite(330, 472 - 126 + 96, 'skull_idle').play('skull_idle');
-    this.add.sprite(950, 472 - 148 + 96, 'lizard_idle').play('lizard_idle').setFlipX(true);
+    // Dois esqueletos: azul (P1) e vermelho (P2).
+    [
+      [330, 0x2f86e0, false],
+      [950, 0xe5463a, true],
+    ].forEach(([x, color, flip]) => {
+      const aura = this.add.image(x as number, 440, 'aura').setTint(color as number).setScale(1.05, 1.1);
+      this.tweens.add({ targets: aura, alpha: { from: 0.95, to: 0.55 }, duration: 650, yoyo: true, repeat: -1 });
+      this.add.ellipse(x as number, 470, 58, 16).setStrokeStyle(3, color as number).setFillStyle(color as number, 0.22);
+      this.add.sprite(x as number, 472 - 126 + 96, 'skull_idle').play('skull_idle').setFlipX(flip as boolean);
+    });
 
     this.add.image(W / 2 - 300, 140, 'skull_avatar').setScale(0.55).setAngle(-8);
     this.add
@@ -64,8 +72,8 @@ export class MenuScene extends Phaser.Scene {
         W / 2,
         H - 100,
         [
-          'História: A/D ou ←/→ mover · W/↑/Espaço pular · S/↓ defender · F/J atacar',
-          'Versus — P1: A/D · W · S · F      P2: ←/→ · ↑ · ↓ · Enter ou 0',
+          'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
+          'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
           'Segure para TRÁS para andar defendendo. Pegue osso, arpão ou lança para se transformar.',
         ].join('\n'),
         {

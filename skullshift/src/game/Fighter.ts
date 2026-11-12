@@ -424,13 +424,17 @@ export class Fighter {
         this.onSwimFx?.(this, 'exit');
         return;
       }
-      const anim = Math.abs(b.velocity.x) > 20 ? `${this.def.id}_run` : `${this.def.id}_idle`;
+      // Nada sem "andar": usa o corpo parado (sem passos) e só ondula.
+      const anim = `${this.def.id}_idle`;
       if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
-      this.sprite.anims.timeScale = 0.75;
+      this.sprite.anims.timeScale = 0.6;
     }
-    // Inclina o corpo: nadando para a frente deita um pouco; mergulhando aponta para baixo.
-    const lean = (b.velocity.x / this.def.speed) * 10 + (diving ? 14 * this.facing : 0);
-    this.sprite.setAngle(Phaser.Math.Linear(this.sprite.angle, lean + Math.sin(now / 260) * 3, Math.min(1, dt * 8)));
+    // Encabeça: o corpo deita para a frente como quem nada, mais quanto mais rápido vai;
+    // mergulhando, a cabeça aponta para baixo. Uma ondulação leve dá o ritmo das braçadas.
+    const speed01 = Math.min(1, Math.abs(b.velocity.x) / this.def.speed);
+    const lean = this.facing * (18 + 42 * speed01) + (diving ? 22 * this.facing : 0);
+    const stroke = Math.sin(now / (speed01 > 0.2 ? 140 : 300)) * (4 + 6 * speed01);
+    this.sprite.setAngle(Phaser.Math.Linear(this.sprite.angle, lean + stroke, Math.min(1, dt * 6)));
     if (now - this.lastWake > (diving ? 260 : 170)) {
       this.lastWake = now;
       if (diving) this.onSwimFx?.(this, 'bubble');

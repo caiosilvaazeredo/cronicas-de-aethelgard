@@ -1,0 +1,237 @@
+import Phaser from 'phaser';
+import { BODY_FONT, FONT, VIEW, W } from '../config';
+import { CHAPTERS, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { CHARS } from '../game/characters';
+import type { DeviceId } from '../game/controls';
+import { LEVELS } from '../game/level';
+import { PLAYER_TINT, pillButton } from '../ui/devices';
+
+const INK = 0x1d1a2b;
+
+/** Folha, quadro e onde ficam os pés/cabeça de cada retrato. */
+function portraitOf(who: Speaker): { key: string; frame: number; feetY: number; head: number } {
+  if (who === 'shaman') return { key: 'shaman_idle', frame: 192, feetY: 133, head: 80 };
+  const d = CHARS[who];
+  return { key: `${who}_idle`, frame: d.frame, feetY: d.feetY, head: d.head };
+}
+
+/** Cor da plaquinha de nome. */
+function nameColor(who: Speaker): number {
+  if (who === 'skull') return PLAYER_TINT[0];
+  if (who === 'shaman') return 0x9b6bf0;
+  return 0xc0392b;
+}
+
+const BG: Record<string, string> = { shore: 'sky', cave: 'cave_bg', volcano: 'volcano_bg', sky: 'sky_high' };
+
+/**
+ * Visual novel antes de cada fase (modo história): fundo da fase, retratos grandes dos
+ * personagens em pixel art (ampliação inteira, pixels nítidos), quem fala em destaque,
+ * caixa de diálogo com nome e texto letra a letra. Próximo / Pular.
+ */
+export class StoryScene extends Phaser.Scene {
+  private devices: DeviceId[] = ['kb-full'];
+  private level = 0;
+  private lines: Line[] = [];
+  private index = -1;
+  private typing?: Phaser.Time.TimerEvent;
+  private full = '';
+  private text!: Phaser.GameObjects.Text;
+  private nameText!: Phaser.GameObjects.Text;
+  private namePlate!: Phaser.GameObjects.Graphics;
+  private arrow!: Phaser.GameObjects.Text;
+  private slots: Record<'left' | 'right', { who?: Speaker; sprite?: Phaser.GameObjects.Sprite }> = { left: {}, right: {} };
+  private prevPad = { a: true, b: true };
+  private boxTop = 0;
+  lastData: { devices?: DeviceId[]; level?: number } = {};
+
+  constructor() {
+    super('vn');
+  }
+
+  init(data: { devices?: DeviceId[]; level?: number }): void {
+    this.lastData = data;
+    this.devices = data.devices ?? ['kb-full'];
+    this.level = data.level ?? 0;
+    this.lines = CHAPTERS[this.level]?.lines ?? [];
+    this.index = -1;
+    this.slots = { left: {}, right: {} };
+    this.prevPad = { a: true, b: true };
+  }
+
+  create(): void {
+    const H = VIEW.h;
+    const theme = LEVELS[this.level].theme;
+    this.add.image(0, 0, BG[theme]).setOrigin(0).setDisplaySize(W, H);
+    // Escurece a base para destacar os retratos e a caixa.
+    const shade = this.add.graphics();
+    shade.fillGradientStyle(0x0b1626, 0x0b1626, 0x0b1626, 0x0b1626, 0, 0, 0.75, 0.75).fillRect(0, H * 0.35, W, H * 0.65);
+
+    // Título do capítulo no alto.
+    const ch = CHAPTERS[this.level];
+    this.add
+      .text(W / 2, VIEW.portrait ? 120 : 46, `CAPÍTULO ${this.level + 1} · ${ch.title.toUpperCase()}`, {
+        fontFamily: FONT,
+        fontSize: VIEW.portrait ? '48px' : '34px',
+        color: '#fff7dc',
+        stroke: '#10223a',
+        strokeThickness: 10,
+      })
+      .setOrigin(0.5)
+      .setDepth(5);
+
+    // Caixa de diálogo em estilo pixel: contorno escuro, borda clara, fundo azul translúcido.
+    const bw = W - 120;
+    const bh = VIEW.portrait ? 360 : 190;
+    const bx = 60;
+    const by = H - bh - (VIEW.portrait ? 160 : 26);
+    this.boxTop = by;
+    const box = this.add.graphics().setDepth(10);
+    box.fillStyle(INK, 1).fillRect(bx - 6, by - 6, bw + 12, bh + 12);
+    box.fillStyle(0xfff7dc, 1).fillRect(bx - 2, by - 2, bw + 4, bh + 4);
+    box.fillStyle(0x1b3a78, 0.94).fillRect(bx, by, bw, bh);
+    box.fillStyle(0x2a5bb8, 0.55).fillRect(bx, by, bw, bh * 0.38);
+    box.fillStyle(0x7fb8ff, 0.35).fillRect(bx + 8, by + 8, bw - 16, 4);
+    // Cantos em degrau (pixel).
+    for (const [cx, cy] of [[bx, by], [bx + bw - 8, by], [bx, by + bh - 8], [bx + bw - 8, by + bh - 8]]) {
+      box.fillStyle(INK, 1).fillRect(cx, cy, 8, 8);
+    }
+
+    this.namePlate = this.add.graphics().setDepth(11);
+    this.nameText = this.add
+      .text(bx + 34, by - 4, '', { fontFamily: FONT, fontSize: VIEW.portrait ? '40px' : '26px', color: '#ffffff' })
+      .setOrigin(0, 0.5)
+      .setDepth(12);
+    this.text = this.add
+      .text(bx + 34, by + (VIEW.portrait ? 60 : 40), '', {
+        fontFamily: BODY_FONT,
+        fontSize: VIEW.portrait ? '40px' : '27px',
+        color: '#ffffff',
+        lineSpacing: 8,
+        wordWrap: { width: bw - 300 },
+      })
+      .setDepth(12);
+    this.arrow = this.add
+      .text(bx + bw - 30, by + bh - 28, '▼', { fontFamily: FONT, fontSize: '22px', color: '#ffe066' })
+      .setOrigin(0.5)
+      .setDepth(12);
+    this.tweens.add({ targets: this.arrow, y: this.arrow.y + 6, duration: 400, yoyo: true, repeat: -1 });
+
+    const sc = VIEW.portrait ? 1.3 : 0.85;
+    pillButton(this, bx + bw - 150, by + bh - (VIEW.portrait ? 180 : 112), 'PRÓXIMO  ▶', () => this.advance(), 230, 0xffe066)
+      .setScale(sc)
+      .setDepth(13);
+    pillButton(this, bx + bw - 150, by + bh - (VIEW.portrait ? 70 : 46), 'PULAR', () => this.play(), 160)
+      .setScale(sc * 0.85)
+      .setDepth(13);
+
+    // Toque/clique fora dos botões também avança.
+    this.input.on('pointerdown', (_p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
+      if (!over.length) this.advance();
+    });
+    const kb = this.input.keyboard!;
+    for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.advance());
+    kb.on('keydown-ESC', () => this.play());
+
+    this.advance();
+  }
+
+  update(): void {
+    const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
+    if (!pad) return;
+    const a = !!pad.buttons[0]?.pressed;
+    const b = !!pad.buttons[1]?.pressed || !!pad.buttons[9]?.pressed;
+    if (a && !this.prevPad.a) this.advance();
+    if (b && !this.prevPad.b) this.play();
+    this.prevPad = { a, b };
+  }
+
+  /** Termina de escrever a fala atual ou passa para a próxima. */
+  private advance(): void {
+    if (this.typing) {
+      this.typing.remove();
+      this.typing = undefined;
+      this.text.setText(this.full);
+      this.arrow.setVisible(true);
+      return;
+    }
+    this.index++;
+    if (this.index >= this.lines.length) {
+      this.play();
+      return;
+    }
+    this.show(this.lines[this.index]);
+  }
+
+  private show(line: Line): void {
+    this.setPortrait(line.side, line.who);
+    // Quem fala fica em destaque; o outro escurece.
+    for (const side of ['left', 'right'] as const) {
+      const sp = this.slots[side].sprite;
+      if (!sp) continue;
+      const active = side === line.side;
+      sp.setTint(active ? 0xffffff : 0x4a5570);
+      this.tweens.add({ targets: sp, alpha: active ? 1 : 0.85, duration: 180 });
+    }
+    // Plaquinha do nome.
+    const name = SPEAKER_NAME[line.who].toUpperCase();
+    this.nameText.setText(name);
+    const pw = this.nameText.width + 50;
+    const px = this.nameText.x - 20;
+    const py = this.boxTop - 4;
+    const ph = VIEW.portrait ? 64 : 44;
+    this.namePlate.clear();
+    this.namePlate.fillStyle(INK, 1).fillRect(px - 4, py - ph / 2 - 4, pw + 8, ph + 8);
+    this.namePlate.fillStyle(0xfff7dc, 1).fillRect(px - 2, py - ph / 2 - 2, pw + 4, ph + 4);
+    this.namePlate.fillStyle(nameColor(line.who), 1).fillRect(px, py - ph / 2, pw, ph);
+    // Texto letra a letra.
+    this.full = line.text;
+    this.text.setText('');
+    this.arrow.setVisible(false);
+    let n = 0;
+    this.typing = this.time.addEvent({
+      delay: 22,
+      repeat: this.full.length - 1,
+      callback: () => {
+        n++;
+        this.text.setText(this.full.slice(0, n));
+        if (n >= this.full.length) {
+          this.typing = undefined;
+          this.arrow.setVisible(true);
+        }
+      },
+    });
+  }
+
+  /** Retrato grande: o sprite do personagem ampliado em múltiplo inteiro (pixels nítidos). */
+  private setPortrait(side: 'left' | 'right', who: Speaker): void {
+    const slot = this.slots[side];
+    if (slot.who === who && slot.sprite) {
+      this.tweens.add({ targets: slot.sprite, y: slot.sprite.y - 10, duration: 120, yoyo: true });
+      return;
+    }
+    const old = slot.sprite;
+    if (old) {
+      this.tweens.add({ targets: old, x: old.x + (side === 'left' ? -200 : 200), alpha: 0, duration: 220, onComplete: () => old.destroy() });
+    }
+    const p = portraitOf(who);
+    const target = VIEW.portrait ? 560 : 330; // altura desejada do personagem
+    const scale = Math.max(2, Math.round(target / (p.head + 40)));
+    const x = side === 'left' ? W * (VIEW.portrait ? 0.3 : 0.24) : W * (VIEW.portrait ? 0.7 : 0.76);
+    const feet = this.boxTop + 30;
+    const sp = this.add
+      .sprite(x + (side === 'left' ? -220 : 220), feet, p.key)
+      .setOrigin(0.5, p.feetY / p.frame)
+      .setScale(scale)
+      .setDepth(6)
+      .setAlpha(0)
+      .setFlipX(side === 'right')
+      .play(p.key);
+    this.tweens.add({ targets: sp, x, alpha: 1, duration: 260, ease: 'Cubic.easeOut' });
+    this.slots[side] = { who, sprite: sp };
+  }
+
+  private play(): void {
+    this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });
+  }
+}

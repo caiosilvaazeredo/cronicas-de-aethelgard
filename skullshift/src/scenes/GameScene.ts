@@ -5,6 +5,7 @@ import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
+import { completeLevel } from '../game/progress';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 
@@ -61,6 +62,8 @@ export class GameScene extends Phaser.Scene {
   private controllers: Controller[] = [];
   private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
   private hangers: Hanger[] = [];
+  /** Teias fixas no teto (área de cada uma), onde o morcego gruda. */
+  private webs: Phaser.Geom.Rectangle[] = [];
   private items: Item[] = [];
   private projectiles: Projectile[] = [];
   /** Versus: quem tem a vez de avançar (-1 = ninguém ainda). */
@@ -100,6 +103,7 @@ export class GameScene extends Phaser.Scene {
     this.controllers = [];
     this.enemies = [];
     this.hangers = [];
+    this.webs = [];
     this.items = [];
     this.projectiles = [];
     this.leader = -1;
@@ -259,11 +263,12 @@ export class GameScene extends Phaser.Scene {
 
   /** Modo história: segue para a próxima fase com os mesmos controles. */
   get hasNextLevel(): boolean {
-    return this.mode === 'story' && this.levelIndex < LEVELS.length - 1;
+    return this.mode === 'story';
   }
 
+  /** História: volta ao mapa (a próxima fase já foi liberada na vitória). */
   nextLevel(): void {
-    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex + 1 });
+    this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
   }
 
   restartMatch(): void {
@@ -287,6 +292,7 @@ export class GameScene extends Phaser.Scene {
       e.f.intent = active && !hanging ? e.ai.read() : emptyIntent();
     }
     this.updateHangers();
+    this.updateWebTraps();
 
     this.fighters.forEach((f) => f.update(delta));
     this.level.update(time, delta);
@@ -823,27 +829,24 @@ export class GameScene extends Phaser.Scene {
     const pi = this.players.indexOf(f);
     if (pi >= 0) this.ui?.showSpiderBadge(pi);
 
-    // Rabiscos azuis e vermelhos tremendo ao redor da cabeça.
+    // Sentido aranha: dois rabisquinhos vermelhos tremendo sobre a cabeça.
     const g = this.add.graphics().setDepth(DEPTH.fx + 2);
     const squiggles = this.time.addEvent({
-      delay: 40,
+      delay: 50,
       loop: true,
       callback: () => {
         g.clear();
         const hx = f.x;
-        const hy = f.feet - f.def.head + 8;
-        for (const [side, color, dy] of [[-1, 0x2f3cff, -14], [-1, 0xff2d55, 10], [1, 0xff2d55, -14], [1, 0x2f3cff, 10]] as const) {
+        const hy = f.feet - f.def.head - 6;
+        for (const side of [-1, 1]) {
           const pts: Phaser.Types.Math.Vector2Like[] = [];
-          const x0 = hx + side * 30;
-          for (let i = 0; i < 6; i++) {
-            pts.push({ x: x0 + side * i * 9, y: hy + dy + (i % 2 ? -7 : 7) + Phaser.Math.Between(-2, 2) });
-          }
-          g.lineStyle(7, 0x1d1a2b, 1).strokePoints(pts);
-          g.lineStyle(4, color, 1).strokePoints(pts);
+          for (let i = 0; i < 4; i++) pts.push({ x: hx + side * (10 + i * 5), y: hy - i * 4 + (i % 2 ? -3 : 3) + Phaser.Math.Between(-1, 1) });
+          g.lineStyle(5, 0x1d1a2b, 1).strokePoints(pts);
+          g.lineStyle(3, 0xff2d2d, 1).strokePoints(pts);
         }
       },
     });
-    this.cameras.main.flash(140, 255, 70, 110);
+    this.cameras.main.flash(90, 255, 40, 40);
     // Câmera lenta rápida para o "momento" do sentido.
     this.physics.world.timeScale = 2.5;
     this.anims.globalTimeScale = 0.5;
@@ -905,11 +908,70 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(f.sprite, this.level.ground);
     // Teia no teto e o fio até a aranha.
     this.add.image(x, 0, 'web_px').setOrigin(0.5, 0).setScale(2).setDepth(DEPTH.clouds + 0.5);
+    this.webs.push(new Phaser.Geom.Rectangle(x - 100, 0, 200, 168));
     const thread = this.add.graphics().setDepth(DEPTH.fighters - 1);
     const bob = this.tweens.add({ targets: f.sprite, y: '+=10', duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     const ai = new EnemyAI(f, () => this.nearestPlayer(f), this.level);
     this.enemies.push({ f, ai });
     this.hangers.push({ f, state: 'hang', thread, bob });
+  }
+
+  /** Morcego que encosta numa teia do teto gruda nela, e uma aranha desce para comê-lo. */
+  private updateWebTraps(): void {
+    for (const f of this.players) {
+      if (f.def.id !== 'bat' || !f.alive || f.zipping || f.invulnerable) continue;
+      const web = this.webs.find((w) => Phaser.Geom.Rectangle.Overlaps(w, new Phaser.Geom.Rectangle(f.body.x, f.body.y, f.body.width, f.body.height)));
+      if (web) this.webEat(f, web);
+    }
+  }
+
+  private webEat(f: Fighter, web: Phaser.Geom.Rectangle): void {
+    // Gruda: para no ar e se debate.
+    f.zipping = true;
+    f.body.setVelocity(0, 0);
+    f.body.moves = false;
+    this.popText(f.x, f.feet - f.def.head - 30, 'GRUDOU!', '#ffffff');
+    const shake = this.tweens.add({ targets: f.sprite, angle: { from: -12, to: 12 }, duration: 90, yoyo: true, repeat: -1 });
+    // A aranha desce pelo fio, do teto até o morcego.
+    const spider = this.add.sprite(f.x, -60, 'spider_idle').setFlipY(true).setDepth(DEPTH.fighters + 1).play('spider_idle');
+    const thread = this.add.graphics().setDepth(DEPTH.fighters);
+    const drawThread = () => {
+      thread.clear();
+      thread.fillStyle(0x1d1a2b, 1).fillRect(Math.round(f.x) - 2, web.y, 4, spider.y - 30 - web.y);
+      thread.fillStyle(0xeef6f8, 1).fillRect(Math.round(f.x) - 1, web.y, 2, spider.y - 30 - web.y);
+    };
+    this.tweens.add({
+      targets: spider,
+      y: f.sprite.y - 70,
+      duration: 700,
+      ease: 'Quad.easeIn',
+      onUpdate: drawThread,
+      onComplete: () => {
+        // Nhac: a aranha morde e embrulha o morcego.
+        spider.play('spider_attack');
+        this.time.delayedCall(260, () => {
+          shake.stop();
+          if (f.alive) {
+            f.zipping = false;
+            f.body.moves = true;
+            this.killFighter(f, null, 'hit');
+          }
+          this.popText(spider.x, spider.y - 40, 'NHAC!', '#ff5c5c');
+          this.tweens.add({
+            targets: spider,
+            y: -80,
+            duration: 800,
+            delay: 300,
+            ease: 'Quad.easeIn',
+            onUpdate: drawThread,
+            onComplete: () => {
+              spider.destroy();
+              thread.destroy();
+            },
+          });
+        });
+      },
+    });
   }
 
   private nearestPlayer(f: Fighter): Fighter | null {
@@ -1089,7 +1151,8 @@ export class GameScene extends Phaser.Scene {
     if (p1.alive && p1.x >= end) {
       if (this.mode === 'story') {
         const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
-        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+        completeLevel(this.levelIndex);
+        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `Fragmento da coroa recuperado!   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
       } else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');

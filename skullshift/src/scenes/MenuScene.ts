@@ -25,6 +25,7 @@ export class MenuScene extends Phaser.Scene {
   private level = 0;
   private prevLR = { l: false, r: false };
   private levelText?: Phaser.GameObjects.Text;
+  private levelRow: Phaser.GameObjects.Text[] = [];
 
   init(data: { stage?: 'title' | 'modes'; level?: number }): void {
     this.lastData = data;
@@ -35,6 +36,7 @@ export class MenuScene extends Phaser.Scene {
 
   create(): void {
     this.texts = [];
+    this.levelRow = [];
     const P = VIEW.portrait;
     const HH = this.scale.height;
     // Linha do chão: deitado como no jogo; em pé, um pouco abaixo do meio.
@@ -121,13 +123,15 @@ export class MenuScene extends Phaser.Scene {
     this.levelText = this.add
       .text(W / 2, ly, '', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: P ? 10 : 7 })
       .setOrigin(0.5);
+    this.levelRow = [this.levelText!];
     for (const dir of [-1, 1]) {
-      this.add
+      const arrow = this.add
         .text(W / 2 + dir * (P ? 520 : 330), ly, dir < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? '56px' : '34px', color: '#ffe066', stroke: '#10223a', strokeThickness: 8 })
         .setOrigin(0.5)
         .setPadding(16)
         .setInteractive({ useHandCursor: true })
         .on('pointerdown', () => this.setLevel(this.level + dir));
+      this.levelRow.push(arrow);
     }
     this.setLevel(this.level);
 
@@ -199,6 +203,8 @@ export class MenuScene extends Phaser.Scene {
 
   private select(i: number): void {
     this.index = Phaser.Math.Wrap(i, 0, OPTIONS.length);
+    // A fase só se escolhe aqui no versus; na história ela vem do mapa.
+    this.levelRow.forEach((o) => o.setVisible(this.index === 1));
     this.texts.forEach((t, j) => {
       const on = j === this.index;
       t.setColor(on ? '#ffe066' : '#fff7dc').setScale(on ? 1.08 : 1);

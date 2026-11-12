@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEPTH, FONT, H, W } from '../config';
+import { DEPTH, FONT, H, PORTRAIT, W } from '../config';
 
 /** bottom: deitado (como o mockup) · top: deitado com botões de toque · portrait: em pé. */
 export type HudStyle = 'bottom' | 'top' | 'portrait';
@@ -32,7 +32,8 @@ export class Hud {
     const touchLayout = style === 'top';
     const portrait = style === 'portrait';
     this.centeredGo = portrait;
-    const y = touchLayout ? 64 : portrait ? 130 : H - 86;
+    const pad = portrait ? PORTRAIT.topPad : 0;
+    const y = touchLayout ? 64 : portrait ? 130 + pad : H - 86;
     const scale = touchLayout ? 0.36 : portrait ? 0.72 : 0.62;
     const fontSize = touchLayout ? '28px' : portrait ? '54px' : '44px';
     const labelGap = touchLayout ? 62 : portrait ? 112 : 96;
@@ -72,7 +73,7 @@ export class Hud {
       const center = i === Math.floor(screens / 2);
       this.dots.push(
         scene.add
-          .circle(x0 + i * gap, portrait ? 34 : 26, (center ? 10 : 8) * (portrait ? 1.5 : 1), 0x10223a, 0.6)
+          .circle(x0 + i * gap, portrait ? 34 + pad : 26, (center ? 10 : 8) * (portrait ? 1.5 : 1), 0x10223a, 0.6)
           .setStrokeStyle(3, 0xfff7dc, 0.9)
           .setScrollFactor(0)
           .setDepth(DEPTH.hud),
@@ -80,7 +81,7 @@ export class Hud {
     }
 
     this.goText = scene.add
-      .text(W / 2, touchLayout ? 128 : portrait ? 206 : 74, '', {
+      .text(W / 2, touchLayout ? 128 : portrait ? 206 + pad : 74, '', {
         fontFamily: FONT,
         fontSize: '40px',
         color: '#fff7dc',

@@ -218,17 +218,6 @@ export class GameScene extends Phaser.Scene {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     f.onDoubleJump = (ff) => this.fx('dust', ff.x, ff.feet - 4, 1.3, ff.color);
-    // Aranha caindo num poço: aponta para a parede mais próxima, para grudar e subir.
-    f.wallProbe = (x, feet) => {
-      if (!this.level.hasWater || this.level.groundY(x) !== null) return 0;
-      for (const r of [24, 48, 80, 120]) {
-        for (const d of [-1, 1]) {
-          const g = this.level.groundY(x + d * r);
-          if (g !== null && g < feet - 4) return d;
-        }
-      }
-      return 0;
-    };
     this.physics.add.collider(f.sprite, this.level.ground);
     const i = this.players.length;
     this.players.push(f);
@@ -278,8 +267,9 @@ export class GameScene extends Phaser.Scene {
     if (!this.transitioning) this.camX += (this.cameraTarget() - this.camX) * 0.12;
     this.applyCamera();
 
+    this.updateSpiderSense();
     for (const f of this.fighters) {
-      if (!f.alive) continue;
+      if (!f.alive || f.zipping) continue;
       if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
       else if (!this.level.hasWater && f.feet > SKY_FALL_Y) this.killFighter(f, null, 'fall');
     }
@@ -436,9 +426,16 @@ export class GameScene extends Phaser.Scene {
     b.stun(950);
     b.knockback(dir, 260);
     this.cameras.main.shake(140, 0.008);
-    // Pedaços do escudo voando.
+    if (!b.def.guard) {
+      // Bolha de energia estourando.
+      const pop = this.add.image(b.x, b.feet - b.def.head * 0.5, 'bubble').setTint(b.color ?? 0x9fe3ff).setDepth(DEPTH.fx);
+      pop.setScale((b.def.head + 34) / 116);
+      this.tweens.add({ targets: pop, scale: pop.scale * 1.6, alpha: 0, duration: 380, ease: 'Quad.easeOut', onComplete: () => pop.destroy() });
+    }
+    // Pedaços do escudo (ou da bolha) voando.
     for (let i = 0; i < 5; i++) {
-      const piece = this.add.image(b.x + dir * 14, b.feet - 30, 'shield').setScale(0.45).setDepth(DEPTH.fx);
+      const piece = this.add.image(b.x + dir * 14, b.feet - 30, b.def.guard ? 'shield' : 'spark').setScale(0.45).setDepth(DEPTH.fx);
+      if (!b.def.guard) piece.setTint(b.color ?? 0x9fe3ff);
       this.tweens.add({
         targets: piece,
         x: piece.x + dir * Phaser.Math.Between(30, 90),
@@ -546,7 +543,9 @@ export class GameScene extends Phaser.Scene {
     const x = victim.x;
     victim.kill(cause === 'fall' ? 'hit' : cause, dir);
 
-    if (cause === 'water') {
+    if (cause === 'water' && this.level.isLava) {
+      this.lavaBurn(x, victim);
+    } else if (cause === 'water') {
       this.waterSplash(x, victim);
     } else if (cause === 'fall') {
       // Caiu do céu: some num sopro de nuvem.
@@ -580,6 +579,27 @@ export class GameScene extends Phaser.Scene {
         if (!this.ended && !victim.alive) this.revive(pi, () => this.versusSpawnX(pi));
       });
     }
+  }
+
+  /** Caiu na lava: o corpo afunda em brasa, sobe fumaça e fagulhas. */
+  private lavaBurn(x: number, victim: Fighter): void {
+    victim.sprite.setMask(this.aboveWater);
+    victim.sprite.setTint(0xff6a1a);
+    const s = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(1.3).setTint(0xffa040).setDepth(DEPTH.fx).play('splash');
+    s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
+    this.smokeBurst(x, WATER_Y - 4, 0xff6a1a, 1);
+    for (let i = 0; i < 10; i++) {
+      const e = this.add.image(x, WATER_Y, 'spark').setTint(Phaser.Math.RND.pick([0xffe066, 0xff9f1c, 0xff5a1a])).setScale(0.35).setDepth(DEPTH.fx);
+      this.tweens.add({
+        targets: e,
+        x: x + Phaser.Math.Between(-40, 40),
+        y: WATER_Y - Phaser.Math.Between(40, 110),
+        alpha: 0,
+        duration: Phaser.Math.Between(500, 900),
+        onComplete: () => e.destroy(),
+      });
+    }
+    this.cameras.main.shake(110, 0.005);
   }
 
   /** Queda na água: respingo na superfície, ondas, bolhas e o corpo afundando (recortado). */
@@ -702,6 +722,95 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  // ---------- sentido aranha (passiva da aranha) ----------
+
+  /** A aranha nunca cai: no ar sem chão embaixo, o sentido aranha dispara. */
+  private updateSpiderSense(): void {
+    for (const f of this.fighters) {
+      if (f.def.id !== 'spider' || !f.alive || f.zipping || !f.body.moves) continue;
+      if (f.onGround || f.body.velocity.y <= 0) continue;
+      if (this.level.landingY(f.x, f.feet, 5000) !== null) continue;
+      this.spiderSense(f);
+    }
+  }
+
+  private spiderSense(f: Fighter): void {
+    f.zipping = true;
+    f.body.setVelocity(0, 0);
+    f.body.moves = false;
+    const pi = this.players.indexOf(f);
+    if (pi >= 0) this.ui?.showSpiderBadge(pi);
+
+    // Rabiscos azuis e vermelhos tremendo ao redor da cabeça.
+    const g = this.add.graphics().setDepth(DEPTH.fx + 2);
+    const squiggles = this.time.addEvent({
+      delay: 40,
+      loop: true,
+      callback: () => {
+        g.clear();
+        const hx = f.x;
+        const hy = f.feet - f.def.head + 8;
+        for (const [side, color, dy] of [[-1, 0x2f3cff, -14], [-1, 0xff2d55, 10], [1, 0xff2d55, -14], [1, 0x2f3cff, 10]] as const) {
+          const pts: Phaser.Types.Math.Vector2Like[] = [];
+          const x0 = hx + side * 30;
+          for (let i = 0; i < 6; i++) {
+            pts.push({ x: x0 + side * i * 9, y: hy + dy + (i % 2 ? -7 : 7) + Phaser.Math.Between(-2, 2) });
+          }
+          g.lineStyle(7, 0x1d1a2b, 1).strokePoints(pts);
+          g.lineStyle(4, color, 1).strokePoints(pts);
+        }
+      },
+    });
+    this.cameras.main.flash(140, 255, 70, 110);
+    // Câmera lenta rápida para o "momento" do sentido.
+    this.physics.world.timeScale = 2.5;
+    this.anims.globalTimeScale = 0.5;
+    window.setTimeout(() => {
+      this.physics.world.timeScale = 1;
+      this.anims.globalTimeScale = 1;
+    }, 280);
+
+    // Chão seguro mais próximo, para um lado ou para o outro.
+    const opts = [-1, 1]
+      .map((d) => this.level.nearestGround(f.x, d))
+      .filter((x) => this.level.groundY(x) !== null)
+      .sort((a, b) => Math.abs(a - f.x) - Math.abs(b - f.x));
+    const tx = opts[0] ?? this.checkpointX;
+    const tyFeet = this.level.groundY(tx) ?? FLOOR_Y;
+    const x0 = f.sprite.x;
+    const y0 = f.sprite.y;
+    const y1 = tyFeet - (f.def.feetY - f.def.frame / 2);
+    const anchor = { x: (x0 + tx) / 2, y: Math.max(20, Math.min(y0, y1) - 160) };
+    const web = this.add.graphics().setDepth(DEPTH.fighters - 1);
+
+    this.time.delayedCall(220, () => {
+      if (!f.alive) return;
+      this.tweens.addCounter({
+        from: 0,
+        to: 1,
+        duration: 460,
+        ease: 'Sine.easeInOut',
+        onUpdate: (tw) => {
+          const t = tw.getValue() ?? 0;
+          f.sprite.x = x0 + (tx - x0) * t;
+          f.sprite.y = y0 + (y1 - y0) * t - Math.sin(Math.PI * t) * 90;
+          web.clear();
+          web.lineStyle(4, 0x1d1a2b, 1).lineBetween(anchor.x, anchor.y, f.x, f.feet - f.def.head * 0.6);
+          web.lineStyle(2, 0xeef6f8, 1).lineBetween(anchor.x, anchor.y, f.x, f.feet - f.def.head * 0.6);
+        },
+        onComplete: () => {
+          web.destroy();
+          squiggles.remove();
+          g.destroy();
+          f.body.moves = true;
+          f.body.reset(tx, y1);
+          f.zipping = false;
+          this.fx('dust', tx, tyFeet - 6, 1);
+        },
+      });
+    });
+  }
+
   // ---------- aranhas penduradas ----------
 
   /** Aranha numa teia no teto, de cabeça para baixo, balançando no fio. */
@@ -713,7 +822,7 @@ export class GameScene extends Phaser.Scene {
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
     // Teia no teto e o fio até a aranha.
-    this.add.image(x, 30, 'web_item').setScale(2.6).setAlpha(0.75).setDepth(DEPTH.clouds + 0.5);
+    this.add.image(x, 0, 'web_px').setOrigin(0.5, 0).setScale(2).setDepth(DEPTH.clouds + 0.5);
     const thread = this.add.graphics().setDepth(DEPTH.fighters - 1);
     const bob = this.tweens.add({ targets: f.sprite, y: '+=10', duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     const ai = new EnemyAI(f, () => this.nearestPlayer(f), this.level);
@@ -735,7 +844,10 @@ export class GameScene extends Phaser.Scene {
       h.thread.clear();
       if (!f.alive) continue;
       if (h.state === 'hang') {
-        h.thread.lineStyle(2, 0xe8f6ff, 0.8).lineBetween(f.x, 30, f.x, f.feet - f.def.head + 10);
+        // Fio em pixel art: contorno escuro + seda clara.
+        const tx = Math.round(f.x);
+        h.thread.fillStyle(0x1d1a2b, 1).fillRect(tx - 2, 60, 4, f.feet - f.def.head - 50);
+        h.thread.fillStyle(0xeef6f8, 1).fillRect(tx - 1, 60, 2, f.feet - f.def.head - 50);
         // Alguém passou por baixo? Salta em cima dele.
         const target = this.players.find((p) => p.alive && Math.abs(p.x - f.x) < 110 && p.feet > f.feet + 60);
         if (target) {
@@ -920,8 +1032,8 @@ export class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         if (!win.alive) return;
-        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false, crouch: false, jumpHeld: false };
-        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false, crouch: false, jumpHeld: false }));
+        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false, crouch: false, jumpHeld: false, sprint: false };
+        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false, crouch: false, jumpHeld: false, sprint: false }));
       },
     });
 

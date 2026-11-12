@@ -13,6 +13,8 @@ const CROUCH_SCALE = 0.66;
 const CROUCH_SPEED = 120;
 /** O segundo pulo (no ar) é um pouco mais fraco. */
 const DOUBLE_JUMP = 0.88;
+/** Pique: multiplicador de velocidade. */
+const SPRINT = 1.6;
 
 export interface HitBox {
   x1: number;
@@ -36,6 +38,8 @@ export class Fighter {
   alive = true;
   /** Sendo trazido de volta pelo xamã (não pode ser revivido de novo). */
   reviving = false;
+  /** Puxada pela teia (sentido aranha): ignora mortes por queda enquanto dura. */
+  zipping = false;
   crouching = false;
   intent: Intent = emptyIntent();
   /** Posição x do oponente a encarar (null = encara para onde anda). */
@@ -50,6 +54,7 @@ export class Fighter {
   private stunUntil = 0;
   private stars: Phaser.GameObjects.Image[] = [];
   private jumps = 0;
+  private lastDust = 0;
   /** Voo do morcego: tempo restante (ms) até tocar o chão de novo. */
   private flightLeft = 0;
   private flightBar?: Phaser.GameObjects.Graphics;
@@ -83,7 +88,8 @@ export class Fighter {
     this.def = CHARS[baseChar];
     this.sprite = scene.physics.add.sprite(x, 0, `${baseChar}_idle`, 0);
     this.sprite.setDepth(DEPTH.fighters);
-    this.shield = scene.add.image(x, feetY, 'shield').setDepth(DEPTH.fighters + 1).setVisible(false);
+    // Quem não tem escudo no sprite defende com uma bolha de energia (estilo jogo de luta de plataforma).
+    this.shield = scene.add.image(x, feetY, 'bubble').setDepth(DEPTH.fighters + 1).setVisible(false).setTint(color ?? 0x9fe3ff);
     if (color !== undefined) this.buildMarkers(color, tagText ?? label);
     this.applyChar(baseChar, feetY);
   }
@@ -275,9 +281,19 @@ export class Fighter {
             });
           }
         }
-        const speed = this.crouching ? CROUCH_SPEED : guarding ? GUARD_WALK_SPEED : d.speed;
+        const sprinting = it.sprint && !this.crouching && !guarding;
+        const speed = this.crouching ? CROUCH_SPEED : guarding ? GUARD_WALK_SPEED : d.speed * (sprinting ? SPRINT : 1);
         this.body.setVelocityX(it.move * speed);
         this.setState(guarding ? 'guard' : it.move !== 0 ? 'run' : 'idle');
+        if (sprinting) {
+          this.sprite.anims.timeScale = 1.6;
+          // Poeira saindo dos pés.
+          if (grounded && now - this.lastDust > 130) {
+            this.lastDust = now;
+            const dust = this.scene.add.sprite(this.x - this.facing * 18, this.feet - 8, 'dust').setScale(0.8).setDepth(DEPTH.fighters - 1).play('dust');
+            dust.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => dust.destroy());
+          }
+        }
         // Morcego: segurando pular no ar, voa subindo (até acabar o fôlego).
         if (d.fly && !grounded && it.jumpHeld && this.flightLeft > 0) {
           this.flightLeft -= dtMs;
@@ -297,12 +313,17 @@ export class Fighter {
 
     this.sprite.setFlipX(this.facing < 0);
 
-    // Escudo genérico para quem não tem animação própria de defesa.
+    // Bolha de energia para quem não tem animação própria de defesa: envolve o corpo e pulsa.
     const showShield = this.state === 'guard' && !d.guard;
     this.shield.setVisible(showShield);
     if (showShield) {
-      const h = this.crouching ? 16 : 26;
-      this.shield.setPosition(this.x + this.facing * 20, this.feet - h).setFlipX(this.facing < 0);
+      const head = d.head * (this.crouching ? CROUCH_SCALE : 1);
+      const size = (head + 34) / 116;
+      const pulse = 1 + Math.sin(now / 90) * 0.03;
+      this.shield
+        .setPosition(this.x, this.feet - head * 0.5 - 4)
+        .setScale(size * pulse)
+        .setAlpha(0.85);
     }
 
     // Pisca enquanto invulnerável.

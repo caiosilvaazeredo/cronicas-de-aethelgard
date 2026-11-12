@@ -22,7 +22,7 @@ export class EnemyAI implements Controller {
   read(): Intent {
     const me = this.self;
     const dt = me.sprite.scene.game.loop.delta / 1000;
-    const it: Intent = { move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false };
+    const it: Intent = { move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false, sprint: false };
     const t = this.getTarget();
     this.attackDelay -= dt;
     this.guardT -= dt;

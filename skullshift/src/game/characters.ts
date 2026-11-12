@@ -1,11 +1,12 @@
 export type CharId =
   | 'skull' | 'lizard' | 'gnoll' | 'shark' | 'goblin' // fase 1
   | 'spider' | 'bat' | 'torchgob' // fase 2 (caverna)
-  | 'bee' | 'imp' | 'sgnome'; // fase 3 (céu)
+  | 'imp' | 'minotaur' // fase 3 (vulcão)
+  | 'bee' | 'sgnome'; // fase 4 (céu)
 export type ItemId =
   | 'bone' | 'harpoon' | 'spear' | 'crest'
   | 'web' | 'wing' | 'torch'
-  | 'honey' | 'ember' | 'acorn';
+  | 'honey' | 'ember' | 'acorn' | 'horn';
 
 interface AnimDef {
   n: number;
@@ -170,7 +171,7 @@ export const CHARS: Record<CharId, CharDef> = {
     melee: { from: 2, to: 5, reach: 66, back: 62 },
     drops: 'torch',
   },
-  // ---------- Fase 3: céu ----------
+  // ---------- Fase 3: vulcão (Diabrete) / Fase 4: céu ----------
   bee: {
     id: 'bee',
     head: 104,
@@ -203,6 +204,20 @@ export const CHARS: Record<CharId, CharDef> = {
     melee: { from: 3, to: 8, reach: 94, back: 0 },
     drops: 'ember',
   },
+  minotaur: {
+    id: 'minotaur',
+    head: 125,
+    name: 'Minotauro',
+    frame: 320,
+    feetY: 210,
+    idle: { n: 16, fps: 12 },
+    run: { n: 8, fps: 10 },
+    attack: { n: 12, fps: 14 },
+    speed: 200,
+    // Marretada de pedra: lenta, mas de alcance enorme.
+    melee: { from: 6, to: 8, reach: 136, back: 0 },
+    drops: 'horn',
+  },
   sgnome: {
     id: 'sgnome',
     head: 64,
@@ -230,6 +245,7 @@ export const ITEM_TO_CHAR: Record<ItemId, CharId> = {
   honey: 'bee',
   ember: 'imp',
   acorn: 'sgnome',
+  horn: 'minotaur',
 };
 
 export const ITEM_TEXTURE: Record<ItemId, string> = {
@@ -243,4 +259,5 @@ export const ITEM_TEXTURE: Record<ItemId, string> = {
   honey: 'honey_item',
   ember: 'ember_item',
   acorn: 'acorn',
+  horn: 'horn_item',
 };

@@ -10,9 +10,10 @@ export interface Intent {
   pick: boolean; // apertou agora: pegar item do chão
   crouch: boolean; // segurando para baixo: agachar
   jumpHeld: boolean; // segurando pular (voo do morcego)
+  sprint: boolean; // pique: toque duplo na direção (e segurar) ou Shift
 }
 
-export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false });
+export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false, sprint: false });
 
 export interface Controller {
   read(): Intent;
@@ -28,6 +29,7 @@ export interface KeyLayout {
   attack: number[];
   pick: number[];
   crouch: number[];
+  sprint?: number[];
 }
 
 /** Dispositivos que um jogador pode escolher na tela de controles. */
@@ -58,6 +60,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     attack: [KC.F, KC.J],
     pick: [KC.E, KC.L],
     crouch: [KC.S, KC.DOWN],
+    sprint: [KC.SHIFT],
   },
   'kb-left': {
     left: [KC.A],
@@ -93,6 +96,10 @@ export function padOrdinal(id: DeviceId): number | null {
 /** Lê um único dispositivo escolhido: teclado (predefinição), controle físico ou toque. */
 export class PlayerController implements Controller {
   private keys?: Record<keyof KeyLayout, Phaser.Input.Keyboard.Key[]>;
+  private prevMove = 0;
+  private lastTapDir = 0;
+  private lastTapAt = -9999;
+  private sprinting = false;
   private padIndex: number | null;
   private prevPadJump = false;
   private prevPadAttack = false;
@@ -116,6 +123,7 @@ export class PlayerController implements Controller {
         attack: mk(layout.attack),
         pick: mk(layout.pick),
         crouch: mk(layout.crouch),
+        sprint: mk(layout.sprint ?? []),
       };
     }
     this.padIndex = padOrdinal(device);
@@ -174,7 +182,18 @@ export class PlayerController implements Controller {
       crouch = t.crouch;
       jumpHeld = t.jumpHeld;
     }
-    return { move, jump, guard, attack, pick, crouch, jumpHeld };
+    // Pique: tocar duas vezes na mesma direção (rápido) e segurar.
+    const now = this.scene.time.now;
+    if (move !== 0 && this.prevMove === 0) {
+      if (move === this.lastTapDir && now - this.lastTapAt < 300) this.sprinting = true;
+      this.lastTapDir = move;
+      this.lastTapAt = now;
+    }
+    if (move === 0) this.sprinting = false;
+    this.prevMove = move;
+    const held = !!this.keys?.sprint.some((k) => k.isDown);
+    const sprint = move !== 0 && (this.sprinting || held);
+    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint };
   }
 }
 

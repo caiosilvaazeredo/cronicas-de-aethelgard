@@ -56,7 +56,9 @@ export const VIEW = { portrait: false, w: 1280, h: 720 };
 
 /** Faixas do layout em pé (coordenadas do canvas). */
 export const PORTRAIT = {
-  hudH: 250, // topo: avatares, cenários, menu
+  hudH: 250, // topo: avatares, cenários, menu (inclui a folga do topo)
+  /** Folga no topo para a barra do sistema/app não cobrir o HUD. */
+  topPad: 0,
   worldH: 1300, // faixa do mundo (ajustada à altura da tela)
   zoom: 1.9, // mundo visível: ~674 px de largura
 };
@@ -66,6 +68,21 @@ export function computeView(): { portrait: boolean; h: number } {
   const ih = Math.max(1, window.innerHeight);
   const portrait = ih > iw * 1.1;
   const h = portrait ? Math.round(Math.min(2900, Math.max(1700, (1280 * ih) / iw))) : 720;
+  // Folga no topo: área segura do aparelho (notch, barra de status) + uma margem para a barra do app.
+  if (portrait) {
+    let inset = 0;
+    try {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:fixed;top:0;height:env(safe-area-inset-top,0px);visibility:hidden';
+      document.body.appendChild(probe);
+      inset = probe.offsetHeight;
+      probe.remove();
+    } catch {
+      /* sem suporte */
+    }
+    PORTRAIT.topPad = Math.round((inset + 36) * (1280 / iw));
+  } else PORTRAIT.topPad = 0;
+  PORTRAIT.hudH = 250 + PORTRAIT.topPad;
   // O resto da altura fica para os botões (no mínimo ~700 px).
   PORTRAIT.worldH = Math.round(Math.min(1500, Math.max(900, h - PORTRAIT.hudH - 700)));
   PORTRAIT.zoom = PORTRAIT.worldH / 680;

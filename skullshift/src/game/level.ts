@@ -10,7 +10,7 @@ import type { CharId, ItemId } from './characters';
 export type Segment = [start: number, length: number, h?: number];
 
 export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal';
-export type Theme = 'shore' | 'cave' | 'sky';
+export type Theme = 'shore' | 'cave' | 'volcano' | 'sky';
 
 /** Um cenário = uma tela de 1280px (20 tiles). */
 export interface ScreenDef {
@@ -151,12 +151,12 @@ const SKY_R2: ScreenDef = {
   versusItems: [[9, 'acorn', 4]],
 };
 export const LEVEL_3: LevelDef = {
-  name: 'Fase 3 — Santuário das Nuvens',
+  name: 'Fase 4 — Santuário das Nuvens',
   intro: 'Só as nuvens encantadas pelo Xamã, as que brilham, aguentam o seu peso.',
   theme: 'sky',
   tiles: 'tiles_sky',
   screens: [
-    { ...mirror(SKY_R2), enemies: [[16, 'imp']], storyItems: [[3, 'acorn']] },
+    { ...mirror(SKY_R2), enemies: [[16, 'sgnome']], storyItems: [[3, 'acorn']] },
     { ...mirror(SKY_R1), enemies: [[11, 'bee'], [17, 'sgnome']], storyItems: [[2, 'honey']] },
     {
       // Central: duas ilhas ligadas por uma ponte de nuvem e uma nuvem alta no meio.
@@ -164,17 +164,56 @@ export const LEVEL_3: LevelDef = {
       floats: [[6, 2, 0], [12, 2, 0], [9, 2, 3]],
       deco: [[3, 'crystal'], [17, 'crystal']],
       enemies: [[9, 'sgnome'], [16, 'bee']],
-      storyItems: [[4, 'ember']],
-      versusItems: [[10, 'ember', 1]],
+      storyItems: [[4, 'honey']],
+      versusItems: [[10, 'honey', 1]],
     },
-    { ...SKY_R1, enemies: [[2, 'bee'], [8, 'imp']], storyItems: [[16, 'acorn']] },
-    { ...SKY_R2, enemies: [[3, 'sgnome'], [9, 'imp'], [16, 'bee']], storyItems: [] },
+    { ...SKY_R1, enemies: [[2, 'bee'], [8, 'sgnome']], storyItems: [[16, 'acorn']] },
+    { ...SKY_R2, enemies: [[3, 'sgnome'], [9, 'bee'], [16, 'bee']], storyItems: [] },
   ],
   storyStart: [0, 2],
   versusStart: [3, 16],
 };
 
-export const LEVELS: LevelDef[] = [LEVEL_1, LEVEL_2, LEVEL_3];
+// ---------- Fase 3: Forja Vulcânica (a casa do Diabrete) ----------
+
+const VOL_R1: ScreenDef = {
+  // Pedras flutuantes sobre poços de lava, subindo e descendo.
+  segments: [[0, 5, 0], [7, 2, 1], [11, 2, 2], [15, 5, 0]],
+  floats: [[5, 2, 1], [9, 2, 2], [13, 2, 1]],
+  deco: [[2, 'rock2'], [17, 'dead_tree']],
+  versusItems: [[16, 'horn']],
+};
+const VOL_R2: ScreenDef = {
+  segments: [[0, 4, 0], [4, 3, 1], [9, 3, 0], [14, 6, 1]],
+  floats: [[7, 2, 2], [12, 2, 2]],
+  deco: [[1, 'bones'], [10, 'rock1'], [18, 'skull_spike'], [19, 'skull_spike']],
+  versusItems: [[10, 'torch']],
+};
+export const LEVEL_VOLCANO: LevelDef = {
+  name: 'Fase 3 — Forja Vulcânica',
+  intro: 'A casa do Diabrete. A lava não perdoa: pule de pedra em pedra.',
+  theme: 'volcano',
+  tiles: 'tiles_volcano',
+  screens: [
+    { ...mirror(VOL_R2), enemies: [[9, 'imp']], storyItems: [[3, 'ember']] },
+    { ...mirror(VOL_R1), enemies: [[11, 'imp'], [16, 'minotaur']], storyItems: [[8, 'horn', 2]] },
+    {
+      segments: [[0, 5, 0], [5, 2, 1], [9, 2, 2], [13, 2, 1], [15, 5, 0]],
+      floats: [[7, 2, 2], [11, 2, 2]],
+      deco: [[2, 'dead_tree'], [17, 'rock2']],
+      enemies: [[10, 'imp'], [16, 'torchgob']],
+      storyItems: [[2, 'torch']],
+      versusItems: [[10, 'ember', 2]],
+    },
+    { ...VOL_R1, enemies: [[2, 'minotaur'], [8, 'imp']], storyItems: [[12, 'horn', 2]] },
+    { ...VOL_R2, enemies: [[5, 'torchgob'], [10, 'minotaur'], [16, 'imp']], storyItems: [] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Ordem das fases: praia, caverna, vulcão e, no fim, o santuário do Xamã no céu. */
+export const LEVELS: LevelDef[] = [LEVEL_1, LEVEL_2, LEVEL_VOLCANO, LEVEL_3];
 
 export class Level {
   readonly def: LevelDef;
@@ -278,12 +317,56 @@ export class Level {
 
   // ---------- fundo ----------
 
+  /** Pedra chamuscada no vulcão. */
+  private get rockTint(): number {
+    return this.isLava ? 0xd28e78 : 0xffffff;
+  }
+
+  get isLava(): boolean {
+    return this.def.theme === 'volcano';
+  }
+
   private buildBackground(): void {
     const t = this.def.theme;
     if (t === 'cave') this.caveBackground();
+    else if (t === 'volcano') this.volcanoBackground();
     else this.skyBackground(t === 'sky');
-    if (this.hasWater) this.water(t === 'cave');
+    if (this.hasWater) this.water(t);
     else this.cloudSea();
+  }
+
+  /** Vulcão: céu vermelho, vulcões ao fundo, brasas subindo e cinzas caindo. */
+  private volcanoBackground(): void {
+    const s = this.scene;
+    s.add.rectangle(0, -500, W, 500, 0x1a0b14).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    s.add.image(0, 0, 'volcano_bg').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    s.add
+      .particles(0, 0, 'spark', {
+        x: { min: 0, max: W },
+        y: 520,
+        speedY: { min: -120, max: -60 },
+        speedX: { min: -20, max: 30 },
+        lifespan: 4500,
+        scale: { start: 0.3, end: 0 },
+        tint: [0xffb347, 0xff6a1a, 0xffe066],
+        frequency: 90,
+      })
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH.clouds);
+    s.add
+      .particles(0, 0, 'leaf', {
+        x: { min: -100, max: W },
+        y: -10,
+        speedY: { min: 30, max: 60 },
+        speedX: { min: 20, max: 60 },
+        rotate: { start: 0, end: 360 },
+        lifespan: 9000,
+        tint: [0x5a4a48, 0x7a6a66, 0x3a2e2e],
+        alpha: 0.8,
+        frequency: 260,
+      })
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH.clouds);
   }
 
   private skyBackground(high: boolean): void {
@@ -401,18 +484,36 @@ export class Level {
       .setDepth(DEPTH.clouds);
   }
 
-  private water(dark: boolean): void {
+  private water(theme: Theme): void {
     const s = this.scene;
-    s.add
-      .rectangle(0, WATER_Y, W, H - WATER_Y + 200, dark ? 0x1d5d6b : 0x39b5fd)
-      .setOrigin(0)
-      .setScrollFactor(0, 1)
-      .setDepth(DEPTH.water);
-    s.add.rectangle(0, WATER_Y, W, 4, dark ? 0x5fa9b5 : 0x8fd9ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+    const dark = theme === 'cave';
+    const lava = theme === 'volcano';
+    const body = lava ? 0xe8501f : dark ? 0x1d5d6b : 0x39b5fd;
+    const edge = lava ? 0xffd36b : dark ? 0x5fa9b5 : 0x8fd9ff;
+    s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+    if (lava) s.add.rectangle(0, WATER_Y + 40, W, H, 0xb8321a).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.6);
+    s.add.rectangle(0, WATER_Y, W, 4, edge).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
     this.waves = [
       s.add.tileSprite(0, WATER_Y + 8, W, 260, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.3 : 0.55),
       s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.18 : 0.3).setTileScale(1.6, 1.3),
     ];
+    if (lava) {
+      this.waves.forEach((w) => w.setTint(0xffd36b));
+      // Bolhas de lava estourando.
+      s.add
+        .particles(0, 0, 'spark', {
+          x: { min: 0, max: W },
+          y: { min: WATER_Y + 6, max: WATER_Y + 160 },
+          scale: { start: 0.5, end: 0.9 },
+          alpha: { start: 0.9, end: 0 },
+          lifespan: 700,
+          tint: [0xffe066, 0xff9f1c],
+          frequency: 120,
+        })
+        .setScrollFactor(0, 1)
+        .setDepth(DEPTH.water);
+      return;
+    }
     const rr = new Phaser.Math.RandomDataGenerator(['skullshift-rocks']);
     for (let x = 300; x < this.width; x += rr.between(300, 560)) {
       s.add
@@ -470,21 +571,21 @@ export class Level {
           s.add
             .sprite((start + i) * TILE + TILE / 2, GRASS_Y + TILE + 28, 'water_foam')
             .setDepth(DEPTH.waterRocks)
-            .setTint(this.theme === 'cave' ? 0x9fc6cc : 0xffffff)
+            .setTint(this.theme === 'cave' ? 0x9fc6cc : this.isLava ? 0xff8c3a : 0xffffff)
             .play({ key: 'water_foam', startFrame: (start + i) % 16 });
         }
       }
       for (let i = 0; i < n; i++) {
         const col = n === 1 ? 8 : i === 0 ? 5 : i === n - 1 ? 7 : 6;
         const x = (start + i) * TILE;
-        s.add.image(x, gy, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain);
+        s.add.image(x, gy, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
         // Rocha até a base (a última fileira tem a borda com espuma).
         for (let r = 1; r <= h + 1; r++) {
           const row = r === h + 1 ? 5 : 4;
-          s.add.image(x, gy + r * TILE, key, row * COLS + col).setOrigin(0).setDepth(DEPTH.terrain);
+          s.add.image(x, gy + r * TILE, key, row * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
         }
       }
-      if (this.theme !== 'cave') {
+      if (this.theme === 'shore') {
         for (let t = start + 0.9; t < start + n - 0.4; t += 2.45) {
           s.add
             .sprite(t * TILE, gy + 44, 'bush')
@@ -504,7 +605,7 @@ export class Level {
       else {
         for (let i = 0; i < n; i++) {
           const col = n === 1 ? 3 : i === 0 ? 0 : i === n - 1 ? 2 : 1;
-          s.add.image((start + i) * TILE, top - 40, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain);
+          s.add.image((start + i) * TILE, top - 40, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
         }
       }
       const w = n * TILE;

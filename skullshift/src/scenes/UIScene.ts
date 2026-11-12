@@ -73,7 +73,7 @@ export class UIScene extends Phaser.Scene {
     const sides = g.mode === 'story' ? (['full'] as const) : (['left', 'right'] as const);
     this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i]) : undefined));
 
-    const menuY = VIEW.portrait ? 120 : 720 - 34;
+    const menuY = VIEW.portrait ? 120 + PORTRAIT.topPad : 720 - 34;
     this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 120)
       .setScale(VIEW.portrait ? 1.2 : 0.7)
       .setDepth(DEPTH.hud + 4)
@@ -110,6 +110,34 @@ export class UIScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(DEPTH.hud);
     this.tweens.add({ targets: t, alpha: 0, delay: ms, duration: 500, onComplete: () => t.destroy() });
+  }
+
+  /** Badge pequena no canto quando a passiva da aranha dispara. */
+  showSpiderBadge(pi: number): void {
+    const right = pi === 1;
+    const y = VIEW.portrait ? PORTRAIT.hudH + 50 : 128;
+    const x = right ? W - 24 : 24;
+    const label = this.add.text(0, 0, 'SENTIDO ARANHA!', { fontFamily: FONT, fontSize: VIEW.portrait ? '30px' : '18px', color: '#ffffff' }).setOrigin(right ? 1 : 0, 0.5);
+    const icon = this.add.image(0, 0, 'spider_avatar').setScale(VIEW.portrait ? 0.26 : 0.16);
+    const iw = icon.displayWidth;
+    const w = label.width + iw + 30;
+    const h = VIEW.portrait ? 64 : 42;
+    const g = this.add.graphics();
+    const x0 = right ? -w : 0;
+    g.fillStyle(0x10223a, 0.92).fillRoundedRect(x0, -h / 2, w, h, 12);
+    g.lineStyle(3, PLAYER_TINT[pi], 1).strokeRoundedRect(x0, -h / 2, w, h, 12);
+    // Rabiscos azul/vermelho nas pontas.
+    for (const [cy, c] of [[-h / 2 + 6, 0xff2d55], [h / 2 - 6, 0x2f3cff]] as const) {
+      g.lineStyle(3, c, 1);
+      g.beginPath();
+      for (let i = 0; i <= 6; i++) g.lineTo(x0 + 10 + i * ((w - 20) / 6), cy + (i % 2 ? -3 : 3));
+      g.strokePath();
+    }
+    icon.setPosition(right ? -w + 10 + iw / 2 : 10 + iw / 2, 0);
+    label.setPosition(right ? -12 : iw + 18, 0);
+    const c = this.add.container(right ? W + w : -w, y, [g, icon, label]).setDepth(DEPTH.hud + 6);
+    this.tweens.add({ targets: c, x, duration: 220, ease: 'Back.easeOut' });
+    this.tweens.add({ targets: c, alpha: 0, delay: 1500, duration: 400, onComplete: () => c.destroy() });
   }
 
   /** Parte de tela da vitória: confete, fogos, avatar, faixa e botões. */

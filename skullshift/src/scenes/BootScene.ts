@@ -29,6 +29,7 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('tilemap', 'terrain/tilemap.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('tiles_cave', 'terrain/tiles_cave.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('tiles_sky', 'terrain/tiles_sky.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('tiles_volcano', 'terrain/tiles_volcano.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('acorn', 'chars/acorn.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('water_rocks', 'terrain/water_rocks.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bush', 'terrain/bush.png', { frameWidth: 128, frameHeight: 128 });
@@ -88,6 +89,9 @@ export class BootScene extends Phaser.Scene {
     this.makeSpear();
     this.makeCrest();
     this.makeNewItems();
+    this.makePixelWebs();
+    this.makeBubble();
+    this.makeVolcano();
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
@@ -283,6 +287,142 @@ export class BootScene extends Phaser.Scene {
     d.fillStyle(0xbfe9ff).fillEllipse(3, 6, 5, 10);
     d.generateTexture('drop', 6, 12);
     d.destroy();
+  }
+
+  /**
+   * Teias em pixel art (linhas de 1px com contorno escuro, como o resto do jogo):
+   * 'web_px' para o teto da caverna e 'web_item' para o item.
+   */
+  private makePixelWebs(): void {
+    const draw = (key: string, w: number, h: number, cx: number, cy: number, radius: number, rings: number[]) => {
+      if (this.textures.exists(key)) this.textures.remove(key);
+      const tex = this.textures.createCanvas(key, w, h)!;
+      const c = tex.getContext();
+      const px = new Set<string>();
+      const line = (x0: number, y0: number, x1: number, y1: number) => {
+        x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+        const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0);
+        const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+        let err = dx + dy;
+        for (;;) {
+          px.add(`${x0},${y0}`);
+          if (x0 === x1 && y0 === y1) break;
+          const e2 = 2 * err;
+          if (e2 >= dy) { err += dy; x0 += sx; }
+          if (e2 <= dx) { err += dx; y0 += sy; }
+        }
+      };
+      const spokes = 8;
+      const pt = (i: number, r: number) => {
+        const a = (i / spokes) * Math.PI * 2 + 0.2;
+        return [cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.85];
+      };
+      for (let i = 0; i < spokes; i++) {
+        const [x, y] = pt(i, radius);
+        line(cx, cy, x, y);
+      }
+      for (const r of rings) {
+        for (let i = 0; i < spokes; i++) {
+          const [x0, y0] = pt(i, r);
+          const [x1, y1] = pt(i + 1, r * 0.92);
+          line(x0, y0, x1, y1);
+        }
+      }
+      // Contorno escuro (vizinhos de cada pixel de seda), depois a seda clara por cima.
+      c.fillStyle = '#1d1a2b';
+      for (const k of px) {
+        const [x, y] = k.split(',').map(Number);
+        c.fillRect(x - 1, y - 1, 3, 3);
+      }
+      c.fillStyle = '#eef6f8';
+      for (const k of px) {
+        const [x, y] = k.split(',').map(Number);
+        c.fillRect(x, y, 1, 1);
+      }
+      // Gotinhas de orvalho.
+      c.fillStyle = '#9fe3ff';
+      for (let i = 0; i < spokes; i += 2) {
+        const [x, y] = pt(i, rings[1] ?? rings[0]);
+        c.fillRect(Math.round(x), Math.round(y), 2, 2);
+      }
+      tex.refresh();
+    };
+    draw('web_px', 112, 84, 56, 36, 50, [12, 24, 37]);
+    draw('web_item', 64, 64, 32, 32, 27, [8, 16, 24]);
+  }
+
+  /** Bolha de energia (defesa de quem não tem escudo), tingida com a cor do jogador. */
+  private makeBubble(): void {
+    const tex = this.textures.createCanvas('bubble', 128, 128)!;
+    const c = tex.getContext();
+    const g = c.createRadialGradient(64, 64, 20, 64, 64, 62);
+    g.addColorStop(0, 'rgba(255,255,255,0.04)');
+    g.addColorStop(0.7, 'rgba(255,255,255,0.22)');
+    g.addColorStop(0.93, 'rgba(255,255,255,0.75)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g;
+    c.beginPath();
+    c.arc(64, 64, 62, 0, Math.PI * 2);
+    c.fill();
+    c.strokeStyle = 'rgba(255,255,255,0.95)';
+    c.lineWidth = 3;
+    c.beginPath();
+    c.arc(64, 64, 58, 0, Math.PI * 2);
+    c.stroke();
+    // Brilho no canto de cima.
+    c.strokeStyle = 'rgba(255,255,255,0.9)';
+    c.lineWidth = 5;
+    c.beginPath();
+    c.arc(64, 64, 46, Math.PI * 1.1, Math.PI * 1.4);
+    c.stroke();
+    tex.refresh();
+  }
+
+  /** Fundo do vulcão e o chifre do Minotauro. */
+  private makeVolcano(): void {
+    const tex = this.textures.createCanvas('volcano_bg', W, H)!;
+    const c = tex.getContext();
+    const g = c.createLinearGradient(0, 0, 0, 520);
+    g.addColorStop(0, '#24091a');
+    g.addColorStop(0.55, '#5e1a1f');
+    g.addColorStop(1, '#c2461f');
+    c.fillStyle = g;
+    c.fillRect(0, 0, W, H);
+    // Vulcões ao fundo, com cratera acesa e rios de lava.
+    for (const [x, w, h] of [[180, 420, 260], [760, 520, 320], [1180, 360, 220]]) {
+      c.fillStyle = '#2b1218';
+      c.beginPath();
+      c.moveTo(x - w / 2, 520);
+      c.lineTo(x - 40, 520 - h);
+      c.lineTo(x + 40, 520 - h);
+      c.lineTo(x + w / 2, 520);
+      c.fill();
+      c.fillStyle = '#ff7a1a';
+      c.fillRect(x - 36, 520 - h - 4, 72, 8);
+      c.strokeStyle = 'rgba(255,140,40,0.8)';
+      c.lineWidth = 4;
+      c.beginPath();
+      c.moveTo(x - 10, 520 - h + 4);
+      c.quadraticCurveTo(x - 30, 520 - h / 2, x - 60, 520);
+      c.stroke();
+      // Fumaça.
+      c.fillStyle = 'rgba(60,40,45,0.6)';
+      for (let i = 0; i < 4; i++) {
+        c.beginPath();
+        c.arc(x + i * 14, 520 - h - 30 - i * 30, 22 + i * 8, 0, Math.PI * 2);
+        c.fill();
+      }
+    }
+    tex.refresh();
+
+    const h = this.make.graphics({}, false);
+    h.fillStyle(0x1d1a2b);
+    h.fillPoints([{ x: 10, y: 54 }, { x: 22, y: 30 }, { x: 40, y: 14 }, { x: 56, y: 8 }, { x: 46, y: 20 }, { x: 34, y: 36 }, { x: 28, y: 58 }], true);
+    h.fillStyle(0xeee3c8);
+    h.fillPoints([{ x: 14, y: 52 }, { x: 25, y: 31 }, { x: 41, y: 17 }, { x: 52, y: 11 }, { x: 43, y: 21 }, { x: 31, y: 37 }, { x: 25, y: 54 }], true);
+    h.fillStyle(0xc9b88f).fillRect(14, 46, 12, 6);
+    h.generateTexture('horn_item', 64, 64);
+    h.destroy();
   }
 
   /** Itens das fases 2 e 3: teia, asa, tocha, favo de mel e brasa. */

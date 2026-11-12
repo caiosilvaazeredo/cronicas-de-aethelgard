@@ -40,6 +40,7 @@ export class BootScene extends Phaser.Scene {
     this.load.svg('logo', 'logo/logo.svg', { width: 2400, height: 1280 });
     // Silhueta do controle (tela Como jogar): fica fora de assets/ porque é arte própria.
     this.load.svg('xbox', '../ui/xbox-controller.svg', { width: 960, height: 640 });
+    this.load.svg('keyboard_sil', '../ui/keyboard.svg', { width: 1120, height: 480 });
 
     this.load.spritesheet('splash', 'fx/splash.png', { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('dust', 'fx/dust.png', { frameWidth: 64, frameHeight: 64 });

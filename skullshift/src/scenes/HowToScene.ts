@@ -76,12 +76,66 @@ export class HowToScene extends Phaser.Scene {
       .text(cx - 186, cy - 112, DEVICES[d].name, { ...CAPTION, fontSize: '20px' })
       .setOrigin(0, 0.5);
     const kind = DEVICES[d].kind;
-    if (kind === 'keyboard') this.keyMap(cx, cy + 20, d);
+    if (kind === 'keyboard') {
+      if (this.textures.exists('keyboard_sil')) this.keyboardMap(cx, cy + 20, d, i);
+      else this.keyMap(cx, cy + 20, d);
+    }
     else if (kind === 'gamepad') this.padMap(cx, cy + 10, i);
     else this.touchMap(cx, cy + 10);
   }
 
   /** Teclas em formato de cruz + tecla de ataque, com legendas e setas. */
+  /**
+   * Silhueta do teclado na cor do jogador: as teclas usadas acendem na cor da ação
+   * (retângulos atrás dos furos) e linhas ligam cada ação à legenda.
+   */
+  private keyboardMap(cx: number, cy: number, d: DeviceId, i: number): void {
+    // Teclas da silhueta (x, y, largura) no viewBox 280x120.
+    const K: Record<string, [number, number, number]> = {
+      Q: [41, 55, 11], W: [55, 55, 11], E: [69, 55, 11],
+      A: [44, 69, 11], S: [58, 69, 11], D: [72, 69, 11], F: [86, 69, 11],
+      J: [128, 69, 11], K: [142, 69, 11], L: [156, 69, 11], ENTER: [184, 69, 28],
+      UP: [233, 69, 12], LEFT: [218, 83, 12], DOWN: [233, 83, 12], RIGHT: [248, 83, 12], SPACE: [73, 83, 86],
+    };
+    type Row = [string, number, string, string[]];
+    const C = { move: 0x8e9aa6, jump: 0x4caf50, crouch: 0x9b6bf0, guard: 0x1ec8c8, atk: 0xff8c1a, pick: 0xd8a530 };
+    const rows: Row[] =
+      d === 'kb-left'
+        ? [['Mover', C.move, 'A  D', ['A', 'D']], ['Pular', C.jump, 'W', ['W']], ['Agachar', C.crouch, 'S', ['S']],
+           ['Defender', C.guard, 'Q', ['Q']], ['Atacar', C.atk, 'F', ['F']], ['Pegar item', C.pick, 'E', ['E']]]
+        : d === 'kb-right'
+          ? [['Mover', C.move, '←  →', ['LEFT', 'RIGHT']], ['Pular', C.jump, '↑', ['UP']], ['Agachar', C.crouch, '↓', ['DOWN']],
+             ['Defender', C.guard, 'Shift', []], ['Atacar', C.atk, 'Enter', ['ENTER']], ['Pegar item', C.pick, '.', []]]
+          : [['Mover', C.move, 'AD ←→', ['A', 'D', 'LEFT', 'RIGHT']], ['Pular', C.jump, 'W ↑ Esp', ['W', 'UP', 'SPACE']],
+             ['Agachar', C.crouch, 'S  ↓', ['S', 'DOWN']], ['Defender', C.guard, 'Q  K', ['Q', 'K']],
+             ['Atacar', C.atk, 'F  J', ['F', 'J']], ['Pegar item', C.pick, 'E  L', ['E', 'L']]];
+
+    const k = 1.62;
+    const px = cx;
+    const py = cy - 44;
+    const at = (x: number, y: number): [number, number] => [px + (x - 140) * k, py + (y - 60) * k];
+    for (const [, color, , keys] of rows) {
+      for (const key of keys) {
+        const [x, y, w] = K[key];
+        const [rx, ry] = at(x - 0.5, y - 0.5);
+        this.add.rectangle(rx, ry, (w + 1) * k, 12 * k, color).setOrigin(0);
+      }
+    }
+    this.add.image(px, py, 'keyboard_sil').setDisplaySize(280 * k, 120 * k).setTint(PLAYER_TINT[i]);
+
+    // Legenda em 3 colunas: etiqueta na cor da tecla acesa + ação.
+    rows.forEach(([label, color, chip], n) => {
+      const x = cx - 245 + (n % 3) * 166;
+      const y = cy + 50 + Math.floor(n / 3) * 36;
+      const probe = this.add.text(0, 0, chip, { fontFamily: FONT, fontSize: '13px' });
+      const cw = Math.max(28, probe.width + 14);
+      probe.destroy();
+      this.add.rectangle(x + cw / 2, y, cw, 24, color).setStrokeStyle(2, 0x1d1a2b);
+      this.add.text(x + cw / 2, y, chip, { fontFamily: FONT, fontSize: '13px', color: '#ffffff' }).setOrigin(0.5);
+      this.add.text(x + cw + 7, y, label, { ...CAPTION, fontSize: '15px' }).setOrigin(0, 0.5);
+    });
+  }
+
   /** Teclas na posição real do teclado, com legendas e setas. */
   private keyMap(cx: number, cy: number, d: DeviceId): void {
     const right = d === 'kb-right';

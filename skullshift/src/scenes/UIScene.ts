@@ -197,6 +197,30 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({ targets: c, alpha: 0, delay: 1500, duration: 400, onComplete: () => c.destroy() });
   }
 
+  /** Faixa escura atravessando a tela com o texto de morte em vermelho (estilo "wasted"). */
+  showWasted(pi: number, text: string): void {
+    const split = this.g.split;
+    const y = split ? (pi === 0 ? VIEW.h * 0.72 : VIEW.h * 0.28) : VIEW.h / 2;
+    const band = this.add.rectangle(0, 0, W + 40, VIEW.portrait ? 120 : 110, 0x000000, 0.6);
+    const label = this.add
+      .text(0, 0, text, {
+        fontFamily: FONT,
+        fontSize: VIEW.portrait ? '58px' : '64px',
+        color: '#d6262b',
+        stroke: '#1a0507',
+        strokeThickness: 8,
+      })
+      .setOrigin(0.5);
+    if (label.width > W - 60) label.setScale((W - 60) / label.width);
+    const c = this.add.container(W / 2, y, [band, label]).setDepth(DEPTH.hud + 8).setAlpha(0);
+    if (split && pi === 1) c.setRotation(Math.PI);
+    const s0 = label.scale;
+    label.setScale(s0 * 1.4);
+    this.tweens.add({ targets: c, alpha: 1, duration: 200, delay: 250 });
+    this.tweens.add({ targets: label, scale: s0, duration: 300, delay: 250, ease: 'Back.easeOut' });
+    this.tweens.add({ targets: c, alpha: 0, delay: 2200, duration: 400, onComplete: () => c.destroy() });
+  }
+
   /** Parte de tela da vitória: confete, fogos, avatar, faixa e botões. */
   showVictory(v: VictoryInfo, instant = false): void {
     const g = this.g;

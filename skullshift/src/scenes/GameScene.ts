@@ -6,6 +6,7 @@ import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type Device
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
 import { completeLevel } from '../game/progress';
+import { REVIVE_LINES } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 
@@ -268,7 +269,8 @@ export class GameScene extends Phaser.Scene {
 
   /** História: volta ao mapa (a próxima fase já foi liberada na vitória). */
   nextLevel(): void {
-    this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
+    if (this.levelIndex >= LEVELS.length - 1) this.scene.start('vn', { devices: this.devices, epilogue: true });
+    else this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
   }
 
   restartMatch(): void {
@@ -572,17 +574,19 @@ export class GameScene extends Phaser.Scene {
     p.life = 2;
   }
 
-  private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water' | 'fall'): void {
+  private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water' | 'fall' | 'eaten'): void {
     if (!victim.alive) return;
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
     const dropped = cause === 'hit' ? victim.def.drops : undefined;
     const x = victim.x;
-    victim.kill(cause === 'fall' ? 'hit' : cause, dir);
+    victim.kill(cause === 'water' ? 'water' : 'hit', dir);
 
     if (cause === 'water' && this.level.isLava) {
       this.lavaBurn(x, victim);
     } else if (cause === 'water') {
       this.waterSplash(x, victim);
+    } else if (cause === 'eaten') {
+      // Sem efeito: a aranha já fez o show.
     } else if (cause === 'fall') {
       // Caiu do céu: some num sopro de nuvem.
       this.smokeBurst(x, SKY_FALL_Y - 20, 0xffffff, 1.2);
@@ -715,6 +719,17 @@ export class GameScene extends Phaser.Scene {
       duration: 750,
       ease: 'Sine.easeOut',
       onComplete: () => {
+        // No modo história, o Xamã murmura algo ao buscar a caveira (pista da lore).
+        if (this.mode === 'story') {
+          const line = Phaser.Utils.Array.GetRandom(REVIVE_LINES);
+          const t = this.add
+            .text(x, hoverY - 96, `"${line}"`, { fontFamily: BODY_FONT, fontSize: '18px', color: '#e2d2ff', stroke: '#1d1a2b', strokeThickness: 5 })
+            .setOrigin(0.5)
+            .setDepth(DEPTH.fx + 1)
+            .setAlpha(0);
+          this.tweens.add({ targets: t, alpha: 1, y: t.y - 8, duration: 300 });
+          this.tweens.add({ targets: t, alpha: 0, delay: 1500, duration: 400, onComplete: () => t.destroy() });
+        }
         // 2) Conjura: o espírito desce e vira o corpo inteiro.
         shaman.play('shaman_attack');
         this.time.delayedCall(320, () => {
@@ -925,43 +940,92 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * Morcego preso na teia: a aranha desce, cospe teia até ele virar um casulo,
+   * a tela pisca, o morcego some e só sobra a aranha mastigando no lugar dele.
+   * Para jogador, a tela fica em preto e branco com "VIROU COMIDA DE ARANHA".
+   */
   private webEat(f: Fighter, web: Phaser.Geom.Rectangle): void {
-    // Gruda: para no ar e se debate.
     f.zipping = true;
     f.body.setVelocity(0, 0);
     f.body.moves = false;
-    this.popText(f.x, f.feet - f.def.head - 30, 'GRUDOU!', '#ffffff');
+    const bx = f.x;
+    const by = f.body.center.y;
+    this.popText(bx, f.feet - f.def.head - 30, 'GRUDOU!', '#ffffff');
     const shake = this.tweens.add({ targets: f.sprite, angle: { from: -12, to: 12 }, duration: 90, yoyo: true, repeat: -1 });
-    // A aranha desce pelo fio, do teto até o morcego.
-    const spider = this.add.sprite(f.x, -60, 'spider_idle').setFlipY(true).setDepth(DEPTH.fighters + 1).play('spider_idle');
+
+    const spider = this.add.sprite(bx, -60, 'spider_idle').setFlipY(true).setDepth(DEPTH.fighters + 1).play('spider_idle');
     const thread = this.add.graphics().setDepth(DEPTH.fighters);
     const drawThread = () => {
       thread.clear();
-      thread.fillStyle(0x1d1a2b, 1).fillRect(Math.round(f.x) - 2, web.y, 4, spider.y - 30 - web.y);
-      thread.fillStyle(0xeef6f8, 1).fillRect(Math.round(f.x) - 1, web.y, 2, spider.y - 30 - web.y);
+      const len = spider.y - 30 - web.y;
+      if (len <= 0) return;
+      thread.fillStyle(0x1d1a2b, 1).fillRect(Math.round(spider.x) - 2, web.y, 4, len);
+      thread.fillStyle(0xeef6f8, 1).fillRect(Math.round(spider.x) - 1, web.y, 2, len);
     };
+    const strands = this.add.graphics().setDepth(DEPTH.fighters + 2);
+    const cocoon = this.add.image(bx, by, 'cocoon').setDepth(DEPTH.fighters + 1).setAlpha(0).setScale(0.4);
+    const spinY = () => spider.y + 26;
+
     this.tweens.add({
       targets: spider,
-      y: f.sprite.y - 70,
+      y: by - 90,
       duration: 700,
       ease: 'Quad.easeIn',
       onUpdate: drawThread,
       onComplete: () => {
-        // Nhac: a aranha morde e embrulha o morcego.
         spider.play('spider_attack');
-        this.time.delayedCall(260, () => {
+        // Jatos de teia: fios em pixel indo da aranha até pontos em volta do morcego.
+        const shots = this.time.addEvent({
+          delay: 110,
+          repeat: 10,
+          callback: () => {
+            strands.clear();
+            for (let i = 0; i < 3; i++) {
+              const tx = bx + Phaser.Math.Between(-26, 26);
+              const ty = by + Phaser.Math.Between(-30, 30);
+              const steps = 10;
+              for (let k = 0; k <= steps; k++) {
+                const x = Math.round(Phaser.Math.Linear(spider.x, tx, k / steps) / 2) * 2;
+                const y = Math.round(Phaser.Math.Linear(spinY(), ty, k / steps) / 2) * 2;
+                strands.fillStyle(0x1d1a2b, 1).fillRect(x - 2, y - 2, 6, 6);
+                strands.fillStyle(0xeef6f8, 1).fillRect(x, y, 2, 2);
+              }
+            }
+          },
+        });
+        this.tweens.add({ targets: cocoon, alpha: 1, scale: 1, duration: 1200, ease: 'Quad.easeIn' });
+        // O morcego vai sumindo dentro do casulo.
+        this.time.delayedCall(650, () => {
+          f.sprite.setVisible(false);
+          f.setMarkersVisible(false);
+        });
+        this.tweens.add({ targets: cocoon, angle: { from: -8, to: 8 }, duration: 160, yoyo: true, repeat: 7, delay: 300 });
+        this.time.delayedCall(1300, () => {
+          shots.remove();
+          strands.destroy();
           shake.stop();
+          // Pisca: o casulo some e a aranha aparece no lugar, mastigando.
+          this.cameras.main.flash(260, 255, 255, 255);
+          this.cam2?.flash(260, 255, 255, 255);
+          cocoon.destroy();
+          spider.setPosition(bx, by - 10).play('spider_idle');
+          drawThread();
+          this.tweens.add({ targets: spider, scaleY: { from: 1, to: 0.9 }, duration: 140, yoyo: true, repeat: 6 });
+          const pi = this.players.indexOf(f);
           if (f.alive) {
             f.zipping = false;
             f.body.moves = true;
-            this.killFighter(f, null, 'hit');
+            this.killFighter(f, null, 'eaten');
+            f.sprite.setVisible(false);
           }
-          this.popText(spider.x, spider.y - 40, 'NHAC!', '#ff5c5c');
+          if (pi !== -1) this.wasted(pi, 'VIROU COMIDA DE ARANHA');
+          else this.popText(bx, by - 60, 'NHAC!', '#ff5c5c');
           this.tweens.add({
             targets: spider,
             y: -80,
-            duration: 800,
-            delay: 300,
+            duration: 900,
+            delay: 2000,
             ease: 'Quad.easeIn',
             onUpdate: drawThread,
             onComplete: () => {
@@ -972,6 +1036,18 @@ export class GameScene extends Phaser.Scene {
         });
       },
     });
+  }
+
+  /** Estilo "wasted": a tela perde a cor por um instante e a faixa de morte aparece. */
+  private wasted(pi: number, text: string): void {
+    const cams = [this.cameras.main, this.cam2].filter((c): c is Phaser.Cameras.Scene2D.Camera => !!c);
+    for (const cam of cams) {
+      const fx = cam.postFX?.addColorMatrix();
+      if (!fx) continue;
+      fx.grayscale(1);
+      this.time.delayedCall(2300, () => cam.postFX.remove(fx as unknown as Phaser.FX.Controller));
+    }
+    this.ui?.showWasted(pi, text);
   }
 
   private nearestPlayer(f: Fighter): Fighter | null {
@@ -1022,6 +1098,7 @@ export class GameScene extends Phaser.Scene {
     const glow = this.add.ellipse(x, floor - 2, 46, 12, 0xfff7a8, 0.45).setDepth(DEPTH.items);
     const sprite = this.add.sprite(x, y, ITEM_TEXTURE[kind], 0).setDepth(DEPTH.items);
     if (kind === 'harpoon') sprite.setAngle(45);
+    if (kind === 'torch') sprite.play('torch_flame');
     this.tweens.add({ targets: sprite, y: y - 8, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: glow, alpha: 0.15, duration: 700, yoyo: true, repeat: -1 });
     const prompt = this.add

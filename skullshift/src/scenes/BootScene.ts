@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { makeCocoon, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
 
@@ -92,6 +93,8 @@ export class BootScene extends Phaser.Scene {
     this.makePixelWebs();
     this.makeBubble();
     this.makeVolcano();
+    makeTorch(this);
+    makeCocoon(this);
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
@@ -380,40 +383,12 @@ export class BootScene extends Phaser.Scene {
 
   /** Fundo do vulcão e o chifre do Minotauro. */
   private makeVolcano(): void {
-    const tex = this.textures.createCanvas('volcano_bg', W, H)!;
-    const c = tex.getContext();
-    const g = c.createLinearGradient(0, 0, 0, 520);
-    g.addColorStop(0, '#24091a');
-    g.addColorStop(0.55, '#5e1a1f');
-    g.addColorStop(1, '#c2461f');
-    c.fillStyle = g;
-    c.fillRect(0, 0, W, H);
-    // Vulcões ao fundo, com cratera acesa e rios de lava.
-    for (const [x, w, h] of [[180, 420, 260], [760, 520, 320], [1180, 360, 220]]) {
-      c.fillStyle = '#2b1218';
-      c.beginPath();
-      c.moveTo(x - w / 2, 520);
-      c.lineTo(x - 40, 520 - h);
-      c.lineTo(x + 40, 520 - h);
-      c.lineTo(x + w / 2, 520);
-      c.fill();
-      c.fillStyle = '#ff7a1a';
-      c.fillRect(x - 36, 520 - h - 4, 72, 8);
-      c.strokeStyle = 'rgba(255,140,40,0.8)';
-      c.lineWidth = 4;
-      c.beginPath();
-      c.moveTo(x - 10, 520 - h + 4);
-      c.quadraticCurveTo(x - 30, 520 - h / 2, x - 60, 520);
-      c.stroke();
-      // Fumaça.
-      c.fillStyle = 'rgba(60,40,45,0.6)';
-      for (let i = 0; i < 4; i++) {
-        c.beginPath();
-        c.arc(x + i * 14, 520 - h - 30 - i * 30, 22 + i * 8, 0, Math.PI * 2);
-        c.fill();
-      }
-    }
-    tex.refresh();
+    const { craters } = makeVolcanoBackdrop(this, 'volcano_bg', W, H);
+    this.registry.set('volcanoCraters', craters);
+    makeSmoke(this);
+    makeLavaTextures(this);
+    this.anims.create({ key: 'lava_bubble', frames: [0, 1, 2, 3, 4, 5].map((frame) => ({ key: 'lava_bubble', frame })), frameRate: 11 });
+    makeMapVolcano(this, 'map_volcano');
 
     const h = this.make.graphics({}, false);
     h.fillStyle(0x1d1a2b);

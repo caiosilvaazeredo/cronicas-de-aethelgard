@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
-import { CHAPTERS, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { CHAPTERS, EPILOGUE, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
 import { CHARS } from '../game/characters';
 import type { DeviceId } from '../game/controls';
 import { LEVELS } from '../game/level';
@@ -43,17 +43,19 @@ export class StoryScene extends Phaser.Scene {
   private slots: Record<'left' | 'right', { who?: Speaker; sprite?: Phaser.GameObjects.Sprite }> = { left: {}, right: {} };
   private prevPad = { a: true, b: true };
   private boxTop = 0;
-  lastData: { devices?: DeviceId[]; level?: number } = {};
+  private epilogue = false;
+  lastData: { devices?: DeviceId[]; level?: number; epilogue?: boolean } = {};
 
   constructor() {
     super('vn');
   }
 
-  init(data: { devices?: DeviceId[]; level?: number }): void {
+  init(data: { devices?: DeviceId[]; level?: number; epilogue?: boolean }): void {
     this.lastData = data;
     this.devices = data.devices ?? ['kb-full'];
     this.level = data.level ?? 0;
-    this.lines = CHAPTERS[this.level]?.lines ?? [];
+    this.epilogue = !!data.epilogue;
+    this.lines = (this.epilogue ? EPILOGUE : CHAPTERS[this.level])?.lines ?? [];
     this.index = -1;
     this.slots = { left: {}, right: {} };
     this.prevPad = { a: true, b: true };
@@ -61,16 +63,16 @@ export class StoryScene extends Phaser.Scene {
 
   create(): void {
     const H = VIEW.h;
-    const theme = LEVELS[this.level].theme;
+    const theme = this.epilogue ? 'shore' : LEVELS[this.level].theme;
     this.add.image(0, 0, BG[theme]).setOrigin(0).setDisplaySize(W, H);
     // Escurece a base para destacar os retratos e a caixa.
     const shade = this.add.graphics();
     shade.fillGradientStyle(0x0b1626, 0x0b1626, 0x0b1626, 0x0b1626, 0, 0, 0.75, 0.75).fillRect(0, H * 0.35, W, H * 0.65);
 
     // Título do capítulo no alto.
-    const ch = CHAPTERS[this.level];
+    const ch = this.epilogue ? EPILOGUE : CHAPTERS[this.level];
     this.add
-      .text(W / 2, VIEW.portrait ? 120 : 46, `CAPÍTULO ${this.level + 1} · ${ch.title.toUpperCase()}`, {
+      .text(W / 2, VIEW.portrait ? 120 : 46, `${this.epilogue ? 'EPÍLOGO' : `CAPÍTULO ${this.level + 1}`} · ${ch.title.toUpperCase()}`, {
         fontFamily: FONT,
         fontSize: VIEW.portrait ? '48px' : '34px',
         color: '#fff7dc',
@@ -232,6 +234,12 @@ export class StoryScene extends Phaser.Scene {
   }
 
   private play(): void {
+    if (this.epilogue) {
+      // Fim em aberto: a tela some num branco morno, e a escolha fica com quem joga.
+      this.cameras.main.fadeOut(1400, 255, 247, 220);
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('map', { devices: this.devices }));
+      return;
+    }
     this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });
   }
 }

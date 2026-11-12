@@ -44,22 +44,23 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 |---|---|---|
 | 1 · Ilhas da Maré | Praia com ilhas; os buracos dão na água | Lagarto (crista), Gnoll (osso), Tubarão-Arpão (arpão), Goblin Lanceiro (lança) |
 | 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos; **aranhas penduradas em teias no teto saltam em quem passa por baixo** | Aranha (teia: gruda nas paredes e sobe sozinha), Morcego Gigante (asa: voa até 2 s), Goblin da Tocha (tocha) |
-| 3 · Forja Vulcânica | A casa do Diabrete: lava no lugar da água, céu vermelho com vulcões ao fundo, brasas subindo e cinzas caindo; pedras flutuantes sobre poços de lava | Diabrete (brasa: baforada de fogo), Minotauro (chifre: marretada lenta e longa), Goblin da Tocha (tocha) |
+| 3 · Forja Vulcânica | A casa do Diabrete: lava viva no lugar da água (veios de casca correndo, crista ondulando, bolhas que crescem e estouram), céu vermelho em faixas com dois vulcões em pixel art (rios de lava, estratos, cratera acesa), fumaça em pixel art saindo das crateras, brasas subindo e cinzas caindo; pedras flutuantes sobre poços de lava | Diabrete (brasa: baforada de fogo), Minotauro (chifre: marretada lenta e longa), Goblin da Tocha (tocha) |
 | 4 · Santuário das Nuvens | O santuário flutuante do Xamã. Só as **nuvens encantadas** (lilás, com runas e faíscas) aguentam peso; as brancas são só enfeite. Cristais mágicos no lugar de árvores; cair no vazio mata | Abelhão (favo de mel), Gnomo do Estilingue (bolota) |
 
 **Poderes especiais:**
 - **Morcego:** no lugar do pulo duplo, voa subindo enquanto PULAR estiver apertado, por até 2 segundos. Uma barrinha de fôlego aparece sobre a cabeça e recarrega ao tocar o chão.
-- **Aranha:** gruda em qualquer parede que encostar no ar e sobe sozinha. Passiva **sentido aranha**: ela nunca cai. No ar sem chão embaixo, aparecem rabiscos azuis e vermelhos ao redor da cabeça, o tempo desacelera, uma badge surge no canto da tela e ela se puxa com uma teia até o chão mais próximo.
-- **Lagarto (passiva: nado):** na água (fases 1 e 2) ele não se afoga. Boia com a cabeça para fora, balançando, nada com aceleração macia deixando ondinhas e rastro, mergulha segurando ▼ (soltando bolhas) e salta para fora com PULAR. Uma camada translúcida na frente da água faz a parte submersa de qualquer personagem parecer dentro d'água.
+- **Aranha:** gruda em qualquer parede que encostar no ar e sobe sozinha. Passiva **sentido aranha**: ela nunca cai. No ar sem chão embaixo, aparecem rabiscos azuis e vermelhos ao redor da cabeça, o tempo desacelera, uma badge surge no canto da tela e ela se puxa com uma teia até o chão mais próximo. O efeito é discreto: dois rabisquinhos vermelhos sobre a cabeça e uma badge pequena vermelha.
+- **Lagarto (passiva: nado):** na água (fases 1 e 2) ele não se afoga. Não anda: o corpo deita para a frente (encabeça) como quem nada, mais quanto mais rápido vai, com uma ondulação no ritmo das braçadas. Boia com a cabeça para fora, nada com aceleração macia deixando ondinhas e rastro, mergulha segurando ▼ (soltando bolhas) e salta para fora com PULAR. Uma camada translúcida na frente da água faz a parte submersa de qualquer personagem parecer dentro d'água.
 - **Pique:** toque duas vezes na direção e segure para correr bem mais rápido, levantando poeira. No teclado de 1 jogador, Shift também ativa o pique.
 - **Bolha de energia:** quem não tem escudo no sprite (todos menos o esqueleto) defende dentro de uma bolha na cor do jogador. Quando a defesa quebra, a bolha estoura.
 - **Aranhas penduradas:** o fio balança no teto da caverna. Quando um jogador passa por baixo, a aranha salta em cima dele (a defesa não segura ataque de cima) e depois vira uma inimiga comum. No versus, ela ataca os dois.
+- **Morcego × teia:** se o morcego encosta numa teia do teto, ele gruda. Uma aranha desce pelo fio, cospe teia até ele virar um casulo, a tela pisca e só sobra a aranha mastigando no lugar dele. Para jogador, a tela perde a cor e aparece a faixa **"VIROU COMIDA DE ARANHA"**.
 
 As plataformas altas são blocos maciços: dá para subir pulando, e elas bloqueiam pelos lados. Degraus de 2 tiles e as plataformas flutuantes mais altas pedem pulo duplo. As flutuantes se atravessam por baixo e seguram quem cai em cima, como num jogo de plataforma clássico. Ossos, arpões e bolotas arremessados caem no chão e viram item.
 
 ## Modos
 
-- **História (1 jogador):** comece na ponta esquerda e chegue ao fim do lado oposto, atravessando os 5 cenários contra inimigos controlados pela IA. Ao morrer, você volta ao último checkpoint. Quando o cenário fica sem inimigos, aparece "VAI ➜".
+- **História (1 jogador):** começa num **mapa-múndi** em pixel art com as 4 ilhas ligadas por uma trilha; a caveira anda até a fase escolhida e as seguintes se abrem ao vencer (o progresso fica salvo no navegador). Antes de cada fase há uma **visual novel** com retratos grandes; depois da última, um epílogo. Em cada fase, comece na ponta esquerda e chegue ao fim do lado oposto, atravessando os 5 cenários contra inimigos controlados pela IA. Ao morrer, você volta ao último checkpoint. Quando o cenário fica sem inimigos, aparece "VAI ➜".
 - **Versus (2 jogadores locais):** a partida começa no cenário central, como no mockup. Os dois começam como esqueleto. O P1 vai para a direita e o P2 para a esquerda. Quem mata ganha a vez: só ele pode sair pela borda da tela e levar a câmera para o próximo cenário. O outro renasce à frente dele. Vence quem chegar ao fim do lado oposto.
 
 **Quem é quem:** o P1 é **azul** e o P2 é **vermelho**. Cada personagem tem:
@@ -70,6 +71,12 @@ As plataformas altas são blocos maciços: dá para subir pulando, e elas bloque
 Também ficam na cor do jogador o disco do avatar e o nome no HUD, o efeito de transformação, o "P1!"/"P2!" ao renascer, o brilho dos projéteis, as metades do teclado e os botões de toque.
 
 A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor comemorando e uma faixa com o avatar.
+
+## Lore
+
+Só dois personagens conversam: a **caveira** (o Xamã a batiza de "Ossian") e o **Xamã Hex**. Na superfície, Hex é um conselheiro: a Coroa dos Ossos foi quebrada em quatro e, inteira, abre o Portão da Maré, o caminho de casa. Ele dá à caveira o dom de tomar a forma das criaturas e a busca na sua nuvem toda vez que ela cai.
+
+Por baixo, fase a fase, as pistas sugerem outra coisa: a caveira lembra de lanternas sobre um rio e de uma queda; a cada morte vê uma luz morna e ouve o seu nome verdadeiro, mas a nuvem de Hex chega sempre antes; na caverna há nomes "Ossian" riscados na pedra; o Xamã não chega perto do fogo; no santuário há coroas quebradas e lanternas apagadas. No modo história, Hex murmura frases como "Ainda não." ao reviver a caveira. Nada é dito com todas as letras. O epílogo deixa a escolha em aberto: atravessar a luz e esquecer tudo, ou ficar e reinar no lugar de Hex. O texto está em `src/data/lore.ts`.
 
 ## Controles
 

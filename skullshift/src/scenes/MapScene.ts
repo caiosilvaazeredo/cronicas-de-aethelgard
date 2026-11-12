@@ -181,16 +181,19 @@ export class MapScene extends Phaser.Scene {
 
     // 3) Forja Vulcânica: ilha chamuscada com um vulcão de pixels e lava.
     this.island(14, 5, 5, 4, 'tiles_volcano', 0xd28e78);
-    const v = this.add.graphics().setDepth(5);
-    const steps = [[1010, 1100, 360], [1020, 1090, 340], [1030, 1080, 320], [1040, 1070, 300]];
-    for (const [a, b, y] of steps) {
-      v.fillStyle(INK, 1).fillRect(a - 4, y - 4, b - a + 8, 28);
-      v.fillStyle(0x5a3a32, 1).fillRect(a, y, b - a, 24);
-    }
-    v.fillStyle(0xff7a1a, 1).fillRect(1040, 296, 30, 8);
-    v.fillStyle(0xffd36b, 1).fillRect(1046, 296, 18, 4);
+    this.add.image(1055, 388, 'map_volcano').setOrigin(0.5, 1).setDepth(5);
     this.add
-      .particles(1055, 290, 'spark', {
+      .particles(1055, 262, 'vsmoke_1', {
+        speedY: { min: -22, max: -12 },
+        speedX: { min: 4, max: 12 },
+        lifespan: 3600,
+        scale: { start: 0.67, end: 1.33 },
+        alpha: { start: 0.95, end: 0 },
+        frequency: 700,
+      })
+      .setDepth(6);
+    this.add
+      .particles(1055, 264, 'spark', {
         speedY: { min: -60, max: -30 },
         speedX: { min: -12, max: 12 },
         lifespan: 1200,

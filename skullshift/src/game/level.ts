@@ -224,6 +224,8 @@ export class Level {
   readonly floats: Segment[];
   private clouds: Array<{ img: Phaser.GameObjects.Image; speed: number }> = [];
   private waves: Phaser.GameObjects.TileSprite[] = [];
+  private lavaBody?: Phaser.GameObjects.TileSprite;
+  private lavaTop: Phaser.GameObjects.TileSprite[] = [];
   private cloudSpan = 0;
 
   constructor(private scene: Phaser.Scene, def: LevelDef) {
@@ -313,6 +315,17 @@ export class Level {
       b.tilePositionX = (camX * 0.8 - time * 0.015) / 1.6;
       b.tilePositionY = Math.cos(time / 1100) * 3;
     }
+    if (this.lavaBody) {
+      const camX = this.scene.cameras.main.scrollX;
+      // Veios fluindo devagar e ondas de calor na crista (em passos de pixel).
+      this.lavaBody.tilePositionX = Math.round((camX + time * 0.012) / 2) * 2;
+      this.lavaBody.tilePositionY = Math.round(Math.sin(time / 1400) * 4 + time * 0.004);
+      const [a, b] = this.lavaTop;
+      a.tilePositionX = Math.round((camX * 0.9 - time * 0.03) / 2) * 2;
+      a.y = WATER_Y - 10 + Math.round(Math.sin(time / 520) * 2) * 2;
+      b.tilePositionX = Math.round((camX + time * 0.045) / 2) * 2;
+      b.y = WATER_Y - 6 + Math.round(Math.cos(time / 610)) * 2;
+    }
   }
 
   // ---------- fundo ----------
@@ -340,6 +353,25 @@ export class Level {
     const s = this.scene;
     s.add.rectangle(0, -500, W, 500, 0x1a0b14).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
     s.add.image(0, 0, 'volcano_bg').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    // Fumaça em pixel art saindo das crateras, levada pelo vento.
+    const craters = (s.registry.get('volcanoCraters') as Array<[number, number]>) ?? [];
+    craters.forEach(([cx, cy], i) => {
+      for (const [key, freq, scale] of [['vsmoke_0', 1500, 1], ['vsmoke_1', 900, 1], ['vsmoke_2', 700, 1]] as const) {
+        s.add
+          .particles(cx, cy - (i ? 26 : 16), key, {
+            speedY: { min: -26, max: -14 },
+            speedX: { min: 4, max: 14 },
+            accelerationX: 3,
+            lifespan: i ? 9000 : 6000,
+            scale: { start: scale * (i ? 1 : 0.67), end: scale * (i ? 2 : 1.33) },
+            alpha: { start: 0.85, end: 0 },
+            frequency: freq * (i ? 1.3 : 1.8),
+            x: { min: -8, max: 8 },
+          })
+          .setScrollFactor(0, 1)
+          .setDepth(DEPTH.sky + 0.5);
+      }
+    });
     s.add
       .particles(0, 0, 'spark', {
         x: { min: 0, max: W },
@@ -506,20 +538,28 @@ export class Level {
       s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.18 : 0.3).setTileScale(1.6, 1.3),
     ];
     if (lava) {
-      this.waves.forEach((w) => w.setTint(0xffd36b));
-      // Bolhas de lava estourando.
-      s.add
-        .particles(0, 0, 'spark', {
-          x: { min: 0, max: W },
-          y: { min: WATER_Y + 6, max: WATER_Y + 160 },
-          scale: { start: 0.5, end: 0.9 },
-          alpha: { start: 0.9, end: 0 },
-          lifespan: 700,
-          tint: [0xffe066, 0xff9f1c],
-          frequency: 120,
-        })
-        .setScrollFactor(0, 1)
-        .setDepth(DEPTH.water);
+      this.waves.forEach((w) => w.destroy());
+      // Lava viva: corpo com veios de casca escura que correm devagar e uma crista clara
+      // ondulando na superfície; bolhas crescem e estouram em pixel art.
+      this.lavaBody = s.add.tileSprite(0, WATER_Y + 6, W, H - WATER_Y + 200, 'lava_body').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+      this.lavaTop = [
+        s.add.tileSprite(0, WATER_Y - 10, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setTint(0xffb08a),
+        s.add.tileSprite(0, WATER_Y - 6, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water),
+      ];
+      this.waves = [];
+      s.time.addEvent({
+        delay: 140,
+        loop: true,
+        callback: () => {
+          const b = s.add
+            .sprite(Phaser.Math.Between(0, W), WATER_Y + Phaser.Math.Between(0, 60), 'lava_bubble', 0)
+            .setOrigin(0.5, 1)
+            .setScrollFactor(0, 1)
+            .setDepth(DEPTH.water);
+          b.play('lava_bubble');
+          b.once('animationcomplete', () => b.destroy());
+        },
+      });
       return;
     }
     const rr = new Phaser.Math.RandomDataGenerator(['skullshift-rocks']);

@@ -584,7 +584,7 @@ export class Fighter {
     this.tag.setPosition(this.x, this.feet - head - 26 + bob).setVisible(visible);
   }
 
-  private setMarkersVisible(v: boolean): void {
+  setMarkersVisible(v: boolean): void {
     this.aura?.setVisible(v);
     this.ring?.setVisible(v);
     this.tag?.setVisible(v);

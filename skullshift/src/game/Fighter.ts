@@ -50,6 +50,14 @@ export class Fighter {
   private stunUntil = 0;
   private stars: Phaser.GameObjects.Image[] = [];
   private jumps = 0;
+  /** Voo do morcego: tempo restante (ms) até tocar o chão de novo. */
+  private flightLeft = 0;
+  private flightBar?: Phaser.GameObjects.Graphics;
+  /** Aranha grudada numa parede (-1 esquerda, 1 direita, 0 não). */
+  private climbDir = 0;
+  private climbHop = 0;
+  /** A cena diz se há uma parede de poço ao lado (para a aranha grudar sozinha). */
+  wallProbe?: (x: number, feet: number) => number;
   private released = false;
   private shield: Phaser.GameObjects.Image;
   /** Alvos já atingidos/bloqueados neste golpe. */
@@ -110,6 +118,10 @@ export class Fighter {
     this.def = CHARS[id];
     const d = this.def;
     this.crouching = false;
+    this.climbDir = 0;
+    this.climbHop = 0;
+    this.sprite.setAngle(0);
+    this.flightLeft = this.def.fly ?? 0;
     this.sprite.setScale(1, 1);
     this.sprite.setTexture(`${id}_idle`, 0);
     this.body.setSize(BODY_W, BODY_H, false);
@@ -190,7 +202,10 @@ export class Fighter {
     const now = this.scene.time.now;
     this.cooldown = Math.max(0, this.cooldown - dt);
     const grounded = this.onGround;
-    if (grounded && this.body.velocity.y >= 0) this.jumps = 0;
+    if (grounded && this.body.velocity.y >= 0) {
+      this.jumps = 0;
+      if (d.fly) this.flightLeft = d.fly;
+    }
 
     if (this.state === 'stun') {
       this.body.setVelocityX(this.body.velocity.x * 0.85);
@@ -246,7 +261,7 @@ export class Fighter {
             this.setCrouch(false);
             this.body.setVelocityY(-JUMP_V);
             this.jumps = 1;
-          } else if (this.jumps < 2) {
+          } else if (this.jumps < 2 && !d.fly) {
             // Pulo duplo: um segundo impulso no ar, com uma cambalhota.
             this.body.setVelocityY(-JUMP_V * DOUBLE_JUMP);
             this.jumps = 2;
@@ -263,13 +278,22 @@ export class Fighter {
         const speed = this.crouching ? CROUCH_SPEED : guarding ? GUARD_WALK_SPEED : d.speed;
         this.body.setVelocityX(it.move * speed);
         this.setState(guarding ? 'guard' : it.move !== 0 ? 'run' : 'idle');
+        // Morcego: segurando pular no ar, voa subindo (até acabar o fôlego).
+        if (d.fly && !grounded && it.jumpHeld && this.flightLeft > 0) {
+          this.flightLeft -= dtMs;
+          this.body.setVelocityY(Math.max(this.body.velocity.y - 2600 * dt, -190));
+          this.sprite.anims.timeScale = 1.8;
+        }
       }
     }
+
+    if (d.climb && this.state !== 'stun') this.updateClimb(dt, grounded);
 
     if (this.knockT > 0) {
       this.knockT -= dt;
       this.body.setVelocityX(this.knockV);
     }
+    this.updateFlightBar();
 
     this.sprite.setFlipX(this.facing < 0);
 
@@ -284,6 +308,55 @@ export class Fighter {
     // Pisca enquanto invulnerável.
     this.sprite.setAlpha(this.invulnerable ? (Math.floor(now / 80) % 2 ? 0.35 : 1) : 1);
     this.updateMarkers();
+  }
+
+  /**
+   * Aranha: encostou numa parede no ar → gruda e sobe sozinha; ao chegar no topo,
+   * dá um impulso por cima da borda. Sobre um poço, é puxada para a parede mais próxima.
+   */
+  private updateClimb(dt: number, grounded: boolean): void {
+    const b = this.body;
+    if (this.climbHop > 0) {
+      this.climbHop -= dt;
+      return;
+    }
+    const wall = b.blocked.left ? -1 : b.blocked.right ? 1 : 0;
+    if (!grounded && wall !== 0) {
+      this.climbDir = wall;
+      this.facing = wall as 1 | -1;
+      b.setVelocity(wall * 60, -260);
+      this.sprite.setAngle(-90 * wall);
+      if (this.sprite.anims.currentAnim?.key !== `${this.def.id}_run`) this.sprite.play(`${this.def.id}_run`);
+      return;
+    }
+    if (this.climbDir !== 0) {
+      // Passou da borda: impulso para cima do degrau.
+      b.setVelocity(this.climbDir * 170, -230);
+      this.climbHop = 0.22;
+      this.climbDir = 0;
+      this.sprite.setAngle(0);
+      return;
+    }
+    if (!grounded && b.velocity.y > 0 && this.wallProbe) {
+      const dir = this.wallProbe(this.x, this.feet);
+      if (dir !== 0) b.setVelocity(dir * 280, Math.min(b.velocity.y, 120));
+    }
+  }
+
+  /** Barrinha de fôlego do voo sobre a cabeça (só aparece enquanto gasta). */
+  private updateFlightBar(): void {
+    const max = this.def.fly;
+    if (!max || this.flightLeft >= max || !this.alive) {
+      this.flightBar?.setVisible(false);
+      return;
+    }
+    if (!this.flightBar) this.flightBar = this.scene.add.graphics().setDepth(DEPTH.fx + 1);
+    const f = Math.max(0, this.flightLeft / max);
+    const x = this.x - 24;
+    const y = this.feet - this.def.head - 44;
+    this.flightBar.clear().setVisible(true);
+    this.flightBar.fillStyle(0x10223a, 0.85).fillRoundedRect(x - 2, y - 2, 52, 10, 4);
+    this.flightBar.fillStyle(f > 0.3 ? 0x9fe3ff : 0xff8c1a, 1).fillRoundedRect(x, y, 48 * f, 6, 3);
   }
 
   private attackFrame(): number {
@@ -419,6 +492,7 @@ export class Fighter {
   }
 
   destroy(): void {
+    this.flightBar?.destroy();
     this.clearStars();
     this.aura?.destroy();
     this.ring?.destroy();

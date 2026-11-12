@@ -39,6 +39,15 @@ interface Projectile {
 }
 
 const ITEM_RESPAWN = 8000;
+/** Aranha pendurada: altura dos pés enquanto está na teia. */
+const HANG_FEET = 236;
+
+interface Hanger {
+  f: Fighter;
+  state: 'hang' | 'drop' | 'free';
+  thread: Phaser.GameObjects.Graphics;
+  bob?: Phaser.Tweens.Tween;
+}
 const FACE_RANGE = 460;
 const SCREEN_TWEEN = 550;
 /** Distância (entre os centros) em que o golpe quebra a defesa. */
@@ -51,6 +60,7 @@ export class GameScene extends Phaser.Scene {
   players: Fighter[] = [];
   private controllers: Controller[] = [];
   private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
+  private hangers: Hanger[] = [];
   private items: Item[] = [];
   private projectiles: Projectile[] = [];
   /** Versus: quem tem a vez de avançar (-1 = ninguém ainda). */
@@ -89,6 +99,7 @@ export class GameScene extends Phaser.Scene {
     this.players = [];
     this.controllers = [];
     this.enemies = [];
+    this.hangers = [];
     this.items = [];
     this.projectiles = [];
     this.leader = -1;
@@ -139,13 +150,17 @@ export class GameScene extends Phaser.Scene {
         for (const [t, kind, h] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
     }
+    def.screens.forEach((s, si) => {
+      for (const t of s.hangers ?? []) this.addHanger(this.level.tileX(si, t));
+    });
+
     this.camX = this.cameraTarget();
     this.setupCamera();
 
     // Interface em uma cena por cima (sem o zoom da câmera do mundo).
     this.scene.launch('ui', { game: this });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
-    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : `VERSUS · ${def.name.split('—')[1]?.trim() ?? ''}`, 1600));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : `VERSUS · ${def.name.split('—')[1]?.trim() ?? ''}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
@@ -203,6 +218,17 @@ export class GameScene extends Phaser.Scene {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     f.onDoubleJump = (ff) => this.fx('dust', ff.x, ff.feet - 4, 1.3, ff.color);
+    // Aranha caindo num poço: aponta para a parede mais próxima, para grudar e subir.
+    f.wallProbe = (x, feet) => {
+      if (!this.level.hasWater || this.level.groundY(x) !== null) return 0;
+      for (const r of [24, 48, 80, 120]) {
+        for (const d of [-1, 1]) {
+          const g = this.level.groundY(x + d * r);
+          if (g !== null && g < feet - 4) return d;
+        }
+      }
+      return 0;
+    };
     this.physics.add.collider(f.sprite, this.level.ground);
     const i = this.players.length;
     this.players.push(f);
@@ -239,8 +265,10 @@ export class GameScene extends Phaser.Scene {
     });
     for (const e of this.enemies) {
       const active = e.f.alive && !this.transitioning && this.level.screenOf(e.f.x) === this.screen;
-      e.f.intent = active ? e.ai.read() : emptyIntent();
+      const hanging = this.hangers.some((h) => h.f === e.f && h.state !== 'free');
+      e.f.intent = active && !hanging ? e.ai.read() : emptyIntent();
     }
+    this.updateHangers();
 
     this.fighters.forEach((f) => f.update(delta));
     this.level.update(time, delta);
@@ -674,6 +702,62 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  // ---------- aranhas penduradas ----------
+
+  /** Aranha numa teia no teto, de cabeça para baixo, balançando no fio. */
+  private addHanger(x: number): void {
+    const f = new Fighter(this, x, HANG_FEET, 'spider', 2, 'enemy');
+    f.body.setAllowGravity(false);
+    f.body.moves = false;
+    f.sprite.setFlipY(true);
+    f.onProjectile = (ff) => this.spawnProjectile(ff);
+    this.physics.add.collider(f.sprite, this.level.ground);
+    // Teia no teto e o fio até a aranha.
+    this.add.image(x, 30, 'web_item').setScale(2.6).setAlpha(0.75).setDepth(DEPTH.clouds + 0.5);
+    const thread = this.add.graphics().setDepth(DEPTH.fighters - 1);
+    const bob = this.tweens.add({ targets: f.sprite, y: '+=10', duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const ai = new EnemyAI(f, () => this.nearestPlayer(f), this.level);
+    this.enemies.push({ f, ai });
+    this.hangers.push({ f, state: 'hang', thread, bob });
+  }
+
+  private nearestPlayer(f: Fighter): Fighter | null {
+    let best: Fighter | null = null;
+    for (const p of this.players) {
+      if (p.alive && (!best || Math.abs(p.x - f.x) < Math.abs(best.x - f.x))) best = p;
+    }
+    return best;
+  }
+
+  private updateHangers(): void {
+    for (const h of this.hangers) {
+      const f = h.f;
+      h.thread.clear();
+      if (!f.alive) continue;
+      if (h.state === 'hang') {
+        h.thread.lineStyle(2, 0xe8f6ff, 0.8).lineBetween(f.x, 30, f.x, f.feet - f.def.head + 10);
+        // Alguém passou por baixo? Salta em cima dele.
+        const target = this.players.find((p) => p.alive && Math.abs(p.x - f.x) < 110 && p.feet > f.feet + 60);
+        if (target) {
+          h.state = 'drop';
+          h.bob?.stop();
+          f.sprite.setFlipY(false);
+          f.body.moves = true;
+          f.body.setAllowGravity(true);
+          f.body.setVelocity(Math.sign(target.x - f.x) * 140, 120);
+          this.popText(f.x, f.feet - 20, '!', '#ff5c5c');
+        }
+      } else if (h.state === 'drop') {
+        // Caindo: quem estiver embaixo é esmagado (a defesa não segura ataque de cima).
+        for (const p of this.players) {
+          if (!p.alive || p.invulnerable) continue;
+          if (overlap(bodyBox(f), bodyBox(p))) this.killFighter(p, f, 'hit');
+        }
+        if (f.onGround) h.state = 'free';
+      }
+    }
+  }
+
   // ---------- itens / transformação ----------
 
   private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0, h?: number, floorY?: number): void {
@@ -786,6 +870,15 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(DEPTH.fx);
     this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 900, onComplete: () => t.destroy() });
+    // Dica do poder especial.
+    const tip = CHARS[char].fly ? 'Segure PULAR no ar para voar' : CHARS[char].climb ? 'Gruda nas paredes e sobe' : '';
+    if (tip) {
+      const h = this.add
+        .text(p.x, p.feet - 80, tip, { fontFamily: BODY_FONT, fontSize: '16px', color: '#ffffff', stroke: '#10223a', strokeThickness: 5 })
+        .setOrigin(0.5)
+        .setDepth(DEPTH.fx);
+      this.tweens.add({ targets: h, y: h.y - 30, alpha: 0, delay: 1400, duration: 700, onComplete: () => h.destroy() });
+    }
   }
 
   // ---------- fim de fase ----------
@@ -827,8 +920,8 @@ export class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         if (!win.alive) return;
-        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false, crouch: false };
-        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false, crouch: false }));
+        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false, crouch: false, jumpHeld: false };
+        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false, crouch: false, jumpHeld: false }));
       },
     });
 

@@ -51,6 +51,10 @@ export interface CharDef {
   attackSheets?: Array<{ key: string; n: number }>;
   /** Altura da cabeça acima dos pés (etiqueta e aura). */
   head: number;
+  /** Voa (segurando pular no ar) por até este tempo, em ms, no lugar do pulo duplo. */
+  fly?: number;
+  /** Gruda nas paredes e sobe sozinho. */
+  climb?: boolean;
   speed: number;
   melee?: MeleeDef;
   projectile?: ProjectileDef;
@@ -136,6 +140,7 @@ export const CHARS: Record<CharId, CharDef> = {
     attack: { n: 8, fps: 16 },
     speed: 255,
     melee: { from: 4, to: 6, reach: 80, back: 0 },
+    climb: true,
     drops: 'web',
   },
   bat: {
@@ -149,6 +154,7 @@ export const CHARS: Record<CharId, CharDef> = {
     attack: { n: 7, fps: 16 },
     speed: 265,
     melee: { from: 3, to: 5, reach: 68, back: 30 },
+    fly: 2000,
     drops: 'wing',
   },
   torchgob: {

@@ -9,9 +9,10 @@ export interface Intent {
   attack: boolean; // apertou agora
   pick: boolean; // apertou agora: pegar item do chão
   crouch: boolean; // segurando para baixo: agachar
+  jumpHeld: boolean; // segurando pular (voo do morcego)
 }
 
-export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false });
+export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false });
 
 export interface Controller {
   read(): Intent;
@@ -127,6 +128,7 @@ export class PlayerController implements Controller {
     let guard = false;
     let pick = false;
     let crouch = false;
+    let jumpHeld = false;
 
     if (this.keys) {
       const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
@@ -137,6 +139,7 @@ export class PlayerController implements Controller {
       guard = down(this.keys.guard);
       pick = just(this.keys.pick);
       crouch = down(this.keys.crouch);
+      jumpHeld = down(this.keys.jump);
     }
 
     const pad = this.padIndex === null ? undefined : connectedPads(this.scene)[this.padIndex];
@@ -152,6 +155,7 @@ export class PlayerController implements Controller {
       if (padPick && !this.prevPadPick) pick = true;
       this.prevPadPick = padPick;
       if (padJump && !this.prevPadJump) jump = true;
+      if (padJump) jumpHeld = true;
       if (padAttack && !this.prevPadAttack) attack = true;
       this.prevPadJump = padJump;
       this.prevPadAttack = padAttack;
@@ -168,8 +172,9 @@ export class PlayerController implements Controller {
       guard = t.guard;
       pick = t.pickPressed;
       crouch = t.crouch;
+      jumpHeld = t.jumpHeld;
     }
-    return { move, jump, guard, attack, pick, crouch };
+    return { move, jump, guard, attack, pick, crouch, jumpHeld };
   }
 }
 

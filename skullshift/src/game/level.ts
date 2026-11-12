@@ -9,7 +9,7 @@ import type { CharId, ItemId } from './characters';
  */
 export type Segment = [start: number, length: number, h?: number];
 
-export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike';
+export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal';
 export type Theme = 'shore' | 'cave' | 'sky';
 
 /** Um cenário = uma tela de 1280px (20 tiles). */
@@ -23,10 +23,14 @@ export interface ScreenDef {
   storyItems?: Array<[tile: number, item: ItemId, h?: number]>;
   /** Modo versus (os itens reaparecem depois de um tempo). */
   versusItems?: Array<[tile: number, item: ItemId, h?: number]>;
+  /** Aranhas penduradas em teias no teto (saltam em quem passa por baixo). */
+  hangers?: number[];
 }
 
 export interface LevelDef {
   name: string;
+  /** Frase de abertura (a narrativa da fase). */
+  intro?: string;
   theme: Theme;
   /** Spritesheet do tileset (variação de cor). */
   tiles: string;
@@ -109,11 +113,12 @@ const CAVE_R2: ScreenDef = {
 };
 export const LEVEL_2: LevelDef = {
   name: 'Fase 2 — Caverna Úmida',
+  intro: 'Olhe para cima: aranhas esperam nas teias do teto.',
   theme: 'cave',
   tiles: 'tiles_cave',
   screens: [
-    { ...mirror(CAVE_R2), enemies: [[11, 'bat']], storyItems: [[4, 'web']] },
-    { ...mirror(CAVE_R1), enemies: [[6, 'spider'], [17, 'torchgob']], storyItems: [[11, 'wing', 2]] },
+    { ...mirror(CAVE_R2), enemies: [[11, 'bat']], storyItems: [[4, 'web']], hangers: [6] },
+    { ...mirror(CAVE_R1), enemies: [[6, 'spider'], [17, 'torchgob']], storyItems: [[11, 'wing', 2]], hangers: [9] },
     {
       // Central: chão com dois degraus e uma plataforma flutuante no meio.
       segments: [[0, 5, 0], [5, 3, 1], [8, 4, 0], [12, 3, 1], [15, 5, 0]],
@@ -122,9 +127,10 @@ export const LEVEL_2: LevelDef = {
       enemies: [[9, 'spider'], [13, 'bat']],
       storyItems: [[2, 'torch']],
       versusItems: [[9, 'torch', 3]],
+      hangers: [6, 14],
     },
-    { ...CAVE_R1, enemies: [[3, 'torchgob'], [13, 'spider']], storyItems: [[8, 'web', 2]] },
-    { ...CAVE_R2, enemies: [[8, 'bat'], [12, 'torchgob'], [17, 'spider']], storyItems: [] },
+    { ...CAVE_R1, enemies: [[3, 'torchgob'], [13, 'spider']], storyItems: [[8, 'web', 2]], hangers: [10] },
+    { ...CAVE_R2, enemies: [[8, 'bat'], [12, 'torchgob'], [17, 'spider']], storyItems: [], hangers: [6] },
   ],
   storyStart: [0, 2],
   versusStart: [3, 16],
@@ -135,17 +141,18 @@ export const LEVEL_2: LevelDef = {
 const SKY_R1: ScreenDef = {
   segments: [[0, 4, 0], [7, 3, 1], [13, 2, 2], [15, 5, 0]],
   floats: [[4, 3, 1], [10, 3, 2]],
-  deco: [[1, 'tree'], [17, 'tree']],
+  deco: [[1, 'crystal'], [17, 'crystal']],
   versusItems: [[11, 'honey', 2]],
 };
 const SKY_R2: ScreenDef = {
   segments: [[0, 5, 0], [8, 3, 1], [14, 6, 0]],
   floats: [[5, 3, 0], [11, 3, 2], [9, 2, 4]],
-  deco: [[2, 'tree'], [18, 'skull_spike'], [19, 'skull_spike']],
+  deco: [[2, 'crystal'], [18, 'skull_spike'], [19, 'skull_spike']],
   versusItems: [[9, 'acorn', 4]],
 };
 export const LEVEL_3: LevelDef = {
-  name: 'Fase 3 — Reino das Nuvens',
+  name: 'Fase 3 — Santuário das Nuvens',
+  intro: 'Só as nuvens encantadas pelo Xamã, as que brilham, aguentam o seu peso.',
   theme: 'sky',
   tiles: 'tiles_sky',
   screens: [
@@ -155,7 +162,7 @@ export const LEVEL_3: LevelDef = {
       // Central: duas ilhas ligadas por uma ponte de nuvem e uma nuvem alta no meio.
       segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]],
       floats: [[6, 2, 0], [12, 2, 0], [9, 2, 3]],
-      deco: [[3, 'tree'], [17, 'tree']],
+      deco: [[3, 'crystal'], [17, 'crystal']],
       enemies: [[9, 'sgnome'], [16, 'bee']],
       storyItems: [[4, 'ember']],
       versusItems: [[10, 'ember', 1]],
@@ -299,6 +306,8 @@ export class Level {
       this.clouds.push({ img, speed: rng.realInRange(8, 22) });
     }
 
+    if (high) this.sanctuary();
+
     // Vento: rajadas finas (e folhas, perto do mar).
     s.add
       .particles(0, 0, 'streak', {
@@ -329,6 +338,25 @@ export class Level {
         })
         .setScrollFactor(0, 1)
         .setDepth(DEPTH.deco);
+    }
+  }
+
+  /** Ao longe: o santuário flutuante do Xamã (silhuetas lilás em parallax). */
+  private sanctuary(): void {
+    const g = this.scene.add.graphics().setScrollFactor(0.15, 1).setDepth(DEPTH.sky + 0.5);
+    const rng = new Phaser.Math.RandomDataGenerator(['sanctuary']);
+    for (let x = 80; x < W + this.width * 0.15; x += rng.between(380, 560)) {
+      const y = rng.between(150, 260);
+      const w = rng.between(120, 200);
+      g.fillStyle(0xb9a6ee, 0.45);
+      g.fillEllipse(x, y, w, 34);
+      g.fillTriangle(x - w / 2 + 10, y, x + w / 2 - 10, y, x + rng.between(-10, 10), y + rng.between(60, 90));
+      // Torres e cúpula.
+      g.fillRect(x - 26, y - 70, 16, 70).fillRect(x + 10, y - 54, 16, 54);
+      g.fillTriangle(x - 30, y - 70, x - 6, y - 70, x - 18, y - 96);
+      g.fillTriangle(x + 6, y - 54, x + 30, y - 54, x + 18, y - 78);
+      g.fillCircle(x - 2, y - 30, 22);
+      g.fillStyle(0xf2c6ff, 0.5).fillCircle(x - 18, y - 60, 4).fillCircle(x + 18, y - 44, 4);
     }
   }
 
@@ -400,8 +428,8 @@ export class Level {
   private cloudSea(): void {
     const s = this.scene;
     for (const [sf, y, alpha, depth] of [
-      [0.5, 560, 0.85, DEPTH.water],
-      [1, 600, 1, DEPTH.waterRocks],
+      [0.5, 560, 0.55, DEPTH.water],
+      [1, 610, 0.7, DEPTH.waterRocks],
     ] as const) {
       for (let x = -300, i = 0; x < (sf === 1 ? this.width : W + this.width * 0.5) + 300; x += 260, i++) {
         const img = s.add
@@ -432,6 +460,11 @@ export class Level {
     for (const [start, n, hh] of merged) {
       const h = hh ?? 0;
       const gy = GRASS_Y - h * TILE;
+      if (this.theme === 'sky') {
+        this.enchantedCloud(start, n, topOf(h), 548);
+        this.addSolid(start, n, h);
+        continue;
+      }
       if (this.hasWater) {
         for (let i = 0; i < n; i++) {
           s.add
@@ -451,12 +484,6 @@ export class Level {
           s.add.image(x, gy + r * TILE, key, row * COLS + col).setOrigin(0).setDepth(DEPTH.terrain);
         }
       }
-      if (this.theme === 'sky') {
-        // Nuvens sob as ilhas, para parecer que flutuam.
-        for (let x = start * TILE - 40; x < (start + n) * TILE; x += 150) {
-          s.add.image(x, GRASS_Y + TILE * 2 + 6, 'cloud_05').setOrigin(0, 0.5).setScale(0.4).setDepth(DEPTH.terrain + 0.5);
-        }
-      }
       if (this.theme !== 'cave') {
         for (let t = start + 0.9; t < start + n - 0.4; t += 2.45) {
           s.add
@@ -466,20 +493,14 @@ export class Level {
             .play({ key: 'bush', startFrame: Math.floor(t) % 8 });
         }
       }
-      // Bloco maciço: o topo é o chão e os lados são paredes.
-      const top = topOf(h);
-      const w = n * TILE;
-      const zh = 600 - top;
-      const zone = s.add.zone(start * TILE + w / 2, top + zh / 2, w, zh);
-      s.physics.add.existing(zone, true);
-      this.ground.add(zone);
+      this.addSolid(start, n, h);
     }
 
     // Plataformas flutuantes (só seguram por cima).
     for (const [start, n, hh] of this.floats) {
       const h = hh ?? 0;
       const top = topOf(h);
-      if (this.theme === 'sky') this.cloudPlatform(start, n, top);
+      if (this.theme === 'sky') this.enchantedCloud(start, n, top, top + 30);
       else {
         for (let i = 0; i < n; i++) {
           const col = n === 1 ? 3 : i === 0 ? 0 : i === n - 1 ? 2 : 1;
@@ -511,16 +532,71 @@ export class Level {
     }
   }
 
-  /** Nuvem fofa que serve de plataforma (fase do céu). */
-  private cloudPlatform(start: number, n: number, top: number): void {
-    const g = this.scene.add.graphics().setDepth(DEPTH.terrain);
+  /** Bloco maciço: o topo é o chão e os lados são paredes. */
+  private addSolid(start: number, n: number, h: number): void {
+    const top = topOf(h);
+    const w = n * TILE;
+    const zh = 600 - top;
+    const zone = this.scene.add.zone(start * TILE + w / 2, top + zh / 2, w, zh);
+    this.scene.physics.add.existing(zone, true);
+    this.ground.add(zone);
+  }
+
+  /**
+   * Nuvem encantada pelo Xamã (fase do céu): a única que aguenta peso. Lilás, com borda de
+   * magia, runas que pulsam e faíscas subindo, bem diferente das nuvens brancas de enfeite.
+   */
+  private enchantedCloud(start: number, n: number, top: number, bottom: number): void {
+    const s = this.scene;
     const x0 = start * TILE;
     const w = n * TILE;
-    g.fillStyle(0xb9d4e6, 1);
-    for (let x = x0 + 14; x <= x0 + w - 14; x += 22) g.fillCircle(x, top + 18, 18);
-    g.fillStyle(0xffffff, 1);
-    for (let x = x0 + 14; x <= x0 + w - 14; x += 22) g.fillCircle(x, top + 10, 16 + ((x / 22) % 2) * 4);
-    g.fillRect(x0 + 14, top + 4, w - 28, 18);
+    const g = s.add.graphics().setDepth(DEPTH.terrain);
+    const hgt = bottom - top;
+    g.fillStyle(0xb27cff, 0.22).fillRoundedRect(x0 - 8, top - 18, w + 16, hgt + 30, 26);
+    g.fillStyle(0xb9a6ee, 1).fillRoundedRect(x0, top - 6, w, hgt + 6, 20);
+    g.fillStyle(0xf4eeff, 1).fillRoundedRect(x0 + 3, top - 10, w - 6, hgt - 4, 18);
+    // Bordas fofas em cima e embaixo.
+    for (let x = x0 + 16; x <= x0 + w - 16; x += 24) {
+      g.fillStyle(0xffffff, 1).fillCircle(x, top - 6, 13 + ((x / 24) % 2) * 3);
+      g.fillStyle(0xd7c8ff, 1).fillCircle(x + 6, bottom - 4, 12);
+    }
+    g.lineStyle(3, 0x9b6bf0, 0.9).strokeRoundedRect(x0, top - 14, w, hgt + 10, 20);
+    g.lineStyle(2, 0xffffff, 0.9).lineBetween(x0 + 14, top - 2, x0 + w - 14, top - 2);
+    // Runas do Xamã no meio da nuvem, pulsando.
+    const runes = s.add.graphics().setDepth(DEPTH.terrain + 0.1);
+    const ry = top + Math.min(hgt * 0.45, 40);
+    for (let x = x0 + 28; x <= x0 + w - 24; x += 48) {
+      runes.lineStyle(2.5, 0xa86bff, 1);
+      runes.strokeTriangle(x - 7, ry + 6, x + 7, ry + 6, x, ry - 8);
+      runes.fillStyle(0xe3c8ff, 1).fillCircle(x, ry + 1, 2.5);
+    }
+    s.tweens.add({ targets: runes, alpha: { from: 1, to: 0.35 }, duration: 900 + start * 13, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Faíscas mágicas subindo do topo.
+    s.add
+      .particles(0, 0, 'spark', {
+        x: { min: x0 + 8, max: x0 + w - 8 },
+        y: top - 4,
+        speedY: { min: -40, max: -20 },
+        lifespan: 1200,
+        scale: { start: 0.22, end: 0 },
+        alpha: { start: 0.9, end: 0 },
+        tint: [0xd9b3ff, 0xfff7dc, 0xb27cff],
+        frequency: Math.max(120, 900 / n),
+      })
+      .setDepth(DEPTH.deco);
+  }
+
+  /** Cristal mágico flutuando (decoração do céu, no lugar de árvores). */
+  private crystal(x: number, ground: number): void {
+    const s = this.scene;
+    const g = s.add.graphics().setDepth(DEPTH.deco);
+    g.fillStyle(0xb27cff, 0.25).fillCircle(0, 0, 26);
+    g.fillStyle(0x1d1a2b, 1).fillPoints([{ x: 0, y: -34 }, { x: 14, y: 0 }, { x: 0, y: 30 }, { x: -14, y: 0 }], true);
+    g.fillStyle(0xc58cff, 1).fillPoints([{ x: 0, y: -30 }, { x: 11, y: 0 }, { x: 0, y: 26 }, { x: -11, y: 0 }], true);
+    g.fillStyle(0xf2dcff, 1).fillPoints([{ x: 0, y: -30 }, { x: 5, y: -2 }, { x: 0, y: 8 }, { x: -6, y: -2 }], true);
+    g.setPosition(x, ground - 70);
+    s.tweens.add({ targets: g, y: ground - 82, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    s.add.ellipse(x, ground - 4, 34, 8, 0x9b6bf0, 0.35).setDepth(DEPTH.deco);
   }
 
   private addDeco(x: number, kind: DecoKind, seed: number, ground: number): void {
@@ -536,6 +612,9 @@ export class Level {
         break;
       case 'skull_spike':
         s.add.image(x, base + 10, 'skull_spike').setOrigin(0.5, 1).setDepth(DEPTH.deco);
+        break;
+      case 'crystal':
+        this.crystal(x, ground);
         break;
       default:
         s.add.image(x, base + 8, kind).setOrigin(0.5, 1).setDepth(DEPTH.deco).setTint(tint);

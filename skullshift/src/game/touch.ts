@@ -21,6 +21,7 @@ export interface TouchState {
   jumpPressed: boolean;
   attackPressed: boolean;
   pickPressed: boolean;
+  jumpHeld: boolean;
 }
 
 type Spec = [ButtonId, number, number, number, string];
@@ -164,6 +165,7 @@ export class TouchPad {
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
       pickPressed: pick && !this.prevPick,
+      jumpHeld: jump,
     };
     this.prevJump = jump;
     this.prevAttack = attack;

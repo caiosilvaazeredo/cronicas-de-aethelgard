@@ -82,7 +82,23 @@ export class UIScene extends Phaser.Scene {
     if (g.victoryInfo) this.showVictory(g.victoryInfo, true);
   }
 
-  banner(text: string, ms: number): void {
+  banner(text: string, ms: number, sub?: string): void {
+    if (sub) {
+      // Frase de abertura (a narrativa da fase), embaixo do nome.
+      const st = this.add
+        .text(W / 2, this.worldMidY - 176, sub, {
+          fontFamily: BODY_FONT,
+          fontSize: '24px',
+          color: '#ffffff',
+          stroke: '#10223a',
+          strokeThickness: 6,
+          align: 'center',
+          wordWrap: { width: 1000 },
+        })
+        .setOrigin(0.5)
+        .setDepth(DEPTH.hud);
+      this.tweens.add({ targets: st, alpha: 0, delay: ms + 1400, duration: 600, onComplete: () => st.destroy() });
+    }
     const t = this.add
       .text(W / 2, this.worldMidY - 230, text, {
         fontFamily: FONT,

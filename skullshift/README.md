@@ -43,8 +43,13 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 | Fase | Ambiente | Personagens (item que transforma) |
 |---|---|---|
 | 1 · Ilhas da Maré | Praia com ilhas; os buracos dão na água | Lagarto (crista), Gnoll (osso), Tubarão-Arpão (arpão), Goblin Lanceiro (lança) |
-| 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos | Aranha (teia), Morcego Gigante (asa), Goblin da Tocha (tocha) |
-| 3 · Reino das Nuvens | Ilhas flutuantes, pontes e plataformas de nuvem; cair no vazio mata | Abelhão (favo de mel), Diabrete (brasa, baforada de fogo), Gnomo do Estilingue (bolota) |
+| 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos; **aranhas penduradas em teias no teto saltam em quem passa por baixo** | Aranha (teia: gruda nas paredes e sobe sozinha), Morcego Gigante (asa: voa até 2 s), Goblin da Tocha (tocha) |
+| 3 · Santuário das Nuvens | O santuário flutuante do Xamã. Só as **nuvens encantadas** (lilás, com runas e faíscas) aguentam peso; as brancas são só enfeite. Cristais mágicos no lugar de árvores; cair no vazio mata | Abelhão (favo de mel), Diabrete (brasa, baforada de fogo), Gnomo do Estilingue (bolota) |
+
+**Poderes especiais:**
+- **Morcego:** no lugar do pulo duplo, voa subindo enquanto PULAR estiver apertado, por até 2 segundos. Uma barrinha de fôlego aparece sobre a cabeça e recarrega ao tocar o chão.
+- **Aranha:** gruda em qualquer parede que encostar no ar e sobe sozinha. Caindo num poço d'água, ela é puxada para a parede mais próxima, sobe e passa por cima da borda.
+- **Aranhas penduradas:** o fio balança no teto da caverna. Quando um jogador passa por baixo, a aranha salta em cima dele (a defesa não segura ataque de cima) e depois vira uma inimiga comum. No versus, ela ataca os dois.
 
 As plataformas altas são blocos maciços: dá para subir pulando, e elas bloqueiam pelos lados. Degraus de 2 tiles e as plataformas flutuantes mais altas pedem pulo duplo. As flutuantes se atravessam por baixo e seguram quem cai em cima, como num jogo de plataforma clássico. Ossos, arpões e bolotas arremessados caem no chão e viram item.
 

@@ -5,6 +5,7 @@ import { backdrop } from '../ui/backdrop';
 import {
   PLAYER_TINT,
   gamepadArt,
+  gestureArt,
   keyboardArt,
   panel,
   phoneArt,
@@ -14,8 +15,8 @@ import {
 
 type Mode = 'story' | 'versus';
 
-const STORY_DEVICES: DeviceId[] = ['kb-full', 'pad0', 'pad1', 'touch'];
-const VERSUS_DEVICES: DeviceId[] = ['kb-left', 'kb-right', 'pad0', 'pad1', 'touch'];
+const STORY_DEVICES: DeviceId[] = ['kb-full', 'pad0', 'pad1', 'touch', 'gesture'];
+const VERSUS_DEVICES: DeviceId[] = ['kb-left', 'kb-right', 'pad0', 'pad1', 'touch', 'gesture'];
 
 /**
  * Tela de escolha de controle: uma coluna por jogador com ◀ ▶ para trocar o dispositivo.
@@ -65,7 +66,12 @@ export class ControlsScene extends Phaser.Scene {
   /** Dispositivos que o jogador i pode escolher agora (o toque pode ser dividido entre os dois). */
   private options(i: number): DeviceId[] {
     return this.list.filter(
-      (d) => this.enabled(d) && (d === 'touch' || !this.choice.some((c, j) => j !== i && c === d)),
+      (d) =>
+        this.enabled(d) &&
+        (d === 'touch' || !this.choice.some((c, j) => j !== i && c === d)) &&
+        // Gestos usam a tela inteira: não dá para dividir com os botões de toque.
+        !(d === 'gesture' && this.choice.some((c, j) => j !== i && c === 'touch')) &&
+        !(d === 'touch' && this.choice.some((c, j) => j !== i && c === 'gesture')),
     );
   }
 
@@ -180,6 +186,8 @@ export class ControlsScene extends Phaser.Scene {
       art = keyboardArt(this, cx, cy - 30, half, PLAYER_TINT[i], PLAYER_TINT[i]);
     } else if (info.kind === 'gamepad') {
       art = gamepadArt(this, cx, cy - 26, PLAYER_TINT[i]);
+    } else if (info.kind === 'gesture') {
+      art = gestureArt(this, cx, cy - 30, true);
     } else {
       art = phoneArt(this, cx, cy - 30);
     }
@@ -233,9 +241,10 @@ export class ControlsScene extends Phaser.Scene {
       { ids: ['pad0'], label: 'Controle 1', art: (x, y, on) => gamepadArt(this, x, y, 0x5a6472, on) },
       { ids: ['pad1'], label: 'Controle 2', art: (x, y, on) => gamepadArt(this, x, y, 0x5a6472, on) },
       { ids: ['touch'], label: 'Toque', art: (x, y, on) => phoneArt(this, x, y, on) },
+      { ids: ['gesture'], label: 'Gestos/Mouse', art: (x, y, on) => gestureArt(this, x, y, on) },
     ];
     const g = this.add.graphics();
-    const tw = 600;
+    const tw = 750;
     g.fillStyle(0x10223a, 0.9).fillRoundedRect(-tw / 2 - 4, cy - 52, tw + 8, 112, 22);
     g.fillStyle(0xe7eef2, 0.95).fillRoundedRect(-tw / 2, cy - 48, tw, 104, 18);
     const items: Phaser.GameObjects.GameObject[] = [g];
@@ -258,7 +267,7 @@ export class ControlsScene extends Phaser.Scene {
       owners.forEach((o, n) => items.push(playerBadge(this, x - 40 + n * 26 + (owners.length === 1 ? 14 : 0), cy - 44, o + 1, 11)));
     });
     const k = this.scale.height / 2770;
-    return this.add.container(W / 2, P ? 1780 * k : 588, items).setScale(P ? 1.85 * Math.min(1, k * 1.1) : 1);
+    return this.add.container(W / 2, P ? 1780 * k : 584, items).setScale(P ? 1.6 * Math.min(1, k * 1.1) : 0.9);
   }
 
   private confirm(): void {

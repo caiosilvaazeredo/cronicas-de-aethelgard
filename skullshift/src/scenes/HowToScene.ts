@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { DEVICES, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
-import { PLAYER_TINT, gamepadArt, keycap, panel, phoneArt, pillButton, playerBadge } from '../ui/devices';
+import { PLAYER_TINT, gamepadArt, gestureArt, keycap, panel, phoneArt, pillButton, playerBadge } from '../ui/devices';
 
 type Mode = 'story' | 'versus';
 
@@ -83,6 +83,7 @@ export class HowToScene extends Phaser.Scene {
       else this.keyMap(cx, cy + 20, d);
     }
     else if (kind === 'gamepad') this.padMap(cx, cy + 10, i);
+    else if (kind === 'gesture') this.gestureMap(cx, cy + 10);
     else this.touchMap(cx, cy + 10);
   }
 
@@ -249,6 +250,33 @@ export class HowToScene extends Phaser.Scene {
     });
     this.add
       .text(px, cy + 118, 'LB / RB também defendem', { fontFamily: BODY_FONT, fontSize: '13px', color: '#3c5368' })
+      .setOrigin(0.5);
+  }
+
+  /** Gestos: arrastar, deslizar, tocar, segurar; mouse: esquerdo, direito, meio. */
+  private gestureMap(cx: number, cy: number): void {
+    gestureArt(this, cx - 150, cy - 10).setScale(0.62);
+    const rows: Array<[string, string]> = [
+      ['↔', 'Arrastar: andar (longe: pique)'],
+      ['↑', 'Deslizar p/ cima: pular'],
+      ['↓', 'Arrastar p/ baixo: agachar'],
+      ['•', 'Toque/clique rápido: atacar'],
+      ['⏱', 'Segurar parado: pegar'],
+      ['✌', '2 dedos ou botão dir.: defender'],
+    ];
+    rows.forEach(([glyph, text], k) => {
+      const y = cy - 92 + k * 32;
+      const x = cx - 10;
+      this.add.circle(x, y, 15, 0x10223a, 0.85).setStrokeStyle(3, 0xfff7dc);
+      this.add.text(x, y, glyph, { fontFamily: BODY_FONT, fontSize: '15px', color: '#fff7dc' }).setOrigin(0.5);
+      this.add.text(x + 26, y, text, { ...CAPTION, fontSize: '15px' }).setOrigin(0, 0.5);
+    });
+    this.add
+      .text(cx, cy + 112, 'Funciona com o dedo na tela ou só com o mouse (meio também pega).', {
+        fontFamily: BODY_FONT,
+        fontSize: '14px',
+        color: '#3c5368',
+      })
       .setOrigin(0.5);
   }
 

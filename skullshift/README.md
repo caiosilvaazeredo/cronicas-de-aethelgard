@@ -110,6 +110,22 @@ Com um oponente perto, segurar para **trás** faz o personagem andar devagar com
 - **Revivendo:** o xamã chega numa nuvem trazendo o espírito do personagem pendurado numa linha, conjura, o corpo inteiro se forma no chão e ele vai embora flutuando devagar.
 - **Água:** respingo na superfície, ondas, gotas e bolhas, e o corpo afunda recortado pela linha d'água. Também há espuma batendo nos penhascos, ondas correndo, nuvens à deriva, rajadas de vento e folhas voando. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
 
+### Gestos ou mouse
+
+Na tela de controles há a opção **Gestos ou mouse**: joga-se só com o dedo na tela (sem botões virtuais) ou só com o mouse. Onde o dedo/clique encosta vira o centro de um manche flutuante (aparece translúcido na tela):
+
+| Gesto | Ação |
+|---|---|
+| Arrastar para os lados | Andar (arrastar longe: pique) |
+| Deslizar rápido para cima | Pular (de novo no ar: pulo duplo; segurar depois: voo do morcego) |
+| Arrastar para baixo | Agachar |
+| Toque/clique rápido | Atacar |
+| Segurar parado | Pegar o item |
+| Segundo dedo na tela / botão direito do mouse | Defender |
+| Botão do meio do mouse | Pegar o item |
+
+No versus, só um jogador pode usar gestos, e não junto com os botões de toque (os dois usariam a tela inteira).
+
 ## Transformações (fase 1)
 
 | Item | Vira | Ataque |

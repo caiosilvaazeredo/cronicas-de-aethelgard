@@ -139,6 +139,28 @@ export function phoneArt(scene: Phaser.Scene, x: number, y: number, enabled = tr
   return scene.add.container(x, y, [g]);
 }
 
+/** Mouse e uma tela com o rastro de um arrasto: o controle por gestos. */
+export function gestureArt(scene: Phaser.Scene, x: number, y: number, enabled = true): Phaser.GameObjects.Container {
+  const g = scene.add.graphics();
+  const on = (c: number) => (enabled ? c : 0x9aa3ad);
+  // Telinha com o rastro do dedo (arrastar e deslizar para cima).
+  g.fillStyle(INK).fillRoundedRect(-150, -70, 190, 140, 20);
+  g.fillStyle(on(0x39b5fd)).fillRoundedRect(-138, -58, 166, 116, 10);
+  g.lineStyle(3, 0xfff7dc, 0.8).strokeCircle(-70, 20, 26);
+  g.fillStyle(0xfff7dc, 0.9).fillCircle(-46, 20, 10);
+  for (let i = 0; i < 5; i++) g.fillStyle(0xffe066, 0.4 + i * 0.12).fillCircle(-30 + i * 6, 6 - i * 12, 3 + i);
+  // Mouse.
+  g.fillStyle(INK).fillRoundedRect(60, -62, 96, 132, 46);
+  g.fillStyle(on(0xe7eef2)).fillRoundedRect(68, -54, 80, 116, 40);
+  g.fillStyle(on(0xd8a530)).fillRoundedRect(68, -54, 40, 50, { tl: 36, tr: 0, bl: 0, br: 0 });
+  g.fillStyle(on(0x2f86e0)).fillRoundedRect(108, -54, 40, 50, { tl: 0, tr: 36, bl: 0, br: 0 });
+  g.fillStyle(INK).fillRect(106, -54, 4, 50).fillRect(68, -6, 80, 4);
+  g.fillStyle(INK).fillRoundedRect(102, -40, 12, 22, 6);
+  // Fio.
+  g.lineStyle(4, INK).beginPath().moveTo(108, -62).lineTo(108, -76).lineTo(140, -84).strokePath();
+  return scene.add.container(x, y, [g]);
+}
+
 /** Círculo numerado do jogador (1, 2). */
 export function playerBadge(scene: Phaser.Scene, x: number, y: number, n: number, r = 26): Phaser.GameObjects.Container {
   const g = scene.add.graphics();

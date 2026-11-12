@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GestureInput } from './gesture';
 import type { TouchPad } from './touch';
 
 /** O que o personagem quer fazer neste quadro (vem do teclado, do controle, do toque ou da IA). */
@@ -33,13 +34,13 @@ export interface KeyLayout {
 }
 
 /** Dispositivos que um jogador pode escolher na tela de controles. */
-export type DeviceId = 'kb-full' | 'kb-left' | 'kb-right' | 'pad0' | 'pad1' | 'touch';
+export type DeviceId = 'kb-full' | 'kb-left' | 'kb-right' | 'pad0' | 'pad1' | 'touch' | 'gesture';
 
 export interface DeviceInfo {
   id: DeviceId;
   name: string;
   detail: string;
-  kind: 'keyboard' | 'gamepad' | 'touch';
+  kind: 'keyboard' | 'gamepad' | 'touch' | 'gesture';
 }
 
 export const DEVICES: Record<DeviceId, DeviceInfo> = {
@@ -49,6 +50,7 @@ export const DEVICES: Record<DeviceId, DeviceInfo> = {
   pad0: { id: 'pad0', name: 'Controle 1', detail: 'Xbox, PlayStation ou similar', kind: 'gamepad' },
   pad1: { id: 'pad1', name: 'Controle 2', detail: 'Xbox, PlayStation ou similar', kind: 'gamepad' },
   touch: { id: 'touch', name: 'Toque na tela', detail: 'Botões virtuais', kind: 'touch' },
+  gesture: { id: 'gesture', name: 'Gestos ou mouse', detail: 'Arrastar, deslizar e tocar', kind: 'gesture' },
 };
 
 export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
@@ -104,6 +106,7 @@ export class PlayerController implements Controller {
   private prevPadJump = false;
   private prevPadAttack = false;
   private prevPadPick = false;
+  private gesture?: GestureInput;
 
   constructor(
     private scene: Phaser.Scene,
@@ -127,6 +130,7 @@ export class PlayerController implements Controller {
       };
     }
     this.padIndex = padOrdinal(device);
+    if (device === 'gesture') this.gesture = new GestureInput(scene);
   }
 
   read(): Intent {
@@ -182,6 +186,11 @@ export class PlayerController implements Controller {
       crouch = t.crouch;
       jumpHeld = t.jumpHeld;
     }
+    if (this.gesture) {
+      const g = this.gesture.read();
+      this.prevMove = g.move;
+      return { move: g.move, jump: g.jump, guard: g.guard, attack: g.attack, pick: g.pick, crouch: g.crouch, jumpHeld: g.jumpHeld, sprint: g.move !== 0 && g.sprint };
+    }
     // Pique: tocar duas vezes na mesma direção (rápido) e segurar.
     const now = this.scene.time.now;
     if (move !== 0 && this.prevMove === 0) {
@@ -205,6 +214,7 @@ export const PICK_LABEL: Record<DeviceId, string> = {
   pad0: 'Y',
   pad1: 'Y',
   touch: 'PEGA',
+  gesture: 'SEGURE',
 };
 
 /** Nome curto do botão de defesa, para a tela Como jogar. */
@@ -215,4 +225,5 @@ export const GUARD_LABEL: Record<DeviceId, string> = {
   pad0: 'B',
   pad1: 'B',
   touch: 'DEF',
+  gesture: '2 DEDOS',
 };

@@ -44,7 +44,7 @@ function mirror(s: ScreenDef): ScreenDef {
 const RIGHT_1: ScreenDef = {
   segments: [[0, 4], [6, 4], [12, 2], [15, 5]],
   deco: [[1, 'tree'], [8, 'rock1'], [13, 'stump'], [18, 'tree']],
-  versusItems: [[7, 'spear']],
+  versusItems: [[7, 'spear'], [17, 'crest']],
 };
 const RIGHT_2: ScreenDef = {
   segments: [[0, 8], [11, 2], [14, 6]],
@@ -62,7 +62,7 @@ export const LEVEL_1: LevelDef = {
     {
       ...mirror(RIGHT_2),
       enemies: [[13, 'gnoll']],
-      storyItems: [],
+      storyItems: [[4, 'crest']],
     },
     {
       ...mirror(RIGHT_1),

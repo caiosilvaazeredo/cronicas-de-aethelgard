@@ -69,16 +69,17 @@ export class HowToScene extends Phaser.Scene {
   private keyMap(cx: number, cy: number, d: DeviceId): void {
     const k =
       d === 'kb-left'
-        ? { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54 }
+        ? { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54, pick: 'E' }
         : d === 'kb-right'
-          ? { up: '↑', left: '←', down: '↓', right: '→', atk: 'Enter', atkW: 92 }
-          : { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54 };
+          ? { up: '↑', left: '←', down: '↓', right: '→', atk: 'Enter', atkW: 92, pick: '.' }
+          : { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54, pick: 'E' };
     const ox = cx - 90;
     keycap(this, ox, cy - 30, k.up);
     keycap(this, ox - 58, cy + 28, k.left);
     keycap(this, ox, cy + 28, k.down);
     keycap(this, ox + 58, cy + 28, k.right);
-    keycap(this, cx + 140, cy + 28, k.atk, k.atkW, 50, 0xd9534f);
+    keycap(this, cx + 110, cy + 28, k.atk, k.atkW, 50, 0xd9534f);
+    keycap(this, cx + 200, cy + 28, k.pick, 50, 50, 0xd8a530);
 
     const g = this.add.graphics().lineStyle(3, 0xe67e22, 1);
     const label = (x: number, y: number, text: string, ax: number, ay: number) => {
@@ -90,10 +91,11 @@ export class HowToScene extends Phaser.Scene {
     this.add.text(ox + 104, cy + 28, '▶', { ...CAPTION, color: '#e67e22' }).setOrigin(0.5);
     this.add.text(ox - 104, cy + 28, '◀', { ...CAPTION, color: '#e67e22' }).setOrigin(0.5);
     label(ox, cy + 96, 'Defender', ox, cy + 58);
-    label(cx + 140, cy - 40, 'Atacar', cx + 140, cy);
+    label(cx + 110, cy - 40, 'Atacar', cx + 110, cy);
+    label(cx + 205, cy - 72, 'Pegar item', cx + 200, cy);
     if (d === 'kb-full') {
       this.add
-        .text(cx + 140, cy + 92, 'também: setas, Espaço\ne J para atacar', {
+        .text(cx + 150, cy + 92, 'também: setas, Espaço,\nJ para atacar e L para pegar', {
           fontFamily: 'Arial, sans-serif',
           fontSize: '14px',
           color: '#3c5368',
@@ -109,10 +111,11 @@ export class HowToScene extends Phaser.Scene {
       [0x4caf50, 'A', 'Pular'],
       [0x3f7fd9, 'X', 'Atacar'],
       [0xe5533d, 'B', 'Defender (ou LB/RB)'],
+      [0xf2c230, 'Y', 'Pegar item'],
       [0x5a6472, '◉', 'Mover (analógico ou direcional)'],
     ];
     rows.forEach(([c, glyph, text], k) => {
-      const y = cy - 66 + k * 44;
+      const y = cy - 74 + k * 37;
       const x = cx + 50;
       this.add.circle(x, y, 15, c).setStrokeStyle(3, 0x1d1a2b);
       this.add.text(x, y, glyph, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#fff' }).setOrigin(0.5);
@@ -127,9 +130,10 @@ export class HowToScene extends Phaser.Scene {
       ['PULA', 'Pular'],
       ['DEF', 'Defender'],
       ['ATQ', 'Atacar'],
+      ['PEGA', 'Pegar item'],
     ];
     rows.forEach(([glyph, text], k) => {
-      const y = cy - 66 + k * 44;
+      const y = cy - 74 + k * 37;
       const x = cx + 90;
       this.add.circle(x, y, 19, 0x10223a, 0.85).setStrokeStyle(3, 0xfff7dc);
       this.add.text(x, y, glyph, { fontFamily: FONT, fontStyle: 'bold', fontSize: '11px', color: '#fff7dc' }).setOrigin(0.5);
@@ -152,7 +156,7 @@ export class HowToScene extends Phaser.Scene {
     const tips: Array<[string, string]> = [
       ['skull_avatar', 'Um golpe mata.\nVocê também!'],
       ['shield', 'Segure para TRÁS\npara defender'],
-      ['items', 'Osso, arpão ou lança:\npegue e se transforme'],
+      ['items', 'Osso, arpão, lança ou crista:\nPEGAR para se transformar'],
       ['goal', this.mode === 'story' ? '5 cenários: chegue ao\nfim do lado oposto' : 'Matou? Ganhou a vez.\nChegue ao seu fim!'],
     ];
     tips.forEach(([icon, text], k) => {
@@ -161,6 +165,7 @@ export class HowToScene extends Phaser.Scene {
         this.add.image(x + 2, y - 16, 'bone', 0).setScale(0.6);
         this.add.image(x + 22, y - 2, 'harpoon').setScale(0.5).setAngle(45);
         this.add.image(x + 12, y + 16, 'spear_item').setScale(0.6);
+        this.add.image(x - 14, y + 4, 'crest_item').setScale(0.45);
       } else if (icon === 'goal') {
         this.add.image(x + 18, y + 26, 'skull_spike').setOrigin(0.5, 1).setScale(0.55);
       } else if (icon === 'shield') {

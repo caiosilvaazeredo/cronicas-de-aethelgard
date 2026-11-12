@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { DEATH_Y, DEPTH, FLOOR_Y, FONT, H, RESPAWN_DELAY, W, WATER_Y } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
-import { PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
+import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { Hud } from '../game/Hud';
 import { LEVEL_1, Level } from '../game/level';
@@ -15,6 +15,8 @@ interface Item {
   kind: ItemId;
   sprite: Phaser.GameObjects.Sprite;
   glow: Phaser.GameObjects.Ellipse;
+  /** Aviso "E pegar" que aparece quando um jogador está em cima. */
+  prompt: Phaser.GameObjects.Text;
   home: boolean;
   active: boolean;
   respawnAt: number;
@@ -433,12 +435,31 @@ export class GameScene extends Phaser.Scene {
     if (kind === 'harpoon') sprite.setAngle(45);
     this.tweens.add({ targets: sprite, y: y - 8, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: glow, alpha: 0.15, duration: 700, yoyo: true, repeat: -1 });
-    this.items.push({ kind, sprite, glow, home, active: true, respawnAt: 0 });
+    const prompt = this.add
+      .text(x, y - 46, '', {
+        fontFamily: FONT,
+        fontStyle: 'bold',
+        fontSize: '16px',
+        color: '#ffffff',
+        stroke: '#10223a',
+        strokeThickness: 4,
+        align: 'center',
+        padding: { x: 10, y: 5 },
+      })
+      .setOrigin(0.5)
+      .setDepth(DEPTH.fx + 1)
+      .setVisible(false);
+    this.items.push({ kind, sprite, glow, prompt, home, active: true, respawnAt: 0 });
   }
 
+  /**
+   * Pegar é opcional: em cima do item aparece "[botão] pegar → personagem" na cor do jogador,
+   * e a transformação só acontece se ele apertar o botão de pegar.
+   */
   private updateItems(time: number): void {
     for (const it of this.items) {
       if (!it.active) {
+        it.prompt.setVisible(false);
         if (it.home && this.mode === 'versus' && time >= it.respawnAt) {
           it.active = true;
           it.sprite.setVisible(true);
@@ -446,24 +467,38 @@ export class GameScene extends Phaser.Scene {
         }
         continue;
       }
+      const char = ITEM_TO_CHAR[it.kind];
+      let shown = false;
       for (let i = 0; i < this.players.length; i++) {
         const p = this.players[i];
-        if (!p.alive) continue;
-        if (Math.abs(p.x - it.sprite.x) > 34 || Math.abs(p.feet - FLOOR_Y) > 30) continue;
-        const char = ITEM_TO_CHAR[it.kind];
-        if (p.def.id === char) continue;
-        this.transform(i, char);
-        it.active = false;
-        it.sprite.setVisible(false);
-        it.glow.setVisible(false);
-        if (it.home && this.mode === 'versus') it.respawnAt = time + ITEM_RESPAWN;
-        break;
+        if (!p.alive || p.def.id === char) continue;
+        if (Math.abs(p.x - it.sprite.x) > 40 || Math.abs(p.feet - FLOOR_Y) > 30) continue;
+        if (p.intent.pick) {
+          this.transform(i, char);
+          it.active = false;
+          it.sprite.setVisible(false);
+          it.glow.setVisible(false);
+          it.prompt.setVisible(false);
+          if (it.home && this.mode === 'versus') it.respawnAt = time + ITEM_RESPAWN;
+          shown = true;
+          break;
+        }
+        if (!shown) {
+          it.prompt
+            .setText(`${PICK_LABEL[this.devices[i]]}  pegar\n${CHARS[char].name}`)
+            .setBackgroundColor(PLAYER_HEX[i])
+            .setPosition(it.sprite.x, FLOOR_Y + 46)
+            .setVisible(true);
+          shown = true;
+        }
       }
+      if (!shown) it.prompt.setVisible(false);
     }
     this.items = this.items.filter((it) => {
       if (it.home || it.active) return true;
       it.sprite.destroy();
       it.glow.destroy();
+      it.prompt.destroy();
       return false;
     });
   }
@@ -566,8 +601,8 @@ export class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         if (!win.alive) return;
-        win.intent = { move: 0, jump: true, attack: false, guard: false };
-        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false }));
+        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false };
+        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false }));
       },
     });
 

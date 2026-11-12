@@ -61,6 +61,7 @@ export class BootScene extends Phaser.Scene {
     this.makeSky();
     this.makeShield();
     this.makeSpear();
+    this.makeCrest();
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
@@ -146,6 +147,35 @@ export class BootScene extends Phaser.Scene {
     g.fillStyle(0xffffff);
     g.fillRect(0, 0, 10, 6);
     g.generateTexture('confetti', 10, 6);
+    g.destroy();
+  }
+
+  /** Crista do lagarto (item que vira o Lagarto): leque verde com bordas douradas e pontas. */
+  private makeCrest(): void {
+    const g = this.make.graphics({}, false);
+    const cx = 32;
+    const cy = 44;
+    const ink = 0x1d1a2b;
+    const spikes = 7;
+    // pontas brancas
+    for (let i = 0; i < spikes; i++) {
+      const a = Math.PI + (Math.PI * i) / (spikes - 1);
+      const x = cx + Math.cos(a) * 30;
+      const y = cy + Math.sin(a) * 30;
+      g.fillStyle(ink).fillCircle(x, y, 4.5);
+      g.fillStyle(0xf4efe6).fillCircle(x, y, 3);
+    }
+    g.fillStyle(ink).slice(cx, cy, 28, Math.PI, 0, false).fillPath();
+    g.fillStyle(0xd8c24a).slice(cx, cy, 25, Math.PI, 0, false).fillPath();
+    g.fillStyle(0x3f9a46).slice(cx, cy, 21, Math.PI, 0, false).fillPath();
+    g.lineStyle(2, 0xd8c24a, 1);
+    for (let i = 1; i < spikes - 1; i++) {
+      const a = Math.PI + (Math.PI * i) / (spikes - 1);
+      g.lineBetween(cx, cy, cx + Math.cos(a) * 21, cy + Math.sin(a) * 21);
+    }
+    g.fillStyle(ink).fillCircle(cx, cy, 6);
+    g.fillStyle(0x7ccf4f).fillCircle(cx, cy, 4);
+    g.generateTexture('crest_item', 64, 64);
     g.destroy();
   }
 

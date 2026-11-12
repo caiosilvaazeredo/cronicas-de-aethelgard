@@ -74,7 +74,7 @@ export class MenuScene extends Phaser.Scene {
         [
           'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
           'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
-          'Segure para TRÁS para andar defendendo. Pegue osso, arpão ou lança para se transformar.',
+          'Segure para TRÁS para andar defendendo. Sobre osso, arpão, lança ou crista, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
           fontFamily: 'Arial, sans-serif',

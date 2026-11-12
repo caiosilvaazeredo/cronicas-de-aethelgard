@@ -57,19 +57,21 @@ Em seguida, a tela **Como jogar** mostra os botões do dispositivo escolhido.
 | Mover | A/D ou ←/→ | A/D | ←/→ | Analógico ou direcional | ◀ ▶ |
 | Pular | W, ↑ ou Espaço | W | ↑ | A | PULA |
 | Defender | S ou ↓ | S | ↓ | B, LB ou RB | DEF |
-| Atacar | F ou J | F | Enter ou 0 | X ou Y | ATQ |
+| Atacar | F ou J | F | Enter ou 0 | X | ATQ |
+| Pegar item | E ou L | E | . ou 1 (numérico) | Y | PEGA |
 
 Com um oponente perto, segurar para **trás** faz o personagem andar devagar com o escudo levantado, como em jogo de luta. O escudo bloqueia golpes e projéteis que vêm pela frente. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
 
-## Transformações (fase 1, até 3 por mapa)
+## Transformações (fase 1)
 
 | Item | Vira | Ataque |
 |---|---|---|
 | Osso | Gnoll | Arremessa ossos |
 | Arpão | Tubarão-Arpão | Arremessa arpão (rápido) |
 | Lança | Goblin Lanceiro | Golpe de lança de longo alcance (frente e trás) |
+| Crista | Lagarto | Abre a crista e golpeia dos dois lados |
 
-Os itens aparecem no mapa e também caem de inimigos ou jogadores transformados quando eles morrem. Ao morrer, você volta ao personagem base. O avatar do HUD acompanha a transformação.
+Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, com o botão e o personagem ("E pegar · Gnoll"), e a transformação só acontece se o jogador apertar **Pegar**. Os itens aparecem no mapa e também caem de inimigos ou jogadores transformados quando eles morrem; o lagarto, por exemplo, solta a crista. Ao morrer, você volta ao personagem base. O avatar do HUD acompanha a transformação.
 
 ## Estrutura
 

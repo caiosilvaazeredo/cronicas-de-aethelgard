@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { DEPTH, FONT, W } from '../config';
 
-type ButtonId = 'left' | 'right' | 'jump' | 'guard' | 'attack';
+type ButtonId = 'left' | 'right' | 'jump' | 'guard' | 'attack' | 'pick';
 
 interface Button {
   id: ButtonId;
@@ -19,6 +19,7 @@ export interface TouchState {
   guard: boolean;
   jumpPressed: boolean;
   attackPressed: boolean;
+  pickPressed: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export class TouchPad {
   private buttons: Button[] = [];
   private prevJump = false;
   private prevAttack = false;
+  private prevPick = false;
   visible = true;
 
   constructor(private scene: Phaser.Scene, side: 'full' | 'left' | 'right', tint = 0xfff7dc) {
@@ -41,6 +43,7 @@ export class TouchPad {
             ['guard', 1000, 640, 50, 'DEF'],
             ['jump', 1110, 530, 54, 'PULA'],
             ['attack', 1190, 650, 64, 'ATQ'],
+            ['pick', 880, 650, 46, 'PEGA'],
           ]
         : [
             ['left', 62, 640, 50, '◀'],
@@ -48,6 +51,7 @@ export class TouchPad {
             ['guard', 62, 528, 42, 'DEF'],
             ['jump', 178, 528, 42, 'PULA'],
             ['attack', 294, 600, 54, 'ATQ'],
+            ['pick', 294, 484, 40, 'PEGA'],
           ];
     for (const [id, x0, y, r, text] of L) {
       const x = side === 'right' ? W - x0 : x0;
@@ -96,13 +100,16 @@ export class TouchPad {
     const get = (id: ButtonId) => this.buttons.some((b) => b.id === id && b.down);
     const jump = get('jump');
     const attack = get('attack');
+    const pick = get('pick');
     const st: TouchState = {
       left: get('left'),
       right: get('right'),
       guard: get('guard'),
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
+      pickPressed: pick && !this.prevPick,
     };
+    this.prevPick = pick;
     this.prevJump = jump;
     this.prevAttack = attack;
     return st;

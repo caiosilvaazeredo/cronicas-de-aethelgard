@@ -7,9 +7,10 @@ export interface Intent {
   jump: boolean; // apertou agora
   guard: boolean; // segurando defesa
   attack: boolean; // apertou agora
+  pick: boolean; // apertou agora: pegar item do chão
 }
 
-export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false });
+export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false });
 
 export interface Controller {
   read(): Intent;
@@ -23,6 +24,7 @@ export interface KeyLayout {
   jump: number[];
   guard: number[];
   attack: number[];
+  pick: number[];
 }
 
 /** Dispositivos que um jogador pode escolher na tela de controles. */
@@ -51,6 +53,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     jump: [KC.W, KC.UP, KC.SPACE],
     guard: [KC.S, KC.DOWN],
     attack: [KC.F, KC.J, KC.K],
+    pick: [KC.E, KC.L],
   },
   'kb-left': {
     left: [KC.A],
@@ -58,13 +61,15 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     jump: [KC.W],
     guard: [KC.S],
     attack: [KC.F, KC.G],
+    pick: [KC.E],
   },
   'kb-right': {
     left: [KC.LEFT],
     right: [KC.RIGHT],
     jump: [KC.UP],
     guard: [KC.DOWN],
-    attack: [KC.ENTER, KC.NUMPAD_ZERO, KC.PERIOD, KC.FORWARD_SLASH],
+    attack: [KC.ENTER, KC.NUMPAD_ZERO, KC.FORWARD_SLASH],
+    pick: [KC.PERIOD, KC.NUMPAD_ONE],
   },
 };
 
@@ -85,6 +90,7 @@ export class PlayerController implements Controller {
   private padIndex: number | null;
   private prevPadJump = false;
   private prevPadAttack = false;
+  private prevPadPick = false;
 
   constructor(
     private scene: Phaser.Scene,
@@ -101,6 +107,7 @@ export class PlayerController implements Controller {
         jump: mk(layout.jump),
         guard: mk(layout.guard),
         attack: mk(layout.attack),
+        pick: mk(layout.pick),
       };
     }
     this.padIndex = padOrdinal(device);
@@ -111,6 +118,7 @@ export class PlayerController implements Controller {
     let jump = false;
     let attack = false;
     let guard = false;
+    let pick = false;
 
     if (this.keys) {
       const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
@@ -119,6 +127,7 @@ export class PlayerController implements Controller {
       jump = just(this.keys.jump);
       attack = just(this.keys.attack);
       guard = down(this.keys.guard);
+      pick = just(this.keys.pick);
     }
 
     const pad = this.padIndex === null ? undefined : connectedPads(this.scene)[this.padIndex];
@@ -129,7 +138,10 @@ export class PlayerController implements Controller {
       if (b(14) || ax < -0.4) move = -1;
       else if (b(15) || ax > 0.4) move = 1;
       const padJump = b(0) || b(12);
-      const padAttack = b(2) || b(3);
+      const padAttack = b(2);
+      const padPick = b(3);
+      if (padPick && !this.prevPadPick) pick = true;
+      this.prevPadPick = padPick;
       if (padJump && !this.prevPadJump) jump = true;
       if (padAttack && !this.prevPadAttack) attack = true;
       this.prevPadJump = padJump;
@@ -143,7 +155,18 @@ export class PlayerController implements Controller {
       jump = t.jumpPressed;
       attack = t.attackPressed;
       guard = t.guard;
+      pick = t.pickPressed;
     }
-    return { move, jump, guard, attack };
+    return { move, jump, guard, attack, pick };
   }
 }
+
+/** Nome curto do botão de pegar, para o aviso sobre o item. */
+export const PICK_LABEL: Record<DeviceId, string> = {
+  'kb-full': 'E',
+  'kb-left': 'E',
+  'kb-right': '.',
+  pad0: 'Y',
+  pad1: 'Y',
+  touch: 'PEGA',
+};

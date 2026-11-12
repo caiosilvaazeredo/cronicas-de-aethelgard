@@ -1,5 +1,5 @@
 export type CharId = 'skull' | 'lizard' | 'gnoll' | 'shark' | 'goblin';
-export type ItemId = 'bone' | 'harpoon' | 'spear';
+export type ItemId = 'bone' | 'harpoon' | 'spear' | 'crest';
 
 interface AnimDef {
   n: number;
@@ -67,6 +67,7 @@ export const CHARS: Record<CharId, CharDef> = {
     attack: { n: 9, fps: 16 },
     speed: 235,
     melee: { from: 2, to: 6, reach: 72, back: 64 },
+    drops: 'crest',
   },
   gnoll: {
     id: 'gnoll',
@@ -111,10 +112,12 @@ export const ITEM_TO_CHAR: Record<ItemId, CharId> = {
   bone: 'gnoll',
   harpoon: 'shark',
   spear: 'goblin',
+  crest: 'lizard',
 };
 
 export const ITEM_TEXTURE: Record<ItemId, string> = {
   bone: 'bone',
   harpoon: 'harpoon',
   spear: 'spear_item',
+  crest: 'crest_item',
 };

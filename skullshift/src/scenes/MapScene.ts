@@ -15,8 +15,9 @@ const PATH: Array<[number, number]> = [
   [270, 548], [400, 610], [540, 590], [662, 520],
   [800, 540], [930, 470], [1050, 392],
   [1010, 270], [830, 205], [648, 162],
+  [520, 200], [410, 252], [300, 300],
 ];
-const NODE_AT = [0, 3, 6, 9];
+const NODE_AT = [0, 3, 6, 9, 12];
 
 /**
  * Seleção de fase do modo história, como um mapa-múndi de plataforma: ilhas da maré,
@@ -202,6 +203,28 @@ export class MapScene extends Phaser.Scene {
         frequency: 160,
       })
       .setDepth(6);
+
+    // 5) Escadaria da Maré: ilha alta em degraus e, no topo, o Portão da Maré.
+    this.island(2, 4, 5, 2);
+    this.plateau(2, 3, 2, 'tilemap');
+    this.plateau(5, 3, 2, 'tilemap');
+    const gate = this.add.graphics().setDepth(6);
+    const gx = 380;
+    const gy = 236;
+    // Brilho do portão (luz morna do outro lado).
+    gate.fillStyle(0xfff1a8, 0.25).fillEllipse(gx, gy - 6, 70, 84);
+    gate.fillStyle(0x7fd8ff, 0.85).fillRect(gx - 16, gy - 36, 32, 42);
+    gate.fillStyle(0xfff7dc, 0.9).fillRect(gx - 6, gy - 30, 12, 34);
+    // Pilares e arco de pedra em pixels.
+    for (const px of [gx - 26, gx + 14]) {
+      gate.fillStyle(INK).fillRect(px - 2, gy - 46, 16, 56);
+      gate.fillStyle(0xb8c4cc).fillRect(px, gy - 44, 12, 52);
+      gate.fillStyle(0x8a95a3).fillRect(px + 8, gy - 44, 4, 52);
+    }
+    gate.fillStyle(INK).fillRect(gx - 30, gy - 58, 60, 16);
+    gate.fillStyle(0xd8e0e6).fillRect(gx - 28, gy - 56, 56, 12);
+    gate.fillStyle(0x8a95a3).fillRect(gx - 28, gy - 48, 56, 4);
+    this.tweens.add({ targets: gate, alpha: { from: 1, to: 0.8 }, duration: 900, yoyo: true, repeat: -1 });
 
     // 4) Santuário das Nuvens: nuvem encantada flutuando no alto, com o santuário.
     const c = this.add.graphics().setDepth(5);

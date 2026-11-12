@@ -19,7 +19,7 @@ export interface SaveData {
 export const SLOT_COUNT = 3;
 const SLOT_KEY = 'skullshift.slot';
 const saveKey = (n: number) => `skullshift.save.${n}`;
-const TOTAL_LEVELS = 4;
+const TOTAL_LEVELS = 5;
 
 /** Reserva em memória, caso o navegador não deixe salvar. */
 const memory = new Map<string, string>();

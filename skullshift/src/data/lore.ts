@@ -110,6 +110,21 @@ export const CHAPTERS: Chapter[] = [
       X('Nada. Coisas de velho. Vai, Ossian. Termina o que começaste.'),
     ],
   },
+  {
+    title: 'Escadaria da Maré',
+    blurb: 'Ilhas soltas subindo até o Portão da Maré. Só passa quem corre e salta de novo no ar.',
+    lines: [
+      X('A coroa está inteira nas tuas mãos. Falta só subir a Escadaria da Maré até o Portão.'),
+      S('Escadaria? São ilhas soltas, com mar embaixo e vãos enormes entre elas.'),
+      X('Ninguém chega ao portão andando. Tens de correr, saltar e saltar de novo no ar. Tudo de uma vez.'),
+      S('Você fala como quem já viu muitos tentarem.'),
+      X('Muitos. Os vãos ficaram mais largos a cada um que caiu.'),
+      S('E você buscou todos eles na sua nuvem.'),
+      X('...Buscava. Até o dia em que pararam de cair.'),
+      S('O que aconteceu com eles, Hex?'),
+      X('Chegaram ao portão. Vai, Ossian. Desta vez eu fico daqui, olhando.'),
+    ],
+  },
 ];
 
 /** Depois da última fase: a coroa inteira, o portão aberto, e uma escolha que fica com quem joga. */

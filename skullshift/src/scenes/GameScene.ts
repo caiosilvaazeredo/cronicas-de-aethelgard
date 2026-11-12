@@ -4,7 +4,7 @@ import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
-import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
+import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
 import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
@@ -124,7 +124,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
+    const def = LEVELS[this.levelIndex];
     this.level = new Level(this, def);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
@@ -1388,7 +1388,7 @@ export class GameScene extends Phaser.Scene {
       if (this.mode === 'story') {
         const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
         completeLevel(this.levelIndex);
-        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `Fragmento da coroa recuperado!   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `${this.levelIndex >= 4 ? 'O Portão da Maré está diante de você!' : 'Fragmento da coroa recuperado!'}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
       } else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');

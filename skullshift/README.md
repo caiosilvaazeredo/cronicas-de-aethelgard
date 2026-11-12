@@ -46,6 +46,7 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 | 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos; **aranhas penduradas em teias no teto saltam em quem passa por baixo** | Aranha (teia: gruda nas paredes e sobe sozinha), Morcego Gigante (asa: voa até 2 s), Goblin da Tocha (tocha) |
 | 3 · Forja Vulcânica | A casa do Diabrete: lava viva no lugar da água (veios de casca correndo, crista ondulando, bolhas que crescem e estouram), céu vermelho em faixas com dois vulcões em pixel art (rios de lava, estratos, cratera acesa), fumaça em pixel art saindo das crateras, brasas subindo e cinzas caindo; pedras flutuantes sobre poços de lava | Diabrete (brasa: baforada de fogo), Minotauro (chifre: marretada lenta e longa), Goblin da Tocha (tocha) |
 | 4 · Santuário das Nuvens | O santuário flutuante do Xamã. Só as **nuvens encantadas** (lilás, com runas e faíscas) aguentam peso; as brancas são só enfeite. Cristais mágicos no lugar de árvores; cair no vazio mata | Abelhão (favo de mel), Gnomo do Estilingue (bolota) |
+| 5 · Escadaria da Maré | O caminho até o Portão da Maré, depois do céu: ilhas que pedem **combinações de ações**. Um bloco de 2 tiles que só se sobe com pulo duplo, vãos de 7 tiles que só se atravessam com **pique + pulo duplo** e um centro com degraus, poço entre blocos altos e ponte. Placas de madeira explicam cada combinação | Gnoll, Lagarto, Goblin Lanceiro (com o dash), Tubarão, Minotauro, Diabrete |
 
 **Poderes especiais:**
 - **Morcego:** no lugar do pulo duplo, voa subindo enquanto PULAR estiver apertado, por até 2 segundos. Uma barrinha de fôlego aparece sobre a cabeça e recarrega ao tocar o chão.
@@ -60,7 +61,7 @@ As plataformas altas são blocos maciços: dá para subir pulando, e elas bloque
 
 ## Modos
 
-- **História (1 jogador):** começa num **mapa-múndi** em pixel art com as 4 ilhas ligadas por uma trilha; a caveira anda até a fase escolhida e as seguintes se abrem ao vencer (o progresso fica salvo no navegador). Antes de cada fase há uma **visual novel** com retratos grandes; depois da última, um epílogo. Em cada fase, comece na ponta esquerda e chegue ao fim do lado oposto, atravessando os 5 cenários contra inimigos controlados pela IA. Ao morrer, você volta ao último checkpoint. Quando o cenário fica sem inimigos, aparece "VAI ➜".
+- **História (1 jogador):** começa num **mapa-múndi** em pixel art com as 4 ilhas ligadas por uma trilha; a caveira anda até a fase escolhida e as seguintes se abrem ao vencer (o progresso fica salvo no navegador). Antes de cada fase há uma **visual novel** com retratos grandes; depois da última (fase 5), um epílogo. Em cada fase, comece na ponta esquerda e chegue ao fim do lado oposto, atravessando os 5 cenários contra inimigos controlados pela IA. Ao morrer, você volta ao último checkpoint. Quando o cenário fica sem inimigos, aparece "VAI ➜".
 - **Versus (2 jogadores locais):** a partida começa no cenário central, como no mockup. Os dois começam como esqueleto. O P1 vai para a direita e o P2 para a esquerda. Quem mata ganha a vez: só ele pode sair pela borda da tela e levar a câmera para o próximo cenário. O outro renasce à frente dele. Vence quem chegar ao fim do lado oposto.
 
 **Quem é quem:** o P1 é **azul** e o P2 é **vermelho**. Cada personagem tem:
@@ -82,7 +83,7 @@ A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor 
 
 As vidas restantes aparecem como caveirinhas no canto da tela; quando acabam, a tela perde a cor, aparece "A FASE RECOMEÇA" e a fase reinicia (sem repetir a visual novel).
 
-**Treino:** no modo história, a fase 1 ganha 2 cenários a mais antes do começo (as fases em si não mudaram). No primeiro, um bloco de 2 tiles que só se sobe com **pulo duplo**; no segundo, um vão de 7 tiles que o pulo duplo andando não alcança: é preciso **correr** (2× na direção e segure) e dar o pulo duplo. Placas de madeira explicam cada um.
+**Mundo 1 = o básico:** a primeira fase só ensina o essencial (andar, pular, atacar, defender, pegar itens) e tem vidas infinitas. As combinações de ações ficam para a fase 5.
 
 **Modo livre (temporário, para testes):** a terceira opção do menu abre o mapa com todas as fases liberadas, entra direto na fase (sem visual novel), com vidas infinitas e sem salvar nada.
 

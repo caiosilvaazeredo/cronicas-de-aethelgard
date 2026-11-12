@@ -493,6 +493,14 @@ export class Level {
     s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
     if (lava) s.add.rectangle(0, WATER_Y + 40, W, H, 0xb8321a).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.6);
     s.add.rectangle(0, WATER_Y, W, 4, edge).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+    // Camada translúcida NA FRENTE dos personagens: o que está abaixo da linha parece submerso.
+    s.add
+      .rectangle(0, WATER_Y + 14, W, H, body)
+      .setOrigin(0)
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH.fighters + 0.5)
+      .setAlpha(lava ? 0.55 : 0.38);
+    s.add.rectangle(0, WATER_Y + 12, W, 3, edge).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.5).setAlpha(0.7);
     this.waves = [
       s.add.tileSprite(0, WATER_Y + 8, W, 260, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.3 : 0.55),
       s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.18 : 0.3).setTileScale(1.6, 1.3),

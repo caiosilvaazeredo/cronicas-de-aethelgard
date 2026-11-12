@@ -131,6 +131,7 @@ export class GameScene extends Phaser.Scene {
         for (const [t, char] of s.enemies ?? []) {
           const ex = this.level.tileX(si, t);
           const f = new Fighter(this, ex, ground(ex), char, 1, 'enemy');
+          this.setupSwim(f);
           f.facing = -1;
           f.onProjectile = (ff) => this.spawnProjectile(ff);
           this.physics.add.collider(f.sprite, this.level.ground);
@@ -245,6 +246,7 @@ export class GameScene extends Phaser.Scene {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     f.onDoubleJump = (ff) => this.fx('dust', ff.x, ff.feet - 4, 1.3, ff.color);
+    this.setupSwim(f);
     this.physics.add.collider(f.sprite, this.level.ground);
     const i = this.players.length;
     this.players.push(f);
@@ -297,6 +299,7 @@ export class GameScene extends Phaser.Scene {
     this.updateSpiderSense();
     for (const f of this.fighters) {
       if (!f.alive || f.zipping) continue;
+      if (f.def.swim && f.waterY !== undefined) continue; // o lagarto nada
       if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
       else if (!this.level.hasWater && f.feet > SKY_FALL_Y) this.killFighter(f, null, 'fall');
     }
@@ -749,6 +752,58 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  // ---------- nado (passiva do lagarto) ----------
+
+  /** Água em que dá para nadar (não vale para a lava nem para o céu). */
+  private setupSwim(f: Fighter): void {
+    f.waterY = this.level.hasWater && !this.level.isLava ? WATER_Y : undefined;
+    f.onSwimFx = (ff, kind) => this.swimFx(ff, kind);
+  }
+
+  private swimFx(f: Fighter, kind: 'enter' | 'exit' | 'wake' | 'bubble'): void {
+    const x = f.x;
+    const ring = (rx: number, delay: number, size: number) => {
+      const r = this.add.ellipse(rx, WATER_Y + 8, 46, 12).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.fighters + 0.6).setScale(0.3);
+      this.tweens.add({ targets: r, scale: size, alpha: 0, delay, duration: 700, ease: 'Quad.easeOut', onComplete: () => r.destroy() });
+    };
+    if (kind === 'enter' || kind === 'exit') {
+      const sp = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(kind === 'enter' ? 0.9 : 0.6).setDepth(DEPTH.fighters + 0.6).play('splash');
+      sp.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => sp.destroy());
+      ring(x, 0, 2);
+      ring(x, 120, 2.6);
+      for (let i = 0; i < 6; i++) {
+        const d = this.add.circle(x, WATER_Y, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
+        this.tweens.add({ targets: d, x: x + Phaser.Math.Between(-36, 36), y: WATER_Y - Phaser.Math.Between(20, 55), duration: 260, yoyo: true, ease: 'Quad.easeOut', onComplete: () => d.destroy() });
+      }
+      return;
+    }
+    if (kind === 'wake') {
+      // Ondinha atrás e um "V" de rastro na superfície.
+      ring(x - f.facing * 18, 0, 1.6);
+      const v = this.add.graphics().setDepth(DEPTH.fighters + 0.6);
+      v.lineStyle(2, 0xe8f8ff, 0.9);
+      v.lineBetween(x - f.facing * 10, WATER_Y + 10, x - f.facing * 40, WATER_Y + 4);
+      v.lineBetween(x - f.facing * 10, WATER_Y + 12, x - f.facing * 40, WATER_Y + 20);
+      this.tweens.add({ targets: v, alpha: 0, duration: 450, onComplete: () => v.destroy() });
+      return;
+    }
+    // Bolhas subindo de quem mergulha.
+    for (let i = 0; i < 2; i++) {
+      const b = this.add
+        .circle(x + f.facing * 14 + Phaser.Math.Between(-6, 6), f.feet - f.def.head * 0.6, Phaser.Math.Between(3, 5))
+        .setStrokeStyle(2, 0xffffff, 0.9)
+        .setDepth(DEPTH.fighters + 0.6);
+      this.tweens.add({
+        targets: b,
+        y: WATER_Y + 6,
+        x: b.x + Phaser.Math.Between(-8, 8),
+        duration: Phaser.Math.Between(500, 800),
+        ease: 'Sine.easeOut',
+        onComplete: () => b.destroy(),
+      });
+    }
+  }
+
   // ---------- sentido aranha (passiva da aranha) ----------
 
   /** A aranha nunca cai: no ar sem chão embaixo, o sentido aranha dispara. */
@@ -1010,7 +1065,13 @@ export class GameScene extends Phaser.Scene {
       .setDepth(DEPTH.fx);
     this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 900, onComplete: () => t.destroy() });
     // Dica do poder especial.
-    const tip = CHARS[char].fly ? 'Segure PULAR no ar para voar' : CHARS[char].climb ? 'Gruda nas paredes e sobe' : '';
+    const tip = CHARS[char].fly
+      ? 'Segure PULAR no ar para voar'
+      : CHARS[char].climb
+        ? 'Gruda nas paredes e sobe'
+        : CHARS[char].swim
+          ? 'Nada! ▼ mergulha, PULAR sai da água'
+          : '';
     if (tip) {
       const h = this.add
         .text(p.x, p.feet - 80, tip, { fontFamily: BODY_FONT, fontSize: '16px', color: '#ffffff', stroke: '#10223a', strokeThickness: 5 })

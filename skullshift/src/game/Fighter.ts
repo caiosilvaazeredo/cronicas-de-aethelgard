@@ -63,6 +63,13 @@ export class Fighter {
   private climbHop = 0;
   /** A cena diz se há uma parede de poço ao lado (para a aranha grudar sozinha). */
   wallProbe?: (x: number, feet: number) => number;
+  /** Superfície da água (a cena define; ausente = sem água em que dê para nadar). */
+  waterY?: number;
+  /** Nadando (passiva do lagarto). */
+  swimming = false;
+  /** Efeitos de nado (ondinha, respingo, bolha), desenhados pela cena. */
+  onSwimFx?: (f: Fighter, kind: 'enter' | 'exit' | 'wake' | 'bubble') => void;
+  private lastWake = 0;
   private released = false;
   private shield: Phaser.GameObjects.Image;
   /** Alvos já atingidos/bloqueados neste golpe. */
@@ -128,6 +135,10 @@ export class Fighter {
     this.climbHop = 0;
     this.sprite.setAngle(0);
     this.flightLeft = this.def.fly ?? 0;
+    if (this.swimming) {
+      this.swimming = false;
+      this.body.setAllowGravity(true);
+    }
     this.sprite.setScale(1, 1);
     this.sprite.setTexture(`${id}_idle`, 0);
     this.body.setSize(BODY_W, BODY_H, false);
@@ -267,7 +278,7 @@ export class Fighter {
             this.setCrouch(false);
             this.body.setVelocityY(-JUMP_V);
             this.jumps = 1;
-          } else if (this.jumps < 2 && !d.fly) {
+          } else if (this.jumps < 2 && !d.fly && !this.swimming) {
             // Pulo duplo: um segundo impulso no ar, com uma cambalhota.
             this.body.setVelocityY(-JUMP_V * DOUBLE_JUMP);
             this.jumps = 2;
@@ -304,6 +315,7 @@ export class Fighter {
     }
 
     if (d.climb && this.state !== 'stun') this.updateClimb(dt, grounded);
+    if (d.swim) this.updateSwim(dt, now);
 
     if (this.knockT > 0) {
       this.knockT -= dt;
@@ -361,6 +373,68 @@ export class Fighter {
     if (!grounded && b.velocity.y > 0 && this.wallProbe) {
       const dir = this.wallProbe(this.x, this.feet);
       if (dir !== 0) b.setVelocity(dir * 280, Math.min(b.velocity.y, 120));
+    }
+  }
+
+  /**
+   * Nado do lagarto: na água ele boia com a cabeça para fora (uma mola suave puxa os pés
+   * para a linha de flutuação), nada com aceleração macia, mergulha segurando ▼ e salta
+   * para fora com PULAR. O corpo balança e inclina conforme nada.
+   */
+  private updateSwim(dt: number, now: number): void {
+    const b = this.body;
+    const wy = this.waterY;
+    const inWater = wy !== undefined && this.feet > wy + 4;
+    if (!inWater) {
+      if (this.swimming) {
+        this.swimming = false;
+        b.setAllowGravity(true);
+        this.sprite.setAngle(0);
+        this.onSwimFx?.(this, 'exit');
+      }
+      return;
+    }
+    if (!this.swimming) {
+      this.swimming = true;
+      b.setAllowGravity(false);
+      // Amortece a entrada (sem parar seco).
+      b.setVelocityY(Math.min(b.velocity.y, 260) * 0.45);
+      this.onSwimFx?.(this, 'enter');
+    }
+    const it = this.intent;
+    const diving = it.crouch;
+    const floatFeet = wy + 34; // cabeça e ombros para fora
+    const target = diving ? wy + 140 : floatFeet;
+    // Mola amortecida até a profundidade alvo + leve balanço na superfície.
+    const bob = diving ? 0 : Math.sin(now / 320) * 4;
+    const desiredVy = (target + bob - this.feet) * (diving ? 2.2 : 4.5);
+    b.setVelocityY(Phaser.Math.Linear(b.velocity.y, desiredVy, Math.min(1, dt * 6)));
+    // Braçadas: aceleração macia, um pouco mais lenta que correr.
+    if (this.state !== 'attack' && this.state !== 'stun') {
+      const want = it.move * this.def.speed * (diving ? 0.7 : 0.85);
+      b.setVelocityX(Phaser.Math.Linear(b.velocity.x, want, Math.min(1, dt * 5)));
+      if (it.move !== 0) this.facing = it.move > 0 ? 1 : -1;
+      // Salto para fora d'água (perto da superfície).
+      if (it.jump && this.feet < wy + 70) {
+        b.setAllowGravity(true);
+        b.setVelocityY(-JUMP_V * 1.08);
+        this.swimming = false;
+        this.jumps = 1;
+        this.sprite.setAngle(0);
+        this.onSwimFx?.(this, 'exit');
+        return;
+      }
+      const anim = Math.abs(b.velocity.x) > 20 ? `${this.def.id}_run` : `${this.def.id}_idle`;
+      if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
+      this.sprite.anims.timeScale = 0.75;
+    }
+    // Inclina o corpo: nadando para a frente deita um pouco; mergulhando aponta para baixo.
+    const lean = (b.velocity.x / this.def.speed) * 10 + (diving ? 14 * this.facing : 0);
+    this.sprite.setAngle(Phaser.Math.Linear(this.sprite.angle, lean + Math.sin(now / 260) * 3, Math.min(1, dt * 8)));
+    if (now - this.lastWake > (diving ? 260 : 170)) {
+      this.lastWake = now;
+      if (diving) this.onSwimFx?.(this, 'bubble');
+      else if (Math.abs(b.velocity.x) > 30) this.onSwimFx?.(this, 'wake');
     }
   }
 

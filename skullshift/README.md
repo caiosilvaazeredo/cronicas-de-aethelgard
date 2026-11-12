@@ -50,6 +50,7 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 **Poderes especiais:**
 - **Morcego:** no lugar do pulo duplo, voa subindo enquanto PULAR estiver apertado, por até 2 segundos. Uma barrinha de fôlego aparece sobre a cabeça e recarrega ao tocar o chão.
 - **Aranha:** gruda em qualquer parede que encostar no ar e sobe sozinha. Passiva **sentido aranha**: ela nunca cai. No ar sem chão embaixo, aparecem rabiscos azuis e vermelhos ao redor da cabeça, o tempo desacelera, uma badge surge no canto da tela e ela se puxa com uma teia até o chão mais próximo.
+- **Lagarto (passiva: nado):** na água (fases 1 e 2) ele não se afoga. Boia com a cabeça para fora, balançando, nada com aceleração macia deixando ondinhas e rastro, mergulha segurando ▼ (soltando bolhas) e salta para fora com PULAR. Uma camada translúcida na frente da água faz a parte submersa de qualquer personagem parecer dentro d'água.
 - **Pique:** toque duas vezes na direção e segure para correr bem mais rápido, levantando poeira. No teclado de 1 jogador, Shift também ativa o pique.
 - **Bolha de energia:** quem não tem escudo no sprite (todos menos o esqueleto) defende dentro de uma bolha na cor do jogador. Quando a defesa quebra, a bolha estoura.
 - **Aranhas penduradas:** o fio balança no teto da caverna. Quando um jogador passa por baixo, a aranha salta em cima dele (a defesa não segura ataque de cima) e depois vira uma inimiga comum. No versus, ela ataca os dois.

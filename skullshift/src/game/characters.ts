@@ -56,6 +56,8 @@ export interface CharDef {
   fly?: number;
   /** Gruda nas paredes e sobe sozinho. */
   climb?: boolean;
+  /** Nada (passiva): não morre na água, boia, mergulha e salta para fora. */
+  swim?: boolean;
   speed: number;
   melee?: MeleeDef;
   projectile?: ProjectileDef;
@@ -88,6 +90,7 @@ export const CHARS: Record<CharId, CharDef> = {
     attack: { n: 9, fps: 16 },
     speed: 235,
     melee: { from: 2, to: 6, reach: 72, back: 64 },
+    swim: true,
     drops: 'crest',
   },
   gnoll: {

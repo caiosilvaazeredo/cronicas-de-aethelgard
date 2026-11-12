@@ -140,23 +140,60 @@ export class HowToScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * Silhueta do controle na cor do jogador. Os furos dos botões mostram as cores A/B/X/Y
+   * (círculos desenhados atrás) e linhas ligam cada comando à sua legenda.
+   */
   private padMap(cx: number, cy: number, i: number): void {
-    gamepadArt(this, cx - 110, cy, PLAYER_TINT[i]).setScale(0.85);
-    const rows: Array<[number, string, string]> = [
-      [0x4caf50, 'A', 'Pular'],
-      [0x3f7fd9, 'X', 'Atacar'],
-      [0xe5533d, 'B', 'Defender (ou LB/RB)'],
-      [0xf2c230, 'Y', 'Pegar item'],
-      [0x5a6472, '◉', 'Mover (analógico)'],
-      [0x5a6472, '▼', 'Agachar (para baixo)'],
+    const k = 1.25; // 240x160 (viewBox do SVG) -> 300x200
+    const px = cx - 105;
+    const py = cy + 8;
+    const at = (x: number, y: number): [number, number] => [px + (x - 120) * k, py + (y - 80) * k];
+
+    // Cores que aparecem pelos furos.
+    const holes: Array<[number, number, number, number]> = [
+      [174, 67, 5.2, 0x4caf50], // A
+      [185, 56, 5.2, 0xe5533d], // B
+      [163, 56, 5.2, 0x3f7fd9], // X
+      [174, 45, 5.2, 0xf2c230], // Y
+      [66, 56, 13, 0x1d1a2b], // analógico esquerdo
+      [150, 82, 13, 0x1d1a2b], // analógico direito
+      [88, 82, 9, 0x1d1a2b], // direcional
+      [120, 40, 8.5, 0x1d1a2b], // botão central
     ];
-    rows.forEach(([c, glyph, text], k) => {
-      const y = cy - 82 + k * 32;
-      const x = cx + 50;
-      this.add.circle(x, y, 15, c).setStrokeStyle(3, 0x1d1a2b);
-      this.add.text(x, y, glyph, { fontFamily: FONT, fontSize: '15px', color: '#fff' }).setOrigin(0.5);
-      this.add.text(x + 26, y, text, { ...CAPTION, fontSize: '16px' }).setOrigin(0, 0.5);
+    for (const [x, y, r, c] of holes) {
+      const [hx, hy] = at(x, y);
+      this.add.circle(hx, hy, r * k, c);
+    }
+    if (this.textures.exists('xbox')) {
+      this.add.image(px, py, 'xbox').setDisplaySize(240 * k, 160 * k).setTint(PLAYER_TINT[i]);
+    } else {
+      gamepadArt(this, px, py, PLAYER_TINT[i]).setScale(0.85);
+    }
+
+    // Legendas à direita, com linha até o botão.
+    const g = this.add.graphics().lineStyle(2.5, 0xe67e22, 1);
+    const lx = cx + 92;
+    const rows: Array<[[number, number], number, string, string]> = [
+      [[174, 45], 0xf2c230, 'Y', 'Pegar item'],
+      [[185, 56], 0xe5533d, 'B', 'Defender'],
+      [[163, 56], 0x3f7fd9, 'X', 'Atacar'],
+      [[174, 67], 0x4caf50, 'A', 'Pular'],
+      [[66, 56], 0x5a6472, '◉', 'Mover'],
+      [[88, 92], 0x5a6472, '▼', 'Agachar (baixo)'],
+    ];
+    rows.forEach(([[bx, by], c, glyph, text], n) => {
+      const y = cy - 86 + n * 33;
+      const [ax, ay] = at(bx, by);
+      g.lineBetween(ax, ay, lx - 16, y);
+      g.fillStyle(0xe67e22).fillCircle(ax, ay, 2.5);
+      this.add.circle(lx, y, 13, c).setStrokeStyle(3, 0x1d1a2b);
+      this.add.text(lx, y, glyph, { fontFamily: FONT, fontSize: '13px', color: '#fff' }).setOrigin(0.5);
+      this.add.text(lx + 20, y, text, { ...CAPTION, fontSize: '16px' }).setOrigin(0, 0.5);
     });
+    this.add
+      .text(px, cy + 118, 'LB / RB também defendem', { fontFamily: BODY_FONT, fontSize: '13px', color: '#3c5368' })
+      .setOrigin(0.5);
   }
 
   private touchMap(cx: number, cy: number): void {

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FONT, H, W } from '../config';
+import { FONT, H, VIEW, W } from '../config';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
@@ -15,52 +15,63 @@ export class MenuScene extends Phaser.Scene {
     super('menu');
   }
 
+  /** Dados para recriar a cena quando o celular gira. */
+  lastData = {};
+
   create(): void {
     this.texts = [];
-    this.add.image(0, 0, 'sky').setOrigin(0);
-    this.add.image(40, 70, 'cloud_01').setOrigin(0);
-    this.add.image(560, 40, 'cloud_03').setOrigin(0);
-    this.add.image(900, 110, 'cloud_05').setOrigin(0);
-    this.add.rectangle(0, 500, W, H - 500, 0x39b5fd).setOrigin(0);
+    const P = VIEW.portrait;
+    const HH = this.scale.height;
+    // Linha do chão: deitado como no jogo; em pé, um pouco abaixo do meio.
+    const gy = P ? Math.round(HH * 0.6) : 432;
+    this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, ((gy + 68) * 720) / 500);
+    this.add.image(40, P ? 470 : 70, 'cloud_01').setOrigin(0);
+    this.add.image(560, P ? 40 + gy * 0.45 : 40, 'cloud_03').setOrigin(0);
+    this.add.image(900, P ? 110 + gy * 0.6 : 110, 'cloud_05').setOrigin(0);
+    this.add.rectangle(0, gy + 68, W, HH - gy - 68, 0x39b5fd).setOrigin(0);
     for (let i = 0; i < 20; i++) {
       const col = i === 0 ? 5 : i === 19 ? 7 : 6;
-      this.add.image(i * 64, 432, 'tilemap', 27 + col).setOrigin(0);
-      this.add.image(i * 64, 496, 'tilemap', 45 + col).setOrigin(0);
+      this.add.image(i * 64, gy, 'tilemap', 27 + col).setOrigin(0);
+      this.add.image(i * 64, gy + 64, 'tilemap', 45 + col).setOrigin(0);
     }
     // Dois esqueletos: azul (P1) e vermelho (P2).
+    const sk = P ? 1.6 : 1;
     [
-      [330, 0x2f86e0, false],
-      [950, 0xe5463a, true],
+      [P ? 300 : 330, 0x2f86e0, false],
+      [P ? 980 : 950, 0xe5463a, true],
     ].forEach(([x, color, flip]) => {
-      const aura = this.add.image(x as number, 440, 'aura').setTint(color as number).setScale(1.05, 1.1);
+      const feet = gy + 40;
+      const aura = this.add.image(x as number, feet - 32 * sk, 'aura').setTint(color as number).setScale(1.05 * sk, 1.1 * sk);
       this.tweens.add({ targets: aura, alpha: { from: 0.95, to: 0.55 }, duration: 650, yoyo: true, repeat: -1 });
-      this.add.ellipse(x as number, 470, 58, 16).setStrokeStyle(3, color as number).setFillStyle(color as number, 0.22);
-      this.add.sprite(x as number, 472 - 126 + 96, 'skull_idle').play('skull_idle').setFlipX(flip as boolean);
+      this.add.ellipse(x as number, feet - 2, 58 * sk, 16 * sk).setStrokeStyle(3, color as number).setFillStyle(color as number, 0.22);
+      this.add.sprite(x as number, feet + (96 - 126) * sk, 'skull_idle').setScale(sk).play('skull_idle').setFlipX(flip as boolean);
     });
 
-    this.add.image(W / 2 - 300, 140, 'skull_avatar').setScale(0.55).setAngle(-8);
+    if (P) this.add.image(W / 2, 190, 'skull_avatar').setScale(0.75).setAngle(-8);
+    else this.add.image(W / 2 - 300, 140, 'skull_avatar').setScale(0.55).setAngle(-8);
     this.add
-      .text(W / 2 + 60, 140, 'SKULLSHIFT', {
+      .text(P ? W / 2 : W / 2 + 60, P ? 400 : 140, 'SKULLSHIFT', {
         fontFamily: FONT,
         fontStyle: 'bold',
-        fontSize: '96px',
+        fontSize: P ? '128px' : '96px',
         color: '#fff7dc',
         stroke: '#10223a',
-        strokeThickness: 14,
+        strokeThickness: P ? 18 : 14,
       })
       .setOrigin(0.5);
 
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, 290 + i * 66, o.label, {
+        .text(W / 2, P ? 620 + i * 130 : 290 + i * 66, o.label, {
           fontFamily: FONT,
-        fontStyle: 'bold',
-          fontSize: '38px',
+          fontStyle: 'bold',
+          fontSize: P ? '58px' : '38px',
           color: '#fff7dc',
           stroke: '#10223a',
-          strokeThickness: 8,
+          strokeThickness: P ? 12 : 8,
         })
         .setOrigin(0.5)
+        .setPadding(P ? 24 : 8)
         .setInteractive({ useHandCursor: true })
         .on('pointerover', () => this.select(i))
         .on('pointerdown', () => this.start(i));
@@ -70,7 +81,7 @@ export class MenuScene extends Phaser.Scene {
     this.add
       .text(
         W / 2,
-        H - 100,
+        P ? (gy + 140 + HH) / 2 : H - 100,
         [
           'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
           'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
@@ -78,10 +89,11 @@ export class MenuScene extends Phaser.Scene {
         ].join('\n'),
         {
           fontFamily: 'Arial, sans-serif',
-          fontSize: '19px',
+          fontSize: P ? '36px' : '19px',
           color: '#0b2236',
           align: 'center',
-          lineSpacing: 8,
+          lineSpacing: P ? 16 : 8,
+          wordWrap: { width: P ? 1100 : 1240 },
         },
       )
       .setOrigin(0.5);

@@ -95,7 +95,8 @@ export class PlayerController implements Controller {
   constructor(
     private scene: Phaser.Scene,
     device: DeviceId,
-    private touch?: TouchPad,
+    /** Botões de toque deste jogador (recriados quando a tela gira, por isso é uma função). */
+    private touch?: () => TouchPad | undefined,
   ) {
     const layout = KEY_LAYOUTS[device];
     if (layout) {
@@ -149,8 +150,9 @@ export class PlayerController implements Controller {
       if (b(1) || b(4) || b(5) || b(6) || b(7) || b(13) || ay > 0.6) guard = true;
     }
 
-    if (this.touch) {
-      const t = this.touch.read();
+    const tp = this.touch?.();
+    if (tp) {
+      const t = tp.read();
       move = (t.right ? 1 : 0) - (t.left ? 1 : 0);
       jump = t.jumpPressed;
       attack = t.attackPressed;

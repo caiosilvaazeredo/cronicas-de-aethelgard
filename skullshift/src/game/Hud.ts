@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 import { DEPTH, FONT, H, W } from '../config';
+
+/** bottom: deitado (como o mockup) · top: deitado com botões de toque · portrait: em pé. */
+export type HudStyle = 'bottom' | 'top' | 'portrait';
 import type { CharId } from './characters';
 
 interface Slot {
@@ -17,24 +20,30 @@ export class Hud {
   private slots: Slot[] = [];
   private goText: Phaser.GameObjects.Text;
   private dots: Phaser.GameObjects.Arc[] = [];
+  private centeredGo = false;
+  private discs: Phaser.GameObjects.Arc[] = [];
 
   constructor(
     private scene: Phaser.Scene,
     players: Array<{ name: string; char: CharId; color: number }>,
     screens: number,
-    touchLayout: boolean,
+    style: HudStyle,
   ) {
-    const y = touchLayout ? 64 : H - 86;
-    const scale = touchLayout ? 0.36 : 0.62;
-    const fontSize = touchLayout ? '28px' : '44px';
-    const labelGap = touchLayout ? 62 : 96;
+    const touchLayout = style === 'top';
+    const portrait = style === 'portrait';
+    this.centeredGo = portrait;
+    const y = touchLayout ? 64 : portrait ? 130 : H - 86;
+    const scale = touchLayout ? 0.36 : portrait ? 0.72 : 0.62;
+    const fontSize = touchLayout ? '28px' : portrait ? '54px' : '44px';
+    const labelGap = touchLayout ? 62 : portrait ? 112 : 96;
     players.forEach((p, i) => {
       const right = i === 1;
-      const ax = right ? W - (touchLayout ? 58 : 92) : touchLayout ? 58 : 92;
+      const ax = right ? W - (touchLayout ? 58 : portrait ? 104 : 92) : touchLayout ? 58 : portrait ? 104 : 92;
       // Disco na cor do jogador atrás do avatar.
-      const r = touchLayout ? 46 : 74;
-      scene.add.circle(ax, y, r + 5, 0x10223a).setScrollFactor(0).setDepth(DEPTH.hud);
+      const r = touchLayout ? 46 : portrait ? 86 : 74;
+      const rim = scene.add.circle(ax, y, r + 5, 0x10223a).setScrollFactor(0).setDepth(DEPTH.hud);
       const disc = scene.add.circle(ax, y, r, p.color).setScrollFactor(0).setDepth(DEPTH.hud);
+      this.discs.push(rim, disc);
       scene.tweens.add({ targets: disc, alpha: { from: 1, to: 0.7 }, duration: 650, yoyo: true, repeat: -1 });
       const avatar = scene.add
         .image(ax, y, `${p.char}_avatar`)
@@ -58,13 +67,13 @@ export class Hud {
     });
 
     // Indicador de cenários (o do meio é o central).
-    const gap = 30;
+    const gap = portrait ? 44 : 30;
     const x0 = W / 2 - ((screens - 1) * gap) / 2;
     for (let i = 0; i < screens; i++) {
       const center = i === Math.floor(screens / 2);
       this.dots.push(
         scene.add
-          .circle(x0 + i * gap, 26, center ? 10 : 8, 0x10223a, 0.6)
+          .circle(x0 + i * gap, portrait ? 34 : 26, (center ? 10 : 8) * (portrait ? 1.5 : 1), 0x10223a, 0.6)
           .setStrokeStyle(3, 0xfff7dc, 0.9)
           .setScrollFactor(0)
           .setDepth(DEPTH.hud),
@@ -72,7 +81,7 @@ export class Hud {
     }
 
     this.goText = scene.add
-      .text(W / 2, touchLayout ? 128 : 74, '', {
+      .text(W / 2, touchLayout ? 128 : portrait ? 206 : 74, '', {
         fontFamily: FONT,
         fontStyle: 'bold',
         fontSize: '40px',
@@ -111,7 +120,7 @@ export class Hud {
       return;
     }
     this.goText.setText(dir > 0 ? 'VAI  ➜' : '⬅  VAI').setColor(color);
-    this.goText.setX(dir > 0 ? W - 170 : 170);
+    if (!this.centeredGo) this.goText.setX(dir > 0 ? W - 170 : 170);
     this.goText.setVisible(Math.floor(this.scene.time.now / 300) % 2 === 0);
   }
 
@@ -121,6 +130,7 @@ export class Hud {
       s.label.setVisible(v);
     }
     this.dots.forEach((d) => d.setVisible(v));
+    this.discs.forEach((d) => d.setVisible(v));
     if (!v) this.goText.setVisible(false);
   }
 }

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEPTH, FONT, W } from '../config';
+import { DEPTH, FONT, VIEW, W, portraitPanelTop } from '../config';
 
 type ButtonId = 'left' | 'right' | 'jump' | 'guard' | 'attack' | 'pick';
 
@@ -22,10 +22,57 @@ export interface TouchState {
   pickPressed: boolean;
 }
 
+type Spec = [ButtonId, number, number, number, string];
+
+const LABELS: Record<ButtonId, string> = {
+  left: '◀',
+  right: '▶',
+  guard: 'DEF',
+  jump: 'PULA',
+  attack: 'ATQ',
+  pick: 'PEGA',
+};
+
+/** Deitado: posições absolutas no canvas 1280x720. */
+const LANDSCAPE_FULL: Spec[] = [
+  ['left', 86, 620, 62, ''],
+  ['right', 236, 620, 62, ''],
+  ['guard', 1000, 640, 50, ''],
+  ['jump', 1110, 530, 54, ''],
+  ['attack', 1190, 650, 64, ''],
+  ['pick', 880, 650, 46, ''],
+];
+const LANDSCAPE_HALF: Spec[] = [
+  ['left', 62, 640, 50, ''],
+  ['right', 178, 640, 50, ''],
+  ['guard', 62, 528, 42, ''],
+  ['jump', 178, 528, 42, ''],
+  ['attack', 294, 600, 54, ''],
+  ['pick', 294, 484, 40, ''],
+];
+
+/** Em pé: frações da área do painel (x da largura, y da altura; raio da largura). */
+const PORTRAIT_FULL: Spec[] = [
+  ['left', 0.14, 0.5, 0.105, ''],
+  ['right', 0.37, 0.5, 0.105, ''],
+  ['pick', 0.62, 0.26, 0.07, ''],
+  ['guard', 0.62, 0.66, 0.08, ''],
+  ['jump', 0.84, 0.28, 0.09, ''],
+  ['attack', 0.85, 0.66, 0.11, ''],
+];
+/** Em pé, versus: cada jogador usa metade da largura (P2 espelhado). */
+const PORTRAIT_HALF: Spec[] = [
+  ['left', 0.1, 0.66, 0.07, ''],
+  ['right', 0.25, 0.66, 0.07, ''],
+  ['guard', 0.1, 0.33, 0.055, ''],
+  ['jump', 0.25, 0.33, 0.055, ''],
+  ['attack', 0.4, 0.52, 0.075, ''],
+  ['pick', 0.4, 0.18, 0.05, ''],
+];
+
 /**
- * Controle virtual na tela (multitoque). Desenhado em coordenadas de jogo, fixo na câmera.
- * side: 'full' (1 jogador: direcional à esquerda, ações à direita),
- * 'left' ou 'right' (versus: um bloco compacto para cada jogador).
+ * Controle virtual na tela (multitoque), fixo na tela.
+ * side: 'full' (1 jogador) ou 'left'/'right' (versus: uma metade para cada jogador).
  */
 export class TouchPad {
   private buttons: Button[] = [];
@@ -35,30 +82,34 @@ export class TouchPad {
   visible = true;
 
   constructor(private scene: Phaser.Scene, side: 'full' | 'left' | 'right', tint = 0xfff7dc) {
-    const L: Array<[ButtonId, number, number, number, string]> =
-      side === 'full'
-        ? [
-            ['left', 86, 620, 62, '◀'],
-            ['right', 236, 620, 62, '▶'],
-            ['guard', 1000, 640, 50, 'DEF'],
-            ['jump', 1110, 530, 54, 'PULA'],
-            ['attack', 1190, 650, 64, 'ATQ'],
-            ['pick', 880, 650, 46, 'PEGA'],
-          ]
-        : [
-            ['left', 62, 640, 50, '◀'],
-            ['right', 178, 640, 50, '▶'],
-            ['guard', 62, 528, 42, 'DEF'],
-            ['jump', 178, 528, 42, 'PULA'],
-            ['attack', 294, 600, 54, 'ATQ'],
-            ['pick', 294, 484, 40, 'PEGA'],
-          ];
-    for (const [id, x0, y, r, text] of L) {
-      const x = side === 'right' ? W - x0 : x0;
+    const specs: Array<[ButtonId, number, number, number]> = [];
+    if (VIEW.portrait) {
+      const top = portraitPanelTop();
+      const h = VIEW.h - top;
+      for (const [id, u, v, r] of side === 'full' ? PORTRAIT_FULL : PORTRAIT_HALF) {
+        const x = side === 'right' ? W - u * W : u * W;
+        specs.push([id, x, top + v * h, r * W]);
+      }
+      // Divisória entre os dois jogadores.
+      if (side === 'left') {
+        scene.add.rectangle(W / 2, top + h / 2, 6, h * 0.8, 0xfff7dc, 0.25).setDepth(DEPTH.hud + 4);
+      }
+    } else {
+      for (const [id, x0, y, r] of side === 'full' ? LANDSCAPE_FULL : LANDSCAPE_HALF) {
+        specs.push([id, side === 'right' ? W - x0 : x0, y, r]);
+      }
+    }
+    // No lado espelhado (P2), as setas não podem ficar invertidas: ◀ sempre à esquerda de ▶.
+    if (side === 'right') {
+      const l = specs.find((b) => b[0] === 'left')!;
+      const r = specs.find((b) => b[0] === 'right')!;
+      [l[1], r[1]] = [r[1], l[1]];
+    }
+    for (const [id, x, y, r] of specs) {
+      const text = LABELS[id];
       const bg = scene.add
         .circle(x, y, r, 0x10223a, 0.42)
-        .setStrokeStyle(4, tint, 0.75)
-        .setScrollFactor(0)
+        .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8)
         .setDepth(DEPTH.hud + 5);
       const label = scene.add
         .text(x, y, text, {
@@ -68,7 +119,6 @@ export class TouchPad {
           color: '#fff7dc',
         })
         .setOrigin(0.5)
-        .setScrollFactor(0)
         .setDepth(DEPTH.hud + 6);
       this.buttons.push({ id, x, y, r, bg, label, down: false });
     }
@@ -109,9 +159,9 @@ export class TouchPad {
       attackPressed: attack && !this.prevAttack,
       pickPressed: pick && !this.prevPick,
     };
-    this.prevPick = pick;
     this.prevJump = jump;
     this.prevAttack = attack;
+    this.prevPick = pick;
     return st;
   }
 }

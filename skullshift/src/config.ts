@@ -44,3 +44,32 @@ export function wantsTouchControls(): boolean {
   }
   return typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 }
+
+/**
+ * Tamanho do canvas. Deitado: 1280x720. Em pé: 1280 de largura e altura proporcional à tela,
+ * com o mundo numa faixa no meio (com zoom) e os botões de toque embaixo.
+ */
+export const VIEW = { portrait: false, w: 1280, h: 720 };
+
+/** Faixas do layout em pé (coordenadas do canvas). */
+export const PORTRAIT = {
+  hudH: 250, // topo: avatares, cenários, menu
+  worldH: 1300, // faixa do mundo (ajustada à altura da tela)
+  zoom: 1.9, // mundo visível: ~674 px de largura
+};
+
+export function computeView(): { portrait: boolean; h: number } {
+  const iw = Math.max(1, window.innerWidth);
+  const ih = Math.max(1, window.innerHeight);
+  const portrait = ih > iw * 1.1;
+  const h = portrait ? Math.round(Math.min(2900, Math.max(1700, (1280 * ih) / iw))) : 720;
+  // O resto da altura fica para os botões (no mínimo ~700 px).
+  PORTRAIT.worldH = Math.round(Math.min(1500, Math.max(900, h - PORTRAIT.hudH - 700)));
+  PORTRAIT.zoom = PORTRAIT.worldH / 680;
+  return { portrait, h };
+}
+
+/** Topo da área dos botões (em pé). */
+export function portraitPanelTop(): number {
+  return PORTRAIT.hudH + PORTRAIT.worldH;
+}

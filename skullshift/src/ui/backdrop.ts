@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
-import { FONT, H, W } from '../config';
+import { FONT, VIEW, W } from '../config';
 
 /** Fundo das telas de menu: céu + faixas diagonais de mar nas laterais. */
 export function backdrop(scene: Phaser.Scene, title: string): void {
-  scene.add.image(0, 0, 'sky').setOrigin(0);
+  const H = scene.scale.height;
+  scene.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, H);
   scene.add.rectangle(0, 0, W, H, 0x10223a, 0.35).setOrigin(0);
   const g = scene.add.graphics();
   // Bordas em zigue-zague com listras, lembrando ondas.
@@ -21,10 +22,10 @@ export function backdrop(scene: Phaser.Scene, title: string): void {
     for (let y = -40; y < H + 40; y += 28) g.lineBetween(x0, y, x0 + dir * 30, y + 30);
   }
   scene.add
-    .text(W / 2, 56, title, {
+    .text(W / 2, VIEW.portrait ? 130 : 56, title, {
       fontFamily: FONT,
       fontStyle: 'bold',
-      fontSize: '52px',
+      fontSize: VIEW.portrait ? '76px' : '52px',
       color: '#fff7dc',
       stroke: '#10223a',
       strokeThickness: 12,

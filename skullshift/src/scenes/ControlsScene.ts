@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FONT, H, W, wantsTouchControls } from '../config';
+import { FONT, VIEW, W, wantsTouchControls } from '../config';
 import { DEVICES, connectedPads, padOrdinal, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import {
@@ -33,7 +33,10 @@ export class ControlsScene extends Phaser.Scene {
     super('controls');
   }
 
+  lastData: { mode?: Mode; devices?: DeviceId[] } = {};
+
   init(data: { mode?: Mode; devices?: DeviceId[] }): void {
+    this.lastData = data;
     this.mode = data.mode ?? 'story';
     this.columns = [];
     this.tray = undefined;
@@ -76,16 +79,25 @@ export class ControlsScene extends Phaser.Scene {
   create(): void {
     backdrop(this, 'ESCOLHA O CONTROLE');
 
+    const P = VIEW.portrait;
+    const HH = this.scale.height;
     this.add
-      .text(W / 2, 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.', {
+      .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.', {
         fontFamily: 'Arial, sans-serif',
-        fontSize: '18px',
+        fontSize: P ? '30px' : '18px',
         color: '#fff7dc',
+        wordWrap: { width: 1100 },
+        align: 'center',
       })
       .setOrigin(0.5);
 
-    pillButton(this, 160, 668, '◀  VOLTAR', () => this.back(), 230);
-    pillButton(this, W - 170, 668, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066);
+    if (P) {
+      pillButton(this, W / 2 - 290, HH - 150, '◀  VOLTAR', () => this.back(), 230).setScale(1.6);
+      pillButton(this, W / 2 + 270, HH - 150, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066).setScale(1.6);
+    } else {
+      pillButton(this, 160, 668, '◀  VOLTAR', () => this.back(), 230);
+      pillButton(this, W - 170, 668, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066);
+    }
 
     const kb = this.input.keyboard!;
     if (this.mode === 'story') {
@@ -148,8 +160,14 @@ export class ControlsScene extends Phaser.Scene {
   }
 
   private column(i: number): Phaser.GameObjects.Container {
-    const cx = this.players === 1 ? W / 2 : i === 0 ? W / 2 - 300 : W / 2 + 300;
-    const cy = 300;
+    // Monta em coordenadas locais e posiciona/escala o grupo (lado a lado deitado, empilhado em pé).
+    const cx = 0;
+    const cy = 0;
+    const P = VIEW.portrait;
+    const px = P ? W / 2 : this.players === 1 ? W / 2 : i === 0 ? W / 2 - 300 : W / 2 + 300;
+    const k = this.scale.height / 2770;
+    const py = P ? (this.players === 1 ? 800 : 580 + i * 620) * k : 300;
+    const sc = P ? (this.players === 1 ? 2.1 : 1.65) * Math.min(1, k * 1.1) : 1;
     const d = this.choice[i];
     const info = DEVICES[d];
     const items: Phaser.GameObjects.GameObject[] = [panel(this, cx, cy, 500, 340)];
@@ -197,12 +215,13 @@ export class ControlsScene extends Phaser.Scene {
         .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: 'Arial, sans-serif', fontSize: '15px', color: '#6b7f90' })
         .setOrigin(0.5),
     );
-    return this.add.container(0, 0, items);
+    return this.add.container(px, py, items).setScale(sc);
   }
 
   /** Bandeja com todos os dispositivos: cinza quando não conectado. */
   private buildTray(): Phaser.GameObjects.Container {
-    const cy = 588;
+    const cy = 0;
+    const P = VIEW.portrait;
     const slots: Array<{ ids: DeviceId[]; label: string; art: (x: number, y: number, on: boolean) => Phaser.GameObjects.Container }> = [
       {
         ids: this.mode === 'story' ? ['kb-full'] : ['kb-left', 'kb-right'],
@@ -215,11 +234,11 @@ export class ControlsScene extends Phaser.Scene {
     ];
     const g = this.add.graphics();
     const tw = 600;
-    g.fillStyle(0x10223a, 0.9).fillRoundedRect(W / 2 - tw / 2 - 4, cy - 52, tw + 8, 112, 22);
-    g.fillStyle(0xe7eef2, 0.95).fillRoundedRect(W / 2 - tw / 2, cy - 48, tw, 104, 18);
+    g.fillStyle(0x10223a, 0.9).fillRoundedRect(-tw / 2 - 4, cy - 52, tw + 8, 112, 22);
+    g.fillStyle(0xe7eef2, 0.95).fillRoundedRect(-tw / 2, cy - 48, tw, 104, 18);
     const items: Phaser.GameObjects.GameObject[] = [g];
     slots.forEach((s, k) => {
-      const x = W / 2 - tw / 2 + 75 + k * 150;
+      const x = -tw / 2 + 75 + k * 150;
       const on = s.ids.some((id) => this.enabled(id));
       const art = s.art(x, cy - 10, on).setScale(0.3).setAlpha(on ? 1 : 0.4);
       items.push(art);
@@ -237,7 +256,8 @@ export class ControlsScene extends Phaser.Scene {
       const owners = this.choice.map((c, i) => (s.ids.includes(c) ? i : -1)).filter((i) => i >= 0);
       owners.forEach((o, n) => items.push(playerBadge(this, x - 40 + n * 26 + (owners.length === 1 ? 14 : 0), cy - 44, o + 1, 11)));
     });
-    return this.add.container(0, 0, items);
+    const k = this.scale.height / 2770;
+    return this.add.container(W / 2, P ? 1780 * k : 588, items).setScale(P ? 1.85 * Math.min(1, k * 1.1) : 1);
   }
 
   private confirm(): void {

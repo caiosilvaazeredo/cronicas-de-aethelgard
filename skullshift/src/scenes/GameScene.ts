@@ -1,13 +1,12 @@
 import Phaser from 'phaser';
-import { DEATH_Y, DEPTH, FLOOR_Y, FONT, H, RESPAWN_DELAY, W, WATER_Y } from '../config';
+import { DEATH_Y, DEPTH, FLOOR_Y, FONT, H, PORTRAIT, RESPAWN_DELAY, VIEW, W, WATER_Y } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
-import { Hud } from '../game/Hud';
 import { LEVEL_1, Level } from '../game/level';
-import { TouchPad } from '../game/touch';
-import { PLAYER_HEX, PLAYER_TINT, pillButton } from '../ui/devices';
+import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
+import type { UIScene, VictoryInfo } from './UIScene';
 
 type Mode = 'story' | 'versus';
 
@@ -37,27 +36,33 @@ const FACE_RANGE = 460;
 const SCREEN_TWEEN = 550;
 
 export class GameScene extends Phaser.Scene {
-  private mode: Mode = 'story';
-  private devices: DeviceId[] = [];
-  private level!: Level;
-  private players: Fighter[] = [];
+  mode: Mode = 'story';
+  devices: DeviceId[] = [];
+  level!: Level;
+  players: Fighter[] = [];
   private controllers: Controller[] = [];
-  private pads: TouchPad[] = [];
   private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
   private items: Item[] = [];
   private projectiles: Projectile[] = [];
-  private hud!: Hud;
   /** Versus: quem tem a vez de avançar (-1 = ninguém ainda). */
-  private leader = -1;
+  leader = -1;
   /** Cenário (tela) atual da câmera. */
-  private screen = 0;
+  screen = 0;
+  /** Centro x da câmera (em pé, ela segue o jogador dentro do cenário). */
+  private camX = 0;
+  victoryInfo?: VictoryInfo;
   private transitioning = false;
   private checkpointX = 0;
   private deaths = 0;
   private startTime = 0;
   private ended = false;
   private winner?: Fighter;
-  private menuButton?: Phaser.GameObjects.Container;
+
+  /** Camada de interface (HUD, toque, vitória). */
+  get ui(): UIScene | undefined {
+    const u = this.scene.get('ui') as UIScene | undefined;
+    return u && u.sys.isActive() ? u : undefined;
+  }
 
   constructor() {
     super('game');
@@ -68,7 +73,6 @@ export class GameScene extends Phaser.Scene {
     this.devices = data.devices ?? (this.mode === 'story' ? ['kb-full'] : ['kb-left', 'kb-right']);
     this.players = [];
     this.controllers = [];
-    this.pads = [];
     this.enemies = [];
     this.items = [];
     this.projectiles = [];
@@ -77,6 +81,7 @@ export class GameScene extends Phaser.Scene {
     this.ended = false;
     this.transitioning = false;
     this.winner = undefined;
+    this.victoryInfo = undefined;
   }
 
   create(): void {
@@ -84,14 +89,13 @@ export class GameScene extends Phaser.Scene {
     this.level = new Level(this, def);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
-    this.cameras.main.setBounds(0, 0, this.level.width, H);
     this.input.addPointer(4); // multitoque
 
     if (this.mode === 'story') {
       const [sc, tile] = def.storyStart;
       this.screen = sc;
       const x = this.level.tileX(sc, tile);
-      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0], 'full');
+      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
       this.checkpointX = x;
       def.screens.forEach((s, si) => {
         for (const [t, char] of s.enemies ?? []) {
@@ -105,60 +109,86 @@ export class GameScene extends Phaser.Scene {
       });
     } else {
       this.screen = Math.floor(def.screens.length / 2);
-      const [a, b] = def.versusStart;
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0], 'left');
+      // Em pé a câmera mostra menos: os dois começam mais perto, na plataforma longa.
+      const [a, b] = VIEW.portrait ? [4, 10] : def.versusStart;
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1', PLAYER_TINT[0], 'P1'), this.devices[0]);
       // Os dois começam como esqueleto; cor, aura e etiqueta diferenciam.
-      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1], 'right');
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'skull', 1, 'Player 2', PLAYER_TINT[1], 'P2'), this.devices[1]);
       this.players[1].facing = -1;
       def.screens.forEach((s, si) => {
         for (const [t, kind] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
       });
     }
-    this.cameras.main.scrollX = this.screen * W;
+    this.camX = this.cameraTarget();
+    this.setupCamera();
 
-    const touchLayout = this.pads.length > 0;
-    this.hud = new Hud(
-      this,
-      this.players.map((p, i) => ({ name: p.label, char: p.baseChar, color: PLAYER_TINT[i] })),
-      this.level.screenCount,
-      touchLayout,
-    );
-    this.hud.setScreen(this.screen);
-
-    // Botão de menu (útil no celular, onde não há Esc).
-    this.menuButton = pillButton(this, W / 2, H - 34, 'MENU', () => this.scene.start('menu'), 120)
-      .setScale(0.7)
-      .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 4)
-      .setAlpha(0.85);
+    // Interface em uma cena por cima (sem o zoom da câmera do mundo).
+    this.scene.launch('ui', { game: this });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : 'VERSUS', 1600));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-ESC', () => this.scene.start('menu'));
-    kb.on('keydown-R', () => this.ended && this.restart());
+    kb.on('keydown-R', () => this.ended && this.restartMatch());
     kb.on('keydown-ENTER', () => this.ended && this.scene.start('menu'));
 
     this.startTime = this.time.now;
-    this.banner(this.mode === 'story' ? def.name : 'VERSUS', 1600);
   }
 
-  private addPlayer(f: Fighter, device: DeviceId, side: 'full' | 'left' | 'right'): void {
+  // ---------- câmera / orientação ----------
+
+  /** Deitado: o cenário inteiro. Em pé: faixa do meio com zoom, seguindo o jogador. */
+  private setupCamera(): void {
+    const cam = this.cameras.main;
+    if (VIEW.portrait) cam.setViewport(0, PORTRAIT.hudH, W, PORTRAIT.worldH).setZoom(PORTRAIT.zoom);
+    // (zoom em pé: a faixa mostra ~680 px de altura do mundo, do céu até a água)
+    else cam.setViewport(0, 0, W, H).setZoom(1);
+    this.applyCamera();
+  }
+
+  private get halfView(): number {
+    return VIEW.portrait ? W / PORTRAIT.zoom / 2 : W / 2;
+  }
+
+  private applyCamera(): void {
+    const cy = VIEW.portrait ? 655 - PORTRAIT.worldH / PORTRAIT.zoom / 2 : H / 2;
+    this.cameras.main.centerOn(this.camX, cy);
+  }
+
+  /** Para onde a câmera quer olhar, presa ao cenário atual. */
+  private cameraTarget(screen = this.screen): number {
+    const a = screen * W;
+    if (!VIEW.portrait) return a + W / 2;
+    let x: number;
+    const lead = this.players[this.leader];
+    const alive = this.players.filter((p) => p.alive);
+    if (this.mode === 'story') x = this.players[0].x;
+    else if (lead && lead.alive) x = lead.x + (lead.team === 0 ? 1 : -1) * 120;
+    else x = alive.length ? alive.reduce((s, p) => s + p.x, 0) / alive.length : a + W / 2;
+    return Phaser.Math.Clamp(x, a + this.halfView, a + W - this.halfView);
+  }
+
+  /** Chamado quando o celular gira: reposiciona a câmera e recria a interface. */
+  relayout(): void {
+    this.setupCamera();
+    this.scene.stop('ui');
+    this.scene.launch('ui', { game: this });
+  }
+
+  private addPlayer(f: Fighter, device: DeviceId): void {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     this.physics.add.collider(f.sprite, this.level.ground);
-    let pad: TouchPad | undefined;
-    if (device === 'touch') {
-      pad = new TouchPad(this, side, PLAYER_TINT[this.players.length]);
-      this.pads.push(pad);
-    }
+    const i = this.players.length;
     this.players.push(f);
-    this.controllers.push(new PlayerController(this, device, pad));
+    this.controllers.push(new PlayerController(this, device, () => this.ui?.pads[i]));
   }
 
   private get fighters(): Fighter[] {
     return [...this.players, ...this.enemies.map((e) => e.f)];
   }
 
-  private restart(): void {
+  restartMatch(): void {
     this.scene.restart({ mode: this.mode, devices: this.devices });
   }
 
@@ -182,6 +212,8 @@ export class GameScene extends Phaser.Scene {
 
     if (this.mode === 'story') this.updateStoryScreens();
     else this.updateVersusScreens();
+    if (!this.transitioning) this.camX += (this.cameraTarget() - this.camX) * 0.12;
+    this.applyCamera();
 
     for (const f of this.fighters) {
       if (f.alive && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
@@ -195,10 +227,10 @@ export class GameScene extends Phaser.Scene {
     if (this.ended) return;
 
     if (this.mode === 'versus') {
-      this.hud.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_HEX[this.leader] ?? '#fff');
+      this.ui?.hud?.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_HEX[this.leader] ?? '#fff');
     } else {
       const cleared = !this.enemies.some((e) => e.f.alive && this.level.screenOf(e.f.x) === this.screen);
-      this.hud.setGo(cleared && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
+      this.ui?.hud?.setGo(cleared && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
     }
   }
 
@@ -210,10 +242,13 @@ export class GameScene extends Phaser.Scene {
     const dir = Math.sign(n - this.screen);
     this.screen = n;
     this.transitioning = true;
-    this.hud.setScreen(n, this.mode === 'versus' && this.leader >= 0 ? PLAYER_TINT[this.leader] : 0xfff7dc);
+    this.ui?.hud?.setScreen(n, this.mode === 'versus' && this.leader >= 0 ? PLAYER_TINT[this.leader] : 0xfff7dc);
+    // Em pé, entra pela borda de onde veio.
+    const a = n * W;
+    const to = VIEW.portrait ? (dir > 0 ? a + this.halfView : a + W - this.halfView) : a + W / 2;
     this.tweens.add({
-      targets: this.cameras.main,
-      scrollX: n * W,
+      targets: this,
+      camX: to,
       duration: SCREEN_TWEEN,
       ease: 'Sine.easeInOut',
       onComplete: () => (this.transitioning = false),
@@ -221,7 +256,6 @@ export class GameScene extends Phaser.Scene {
 
     if (this.mode === 'story') {
       // Checkpoint na entrada do novo cenário.
-      const a = n * W;
       const entry = dir > 0 ? a + 70 : a + W - 70;
       this.checkpointX = this.level.nearestGround(entry, -dir, a + 40, a + W - 40);
       return;
@@ -230,7 +264,7 @@ export class GameScene extends Phaser.Scene {
     const other = this.players[1 - this.leader];
     if (other && other.alive) {
       other.respawn(this.versusSpawnX(1 - this.leader), FLOOR_Y);
-      this.hud.setChar(1 - this.leader, other.def.id);
+      this.ui?.hud?.setChar(1 - this.leader, other.def.id);
       this.announce(1 - this.leader);
     }
   }
@@ -255,8 +289,11 @@ export class GameScene extends Phaser.Scene {
         if (dir < 0 && p.x < a - 10 && this.screen > 0) return this.goScreen(this.screen - 1);
       }
       if (this.transitioning) return;
-      const min = isLeader && dir < 0 ? -Infinity : a + 22;
-      const max = isLeader && dir > 0 ? Infinity : b - 22;
+      // Presos à parte visível (em pé a câmera mostra só um pedaço do cenário).
+      const va = Math.max(a, this.camX - this.halfView);
+      const vb = Math.min(b, this.camX + this.halfView);
+      const min = isLeader && dir < 0 ? -Infinity : va + 22;
+      const max = isLeader && dir > 0 ? Infinity : vb - 22;
       if (p.x < min || p.x > max) p.body.reset(Phaser.Math.Clamp(p.x, min, max), p.sprite.y);
     });
   }
@@ -411,16 +448,16 @@ export class GameScene extends Phaser.Scene {
       this.time.delayedCall(RESPAWN_DELAY, () => {
         if (this.ended) return;
         victim.respawn(this.checkpointX, FLOOR_Y);
-        this.hud.setChar(0, victim.def.id);
+        this.ui?.hud?.setChar(0, victim.def.id);
         this.announce(0);
       });
     } else {
       this.leader = 1 - pi;
-      this.hud.setScreen(this.screen, PLAYER_TINT[this.leader]);
+      this.ui?.hud?.setScreen(this.screen, PLAYER_TINT[this.leader]);
       this.time.delayedCall(RESPAWN_DELAY, () => {
         if (this.ended || victim.alive) return;
         victim.respawn(this.versusSpawnX(pi), FLOOR_Y);
-        this.hud.setChar(pi, victim.def.id);
+        this.ui?.hud?.setChar(pi, victim.def.id);
         this.announce(pi);
       });
     }
@@ -507,7 +544,7 @@ export class GameScene extends Phaser.Scene {
     const p = this.players[pi];
     this.fx('transform', p.x, p.feet - 40, 1, PLAYER_TINT[pi]);
     p.applyChar(char);
-    this.hud.setChar(pi, char);
+    this.ui?.hud?.setChar(pi, char);
     const t = this.add
       .text(p.x, p.feet - 110, CHARS[char].name.toUpperCase() + '!', {
         fontFamily: FONT,
@@ -542,14 +579,10 @@ export class GameScene extends Phaser.Scene {
     this.ended = true;
     const win = this.players[pi];
     this.winner = win;
-    this.hud.setVisible(false);
-    this.menuButton?.setVisible(false);
-    this.pads.forEach((p) => p.setVisible(false));
     this.fighters.forEach((f) => (f.intent = emptyIntent()));
-    const color = PLAYER_TINT[pi];
 
     // Escurece o mundo e destaca o vencedor.
-    const dim = this.add.rectangle(0, 0, W, H, 0x0b1626, 0).setOrigin(0).setScrollFactor(0).setDepth(50);
+    const dim = this.add.rectangle(-W, -H, W * 3, H * 3, 0x0b1626, 0).setOrigin(0).setScrollFactor(0).setDepth(50);
     this.tweens.add({ targets: dim, fillAlpha: 0.6, duration: 500 });
     const glow = this.add.ellipse(win.x, win.feet - 2, 150, 34, 0xfff7a8, 0).setDepth(55);
     this.tweens.add({ targets: glow, fillAlpha: 0.55, duration: 500 });
@@ -558,42 +591,6 @@ export class GameScene extends Phaser.Scene {
     win.faceTarget = null;
     win.facing = win.team === 0 ? -1 : 1; // vira para o mapa que atravessou
     this.cameras.main.flash(250, 255, 247, 220);
-
-    // Confete caindo do topo.
-    const colors = [0xffe066, 0xe5533d, 0x3d8bd9, 0x58b947, 0xfff7dc, 0xb07de0];
-    this.add
-      .particles(0, -20, 'confetti', {
-        x: { min: 0, max: W },
-        speedY: { min: 140, max: 280 },
-        speedX: { min: -70, max: 70 },
-        rotate: { min: 0, max: 360 },
-        scaleX: { min: 0.6, max: 1.2 },
-        lifespan: 4200,
-        quantity: 2,
-        frequency: 45,
-        tint: colors,
-        gravityY: 60,
-      })
-      .setScrollFactor(0)
-      .setDepth(70);
-
-    // Fogos de artifício.
-    const fireworks = this.add
-      .particles(0, 0, 'spark', {
-        speed: { min: 120, max: 300 },
-        lifespan: 800,
-        scale: { start: 0.5, end: 0 },
-        gravityY: 220,
-        tint: colors,
-        emitting: false,
-      })
-      .setScrollFactor(0)
-      .setDepth(65);
-    this.time.addEvent({
-      delay: 420,
-      loop: true,
-      callback: () => fireworks.explode(26, Phaser.Math.Between(160, W - 160), Phaser.Math.Between(90, 300)),
-    });
 
     // Comemoração: pula e ataca em loop.
     this.time.addEvent({
@@ -606,65 +603,12 @@ export class GameScene extends Phaser.Scene {
       },
     });
 
-    // Faixa com avatar e título.
-    const avatar = this.add
-      .image(W / 2, 150, `${win.def.id}_avatar`)
-      .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 2)
-      .setScale(0);
-    this.tweens.add({ targets: avatar, scale: 0.75, duration: 600, ease: 'Back.easeOut', delay: 200 });
-    this.tweens.add({ targets: avatar, angle: { from: -8, to: 8 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-
-    const ribbon = this.add.graphics().setScrollFactor(0).setDepth(DEPTH.hud + 1);
-    ribbon.fillStyle(0x10223a, 1).fillRect(W / 2 - 420, 262, 840, 104);
-    ribbon.fillStyle(color, 1).fillRect(W / 2 - 410, 270, 820, 88);
-    ribbon.fillStyle(Phaser.Display.Color.ValueToColor(color).darken(30).color, 1);
-    ribbon.fillTriangle(W / 2 - 470, 280, W / 2 - 410, 280, W / 2 - 410, 370).fillTriangle(W / 2 - 470, 380, W / 2 - 410, 340, W / 2 - 410, 380);
-    ribbon.fillTriangle(W / 2 + 470, 280, W / 2 + 410, 280, W / 2 + 410, 370).fillTriangle(W / 2 + 470, 380, W / 2 + 410, 340, W / 2 + 410, 380);
-    ribbon.setAlpha(0);
-    this.tweens.add({ targets: ribbon, alpha: 1, duration: 300, delay: 350 });
-
-    const titleT = this.add
-      .text(W / 2, 314, title, {
-        fontFamily: FONT,
-        fontStyle: 'bold',
-        fontSize: '62px',
-        color: '#fff7dc',
-        stroke: '#10223a',
-        strokeThickness: 12,
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 3)
-      .setScale(0);
-    this.tweens.add({ targets: titleT, scale: 1, duration: 650, ease: 'Elastic.easeOut', delay: 450 });
-
-    const subT = this.add
-      .text(W / 2, 400, sub, {
-        fontFamily: FONT,
-        fontStyle: 'bold',
-        fontSize: '26px',
-        color: '#fff7dc',
-        stroke: '#10223a',
-        strokeThickness: 6,
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 3)
-      .setAlpha(0);
-    this.tweens.add({ targets: subT, alpha: 1, duration: 400, delay: 900 });
-
-    this.time.delayedCall(1200, () => {
-      pillButton(this, W / 2 - 160, 640, 'JOGAR DE NOVO', () => this.restart(), 280, 0xffe066)
-        .setScrollFactor(0)
-        .setDepth(DEPTH.hud + 4);
-      pillButton(this, W / 2 + 160, 640, 'MENU', () => this.scene.start('menu'), 200)
-        .setScrollFactor(0)
-        .setDepth(DEPTH.hud + 4);
-    });
+    this.victoryInfo = { pi, title, sub };
+    this.ui?.showVictory(this.victoryInfo);
   }
 
   private updateVictory(delta: number): void {
+    this.applyCamera();
     for (const f of this.fighters) {
       if (f !== this.winner) f.intent = emptyIntent();
       f.update(delta);
@@ -716,21 +660,6 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private banner(text: string, ms: number): void {
-    const t = this.add
-      .text(W / 2, 130, text, {
-        fontFamily: FONT,
-        fontStyle: 'bold',
-        fontSize: '46px',
-        color: '#fff7dc',
-        stroke: '#10223a',
-        strokeThickness: 10,
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(DEPTH.hud);
-    this.tweens.add({ targets: t, alpha: 0, delay: ms, duration: 500, onComplete: () => t.destroy() });
-  }
 }
 
 function bodyBox(f: Fighter): HitBox {

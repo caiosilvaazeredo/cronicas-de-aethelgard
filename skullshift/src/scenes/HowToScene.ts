@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FONT, W } from '../config';
+import { FONT, VIEW, W } from '../config';
 import { DEVICES, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import { PLAYER_TINT, gamepadArt, keycap, panel, phoneArt, pillButton, playerBadge } from '../ui/devices';
@@ -18,7 +18,10 @@ export class HowToScene extends Phaser.Scene {
     super('howto');
   }
 
+  lastData?: { mode: Mode; devices: DeviceId[] };
+
   init(data: { mode: Mode; devices: DeviceId[] }): void {
+    this.lastData = data;
     this.mode = data.mode;
     this.devices = data.devices;
     // Evita que o botão "confirmar" da tela anterior pule esta tela.
@@ -28,14 +31,27 @@ export class HowToScene extends Phaser.Scene {
   create(): void {
     backdrop(this, 'COMO JOGAR');
     const n = this.devices.length;
+    const P = VIEW.portrait;
+    const HH = this.scale.height;
     this.devices.forEach((d, i) => {
-      const cx = n === 1 ? W / 2 : i === 0 ? W / 2 - 300 : W / 2 + 300;
-      this.playerPanel(cx, 268, i, d);
+      // Monta em coordenadas locais e posiciona/escala (lado a lado deitado, empilhado em pé).
+      const before = this.children.list.length;
+      this.playerPanel(0, 0, i, d);
+      const made = this.children.list.slice(before);
+      const px = P ? W / 2 : n === 1 ? W / 2 : i === 0 ? W / 2 - 300 : W / 2 + 300;
+      const k = HH / 2770;
+      const py = P ? (n === 1 ? 760 : 560 + i * 700) * k : 268;
+      this.add.container(px, py, made).setScale(P ? (n === 1 ? 2.3 : 2.1) * Math.min(1, k * 1.1) : 1);
     });
-    this.rules(520);
+    this.rules(P ? (n === 1 ? 1560 : 2000) * (HH / 2770) : 520);
 
-    pillButton(this, 160, 668, '◀  VOLTAR', () => this.back(), 230);
-    pillButton(this, W - 170, 668, 'JOGAR  ▶', () => this.play(), 250, 0xffe066);
+    if (P) {
+      pillButton(this, W / 2 - 290, HH - 150, '◀  VOLTAR', () => this.back(), 230).setScale(1.6);
+      pillButton(this, W / 2 + 270, HH - 150, 'JOGAR  ▶', () => this.play(), 250, 0xffe066).setScale(1.6);
+    } else {
+      pillButton(this, 160, 668, '◀  VOLTAR', () => this.back(), 230);
+      pillButton(this, W - 170, 668, 'JOGAR  ▶', () => this.play(), 250, 0xffe066);
+    }
 
     const kb = this.input.keyboard!;
     kb.on('keydown-ENTER', () => this.play());
@@ -140,7 +156,7 @@ export class HowToScene extends Phaser.Scene {
       this.add.text(x + 30, y, text, { ...CAPTION, fontSize: '16px' }).setOrigin(0, 0.5);
     });
     this.add
-      .text(cx, cy + 112, 'Deite o celular. Dá para usar vários dedos ao mesmo tempo.', {
+      .text(cx, cy + 112, 'Celular deitado ou em pé. Dá para usar vários dedos ao mesmo tempo.', {
         fontFamily: 'Arial, sans-serif',
         fontSize: '14px',
         color: '#3c5368',
@@ -149,10 +165,13 @@ export class HowToScene extends Phaser.Scene {
   }
 
   /** Regras em uma faixa: golpe único, escudo, transformação, objetivo. */
+  /** Regras: golpe único, escudo, transformação, objetivo. Deitado em faixa; em pé em grade 2x2. */
   private rules(y: number): void {
+    const P = VIEW.portrait;
     const g = this.add.graphics();
-    const w = 1060;
-    g.fillStyle(0x10223a, 0.88).fillRoundedRect(W / 2 - w / 2, y - 46, w, 92, 18);
+    const w = P ? 1180 : 1060;
+    const h = P ? 400 : 92;
+    g.fillStyle(0x10223a, 0.88).fillRoundedRect(W / 2 - w / 2, y - h / 2, w, h, 18);
     const tips: Array<[string, string]> = [
       ['skull_avatar', 'Um golpe mata.\nVocê também!'],
       ['shield', 'Segure para TRÁS\npara defender'],
@@ -160,22 +179,28 @@ export class HowToScene extends Phaser.Scene {
       ['goal', this.mode === 'story' ? '5 cenários: chegue ao\nfim do lado oposto' : 'Matou? Ganhou a vez.\nChegue ao seu fim!'],
     ];
     tips.forEach(([icon, text], k) => {
-      const x = W / 2 - w / 2 + 40 + k * (w / 4);
+      const before = this.children.list.length;
+      const x = 0;
+      const yy = 0;
       if (icon === 'items') {
-        this.add.image(x + 2, y - 16, 'bone', 0).setScale(0.6);
-        this.add.image(x + 22, y - 2, 'harpoon').setScale(0.5).setAngle(45);
-        this.add.image(x + 12, y + 16, 'spear_item').setScale(0.6);
-        this.add.image(x - 14, y + 4, 'crest_item').setScale(0.45);
+        this.add.image(x + 2, yy - 16, 'bone', 0).setScale(0.6);
+        this.add.image(x + 22, yy - 2, 'harpoon').setScale(0.5).setAngle(45);
+        this.add.image(x + 12, yy + 16, 'spear_item').setScale(0.6);
+        this.add.image(x - 14, yy + 4, 'crest_item').setScale(0.45);
       } else if (icon === 'goal') {
-        this.add.image(x + 18, y + 26, 'skull_spike').setOrigin(0.5, 1).setScale(0.55);
+        this.add.image(x + 18, yy + 26, 'skull_spike').setOrigin(0.5, 1).setScale(0.55);
       } else if (icon === 'shield') {
-        this.add.image(x + 18, y, 'shield').setScale(1.4);
+        this.add.image(x + 18, yy, 'shield').setScale(1.4);
       } else {
-        this.add.image(x + 18, y, icon).setScale(0.26);
+        this.add.image(x + 18, yy, icon).setScale(0.26);
       }
       this.add
-        .text(x + 54, y, text, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#fff7dc', lineSpacing: 4 })
+        .text(x + 54, yy, text, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#fff7dc', lineSpacing: 4 })
         .setOrigin(0, 0.5);
+      const made = this.children.list.slice(before);
+      const cx = P ? W / 2 - w / 2 + 50 + (k % 2) * (w / 2) : W / 2 - w / 2 + 40 + k * (w / 4);
+      const cy = P ? y - 95 + Math.floor(k / 2) * 190 : y;
+      this.add.container(cx, cy, made).setScale(P ? 1.95 : 1);
     });
   }
 

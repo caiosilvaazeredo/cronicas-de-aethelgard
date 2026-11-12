@@ -149,7 +149,9 @@ export class Level {
 
   private buildBackground(): void {
     const s = this.scene;
-    s.add.image(0, 0, 'sky').setOrigin(0).setScrollFactor(0).setDepth(DEPTH.sky);
+    // Faixa acima do céu (aparece em pé, quando a câmera mostra mais altura).
+    s.add.rectangle(0, -500, W, 500, 0x59e3b5).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    s.add.image(0, 0, 'sky').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
 
     // Nuvens em parallax.
     const rng = new Phaser.Math.RandomDataGenerator(['skullshift-clouds']);
@@ -158,12 +160,12 @@ export class Level {
       s.add
         .image(x, rng.between(70, 190), `cloud_0${(i % 8) + 1}`)
         .setOrigin(0, 0)
-        .setScrollFactor(0.25, 0)
+        .setScrollFactor(0.25, 1)
         .setDepth(DEPTH.clouds);
     }
 
-    s.add.rectangle(0, WATER_Y, W, H - WATER_Y, 0x39b5fd).setOrigin(0).setScrollFactor(0).setDepth(DEPTH.water);
-    s.add.rectangle(0, WATER_Y, W, 4, 0x8fd9ff).setOrigin(0).setScrollFactor(0).setDepth(DEPTH.water);
+    s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, 0x39b5fd).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+    s.add.rectangle(0, WATER_Y, W, 4, 0x8fd9ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
 
     // Pedras na água, inclusive dentro dos buracos.
     const rr = new Phaser.Math.RandomDataGenerator(['skullshift-rocks']);

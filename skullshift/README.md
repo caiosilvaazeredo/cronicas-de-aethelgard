@@ -50,6 +50,8 @@ Depois de escolher o modo, cada jogador escolhe o dispositivo na tela **Escolha 
 - **Controle 1 / Controle 2:** aparecem cinza enquanto não estão conectados. O navegador só detecta o controle depois que você aperta um botão nele.
 - **Toque:** botões virtuais na tela, já selecionados por padrão no celular. No versus, cada jogador fica com um lado da tela.
 
+**Celular deitado ou em pé:** com o celular deitado, o jogo ocupa a tela inteira e os botões ficam por cima. Em pé, o topo mostra avatares, cenários e o menu, o meio mostra o mundo com zoom (a câmera segue o personagem dentro do cenário) e embaixo fica um painel grande de botões. No versus em pé, o painel se divide ao meio, metade para cada jogador. Girar o aparelho reorganiza a tela sem reiniciar a partida.
+
 Em seguida, a tela **Como jogar** mostra os botões do dispositivo escolhido.
 
 | Ação | Teclado (1 jogador) | Predefinição 1 | Predefinição 2 | Controle | Toque |
@@ -83,7 +85,7 @@ Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, c
 - `src/game/Hud.ts` — avatares, indicador dos 5 cenários e seta "VAI".
 - `src/game/touch.ts` — botões virtuais com multitoque.
 - `src/ui/` — desenhos de teclado, controle e celular, além dos botões das telas de menu.
-- `src/scenes/` — carregamento, menu, escolha de controle, como jogar e partida.
+- `src/scenes/` — carregamento, menu, escolha de controle, como jogar, partida e `UIScene` (HUD, toque e vitória, por cima da câmera do mundo).
 
 ## Sprites
 

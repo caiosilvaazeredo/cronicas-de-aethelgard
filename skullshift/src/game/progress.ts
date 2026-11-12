@@ -1,3 +1,5 @@
+import { LEVELS } from './level';
+
 /**
  * Progresso do modo história, em vários saves (slots). Cada save guarda: fases concluídas,
  * dificuldade, falas já vistas e a data do último jogo. Fica no navegador de quem joga
@@ -19,7 +21,7 @@ export interface SaveData {
 export const SLOT_COUNT = 3;
 const SLOT_KEY = 'skullshift.slot';
 const saveKey = (n: number) => `skullshift.save.${n}`;
-const TOTAL_LEVELS = 5;
+const TOTAL_LEVELS = LEVELS.length;
 
 /** Reserva em memória, caso o navegador não deixe salvar. */
 const memory = new Map<string, string>();

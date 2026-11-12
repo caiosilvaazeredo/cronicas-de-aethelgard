@@ -217,7 +217,10 @@ export class MenuScene extends Phaser.Scene {
   /** ◀ ▶: troca a fase (só no versus). */
   private shift(dir: number): void {
     if (this.index !== 1) return;
-    this.level = Phaser.Math.Wrap(this.level + dir, 0, LEVELS.length);
+    // Casas assombradas são quebra-cabeças do modo história: não entram no versus.
+    const ok = LEVELS.map((_, i) => i).filter((i) => !LEVELS[i].haunt);
+    const at = Math.max(0, ok.indexOf(this.level));
+    this.level = ok[Phaser.Math.Wrap(at + dir, 0, ok.length)];
     this.refreshRow();
   }
 
@@ -230,7 +233,7 @@ export class MenuScene extends Phaser.Scene {
     if (!this.levelText) return;
     // Versus: escolhe a fase aqui. História: a dificuldade é do save. Livre: todas abertas no mapa.
     this.levelRow.forEach((o) => o.setVisible(this.index === 1));
-    const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
+    const name = LEVELS[this.level].name.toUpperCase();
     this.levelText.setText(`FASE ${this.level + 1} · ${name}`).setColor('#bfe9ff');
     // Setas afastadas o bastante para o texto mais longo.
     const half = this.levelText.width / 2 + (VIEW.portrait ? 60 : 40);

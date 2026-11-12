@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
-import { makeCocoon, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
+import { MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
+import { MINO_SCALE } from '../game/characters';
+import { makeBossFx, makeCocoon, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
 
@@ -58,6 +60,13 @@ export class BootScene extends Phaser.Scene {
   }
 
   create(): void {
+    // Chefes: folhas recoloridas à mão (antes de encolher o Minotauro comum).
+    for (const k of ['idle', 'run', 'attack']) {
+      recolorSheet(this, `minotaur_${k}`, `boss_mino_${k}`, 320, 320, MINO_BOSS_PALETTE);
+      recolorSheet(this, `spider_${k}`, `boss_spider_${k}`, 192, 192, SPIDER_QUEEN_PALETTE);
+    }
+    // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
+    for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
     for (const id of Object.keys(CHARS) as CharId[]) {
       const d = CHARS[id];
       this.anim(`${id}_idle`, d.idle.n, d.idle.fps, -1);
@@ -73,6 +82,12 @@ export class BootScene extends Phaser.Scene {
       } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
     }
     this.anim('skull_guard', 7, 10, -1);
+    this.anim('boss_mino_idle', 16, 12, -1);
+    this.anim('boss_mino_run', 8, 12, -1);
+    this.anim('boss_mino_attack', 12, 14, 0);
+    this.anim('boss_spider_idle', 8, 10, -1);
+    this.anim('boss_spider_run', 5, 14, -1);
+    this.anim('boss_spider_attack', 8, 16, 0);
     makeCrouchAnims(this);
     this.anim('bone', 4, 16, -1);
     this.anim('water_rocks', 16, 8, -1);
@@ -97,6 +112,10 @@ export class BootScene extends Phaser.Scene {
     this.makeVolcano();
     makeTorch(this);
     makeCocoon(this);
+    makeBossFx(this);
+    makeHauntArt(this);
+    makeHauntBackdrop(this, 'haunt_bg', W, H);
+    makeMapMansion(this, 'map_mansion');
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();

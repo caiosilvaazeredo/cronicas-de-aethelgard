@@ -535,3 +535,402 @@ export function makeCocoon(scene: Phaser.Scene): void {
   p.set(11, 27, 0xeef6f8);
   p.toTexture(scene, 'cocoon', 2);
 }
+
+// ------------------------------------------------------------------
+// Casas assombradas (fases 6-8)
+// ------------------------------------------------------------------
+
+const HINK = 0x1d1a2b;
+
+/** Tijolos de pedra arroxeada (com rejunte e luz em cima de cada tijolo). */
+function bricks(px: Px, x0: number, y0: number, w: number, h: number): void {
+  for (let y = y0; y < y0 + h; y++)
+    for (let x = x0; x < x0 + w; x++) {
+      const row = Math.floor((y - y0) / 8);
+      const off = row % 2 ? 8 : 0;
+      const bx = (x - x0 + off) % 16;
+      const by = (y - y0) % 8;
+      let c = 0x4a4060;
+      if (by === 7 || bx === 15) c = 0x2a2238;
+      else if (by === 0) c = 0x5e5478;
+      else if ((bx + by * 3 + row * 5) % 11 === 0) c = 0x423858;
+      px.set(x, y, c);
+    }
+}
+
+/** Tábuas de madeira escura (piso do casarão). */
+function planks(px: Px, x0: number, y0: number, w: number, h: number): void {
+  for (let y = y0; y < y0 + h; y++)
+    for (let x = x0; x < x0 + w; x++) {
+      const seam = (x - x0 + (y - y0 > 2 ? 5 : 0)) % 12 === 0;
+      let c = y === y0 ? 0x9a7050 : y === y0 + h - 1 ? 0x3a2418 : 0x6b4a3a;
+      if (seam && y > y0) c = 0x3a2418;
+      if (y === y0 + 1 && !seam) c = 0x7e5a44;
+      px.set(x, y, c);
+    }
+}
+
+export function makeHauntArt(scene: Phaser.Scene): void {
+  // Piso: tábuas em cima, tijolos embaixo (tile 64x64).
+  const top = new Px(32, 32);
+  planks(top, 0, 0, 32, 6);
+  bricks(top, 0, 6, 32, 26);
+  top.toTexture(scene, 'hfloor_top', 2);
+  const body = new Px(32, 32);
+  bricks(body, 0, 0, 32, 32);
+  body.toTexture(scene, 'hfloor_body', 2);
+  // Piso que desaba: igualzinho, só com rachaduras finas (quem olha com atenção percebe).
+  const crack = new Px(32, 32);
+  planks(crack, 0, 0, 32, 6);
+  bricks(crack, 0, 6, 32, 26);
+  for (const [x, y] of [[9, 1], [10, 2], [10, 3], [11, 4], [22, 2], [21, 3], [21, 4], [12, 8], [13, 9], [13, 10], [20, 12], [19, 13]]) crack.set(x, y, 0x1a1020);
+  crack.toTexture(scene, 'hfloor_crack', 2);
+  // Prateleira flutuante (tábua com mãos-francesas).
+  const shelf = new Px(32, 12);
+  planks(shelf, 0, 0, 32, 5);
+  for (const bx of [4, 26]) for (let k = 0; k < 6; k++) shelf.set(bx + Math.min(k, 2) - 1, 5 + k, 0x3a2418), shelf.set(bx + Math.min(k, 2), 5 + k, 0x5a3826);
+  shelf.outline(HINK);
+  shelf.toTexture(scene, 'hplank', 2);
+  // Ponte-fantasma: ligada (brilho lilás) e desligada (só o contorno tracejado).
+  const gon = new Px(32, 8);
+  for (let y = 1; y < 7; y++) for (let x = 0; x < 32; x++) gon.set(x, y, y === 1 ? 0xffffff : y < 3 ? 0xe2d6ff : checker(x, y) ? 0xb9a6ff : 0x9d86f0);
+  for (let x = 0; x < 32; x += 6) gon.set(x, 4, 0xffffff);
+  gon.toTexture(scene, 'gplank_on', 2);
+  const goff = new Px(32, 8);
+  for (let x = 0; x < 32; x++) if (x % 4 < 2) goff.set(x, 1, 0x8a7ad0), goff.set(x, 6, 0x8a7ad0);
+  goff.toTexture(scene, 'gplank_off', 2);
+
+  // Porta: arco de pedra, tábuas, faixas de ferro e maçaneta. Saída com moldura dourada.
+  const door = (gold: boolean, open: boolean) => {
+    const p = new Px(24, 38);
+    for (let y = 0; y < 38; y++)
+      for (let x = 0; x < 24; x++) {
+        const dx = x - 11.5;
+        const inArch = y >= 8 || dx * dx + (y - 8) * (y - 8) * 1.4 <= 132;
+        if (!inArch) continue;
+        const inner = (y >= 10 || dx * dx + (y - 9) * (y - 9) * 1.6 <= 72) && x >= 3 && x <= 20 && y >= 3;
+        if (!inner) p.set(x, y, gold ? (x + y) % 5 === 0 ? 0xffe066 : 0xd8a530 : (x + y) % 6 === 0 ? 0x6e6488 : 0x5c5276);
+        else if (open) p.set(x, y, y > 30 ? 0xfff1a8 : checker(x, y) ? 0xffe9a0 : 0xfff7dc);
+        else {
+          const seam = (x - 3) % 5 === 0;
+          p.set(x, y, seam ? 0x3a2418 : x % 5 === 1 ? 0x7a5236 : 0x5a3826);
+        }
+      }
+    if (!open) {
+      for (const y of [14, 28]) for (let x = 3; x <= 20; x++) p.set(x, y, 0x3a3f4c);
+      p.rect(16, 21, 2, 2, 0xd8a530);
+      p.set(16, 21, 0xffe066);
+      if (gold) {
+        // Janelinha com luz esverdeada (é a saída).
+        p.rect(9, 6, 6, 4, 0x9dffb0);
+        p.rect(10, 7, 4, 2, 0xe8fff0);
+      }
+    }
+    p.outline(HINK);
+    return p;
+  };
+  door(false, false).toTexture(scene, 'door', 3);
+  door(true, false).toTexture(scene, 'door_exit', 3);
+  door(true, true).toTexture(scene, 'door_open', 3);
+
+  // Símbolos das plaquinhas das portas.
+  const sym = (key: string, draw: (p: Px) => void) => {
+    const p = new Px(11, 11);
+    draw(p);
+    p.outline(HINK);
+    p.toTexture(scene, key, 3);
+  };
+  const moon = (c: number, c2: number) => (p: Px) => {
+    for (let y = 0; y < 11; y++)
+      for (let x = 0; x < 11; x++) {
+        const a = (x - 5) ** 2 + (y - 5) ** 2 <= 20;
+        const b = (x - 7.5) ** 2 + (y - 3.5) ** 2 <= 16;
+        if (a && !b) p.set(x, y, x < 4 ? c2 : c);
+      }
+  };
+  sym('sym_moon', moon(0xf4f0d0, 0xffffff));
+  sym('sym_redmoon', moon(0xe04848, 0xff8a7a));
+  sym('sym_sun', (p) => {
+    p.disc(5, 5, 3, 0xffd36b);
+    p.set(4, 4, 0xfff1a8);
+    for (const [x, y] of [[5, 0], [5, 10], [0, 5], [10, 5], [1, 1], [9, 1], [1, 9], [9, 9]]) p.set(x, y, 0xffb347);
+  });
+  sym('sym_star', (p) => {
+    const pts = [[5, 0], [5, 1], [4, 2], [5, 2], [6, 2], [0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3], [7, 3], [8, 3], [9, 3], [10, 3], [2, 4], [3, 4], [4, 4], [5, 4], [6, 4], [7, 4], [8, 4], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5], [3, 6], [4, 6], [6, 6], [7, 6], [2, 7], [3, 7], [7, 7], [8, 7], [2, 8], [8, 8]];
+    for (const [x, y] of pts) p.set(x, y + 1, y < 4 ? 0xfff1a8 : 0xffd36b);
+  });
+  sym('sym_skull', (p) => {
+    p.disc(5, 4, 3, 0xeee3c8);
+    p.rect(3, 7, 5, 2, 0xeee3c8);
+    p.set(4, 4, HINK);
+    p.set(6, 4, HINK);
+    p.set(5, 6, 0x8a7a66);
+  });
+
+  // Chave dourada.
+  const key = new Px(18, 9);
+  for (let y = 0; y < 9; y++) for (let x = 0; x < 7; x++) if ((x - 3) ** 2 + (y - 4) ** 2 <= 10 && (x - 3) ** 2 + (y - 4) ** 2 > 2) key.set(x, y, y < 4 ? 0xffe066 : 0xd8a530);
+  key.rect(7, 3, 10, 2, 0xd8a530);
+  key.rect(7, 3, 10, 1, 0xffe066);
+  key.rect(13, 5, 2, 2, 0xd8a530);
+  key.rect(16, 5, 1, 3, 0xd8a530);
+  key.outline(HINK);
+  key.toTexture(scene, 'key_item', 3);
+
+  // Alavanca: base de pedra e haste com bola vermelha (desligada inclinada à esquerda).
+  const lever = (on: boolean) => {
+    const p = new Px(14, 16);
+    p.rect(2, 12, 10, 4, 0x5c5276);
+    p.rect(2, 12, 10, 1, 0x6e6488);
+    for (let k = 0; k < 9; k++) p.set(7 + (on ? 1 : -1) * Math.floor(k / 2), 11 - k, 0x8a95a3);
+    const tipX = 7 + (on ? 1 : -1) * 4;
+    p.disc(tipX, 2, 2, on ? 0x58b947 : 0xe04848);
+    p.set(tipX - 1, 1, 0xffffff);
+    p.outline(HINK);
+    return p;
+  };
+  lever(false).toTexture(scene, 'lever_off', 3);
+  lever(true).toTexture(scene, 'lever_on', 3);
+
+  // Velas: pequena (castiçal) e grande (candelabro de 3 velas). Quadro 0 apagada, 1-3 acesas.
+  const flameAt = (p: Px, cx: number, top: number, f: number) => {
+    const shapes = [[0, 1, 1, 2, 2, 2, 1], [1, 1, 2, 2, 2, 1], [0, 1, 1, 1, 2, 2, 1]];
+    const sway = [[0, 0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [-1, 0, 0, 0, 0, 0, 0]];
+    const rows = shapes[f];
+    rows.forEach((hw, i) => {
+      for (let x = -hw; x <= hw; x++) {
+        const inner = hw - Math.abs(x);
+        const c = inner >= 2 ? 0xfff7d6 : inner >= 1 ? 0xffe066 : 0xff9f1c;
+        p.set(cx + x + sway[f][i], top + i - rows.length + 1, c);
+      }
+    });
+  };
+  const candleFrames = (big: boolean): Px[] => {
+    const out: Px[] = [];
+    for (let f = 0; f < 4; f++) {
+      const p = new Px(big ? 26 : 12, big ? 34 : 24);
+      const stick = (cx: number, top: number, h: number) => {
+        p.rect(cx - 1, top, 3, h, 0xf2e8d0);
+        p.set(cx - 1, top, 0xffffff);
+        p.rect(cx + 1, top + 1, 1, h - 1, 0xc8b89a);
+        p.set(cx, top - 1, 0x3a2418);
+        if (f > 0) flameAt(p, cx, top - 2, f - 1);
+      };
+      if (big) {
+        p.rect(4, 30, 18, 3, 0xd8a530);
+        p.rect(12, 18, 2, 12, 0xd8a530);
+        p.rect(4, 17, 18, 2, 0xd8a530);
+        p.rect(4, 15, 2, 2, 0xd8a530);
+        p.rect(20, 15, 2, 2, 0xd8a530);
+        p.rect(11, 14, 4, 2, 0xd8a530);
+        stick(5, 9, 6);
+        stick(21, 9, 6);
+        stick(13, 6, 8);
+      } else {
+        p.rect(2, 20, 8, 3, 0xd8a530);
+        p.rect(5, 18, 2, 2, 0xd8a530);
+        stick(6, 10, 8);
+      }
+      p.outline(HINK);
+      out.push(p);
+    }
+    return out;
+  };
+  sheetTexture(scene, 'candle', candleFrames(false), 3);
+  sheetTexture(scene, 'candelabra', candleFrames(true), 3);
+  for (const k of ['candle', 'candelabra'])
+    if (!scene.anims.exists(`${k}_lit`))
+      scene.anims.create({ key: `${k}_lit`, frames: [1, 2, 3, 2].map((frame) => ({ key: k, frame })), frameRate: 8, repeat: -1 });
+
+  // Luz em degraus (anéis de alpha), para "apagar" a escuridão em volta de quem ilumina.
+  if (scene.textures.exists('light_px')) scene.textures.remove('light_px');
+  const lt = scene.textures.createCanvas('light_px', 128, 128)!;
+  const lc = lt.getContext();
+  for (const [r, a] of [[64, 0.25], [54, 0.5], [44, 0.75], [34, 1]] as const) {
+    lc.fillStyle = `rgba(255,255,255,${a})`;
+    lc.beginPath();
+    lc.arc(64, 64, r, 0, Math.PI * 2);
+    lc.fill();
+  }
+  lt.refresh();
+}
+
+/**
+ * Interior do casarão (pixel 3×): papel de parede listrado com arabescos, lambris de madeira,
+ * janelas em arco com lua e céu noturno, cortinas rasgadas, quadros com olhos e teias.
+ */
+export function makeHauntBackdrop(scene: Phaser.Scene, key: string, width: number, height: number): void {
+  const S = 3;
+  const lw = Math.ceil(width / S);
+  const lh = Math.ceil(height / S);
+  const px = new Px(lw, lh);
+  const floor = Math.round(520 / S);
+  // Papel de parede.
+  for (let y = 0; y < lh; y++)
+    for (let x = 0; x < lw; x++) {
+      const stripe = Math.floor(x / 10) % 2;
+      let c = stripe ? 0x2c1c3c : 0x34224a;
+      if (stripe && (x % 10 === 5) && (y % 14 === 3 || y % 14 === 4)) c = 0x452e5e;
+      if (!stripe && (x % 10 === 5) && y % 14 === 10) c = 0x3e2954;
+      px.set(x, y, c);
+    }
+  // Sombra no alto (teto escuro).
+  for (let y = 0; y < 22; y++) for (let x = 0; x < lw; x++) if (y < 12 || checker(x, y)) px.set(x, y, y < 6 ? 0x150c1e : 0x1e1229);
+  // Lambris de madeira na parte de baixo.
+  const wain = floor - 46;
+  for (let y = wain; y < lh; y++)
+    for (let x = 0; x < lw; x++) {
+      let c = 0x3e2a22;
+      if (y === wain) c = 0x6b4a3a;
+      else if (y === wain + 1) c = 0x24160f;
+      else if (x % 28 === 0 || x % 28 === 27) c = 0x2a1a12;
+      else if ((y - wain) % 40 === 6 || (y - wain) % 40 === 36) c = 0x2a1a12;
+      else if (x % 28 === 1) c = 0x54392c;
+      px.set(x, y, c);
+    }
+  // Janelas em arco com lua.
+  const r = rng(13);
+  const windows = [Math.round(lw * 0.18), Math.round(lw * 0.5), Math.round(lw * 0.82)];
+  windows.forEach((wx, i) => {
+    const ww = 34;
+    const wt = 34;
+    const wb = wain - 10;
+    for (let y = wt - 18; y <= wb; y++)
+      for (let x = wx - ww / 2; x <= wx + ww / 2; x++) {
+        const dx = x - wx;
+        const arch = y >= wt || dx * dx + (y - wt) * (y - wt) <= (ww / 2) ** 2;
+        if (!arch) continue;
+        const frame = Math.abs(dx) >= ww / 2 - 2 || y >= wb - 1 || (y < wt && dx * dx + (y - wt) * (y - wt) >= (ww / 2 - 2) ** 2);
+        const bar = Math.abs(dx) <= 0 || y === wt + 14;
+        let c = frame || bar ? 0x24160f : y < wt + 6 ? 0x1c2a52 : 0x22346a;
+        if (!frame && !bar && r() < 0.02) c = 0xcfd8ff;
+        px.set(x, y, c);
+      }
+    if (i === 1) {
+      // Lua cheia atrás do vidro do meio.
+      px.disc(wx + 8, wt + 4, 5, 0xf4f0d0);
+      px.set(wx + 6, wt + 3, 0xd8d0b0);
+      px.set(wx + 10, wt + 6, 0xd8d0b0);
+    }
+    // Cortinas rasgadas.
+    for (const side of [-1, 1])
+      for (let y = wt - 20; y < wb + 4; y++) {
+        const wdt = 5 + Math.round(Math.sin(y / 5) * 1.5) + (y > wb - 10 ? -2 : 0);
+        for (let k = 0; k < wdt; k++) {
+          const x = wx + side * (ww / 2 + 1) - side * k + side * 3;
+          if (y > wb - 4 && (x + y) % 3 === 0) continue;
+          px.set(x, y, k === 0 ? 0x4a1020 : k < 2 ? 0x8a2034 : 0x6e1a2a);
+        }
+      }
+  });
+  // Quadros com olhos (entre as janelas).
+  for (const qx of [Math.round(lw * 0.34), Math.round(lw * 0.66)]) {
+    const qy = 46;
+    for (let y = qy - 14; y <= qy + 14; y++)
+      for (let x = qx - 10; x <= qx + 10; x++) {
+        const edge = Math.abs(x - qx) >= 9 || Math.abs(y - qy) >= 13;
+        px.set(x, y, edge ? ((x + y) % 4 === 0 ? 0xffe066 : 0xd8a530) : 0x1a1426);
+      }
+    px.disc(qx, qy - 1, 6, 0x2e2440);
+    px.set(qx - 2, qy - 2, 0xff5c5c);
+    px.set(qx + 2, qy - 2, 0xff5c5c);
+  }
+  // Teias nos cantos de cima.
+  for (const [cx, dir] of [[0, 1], [lw - 1, -1]] as const)
+    for (let k = 0; k < 18; k++) {
+      px.set(cx + dir * k, 22 + Math.round(k * 0.2), 0x8a7ad0);
+      px.set(cx + dir * Math.round(k * 0.6), 22 + k, 0x8a7ad0);
+    }
+  // Vazio escuro embaixo (o chão do casarão é feito de plataformas; entre elas, o breu).
+  for (let y = floor - 4; y < lh; y++) for (let x = 0; x < lw; x++) if (y > floor || checker(x, y)) px.set(x, y, y > floor + 6 ? 0x07040c : 0x120a1a);
+  px.toTexture(scene, key, S);
+}
+
+/** Casarão do mapa-múndi (pixel 3×): torre, telhado torto e janelas acesas. */
+export function makeMapMansion(scene: Phaser.Scene, key: string): void {
+  const p = new Px(60, 52);
+  // Corpo.
+  p.rect(6, 22, 40, 28, 0x4a4060);
+  for (let y = 22; y < 50; y += 5) for (let x = 6; x < 46; x++) if ((x + (y % 10 ? 4 : 0)) % 9 === 0) p.set(x, y, 0x2a2238);
+  // Telhado torto.
+  for (let y = 10; y < 22; y++) for (let x = 2 + (22 - y); x < 50 - (22 - y) + 2; x++) p.set(x, y, y % 3 === 0 ? 0x2a1a3a : 0x3a2650);
+  // Torre.
+  p.rect(42, 12, 12, 38, 0x544a6e);
+  for (let y = 0; y < 12; y++) for (let x = 48 - Math.floor(y / 2); x <= 48 + Math.floor(y / 2); x++) p.set(x, y, 0x2a1a3a);
+  // Janelas acesas.
+  for (const [x, y] of [[11, 28], [21, 28], [31, 28], [11, 38], [31, 38], [46, 20], [46, 32]]) {
+    p.rect(x, y, 5, 6, 0xd8ff8a);
+    p.rect(x, y, 5, 1, 0xf4ffd0);
+    p.set(x + 2, y + 2, 0x2a2238);
+  }
+  // Porta.
+  p.rect(20, 40, 8, 10, 0x3a2418);
+  p.set(26, 45, 0xd8a530);
+  p.outline(HINK);
+  p.toTexture(scene, key, 3);
+}
+
+// ------------------------------------------------------------------
+// Chefes: explosão em pixel, orbe de energia e bola de teia
+// ------------------------------------------------------------------
+
+/** Explosão 8-bit em 6 quadros (pixel 3×): núcleo branco, anel amarelo, laranja e fumaça. */
+export function makeBossFx(scene: Phaser.Scene): void {
+  const frames: Px[] = [];
+  const steps: Array<[number, number, number]> = [
+    [2, 0, 0],
+    [4, 2, 0],
+    [6, 4, 2],
+    [8, 6, 4],
+    [9, 8, 7],
+    [10, 10, 9],
+  ];
+  steps.forEach(([outer, mid, inner], f) => {
+    const p = new Px(22, 22);
+    const c = 11;
+    for (let y = 0; y < 22; y++)
+      for (let x = 0; x < 22; x++) {
+        const d = Math.hypot(x - c + 0.5, y - c + 0.5);
+        if (d > outer) continue;
+        let col = f < 4 ? 0xff7a1a : 0x5c4a52;
+        if (d <= mid) col = f < 4 ? 0xffd36b : 0x7e6a70;
+        if (d <= inner) col = f < 3 ? 0xfff7dc : -1;
+        if (f >= 4 && (x + y) % 2 === 0 && d > mid) col = -1;
+        if (col !== -1) p.set(x, y, col);
+      }
+    if (f < 4) p.outline(0x1d1a2b);
+    frames.push(p);
+  });
+  sheetTexture(scene, 'boom', frames, 3);
+  if (!scene.anims.exists('boom')) scene.anims.create({ key: 'boom', frames: [0, 1, 2, 3, 4, 5].map((frame) => ({ key: 'boom', frame })), frameRate: 18 });
+
+  // Orbe de energia (anéis em degrau).
+  const orb = new Px(12, 12);
+  orb.disc(6, 6, 5, 0x7fd8ff);
+  orb.disc(6, 6, 3, 0xd8f4ff);
+  orb.disc(5, 5, 1, 0xffffff);
+  orb.outline(0x1d1a2b);
+  orb.toTexture(scene, 'orb', 3);
+
+  // Bola de teia (cuspe da Aranha-Rainha).
+  const web = new Px(14, 14);
+  web.disc(7, 7, 6, 0xeef6f8);
+  for (let k = -6; k <= 6; k++) {
+    web.paintIf(7 + k, 7, 0xb9c6cc);
+    web.paintIf(7, 7 + k, 0xb9c6cc);
+    web.paintIf(7 + k, 7 + k, 0xcfdbe0);
+  }
+  web.outline(0x1d1a2b);
+  web.toTexture(scene, 'web_ball', 3);
+
+  // Coroa da Rainha-Aranha.
+  const crown = new Px(16, 10);
+  crown.rect(1, 5, 14, 5, 0xd8a530);
+  for (const x of [1, 7, 13]) crown.rect(x, 1, 2, 4, 0xd8a530), crown.set(x, 0, 0xffe066);
+  crown.rect(1, 5, 14, 1, 0xffe066);
+  crown.set(4, 7, 0xd42a3c);
+  crown.set(11, 7, 0xd42a3c);
+  crown.set(8, 7, 0x7fd8ff);
+  crown.outline(0x1d1a2b);
+  crown.toTexture(scene, 'queen_crown', 3);
+}

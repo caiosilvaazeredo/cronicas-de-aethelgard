@@ -221,6 +221,60 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({ targets: c, alpha: 0, delay: hold, duration: 400, onComplete: () => c.destroy() });
   }
 
+  private bossBox?: Phaser.GameObjects.Container;
+  private bossCells: Phaser.GameObjects.Rectangle[] = [];
+
+  /** Alerta antes do chefe: faixa vermelha piscando "PERIGO" (com a tela tremendo de leve). */
+  bossWarning(): void {
+    const y = VIEW.portrait ? PORTRAIT.hudH + PORTRAIT.worldH * 0.35 : 300;
+    const band = this.add.rectangle(W / 2, y, W + 40, 110, 0x7a0a12, 0.85);
+    const t = this.add
+      .text(W / 2, y, '!  PERIGO  !', { fontFamily: FONT, fontSize: '72px', color: '#ffe066', stroke: '#1a0507', strokeThickness: 10 })
+      .setOrigin(0.5);
+    const c = this.add.container(0, 0, [band, t]).setDepth(DEPTH.hud + 9).setAlpha(0);
+    this.tweens.add({ targets: c, alpha: { from: 0, to: 1 }, duration: 160, yoyo: true, hold: 120, repeat: 3, onComplete: () => c.destroy() });
+  }
+
+  /** Barra de vida do chefe em gomos (enche na entrada, esvazia a cada golpe). */
+  showBossBar(name: string, title: string, color: number): void {
+    this.bossBox?.destroy();
+    this.bossCells = [];
+    const P = VIEW.portrait;
+    const n = 28;
+    const cw = P ? 30 : 18;
+    const gap = 4;
+    const w = n * (cw + gap) + 16;
+    const items: Phaser.GameObjects.GameObject[] = [];
+    const g = this.add.graphics();
+    g.fillStyle(0x1d1a2b, 0.92).fillRect(-w / 2 - 4, -8, w + 8, (P ? 50 : 34) + 12);
+    g.fillStyle(0x3a2a44, 1).fillRect(-w / 2, -4, w, (P ? 50 : 34) + 4);
+    items.push(g);
+    for (let i = 0; i < n; i++) {
+      const cell = this.add.rectangle(-w / 2 + 8 + i * (cw + gap), 2, cw, P ? 40 : 26, color).setOrigin(0, 0).setVisible(false);
+      this.bossCells.push(cell);
+      items.push(cell);
+    }
+    items.push(
+      this.add
+        .text(-w / 2, -14, `${name}  ·  ${title}`, { fontFamily: FONT, fontSize: P ? '30px' : '20px', color: '#fff7dc', stroke: '#1d1a2b', strokeThickness: 6 })
+        .setOrigin(0, 1),
+    );
+    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 70 : 74;
+    this.bossBox = this.add.container(W / 2, y, items).setDepth(DEPTH.hud + 3);
+  }
+
+  setBossHp(frac: number): void {
+    const on = Math.ceil(frac * this.bossCells.length);
+    this.bossCells.forEach((c, i) => c.setVisible(i < on));
+  }
+
+  hideBossBar(): void {
+    const b = this.bossBox;
+    if (!b) return;
+    this.tweens.add({ targets: b, alpha: 0, duration: 600, delay: 900, onComplete: () => b.destroy() });
+    this.bossBox = undefined;
+  }
+
   private livesBox?: Phaser.GameObjects.Container;
 
   /** Vidas da fase (modo história): caveirinhas no canto; null = infinitas (∞). */

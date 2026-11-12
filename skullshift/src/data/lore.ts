@@ -81,6 +81,31 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
   {
+    title: 'Ninho das Teias',
+    blurb: 'Aranhas penduradas por todo o teto. Dá para passar sem derrotar todas.',
+    lines: [
+      S('Mais teias. E mais. A caverna inteira parece um casulo.'),
+      X('O Ninho. As filhas da Rainha vivem penduradas no teto. Olha para cima antes de passar.'),
+      S('Preciso derrotar todas?'),
+      X('Não. Passa por elas. Aranha nenhuma vale um osso quebrado.'),
+      S('Você conhece bem este lugar.'),
+      X('Já atravessei muita coisa carregando alguém nas costas.'),
+    ],
+  },
+  {
+    title: 'Covil da Rainha',
+    blurb: 'Ovos, teias grossas e, no fundo, a Aranha-Rainha guardando um fragmento.',
+    lines: [
+      S('Hex... aquilo no fundo é uma aranha do tamanho de uma casa. De coroa.'),
+      X('A Rainha do Covil. Guarda um fragmento entre os ovos.'),
+      X('Ela cospe teia. Se te prender, golpeia e espera soltar. E olha o teto: ela anda por lá.'),
+      S('E se eu cair?'),
+      X('Eu te busco. Ela conhece a minha nuvem: já perdeu muitas presas para mim.'),
+      S('Presas. É isso que eu sou para vocês dois?'),
+      X('...Vai, Ossian. Ela está acordando.'),
+    ],
+  },
+  {
     title: 'Forja Vulcânica',
     blurb: 'A forja do Diabrete, que tenta fundir os fragmentos numa coroa só dele.',
     lines: [
@@ -92,7 +117,9 @@ export const CHAPTERS: Chapter[] = [
       S('As criaturas daqui não fogem de mim. Fogem quando a sua nuvem aparece.'),
       X('Elas me conhecem. Eu levo quem cai. É o meu ofício.'),
       S('"Levo"? Para onde?'),
-      X('De volta para ti mesmo, é claro. Pega o fragmento. O Diabrete não pode completar a coroa.'),
+      X('Aqui cada área tem uma barreira de fogo. Só apaga quando ninguém mais estiver de pé.'),
+      X('E no fundo da forja mora o Minotauro Rubro. Ele não cai com um golpe só.'),
+      X('Pega o fragmento. O Diabrete não pode completar a coroa.'),
     ],
   },
   {
@@ -123,6 +150,44 @@ export const CHAPTERS: Chapter[] = [
       X('...Buscava. Até o dia em que pararam de cair.'),
       S('O que aconteceu com eles, Hex?'),
       X('Chegaram ao portão. Vai, Ossian. Desta vez eu fico daqui, olhando.'),
+    ],
+  },
+  {
+    title: 'Casa das Portas',
+    blurb: 'O portão não dava em casa. Dava numa casa. Portas por toda parte, e quase todas mentem.',
+    lines: [
+      S('Atravessei o portão e... é uma casa? Corredores, portas por todo lado.'),
+      X('A Casa do Barqueiro. Minha velha casa. Ela gosta de brincar com quem entra.'),
+      S('Sua casa? Você nunca disse que tinha uma casa.'),
+      X('Nunca perguntaste. Segue a lua pintada nas portas: ela sempre aponta para fora.'),
+      S('E as outras portas?'),
+      X('Te devolvem ao começo. E cuidado com a lua vermelha. Ela também mente.'),
+      S('Quem são esses esqueletos translúcidos?'),
+      X('Inquilinos. Ossos que se recusaram a seguir a lua. Não pares para conversar.'),
+    ],
+  },
+  {
+    title: 'Biblioteca Assombrada',
+    blurb: 'Estantes até o teto, pontes que só existem por um instante e uma porta trancada.',
+    lines: [
+      S('Uma biblioteca. Todos os livros têm o mesmo título na lombada: "Ossian".'),
+      X('Coincidência. É um nome comum por aqui.'),
+      S('A porta de saída está trancada.'),
+      X('A chave está no alto das estantes. As alavancas acordam as pontes-fantasma, mas só por um instante.'),
+      S('Este livro tem uma página marcada: "O barqueiro que não soltou o remo". É você?'),
+      X('...Larga esse livro, Ossian. Pega a chave.'),
+    ],
+  },
+  {
+    title: 'Casa Sem Luz',
+    blurb: 'Escuridão quase total. Velas para acender e pisos rachados que não aguentam ninguém.',
+    lines: [
+      S('Não enxergo nada. Hex? Hex!'),
+      X('Estou aqui. Sempre estou. Encosta nas velas: o caminho aparece com a luz.'),
+      S('Metade deste chão é falso. Racha e cai quando eu piso.'),
+      X('Como as promessas desta casa. Não pares em cima. E acende as três velas grandes: a última porta só abre com elas.'),
+      S('Lá no fundo... é a luz das lanternas? A da feira, sobre o rio?'),
+      X('...É. Desta vez eu não vou te buscar se caíres. Nem se não caíres.'),
     ],
   },
 ];

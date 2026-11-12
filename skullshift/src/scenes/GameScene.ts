@@ -4,9 +4,11 @@ import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
-import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
+import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
+import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
+import { HauntSystem } from '../game/haunt';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
@@ -68,6 +70,16 @@ export class GameScene extends Phaser.Scene {
   private hangers: Hanger[] = [];
   /** Cena de conversa: o jogo congela enquanto os balões aparecem. */
   private cutscene = false;
+  /** Casa assombrada (portas, chave, alavancas, velas, escuridão). */
+  private haunt?: HauntSystem;
+  /** Chefe da fase (modo história) e estado da arena. */
+  private boss?: Boss;
+  private bossStarted = false;
+  private rootedUntil = 0;
+  private rootWeb?: Phaser.GameObjects.Image;
+  /** Barreira de fogo das áreas travadas (só libera sem inimigos). */
+  private lockWall?: Phaser.GameObjects.Container;
+  private lockedScreen = -1;
   private skipLine?: () => void;
   private prevSkip = true;
   private quip?: SpeechBubble;
@@ -115,6 +127,11 @@ export class GameScene extends Phaser.Scene {
     this.webs = [];
     this.items = [];
     this.projectiles = [];
+    this.boss = undefined;
+    this.bossStarted = false;
+    this.rootedUntil = 0;
+    this.lockWall = undefined;
+    this.lockedScreen = -1;
     this.leader = -1;
     this.deaths = 0;
     this.ended = false;
@@ -124,7 +141,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const def = LEVELS[this.levelIndex];
+    const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     this.level = new Level(this, def);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
@@ -148,10 +165,26 @@ export class GameScene extends Phaser.Scene {
           f.facing = -1;
           f.onProjectile = (ff) => this.spawnProjectile(ff);
           this.physics.add.collider(f.sprite, this.level.ground);
+          // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
+          if (def.haunt) f.sprite.setTint(0xc8b8ff);
           this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
+      if (def.haunt) {
+        this.haunt = new HauntSystem(
+          {
+            scene: this,
+            level: this.level,
+            player: () => this.players[0],
+            pickLabel: () => PICK_LABEL[this.devices[0]],
+            moveTo: (x, feet, checkpoint) => this.teleport(x, feet, checkpoint),
+            win: (sub) => this.storyWin(sub),
+            popText: (x, y, text, color) => this.popText(x, y, text, color),
+          },
+          def.haunt,
+        );
+      }
     } else {
       this.screen = Math.floor(def.screens.length / 2);
       // Em pé a câmera mostra menos: os dois começam mais perto, na plataforma longa.
@@ -178,7 +211,7 @@ export class GameScene extends Phaser.Scene {
       const limit = deathLimit(this.levelIndex);
       this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
     }
-    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : `VERSUS · ${def.name.split('—')[1]?.trim() ?? ''}`, 1600, def.intro));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? `Fase ${this.levelIndex + 1} — ${def.name}` : `VERSUS · ${def.name}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
@@ -308,6 +341,8 @@ export class GameScene extends Phaser.Scene {
 
     this.players.forEach((p, i) => {
       p.intent = p.alive ? this.controllers[i].read() : emptyIntent();
+      // Preso na teia da Aranha-Rainha: não anda nem pula (dá para atacar e defender).
+      if (i === 0 && time < this.rootedUntil) p.intent = { ...p.intent, move: 0, jump: false, jumpHeld: false, sprint: false };
       p.faceTarget = this.nearestFoe(p)?.x ?? null;
     });
     for (const e of this.enemies) {
@@ -342,6 +377,9 @@ export class GameScene extends Phaser.Scene {
     this.resolveMelee();
     this.updateProjectiles(dt);
     this.updateItems(time);
+    this.haunt?.update(time);
+    this.updateBossArena(time, dt);
+    this.updateLockWall();
     this.updateCheckpoint();
     this.checkGoal();
     if (this.ended) return;
@@ -391,6 +429,13 @@ export class GameScene extends Phaser.Scene {
   private updateStoryScreens(): void {
     const p = this.players[0];
     if (!p.alive || this.transitioning) return;
+    // Área travada: a barreira de fogo segura o jogador até derrotar todos os inimigos dela.
+    if (this.lockedScreen === this.screen) {
+      const edge = (this.screen + 1) * W - 30;
+      if (p.x > edge) p.body.reset(edge, p.sprite.y);
+    }
+    // Arena do chefe: não dá para voltar.
+    if (this.bossStarted && p.x < this.screen * W + 50) p.body.reset(this.screen * W + 50, p.sprite.y);
     if (p.x > (this.screen + 1) * W) this.goScreen(this.screen + 1);
     else if (p.x < this.screen * W) this.goScreen(this.screen - 1);
   }
@@ -573,6 +618,14 @@ export class GameScene extends Phaser.Scene {
         continue;
       }
       if (p.bounced) continue;
+      if (this.boss && p.owner.team === 0) {
+        const r = projBox(p);
+        if (this.boss.tryProjectile(new Phaser.Geom.Rectangle(r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1))) {
+          this.sparks(p.sprite.x, p.sprite.y);
+          p.life = 0;
+          continue;
+        }
+      }
       for (const b of this.fighters) {
         if (!b.alive || b.team === p.owner.team || b.invulnerable) continue;
         if (!overlap(projBox(p), bodyBox(b))) continue;
@@ -1381,15 +1434,134 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- fim de fase ----------
 
+  /** Inimigos vivos num cenário. */
+  private enemiesIn(screen: number): number {
+    return this.enemies.filter((e) => e.f.alive && this.level.screenOf(e.f.x) === screen).length;
+  }
+
+  /** Fases "limpe a área": barreira de fogo na borda até não sobrar inimigo no cenário. */
+  private updateLockWall(): void {
+    const def = LEVELS[this.levelIndex];
+    if (this.mode !== 'story' || !def.clearToAdvance) return;
+    const last = this.level.screenCount - 1;
+    const locked = this.screen < last && this.enemiesIn(this.screen) > 0 ? this.screen : -1;
+    if (locked === this.lockedScreen) return;
+    if (this.lockedScreen !== -1 && locked === -1) {
+      this.popText(this.players[0].x, this.players[0].feet - 170, 'ÁREA LIMPA!', '#9dffb0');
+      const w = this.lockWall;
+      if (w) this.tweens.add({ targets: w, alpha: 0, duration: 400, onComplete: () => w.destroy() });
+      this.lockWall = undefined;
+    }
+    this.lockedScreen = locked;
+    if (locked === -1) return;
+    // Barreira: coluna de chamas em pixel (tochas) e um véu vermelho.
+    this.lockWall?.destroy();
+    const x = (locked + 1) * W - 18;
+    const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, -260, 36, 560, 0xff3a1a, 0.22)];
+    for (let y = 0; y > -520; y -= 64) {
+      const f = this.add.sprite(0, y, 'torch_item_anim', 0).setOrigin(0.5, 1).setScale(1.3).play({ key: 'torch_flame', startFrame: Math.abs(y / 64) % 4 });
+      items.push(f);
+    }
+    this.lockWall = this.add.container(x, FLOOR_Y + 20, items).setDepth(DEPTH.fighters + 1);
+  }
+
+  /** Arena do chefe: ao entrar, o portão fecha atrás e o chefe aparece. */
+  private updateBossArena(time: number, dt: number): void {
+    const def = LEVELS[this.levelIndex];
+    if (this.mode !== 'story' || !def.boss) return;
+    const p = this.players[0];
+    const last = this.level.screenCount - 1;
+    if (!this.bossStarted && this.screen === last && !this.transitioning && p.alive && p.x > last * W + 220) {
+      this.bossStarted = true;
+      const a = last * W;
+      // Portão de ferro desce atrás do jogador.
+      const gate = this.add.graphics().setDepth(DEPTH.fighters + 1);
+      gate.fillStyle(0x1d1a2b).fillRect(-22, -560, 44, 560);
+      for (let k = -16; k <= 16; k += 10) gate.fillStyle(0x6c7385).fillRect(k - 3, -560, 6, 560);
+      for (let y = -540; y < 0; y += 70) gate.fillStyle(0x4c5262).fillRect(-20, y, 40, 8);
+      gate.setPosition(a + 24, FLOOR_Y - 600);
+      this.tweens.add({ targets: gate, y: FLOOR_Y, duration: 420, ease: 'Bounce.easeOut' });
+      this.cameras.main.shake(200, 0.006);
+      this.checkpointX = a + 160;
+      const host = {
+        scene: this as Phaser.Scene,
+        player: () => this.players[0],
+        x0: a + 50,
+        x1: a + W - 10,
+        floor: FLOOR_Y,
+        ceiling: 30,
+        killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
+        rootPlayer: (ms: number) => this.rootPlayer(ms),
+        spawnEnemy: (char: CharId, x: number, feet: number) => this.spawnEnemy(char, x, feet),
+        freeze: (on: boolean) => {
+          this.cutscene = on;
+          if (on) this.players[0].body.setVelocityX(0);
+        },
+        bar: () => this.ui,
+        defeated: () => this.storyWin(def.winText ?? 'Chefe derrotado!'),
+      };
+      this.boss = def.boss.kind === 'minotaur' ? new MinotaurBoss(host) : new SpiderQueenBoss(host);
+      void this.boss.intro();
+    }
+    this.boss?.update(time, dt);
+    if (this.rootWeb) {
+      if (time >= this.rootedUntil || !p.alive) {
+        this.rootWeb.destroy();
+        this.rootWeb = undefined;
+      } else this.rootWeb.setPosition(p.x, p.feet - 40);
+    }
+  }
+
+  private rootPlayer(ms: number): void {
+    this.rootedUntil = this.time.now + ms;
+    this.rootWeb?.destroy();
+    const p = this.players[0];
+    this.rootWeb = this.add.image(p.x, p.feet - 40, 'web_ball').setScale(2.2).setAlpha(0.85).setDepth(DEPTH.fighters + 0.5);
+    this.popText(p.x, p.feet - 150, 'PRESO!', '#ffffff');
+  }
+
+  /** Inimigo criado no meio da fase (filhotes da Aranha-Rainha). */
+  private spawnEnemy(char: CharId, x: number, feet: number): Fighter {
+    const f = new Fighter(this, x, feet, char, 1, 'enemy');
+    f.facing = -1;
+    f.onProjectile = (ff) => this.spawnProjectile(ff);
+    this.physics.add.collider(f.sprite, this.level.ground);
+    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
+    this.smokeBurst(x, feet, 0x8a6ad0, 0.7);
+    return f;
+  }
+
+  /** Vitória no modo história (fim do mapa, porta de saída ou chefe derrotado). */
+  private storyWin(sub: string): void {
+    if (this.ended) return;
+    const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
+    completeLevel(this.levelIndex);
+    this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `${sub}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+  }
+
+  /** Porta da casa assombrada: leva o jogador a outro ponto (e outro cenário) na hora. */
+  private teleport(x: number, feet: number, checkpoint: boolean): void {
+    const p = this.players[0];
+    p.body.reset(x, feet - (p.def.feetY - p.def.frame / 2));
+    p.body.setVelocity(0, 0);
+    const n = this.level.screenOf(x);
+    if (n !== this.screen) {
+      this.screen = n;
+      this.ui?.hud?.setScreen(n, 0xfff7dc);
+    }
+    this.camX = this.cameraTarget();
+    this.applyCamera();
+    if (checkpoint) this.checkpointX = x;
+  }
+
   private checkGoal(): void {
+    if (LEVELS[this.levelIndex].haunt) return; // casa assombrada: só pela porta de saída
+    if (this.mode === 'story' && LEVELS[this.levelIndex].boss) return; // vence derrotando o chefe
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
     if (p1.alive && p1.x >= end) {
-      if (this.mode === 'story') {
-        const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
-        completeLevel(this.levelIndex);
-        this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `${this.levelIndex >= 4 ? 'O Portão da Maré está diante de você!' : 'Fragmento da coroa recuperado!'}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
-      } else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
+      if (this.mode === 'story') this.storyWin(LEVELS[this.levelIndex].winText ?? 'Fragmento da coroa recuperado!');
+      else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');
     }

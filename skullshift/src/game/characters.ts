@@ -212,7 +212,8 @@ export const CHARS: Record<CharId, CharDef> = {
   },
   minotaur: {
     id: 'minotaur',
-    head: 125,
+    // Desenho encolhido para 72% ao carregar (ver MINO_SCALE).
+    head: 90,
     name: 'Minotauro',
     frame: 320,
     feetY: 210,
@@ -221,7 +222,7 @@ export const CHARS: Record<CharId, CharDef> = {
     attack: { n: 12, fps: 14 },
     speed: 200,
     // Marretada de pedra: lenta, mas de alcance enorme.
-    melee: { from: 6, to: 8, reach: 136, back: 0 },
+    melee: { from: 6, to: 8, reach: 100, back: 0 },
     drops: 'horn',
   },
   sgnome: {
@@ -267,3 +268,6 @@ export const ITEM_TEXTURE: Record<ItemId, string> = {
   acorn: 'acorn',
   horn: 'horn_item',
 };
+
+/** O Minotauro comum é desenhado menor que a folha original. */
+export const MINO_SCALE = 0.72;

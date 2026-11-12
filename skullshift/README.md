@@ -71,7 +71,7 @@ Os itens aparecem no mapa e também caem de inimigos ou jogadores transformados 
 - `src/game/level.ts` — fases com 5 cenários em tiles. Novas fases entram aqui.
 - `src/game/Fighter.ts` — estados, ataque, defesa, morte e transformação.
 - `src/game/ai.ts` — IA dos inimigos.
-- `src/game/Hud.ts` — avatares, indicador "VAI" e barra de progresso.
+- `src/game/Hud.ts` — avatares, indicador dos 5 cenários e seta "VAI".
 - `src/game/touch.ts` — botões virtuais com multitoque.
 - `src/ui/` — desenhos de teclado, controle e celular, além dos botões das telas de menu.
 - `src/scenes/` — carregamento, menu, escolha de controle, como jogar e partida.

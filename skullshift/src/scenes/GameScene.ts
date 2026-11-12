@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, VIEW, W, WATER_Y } from '../config';
+import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -177,21 +177,48 @@ export class GameScene extends Phaser.Scene {
   // ---------- câmera / orientação ----------
 
   /** Deitado: o cenário inteiro. Em pé: faixa do meio com zoom, seguindo o jogador. */
+  /** 2 jogadores no toque com o celular em pé: tela dividida, P2 de ponta-cabeça. */
+  get split(): boolean {
+    return VIEW.portrait && this.mode === 'versus' && this.devices.length === 2 && this.devices.every((d) => d === 'touch');
+  }
+
+  private cam2?: Phaser.Cameras.Scene2D.Camera;
+
   private setupCamera(): void {
     const cam = this.cameras.main;
-    if (VIEW.portrait) cam.setViewport(0, PORTRAIT.hudH, W, PORTRAIT.worldH).setZoom(PORTRAIT.zoom);
-    // (zoom em pé: a faixa mostra ~680 px de altura do mundo, do céu até a água)
-    else cam.setViewport(0, 0, W, H).setZoom(1);
+    if (this.split) {
+      computeSplit(VIEW.h);
+      const half = VIEW.h / 2;
+      cam.setViewport(0, half + SPLIT.hudS, W, SPLIT.bandH).setZoom(SPLIT.zoom).setRotation(0);
+      // Segunda câmera: mesma ação, girada 180° para quem está do outro lado.
+      if (!this.cam2) this.cam2 = this.cameras.add(0, 0, W, SPLIT.bandH);
+      this.cam2.setViewport(0, half - SPLIT.hudS - SPLIT.bandH, W, SPLIT.bandH).setZoom(SPLIT.zoom).setRotation(Math.PI);
+      this.cam2.setBackgroundColor('#0e1a2b');
+    } else {
+      if (this.cam2) {
+        this.cameras.remove(this.cam2);
+        this.cam2 = undefined;
+      }
+      if (VIEW.portrait) cam.setViewport(0, PORTRAIT.hudH, W, PORTRAIT.worldH).setZoom(PORTRAIT.zoom);
+      // (zoom em pé: a faixa mostra ~680 px de altura do mundo, do céu até a água)
+      else cam.setViewport(0, 0, W, H).setZoom(1);
+    }
     this.applyCamera();
   }
 
+  private get viewZoom(): number {
+    return this.split ? SPLIT.zoom : VIEW.portrait ? PORTRAIT.zoom : 1;
+  }
+
   private get halfView(): number {
-    return VIEW.portrait ? W / PORTRAIT.zoom / 2 : W / 2;
+    return VIEW.portrait ? W / this.viewZoom / 2 : W / 2;
   }
 
   private applyCamera(): void {
-    const cy = VIEW.portrait ? 655 - PORTRAIT.worldH / PORTRAIT.zoom / 2 : H / 2;
+    const band = this.split ? SPLIT.bandH : PORTRAIT.worldH;
+    const cy = VIEW.portrait ? 655 - band / this.viewZoom / 2 : H / 2;
     this.cameras.main.centerOn(this.camX, cy);
+    this.cam2?.centerOn(this.camX, cy);
   }
 
   /** Para onde a câmera quer olhar, presa ao cenário atual. */

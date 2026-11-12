@@ -88,11 +88,21 @@ export class TouchPad {
   private prevPick = false;
   visible = true;
 
-  constructor(private scene: Phaser.Scene, side: 'full' | 'left' | 'right', tint = 0xfff7dc) {
+  /**
+   * area: faixa da tela onde ficam os botões (padrão: o painel de baixo, em pé).
+   * flip: gira tudo 180° (o P2 sentado do outro lado da mesa, no modo dividido).
+   */
+  constructor(
+    private scene: Phaser.Scene,
+    side: 'full' | 'left' | 'right',
+    tint = 0xfff7dc,
+    area?: { top: number; h: number },
+    flip = false,
+  ) {
     const specs: Array<[ButtonId, number, number, number]> = [];
     if (VIEW.portrait) {
-      const top = portraitPanelTop();
-      const h = VIEW.h - top;
+      const top = area?.top ?? portraitPanelTop();
+      const h = area?.h ?? VIEW.h - top;
       for (const [id, u, v, r] of side === 'full' ? PORTRAIT_FULL : PORTRAIT_HALF) {
         const x = side === 'right' ? W - u * W : u * W;
         specs.push([id, x, top + v * h, r * W]);
@@ -112,6 +122,13 @@ export class TouchPad {
       const r = specs.find((b) => b[0] === 'right')!;
       [l[1], r[1]] = [r[1], l[1]];
     }
+    if (flip) {
+      // Gira 180° em torno do centro da tela: o layout fica de frente para quem está do outro lado.
+      for (const sp of specs) {
+        sp[1] = W - sp[1];
+        sp[2] = VIEW.h - sp[2];
+      }
+    }
     for (const [id, x, y, r] of specs) {
       const text = LABELS[id];
       const bg = scene.add
@@ -125,7 +142,8 @@ export class TouchPad {
           color: '#fff7dc',
         })
         .setOrigin(0.5)
-        .setDepth(DEPTH.hud + 6);
+        .setDepth(DEPTH.hud + 6)
+        .setRotation(flip ? Math.PI : 0);
       this.buttons.push({ id, x, y, r, bg, label, down: false });
     }
   }

@@ -93,3 +93,15 @@ export function computeView(): { portrait: boolean; h: number } {
 export function portraitPanelTop(): number {
   return PORTRAIT.hudH + PORTRAIT.worldH;
 }
+
+/**
+ * Modo dividido (2 jogadores no mesmo celular em pé, um de cada lado da mesa):
+ * cada metade tem faixa de HUD junto ao meio, faixa do mundo e botões na ponta.
+ */
+export const SPLIT = { hudS: 140, bandH: 660, zoom: 0.97 };
+
+export function computeSplit(h: number): void {
+  const half = h / 2;
+  SPLIT.bandH = Math.round(Math.min(700, Math.max(380, half - SPLIT.hudS - 520)));
+  SPLIT.zoom = SPLIT.bandH / 680;
+}

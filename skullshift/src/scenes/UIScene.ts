@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEPTH, BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
+import { DEPTH, BODY_FONT, FONT, PORTRAIT, SPLIT, VIEW, W } from '../config';
 import { Hud } from '../game/Hud';
 import { TouchPad } from '../game/touch';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
@@ -16,8 +16,10 @@ export interface VictoryInfo {
  * HUD, botões de toque, botão de menu, faixas e a parte de tela da animação de vitória.
  * É recriada quando o celular gira (o estado vem do GameScene).
  */
+type HudLike = Pick<Hud, 'setChar' | 'setScreen' | 'setGo' | 'setVisible'>;
+
 export class UIScene extends Phaser.Scene {
-  hud?: Hud;
+  hud?: HudLike;
   pads: Array<TouchPad | undefined> = [];
   private g!: GameScene;
   private menuButton?: Phaser.GameObjects.Container;
@@ -32,14 +34,64 @@ export class UIScene extends Phaser.Scene {
     this.hud = undefined;
   }
 
-  /** Centro vertical da faixa do mundo (para faixas e vitória). */
+  /** Centro vertical da faixa do mundo (para faixas e vitória). No modo dividido, a do P1. */
   private get worldMidY(): number {
+    if (this.g.split) return VIEW.h / 2 + SPLIT.hudS + SPLIT.bandH / 2;
     return VIEW.portrait ? PORTRAIT.hudH + PORTRAIT.worldH / 2 : 360;
+  }
+
+  /**
+   * Monta algo para o P1 e, no modo dividido, uma cópia girada 180° para o P2
+   * (que está do outro lado da mesa).
+   */
+  private mirrored(build: () => void): void {
+    build();
+    if (!this.g.split) return;
+    const before = this.children.list.length;
+    build();
+    const made = this.children.list.slice(before);
+    this.add.container(W, VIEW.h, made).setRotation(Math.PI).setDepth(DEPTH.hud + 3);
+  }
+
+  /** Modo dividido: faixas, HUD de cada lado, botões nas pontas, P2 de ponta-cabeça. */
+  private createSplit(): void {
+    const g = this.g;
+    const half = VIEW.h / 2;
+    const panelTop = half + SPLIT.hudS + SPLIT.bandH;
+    for (const flip of [false, true]) {
+      const rect = (y0: number, h: number, c: number) =>
+        this.add.rectangle(0, flip ? VIEW.h - y0 - h : y0, W, h, c).setOrigin(0).setDepth(DEPTH.hud - 1);
+      rect(half, SPLIT.hudS, 0x10223a);
+      rect(panelTop, VIEW.h - panelTop, 0x16304d);
+      rect(panelTop, 8, 0x0b1626);
+    }
+    this.add.rectangle(0, half - 3, W, 6, 0xfff7dc, 0.6).setOrigin(0).setDepth(DEPTH.hud);
+    const players = g.players.map((p, i) => ({ name: p.label, char: p.def.id, color: PLAYER_TINT[i] }));
+    const h1 = new Hud(this, players, g.level.screenCount, 'split', { only: 0, x: 0, y: half, rotation: 0 });
+    const h2 = new Hud(this, players, g.level.screenCount, 'split', { only: 1, x: W, y: half, rotation: Math.PI });
+    this.hud = {
+      setChar: (pl, c) => (h1.setChar(pl, c), h2.setChar(pl, c)),
+      setScreen: (n, c) => (h1.setScreen(n, c), h2.setScreen(n, c)),
+      setGo: (d, c) => (h1.setGo(d, c), h2.setGo(d, c)),
+      setVisible: (v) => (h1.setVisible(v), h2.setVisible(v)),
+    };
+    const area = { top: panelTop, h: VIEW.h - panelTop };
+    this.pads = [new TouchPad(this, 'full', PLAYER_TINT[0], area, false), new TouchPad(this, 'full', PLAYER_TINT[1], area, true)];
+    this.menuButton = pillButton(this, W / 2, half, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 120)
+      .setScale(1)
+      .setDepth(DEPTH.hud + 4)
+      .setAlpha(0.9);
   }
 
   create(): void {
     this.input.addPointer(4);
     const g = this.g;
+    if (g.split) {
+      this.createSplit();
+      this.hud?.setScreen(g.screen, g.leader >= 0 ? PLAYER_TINT[g.leader] : 0xfff7dc);
+      if (g.victoryInfo) this.showVictory(g.victoryInfo, true);
+      return;
+    }
     const touch = g.devices.map((d) => d === 'touch');
     const anyTouch = touch.some(Boolean);
     const style = VIEW.portrait ? 'portrait' : anyTouch ? 'top' : 'bottom';
@@ -83,6 +135,10 @@ export class UIScene extends Phaser.Scene {
   }
 
   banner(text: string, ms: number, sub?: string): void {
+    this.mirrored(() => this.bannerFace(text, ms, sub));
+  }
+
+  private bannerFace(text: string, ms: number, sub?: string): void {
     if (sub) {
       // Frase de abertura (a narrativa da fase), embaixo do nome.
       const st = this.add
@@ -114,8 +170,9 @@ export class UIScene extends Phaser.Scene {
 
   /** Badge pequena no canto quando a passiva da aranha dispara. */
   showSpiderBadge(pi: number): void {
-    const right = pi === 1;
-    const y = VIEW.portrait ? PORTRAIT.hudH + 50 : 128;
+    const flip = this.g.split && pi === 1;
+    const right = pi === 1 && !this.g.split;
+    const y = this.g.split ? VIEW.h / 2 + SPLIT.hudS + 50 : VIEW.portrait ? PORTRAIT.hudH + 50 : 128;
     const x = right ? W - 24 : 24;
     const label = this.add.text(0, 0, 'SENTIDO ARANHA!', { fontFamily: FONT, fontSize: VIEW.portrait ? '30px' : '18px', color: '#ffffff' }).setOrigin(right ? 1 : 0, 0.5);
     const icon = this.add.image(0, 0, 'spider_avatar').setScale(VIEW.portrait ? 0.26 : 0.16);
@@ -136,6 +193,13 @@ export class UIScene extends Phaser.Scene {
     icon.setPosition(right ? -w + 10 + iw / 2 : 10 + iw / 2, 0);
     label.setPosition(right ? -12 : iw + 18, 0);
     const c = this.add.container(right ? W + w : -w, y, [g, icon, label]).setDepth(DEPTH.hud + 6);
+    if (flip) {
+      // P2 do outro lado da mesa: a badge aparece na metade dele, de ponta-cabeça.
+      c.setPosition(W + w, VIEW.h - y).setRotation(Math.PI);
+      this.tweens.add({ targets: c, x: W - x, duration: 220, ease: 'Back.easeOut' });
+      this.tweens.add({ targets: c, alpha: 0, delay: 1500, duration: 400, onComplete: () => c.destroy() });
+      return;
+    }
     this.tweens.add({ targets: c, x, duration: 220, ease: 'Back.easeOut' });
     this.tweens.add({ targets: c, alpha: 0, delay: 1500, duration: 400, onComplete: () => c.destroy() });
   }
@@ -181,6 +245,28 @@ export class UIScene extends Phaser.Scene {
       callback: () => fireworks.explode(26, Phaser.Math.Between(160, W - 160), Phaser.Math.Between(mid - 270, mid - 60)),
     });
 
+    this.mirrored(() => this.victoryFace(v, mid, color, d));
+
+    // Botões: deitado, embaixo da tela; em pé, no painel de baixo (maiores).
+    const split = g.split;
+    const by = split ? VIEW.h / 2 + SPLIT.hudS + SPLIT.bandH + 110 : VIEW.portrait ? PORTRAIT.hudH + PORTRAIT.worldH + 200 : 640;
+    const sc = split ? 1.15 : VIEW.portrait ? 1.5 : 1;
+    this.time.delayedCall(d(1200), () => {
+      this.mirrored(() => {
+        const next = g.hasNextLevel;
+        const side = !VIEW.portrait || split;
+        pillButton(this, side ? W / 2 - 170 : W / 2, by, next ? 'PRÓXIMA FASE' : 'JOGAR DE NOVO', () => (next ? g.nextLevel() : g.restartMatch()), 280, 0xffe066)
+          .setScale(sc)
+          .setDepth(DEPTH.hud + 4);
+        pillButton(this, side ? W / 2 + 170 : W / 2, side ? by : by + 150, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 200)
+          .setScale(sc)
+          .setDepth(DEPTH.hud + 4);
+      });
+    });
+  }
+
+  private victoryFace(v: VictoryInfo, mid: number, color: number, d: (ms: number) => number): void {
+    const g = this.g;
     const avatar = this.add.image(W / 2, mid - 210, `${g.players[v.pi].def.id}_avatar`).setDepth(DEPTH.hud + 2).setScale(0);
     this.tweens.add({ targets: avatar, scale: 0.75, duration: 600, ease: 'Back.easeOut', delay: d(200) });
     this.tweens.add({ targets: avatar, angle: { from: -8, to: 8 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
@@ -221,17 +307,5 @@ export class UIScene extends Phaser.Scene {
       .setAlpha(0);
     this.tweens.add({ targets: sub, alpha: 1, duration: 400, delay: d(900) });
 
-    // Botões: deitado, embaixo da tela; em pé, no painel de baixo (maiores).
-    const by = VIEW.portrait ? PORTRAIT.hudH + PORTRAIT.worldH + 200 : 640;
-    const sc = VIEW.portrait ? 1.5 : 1;
-    this.time.delayedCall(d(1200), () => {
-      const next = g.hasNextLevel;
-      pillButton(this, VIEW.portrait ? W / 2 : W / 2 - 160, by, next ? 'PRÓXIMA FASE' : 'JOGAR DE NOVO', () => (next ? g.nextLevel() : g.restartMatch()), 280, 0xffe066)
-        .setScale(sc)
-        .setDepth(DEPTH.hud + 4);
-      pillButton(this, VIEW.portrait ? W / 2 : W / 2 + 160, VIEW.portrait ? by + 150 : by, 'MENU', () => g.scene.start('menu', { stage: 'modes' }), 200)
-        .setScale(sc)
-        .setDepth(DEPTH.hud + 4);
-    });
   }
 }

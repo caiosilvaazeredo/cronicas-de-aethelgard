@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { DEPTH, FONT, H, PORTRAIT, W } from '../config';
 
 /** bottom: deitado (como o mockup) · top: deitado com botões de toque · portrait: em pé. */
-export type HudStyle = 'bottom' | 'top' | 'portrait';
+export type HudStyle = 'bottom' | 'top' | 'portrait' | 'split';
 import type { CharId } from './characters';
 
 interface Slot {
@@ -17,7 +17,7 @@ interface Slot {
  * para dar lugar aos botões), indicador dos 5 cenários e seta "VAI" de quem tem a vez.
  */
 export class Hud {
-  private slots: Slot[] = [];
+  private slots: Array<Slot | undefined> = [];
   private goText: Phaser.GameObjects.Text;
   private dots: Phaser.GameObjects.Arc[] = [];
   private centeredGo = false;
@@ -28,20 +28,31 @@ export class Hud {
     players: Array<{ name: string; char: CharId; color: number }>,
     screens: number,
     style: HudStyle,
+    /**
+     * Modo dividido (2 jogadores no mesmo celular em pé): mostra só este jogador, numa faixa
+     * de 140 px que começa em y=0 local; 'place' posiciona/gira a faixa (o P2 fica de ponta-cabeça).
+     */
+    split?: { only: number; x: number; y: number; rotation: number },
   ) {
+    const before = scene.children.list.length;
     const touchLayout = style === 'top';
     const portrait = style === 'portrait';
+    const sp = style === 'split';
     this.centeredGo = portrait;
     const pad = portrait ? PORTRAIT.topPad : 0;
-    const y = touchLayout ? 64 : portrait ? 130 + pad : H - 86;
-    const scale = touchLayout ? 0.36 : portrait ? 0.72 : 0.62;
-    const fontSize = touchLayout ? '28px' : portrait ? '54px' : '44px';
-    const labelGap = touchLayout ? 62 : portrait ? 112 : 96;
+    const y = sp ? 70 : touchLayout ? 64 : portrait ? 130 + pad : H - 86;
+    const scale = sp ? 0.46 : touchLayout ? 0.36 : portrait ? 0.72 : 0.62;
+    const fontSize = sp ? '40px' : touchLayout ? '28px' : portrait ? '54px' : '44px';
+    const labelGap = sp ? 80 : touchLayout ? 62 : portrait ? 112 : 96;
     players.forEach((p, i) => {
-      const right = i === 1;
-      const ax = right ? W - (touchLayout ? 58 : portrait ? 104 : 92) : touchLayout ? 58 : portrait ? 104 : 92;
+      if (sp && split && i !== split.only) {
+        this.slots.push(undefined);
+        return;
+      }
+      const right = i === 1 && !sp;
+      const ax = sp ? 90 : right ? W - (touchLayout ? 58 : portrait ? 104 : 92) : touchLayout ? 58 : portrait ? 104 : 92;
       // Disco na cor do jogador atrás do avatar.
-      const r = touchLayout ? 46 : portrait ? 86 : 74;
+      const r = sp ? 56 : touchLayout ? 46 : portrait ? 86 : 74;
       const rim = scene.add.circle(ax, y, r + 5, 0x10223a).setScrollFactor(0).setDepth(DEPTH.hud);
       const disc = scene.add.circle(ax, y, r, p.color).setScrollFactor(0).setDepth(DEPTH.hud);
       this.discs.push(rim, disc);
@@ -67,13 +78,13 @@ export class Hud {
     });
 
     // Indicador de cenários (o do meio é o central).
-    const gap = portrait ? 44 : 30;
-    const x0 = W / 2 - ((screens - 1) * gap) / 2;
+    const gap = portrait || sp ? 44 : 30;
+    const x0 = sp ? W - 70 - (screens - 1) * gap : W / 2 - ((screens - 1) * gap) / 2;
     for (let i = 0; i < screens; i++) {
       const center = i === Math.floor(screens / 2);
       this.dots.push(
         scene.add
-          .circle(x0 + i * gap, portrait ? 34 + pad : 26, (center ? 10 : 8) * (portrait ? 1.5 : 1), 0x10223a, 0.6)
+          .circle(x0 + i * gap, sp ? 44 : portrait ? 34 + pad : 26, (center ? 10 : 8) * (portrait || sp ? 1.5 : 1), 0x10223a, 0.6)
           .setStrokeStyle(3, 0xfff7dc, 0.9)
           .setScrollFactor(0)
           .setDepth(DEPTH.hud),
@@ -81,7 +92,7 @@ export class Hud {
     }
 
     this.goText = scene.add
-      .text(W / 2, touchLayout ? 128 : portrait ? 206 + pad : 74, '', {
+      .text(sp ? W - 160 : W / 2, sp ? 106 : touchLayout ? 128 : portrait ? 206 + pad : 74, '', {
         fontFamily: FONT,
         fontSize: '40px',
         color: '#fff7dc',
@@ -92,6 +103,13 @@ export class Hud {
       .setScrollFactor(0)
       .setDepth(DEPTH.hud)
       .setVisible(false);
+    if (sp) this.centeredGo = true;
+
+    if (split) {
+      // Junta tudo numa faixa e posiciona/gira (o P2 vê de ponta-cabeça, do outro lado da mesa).
+      const made = scene.children.list.slice(before);
+      scene.add.container(split.x, split.y, made).setRotation(split.rotation).setDepth(DEPTH.hud);
+    }
   }
 
   /** Troca o avatar com uma animação de "pop". */
@@ -125,6 +143,7 @@ export class Hud {
 
   setVisible(v: boolean): void {
     for (const s of this.slots) {
+      if (!s) continue;
       s.avatar.setVisible(v);
       s.label.setVisible(v);
     }

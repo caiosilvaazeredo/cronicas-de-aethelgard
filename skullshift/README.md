@@ -78,6 +78,8 @@ Depois de escolher o modo, cada jogador escolhe o dispositivo na tela **Escolha 
 - **Controle 1 / Controle 2:** aparecem cinza enquanto não estão conectados. O navegador só detecta o controle depois que você aperta um botão nele.
 - **Toque:** botões virtuais na tela, já selecionados por padrão no celular. No versus, cada jogador fica com um lado da tela.
 
+**2 jogadores no mesmo celular:** com os dois no "Toque" e o celular em pé sobre a mesa, a tela se divide. O P1 joga na metade de baixo e o P2 na de cima, que mostra o jogo de ponta-cabeça (cada um vê a mesma partida do seu lado, com o HUD e os botões de frente para si). Faixas de abertura, badges e a vitória aparecem para os dois. Com controle ou teclado conectado, o celular em pé usa a tela única normal.
+
 **Celular deitado ou em pé:** com o celular deitado, o jogo ocupa a tela inteira e os botões ficam por cima. Em pé, o topo mostra avatares, cenários e o menu, o meio mostra o mundo com zoom (a câmera segue o personagem dentro do cenário) e embaixo fica um painel grande de botões. No versus em pé, o painel se divide ao meio, metade para cada jogador. Girar o aparelho reorganiza a tela sem reiniciar a partida.
 
 Em seguida, a tela **Como jogar** mostra os botões do dispositivo escolhido.

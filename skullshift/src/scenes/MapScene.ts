@@ -20,12 +20,16 @@ const SPOTS: Array<[number, number]> = [
   [930, 500], // Ninho das Teias
   [1250, 430], // Covil da Rainha
   [1610, 480], // Forja Vulcânica
-  [1950, 205], // Santuário das Nuvens
-  [2290, 380], // Escadaria da Maré
-  [2700, 500], // Casa das Portas
-  [2920, 510], // Biblioteca Assombrada
-  [3140, 480], // Casa Sem Luz
+  [1930, 510], // Fuga da Forja
+  [2260, 205], // Santuário das Nuvens
+  [2580, 280], // Correntes do Céu
+  [2890, 170], // Voo Noturno
+  [3220, 380], // Escadaria da Maré
+  [3630, 500], // Casa das Portas
+  [3850, 510], // Biblioteca Assombrada
+  [4070, 480], // Casa Sem Luz
 ];
+const S = (i: number) => SPOTS[i];
 function spot(i: number): [number, number] {
   if (SPOTS[i]) return SPOTS[i];
   const k = i - SPOTS.length;
@@ -228,8 +232,19 @@ export class MapScene extends Phaser.Scene {
       .particles(1610, 304, 'spark', { speedY: { min: -60, max: -30 }, speedX: { min: -12, max: 12 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xffb347, 0xff6a1a], frequency: 160 })
       .setDepth(6);
 
-    // 6) Santuário das Nuvens: nuvem encantada flutuando no alto.
-    const cx = 1950 - 650;
+    // 6) Fuga da Forja: ilhota de rocha com um rio de lava e chamas.
+    {
+      const [x, y] = S(5);
+      this.island((x - 128) / 64, (y - 70) / 64, 4, 2.5, 'tiles_volcano', 0xd28e78);
+      const lava = this.add.graphics().setDepth(5);
+      lava.fillStyle(INK, 1).fillRect(x - 120, y + 34, 240, 18);
+      lava.fillStyle(0xff7a1a, 1).fillRect(x - 116, y + 37, 232, 12);
+      lava.fillStyle(0xffd36b, 1).fillRect(x - 116, y + 37, 232, 4);
+      for (const dx of [-100, -60]) this.add.sprite(x + dx, y + 10, 'torch_item_anim', 0).setDepth(6).play('torch_flame');
+    }
+
+    // 7) Santuário das Nuvens: nuvem encantada flutuando no alto.
+    const cx = S(6)[0] - 650;
     const c = this.add.graphics().setDepth(5);
     c.fillStyle(0xb27cff, 0.22).fillRoundedRect(cx + 520, 160, 260, 92, 30);
     c.fillStyle(0xb9a6ee, 1).fillRoundedRect(cx + 530, 180, 240, 62, 24);
@@ -242,12 +257,32 @@ export class MapScene extends Phaser.Scene {
     t.fillTriangle(cx + 596, 124, cx + 622, 124, cx + 609, 98).fillTriangle(cx + 684, 136, cx + 708, 136, cx + 696, 114);
     this.tweens.add({ targets: [c, t], y: -6, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
 
-    // 7) Escadaria da Maré: ilha alta em degraus e, no topo, o Portão da Maré.
-    this.island(33.5, 5, 5, 3);
-    this.plateau(33.5, 4, 2, 'tilemap');
-    this.plateau(36.5, 4, 2, 'tilemap');
+    // 8) Correntes do Céu: nuvenzinhas com riscos de vento subindo.
+    {
+      const [x, y] = S(7);
+      for (const [dx, dy] of [[-90, 40], [80, 10]] as const) this.add.image(x + dx, y + dy, 'cloud_05').setScale(0.35).setDepth(5);
+      this.add
+        .particles(x, y + 60, 'streak', { x: { min: -30, max: 30 }, speedY: { min: -160, max: -110 }, lifespan: 900, scaleX: 0.15, scaleY: 0.8, rotate: 90, alpha: { start: 0.8, end: 0 }, frequency: 120 })
+        .setDepth(6);
+    }
+
+    // 9) Voo Noturno: lua cheia e o morcego gigante dando voltas.
+    {
+      const [x, y] = S(8);
+      const moon = this.add.graphics().setDepth(4);
+      moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 40, y - 20, 70);
+      moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 40, y - 20, 46);
+      moon.fillStyle(0xd8d0b0, 1).fillCircle(x + 26, y - 30, 8).fillCircle(x + 56, y - 6, 6);
+      const bat = this.add.sprite(x - 60, y - 10, 'bat_idle').setScale(0.55).setDepth(6).play('bat_idle');
+      this.tweens.add({ targets: bat, x: x + 120, y: y + 20, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut', onYoyo: () => bat.setFlipX(true), onRepeat: () => bat.setFlipX(false) });
+    }
+
+    // 10) Escadaria da Maré: ilha alta em degraus e, no topo, o Portão da Maré.
+    const gx = S(9)[0];
+    this.island((gx - 146) / 64, 5, 5, 3);
+    this.plateau((gx - 146) / 64, 4, 2, 'tilemap');
+    this.plateau((gx + 46) / 64, 4, 2, 'tilemap');
     const gate = this.add.graphics().setDepth(6);
-    const gx = 2290;
     const gy = 300;
     gate.fillStyle(0xfff1a8, 0.25).fillEllipse(gx, gy - 6, 70, 84);
     gate.fillStyle(0x7fd8ff, 0.85).fillRect(gx - 16, gy - 36, 32, 42);
@@ -261,11 +296,12 @@ export class MapScene extends Phaser.Scene {
     gate.fillStyle(0xd8e0e6).fillRect(gx - 28, gy - 56, 56, 12);
     this.tweens.add({ targets: gate, alpha: { from: 1, to: 0.8 }, duration: 900, yoyo: true, repeat: -1 });
 
-    // 8-10) Ilha do Casarão: o casarão assombrado do Barqueiro, com névoa lilás.
-    this.island(40.5, 5.5, 10, 3.5, 'tiles_cave', 0x8a7aa8);
-    this.add.image(2920, 452, 'map_mansion').setOrigin(0.5, 1).setDepth(5);
+    // 11-13) Ilha do Casarão: o casarão assombrado do Barqueiro, com névoa lilás.
+    const hx = S(11)[0];
+    this.island((S(10)[0] - 108) / 64, 5.5, 10, 3.5, 'tiles_cave', 0x8a7aa8);
+    this.add.image(hx, 452, 'map_mansion').setOrigin(0.5, 1).setDepth(5);
     this.add
-      .particles(2920, 470, 'vsmoke_0', { x: { min: -260, max: 260 }, speedX: { min: 4, max: 12 }, speedY: { min: -8, max: -3 }, lifespan: 4000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.35, end: 0 }, tint: 0x8a6ad0, frequency: 500 })
+      .particles(hx, 470, 'vsmoke_0', { x: { min: -260, max: 260 }, speedX: { min: 4, max: 12 }, speedY: { min: -8, max: -3 }, lifespan: 4000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.35, end: 0 }, tint: 0x8a6ad0, frequency: 500 })
       .setDepth(6);
 
     // Fases novas sem ilha própria: ilhotas simples.

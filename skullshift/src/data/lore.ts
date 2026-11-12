@@ -123,6 +123,18 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
   {
+    title: 'Fuga da Forja',
+    blurb: 'Sem o Minotauro, a montanha acordou. A lava vem atrás: corra sem parar.',
+    lines: [
+      S('O chão está tremendo. Hex, a forja inteira está acordando!'),
+      X('O Minotauro caiu e a montanha ficou sem dono. A lava vem atrás de ti. Corre!'),
+      S('Correr para onde?'),
+      X('Para a frente. Sempre para a frente. E não pares: ela não para.'),
+      S('Você nunca corre de nada, não é?'),
+      X('Não preciso. Eu flutuo.'),
+    ],
+  },
+  {
     title: 'Santuário das Nuvens',
     blurb: 'O lar do Xamã. O último fragmento espera no altar, entre as nuvens encantadas.',
     lines: [
@@ -135,6 +147,30 @@ export const CHAPTERS: Chapter[] = [
       X('Eu jurei que ele abriria. Não jurei para que lado.'),
       S('...O quê?'),
       X('Nada. Coisas de velho. Vai, Ossian. Termina o que começaste.'),
+    ],
+  },
+  {
+    title: 'Correntes do Céu',
+    blurb: 'Vãos enormes entre as nuvens. Só o vento leva de uma ilha à outra.',
+    lines: [
+      S('As nuvens acabaram. Só tem vento entre uma ilha e outra.'),
+      X('Correntes do Céu. Entra no vento e ele te leva para cima. Segura o pulo e plana.'),
+      S('E se o vento parar?'),
+      X('Ele não para. Sopra desde que eu cheguei aqui. Faz tempo.'),
+      S('Quanto tempo?'),
+      X('Mais do que tu lembras de ter vivido.'),
+    ],
+  },
+  {
+    title: 'Voo Noturno',
+    blurb: 'Montado num morcego gigante, pela noite, até a Escadaria da Maré.',
+    lines: [
+      S('Um morcego do tamanho de um barco? Você quer que eu monte nisso?'),
+      X('Ele me deve um favor. Te leva pela noite até a Escadaria da Maré.'),
+      X('Os ossos saem sozinhos para a frente. Desvia do resto.'),
+      S('Você está me ajudando demais ultimamente, Hex.'),
+      X('...Estamos perto do fim. Quero que chegues lá.'),
+      S('Quer mesmo?'),
     ],
   },
   {

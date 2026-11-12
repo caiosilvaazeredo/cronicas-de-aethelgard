@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, VIEW, W, WATER_Y, computeSplit } from '../config';
+import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -9,6 +9,7 @@ import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
+import { ShmupSystem } from '../game/shmup';
 import { playerName } from '../game/names';
 import { settings, sfx } from '../game/settings';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
@@ -80,6 +81,16 @@ export class GameScene extends Phaser.Scene {
   private bossStarted = false;
   private rootedUntil = 0;
   private rootWeb?: Phaser.GameObjects.Image;
+  /** Fase de voo com tiro. */
+  private shmup?: ShmupSystem;
+  /** Perseguição: frente da onda de lava (x do mundo) e quando volta a andar. */
+  private chaseX = 0;
+  private chaseFrom = 0;
+  private chaseWall?: Phaser.GameObjects.Container;
+  private chaseLava?: Phaser.GameObjects.TileSprite;
+  private chaseWasAlive = true;
+  /** Correntes de vento (faixas x do mundo). */
+  private winds: Array<[number, number]> = [];
   /** Barreira de fogo das áreas travadas (só libera sem inimigos). */
   private lockWall?: Phaser.GameObjects.Container;
   private lockedScreen = -1;
@@ -131,6 +142,9 @@ export class GameScene extends Phaser.Scene {
     this.items = [];
     this.projectiles = [];
     this.boss = undefined;
+    this.shmup = undefined;
+    this.chaseWall = undefined;
+    this.winds = [];
     this.bossStarted = false;
     this.rootedUntil = 0;
     this.lockWall = undefined;
@@ -174,6 +188,9 @@ export class GameScene extends Phaser.Scene {
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
+      if (def.shmup) this.setupShmup();
+      if (def.chase) this.setupChase(def.chase);
+      if (def.winds) this.setupWinds(def.winds);
       if (def.haunt) {
         this.haunt = new HauntSystem(
           {
@@ -385,6 +402,18 @@ export class GameScene extends Phaser.Scene {
     this.updateItems(time);
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
+    this.updateChase(time, dt);
+    this.updateWinds(dt);
+    if (this.shmup) {
+      this.shmup.update(time, dt);
+      this.camX = this.shmup.camX;
+      const n = this.level.screenOf(this.camX);
+      if (n !== this.screen) {
+        this.screen = n;
+        this.ui?.hud?.setScreen(n, 0xfff7dc);
+      }
+      this.applyCamera();
+    }
     this.updateLockWall();
     this.updateCheckpoint();
     this.checkGoal();
@@ -394,7 +423,7 @@ export class GameScene extends Phaser.Scene {
       this.ui?.hud?.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_HEX[this.leader] ?? '#fff');
     } else {
       const cleared = !this.enemies.some((e) => e.f.alive && this.level.screenOf(e.f.x) === this.screen);
-      this.ui?.hud?.setGo(cleared && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
+      this.ui?.hud?.setGo(cleared && !this.shmup && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
     }
   }
 
@@ -695,18 +724,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     if (this.mode === 'story') {
-      this.deaths++;
-      const limit = deathLimit(this.levelIndex);
-      this.ui?.setLives(limit === Infinity ? null : limit - this.deaths, limit - 1);
-      if (this.deaths >= limit) {
-        // Acabaram as vidas: a fase recomeça do início (sem a visual novel de novo).
-        this.ended = true;
-        this.time.delayedCall(cause === 'eaten' ? 3400 : 700, () => {
-          this.wasted(0, 'A FASE RECOMEÇA', 3000);
-          this.time.delayedCall(3200, () => this.restartMatch());
-        });
-        return;
-      }
+      if (this.countStoryDeath(cause === 'eaten' ? 3400 : 700)) return;
       // Virou comida de aranha: dá tempo de ler a faixa antes de o Xamã voltar.
       this.time.delayedCall(cause === 'eaten' ? 3600 : RESPAWN_DELAY / 2, () => {
         if (!this.ended) this.revive(0, () => this.checkpointX);
@@ -1442,6 +1460,134 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- fim de fase ----------
 
+  /**
+   * Conta uma morte no modo história e atualiza as vidas. Devolve true se acabaram as vidas
+   * (a fase recomeça do início, sem a visual novel).
+   */
+  countStoryDeath(delay = 700): boolean {
+    this.deaths++;
+    const limit = deathLimit(this.levelIndex);
+    this.ui?.setLives(limit === Infinity ? null : limit - this.deaths, limit - 1);
+    if (this.deaths < limit) return false;
+    this.ended = true;
+    this.time.delayedCall(delay, () => {
+      this.wasted(0, 'A FASE RECOMEÇA', 3000);
+      this.time.delayedCall(3200, () => this.restartMatch());
+    });
+    return true;
+  }
+
+  // ---------- fases de outros tipos ----------
+
+  /** Voo: a caveira some do chão e passa a voar montada no morcego. */
+  private setupShmup(): void {
+    const p = this.players[0];
+    p.sprite.setVisible(false);
+    p.setMarkersVisible(false);
+    p.body.setEnable(false);
+    this.shmup = new ShmupSystem({
+      scene: this,
+      width: this.level.width,
+      intent: () => this.players[0].intent,
+      halfView: () => this.halfView,
+      top: 70,
+      bottom: 560,
+      color: PLAYER_TINT[0],
+      died: () => this.countStoryDeath(1200),
+      win: () => this.storyWin(LEVELS[this.levelIndex].winText ?? 'Céu limpo!'),
+      popText: (x, y, text, color) => this.popText(x, y, text, color),
+    });
+    this.time.delayedCall(400, () => this.shmup?.hint());
+    // Noite: céu escurecido e estrelas piscando.
+    this.add.rectangle(0, -400, W, H + 800, 0x0b1030, 0.55).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.5);
+    const rng = new Phaser.Math.RandomDataGenerator(['night']);
+    for (let i = 0; i < 40; i++) {
+      const st = this.add.image(rng.between(0, W), rng.between(20, 420), 'spark').setScale(rng.realInRange(0.15, 0.3)).setTint(0xfff7dc).setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.6);
+      this.tweens.add({ targets: st, alpha: 0.2, duration: rng.between(500, 1400), yoyo: true, repeat: -1 });
+    }
+    const moon = this.add.graphics().setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.6);
+    moon.fillStyle(0xfff7dc, 0.18).fillCircle(W - 220, 150, 90);
+    moon.fillStyle(0xf4f0d0, 1).fillCircle(W - 220, 150, 56);
+    moon.fillStyle(0xd8d0b0, 1).fillCircle(W - 238, 136, 10).fillCircle(W - 200, 170, 7);
+  }
+
+  /** Perseguição: paredão de lava com chamas na frente, vindo da esquerda. */
+  private setupChase(c: { speed: number; delay: number }): void {
+    this.chaseX = this.checkpointX - 640;
+    this.chaseFrom = this.time.now + c.delay;
+    this.chaseLava = this.add.tileSprite(0, -400, 1400, 1500, 'lava_body').setOrigin(1, 0);
+    const items: Phaser.GameObjects.GameObject[] = [this.chaseLava];
+    for (let y = -320; y < FLOOR_Y + 120; y += 70) {
+      items.push(this.add.sprite(-6, y, 'torch_item_anim', 0).setOrigin(0.5, 1).setScale(1.8).play({ key: 'torch_flame', startFrame: Math.floor(Math.abs(y / 70)) % 4 }));
+    }
+    const sparks = this.add.particles(0, 0, 'spark', {
+      x: { min: -40, max: 10 },
+      y: { min: -300, max: FLOOR_Y + 100 },
+      speedX: { min: 40, max: 160 },
+      speedY: { min: -80, max: 20 },
+      lifespan: 700,
+      scale: { start: 0.5, end: 0 },
+      tint: [0xffd36b, 0xff7a1a],
+      frequency: 30,
+    });
+    items.push(sparks);
+    this.chaseWall = this.add.container(this.chaseX, 0, items).setDepth(DEPTH.fighters + 2);
+  }
+
+  private updateChase(time: number, dt: number): void {
+    const c = LEVELS[this.levelIndex].chase;
+    if (!c || !this.chaseWall || this.mode !== 'story' || this.ended) return;
+    const p = this.players[0];
+    // Renasceu: a lava recua para trás do checkpoint e espera um pouco.
+    if (p.alive && !this.chaseWasAlive) {
+      this.chaseX = this.checkpointX - 600;
+      this.chaseFrom = time + 1600;
+    }
+    this.chaseWasAlive = p.alive;
+    if (p.alive && !p.reviving && time >= this.chaseFrom && !this.cutscene) {
+      this.chaseX += c.speed * dt;
+      if (Math.floor(time / 500) !== Math.floor((time - dt * 1000) / 500)) this.cameras.main.shake(160, 0.002);
+    }
+    this.chaseWall.setX(this.chaseX);
+    if (this.chaseLava) this.chaseLava.tilePositionY -= 60 * dt;
+    if (p.alive && !p.reviving && p.x - 24 < this.chaseX) this.killFighter(p, null, 'water');
+  }
+
+  /** Correntes de vento: colunas translúcidas com riscos subindo. */
+  private setupWinds(list: Array<[number, number, number]>): void {
+    for (const [sc, tile, w] of list) {
+      const x0 = sc * W + tile * TILE;
+      const x1 = x0 + w * TILE;
+      this.winds.push([x0, x1]);
+      this.add.rectangle(x0, -200, x1 - x0, 900, 0xdff6ff, 0.12).setOrigin(0).setDepth(DEPTH.deco);
+      this.add
+        .particles(0, 0, 'streak', {
+          x: { min: x0 + 8, max: x1 - 8 },
+          y: { min: 520, max: 620 },
+          speedY: { min: -520, max: -380 },
+          lifespan: 1300,
+          scaleX: 0.25,
+          scaleY: { start: 1.4, end: 0.6 },
+          rotate: 90,
+          alpha: { start: 0.7, end: 0 },
+          frequency: 60,
+        })
+        .setDepth(DEPTH.deco + 0.5);
+    }
+  }
+
+  private updateWinds(dt: number): void {
+    if (!this.winds.length) return;
+    for (const p of this.players) {
+      if (!p.alive || p.zipping) continue;
+      const vy = p.body.velocity.y;
+      const inWind = this.winds.some(([a, b]) => p.x > a && p.x < b) && p.feet > 150;
+      if (inWind) p.body.setVelocityY(Math.max(vy - 2600 * dt, -460));
+      // Planar: segurando pulo no ar, a queda fica lenta.
+      else if (!p.onGround && p.intent.jumpHeld && vy > 80) p.body.setVelocityY(80);
+    }
+  }
+
   /** Inimigos vivos num cenário. */
   private enemiesIn(screen: number): number {
     return this.enemies.filter((e) => e.f.alive && this.level.screenOf(e.f.x) === screen).length;
@@ -1565,6 +1711,7 @@ export class GameScene extends Phaser.Scene {
   private checkGoal(): void {
     if (LEVELS[this.levelIndex].haunt) return; // casa assombrada: só pela porta de saída
     if (this.mode === 'story' && LEVELS[this.levelIndex].boss) return; // vence derrotando o chefe
+    if (this.shmup) return; // voo: vence quando a rolagem termina
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
     if (p1.alive && p1.x >= end) {

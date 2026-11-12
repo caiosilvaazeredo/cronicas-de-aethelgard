@@ -223,7 +223,7 @@ export class MenuScene extends Phaser.Scene {
   private shift(dir: number): void {
     if (this.index !== 1) return;
     // Casas assombradas são quebra-cabeças do modo história: não entram no versus.
-    const ok = LEVELS.map((_, i) => i).filter((i) => !LEVELS[i].haunt);
+    const ok = LEVELS.map((_, i) => i).filter((i) => !LEVELS[i].haunt && !LEVELS[i].shmup && !LEVELS[i].chase);
     const at = Math.max(0, ok.indexOf(this.level));
     this.level = ok[Phaser.Math.Wrap(at + dir, 0, ok.length)];
     this.refreshRow();

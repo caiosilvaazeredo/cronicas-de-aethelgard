@@ -78,6 +78,12 @@ export interface LevelDef {
   screens: ScreenDef[];
   /** Modo história: cenário e tile de início (o fim é a ponta oposta). */
   storyStart: [screen: number, tile: number];
+  /** Perseguição: uma onda de lava avança da esquerda; parar é morrer. */
+  chase?: { speed: number; delay: number };
+  /** Correntes de vento (cenário, tile, largura em tiles): levantam quem entra; segurar pulo plana. */
+  winds?: Array<[screen: number, tile: number, width: number]>;
+  /** Fase de voo com tiro (rolagem automática, montado no morcego). */
+  shmup?: boolean;
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
@@ -482,13 +488,77 @@ export const LEVEL_QUEEN: LevelDef = {
   versusStart: [3, 16],
 };
 
+// ---------- Fases de outros tipos ----------
+
+/** Fuga da Forja: a montanha desperta e a lava vem atrás. Correr (de verdade) é obrigatório. */
+export const LEVEL_CHASE: LevelDef = {
+  name: 'Fuga da Forja',
+  intro: 'A lava vem atrás de você. Corra sem parar (2× na direção e segure)!',
+  theme: 'volcano',
+  tiles: 'tiles_volcano',
+  winText: 'Você escapou da lava!',
+  chase: { speed: 255, delay: 2600 },
+  screens: [
+    { segments: [[0, 8, 0], [10, 3, 0], [15, 5, 1]], deco: [[2, 'dead_tree']] },
+    { segments: [[0, 3, 1], [5, 4, 0], [11, 2, 1], [15, 5, 0]], floats: [[9, 2, 2]] },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 2], [16, 4, 0]] },
+    { segments: [[0, 5, 0], [7, 2, 1], [11, 2, 1], [15, 5, 0]], floats: [[9, 2, 3]] },
+    { segments: [[0, 6, 0], [8, 3, 1], [13, 7, 0]], deco: [[18, 'skull_spike']] },
+  ],
+  storyStart: [0, 3],
+  versusStart: [3, 16],
+};
+
+/** Correntes do Céu: vãos enormes entre nuvens, cruzados nas correntes de vento e planando. */
+export const LEVEL_WINDS: LevelDef = {
+  name: 'Correntes do Céu',
+  intro: 'Entre nas correntes de vento para subir. Segure PULAR no ar para planar.',
+  theme: 'sky',
+  tiles: 'tiles_sky',
+  winText: 'O vento te levou até o outro lado!',
+  winds: [
+    [0, 8, 3],
+    [1, 5, 3],
+    [1, 13, 2],
+    [2, 6, 3],
+    [3, 5, 2],
+    [3, 12, 2],
+    [4, 7, 3],
+  ],
+  screens: [
+    { segments: [[0, 7, 0], [12, 8, 3]], deco: [[2, 'crystal']], sign: [3, 'VENTO! Entre na corrente\ne segure PULAR\npara planar.'] },
+    { segments: [[0, 4, 3], [9, 3, 1], [16, 4, 4]], enemies: [[17, 'bee']] },
+    { segments: [[0, 5, 4], [10, 3, 2], [16, 4, 0]], floats: [[13, 2, 3]] },
+    { segments: [[0, 4, 0], [8, 3, 3], [15, 5, 1]], enemies: [[9, 'sgnome']] },
+    { segments: [[0, 6, 1], [11, 9, 0]], deco: [[17, 'crystal']], enemies: [[15, 'bee']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Voo Noturno: montado num morcego gigante, a tela rola sozinha e os ossos saem atirando. */
+export const LEVEL_FLIGHT: LevelDef = {
+  name: 'Voo Noturno',
+  intro: 'Montado no morcego: voe em todas as direções. Os ossos saem sozinhos!',
+  theme: 'sky',
+  tiles: 'tiles_sky',
+  winText: 'O céu da noite ficou limpo!',
+  shmup: true,
+  screens: [{ segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }],
+  storyStart: [0, 3],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
   LEVEL_NEST,
   LEVEL_QUEEN,
   LEVEL_VOLCANO,
+  LEVEL_CHASE,
   LEVEL_3,
+  LEVEL_WINDS,
+  LEVEL_FLIGHT,
   LEVEL_STAIRS,
   LEVEL_DOORS,
   LEVEL_LIBRARY,

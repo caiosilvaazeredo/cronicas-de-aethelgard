@@ -38,15 +38,35 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 ## Fases
 
-Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. A fase é escolhida no menu, depois do modo (◀ ▶, A/D ou ←/→). No modo história, a vitória leva à fase seguinte.
+Cada fase tem **5 cenários** (telas; o voo tem 6): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. No versus, a fase é escolhida no menu (◀ ▶); no modo história, no mapa-múndi, que é uma faixa larga que rola acompanhando o esqueleto.
 
-| Fase | Ambiente | Personagens (item que transforma) |
-|---|---|---|
-| 1 · Ilhas da Maré | Praia com ilhas; os buracos dão na água | Lagarto (crista), Gnoll (osso), Tubarão-Arpão (arpão), Goblin Lanceiro (lança) |
-| 2 · Caverna Úmida | Degraus que sobem e descem, poços d'água, plataformas de pedra flutuantes, estalactites, gotas e brilhos; **aranhas penduradas em teias no teto saltam em quem passa por baixo** | Aranha (teia: gruda nas paredes e sobe sozinha), Morcego Gigante (asa: voa até 2 s), Goblin da Tocha (tocha) |
-| 3 · Forja Vulcânica | A casa do Diabrete: lava viva no lugar da água (veios de casca correndo, crista ondulando, bolhas que crescem e estouram), céu vermelho em faixas com dois vulcões em pixel art (rios de lava, estratos, cratera acesa), fumaça em pixel art saindo das crateras, brasas subindo e cinzas caindo; pedras flutuantes sobre poços de lava | Diabrete (brasa: baforada de fogo), Minotauro (chifre: marretada lenta e longa), Goblin da Tocha (tocha) |
-| 4 · Santuário das Nuvens | O santuário flutuante do Xamã. Só as **nuvens encantadas** (lilás, com runas e faíscas) aguentam peso; as brancas são só enfeite. Cristais mágicos no lugar de árvores; cair no vazio mata | Abelhão (favo de mel), Gnomo do Estilingue (bolota) |
-| 5 · Escadaria da Maré | O caminho até o Portão da Maré, depois do céu: ilhas que pedem **combinações de ações**. Um bloco de 2 tiles que só se sobe com pulo duplo, vãos de 7 tiles que só se atravessam com **pique + pulo duplo** e um centro com degraus, poço entre blocos altos e ponte. Placas de madeira explicam cada combinação | Gnoll, Lagarto, Goblin Lanceiro (com o dash), Tubarão, Minotauro, Diabrete |
+O modo história tem **13 fases** em ordem (o número é a posição na lista `LEVELS`):
+
+| # | Fase | Tipo | O que tem |
+|---|---|---|---|
+| 1 | Ilhas da Maré | Plataforma (o básico) | Praia com ilhas e água; vidas infinitas. Lagarto, Gnoll, Tubarão-Arpão, Goblin Lanceiro |
+| 2 | Caverna Úmida | Plataforma | Degraus, poços, aranhas penduradas no teto. Aranha, Morcego, Goblin da Tocha |
+| 3 | Ninho das Teias | Plataforma | Teto cheio de aranhas penduradas; dá para passar sem derrotar todas |
+| 4 | Covil da Rainha | Plataforma + **chefe** | Aranhas pelo caminho e a **Aranha-Rainha** no fim |
+| 5 | Forja Vulcânica | Áreas travadas + **chefe** | Cada cenário só abre (a barreira de fogo apaga) quando todos os inimigos dele caem; no fim, o **Minotauro Rubro**. O Minotauro comum ficou menor (72%) |
+| 6 | Fuga da Forja | **Perseguição** | Um paredão de lava avança da esquerda, mais rápido que andar: é preciso correr sem parar |
+| 7 | Santuário das Nuvens | Plataforma | Só as nuvens encantadas aguentam peso. Abelhão, Gnomo do Estilingue |
+| 8 | Correntes do Céu | **Ventos e planar** | Colunas de vento levantam quem entra; segurar PULAR no ar plana |
+| 9 | Voo Noturno | **Voo com tiro** | Montado no morcego gigante, a tela rola sozinha; voa em todas as direções e os ossos saem sozinhos. Ondas de morcegos, diabretes e abelhas atiradoras |
+| 10 | Escadaria da Maré | Combinações de ações | Pulo duplo, pique + pulo duplo, placas explicando |
+| 11 | Casa das Portas | **Quebra-cabeça** | Cômodos fechados; portas com a LUA levam adiante, as outras (e a lua vermelha) devolvem ao começo |
+| 12 | Biblioteca Assombrada | **Quebra-cabeça** | Alavancas acendem pontes-fantasma por poucos segundos; chave no alto das estantes abre a saída |
+| 13 | Casa Sem Luz | **Quebra-cabeça** | Escuridão: encostar nas velas acende a luz; pisos rachados desabam; a saída abre com as 3 velas grandes |
+
+Casas assombradas, perseguição e voo são só do modo história; o versus usa as fases de plataforma.
+
+### Chefes (estilo Mega Man)
+
+Ao entrar na arena, um portão de ferro desce atrás do jogador, a tela pisca **"! PERIGO !"**, o chefe cai do teto e a **barra de vida enche gomo por gomo**. Cada golpe tira um gomo; com metade da vida o chefe pisca em vermelho, fica mais rápido e passa a **combinar padrões**. Se o jogador cai, o chefe volta com a vida cheia (como nos clássicos).
+
+- **Minotauro Rubro, Senhor da Forja** (paleta trocada à mão: carmim, chifres de ouro, olhos vermelhos): investida até a parede (que derruba pedras do teto avisadas no chão), salto esmagador com ondas de choque pelo chão, marretada tripla avançando, chuva de brasas.
+- **Aranha-Rainha, Mãe do Covil** (paleta de viúva-negra, com coroa): sobe pelo fio e despenca em cima do jogador, cospe bolas de teia que **prendem** (dá para atacar e defender, mas não andar), chama filhotes, anda pelo teto soltando fios de teia como lanças, bote rasteiro.
+- **Derrota:** congelamento no golpe final, a barra esvazia, explosões em cadeia pelo corpo piscando em branco, clarão na tela e **orbes de energia em estrela** em dois anéis.
 
 **Poderes especiais:**
 - **Morcego:** no lugar do pulo duplo, voa subindo enquanto PULAR estiver apertado, por até 2 segundos. Uma barrinha de fôlego aparece sobre a cabeça e recarrega ao tocar o chão.
@@ -158,11 +178,29 @@ No versus, só um jogador pode usar gestos, e não junto com os botões de toque
 
 Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, com o botão e o personagem ("E pegar · Gnoll"), e a transformação só acontece se o jogador apertar **Pegar**. Os itens aparecem no mapa e também caem de inimigos ou jogadores transformados quando eles morrem; o lagarto, por exemplo, solta a crista. Ao morrer, você volta ao personagem base. O avatar do HUD acompanha a transformação.
 
+## Pausa e configurações
+
+**Esc**, **P**, o botão **MENU** da tela ou **Start** do controle pausam o jogo: CONTINUAR, CONFIGURAÇÕES, REINICIAR FASE e SAIR (para o mapa ou o menu). As configurações também abrem pelo menu inicial (opção CONFIGURAÇÕES ou o botão ⚙ AJUSTES na tela de título). Abas na lateral, tudo salvo no navegador:
+
+- **Jogo:** velocidade do texto da história (lento, normal, rápido, instantâneo), comentários da caveira, intensidade do tremor da tela.
+- **Tela:** tela cheia, brilho.
+- **Áudio:** volume geral e dos efeitos. Os efeitos são sons 8-bit sintetizados na hora (pulo, golpe, morte, transformação, portas, explosões, alerta do chefe, menus).
+- **Controles:** correr com toque duplo, tamanho e opacidade dos botões de toque.
+- **Acessibilidade:** cores para daltonismo (P2 laranja em vez de vermelho) e desligar clarões.
+
+## Nome dos jogadores
+
+Na tela de escolha de controle, cada jogador escolhe o nome (◀ ▶ na plaquinha, ✎ para digitar, ou as teclas N / M): **PADRÃO** ("Player 1"), **STEAM** (o nome da conta, quando o jogo roda pela Steam) ou **NOVO** (um nome temporário, só nesta sessão). O nome aparece no HUD e na faixa de vitória. A versão Steam deve expor o nome em `window.skullshiftSteam.personaName` (ou via greenworks / steamworks.js); no navegador essa opção não aparece.
+
 ## Estrutura
 
 - `src/config.ts` — medidas do mundo e constantes de física.
 - `src/game/characters.ts` — dados de cada personagem: quadros, velocidade, golpe ou projétil e item que solta.
-- `src/game/level.ts` — as 3 fases (5 cenários cada) em tiles, com altura das plataformas, flutuantes e tema (praia, caverna, céu). Novas fases entram aqui.
+- `src/game/level.ts` — as fases (5 cenários cada) em tiles: plataformas, flutuantes, tema, inimigos, itens, placas, arena de chefe, perseguição, ventos, voo e casas assombradas. A ordem está em `LEVELS`; novas fases entram aqui (e um capítulo em `src/data/lore.ts` e uma posição em `SPOTS` no mapa).
+- `src/game/boss.ts` — chefes (entrada, barra de vida, padrões, perigos e derrota).
+- `src/game/haunt.ts` — casas assombradas (portas, chave, alavancas, pontes-fantasma, pisos falsos, velas, escuridão).
+- `src/game/shmup.ts` — fase de voo com tiro.
+- `src/game/settings.ts` — configurações e sons 8-bit; `src/game/names.ts` — nomes dos jogadores; `src/game/progress.ts` — saves.
 - `src/game/Fighter.ts` — estados, ataque, defesa, morte e transformação.
 - `src/game/ai.ts` — IA dos inimigos.
 - `src/game/Hud.ts` — avatares, indicador dos 5 cenários e seta "VAI".

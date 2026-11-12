@@ -6,39 +6,68 @@ interface Slot {
   avatar: Phaser.GameObjects.Image;
   label: Phaser.GameObjects.Text;
   current: CharId;
+  baseScale: number;
 }
 
-/** HUD fixo: avatar + nome do jogador nos cantos inferiores, como no mockup. */
+/**
+ * HUD fixo: avatar + nome do jogador (embaixo, como no mockup; no celular sobe para o topo
+ * para dar lugar aos botões), indicador dos 5 cenários e seta "VAI" de quem tem a vez.
+ */
 export class Hud {
   private slots: Slot[] = [];
   private goText: Phaser.GameObjects.Text;
-  private progress?: { bar: Phaser.GameObjects.Rectangle; marker: Phaser.GameObjects.Image };
+  private dots: Phaser.GameObjects.Arc[] = [];
 
-  constructor(private scene: Phaser.Scene, players: Array<{ name: string; char: CharId }>, story: boolean) {
+  constructor(
+    private scene: Phaser.Scene,
+    players: Array<{ name: string; char: CharId }>,
+    screens: number,
+    touchLayout: boolean,
+  ) {
+    const y = touchLayout ? 64 : H - 86;
+    const scale = touchLayout ? 0.36 : 0.62;
+    const fontSize = touchLayout ? '28px' : '44px';
+    const labelGap = touchLayout ? 70 : 98;
     players.forEach((p, i) => {
       const right = i === 1;
-      const ax = right ? W - 92 : 92;
+      const ax = right ? W - (touchLayout ? 58 : 92) : touchLayout ? 58 : 92;
       const avatar = scene.add
-        .image(ax, H - 86, `${p.char}_avatar`)
-        .setScale(0.62)
+        .image(ax, y, `${p.char}_avatar`)
+        .setScale(scale)
         .setFlipX(right)
         .setScrollFactor(0)
         .setDepth(DEPTH.hud);
       const label = scene.add
-        .text(right ? W - 190 : 190, H - 86, p.name, {
+        .text(right ? ax - labelGap : ax + labelGap, y, p.name, {
           fontFamily: FONT,
-        fontStyle: 'bold',
-          fontSize: '44px',
-          color: '#0b0b0b',
+          fontStyle: 'bold',
+          fontSize,
+          color: touchLayout ? '#fff7dc' : '#0b0b0b',
+          stroke: '#10223a',
+          strokeThickness: touchLayout ? 6 : 0,
         })
         .setOrigin(right ? 1 : 0, 0.5)
         .setScrollFactor(0)
         .setDepth(DEPTH.hud);
-      this.slots.push({ avatar, label, current: p.char });
+      this.slots.push({ avatar, label, current: p.char, baseScale: scale });
     });
 
+    // Indicador de cenários (o do meio é o central).
+    const gap = 30;
+    const x0 = W / 2 - ((screens - 1) * gap) / 2;
+    for (let i = 0; i < screens; i++) {
+      const center = i === Math.floor(screens / 2);
+      this.dots.push(
+        scene.add
+          .circle(x0 + i * gap, 26, center ? 10 : 8, 0x10223a, 0.6)
+          .setStrokeStyle(3, 0xfff7dc, 0.9)
+          .setScrollFactor(0)
+          .setDepth(DEPTH.hud),
+      );
+    }
+
     this.goText = scene.add
-      .text(W / 2, 46, '', {
+      .text(W / 2, touchLayout ? 128 : 74, '', {
         fontFamily: FONT,
         fontStyle: 'bold',
         fontSize: '40px',
@@ -50,22 +79,6 @@ export class Hud {
       .setScrollFactor(0)
       .setDepth(DEPTH.hud)
       .setVisible(false);
-
-    if (story) {
-      const bw = 360;
-      scene.add.rectangle(W / 2, 30, bw + 8, 16, 0x10223a, 0.8).setScrollFactor(0).setDepth(DEPTH.hud);
-      const bar = scene.add
-        .rectangle(W / 2 - bw / 2, 30, 0, 8, 0xfff7dc)
-        .setOrigin(0, 0.5)
-        .setScrollFactor(0)
-        .setDepth(DEPTH.hud);
-      const marker = scene.add
-        .image(W / 2 - bw / 2, 30, 'skull_avatar')
-        .setScale(0.16)
-        .setScrollFactor(0)
-        .setDepth(DEPTH.hud);
-      this.progress = { bar, marker };
-    }
   }
 
   /** Troca o avatar com uma animação de "pop". */
@@ -76,27 +89,33 @@ export class Hud {
     slot.avatar.setTexture(`${char}_avatar`);
     this.scene.tweens.add({
       targets: slot.avatar,
-      scale: { from: 0.85, to: 0.62 },
+      scale: { from: slot.baseScale * 1.4, to: slot.baseScale },
       duration: 280,
       ease: 'Back.easeOut',
     });
   }
 
-  /** Indicador "VAI" de quem tem a vez (versus). */
+  setScreen(index: number, color = 0xfff7dc): void {
+    this.dots.forEach((d, i) => d.setFillStyle(i === index ? color : 0x10223a, i === index ? 1 : 0.6));
+  }
+
+  /** Seta "VAI" de quem tem a vez (versus) ou para onde seguir (história). */
   setGo(dir: -1 | 0 | 1, color: string): void {
     if (dir === 0) {
       this.goText.setVisible(false);
       return;
     }
     this.goText.setText(dir > 0 ? 'VAI  ➜' : '⬅  VAI').setColor(color);
-    this.goText.setX(dir > 0 ? W - 150 : 150);
+    this.goText.setX(dir > 0 ? W - 170 : 170);
     this.goText.setVisible(Math.floor(this.scene.time.now / 300) % 2 === 0);
   }
 
-  setProgress(frac: number): void {
-    if (!this.progress) return;
-    const f = Phaser.Math.Clamp(frac, 0, 1);
-    this.progress.bar.width = 360 * f;
-    this.progress.marker.x = W / 2 - 180 + 360 * f;
+  setVisible(v: boolean): void {
+    for (const s of this.slots) {
+      s.avatar.setVisible(v);
+      s.label.setVisible(v);
+    }
+    this.dots.forEach((d) => d.setVisible(v));
+    if (!v) this.goText.setVisible(false);
   }
 }

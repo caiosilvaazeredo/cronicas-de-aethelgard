@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { GRAVITY, H, W } from './config';
 import { BootScene } from './scenes/BootScene';
+import { ControlsScene } from './scenes/ControlsScene';
+import { HowToScene } from './scenes/HowToScene';
 import { GameScene } from './scenes/GameScene';
 import { MenuScene } from './scenes/MenuScene';
 
@@ -14,7 +16,7 @@ const game = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
   input: { gamepad: true },
-  scene: [BootScene, MenuScene, GameScene],
+  scene: [BootScene, MenuScene, ControlsScene, HowToScene, GameScene],
 });
 
 // Acesso para testes automatizados.

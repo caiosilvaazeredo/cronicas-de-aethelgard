@@ -1,11 +1,13 @@
 import Phaser from 'phaser';
 import { DEATH_Y, DEPTH, FLOOR_Y, FONT, H, RESPAWN_DELAY, W, WATER_Y } from '../config';
 import { EnemyAI } from '../game/ai';
-import { ITEM_TEXTURE, ITEM_TO_CHAR, CHARS, type ItemId } from '../game/characters';
-import { LAYOUT_P1, LAYOUT_P2, LAYOUT_STORY, PlayerController, emptyIntent, type Controller } from '../game/controls';
+import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
+import { PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { Hud } from '../game/Hud';
 import { LEVEL_1, Level } from '../game/level';
+import { TouchPad } from '../game/touch';
+import { PLAYER_HEX, PLAYER_TINT, pillButton } from '../ui/devices';
 
 type Mode = 'story' | 'versus';
 
@@ -27,39 +29,51 @@ interface Projectile {
   bounced: boolean;
 }
 
-const PLAYER_COLORS = ['#fff7dc', '#9cff6b'];
 const ITEM_RESPAWN = 8000;
 const FACE_RANGE = 460;
+const SCREEN_TWEEN = 550;
 
 export class GameScene extends Phaser.Scene {
   private mode: Mode = 'story';
+  private devices: DeviceId[] = [];
   private level!: Level;
   private players: Fighter[] = [];
   private controllers: Controller[] = [];
+  private pads: TouchPad[] = [];
   private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
   private items: Item[] = [];
   private projectiles: Projectile[] = [];
   private hud!: Hud;
+  /** Versus: quem tem a vez de avançar (-1 = ninguém ainda). */
   private leader = -1;
+  /** Cenário (tela) atual da câmera. */
+  private screen = 0;
+  private transitioning = false;
   private checkpointX = 0;
   private deaths = 0;
   private startTime = 0;
   private ended = false;
+  private winner?: Fighter;
+  private menuButton?: Phaser.GameObjects.Container;
 
   constructor() {
     super('game');
   }
 
-  init(data: { mode?: Mode }): void {
+  init(data: { mode?: Mode; devices?: DeviceId[] }): void {
     this.mode = data.mode ?? 'story';
+    this.devices = data.devices ?? (this.mode === 'story' ? ['kb-full'] : ['kb-left', 'kb-right']);
     this.players = [];
     this.controllers = [];
+    this.pads = [];
     this.enemies = [];
     this.items = [];
     this.projectiles = [];
     this.leader = -1;
     this.deaths = 0;
     this.ended = false;
+    this.transitioning = false;
+    this.winner = undefined;
   }
 
   create(): void {
@@ -68,83 +82,103 @@ export class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.cameras.main.setBounds(0, 0, this.level.width, H);
+    this.input.addPointer(4); // multitoque
 
     if (this.mode === 'story') {
-      const x = this.level.tileX(def.storyStartTile);
-      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1'), new PlayerController(this, LAYOUT_STORY, 0));
+      const [sc, tile] = def.storyStart;
+      this.screen = sc;
+      const x = this.level.tileX(sc, tile);
+      this.addPlayer(new Fighter(this, x, FLOOR_Y, 'skull', 0, 'Player 1'), this.devices[0], 'full');
       this.checkpointX = x;
-      for (const [tile, char] of def.enemies) {
-        const f = new Fighter(this, this.level.tileX(tile), FLOOR_Y, char, 1, 'enemy');
-        f.facing = -1;
-        f.onProjectile = (s) => this.spawnProjectile(s);
-        this.physics.add.collider(f.sprite, this.level.ground);
-        this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
-      }
-      for (const [tile, kind] of def.storyItems) this.spawnItem(this.level.tileX(tile), kind, true);
-      this.cameras.main.startFollow(this.players[0].sprite, true, 0.1, 0.1, -140, 0);
+      def.screens.forEach((s, si) => {
+        for (const [t, char] of s.enemies ?? []) {
+          const f = new Fighter(this, this.level.tileX(si, t), FLOOR_Y, char, 1, 'enemy');
+          f.facing = -1;
+          f.onProjectile = (ff) => this.spawnProjectile(ff);
+          this.physics.add.collider(f.sprite, this.level.ground);
+          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
+        }
+        for (const [t, kind] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
+      });
     } else {
+      this.screen = Math.floor(def.screens.length / 2);
       const [a, b] = def.versusStart;
-      this.addPlayer(new Fighter(this, this.level.tileX(a), FLOOR_Y, 'skull', 0, 'Player 1'), new PlayerController(this, LAYOUT_P1, 0));
-      this.addPlayer(new Fighter(this, this.level.tileX(b), FLOOR_Y, 'lizard', 1, 'Player 2'), new PlayerController(this, LAYOUT_P2, 1));
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, a), FLOOR_Y, 'skull', 0, 'Player 1'), this.devices[0], 'left');
+      this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), FLOOR_Y, 'lizard', 1, 'Player 2'), this.devices[1], 'right');
       this.players[1].facing = -1;
-      for (const [tile, kind] of def.versusItems) this.spawnItem(this.level.tileX(tile), kind, true);
-      this.cameras.main.scrollX = (this.players[0].x + this.players[1].x) / 2 - W / 2;
+      def.screens.forEach((s, si) => {
+        for (const [t, kind] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true);
+      });
     }
+    this.cameras.main.scrollX = this.screen * W;
 
+    const touchLayout = this.pads.length > 0;
     this.hud = new Hud(
       this,
       this.players.map((p) => ({ name: p.label, char: p.baseChar })),
-      this.mode === 'story',
+      this.level.screenCount,
+      touchLayout,
     );
+    this.hud.setScreen(this.screen);
 
-    this.input.keyboard!.on('keydown-ESC', () => this.scene.start('menu'));
-    this.input.keyboard!.on('keydown-R', () => {
-      if (this.ended) this.scene.restart({ mode: this.mode });
-    });
-    this.input.keyboard!.on('keydown-ENTER', () => {
-      if (this.ended) this.scene.start('menu');
-    });
+    // Botão de menu (útil no celular, onde não há Esc).
+    this.menuButton = pillButton(this, W / 2, H - 34, 'MENU', () => this.scene.start('menu'), 120)
+      .setScale(0.7)
+      .setScrollFactor(0)
+      .setDepth(DEPTH.hud + 4)
+      .setAlpha(0.85);
+
+    const kb = this.input.keyboard!;
+    kb.on('keydown-ESC', () => this.scene.start('menu'));
+    kb.on('keydown-R', () => this.ended && this.restart());
+    kb.on('keydown-ENTER', () => this.ended && this.scene.start('menu'));
 
     this.startTime = this.time.now;
-    this.banner(this.mode === 'story' ? LEVEL_1.name : 'VERSUS', 1600);
+    this.banner(this.mode === 'story' ? def.name : 'VERSUS', 1600);
   }
 
-  private addPlayer(f: Fighter, c: Controller): void {
+  private addPlayer(f: Fighter, device: DeviceId, side: 'full' | 'left' | 'right'): void {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     this.physics.add.collider(f.sprite, this.level.ground);
+    let pad: TouchPad | undefined;
+    if (device === 'touch') {
+      pad = new TouchPad(this, side, PLAYER_TINT[this.players.length]);
+      this.pads.push(pad);
+    }
     this.players.push(f);
-    this.controllers.push(c);
+    this.controllers.push(new PlayerController(this, device, pad));
   }
 
   private get fighters(): Fighter[] {
     return [...this.players, ...this.enemies.map((e) => e.f)];
   }
 
+  private restart(): void {
+    this.scene.restart({ mode: this.mode, devices: this.devices });
+  }
+
   update(time: number, delta: number): void {
     if (this.ended) {
-      this.players.forEach((p) => (p.intent = emptyIntent()));
-      this.fighters.forEach((f) => f.update(delta));
+      this.updateVictory(delta);
       return;
     }
     const dt = delta / 1000;
-    const camMid = this.cameras.main.scrollX + W / 2;
 
-    // Intenções.
     this.players.forEach((p, i) => {
       p.intent = p.alive ? this.controllers[i].read() : emptyIntent();
       p.faceTarget = this.nearestFoe(p)?.x ?? null;
     });
     for (const e of this.enemies) {
-      const near = Math.abs(e.f.x - camMid) < W * 0.75;
-      e.f.intent = near && e.f.alive ? e.ai.read() : emptyIntent();
+      const active = e.f.alive && !this.transitioning && this.level.screenOf(e.f.x) === this.screen;
+      e.f.intent = active ? e.ai.read() : emptyIntent();
     }
 
     this.fighters.forEach((f) => f.update(delta));
 
-    if (this.mode === 'versus') this.updateVersusCamera();
+    if (this.mode === 'story') this.updateStoryScreens();
+    else this.updateVersusScreens();
 
-    // Queda na água.
     for (const f of this.fighters) {
       if (f.alive && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
     }
@@ -154,11 +188,94 @@ export class GameScene extends Phaser.Scene {
     this.updateItems(time);
     this.updateCheckpoint();
     this.checkGoal();
+    if (this.ended) return;
+
+    if (this.mode === 'versus') {
+      this.hud.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_HEX[this.leader] ?? '#fff');
+    } else {
+      const cleared = !this.enemies.some((e) => e.f.alive && this.level.screenOf(e.f.x) === this.screen);
+      this.hud.setGo(cleared && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
+    }
+  }
+
+  // ---------- cenários e transições ----------
+
+  /** Muda a câmera para outro cenário com um deslize. */
+  private goScreen(n: number): void {
+    if (n === this.screen || n < 0 || n >= this.level.screenCount) return;
+    const dir = Math.sign(n - this.screen);
+    this.screen = n;
+    this.transitioning = true;
+    this.hud.setScreen(n, this.mode === 'versus' && this.leader >= 0 ? PLAYER_TINT[this.leader] : 0xfff7dc);
+    this.tweens.add({
+      targets: this.cameras.main,
+      scrollX: n * W,
+      duration: SCREEN_TWEEN,
+      ease: 'Sine.easeInOut',
+      onComplete: () => (this.transitioning = false),
+    });
 
     if (this.mode === 'story') {
-      this.hud.setProgress(this.players[0].x / this.level.width);
-    } else {
-      this.hud.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_COLORS[this.leader] ?? '#fff');
+      // Checkpoint na entrada do novo cenário.
+      const a = n * W;
+      const entry = dir > 0 ? a + 70 : a + W - 70;
+      this.checkpointX = this.level.nearestGround(entry, -dir, a + 40, a + W - 40);
+      return;
+    }
+    // Versus: quem não tem a vez reaparece no novo cenário, à frente de quem tem.
+    const other = this.players[1 - this.leader];
+    if (other && other.alive) {
+      other.respawn(this.versusSpawnX(1 - this.leader), FLOOR_Y);
+      this.hud.setChar(1 - this.leader, other.def.id);
+      this.fx('transform', other.x, FLOOR_Y - 40, 1);
+    }
+  }
+
+  private updateStoryScreens(): void {
+    const p = this.players[0];
+    if (!p.alive || this.transitioning) return;
+    if (p.x > (this.screen + 1) * W) this.goScreen(this.screen + 1);
+    else if (p.x < this.screen * W) this.goScreen(this.screen - 1);
+  }
+
+  private updateVersusScreens(): void {
+    const a = this.screen * W;
+    const b = a + W;
+    this.players.forEach((p, i) => {
+      if (!p.alive) return;
+      const isLeader = i === this.leader;
+      const dir = p.team === 0 ? 1 : -1;
+      // Quem tem a vez sai pela borda da frente e leva a câmera junto.
+      if (isLeader && !this.transitioning) {
+        if (dir > 0 && p.x > b + 10 && this.screen < this.level.screenCount - 1) return this.goScreen(this.screen + 1);
+        if (dir < 0 && p.x < a - 10 && this.screen > 0) return this.goScreen(this.screen - 1);
+      }
+      if (this.transitioning) return;
+      const min = isLeader && dir < 0 ? -Infinity : a + 22;
+      const max = isLeader && dir > 0 ? Infinity : b - 22;
+      if (p.x < min || p.x > max) p.body.reset(Phaser.Math.Clamp(p.x, min, max), p.sprite.y);
+    });
+  }
+
+  /** Versus: ponto de renascer à frente de quem tem a vez, dentro do cenário atual. */
+  private versusSpawnX(pi: number): number {
+    const a = this.screen * W;
+    const b = a + W;
+    const lead = this.players[1 - pi];
+    const dir = lead.team === 0 ? 1 : -1;
+    const base = lead.alive ? lead.x : a + W / 2;
+    let x = base + dir * 460;
+    x = Phaser.Math.Clamp(x, a + 90, b - 90);
+    return this.level.nearestGround(x, -dir, a + 60, b - 60);
+  }
+
+  private updateCheckpoint(): void {
+    if (this.mode !== 'story') return;
+    const p = this.players[0];
+    if (!p.alive || !p.onGround || this.transitioning) return;
+    // Avança o checkpoint conforme o jogador progride dentro do cenário.
+    if (p.x > this.checkpointX + 320 && this.level.screenOf(p.x) === this.screen && this.level.isGround(p.x)) {
+      this.checkpointX = p.x;
     }
   }
 
@@ -198,7 +315,6 @@ export class GameScene extends Phaser.Scene {
         }
         this.killFighter(b, a, 'hit');
       }
-      // Golpe corpo a corpo rebate projéteis inimigos.
       for (const p of this.projectiles) {
         if (p.bounced || p.owner.team === a.team) continue;
         if (overlap(hb, projBox(p))) this.deflect(p);
@@ -288,47 +404,15 @@ export class GameScene extends Phaser.Scene {
         this.fx('transform', victim.x, FLOOR_Y - 40, 1);
       });
     } else {
-      // Quem matou (ou o sobrevivente) ganha a vez de avançar.
       this.leader = 1 - pi;
+      this.hud.setScreen(this.screen, PLAYER_TINT[this.leader]);
       this.time.delayedCall(RESPAWN_DELAY, () => {
-        if (this.ended) return;
-        victim.respawn(this.versusRespawnX(pi), FLOOR_Y);
+        if (this.ended || victim.alive) return;
+        victim.respawn(this.versusSpawnX(pi), FLOOR_Y);
         this.hud.setChar(pi, victim.def.id);
         this.fx('transform', victim.x, FLOOR_Y - 40, 1);
       });
     }
-  }
-
-  /** Renasce à frente de quem tem a vez, como no gênero cabo-de-guerra. */
-  private versusRespawnX(pi: number): number {
-    const leader = this.players[1 - pi];
-    const dir = leader.team === 0 ? 1 : -1;
-    const base = leader.alive ? leader.x : this.cameras.main.scrollX + W / 2;
-    let x = this.level.nearestGround(base + dir * 480, dir);
-    if (Math.abs(x - base) < 160) x = this.level.nearestGround(base - dir * 360, -dir);
-    return x;
-  }
-
-  private updateVersusCamera(): void {
-    const cam = this.cameras.main;
-    const alive = this.players.filter((p) => p.alive);
-    let target: number;
-    const lead = this.players[this.leader];
-    if (lead && lead.alive) target = lead.x + (lead.team === 0 ? 1 : -1) * 180;
-    else if (alive.length) target = alive.reduce((s, p) => s + p.x, 0) / alive.length;
-    else target = cam.scrollX + W / 2;
-    const desired = Phaser.Math.Clamp(target - W / 2, 0, this.level.width - W);
-    cam.scrollX += (desired - cam.scrollX) * 0.08;
-
-    // Quem não tem a vez fica preso dentro da tela.
-    this.players.forEach((p, i) => {
-      if (!p.alive || i === this.leader) return;
-      const min = cam.scrollX + 24;
-      const max = cam.scrollX + W - 24;
-      if (p.x < min || p.x > max) {
-        p.body.reset(Phaser.Math.Clamp(p.x, min, max), p.sprite.y);
-      }
-    });
   }
 
   // ---------- itens / transformação ----------
@@ -367,7 +451,6 @@ export class GameScene extends Phaser.Scene {
         break;
       }
     }
-    // Itens soltos por quem morreu somem quando pegos.
     this.items = this.items.filter((it) => {
       if (it.home || it.active) return true;
       it.sprite.destroy();
@@ -376,7 +459,7 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private transform(pi: number, char: keyof typeof CHARS): void {
+  private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
     this.fx('transform', p.x, p.feet - 40, 1);
     p.applyChar(char);
@@ -395,56 +478,154 @@ export class GameScene extends Phaser.Scene {
     this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 900, onComplete: () => t.destroy() });
   }
 
-  // ---------- progresso ----------
-
-  private updateCheckpoint(): void {
-    if (this.mode !== 'story') return;
-    const p = this.players[0];
-    if (!p.alive || !p.onGround) return;
-    const seg = this.level.segmentAt(p.x);
-    if (!seg) return;
-    const x = seg[0] * 64 + 48;
-    if (x > this.checkpointX) this.checkpointX = x;
-  }
+  // ---------- fim de fase ----------
 
   private checkGoal(): void {
-    const end = this.level.width - 80;
+    const end = this.level.width - 70;
     const [p1, p2] = this.players;
     if (p1.alive && p1.x >= end) {
       if (this.mode === 'story') {
         const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
-        this.finish('FASE CONCLUÍDA!', `Tempo: ${secs}s   ·   Mortes: ${this.deaths}`, PLAYER_COLORS[0]);
-      } else this.finish('PLAYER 1 VENCEU!', 'Chegou ao fim do mapa', PLAYER_COLORS[0]);
-    } else if (p2 && p2.alive && p2.x <= 80) {
-      this.finish('PLAYER 2 VENCEU!', 'Chegou ao fim do mapa', PLAYER_COLORS[1]);
+        this.victory(0, 'FASE CONCLUÍDA!', `Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+      } else this.victory(0, 'PLAYER 1 VENCEU!', 'Chegou ao fim do lado oposto');
+    } else if (p2 && p2.alive && p2.x <= 70) {
+      this.victory(1, 'PLAYER 2 VENCEU!', 'Chegou ao fim do lado oposto');
     }
   }
 
-  private finish(title: string, sub: string, color: string): void {
+  /** Animação de vitória: holofote, comemoração do vencedor, confete, fogos e faixa. */
+  private victory(pi: number, title: string, sub: string): void {
     this.ended = true;
-    this.hud.setGo(0, '#fff');
-    this.add.rectangle(0, 0, W, H, 0x0b1626, 0.6).setOrigin(0).setScrollFactor(0).setDepth(DEPTH.hud + 1);
-    const style = { fontFamily: FONT, fontStyle: 'bold', color, stroke: '#10223a', strokeThickness: 12 };
+    const win = this.players[pi];
+    this.winner = win;
+    this.hud.setVisible(false);
+    this.menuButton?.setVisible(false);
+    this.pads.forEach((p) => p.setVisible(false));
+    this.fighters.forEach((f) => (f.intent = emptyIntent()));
+    const color = PLAYER_TINT[pi];
+
+    // Escurece o mundo e destaca o vencedor.
+    const dim = this.add.rectangle(0, 0, W, H, 0x0b1626, 0).setOrigin(0).setScrollFactor(0).setDepth(50);
+    this.tweens.add({ targets: dim, fillAlpha: 0.6, duration: 500 });
+    const glow = this.add.ellipse(win.x, win.feet - 2, 150, 34, 0xfff7a8, 0).setDepth(55);
+    this.tweens.add({ targets: glow, fillAlpha: 0.55, duration: 500 });
+    this.tweens.add({ targets: glow, scaleX: 1.2, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    win.sprite.setDepth(60);
+    win.faceTarget = null;
+    win.facing = win.team === 0 ? -1 : 1; // vira para o mapa que atravessou
+    this.cameras.main.flash(250, 255, 247, 220);
+
+    // Confete caindo do topo.
+    const colors = [0xffe066, 0xe5533d, 0x3d8bd9, 0x58b947, 0xfff7dc, 0xb07de0];
     this.add
-      .text(W / 2, H / 2 - 60, title, { ...style, fontSize: '80px' })
-      .setOrigin(0.5)
+      .particles(0, -20, 'confetti', {
+        x: { min: 0, max: W },
+        speedY: { min: 140, max: 280 },
+        speedX: { min: -70, max: 70 },
+        rotate: { min: 0, max: 360 },
+        scaleX: { min: 0.6, max: 1.2 },
+        lifespan: 4200,
+        quantity: 2,
+        frequency: 45,
+        tint: colors,
+        gravityY: 60,
+      })
       .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 2);
-    this.add
-      .text(W / 2, H / 2 + 20, sub, { ...style, fontSize: '30px', color: '#fff7dc', strokeThickness: 6 })
-      .setOrigin(0.5)
+      .setDepth(70);
+
+    // Fogos de artifício.
+    const fireworks = this.add
+      .particles(0, 0, 'spark', {
+        speed: { min: 120, max: 300 },
+        lifespan: 800,
+        scale: { start: 0.5, end: 0 },
+        gravityY: 220,
+        tint: colors,
+        emitting: false,
+      })
       .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 2);
-    this.add
-      .text(W / 2, H / 2 + 90, 'Enter: menu   ·   R: jogar de novo', {
-        ...style,
-        fontSize: '24px',
+      .setDepth(65);
+    this.time.addEvent({
+      delay: 420,
+      loop: true,
+      callback: () => fireworks.explode(26, Phaser.Math.Between(160, W - 160), Phaser.Math.Between(90, 300)),
+    });
+
+    // Comemoração: pula e ataca em loop.
+    this.time.addEvent({
+      delay: 950,
+      loop: true,
+      callback: () => {
+        if (!win.alive) return;
+        win.intent = { move: 0, jump: true, attack: false, guard: false };
+        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false }));
+      },
+    });
+
+    // Faixa com avatar e título.
+    const avatar = this.add
+      .image(W / 2, 150, `${win.def.id}_avatar`)
+      .setScrollFactor(0)
+      .setDepth(DEPTH.hud + 2)
+      .setScale(0);
+    this.tweens.add({ targets: avatar, scale: 0.75, duration: 600, ease: 'Back.easeOut', delay: 200 });
+    this.tweens.add({ targets: avatar, angle: { from: -8, to: 8 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+
+    const ribbon = this.add.graphics().setScrollFactor(0).setDepth(DEPTH.hud + 1);
+    ribbon.fillStyle(0x10223a, 1).fillRect(W / 2 - 420, 262, 840, 104);
+    ribbon.fillStyle(color, 1).fillRect(W / 2 - 410, 270, 820, 88);
+    ribbon.fillStyle(Phaser.Display.Color.ValueToColor(color).darken(30).color, 1);
+    ribbon.fillTriangle(W / 2 - 470, 280, W / 2 - 410, 280, W / 2 - 410, 370).fillTriangle(W / 2 - 470, 380, W / 2 - 410, 340, W / 2 - 410, 380);
+    ribbon.fillTriangle(W / 2 + 470, 280, W / 2 + 410, 280, W / 2 + 410, 370).fillTriangle(W / 2 + 470, 380, W / 2 + 410, 340, W / 2 + 410, 380);
+    ribbon.setAlpha(0);
+    this.tweens.add({ targets: ribbon, alpha: 1, duration: 300, delay: 350 });
+
+    const titleT = this.add
+      .text(W / 2, 314, title, {
+        fontFamily: FONT,
+        fontStyle: 'bold',
+        fontSize: '62px',
         color: '#fff7dc',
+        stroke: '#10223a',
+        strokeThickness: 12,
+      })
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setDepth(DEPTH.hud + 3)
+      .setScale(0);
+    this.tweens.add({ targets: titleT, scale: 1, duration: 650, ease: 'Elastic.easeOut', delay: 450 });
+
+    const subT = this.add
+      .text(W / 2, 400, sub, {
+        fontFamily: FONT,
+        fontStyle: 'bold',
+        fontSize: '26px',
+        color: '#fff7dc',
+        stroke: '#10223a',
         strokeThickness: 6,
       })
       .setOrigin(0.5)
       .setScrollFactor(0)
-      .setDepth(DEPTH.hud + 2);
+      .setDepth(DEPTH.hud + 3)
+      .setAlpha(0);
+    this.tweens.add({ targets: subT, alpha: 1, duration: 400, delay: 900 });
+
+    this.time.delayedCall(1200, () => {
+      pillButton(this, W / 2 - 160, 640, 'JOGAR DE NOVO', () => this.restart(), 280, 0xffe066)
+        .setScrollFactor(0)
+        .setDepth(DEPTH.hud + 4);
+      pillButton(this, W / 2 + 160, 640, 'MENU', () => this.scene.start('menu'), 200)
+        .setScrollFactor(0)
+        .setDepth(DEPTH.hud + 4);
+    });
+  }
+
+  private updateVictory(delta: number): void {
+    for (const f of this.fighters) {
+      if (f !== this.winner) f.intent = emptyIntent();
+      f.update(delta);
+    }
+    if (this.winner) this.winner.intent = { ...this.winner.intent, jump: false, attack: false };
   }
 
   // ---------- efeitos ----------
@@ -472,7 +653,7 @@ export class GameScene extends Phaser.Scene {
 
   private banner(text: string, ms: number): void {
     const t = this.add
-      .text(W / 2, 110, text, {
+      .text(W / 2, 130, text, {
         fontFamily: FONT,
         fontStyle: 'bold',
         fontSize: '46px',

@@ -115,6 +115,6 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private start(i: number): void {
-    this.scene.start('game', { mode: OPTIONS[i].mode });
+    this.scene.start('controls', { mode: OPTIONS[i].mode });
   }
 }

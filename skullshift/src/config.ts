@@ -13,7 +13,7 @@ export const WATER_Y = 500;
 export const DEATH_Y = 530;
 
 export const GRAVITY = 1500;
-export const JUMP_V = 560;
+export const JUMP_V = 580;
 export const GUARD_WALK_SPEED = 110;
 
 export const RESPAWN_DELAY = 1200; // ms
@@ -34,3 +34,13 @@ export const DEPTH = {
 } as const;
 
 export const FONT = '"Arial Black", "Arial Bold", Arial, sans-serif';
+
+/** Mostra os controles na tela: aparelho com toque, ou ?touch=1 na URL (para testar no PC). */
+export function wantsTouchControls(): boolean {
+  try {
+    if (new URLSearchParams(location.search).get('touch') === '1') return true;
+  } catch {
+    /* sem URL */
+  }
+  return typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+}

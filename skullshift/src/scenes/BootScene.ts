@@ -31,6 +31,11 @@ export class BootScene extends Phaser.Scene {
     for (let i = 1; i <= 8; i++) this.load.image(`cloud_0${i}`, `terrain/cloud_0${i}.png`);
     this.load.image('skull_spike', 'terrain/skull_spike.png');
     this.load.image('bones', 'terrain/bones.png');
+    this.load.spritesheet('tree', 'terrain/tree.png', { frameWidth: 192, frameHeight: 256 });
+    this.load.image('dead_tree', 'terrain/dead_tree.png');
+    this.load.image('rock1', 'terrain/rock1.png');
+    this.load.image('rock2', 'terrain/rock2.png');
+    this.load.image('stump', 'terrain/stump.png');
 
     this.load.spritesheet('splash', 'fx/splash.png', { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('dust', 'fx/dust.png', { frameWidth: 64, frameHeight: 64 });
@@ -48,6 +53,7 @@ export class BootScene extends Phaser.Scene {
     this.anim('bone', 4, 16, -1);
     this.anim('water_rocks', 16, 8, -1);
     this.anim('bush', 8, 8, -1);
+    this.anim('tree', 8, 8, -1);
     this.anim('splash', 9, 18, 0);
     this.anim('dust', 8, 18, 0);
     this.anim('transform', 11, 22, 0);
@@ -56,6 +62,7 @@ export class BootScene extends Phaser.Scene {
     this.makeShield();
     this.makeSpear();
     this.makeSpark();
+    this.makeConfetti();
 
     this.scene.start('menu');
   }
@@ -117,6 +124,14 @@ export class BootScene extends Phaser.Scene {
     g.fillStyle(0xd1a35c);
     g.fillRect(44, 29, 3, 6);
     g.generateTexture('spear_item', 64, 64);
+    g.destroy();
+  }
+
+  private makeConfetti(): void {
+    const g = this.make.graphics({}, false);
+    g.fillStyle(0xffffff);
+    g.fillRect(0, 0, 10, 6);
+    g.generateTexture('confetti', 10, 6);
     g.destroy();
   }
 

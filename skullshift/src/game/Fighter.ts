@@ -146,7 +146,9 @@ export class Fighter {
 
     if (this.state !== 'attack') {
       // Para onde olhar: oponente próximo (estilo luta) ou direção do movimento.
-      if (this.faceTarget !== null) {
+      // Fugindo de um oponente longe, corre normalmente; perto, anda de costas defendendo.
+      const near = this.faceTarget !== null && Math.abs(this.faceTarget - this.x) < 220;
+      if (this.faceTarget !== null && (near || it.move === 0)) {
         const dir = Math.sign(this.faceTarget - this.x);
         if (dir !== 0) this.facing = dir as 1 | -1;
       } else if (it.move !== 0) {
@@ -154,7 +156,7 @@ export class Fighter {
       }
 
       const backing = it.move !== 0 && Math.sign(it.move) !== this.facing;
-      const guarding = it.guard || (backing && this.faceTarget !== null);
+      const guarding = it.guard || (backing && near);
 
       if (it.attack && this.cooldown <= 0) {
         this.startAttack();

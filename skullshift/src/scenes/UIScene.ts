@@ -198,7 +198,7 @@ export class UIScene extends Phaser.Scene {
   }
 
   /** Faixa escura atravessando a tela com o texto de morte em vermelho (estilo "wasted"). */
-  showWasted(pi: number, text: string): void {
+  showWasted(pi: number, text: string, hold = 3200): void {
     const split = this.g.split;
     const y = split ? (pi === 0 ? VIEW.h * 0.72 : VIEW.h * 0.28) : VIEW.h / 2;
     const band = this.add.rectangle(0, 0, W + 40, VIEW.portrait ? 120 : 110, 0x000000, 0.6);
@@ -218,7 +218,30 @@ export class UIScene extends Phaser.Scene {
     label.setScale(s0 * 1.4);
     this.tweens.add({ targets: c, alpha: 1, duration: 200, delay: 250 });
     this.tweens.add({ targets: label, scale: s0, duration: 300, delay: 250, ease: 'Back.easeOut' });
-    this.tweens.add({ targets: c, alpha: 0, delay: 2200, duration: 400, onComplete: () => c.destroy() });
+    this.tweens.add({ targets: c, alpha: 0, delay: hold, duration: 400, onComplete: () => c.destroy() });
+  }
+
+  private livesBox?: Phaser.GameObjects.Container;
+
+  /** Vidas da fase (modo história): caveirinhas no canto; null = infinitas (∞). */
+  setLives(left: number | null, max: number): void {
+    this.livesBox?.destroy();
+    const P = VIEW.portrait;
+    const items: Phaser.GameObjects.GameObject[] = [];
+    const s = P ? 0.2 : 0.14;
+    if (left === null) {
+      items.push(this.add.image(0, 0, 'skull_avatar').setScale(s));
+      items.push(this.add.text(26, 0, 'x ∞', { fontFamily: '"Arial Black", Arial, sans-serif', fontSize: P ? '34px' : '24px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0, 0.5));
+    } else {
+      for (let i = 0; i < max; i++) {
+        const on = i < left;
+        items.push(this.add.image(-i * (P ? 46 : 32), 0, 'skull_avatar').setScale(s).setAlpha(on ? 1 : 0.25).setTint(on ? 0xffffff : 0x445566));
+      }
+    }
+    const x = left === null ? W - (P ? 130 : 96) : W - (P ? 40 : 30);
+    const y = P ? PORTRAIT.topPad + 60 : 30;
+    this.livesBox = this.add.container(x, y, items).setDepth(DEPTH.hud + 2);
+    if (left !== null && left < max) this.tweens.add({ targets: this.livesBox, scale: { from: 1.25, to: 1 }, duration: 300, ease: 'Back.easeOut' });
   }
 
   /** Parte de tela da vitória: confete, fogos, avatar, faixa e botões. */

@@ -574,6 +574,47 @@ export class Fighter {
     this.tag = s.add.container(0, 0, [g, label]).setDepth(DEPTH.fx + 1);
   }
 
+  /** Topo real do desenho (pixels opacos) de cada folha 'idle', medido uma vez. */
+  private static tops = new Map<string, number>();
+
+  /** Quantos px acima dos pés fica o topo visível do personagem (crista, chifres, orelhas...). */
+  private visualHeight(): number {
+    const key = `${this.def.id}_idle`;
+    let top = Fighter.tops.get(key);
+    if (top === undefined) {
+      top = this.def.feetY - this.def.head;
+      try {
+        const tex = this.scene.textures.get(key);
+        const src = tex.getSourceImage() as HTMLImageElement | HTMLCanvasElement;
+        const c = document.createElement('canvas');
+        c.width = src.width;
+        c.height = src.height;
+        const ctx = c.getContext('2d', { willReadFrequently: true })!;
+        ctx.drawImage(src, 0, 0);
+        let best = Infinity;
+        for (const name of tex.getFrameNames()) {
+          const f = tex.get(name);
+          const data = ctx.getImageData(f.cutX, f.cutY, f.cutWidth, f.cutHeight).data;
+          for (let y = 0; y < f.cutHeight && y < best; y++) {
+            let hit = false;
+            for (let x = 0; x < f.cutWidth; x++) if (data[(y * f.cutWidth + x) * 4 + 3] > 40) { hit = true; break; }
+            if (hit) best = Math.min(best, y);
+          }
+        }
+        if (Number.isFinite(best)) top = best;
+      } catch {
+        /* sem leitura de pixels: usa a altura da cabeça */
+      }
+      Fighter.tops.set(key, top);
+    }
+    return Math.max(this.def.head, this.def.feetY - top) * Math.abs(this.sprite.scaleY);
+  }
+
+  /** Altura (acima dos pés) onde cabem etiquetas e balões sem cobrir o personagem. */
+  get labelHeight(): number {
+    return this.visualHeight(); // a escala do sprite já inclui o agachamento
+  }
+
   private updateMarkers(): void {
     if (!this.aura || !this.ring || !this.tag) return;
     const head = this.def.head * (this.crouching ? CROUCH_SCALE : 1);
@@ -581,7 +622,7 @@ export class Fighter {
     this.aura.setPosition(this.x, this.feet - head * 0.45).setScale(1.05, (head + 40) / 100).setVisible(visible);
     this.ring.setPosition(this.x, this.feet - 2).setVisible(visible);
     const bob = Math.sin(this.scene.time.now / 220) * 3;
-    this.tag.setPosition(this.x, this.feet - head - 26 + bob).setVisible(visible);
+    this.tag.setPosition(this.x, this.feet - Math.max(head, this.labelHeight) - 22 + bob).setVisible(visible);
   }
 
   setMarkersVisible(v: boolean): void {

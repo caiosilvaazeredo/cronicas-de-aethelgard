@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { LEVELS } from '../game/level';
+import { getDifficulty, setDifficulty } from '../game/progress';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
@@ -130,7 +131,7 @@ export class MenuScene extends Phaser.Scene {
         .setOrigin(0.5)
         .setPadding(16)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.setLevel(this.level + dir));
+        .on('pointerdown', () => this.shift(dir));
       this.levelRow.push(arrow);
     }
     this.setLevel(this.level);
@@ -164,8 +165,8 @@ export class MenuScene extends Phaser.Scene {
     kb.on('keydown-ESC', () => this.scene.restart({ stage: 'title' }));
     kb.on('keydown-SPACE', () => this.start(this.index));
     kb.on('keydown-F', () => this.start(this.index));
-    for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.setLevel(this.level - 1));
-    for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.setLevel(this.level + 1));
+    for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.shift(-1));
+    for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.shift(1));
     kb.on('keydown-ONE', () => this.start(0));
     kb.on('keydown-TWO', () => this.start(1));
 
@@ -195,16 +196,16 @@ export class MenuScene extends Phaser.Scene {
     const lr = (pad.axes[0]?.getValue() ?? 0);
     const left = !!pad.buttons[14]?.pressed || lr < -0.5;
     const right = !!pad.buttons[15]?.pressed || lr > 0.5;
-    if (left && !this.prevLR.l) this.setLevel(this.level - 1);
-    if (right && !this.prevLR.r) this.setLevel(this.level + 1);
+    if (left && !this.prevLR.l) this.shift(-1);
+    if (right && !this.prevLR.r) this.shift(1);
     this.prevLR = { l: left, r: right };
     this.prevPad = { up, down, ok };
   }
 
   private select(i: number): void {
     this.index = Phaser.Math.Wrap(i, 0, OPTIONS.length);
-    // A fase só se escolhe aqui no versus; na história ela vem do mapa.
-    this.levelRow.forEach((o) => o.setVisible(this.index === 1));
+    // Versus: escolhe a fase aqui. História: escolhe a dificuldade (a fase vem do mapa).
+    this.refreshRow();
     this.texts.forEach((t, j) => {
       const on = j === this.index;
       t.setColor(on ? '#ffe066' : '#fff7dc').setScale(on ? 1.08 : 1);
@@ -212,10 +213,31 @@ export class MenuScene extends Phaser.Scene {
     });
   }
 
+  /** ◀ ▶: troca a fase (versus) ou a dificuldade (história). */
+  private shift(dir: number): void {
+    if (this.index === 0) setDifficulty(getDifficulty() === 'normal' ? 'hard' : 'normal');
+    else this.level = Phaser.Math.Wrap(this.level + dir, 0, LEVELS.length);
+    this.refreshRow();
+  }
+
   private setLevel(n: number): void {
     this.level = Phaser.Math.Wrap(n, 0, LEVELS.length);
-    const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
-    this.levelText?.setText(`FASE ${this.level + 1} · ${name}`);
+    this.refreshRow();
+  }
+
+  private refreshRow(): void {
+    if (!this.levelText) return;
+    if (this.index === 0) {
+      const hard = getDifficulty() === 'hard';
+      this.levelText.setText(hard ? 'DIFÍCIL · recomeça na 3ª morte' : 'NORMAL · recomeça após 5 mortes');
+      this.levelText.setColor(hard ? '#ff9a8a' : '#bfe9ff');
+    } else {
+      const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
+      this.levelText.setText(`FASE ${this.level + 1} · ${name}`).setColor('#bfe9ff');
+    }
+    // Setas afastadas o bastante para o texto mais longo.
+    const half = this.levelText.width / 2 + (VIEW.portrait ? 60 : 40);
+    this.levelRow.slice(1).forEach((a, k) => a.setX(W / 2 + (k === 0 ? -1 : 1) * half));
   }
 
   private start(i: number): void {

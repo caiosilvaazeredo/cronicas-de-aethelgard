@@ -5,7 +5,7 @@ import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
-import { completeLevel, hasSeen, markSeen } from '../game/progress';
+import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
@@ -172,6 +172,10 @@ export class GameScene extends Phaser.Scene {
     // Interface em uma cena por cima (sem o zoom da câmera do mundo).
     this.scene.launch('ui', { game: this });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
+    if (this.mode === 'story') {
+      const limit = deathLimit(this.levelIndex);
+      this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
+    }
     this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? def.name : `VERSUS · ${def.name.split('—')[1]?.trim() ?? ''}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
@@ -324,6 +328,10 @@ export class GameScene extends Phaser.Scene {
     for (const f of this.fighters) {
       if (!f.alive || f.zipping) continue;
       if (f.def.swim && f.waterY !== undefined) continue; // o lagarto nada
+      if (f.def.id === 'shark' && this.level.hasWater && !this.level.isLava && f.feet > WATER_Y + 4) {
+        this.sharkLeap(f); // o tubarão nunca se afoga: afunda e salta para fora
+        continue;
+      }
       if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
       else if (!this.level.hasWater && f.feet > SKY_FALL_Y) this.killFighter(f, null, 'fall');
     }
@@ -625,13 +633,25 @@ export class GameScene extends Phaser.Scene {
 
     if (this.mode === 'story') {
       this.deaths++;
-      this.time.delayedCall(RESPAWN_DELAY / 2, () => {
+      const limit = deathLimit(this.levelIndex);
+      this.ui?.setLives(limit === Infinity ? null : limit - this.deaths, limit - 1);
+      if (this.deaths >= limit) {
+        // Acabaram as vidas: a fase recomeça do início (sem a visual novel de novo).
+        this.ended = true;
+        this.time.delayedCall(cause === 'eaten' ? 3400 : 700, () => {
+          this.wasted(0, 'A FASE RECOMEÇA', 3000);
+          this.time.delayedCall(3200, () => this.restartMatch());
+        });
+        return;
+      }
+      // Virou comida de aranha: dá tempo de ler a faixa antes de o Xamã voltar.
+      this.time.delayedCall(cause === 'eaten' ? 3600 : RESPAWN_DELAY / 2, () => {
         if (!this.ended) this.revive(0, () => this.checkpointX);
       });
     } else {
       this.leader = 1 - pi;
       this.ui?.hud?.setScreen(this.screen, PLAYER_TINT[this.leader]);
-      this.time.delayedCall(RESPAWN_DELAY / 2, () => {
+      this.time.delayedCall(cause === 'eaten' ? 3600 : RESPAWN_DELAY / 2, () => {
         if (!this.ended && !victim.alive) this.revive(pi, () => this.versusSpawnX(pi));
       });
     }
@@ -1054,16 +1074,73 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  /** Tubarão caiu na água: afunda, ganha impulso e sai num salto bem alto até a terra mais perto. */
+  private sharkLeap(f: Fighter): void {
+    f.zipping = true;
+    f.body.setVelocity(0, 0);
+    f.body.moves = false;
+    this.fx('splash', f.x, WATER_Y - 40, 0.9);
+    const prefer = f.intent.move || f.facing;
+    const opts = [prefer, -prefer]
+      .map((d) => this.level.nearestGround(f.x, d))
+      .filter((x) => this.level.groundY(x) !== null);
+    const tx = opts.find((x) => Math.sign(x - f.x) === Math.sign(prefer) && Math.abs(x - f.x) < 640) ?? opts.sort((a, b) => Math.abs(a - f.x) - Math.abs(b - f.x))[0] ?? this.checkpointX;
+    const tyFeet = this.level.groundY(tx) ?? FLOOR_Y;
+    const off = f.def.feetY - f.def.frame / 2; // centro do sprite até os pés
+    const x0 = f.sprite.x;
+    const sunk = f.sprite.y + 70;
+    const y1 = tyFeet - off;
+    const dir = Math.sign(tx - x0) || 1;
+    f.sprite.setFlipX(dir < 0);
+    f.facing = dir as 1 | -1;
+    // 1) Afunda girando de leve, soltando bolhas.
+    this.tweens.add({ targets: f.sprite, y: sunk, angle: dir * 25, duration: 420, ease: 'Quad.easeOut' });
+    const bubbles = this.add
+      .particles(0, 0, 'bubble', { x: { min: -14, max: 14 }, speedY: { min: -90, max: -50 }, lifespan: 500, scale: { start: 0.12, end: 0.04 }, alpha: { start: 0.8, end: 0 }, frequency: 60 })
+      .setDepth(DEPTH.fighters + 0.6);
+    bubbles.startFollow(f.sprite);
+    this.time.delayedCall(560, () => {
+      bubbles.stop();
+      this.time.delayedCall(600, () => bubbles.destroy());
+      if (!f.alive) return;
+      // 2) Salto: arco alto até a terra, com borrifo na saída.
+      this.fx('splash', x0, WATER_Y - 40, 1.1);
+      const apex = Math.min(WATER_Y, tyFeet) - 230;
+      this.tweens.addCounter({
+        from: 0,
+        to: 1,
+        duration: 760,
+        onUpdate: (tw) => {
+          const t = tw.getValue() ?? 0;
+          // Parábola por três pontos: fundo, ápice e chegada.
+          const x = x0 + (tx - x0) * t;
+          const yLine = sunk + (y1 - sunk) * t;
+          const yApex = apex - off;
+          const bulge = yApex - (sunk + y1) / 2;
+          f.sprite.setPosition(x, yLine + bulge * 4 * t * (1 - t));
+          f.sprite.setAngle(dir * (-40 + 80 * t));
+        },
+        onComplete: () => {
+          f.sprite.setAngle(0);
+          f.body.moves = true;
+          f.body.reset(tx, y1);
+          f.zipping = false;
+          this.fx('dust', tx, tyFeet - 6, 1);
+        },
+      });
+    });
+  }
+
   /** Estilo "wasted": a tela perde a cor por um instante e a faixa de morte aparece. */
-  private wasted(pi: number, text: string): void {
+  private wasted(pi: number, text: string, hold = 3200): void {
     const cams = [this.cameras.main, this.cam2].filter((c): c is Phaser.Cameras.Scene2D.Camera => !!c);
     for (const cam of cams) {
       const fx = cam.postFX?.addColorMatrix();
       if (!fx) continue;
       fx.grayscale(1);
-      this.time.delayedCall(2300, () => cam.postFX.remove(fx as unknown as Phaser.FX.Controller));
+      this.time.delayedCall(hold + 100, () => cam.postFX.remove(fx as unknown as Phaser.FX.Controller));
     }
-    this.ui?.showWasted(pi, text);
+    this.ui?.showWasted(pi, text, hold);
   }
 
   private nearestPlayer(f: Fighter): Fighter | null {
@@ -1210,7 +1287,7 @@ export class GameScene extends Phaser.Scene {
     const text = SHIFT_QUIPS[char];
     if (!text) return;
     this.quip?.close();
-    const b = new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.def.head - 52 }), text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+    const b = new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.labelHeight - 56 }), text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
     this.quip = b;
     this.time.delayedCall(Math.max(2600, text.length * 55), () => {
       b.close();
@@ -1241,7 +1318,7 @@ export class GameScene extends Phaser.Scene {
       const shamanLine = line.who === 'shaman';
       const bubble = shamanLine
         ? new SpeechBubble(this, () => ({ x: rig.x, y: rig.y - 74 }), line.text, SPEAKER_NAME.shaman, 0x9b6bf0)
-        : new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.def.head - 52 }), line.text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+        : new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.labelHeight - 56 }), line.text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
       if (shamanLine) shaman.play('shaman_attack').once('animationcomplete', () => shaman.play('shaman_idle'));
       await this.lineWait(Math.max(2400, line.text.length * 60));
       bubble.close();

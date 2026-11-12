@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
+import { BODY_FONT, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
 import type { CharId, ItemId } from './characters';
 
 /**
@@ -25,6 +25,8 @@ export interface ScreenDef {
   versusItems?: Array<[tile: number, item: ItemId, h?: number]>;
   /** Aranhas penduradas em teias no teto (saltam em quem passa por baixo). */
   hangers?: number[];
+  /** Placa de madeira com uma dica (tile, texto). */
+  sign?: [tile: number, text: string];
 }
 
 export interface LevelDef {
@@ -68,6 +70,16 @@ const SHORE_R1: ScreenDef = {
   deco: [[1, 'tree'], [8, 'rock1'], [13, 'stump'], [18, 'tree']],
   versusItems: [[7, 'spear'], [17, 'crest']],
 };
+/**
+ * Vão largo demais para o pulo duplo andando: só com PIQUE + pulo duplo se atravessa.
+ * Ensina a correr logo no começo da fase 1 (que tem vidas infinitas).
+ */
+const SHORE_DASH: ScreenDef = {
+  segments: [[0, 7], [14, 6]],
+  deco: [[1, 'tree'], [16, 'rock1'], [19, 'dead_tree']],
+  sign: [4, 'CORRA!\n2× na direção e segure\n+ pulo duplo'],
+  versusItems: [[17, 'crest']],
+};
 const SHORE_R2: ScreenDef = {
   segments: [[0, 8], [11, 2], [14, 6]],
   deco: [[3, 'dead_tree'], [12, 'rock2'], [15, 'rock1'], [18, 'skull_spike'], [19, 'skull_spike']],
@@ -80,8 +92,8 @@ export const LEVEL_1: LevelDef = {
   theme: 'shore',
   tiles: 'tilemap',
   screens: [
-    { ...mirror(SHORE_R2), enemies: [[13, 'gnoll']], storyItems: [[4, 'crest']] },
-    { ...mirror(SHORE_R1), enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone']] },
+    { ...SHORE_DASH, enemies: [[17, 'gnoll']], storyItems: [] },
+    { ...mirror(SHORE_R1), enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone'], [8, 'crest']] },
     {
       segments: [[0, 13], [15, 3], [18, 2]],
       deco: [[6, 'rock1'], [11, 'stump']],
@@ -90,7 +102,7 @@ export const LEVEL_1: LevelDef = {
       versusItems: [[9, 'bone']],
     },
     { ...SHORE_R1, enemies: [[8, 'shark'], [17, 'goblin']], storyItems: [[2, 'harpoon']] },
-    { ...SHORE_R2, enemies: [[5, 'lizard'], [12, 'shark'], [16, 'goblin']], storyItems: [] },
+    { ...mirror(SHORE_DASH), sign: [15, 'CORRA!\n2× na direção e segure\n+ pulo duplo'], enemies: [[4, 'lizard'], [16, 'shark'], [18, 'goblin']], storyItems: [] },
   ],
   storyStart: [0, 2],
   versusStart: [3, 16],
@@ -671,6 +683,10 @@ export class Level {
         const x = this.tileX(i, tile);
         this.addDeco(x, kind, tile, this.groundY(x) ?? FLOOR_Y);
       }
+      if (sc.sign) {
+        const x = this.tileX(i, sc.sign[0]);
+        this.addSign(x, this.groundY(x) ?? FLOOR_Y, sc.sign[1]);
+      }
     });
 
     // Marcos de chegada nas duas pontas.
@@ -746,6 +762,31 @@ export class Level {
     g.setPosition(x, ground - 70);
     s.tweens.add({ targets: g, y: ground - 82, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     s.add.ellipse(x, ground - 4, 34, 8, 0x9b6bf0, 0.35).setDepth(DEPTH.deco);
+  }
+
+  /** Placa de madeira em pixel art (poste, tábuas com veio e pregos) com a dica escrita. */
+  private addSign(x: number, ground: number, text: string): void {
+    const s = this.scene;
+    const label = s.add
+      .text(0, 0, text, { fontFamily: BODY_FONT, fontSize: '14px', color: '#fff7dc', align: 'center', lineSpacing: 2, stroke: '#3a2416', strokeThickness: 3 })
+      .setOrigin(0.5);
+    const w = Math.ceil((label.width + 24) / 4) * 4;
+    const h = Math.ceil((label.height + 16) / 4) * 4;
+    const g = s.add.graphics();
+    const INK = 0x1d1a2b;
+    // Poste.
+    g.fillStyle(INK).fillRect(-6, -46 - 4, 12, 50);
+    g.fillStyle(0x8a5a35).fillRect(-4, -46, 8, 46);
+    g.fillStyle(0xb07a48).fillRect(-4, -46, 2, 46);
+    // Tábuas.
+    g.fillStyle(INK).fillRect(-w / 2 - 4, -46 - h - 4, w + 8, h + 8);
+    g.fillStyle(0x9a6438).fillRect(-w / 2, -46 - h, w, h);
+    for (let y = -46 - h + 12; y < -46; y += 12) g.fillStyle(0x7a4a2a).fillRect(-w / 2, y, w, 2);
+    g.fillStyle(0xc08a52).fillRect(-w / 2, -46 - h, w, 3);
+    g.fillStyle(0x5e3a22).fillRect(-w / 2, -50, w, 4);
+    for (const px of [-w / 2 + 6, w / 2 - 10]) g.fillStyle(0xd8d0c0).fillRect(px, -46 - h + 6, 4, 4);
+    label.setPosition(0, -46 - h / 2 + 1);
+    s.add.container(x, ground, [g, label]).setDepth(DEPTH.deco);
   }
 
   private addDeco(x: number, kind: DecoKind, seed: number, ground: number): void {

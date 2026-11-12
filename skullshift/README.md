@@ -54,7 +54,7 @@ Cada fase tem **5 cenários** (telas): o central, 2 à direita e 2 à esquerda. 
 - **Pique:** toque duas vezes na direção e segure para correr bem mais rápido, levantando poeira. No teclado de 1 jogador, Shift também ativa o pique.
 - **Bolha de energia:** quem não tem escudo no sprite (todos menos o esqueleto) defende dentro de uma bolha na cor do jogador. Quando a defesa quebra, a bolha estoura.
 - **Aranhas penduradas:** o fio balança no teto da caverna. Quando um jogador passa por baixo, a aranha salta em cima dele (a defesa não segura ataque de cima) e depois vira uma inimiga comum. No versus, ela ataca os dois.
-- **Morcego × teia:** se o morcego encosta numa teia do teto, ele gruda. Uma aranha desce pelo fio, cospe teia até ele virar um casulo, a tela pisca e só sobra a aranha mastigando no lugar dele. Para jogador, a tela perde a cor e aparece a faixa **"VIROU COMIDA DE ARANHA"**.
+- **Morcego × teia:** se o morcego encosta numa teia do teto, ele gruda. Uma aranha desce pelo fio, cospe teia até ele virar um casulo, a tela pisca e só sobra a aranha mastigando no lugar dele. Para jogador, a tela perde a cor e a faixa **"VIROU COMIDA DE ARANHA"** fica uns 3 segundos na tela antes de o Xamã trazê-lo de volta.
 
 As plataformas altas são blocos maciços: dá para subir pulando, e elas bloqueiam pelos lados. Degraus de 2 tiles e as plataformas flutuantes mais altas pedem pulo duplo. As flutuantes se atravessam por baixo e seguram quem cai em cima, como num jogo de plataforma clássico. Ossos, arpões e bolotas arremessados caem no chão e viram item.
 
@@ -71,6 +71,20 @@ As plataformas altas são blocos maciços: dá para subir pulando, e elas bloque
 Também ficam na cor do jogador o disco do avatar e o nome no HUD, o efeito de transformação, o "P1!"/"P2!" ao renascer, o brilho dos projéteis, as metades do teclado e os botões de toque.
 
 A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor comemorando e uma faixa com o avatar.
+
+## Dificuldade e vidas (modo história)
+
+No menu, com **HISTÓRIA** selecionado, ◀ ▶ troca a dificuldade (fica salva no navegador):
+
+- **Normal:** se morrer mais de 5 vezes na mesma fase, a fase recomeça do início.
+- **Difícil:** na 3ª morte, a fase recomeça do início.
+- **Fase 1:** vidas infinitas em qualquer dificuldade (o Xamã sempre traz de volta ao checkpoint).
+
+As vidas restantes aparecem como caveirinhas no canto da tela; quando acabam, a tela perde a cor, aparece "A FASE RECOMEÇA" e a fase reinicia (sem repetir a visual novel).
+
+**Aprender a correr:** a fase 1 abre com um vão de 7 tiles que o pulo duplo andando não alcança. Uma placa avisa: corra (2× na direção e segure) e dê o pulo duplo. O mesmo vão, espelhado, aparece no último cenário.
+
+**Tubarão (passiva):** ao cair na água, não se afoga: afunda soltando bolhas e sai num salto bem alto até a terra mais próxima.
 
 ## Lore
 

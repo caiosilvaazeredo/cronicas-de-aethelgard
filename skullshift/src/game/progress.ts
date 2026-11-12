@@ -53,3 +53,36 @@ export function markSeen(key: string): void {
     /* vale só nesta sessão */
   }
 }
+
+/** Dificuldade do modo história. Normal: até 5 mortes por fase. Difícil: na 3ª, a fase recomeça. */
+export type Difficulty = 'normal' | 'hard';
+const DIFF_KEY = 'skullshift.difficulty.v1';
+let diffMemory: Difficulty = 'normal';
+
+export function getDifficulty(): Difficulty {
+  try {
+    const v = window.localStorage.getItem(DIFF_KEY);
+    if (v === 'normal' || v === 'hard') diffMemory = v;
+  } catch {
+    /* reserva em memória */
+  }
+  return diffMemory;
+}
+
+export function setDifficulty(d: Difficulty): void {
+  diffMemory = d;
+  try {
+    window.localStorage.setItem(DIFF_KEY, d);
+  } catch {
+    /* vale só nesta sessão */
+  }
+}
+
+/**
+ * Quantas mortes a fase aguenta antes de recomeçar do início (Infinity = vidas infinitas).
+ * A fase 1 é de aprendizado: nunca recomeça.
+ */
+export function deathLimit(level: number, d: Difficulty = getDifficulty()): number {
+  if (level === 0) return Infinity;
+  return d === 'hard' ? 3 : 6; // normal: "morreu mais de 5 vezes" = na 6ª
+}

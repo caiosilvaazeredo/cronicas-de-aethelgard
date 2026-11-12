@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W, wantsTouchControls } from '../config';
 import { DEVICES, connectedPads, padOrdinal, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
+import { isFreePlay } from '../game/progress';
 import {
   PLAYER_TINT,
   gamepadArt,
@@ -275,7 +276,8 @@ export class ControlsScene extends Phaser.Scene {
   }
 
   private back(): void {
-    this.scene.start('menu', { stage: 'modes', level: this.level });
+    if (this.mode === 'story' && !isFreePlay()) this.scene.start('slots');
+    else this.scene.start('menu', { stage: 'modes', level: this.level });
   }
 }
 

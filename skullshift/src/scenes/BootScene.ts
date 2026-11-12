@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { makeCrouchAnims } from '../game/crouch';
 import { makeCocoon, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
@@ -72,6 +73,7 @@ export class BootScene extends Phaser.Scene {
       } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
     }
     this.anim('skull_guard', 7, 10, -1);
+    makeCrouchAnims(this);
     this.anim('bone', 4, 16, -1);
     this.anim('water_rocks', 16, 8, -1);
     this.anim('bush', 8, 8, -1);

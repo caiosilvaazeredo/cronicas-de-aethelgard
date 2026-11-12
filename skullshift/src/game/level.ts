@@ -12,6 +12,12 @@ export type Segment = [start: number, length: number, h?: number];
 export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal';
 export type Theme = 'shore' | 'cave' | 'volcano' | 'sky';
 
+/** A fase como ela é jogada no modo escolhido (a história ganha os cenários de treino). */
+export function levelFor(def: LevelDef, story: boolean): LevelDef {
+  if (!story || !def.tutorial?.length) return def;
+  return { ...def, screens: [...def.tutorial, ...def.screens], storyStart: [0, 2] };
+}
+
 /** Um cenário = uma tela de 1280px (20 tiles). */
 export interface ScreenDef {
   segments: Segment[];
@@ -40,6 +46,8 @@ export interface LevelDef {
   screens: ScreenDef[];
   /** Modo história: cenário e tile de início (o fim é a ponta oposta). */
   storyStart: [screen: number, tile: number];
+  /** Cenários de treino colocados antes da fase, só no modo história. */
+  tutorial?: ScreenDef[];
   /** Modo versus: tiles de início no cenário central. */
   versusStart: [p1Tile: number, p2Tile: number];
 }
@@ -71,15 +79,22 @@ const SHORE_R1: ScreenDef = {
   versusItems: [[7, 'spear'], [17, 'crest']],
 };
 /**
- * Vão largo demais para o pulo duplo andando: só com PIQUE + pulo duplo se atravessa.
- * Ensina a correr logo no começo da fase 1 (que tem vidas infinitas).
+ * Treino (só no modo história, antes da fase 1): dois cenários a mais à esquerda.
+ * 1) Um bloco de 2 tiles que só se sobe com pulo duplo.
+ * 2) Um vão largo demais para o pulo duplo andando: só com PIQUE + pulo duplo.
  */
-const SHORE_DASH: ScreenDef = {
-  segments: [[0, 7], [14, 6]],
-  deco: [[1, 'tree'], [16, 'rock1'], [19, 'dead_tree']],
-  sign: [4, 'CORRA!\n2× na direção e segure\n+ pulo duplo'],
-  versusItems: [[17, 'crest']],
-};
+const TUTORIAL_SHORE: ScreenDef[] = [
+  {
+    segments: [[0, 9], [9, 3, 2], [12, 8]],
+    deco: [[1, 'tree'], [15, 'rock1'], [18, 'stump']],
+    sign: [5, 'PULO DUPLO!\npule e, no ar,\npule de novo'],
+  },
+  {
+    segments: [[0, 7], [14, 6]],
+    deco: [[1, 'rock2'], [16, 'rock1'], [19, 'dead_tree']],
+    sign: [4, 'CORRA!\n2× na direção e segure\n+ pulo duplo'],
+  },
+];
 const SHORE_R2: ScreenDef = {
   segments: [[0, 8], [11, 2], [14, 6]],
   deco: [[3, 'dead_tree'], [12, 'rock2'], [15, 'rock1'], [18, 'skull_spike'], [19, 'skull_spike']],
@@ -92,8 +107,8 @@ export const LEVEL_1: LevelDef = {
   theme: 'shore',
   tiles: 'tilemap',
   screens: [
-    { ...SHORE_DASH, enemies: [[17, 'gnoll']], storyItems: [] },
-    { ...mirror(SHORE_R1), enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone'], [8, 'crest']] },
+    { ...mirror(SHORE_R2), enemies: [[13, 'gnoll']], storyItems: [[4, 'crest']] },
+    { ...mirror(SHORE_R1), enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone']] },
     {
       segments: [[0, 13], [15, 3], [18, 2]],
       deco: [[6, 'rock1'], [11, 'stump']],
@@ -102,8 +117,9 @@ export const LEVEL_1: LevelDef = {
       versusItems: [[9, 'bone']],
     },
     { ...SHORE_R1, enemies: [[8, 'shark'], [17, 'goblin']], storyItems: [[2, 'harpoon']] },
-    { ...mirror(SHORE_DASH), sign: [15, 'CORRA!\n2× na direção e segure\n+ pulo duplo'], enemies: [[4, 'lizard'], [16, 'shark'], [18, 'goblin']], storyItems: [] },
+    { ...SHORE_R2, enemies: [[5, 'lizard'], [12, 'shark'], [16, 'goblin']], storyItems: [] },
   ],
+  tutorial: TUTORIAL_SHORE,
   storyStart: [0, 2],
   versusStart: [3, 16],
 };

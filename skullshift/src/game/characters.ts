@@ -58,6 +58,8 @@ export interface CharDef {
   climb?: boolean;
   /** Nada (passiva): não morre na água, boia, mergulha e salta para fora. */
   swim?: boolean;
+  /** Passiva: ao acionar a corrida, dá um dash (arrancada rápida). */
+  dash?: boolean;
   speed: number;
   melee?: MeleeDef;
   projectile?: ProjectileDef;
@@ -131,6 +133,7 @@ export const CHARS: Record<CharId, CharDef> = {
     speed: 230,
     melee: { from: 2, to: 4, reach: 112, back: 70 },
     drops: 'spear',
+    dash: true,
   },
   // ---------- Fase 2: caverna ----------
   spider: {

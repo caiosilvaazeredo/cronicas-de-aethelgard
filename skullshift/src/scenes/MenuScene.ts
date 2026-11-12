@@ -2,11 +2,12 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { LEVELS } from '../game/level';
-import { getDifficulty, setDifficulty } from '../game/progress';
+import { setFreePlay } from '../game/progress';
 
 const OPTIONS = [
   { label: 'HISTÓRIA  ·  1 jogador', mode: 'story' },
   { label: 'VERSUS  ·  2 jogadores', mode: 'versus' },
+  { label: 'LIVRE  ·  testes', mode: 'free' },
 ] as const;
 
 export class MenuScene extends Phaser.Scene {
@@ -104,7 +105,7 @@ export class MenuScene extends Phaser.Scene {
     }
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, P ? 680 + i * 130 : 268 + i * 58, o.label, {
+        .text(W / 2, P ? 680 + i * 130 : 284 + i * 54, o.label, {
           fontFamily: FONT,
           fontSize: P ? '58px' : '36px',
           color: '#fff7dc',
@@ -120,7 +121,7 @@ export class MenuScene extends Phaser.Scene {
     });
 
     // Escolha da fase: ◀ FASE 1 · ILHAS DA MARÉ ▶
-    const ly = P ? 980 : 388;
+    const ly = P ? 1110 : 446;
     this.levelText = this.add
       .text(W / 2, ly, '', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: P ? 10 : 7 })
       .setOrigin(0.5);
@@ -213,10 +214,10 @@ export class MenuScene extends Phaser.Scene {
     });
   }
 
-  /** ◀ ▶: troca a fase (versus) ou a dificuldade (história). */
+  /** ◀ ▶: troca a fase (só no versus). */
   private shift(dir: number): void {
-    if (this.index === 0) setDifficulty(getDifficulty() === 'normal' ? 'hard' : 'normal');
-    else this.level = Phaser.Math.Wrap(this.level + dir, 0, LEVELS.length);
+    if (this.index !== 1) return;
+    this.level = Phaser.Math.Wrap(this.level + dir, 0, LEVELS.length);
     this.refreshRow();
   }
 
@@ -227,20 +228,27 @@ export class MenuScene extends Phaser.Scene {
 
   private refreshRow(): void {
     if (!this.levelText) return;
-    if (this.index === 0) {
-      const hard = getDifficulty() === 'hard';
-      this.levelText.setText(hard ? 'DIFÍCIL · recomeça na 3ª morte' : 'NORMAL · recomeça após 5 mortes');
-      this.levelText.setColor(hard ? '#ff9a8a' : '#bfe9ff');
-    } else {
-      const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
-      this.levelText.setText(`FASE ${this.level + 1} · ${name}`).setColor('#bfe9ff');
-    }
+    // Versus: escolhe a fase aqui. História: a dificuldade é do save. Livre: todas abertas no mapa.
+    this.levelRow.forEach((o) => o.setVisible(this.index === 1));
+    const name = LEVELS[this.level].name.split('—')[1]?.trim() ?? '';
+    this.levelText.setText(`FASE ${this.level + 1} · ${name}`).setColor('#bfe9ff');
     // Setas afastadas o bastante para o texto mais longo.
     const half = this.levelText.width / 2 + (VIEW.portrait ? 60 : 40);
     this.levelRow.slice(1).forEach((a, k) => a.setX(W / 2 + (k === 0 ? -1 : 1) * half));
   }
 
   private start(i: number): void {
-    this.scene.start('controls', { mode: OPTIONS[i].mode, level: this.level });
+    const mode = OPTIONS[i].mode;
+    if (mode === 'story') {
+      setFreePlay(false);
+      this.scene.start('slots');
+    } else if (mode === 'free') {
+      // Modo livre (temporário): mapa com todas as fases abertas, nada é salvo.
+      setFreePlay(true);
+      this.scene.start('controls', { mode: 'story', level: this.level });
+    } else {
+      setFreePlay(false);
+      this.scene.start('controls', { mode, level: this.level });
+    }
   }
 }

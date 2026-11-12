@@ -1,88 +1,159 @@
 /**
- * Progresso do modo história: quantas fases já foram concluídas.
- * Fica no navegador de quem joga (localStorage); sem ele, começa do zero.
+ * Progresso do modo história, em vários saves (slots). Cada save guarda: fases concluídas,
+ * dificuldade, falas já vistas e a data do último jogo. Fica no navegador de quem joga
+ * (localStorage); sem ele, vale só enquanto a página estiver aberta.
+ *
+ * Modo livre (temporário, para testes): todas as fases abertas, vidas infinitas e nada salvo.
  */
-const KEY = 'skullshift.progress.v1';
+
+export type Difficulty = 'normal' | 'hard';
+
+export interface SaveData {
+  completed: number;
+  difficulty: Difficulty;
+  seen: string[];
+  /** Data do último jogo (ms). */
+  updated: number;
+}
+
+export const SLOT_COUNT = 3;
+const SLOT_KEY = 'skullshift.slot';
+const saveKey = (n: number) => `skullshift.save.${n}`;
+const TOTAL_LEVELS = 4;
+
 /** Reserva em memória, caso o navegador não deixe salvar. */
-let memory = 0;
-
-export function completedCount(): number {
+const memory = new Map<string, string>();
+function read(key: string): string | null {
   try {
-    const n = Number(window.localStorage.getItem(KEY) ?? '0');
-    return Math.max(memory, Number.isFinite(n) ? Math.max(0, n) : 0);
-  } catch {
-    return memory;
-  }
-}
-
-/** Marca a fase como concluída (libera a seguinte). */
-export function completeLevel(index: number): void {
-  const n = Math.max(completedCount(), index + 1);
-  memory = n;
-  try {
-    window.localStorage.setItem(KEY, String(n));
-  } catch {
-    /* sem armazenamento: o progresso vale só nesta sessão */
-  }
-}
-
-/** Falas que só aparecem uma vez (primeira transformação, primeira vez em cada forma). */
-const SEEN_KEY = 'skullshift.seen.v1';
-let seenMemory = new Set<string>();
-
-function loadSeen(): Set<string> {
-  try {
-    const raw = window.localStorage.getItem(SEEN_KEY);
-    if (raw) for (const k of JSON.parse(raw) as string[]) seenMemory.add(k);
+    const v = window.localStorage.getItem(key);
+    if (v !== null) return v;
   } catch {
     /* sem armazenamento */
   }
-  return seenMemory;
+  return memory.get(key) ?? null;
+}
+function write(key: string, value: string | null): void {
+  if (value === null) memory.delete(key);
+  else memory.set(key, value);
+  try {
+    if (value === null) window.localStorage.removeItem(key);
+    else window.localStorage.setItem(key, value);
+  } catch {
+    /* vale só nesta sessão */
+  }
 }
 
+/** Saves antigos (antes dos slots) viram o save 1. */
+function migrate(): void {
+  if (read(saveKey(1)) !== null) return;
+  const old = read('skullshift.progress.v1');
+  if (old === null) return;
+  let seen: string[] = [];
+  try {
+    seen = JSON.parse(read('skullshift.seen.v1') ?? '[]') as string[];
+  } catch {
+    /* ignora */
+  }
+  const diff = read('skullshift.difficulty.v1') === 'hard' ? 'hard' : 'normal';
+  write(saveKey(1), JSON.stringify({ completed: Number(old) || 0, difficulty: diff, seen, updated: Date.now() } satisfies SaveData));
+}
+
+export function loadSlot(n: number): SaveData | null {
+  migrate();
+  const raw = read(saveKey(n));
+  if (!raw) return null;
+  try {
+    const d = JSON.parse(raw) as Partial<SaveData>;
+    return {
+      completed: Math.max(0, Math.min(TOTAL_LEVELS, Number(d.completed) || 0)),
+      difficulty: d.difficulty === 'hard' ? 'hard' : 'normal',
+      seen: Array.isArray(d.seen) ? d.seen : [],
+      updated: Number(d.updated) || 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function saveSlot(n: number, d: SaveData): void {
+  write(saveKey(n), JSON.stringify({ ...d, updated: Date.now() }));
+}
+
+export function deleteSlot(n: number): void {
+  write(saveKey(n), null);
+}
+
+/** Começa um jogo novo no save n (apaga o que havia). */
+export function newSlot(n: number, difficulty: Difficulty): void {
+  saveSlot(n, { completed: 0, difficulty, seen: [], updated: Date.now() });
+  useSlot(n);
+}
+
+export function useSlot(n: number): void {
+  free = false;
+  write(SLOT_KEY, String(n));
+}
+
+export function currentSlot(): number {
+  const n = Number(read(SLOT_KEY));
+  return n >= 1 && n <= SLOT_COUNT ? n : 1;
+}
+
+/** Save em uso (cria um vazio se ainda não houver). */
+function current(): SaveData {
+  if (free) return freeSave;
+  return loadSlot(currentSlot()) ?? { completed: 0, difficulty: 'normal', seen: [], updated: Date.now() };
+}
+
+// ---------- modo livre ----------
+
+let free = false;
+const freeSave: SaveData = { completed: TOTAL_LEVELS - 1, difficulty: 'normal', seen: ['first-shift'], updated: 0 };
+
+export function setFreePlay(on: boolean): void {
+  free = on;
+}
+
+export function isFreePlay(): boolean {
+  return free;
+}
+
+// ---------- consultas do jogo ----------
+
+export function completedCount(): number {
+  return current().completed;
+}
+
+/** Marca a fase como concluída (libera a seguinte). No modo livre, não salva nada. */
+export function completeLevel(index: number): void {
+  if (free) return;
+  const d = current();
+  d.completed = Math.max(d.completed, index + 1);
+  saveSlot(currentSlot(), d);
+}
+
+/** Falas que só aparecem uma vez (primeira transformação, primeira vez em cada forma). */
 export function hasSeen(key: string): boolean {
-  return loadSeen().has(key);
+  return current().seen.includes(key);
 }
 
 export function markSeen(key: string): void {
-  seenMemory = loadSeen();
-  seenMemory.add(key);
-  try {
-    window.localStorage.setItem(SEEN_KEY, JSON.stringify([...seenMemory]));
-  } catch {
-    /* vale só nesta sessão */
-  }
+  const d = current();
+  if (d.seen.includes(key)) return;
+  d.seen.push(key);
+  if (!free) saveSlot(currentSlot(), d);
 }
-
-/** Dificuldade do modo história. Normal: até 5 mortes por fase. Difícil: na 3ª, a fase recomeça. */
-export type Difficulty = 'normal' | 'hard';
-const DIFF_KEY = 'skullshift.difficulty.v1';
-let diffMemory: Difficulty = 'normal';
 
 export function getDifficulty(): Difficulty {
-  try {
-    const v = window.localStorage.getItem(DIFF_KEY);
-    if (v === 'normal' || v === 'hard') diffMemory = v;
-  } catch {
-    /* reserva em memória */
-  }
-  return diffMemory;
-}
-
-export function setDifficulty(d: Difficulty): void {
-  diffMemory = d;
-  try {
-    window.localStorage.setItem(DIFF_KEY, d);
-  } catch {
-    /* vale só nesta sessão */
-  }
+  return current().difficulty;
 }
 
 /**
  * Quantas mortes a fase aguenta antes de recomeçar do início (Infinity = vidas infinitas).
- * A fase 1 é de aprendizado: nunca recomeça.
+ * Normal: na 6ª morte ("morreu mais de 5 vezes"). Difícil: na 3ª.
+ * A fase 1 é de aprendizado e o modo livre é para testes: nunca recomeçam.
  */
 export function deathLimit(level: number, d: Difficulty = getDifficulty()): number {
-  if (level === 0) return Infinity;
-  return d === 'hard' ? 3 : 6; // normal: "morreu mais de 5 vezes" = na 6ª
+  if (level === 0 || free) return Infinity;
+  return d === 'hard' ? 3 : 6;
 }

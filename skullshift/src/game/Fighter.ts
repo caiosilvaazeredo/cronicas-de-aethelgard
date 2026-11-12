@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { CROUCH_SCALE } from './crouch';
 import { DEPTH, FONT, GUARD_WALK_SPEED, INVULN_TIME, JUMP_V } from '../config';
 import { CHARS, type CharDef, type CharId } from './characters';
 import { emptyIntent, type Intent } from './controls';
@@ -6,10 +7,13 @@ import { emptyIntent, type Intent } from './controls';
 type State = 'idle' | 'run' | 'guard' | 'attack' | 'stun' | 'dead';
 
 
+/** Dash do Goblin Lanceiro. */
+const DASH_V = 900;
+const DASH_MS = 200;
+const DASH_COOLDOWN = 650;
 const BODY_W = 30;
 const BODY_H = 50;
 /** Agachado: o desenho e a caixa de colisão encolhem na altura (estilo Metal Slug). */
-const CROUCH_SCALE = 0.66;
 const CROUCH_SPEED = 120;
 /** O segundo pulo (no ar) é um pouco mais fraco. */
 const DOUBLE_JUMP = 0.88;
@@ -79,6 +83,15 @@ export class Fighter {
 
   onProjectile?: (f: Fighter) => void;
   onDoubleJump?: (f: Fighter) => void;
+  /** Dash do Goblin Lanceiro: até quando dura, direção e quando pode de novo. */
+  private dashUntil = 0;
+  private dashDir = 1;
+  private dashReady = 0;
+  private prevSprint = false;
+  private dashGravityOff = false;
+  private lastGhost = 0;
+  /** Cor do rastro do dash (cor do jogador). */
+  ghostTint = 0xffffff;
 
   constructor(
     private scene: Phaser.Scene,
@@ -97,7 +110,10 @@ export class Fighter {
     this.sprite.setDepth(DEPTH.fighters);
     // Quem não tem escudo no sprite defende com uma bolha de energia (estilo jogo de luta de plataforma).
     this.shield = scene.add.image(x, feetY, 'bubble').setDepth(DEPTH.fighters + 1).setVisible(false).setTint(color ?? 0x9fe3ff);
-    if (color !== undefined) this.buildMarkers(color, tagText ?? label);
+    if (color !== undefined) {
+      this.ghostTint = color;
+      this.buildMarkers(color, tagText ?? label);
+    }
     this.applyChar(baseChar, feetY);
   }
 
@@ -132,6 +148,11 @@ export class Fighter {
     const d = this.def;
     this.crouching = false;
     this.climbDir = 0;
+    this.dashUntil = 0;
+    if (this.dashGravityOff) {
+      this.dashGravityOff = false;
+      this.body.setAllowGravity(true);
+    }
     this.climbHop = 0;
     this.sprite.setAngle(0);
     this.flightLeft = this.def.fly ?? 0;
@@ -153,14 +174,30 @@ export class Fighter {
   private setCrouch(v: boolean): void {
     if (v === this.crouching) return;
     const feet = this.feet;
-    const s = v ? CROUCH_SCALE : 1;
     this.crouching = v;
-    this.sprite.setScale(1, s);
-    this.sprite.y = feet - s * (this.def.feetY - this.def.frame / 2);
-    this.body.updateFromGameObject();
+    if (this.hasCrouchPose) {
+      // Pose agachada em pixel art: o desenho já vem encolhido; só a caixa de colisão baixa.
+      const h = v ? Math.round(BODY_H * CROUCH_SCALE) : BODY_H;
+      this.sprite.setScale(1, 1);
+      this.body.setSize(BODY_W, h, false);
+      this.body.setOffset(this.def.frame / 2 - BODY_W / 2, this.def.feetY - h);
+      this.sprite.y = feet - (this.def.feetY - this.def.frame / 2);
+      this.body.updateFromGameObject();
+      if (this.state === 'idle' || this.state === 'run' || this.state === 'guard') this.setState(this.state);
+    } else {
+      const s = v ? CROUCH_SCALE : 1;
+      this.sprite.setScale(1, s);
+      this.sprite.y = feet - s * (this.def.feetY - this.def.frame / 2);
+      this.body.updateFromGameObject();
+    }
     // Mantém o apoio no chão sem "cair" no quadro seguinte.
     this.body.prev.y = this.body.y;
     this.body.prevFrame.y = this.body.y;
+  }
+
+  /** Este personagem tem pose agachada desenhada (todos menos a aranha). */
+  private get hasCrouchPose(): boolean {
+    return this.scene.anims.exists(`${this.def.id}_crouch_idle`);
   }
 
   /** Caixa de acerto do golpe corpo a corpo, se estiver nos quadros ativos. */
@@ -293,8 +330,40 @@ export class Fighter {
           }
         }
         const sprinting = it.sprint && !this.crouching && !guarding;
+        // Passiva do Goblin Lanceiro: começar a correr = arrancada (dash) com rastro.
+        if (d.dash && sprinting && !this.prevSprint && now >= this.dashReady && it.move !== 0) {
+          this.dashUntil = now + DASH_MS;
+          this.dashReady = now + DASH_COOLDOWN;
+          this.dashDir = it.move > 0 ? 1 : -1;
+          this.body.setAllowGravity(false);
+          this.dashGravityOff = true;
+          this.body.setVelocityY(0);
+          this.scene.cameras.main.shake(80, 0.003);
+          const puff = this.scene.add.sprite(this.x - this.dashDir * 20, this.feet - 10, 'dust').setScale(1.2).setDepth(DEPTH.fighters - 1).setFlipX(this.dashDir < 0).play('dust');
+          puff.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => puff.destroy());
+        }
+        this.prevSprint = sprinting;
+        const dashing = now < this.dashUntil;
+        if (!dashing && this.dashGravityOff) {
+          this.dashGravityOff = false;
+          this.body.setAllowGravity(true);
+        }
         const speed = this.crouching ? CROUCH_SPEED : guarding ? GUARD_WALK_SPEED : d.speed * (sprinting ? SPRINT : 1);
-        this.body.setVelocityX(it.move * speed);
+        this.body.setVelocityX(dashing ? this.dashDir * DASH_V : it.move * speed);
+        if (dashing) {
+          this.body.setVelocityY(0);
+          if (now - this.lastGhost > 30) {
+            this.lastGhost = now;
+            const g = this.scene.add
+              .image(this.sprite.x, this.sprite.y, this.sprite.texture.key, this.sprite.frame.name)
+              .setFlipX(this.sprite.flipX)
+              .setScale(this.sprite.scaleX, this.sprite.scaleY)
+              .setDepth(DEPTH.fighters - 0.5)
+              .setTintFill(this.ghostTint)
+              .setAlpha(0.55);
+            this.scene.tweens.add({ targets: g, alpha: 0, duration: 260, onComplete: () => g.destroy() });
+          }
+        }
         this.setState(guarding ? 'guard' : it.move !== 0 ? 'run' : 'idle');
         if (sprinting) {
           this.sprite.anims.timeScale = 1.6;
@@ -469,7 +538,7 @@ export class Fighter {
     this.released = false;
     this.attackHits.clear();
     this.attackId++;
-    this.sprite.play(`${this.def.id}_attack`);
+    this.sprite.play(this.crouching && this.hasCrouchPose ? `${this.def.id}_crouch_attack` : `${this.def.id}_attack`);
   }
 
   private setState(s: State): void {
@@ -478,6 +547,7 @@ export class Fighter {
     if (s === 'run') anim = `${id}_run`;
     if (s === 'guard') anim = this.def.guard ? `${id}_guard` : `${id}_idle`;
     if (!this.onGround && s !== 'guard') anim = `${id}_run`;
+    if (this.crouching && this.hasCrouchPose) anim = s === 'run' ? `${id}_crouch_run` : `${id}_crouch_idle`;
     this.state = s;
     if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
     // Andando agachado: passos mais lentos.
@@ -612,7 +682,8 @@ export class Fighter {
 
   /** Altura (acima dos pés) onde cabem etiquetas e balões sem cobrir o personagem. */
   get labelHeight(): number {
-    return this.visualHeight(); // a escala do sprite já inclui o agachamento
+    // Agachado com pose desenhada: o desenho encolhe sem mudar a escala do sprite.
+    return this.visualHeight() * (this.crouching && this.hasCrouchPose ? CROUCH_SCALE : 1);
   }
 
   private updateMarkers(): void {

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT } from '../config';
 import { CHAPTERS } from '../data/lore';
 import type { DeviceId } from '../game/controls';
-import { completedCount } from '../game/progress';
+import { completedCount, currentSlot, isFreePlay } from '../game/progress';
 import { pillButton } from '../ui/devices';
 
 const MW = 1280;
@@ -67,7 +67,7 @@ export class MapScene extends Phaser.Scene {
     this.placeHero(PATH[NODE_AT[this.current]]);
 
     this.add
-      .text(MW / 2, 40, 'SELECIONAR FASE', { fontFamily: FONT, fontSize: '42px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 })
+      .text(MW / 2, 40, isFreePlay() ? 'MODO LIVRE · TESTES' : `SELECIONAR FASE · SAVE ${currentSlot()}`, { fontFamily: FONT, fontSize: '42px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 })
       .setOrigin(0.5)
       .setDepth(30);
     const g = this.add.graphics().setDepth(29);
@@ -332,7 +332,9 @@ export class MapScene extends Phaser.Scene {
 
   private enter(): void {
     if (this.walking) return;
-    this.scene.start('vn', { devices: this.devices, level: this.current });
+    // Modo livre (testes): direto para a fase, sem a visual novel.
+    if (isFreePlay()) this.scene.start('game', { mode: 'story', devices: this.devices, level: this.current });
+    else this.scene.start('vn', { devices: this.devices, level: this.current });
   }
 }
 

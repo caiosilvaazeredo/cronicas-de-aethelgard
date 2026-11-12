@@ -72,9 +72,9 @@ Também ficam na cor do jogador o disco do avatar e o nome no HUD, o efeito de t
 
 A chegada abre uma animação de vitória: holofote, confete, fogos, o vencedor comemorando e uma faixa com o avatar.
 
-## Dificuldade e vidas (modo história)
+## Saves, dificuldade e vidas (modo história)
 
-No menu, com **HISTÓRIA** selecionado, ◀ ▶ troca a dificuldade (fica salva no navegador):
+**HISTÓRIA** abre a tela de saves: 3 slots, cada um com a fase em que parou, os medalhões das fases concluídas, a dificuldade e a data do último jogo. CONTINUAR segue de onde parou; APAGAR pede confirmação. Slot vazio: NOVO JOGO em Normal ou Difícil (cada save tem a sua dificuldade e as suas falas já vistas). Saves antigos viram o Save 1.
 
 - **Normal:** se morrer mais de 5 vezes na mesma fase, a fase recomeça do início.
 - **Difícil:** na 3ª morte, a fase recomeça do início.
@@ -82,9 +82,15 @@ No menu, com **HISTÓRIA** selecionado, ◀ ▶ troca a dificuldade (fica salva 
 
 As vidas restantes aparecem como caveirinhas no canto da tela; quando acabam, a tela perde a cor, aparece "A FASE RECOMEÇA" e a fase reinicia (sem repetir a visual novel).
 
-**Aprender a correr:** a fase 1 abre com um vão de 7 tiles que o pulo duplo andando não alcança. Uma placa avisa: corra (2× na direção e segure) e dê o pulo duplo. O mesmo vão, espelhado, aparece no último cenário.
+**Treino:** no modo história, a fase 1 ganha 2 cenários a mais antes do começo (as fases em si não mudaram). No primeiro, um bloco de 2 tiles que só se sobe com **pulo duplo**; no segundo, um vão de 7 tiles que o pulo duplo andando não alcança: é preciso **correr** (2× na direção e segure) e dar o pulo duplo. Placas de madeira explicam cada um.
 
-**Tubarão (passiva):** ao cair na água, não se afoga: afunda soltando bolhas e sai num salto bem alto até a terra mais próxima.
+**Modo livre (temporário, para testes):** a terceira opção do menu abre o mapa com todas as fases liberadas, entra direto na fase (sem visual novel), com vidas infinitas e sem salvar nada.
+
+**Tubarão (passiva):** a água é um trampolim. Ao cair nela, ele mergulha inclinando o focinho para baixo, vira para cima e é lançado bem alto, com controle no ar.
+
+**Goblin Lanceiro (passiva):** ao começar a correr, dá um **dash**: uma arrancada rápida em linha reta, com rastro na cor do jogador (recarrega em ~0,65 s).
+
+**Agachar:** cada personagem tem uma pose agachada desenhada a partir do próprio sprite: a cabeça (e armas, cristas, chifres) fica intacta e só o corpo de baixo perde linhas de pixel, como joelhos dobrando. Morcego e abelha, que voam, só descem. A aranha continua como antes.
 
 ## Lore
 

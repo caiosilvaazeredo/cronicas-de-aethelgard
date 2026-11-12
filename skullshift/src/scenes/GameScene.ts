@@ -4,7 +4,7 @@ import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
-import { LEVELS, Level, SKY_FALL_Y } from '../game/level';
+import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
@@ -43,6 +43,8 @@ interface Projectile {
 
 const ITEM_RESPAWN = 8000;
 /** Aranha pendurada: altura dos pés enquanto está na teia. */
+/** Impulso do tubarão saindo da água (bem mais alto que um pulo). */
+const SHARK_LEAP_V = 1050;
 const HANG_FEET = 236;
 
 interface Hanger {
@@ -122,7 +124,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const def = LEVELS[this.levelIndex];
+    const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     this.level = new Level(this, def);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
@@ -328,8 +330,9 @@ export class GameScene extends Phaser.Scene {
     for (const f of this.fighters) {
       if (!f.alive || f.zipping) continue;
       if (f.def.swim && f.waterY !== undefined) continue; // o lagarto nada
-      if (f.def.id === 'shark' && this.level.hasWater && !this.level.isLava && f.feet > WATER_Y + 4) {
-        this.sharkLeap(f); // o tubarão nunca se afoga: afunda e salta para fora
+      if (f.def.id === 'shark' && this.level.hasWater && !this.level.isLava) {
+        // O tubarão nunca se afoga: ao cair (descendo) na água, afunda e é lançado para cima.
+        if (f.feet > WATER_Y + 4 && f.body.velocity.y >= 0) this.sharkLeap(f);
         continue;
       }
       if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
@@ -1074,60 +1077,39 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  /** Tubarão caiu na água: afunda, ganha impulso e sai num salto bem alto até a terra mais perto. */
+  /**
+   * Tubarão caiu na água: a água vira trampolim. Ele mergulha inclinando o focinho para
+   * baixo, vira para cima e é lançado alto, mantendo o controle no ar (cai onde o jogador levar).
+   */
   private sharkLeap(f: Fighter): void {
     f.zipping = true;
+    const vx = f.body.velocity.x;
     f.body.setVelocity(0, 0);
     f.body.moves = false;
     this.fx('splash', f.x, WATER_Y - 40, 0.9);
-    const prefer = f.intent.move || f.facing;
-    const opts = [prefer, -prefer]
-      .map((d) => this.level.nearestGround(f.x, d))
-      .filter((x) => this.level.groundY(x) !== null);
-    const tx = opts.find((x) => Math.sign(x - f.x) === Math.sign(prefer) && Math.abs(x - f.x) < 640) ?? opts.sort((a, b) => Math.abs(a - f.x) - Math.abs(b - f.x))[0] ?? this.checkpointX;
-    const tyFeet = this.level.groundY(tx) ?? FLOOR_Y;
-    const off = f.def.feetY - f.def.frame / 2; // centro do sprite até os pés
-    const x0 = f.sprite.x;
-    const sunk = f.sprite.y + 70;
-    const y1 = tyFeet - off;
-    const dir = Math.sign(tx - x0) || 1;
-    f.sprite.setFlipX(dir < 0);
-    f.facing = dir as 1 | -1;
-    // 1) Afunda girando de leve, soltando bolhas.
-    this.tweens.add({ targets: f.sprite, y: sunk, angle: dir * 25, duration: 420, ease: 'Quad.easeOut' });
+    const dir = f.facing;
+    const y0 = f.sprite.y;
+    // 1) Mergulho: desce inclinando o focinho alguns graus para baixo, soltando bolhas.
+    this.tweens.add({ targets: f.sprite, y: y0 + 60, x: f.sprite.x + dir * 24, angle: dir * 35, duration: 360, ease: 'Quad.easeOut' });
     const bubbles = this.add
       .particles(0, 0, 'bubble', { x: { min: -14, max: 14 }, speedY: { min: -90, max: -50 }, lifespan: 500, scale: { start: 0.12, end: 0.04 }, alpha: { start: 0.8, end: 0 }, frequency: 60 })
       .setDepth(DEPTH.fighters + 0.6);
     bubbles.startFollow(f.sprite);
+    // 2) No fundo, vira o focinho para cima.
+    this.time.delayedCall(380, () => {
+      this.tweens.add({ targets: f.sprite, angle: -dir * 30, duration: 160, ease: 'Sine.easeInOut' });
+    });
+    // 3) Sai da água com tudo (física normal a partir daqui).
     this.time.delayedCall(560, () => {
       bubbles.stop();
       this.time.delayedCall(600, () => bubbles.destroy());
       if (!f.alive) return;
-      // 2) Salto: arco alto até a terra, com borrifo na saída.
-      this.fx('splash', x0, WATER_Y - 40, 1.1);
-      const apex = Math.min(WATER_Y, tyFeet) - 230;
-      this.tweens.addCounter({
-        from: 0,
-        to: 1,
-        duration: 760,
-        onUpdate: (tw) => {
-          const t = tw.getValue() ?? 0;
-          // Parábola por três pontos: fundo, ápice e chegada.
-          const x = x0 + (tx - x0) * t;
-          const yLine = sunk + (y1 - sunk) * t;
-          const yApex = apex - off;
-          const bulge = yApex - (sunk + y1) / 2;
-          f.sprite.setPosition(x, yLine + bulge * 4 * t * (1 - t));
-          f.sprite.setAngle(dir * (-40 + 80 * t));
-        },
-        onComplete: () => {
-          f.sprite.setAngle(0);
-          f.body.moves = true;
-          f.body.reset(tx, y1);
-          f.zipping = false;
-          this.fx('dust', tx, tyFeet - 6, 1);
-        },
-      });
+      this.fx('splash', f.x, WATER_Y - 40, 1.2);
+      f.body.moves = true;
+      f.body.reset(f.sprite.x, f.sprite.y);
+      f.body.setVelocity(vx * 0.5, -SHARK_LEAP_V);
+      f.zipping = false;
+      this.tweens.add({ targets: f.sprite, angle: 0, duration: 520, ease: 'Sine.easeOut' });
     });
   }
 

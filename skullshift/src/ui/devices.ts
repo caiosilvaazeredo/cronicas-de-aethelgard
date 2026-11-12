@@ -27,7 +27,6 @@ export function keycap(
   const t = scene.add
     .text(0, -2, label, {
       fontFamily: FONT,
-      fontStyle: 'bold',
       fontSize: label.length > 2 ? '15px' : '22px',
       color: tint !== undefined ? '#ffffff' : '#3a2f2a',
     })
@@ -146,7 +145,7 @@ export function playerBadge(scene: Phaser.Scene, x: number, y: number, n: number
   g.fillStyle(INK).fillCircle(0, 2, r + 4);
   g.fillStyle(PLAYER_TINT[n - 1]).fillCircle(0, 0, r);
   const t = scene.add
-    .text(0, 0, String(n), { fontFamily: FONT, fontStyle: 'bold', fontSize: `${Math.round(r * 1.2)}px`, color: '#ffffff' })
+    .text(0, 0, String(n), { fontFamily: FONT, fontSize: `${Math.round(r * 1.2)}px`, color: '#ffffff' })
     .setOrigin(0.5);
   return scene.add.container(x, y, [g, t]);
 }
@@ -167,7 +166,7 @@ export function pillButton(
   g.fillStyle(Phaser.Display.Color.ValueToColor(color).darken(25).color).fillRoundedRect(-w / 2, -h / 2 + 6, w, h, 12);
   g.fillStyle(color).fillRoundedRect(-w / 2, -h / 2, w, h, 12);
   const t = scene.add
-    .text(0, 0, label, { fontFamily: FONT, fontStyle: 'bold', fontSize: '26px', color: '#10223a' })
+    .text(0, 0, label, { fontFamily: FONT, fontSize: '26px', color: '#10223a' })
     .setOrigin(0.5);
   const c = scene.add.container(x, y, [g, t]).setSize(w, h + 10);
   c.setInteractive({ useHandCursor: true })

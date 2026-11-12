@@ -9,18 +9,36 @@ import { UIScene } from './scenes/UIScene';
 
 Object.assign(VIEW, computeView());
 
-const game = new Phaser.Game({
-  type: Phaser.AUTO,
-  parent: 'game',
-  width: W,
-  height: VIEW.h,
-  backgroundColor: '#0e1a2b',
-  pixelArt: true,
-  scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
-  physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
-  input: { gamepad: true, activePointers: 5 },
-  scene: [BootScene, MenuScene, ControlsScene, HowToScene, GameScene, UIScene],
-});
+/** Carrega a fonte antes de desenhar qualquer texto (sem ela, usa a reserva). */
+async function loadFont(): Promise<void> {
+  try {
+    const res = await fetch('./fonts/anak-manja-pt.ttf');
+    if (!res.ok) return;
+    const face = new FontFace('Anak Manja PT', await res.arrayBuffer());
+    await face.load();
+    (document.fonts as unknown as { add(f: FontFace): void }).add(face);
+  } catch {
+    /* fonte reserva */
+  }
+}
+let game: Phaser.Game;
+
+function boot(): void {
+  game = new Phaser.Game({
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: W,
+    height: VIEW.h,
+    backgroundColor: '#0e1a2b',
+    pixelArt: true,
+    scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+    physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
+    input: { gamepad: true, activePointers: 5 },
+    scene: [BootScene, MenuScene, ControlsScene, HowToScene, GameScene, UIScene],
+  });
+  (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
+}
+loadFont().finally(boot);
 
 /**
  * Celular girou (ou a janela mudou de formato): troca o tamanho do canvas e reorganiza.
@@ -30,6 +48,7 @@ let timer = 0;
 function onResize(): void {
   window.clearTimeout(timer);
   timer = window.setTimeout(() => {
+    if (!game) return;
     const v = computeView();
     if (v.portrait === VIEW.portrait && Math.abs(v.h - VIEW.h) < 60) return;
     Object.assign(VIEW, v);
@@ -46,5 +65,3 @@ function onResize(): void {
 window.addEventListener('resize', onResize);
 window.addEventListener('orientationchange', onResize);
 
-// Acesso para testes automatizados.
-(window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;

@@ -34,6 +34,8 @@ interface Projectile {
 const ITEM_RESPAWN = 8000;
 const FACE_RANGE = 460;
 const SCREEN_TWEEN = 550;
+/** Distância (entre os centros) em que o golpe quebra a defesa. */
+const POINT_BLANK = 58;
 
 export class GameScene extends Phaser.Scene {
   mode: Mode = 'story';
@@ -57,6 +59,8 @@ export class GameScene extends Phaser.Scene {
   private startTime = 0;
   private ended = false;
   private winner?: Fighter;
+  /** Recorta o que estiver abaixo da superfície da água (personagem afundando). */
+  private aboveWater!: Phaser.Display.Masks.GeometryMask;
 
   /** Camada de interface (HUD, toque, vitória). */
   get ui(): UIScene | undefined {
@@ -90,6 +94,9 @@ export class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
+    const mg = this.make.graphics({}, false);
+    mg.fillStyle(0xffffff).fillRect(-W, -2000, this.level.width + 2 * W, 2000 + WATER_Y + 3);
+    this.aboveWater = mg.createGeometryMask();
 
     if (this.mode === 'story') {
       const [sc, tile] = def.storyStart;
@@ -178,6 +185,7 @@ export class GameScene extends Phaser.Scene {
   private addPlayer(f: Fighter, device: DeviceId): void {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
+    f.onDoubleJump = (ff) => this.fx('dust', ff.x, ff.feet - 4, 1.3, ff.color);
     this.physics.add.collider(f.sprite, this.level.ground);
     const i = this.players.length;
     this.players.push(f);
@@ -209,6 +217,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.fighters.forEach((f) => f.update(delta));
+    this.level.update(time, delta);
 
     if (this.mode === 'story') this.updateStoryScreens();
     else this.updateVersusScreens();
@@ -263,9 +272,8 @@ export class GameScene extends Phaser.Scene {
     // Versus: quem não tem a vez reaparece no novo cenário, à frente de quem tem.
     const other = this.players[1 - this.leader];
     if (other && other.alive) {
-      other.respawn(this.versusSpawnX(1 - this.leader), FLOOR_Y);
-      this.ui?.hud?.setChar(1 - this.leader, other.def.id);
-      this.announce(1 - this.leader);
+      other.vanish();
+      this.revive(1 - this.leader, () => this.versusSpawnX(1 - this.leader));
     }
   }
 
@@ -348,7 +356,12 @@ export class GameScene extends Phaser.Scene {
         a.attackHits.add(b);
         if (b.invulnerable) continue;
         const dir = Math.sign(b.x - a.x) || a.facing;
-        if (b.blocksFrom(a.x)) {
+        if (b.blocksFrom(a.x, hb.low)) {
+          if (Math.abs(a.x - b.x) <= POINT_BLANK) {
+            // À queima-roupa: o golpe quebra a defesa e deixa o outro tonto.
+            this.guardBreak(b, dir);
+            continue;
+          }
           a.knockback(-dir, 360);
           b.knockback(dir, 180);
           this.sparks((a.x + b.x) / 2, b.feet - 34);
@@ -363,10 +376,43 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private guardBreak(b: Fighter, dir: number): void {
+    b.stun(950);
+    b.knockback(dir, 260);
+    this.cameras.main.shake(140, 0.008);
+    // Pedaços do escudo voando.
+    for (let i = 0; i < 5; i++) {
+      const piece = this.add.image(b.x + dir * 14, b.feet - 30, 'shield').setScale(0.45).setDepth(DEPTH.fx);
+      this.tweens.add({
+        targets: piece,
+        x: piece.x + dir * Phaser.Math.Between(30, 90),
+        y: piece.y - Phaser.Math.Between(20, 70),
+        angle: Phaser.Math.Between(-300, 300),
+        alpha: 0,
+        duration: 600,
+        ease: 'Quad.easeOut',
+        onComplete: () => piece.destroy(),
+      });
+    }
+    this.sparks(b.x, b.feet - 34);
+    this.popText(b.x, b.feet - 120, 'QUEBROU!', '#ffe066');
+  }
+
+  private popText(x: number, y: number, text: string, color: string): void {
+    const t = this.add
+      .text(x, y, text, { fontFamily: FONT, fontSize: '30px', color, stroke: '#10223a', strokeThickness: 8 })
+      .setOrigin(0.5)
+      .setDepth(DEPTH.fx + 2)
+      .setScale(0);
+    this.tweens.add({ targets: t, scale: 1, duration: 260, ease: 'Back.easeOut' });
+    this.tweens.add({ targets: t, y: y - 30, alpha: 0, delay: 650, duration: 450, onComplete: () => t.destroy() });
+  }
+
   private spawnProjectile(f: Fighter): void {
     const pd = f.def.projectile;
     if (!pd) return;
-    const s = this.add.sprite(f.x + f.facing * 30, f.feet - 36, pd.tex).setDepth(DEPTH.projectiles);
+    // Altura do peito: quem está agachado escapa por baixo.
+    const s = this.add.sprite(f.x + f.facing * 30, f.feet - 42, pd.tex).setDepth(DEPTH.projectiles);
     if (pd.spin) s.play(pd.tex);
     s.setFlipX(f.facing < 0);
     s.setAngle(pd.angle * f.facing);
@@ -426,7 +472,7 @@ export class GameScene extends Phaser.Scene {
     victim.kill(cause, dir);
 
     if (cause === 'water') {
-      this.fx('splash', x, WATER_Y - 50, 1);
+      this.waterSplash(x, victim);
     } else {
       this.fx('dust', x, victim.feet - 20, 1.6);
       this.sparks(x, victim.feet - 34);
@@ -445,22 +491,134 @@ export class GameScene extends Phaser.Scene {
 
     if (this.mode === 'story') {
       this.deaths++;
-      this.time.delayedCall(RESPAWN_DELAY, () => {
-        if (this.ended) return;
-        victim.respawn(this.checkpointX, FLOOR_Y);
-        this.ui?.hud?.setChar(0, victim.def.id);
-        this.announce(0);
+      this.time.delayedCall(RESPAWN_DELAY / 2, () => {
+        if (!this.ended) this.revive(0, () => this.checkpointX);
       });
     } else {
       this.leader = 1 - pi;
       this.ui?.hud?.setScreen(this.screen, PLAYER_TINT[this.leader]);
-      this.time.delayedCall(RESPAWN_DELAY, () => {
-        if (this.ended || victim.alive) return;
-        victim.respawn(this.versusSpawnX(pi), FLOOR_Y);
-        this.ui?.hud?.setChar(pi, victim.def.id);
-        this.announce(pi);
+      this.time.delayedCall(RESPAWN_DELAY / 2, () => {
+        if (!this.ended && !victim.alive) this.revive(pi, () => this.versusSpawnX(pi));
       });
     }
+  }
+
+  /** Queda na água: respingo na superfície, ondas, bolhas e o corpo afundando (recortado). */
+  private waterSplash(x: number, victim: Fighter): void {
+    victim.sprite.setMask(this.aboveWater);
+    const s = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(1.35).setDepth(DEPTH.fx).play('splash');
+    s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
+    for (let i = 0; i < 3; i++) {
+      const ring = this.add.ellipse(x, WATER_Y + 8, 60, 14).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.waterRocks).setScale(0.3);
+      this.tweens.add({ targets: ring, scale: 2 + i * 0.6, alpha: 0, delay: i * 180, duration: 900, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
+    }
+    // Gotas para cima.
+    for (let i = 0; i < 8; i++) {
+      const d = this.add.circle(x, WATER_Y, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
+      this.tweens.add({
+        targets: d,
+        x: x + Phaser.Math.Between(-50, 50),
+        y: WATER_Y - Phaser.Math.Between(30, 80),
+        duration: 300,
+        ease: 'Quad.easeOut',
+        yoyo: true,
+        onComplete: () => d.destroy(),
+      });
+    }
+    // Bolhas subindo enquanto ele afunda.
+    for (let i = 0; i < 6; i++) {
+      const b = this.add.circle(x + Phaser.Math.Between(-12, 12), WATER_Y + 70, Phaser.Math.Between(3, 6)).setStrokeStyle(2, 0xffffff, 0.8).setDepth(DEPTH.waterRocks);
+      this.tweens.add({
+        targets: b,
+        y: WATER_Y + 6,
+        x: b.x + Phaser.Math.Between(-10, 10),
+        delay: 200 + i * 130,
+        duration: 600,
+        ease: 'Sine.easeOut',
+        onComplete: () => b.destroy(),
+      });
+    }
+    this.cameras.main.shake(90, 0.004);
+  }
+
+  /**
+   * O xamã chega numa nuvem trazendo o espírito do personagem pendurado (como o juiz de
+   * pista que resgata o piloto), conjura, o corpo inteiro se forma no chão e ele vai embora
+   * flutuando devagar.
+   */
+  private revive(pi: number, spawnX: () => number): void {
+    const p = this.players[pi];
+    if (p.reviving || p.alive) return;
+    p.reviving = true;
+    const color = PLAYER_TINT[pi];
+    const from = p.team === 0 ? -1 : 1; // chega por trás de quem vai renascer
+    const x = spawnX();
+    const hoverY = FLOOR_Y - 190;
+    const d = CHARS[p.baseChar];
+    const ghostFeet = 150; // pés do espírito abaixo do centro da nuvem
+    const ghostY = ghostFeet - (d.feetY - d.frame / 2);
+
+    const rope = this.add.graphics();
+    rope.lineStyle(2, 0xfff7dc, 0.8).lineBetween(14 * -from, -10, 0, ghostFeet - 70);
+    const ghost = this.add.sprite(0, ghostY, `${p.baseChar}_idle`).play(`${p.baseChar}_idle`);
+    ghost.setAlpha(0.6).setTint(0xcfefff).setFlipX(from > 0);
+    const glow = this.add.image(0, ghostY - 10, 'aura').setTint(color).setScale(0.9, 1).setAlpha(0.6);
+    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
+    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(from > 0);
+    const rig = this.add.container(x + from * 420, hoverY - 300, [rope, glow, ghost, cloud, shaman]).setDepth(DEPTH.fx + 3).setAlpha(0);
+    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.tweens.add({ targets: [ghost, glow], angle: { from: -6, to: 6 }, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+
+    // 1) Chega planando.
+    this.tweens.add({
+      targets: rig,
+      alpha: 1,
+      x,
+      y: hoverY,
+      duration: 750,
+      ease: 'Sine.easeOut',
+      onComplete: () => {
+        // 2) Conjura: o espírito desce e vira o corpo inteiro.
+        shaman.play('shaman_attack');
+        this.time.delayedCall(320, () => {
+          if (this.ended) return;
+          rope.setVisible(false);
+          this.tweens.killTweensOf([ghost, glow]);
+          ghost.setAngle(0);
+          this.tweens.add({
+            targets: [ghost, glow],
+            y: `+=${FLOOR_Y - hoverY - ghostFeet}`,
+            duration: 240,
+            ease: 'Quad.easeIn',
+            onComplete: () => {
+              ghost.setVisible(false);
+              glow.setVisible(false);
+              p.respawn(rig.x, FLOOR_Y);
+              p.sprite.setTintFill(0xffffff);
+              this.time.delayedCall(140, () => p.sprite.clearTint());
+              this.ui?.hud?.setChar(pi, p.def.id);
+              this.announce(pi);
+            },
+          });
+        });
+        // 3) Vai embora flutuando, sem pressa.
+        shaman.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+          shaman.play('shaman_idle');
+          this.tweens.add({
+            targets: rig,
+            x: rig.x + from * 160,
+            y: hoverY - 340,
+            alpha: 0,
+            duration: 1300,
+            ease: 'Sine.easeIn',
+            onComplete: () => {
+              bob.stop();
+              rig.destroy();
+            },
+          });
+        });
+      },
+    });
   }
 
   // ---------- itens / transformação ----------
@@ -475,7 +633,6 @@ export class GameScene extends Phaser.Scene {
     const prompt = this.add
       .text(x, y - 46, '', {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '16px',
         color: '#ffffff',
         stroke: '#10223a',
@@ -548,7 +705,6 @@ export class GameScene extends Phaser.Scene {
     const t = this.add
       .text(p.x, p.feet - 110, CHARS[char].name.toUpperCase() + '!', {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '22px',
         color: '#ffe066',
         stroke: '#10223a',
@@ -598,8 +754,8 @@ export class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         if (!win.alive) return;
-        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false };
-        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false }));
+        win.intent = { move: 0, jump: true, attack: false, guard: false, pick: false, crouch: false };
+        this.time.delayedCall(220, () => (win.intent = { move: 0, jump: false, attack: true, guard: false, pick: false, crouch: false }));
       },
     });
 
@@ -609,6 +765,7 @@ export class GameScene extends Phaser.Scene {
 
   private updateVictory(delta: number): void {
     this.applyCamera();
+    this.level.update(this.time.now, delta);
     for (const f of this.fighters) {
       if (f !== this.winner) f.intent = emptyIntent();
       f.update(delta);
@@ -627,11 +784,10 @@ export class GameScene extends Phaser.Scene {
   /** Renascimento: efeito na cor do jogador + "P1!"/"P2!" saltando sobre ele. */
   private announce(pi: number): void {
     const p = this.players[pi];
-    this.fx('transform', p.x, p.feet - 40, 1, PLAYER_TINT[pi]);
+    this.fx('transform', p.x, p.feet - 40, 0.8, PLAYER_TINT[pi]);
     const t = this.add
       .text(p.x, p.feet - 120, `P${pi + 1}!`, {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '34px',
         color: PLAYER_HEX[pi],
         stroke: '#10223a',
@@ -668,7 +824,7 @@ function bodyBox(f: Fighter): HitBox {
 }
 
 function projBox(p: Projectile): HitBox {
-  return { x1: p.sprite.x - 12, x2: p.sprite.x + 12, y1: p.sprite.y - 8, y2: p.sprite.y + 8 };
+  return { x1: p.sprite.x - 12, x2: p.sprite.x + 12, y1: p.sprite.y - 6, y2: p.sprite.y + 6 };
 }
 
 function overlap(a: HitBox, b: HitBox): boolean {

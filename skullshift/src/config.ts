@@ -10,7 +10,7 @@ export const FLOOR_Y = 472;
 /** Superfície da água. */
 export const WATER_Y = 500;
 /** Pés abaixo desta linha = caiu na água. */
-export const DEATH_Y = 530;
+export const DEATH_Y = 508;
 
 export const GRAVITY = 1500;
 export const JUMP_V = 580;
@@ -33,7 +33,8 @@ export const DEPTH = {
   hud: 100,
 } as const;
 
-export const FONT = '"Arial Black", "Arial Bold", Arial, sans-serif';
+/** Fonte do jogo: Anak Manja (com acentos do português) e reserva para setas e símbolos. */
+export const FONT = '"Anak Manja PT", "Arial Black", "Arial Bold", Arial, sans-serif';
 
 /** Mostra os controles na tela: aparelho com toque, ou ?touch=1 na URL (para testar no PC). */
 export function wantsTouchControls(): boolean {

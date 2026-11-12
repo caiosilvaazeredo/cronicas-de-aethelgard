@@ -6,7 +6,7 @@ import { PLAYER_TINT, gamepadArt, keycap, panel, phoneArt, pillButton, playerBad
 
 type Mode = 'story' | 'versus';
 
-const CAPTION = { fontFamily: FONT, fontStyle: 'bold', fontSize: '17px', color: '#10223a' };
+const CAPTION = { fontFamily: FONT, fontSize: '17px', color: '#10223a' };
 
 /** Tela "Como jogar": mostra o mapa de botões do dispositivo escolhido por cada jogador. */
 export class HowToScene extends Phaser.Scene {
@@ -43,7 +43,7 @@ export class HowToScene extends Phaser.Scene {
       const py = P ? (n === 1 ? 760 : 560 + i * 700) * k : 268;
       this.add.container(px, py, made).setScale(P ? (n === 1 ? 2.3 : 2.1) * Math.min(1, k * 1.1) : 1);
     });
-    this.rules(P ? (n === 1 ? 1560 : 2000) * (HH / 2770) : 520);
+    this.rules(P ? (n === 1 ? 1640 : 2080) * (HH / 2770) : 518);
 
     if (P) {
       pillButton(this, W / 2 - 290, HH - 150, '◀  VOLTAR', () => this.back(), 230).setScale(1.6);
@@ -82,38 +82,57 @@ export class HowToScene extends Phaser.Scene {
   }
 
   /** Teclas em formato de cruz + tecla de ataque, com legendas e setas. */
+  /** Teclas na posição real do teclado, com legendas e setas. */
   private keyMap(cx: number, cy: number, d: DeviceId): void {
-    const k =
-      d === 'kb-left'
-        ? { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54, pick: 'E' }
-        : d === 'kb-right'
-          ? { up: '↑', left: '←', down: '↓', right: '→', atk: 'Enter', atkW: 92, pick: '.' }
-          : { up: 'W', left: 'A', down: 'S', right: 'D', atk: 'F', atkW: 54, pick: 'E' };
-    const ox = cx - 90;
-    keycap(this, ox, cy - 30, k.up);
-    keycap(this, ox - 58, cy + 28, k.left);
-    keycap(this, ox, cy + 28, k.down);
-    keycap(this, ox + 58, cy + 28, k.right);
-    keycap(this, cx + 110, cy + 28, k.atk, k.atkW, 50, 0xd9534f);
-    keycap(this, cx + 200, cy + 28, k.pick, 50, 50, 0xd8a530);
+    const right = d === 'kb-right';
+    const ox = cx - 40;
+    const RED = 0xd9534f;
+    const GOLD = 0xd8a530;
+    const BLUE = 0x4a7fc1;
+    // [x, y, rótulo, largura, cor]
+    const keys: Array<[number, number, string, number, number?]> = right
+      ? [
+          [ox - 78, cy - 30, 'Shift', 70, BLUE],
+          [ox, cy - 30, '↑', 50],
+          [ox + 58, cy - 30, '.', 50, GOLD],
+          [ox - 58, cy + 28, '←', 50],
+          [ox, cy + 28, '↓', 50],
+          [ox + 58, cy + 28, '→', 50],
+          [ox + 138, cy + 28, 'Enter', 84, RED],
+        ]
+      : [
+          [ox - 58, cy - 30, 'Q', 50, BLUE],
+          [ox, cy - 30, 'W', 50],
+          [ox + 58, cy - 30, 'E', 50, GOLD],
+          [ox - 58, cy + 28, 'A', 50],
+          [ox, cy + 28, 'S', 50],
+          [ox + 58, cy + 28, 'D', 50],
+          [ox + 116, cy + 28, 'F', 50, RED],
+        ];
+    for (const [x, y, t, w, c] of keys) keycap(this, x, y, t, w, 50, c);
+    const atkX = right ? ox + 138 : ox + 116;
+    const atkW = right ? 84 : 50;
 
     const g = this.add.graphics().lineStyle(3, 0xe67e22, 1);
-    const label = (x: number, y: number, text: string, ax: number, ay: number) => {
-      this.add.text(x, y, text, CAPTION).setOrigin(0.5);
-      g.lineBetween(x, y + (ay > y ? 12 : -12), ax, ay);
+    const label = (x: number, y: number, text: string, ax: number, ay: number, origin = 0.5) => {
+      const t = this.add.text(x, y, text, CAPTION).setOrigin(origin, 0.5);
+      const lx = origin === 0 ? x - 4 : origin === 1 ? x + 4 : x;
+      const ly = origin === 0.5 ? y + (ay > y ? 12 : -12) : y;
+      g.lineBetween(lx, ly, ax, ay);
+      return t;
     };
-    label(ox + 110, cy - 72, 'Pular', ox + 26, cy - 40);
-    label(ox - 116, cy - 40, 'Mover', ox - 70, cy + 4);
-    this.add.text(ox + 104, cy + 28, '▶', { ...CAPTION, color: '#e67e22' }).setOrigin(0.5);
-    this.add.text(ox - 104, cy + 28, '◀', { ...CAPTION, color: '#e67e22' }).setOrigin(0.5);
-    label(ox, cy + 96, 'Defender', ox, cy + 58);
-    label(cx + 110, cy - 40, 'Atacar', cx + 110, cy);
-    label(cx + 205, cy - 72, 'Pegar item', cx + 200, cy);
+    label(right ? ox + 6 : ox, cy - 104, 'Pular', ox, cy - 58);
+    if (right) label(ox - 92, cy - 82, 'Defender', ox - 86, cy - 58);
+    else label(ox - 100, cy - 70, 'Defender', ox - 62, cy - 52, 1);
+    label(ox + 104, cy - 70, 'Pegar', ox + 76, cy - 52, 0);
+    label(ox - 100, cy + 28, 'Mover', ox - 86, cy + 28, 1);
+    label(ox, cy + 98, 'Agachar', ox, cy + 58);
+    label(atkX + atkW / 2 + 14, cy + 28, 'Atacar', atkX + atkW / 2 + 4, cy + 28, 0);
     if (d === 'kb-full') {
       this.add
-        .text(cx + 150, cy + 92, 'também: setas, Espaço,\nJ para atacar e L para pegar', {
-          fontFamily: 'Arial, sans-serif',
-          fontSize: '14px',
+        .text(cx + 120, cy + 98, 'Também: setas, Espaço,\nJ (atacar), K (defender), L (pegar)', {
+          fontFamily: FONT,
+          fontSize: '12px',
           color: '#3c5368',
           align: 'center',
         })
@@ -129,12 +148,13 @@ export class HowToScene extends Phaser.Scene {
       [0xe5533d, 'B', 'Defender (ou LB/RB)'],
       [0xf2c230, 'Y', 'Pegar item'],
       [0x5a6472, '◉', 'Mover (analógico ou direcional)'],
+      [0x5a6472, '▼', 'Agachar (para baixo)'],
     ];
     rows.forEach(([c, glyph, text], k) => {
-      const y = cy - 74 + k * 37;
+      const y = cy - 82 + k * 32;
       const x = cx + 50;
       this.add.circle(x, y, 15, c).setStrokeStyle(3, 0x1d1a2b);
-      this.add.text(x, y, glyph, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#fff' }).setOrigin(0.5);
+      this.add.text(x, y, glyph, { fontFamily: FONT, fontSize: '15px', color: '#fff' }).setOrigin(0.5);
       this.add.text(x + 26, y, text, { ...CAPTION, fontSize: '16px' }).setOrigin(0, 0.5);
     });
   }
@@ -147,60 +167,67 @@ export class HowToScene extends Phaser.Scene {
       ['DEF', 'Defender'],
       ['ATQ', 'Atacar'],
       ['PEGA', 'Pegar item'],
+      ['▼', 'Agachar'],
     ];
     rows.forEach(([glyph, text], k) => {
-      const y = cy - 74 + k * 37;
+      const y = cy - 84 + k * 32;
       const x = cx + 90;
-      this.add.circle(x, y, 19, 0x10223a, 0.85).setStrokeStyle(3, 0xfff7dc);
-      this.add.text(x, y, glyph, { fontFamily: FONT, fontStyle: 'bold', fontSize: '11px', color: '#fff7dc' }).setOrigin(0.5);
+      this.add.circle(x, y, 16, 0x10223a, 0.85).setStrokeStyle(3, 0xfff7dc);
+      this.add.text(x, y, glyph, { fontFamily: FONT, fontSize: '11px', color: '#fff7dc' }).setOrigin(0.5);
       this.add.text(x + 30, y, text, { ...CAPTION, fontSize: '16px' }).setOrigin(0, 0.5);
     });
     this.add
       .text(cx, cy + 112, 'Celular deitado ou em pé. Dá para usar vários dedos ao mesmo tempo.', {
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT,
         fontSize: '14px',
         color: '#3c5368',
       })
       .setOrigin(0.5);
   }
 
-  /** Regras em uma faixa: golpe único, escudo, transformação, objetivo. */
-  /** Regras: golpe único, escudo, transformação, objetivo. Deitado em faixa; em pé em grade 2x2. */
+  /** Regras em grade: 3 colunas deitado, 2 colunas em pé. */
   private rules(y: number): void {
     const P = VIEW.portrait;
-    const g = this.add.graphics();
-    const w = P ? 1180 : 1060;
-    const h = P ? 400 : 92;
-    g.fillStyle(0x10223a, 0.88).fillRoundedRect(W / 2 - w / 2, y - h / 2, w, h, 18);
+    const cols = P ? 2 : 3;
     const tips: Array<[string, string]> = [
       ['skull_avatar', 'Um golpe mata.\nVocê também!'],
-      ['shield', 'Segure para TRÁS\npara defender'],
-      ['items', 'Osso, arpão, lança ou crista:\nPEGAR para se transformar'],
-      ['goal', this.mode === 'story' ? '5 cenários: chegue ao\nfim do lado oposto' : 'Matou? Ganhou a vez.\nChegue ao seu fim!'],
+      ['shield', 'Segure para TRÁS: defesa.\nColado no rival, o golpe\nQUEBRA a defesa.'],
+      ['crouch', 'Agachado: desvia de tiros\ne dá golpe baixo.'],
+      ['double', 'Aperte pular no ar:\npulo duplo.'],
+      ['items', 'Osso, arpão, lança ou\ncrista: PEGAR transforma.'],
+      ['goal', this.mode === 'story' ? '5 cenários: chegue ao\nfim do lado oposto.' : 'Matou? Ganhou a vez.\nChegue ao seu fim!'],
     ];
+    const rows = Math.ceil(tips.length / cols);
+    const w = P ? 1180 : 1080;
+    const cellH = P ? 170 : 74;
+    const h = rows * cellH + (P ? 40 : 14);
+    const g = this.add.graphics();
+    g.fillStyle(0x10223a, 0.88).fillRoundedRect(W / 2 - w / 2, y - h / 2, w, h, 18);
     tips.forEach(([icon, text], k) => {
       const before = this.children.list.length;
-      const x = 0;
-      const yy = 0;
       if (icon === 'items') {
-        this.add.image(x + 2, yy - 16, 'bone', 0).setScale(0.6);
-        this.add.image(x + 22, yy - 2, 'harpoon').setScale(0.5).setAngle(45);
-        this.add.image(x + 12, yy + 16, 'spear_item').setScale(0.6);
-        this.add.image(x - 14, yy + 4, 'crest_item').setScale(0.45);
+        this.add.image(2, -16, 'bone', 0).setScale(0.6);
+        this.add.image(22, -2, 'harpoon').setScale(0.5).setAngle(45);
+        this.add.image(12, 16, 'spear_item').setScale(0.6);
+        this.add.image(-14, 4, 'crest_item').setScale(0.45);
       } else if (icon === 'goal') {
-        this.add.image(x + 18, yy + 26, 'skull_spike').setOrigin(0.5, 1).setScale(0.55);
+        this.add.image(18, 26, 'skull_spike').setOrigin(0.5, 1).setScale(0.55);
       } else if (icon === 'shield') {
-        this.add.image(x + 18, yy, 'shield').setScale(1.4);
+        this.add.image(18, 0, 'shield').setScale(1.4);
+      } else if (icon === 'crouch') {
+        this.add.sprite(18, -6, 'skull_idle', 0).setScale(0.55, 0.36);
+      } else if (icon === 'double') {
+        this.add.text(18, 0, '▲\n▲', { fontFamily: FONT, fontSize: '16px', color: '#ffe066', align: 'center', lineSpacing: -6 }).setOrigin(0.5);
       } else {
-        this.add.image(x + 18, yy, icon).setScale(0.26);
+        this.add.image(18, 0, icon).setScale(0.26);
       }
       this.add
-        .text(x + 54, yy, text, { fontFamily: FONT, fontStyle: 'bold', fontSize: '15px', color: '#fff7dc', lineSpacing: 4 })
+        .text(46, 0, text, { fontFamily: FONT, fontSize: '13px', color: '#fff7dc', lineSpacing: 2 })
         .setOrigin(0, 0.5);
       const made = this.children.list.slice(before);
-      const cx = P ? W / 2 - w / 2 + 50 + (k % 2) * (w / 2) : W / 2 - w / 2 + 40 + k * (w / 4);
-      const cy = P ? y - 95 + Math.floor(k / 2) * 190 : y;
-      this.add.container(cx, cy, made).setScale(P ? 1.95 : 1);
+      const cx = W / 2 - w / 2 + (P ? 40 : 30) + (k % cols) * (w / cols);
+      const cy = y - h / 2 + (P ? 20 : 7) + cellH / 2 + Math.floor(k / cols) * cellH;
+      this.add.container(cx, cy, made).setScale(P ? 1.85 : 1);
     });
   }
 

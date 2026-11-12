@@ -52,7 +52,6 @@ export class MenuScene extends Phaser.Scene {
     this.add
       .text(P ? W / 2 : W / 2 + 60, P ? 400 : 140, 'SKULLSHIFT', {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: P ? '128px' : '96px',
         color: '#fff7dc',
         stroke: '#10223a',
@@ -64,7 +63,6 @@ export class MenuScene extends Phaser.Scene {
       const t = this.add
         .text(W / 2, P ? 620 + i * 130 : 290 + i * 66, o.label, {
           fontFamily: FONT,
-          fontStyle: 'bold',
           fontSize: P ? '58px' : '38px',
           color: '#fff7dc',
           stroke: '#10223a',
@@ -88,7 +86,7 @@ export class MenuScene extends Phaser.Scene {
           'Segure para TRÁS para andar defendendo. Sobre osso, arpão, lança ou crista, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: FONT,
           fontSize: P ? '36px' : '19px',
           color: '#0b2236',
           align: 'center',

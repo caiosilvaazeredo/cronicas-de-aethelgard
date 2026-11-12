@@ -98,6 +98,9 @@ export class Level {
   readonly ground: Phaser.Physics.Arcade.StaticGroup;
   /** Plataformas em tiles globais. */
   readonly segments: Segment[];
+  private clouds: Array<{ img: Phaser.GameObjects.Image; speed: number }> = [];
+  private waves: Phaser.GameObjects.TileSprite[] = [];
+  private cloudSpan = 0;
 
   constructor(private scene: Phaser.Scene, def: LevelDef) {
     this.def = def;
@@ -147,6 +150,22 @@ export class Level {
     return best;
   }
 
+  /** Movimento contínuo do cenário: nuvens com o vento e ondas na água. */
+  update(time: number, delta: number): void {
+    const dt = delta / 1000;
+    for (const c of this.clouds) {
+      c.img.x += c.speed * dt;
+      if (c.img.x > this.cloudSpan) c.img.x = -600;
+    }
+    const camX = this.scene.cameras.main.scrollX;
+    const [a, b] = this.waves;
+    // As ondas acompanham o mundo (como se estivessem paradas) e ainda correm devagar.
+    a.tilePositionX = camX + time * 0.02;
+    a.tilePositionY = Math.sin(time / 900) * 3;
+    b.tilePositionX = (camX * 0.8 - time * 0.015) / 1.6;
+    b.tilePositionY = Math.cos(time / 1100) * 3;
+  }
+
   private buildBackground(): void {
     const s = this.scene;
     // Faixa acima do céu (aparece em pé, quando a câmera mostra mais altura).
@@ -156,16 +175,54 @@ export class Level {
     // Nuvens em parallax.
     const rng = new Phaser.Math.RandomDataGenerator(['skullshift-clouds']);
     const span = W + (this.width - W) * 0.25 + 600;
+    this.cloudSpan = span + 400;
     for (let x = -200, i = 0; x < span; x += rng.between(330, 460), i++) {
-      s.add
+      const img = s.add
         .image(x, rng.between(70, 190), `cloud_0${(i % 8) + 1}`)
         .setOrigin(0, 0)
         .setScrollFactor(0.25, 1)
         .setDepth(DEPTH.clouds);
+      // Nuvens mais altas andam mais rápido com o vento.
+      this.clouds.push({ img, speed: rng.realInRange(8, 22) });
     }
+
+    // Vento: rajadas finas cruzando o céu e folhas voando.
+    s.add
+      .particles(0, 0, 'streak', {
+        x: { min: -120, max: W - 200 },
+        y: { min: 40, max: 400 },
+        speedX: { min: 650, max: 950 },
+        lifespan: 900,
+        alpha: { start: 0.55, end: 0 },
+        scaleX: { min: 0.6, max: 1.4 },
+        frequency: 240,
+        quantity: 1,
+      })
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH.clouds);
+    s.add
+      .particles(0, 0, 'leaf', {
+        x: { min: -60, max: W / 2 },
+        y: { min: 200, max: 470 },
+        speedX: { min: 140, max: 260 },
+        speedY: { min: -40, max: 30 },
+        rotate: { start: 0, end: 540 },
+        lifespan: 6500,
+        gravityY: 8,
+        tint: [0x7ccf4f, 0x9fd65a, 0x5ea845],
+        frequency: 700,
+        quantity: 1,
+      })
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH.deco);
 
     s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, 0x39b5fd).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
     s.add.rectangle(0, WATER_Y, W, 4, 0x8fd9ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
+    // Ondas: duas camadas de cristas claras andando em velocidades diferentes.
+    this.waves = [
+      s.add.tileSprite(0, WATER_Y + 8, W, 260, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.55),
+      s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.3).setTileScale(1.6, 1.3),
+    ];
 
     // Pedras na água, inclusive dentro dos buracos.
     const rr = new Phaser.Math.RandomDataGenerator(['skullshift-rocks']);
@@ -197,6 +254,13 @@ export class Level {
       else merged.push([seg[0], seg[1]]);
     }
     for (const [start, n] of merged) {
+      // Espuma batendo na base do penhasco.
+      for (let i = 0; i < n; i++) {
+        s.add
+          .sprite((start + i) * TILE + TILE / 2, GRASS_Y + TILE + 28, 'water_foam')
+          .setDepth(DEPTH.waterRocks)
+          .play({ key: 'water_foam', startFrame: (start + i) % 16 });
+      }
       for (let i = 0; i < n; i++) {
         const col = n === 1 ? 8 : i === 0 ? 5 : i === n - 1 ? 7 : 6;
         const x = (start + i) * TILE;

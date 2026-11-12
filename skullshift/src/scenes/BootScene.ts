@@ -40,6 +40,9 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('splash', 'fx/splash.png', { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('dust', 'fx/dust.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('transform', 'fx/transform.png', { frameWidth: 192, frameHeight: 192 });
+    this.load.spritesheet('shaman_idle', 'chars/shaman_idle.png', { frameWidth: 192, frameHeight: 192 });
+    this.load.spritesheet('shaman_attack', 'chars/shaman_attack.png', { frameWidth: 192, frameHeight: 192 });
+    this.load.spritesheet('water_foam', 'terrain/water_foam.png', { frameWidth: 192, frameHeight: 192 });
   }
 
   create(): void {
@@ -57,6 +60,9 @@ export class BootScene extends Phaser.Scene {
     this.anim('splash', 9, 18, 0);
     this.anim('dust', 8, 18, 0);
     this.anim('transform', 11, 22, 0);
+    this.anim('shaman_idle', 8, 10, -1);
+    this.anim('shaman_attack', 10, 14, 0);
+    this.anim('water_foam', 16, 10, -1);
 
     this.makeSky();
     this.makeShield();
@@ -65,6 +71,7 @@ export class BootScene extends Phaser.Scene {
     this.makeSpark();
     this.makeConfetti();
     this.makeAura();
+    this.makeWindAndWaves();
 
     this.scene.start('menu');
   }
@@ -126,6 +133,56 @@ export class BootScene extends Phaser.Scene {
     g.fillStyle(0xd1a35c);
     g.fillRect(44, 29, 3, 6);
     g.generateTexture('spear_item', 64, 64);
+    g.destroy();
+  }
+
+  /** Texturas de movimento: rajada de vento, folha, cristas de onda e estrela (tontura). */
+  private makeWindAndWaves(): void {
+    const streak = this.textures.createCanvas('streak', 90, 3)!;
+    const sc = streak.getContext();
+    const sg = sc.createLinearGradient(0, 0, 90, 0);
+    sg.addColorStop(0, 'rgba(255,255,255,0)');
+    sg.addColorStop(0.7, 'rgba(255,255,255,0.9)');
+    sg.addColorStop(1, 'rgba(255,255,255,0)');
+    sc.fillStyle = sg;
+    sc.fillRect(0, 0, 90, 3);
+    streak.refresh();
+
+    const g = this.make.graphics({}, false);
+    g.fillStyle(0xffffff).fillEllipse(5, 3, 10, 5);
+    g.generateTexture('leaf', 10, 6);
+    g.clear();
+
+    // Cristas: arcos curtos espalhados num ladrilho que se repete sem emenda.
+    const waves = this.textures.createCanvas('waves', 256, 96)!;
+    const wc = waves.getContext();
+    wc.strokeStyle = 'rgba(220,245,255,0.9)';
+    wc.lineWidth = 3;
+    wc.lineCap = 'round';
+    const crests = [
+      [20, 10, 30], [110, 30, 22], [190, 14, 34], [60, 52, 26], [160, 66, 20], [230, 82, 24], [10, 86, 18],
+    ];
+    for (const [x, y, w] of crests) {
+      wc.beginPath();
+      for (let i = 0; i <= w; i++) {
+        const px = (x + i) % 256;
+        const py = y + Math.sin((i / w) * Math.PI) * -4;
+        if (i === 0 || px === 0) wc.moveTo(px, py);
+        else wc.lineTo(px, py);
+      }
+      wc.stroke();
+    }
+    waves.refresh();
+
+    g.fillStyle(0xffffff);
+    const pts: number[] = [];
+    for (let i = 0; i < 10; i++) {
+      const r = i % 2 === 0 ? 8 : 3.5;
+      const a = -Math.PI / 2 + (i * Math.PI) / 5;
+      pts.push(8 + Math.cos(a) * r, 8 + Math.sin(a) * r);
+    }
+    g.fillPoints(pts.reduce<Phaser.Types.Math.Vector2Like[]>((acc, v, i) => (i % 2 ? (acc[acc.length - 1].y = v, acc) : [...acc, { x: v, y: 0 }]), []), true);
+    g.generateTexture('star', 16, 16);
     g.destroy();
   }
 

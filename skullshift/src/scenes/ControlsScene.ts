@@ -83,7 +83,7 @@ export class ControlsScene extends Phaser.Scene {
     const HH = this.scale.height;
     this.add
       .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.', {
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT,
         fontSize: P ? '30px' : '18px',
         color: '#fff7dc',
         wordWrap: { width: 1100 },
@@ -185,12 +185,12 @@ export class ControlsScene extends Phaser.Scene {
     items.push(playerBadge(this, cx - 210, cy - 132, i + 1));
     items.push(
       this.add
-        .text(cx, cy + 82, info.name, { fontFamily: FONT, fontStyle: 'bold', fontSize: '26px', color: '#10223a' })
+        .text(cx, cy + 82, info.name, { fontFamily: FONT, fontSize: '26px', color: '#10223a' })
         .setOrigin(0.5),
     );
     items.push(
       this.add
-        .text(cx, cy + 116, info.detail, { fontFamily: 'Arial, sans-serif', fontSize: '19px', color: '#3c5368' })
+        .text(cx, cy + 116, info.detail, { fontFamily: FONT, fontSize: '19px', color: '#3c5368' })
         .setOrigin(0.5),
     );
     // Setas para trocar.
@@ -212,7 +212,7 @@ export class ControlsScene extends Phaser.Scene {
     const hint = this.mode === 'story' ? 'A / D' : i === 0 ? 'A / D' : '← / →';
     items.push(
       this.add
-        .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: 'Arial, sans-serif', fontSize: '15px', color: '#6b7f90' })
+        .text(cx, cy + 150, `trocar: ${hint}`, { fontFamily: FONT, fontSize: '15px', color: '#6b7f90' })
         .setOrigin(0.5),
     );
     return this.add.container(px, py, items).setScale(sc);
@@ -246,7 +246,6 @@ export class ControlsScene extends Phaser.Scene {
         this.add
           .text(x, cy + 34, s.label, {
             fontFamily: FONT,
-            fontStyle: 'bold',
             fontSize: '15px',
             color: on ? '#10223a' : '#9aa3ad',
           })

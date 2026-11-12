@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { DEPTH, FONT, VIEW, W, portraitPanelTop } from '../config';
 
-type ButtonId = 'left' | 'right' | 'jump' | 'guard' | 'attack' | 'pick';
+type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick';
 
 interface Button {
   id: ButtonId;
@@ -17,6 +17,7 @@ export interface TouchState {
   left: boolean;
   right: boolean;
   guard: boolean;
+  crouch: boolean;
   jumpPressed: boolean;
   attackPressed: boolean;
   pickPressed: boolean;
@@ -27,6 +28,7 @@ type Spec = [ButtonId, number, number, number, string];
 const LABELS: Record<ButtonId, string> = {
   left: '◀',
   right: '▶',
+  crouch: '▼',
   guard: 'DEF',
   jump: 'PULA',
   attack: 'ATQ',
@@ -35,26 +37,29 @@ const LABELS: Record<ButtonId, string> = {
 
 /** Deitado: posições absolutas no canvas 1280x720. */
 const LANDSCAPE_FULL: Spec[] = [
-  ['left', 86, 620, 62, ''],
-  ['right', 236, 620, 62, ''],
+  ['left', 80, 590, 56, ''],
+  ['right', 240, 590, 56, ''],
+  ['crouch', 160, 672, 40, ''],
   ['guard', 1000, 640, 50, ''],
   ['jump', 1110, 530, 54, ''],
   ['attack', 1190, 650, 64, ''],
   ['pick', 880, 650, 46, ''],
 ];
 const LANDSCAPE_HALF: Spec[] = [
-  ['left', 62, 640, 50, ''],
-  ['right', 178, 640, 50, ''],
-  ['guard', 62, 528, 42, ''],
-  ['jump', 178, 528, 42, ''],
+  ['left', 58, 610, 46, ''],
+  ['right', 178, 610, 46, ''],
+  ['crouch', 118, 682, 32, ''],
+  ['guard', 58, 500, 40, ''],
+  ['jump', 178, 500, 40, ''],
   ['attack', 294, 600, 54, ''],
   ['pick', 294, 484, 40, ''],
 ];
 
 /** Em pé: frações da área do painel (x da largura, y da altura; raio da largura). */
 const PORTRAIT_FULL: Spec[] = [
-  ['left', 0.14, 0.5, 0.105, ''],
-  ['right', 0.37, 0.5, 0.105, ''],
+  ['left', 0.13, 0.42, 0.1, ''],
+  ['right', 0.37, 0.42, 0.1, ''],
+  ['crouch', 0.25, 0.76, 0.085, ''],
   ['pick', 0.62, 0.26, 0.07, ''],
   ['guard', 0.62, 0.66, 0.08, ''],
   ['jump', 0.84, 0.28, 0.09, ''],
@@ -62,8 +67,9 @@ const PORTRAIT_FULL: Spec[] = [
 ];
 /** Em pé, versus: cada jogador usa metade da largura (P2 espelhado). */
 const PORTRAIT_HALF: Spec[] = [
-  ['left', 0.1, 0.66, 0.07, ''],
-  ['right', 0.25, 0.66, 0.07, ''],
+  ['left', 0.09, 0.6, 0.065, ''],
+  ['right', 0.25, 0.6, 0.065, ''],
+  ['crouch', 0.17, 0.84, 0.055, ''],
   ['guard', 0.1, 0.33, 0.055, ''],
   ['jump', 0.25, 0.33, 0.055, ''],
   ['attack', 0.4, 0.52, 0.075, ''],
@@ -114,7 +120,6 @@ export class TouchPad {
       const label = scene.add
         .text(x, y, text, {
           fontFamily: FONT,
-          fontStyle: 'bold',
           fontSize: text.length > 1 ? `${Math.round(r * 0.42)}px` : `${Math.round(r * 0.8)}px`,
           color: '#fff7dc',
         })
@@ -155,6 +160,7 @@ export class TouchPad {
       left: get('left'),
       right: get('right'),
       guard: get('guard'),
+      crouch: get('crouch'),
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
       pickPressed: pick && !this.prevPick,

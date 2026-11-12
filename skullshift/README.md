@@ -13,8 +13,10 @@ Jogo de duelo 2D de ação, feito com Phaser 3, TypeScript e Vite. Você começa
 2. Importe os sprites (eles não ficam no Git, veja **Sprites** abaixo):
 
    ```bash
-   scripts/import-assets.sh caminho/Tiny_Swords_Enemy_Pack.zip caminho/Tiny_Swords_Free_Pack.zip
+   scripts/import-assets.sh caminho/Tiny_Swords_Enemy_Pack.zip caminho/Tiny_Swords_Free_Pack.zip caminho/anak_manja.zip
    ```
+
+   O terceiro zip é a fonte **Anak Manja** (Khurasan Studio), livre para uso pessoal e comercial. O script gera uma versão com os acentos do português, que a fonte original não tem, e para isso precisa do `fonttools` (`pip install fonttools`). Sem a fonte, o jogo usa Arial Black.
 
 3. Inicie o servidor de desenvolvimento:
 
@@ -58,11 +60,19 @@ Em seguida, a tela **Como jogar** mostra os botões do dispositivo escolhido.
 |---|---|---|---|---|---|
 | Mover | A/D ou ←/→ | A/D | ←/→ | Analógico ou direcional | ◀ ▶ |
 | Pular | W, ↑ ou Espaço | W | ↑ | A | PULA |
-| Defender | S ou ↓ | S | ↓ | B, LB ou RB | DEF |
-| Atacar | F ou J | F | Enter ou 0 | X | ATQ |
+| Defender | Q ou K | Q | Shift ou / | B, LB ou RB | DEF |
+| Agachar | S ou ↓ | S | ↓ | Para baixo | ▼ |
+| Atacar | F ou J | F | Enter ou 0 (numérico) | X | ATQ |
 | Pegar item | E ou L | E | . ou 1 (numérico) | Y | PEGA |
 
-Com um oponente perto, segurar para **trás** faz o personagem andar devagar com o escudo levantado, como em jogo de luta. O escudo bloqueia golpes e projéteis que vêm pela frente. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
+Com um oponente perto, segurar para **trás** faz o personagem andar devagar com o escudo levantado, como em jogo de luta. O escudo bloqueia golpes e projéteis que vêm pela frente.
+
+**Movimentos:**
+- **Agachar:** o personagem anda agachado, mais devagar. Ossos e arpões passam por cima dele, e o golpe dado agachado é **baixo**: só a defesa agachada segura.
+- **Pulo duplo:** aperte pular de novo no ar para dar uma cambalhota com um segundo impulso.
+- **Quebra de defesa:** um golpe à queima-roupa, com os dois colados, quebra o escudo. O defensor fica tonto por quase 1 segundo, com estrelinhas girando sobre a cabeça.
+- **Revivendo:** o xamã chega numa nuvem trazendo o espírito do personagem pendurado numa linha, conjura, o corpo inteiro se forma no chão e ele vai embora flutuando devagar.
+- **Água:** respingo na superfície, ondas, gotas e bolhas, e o corpo afunda recortado pela linha d'água. Também há espuma batendo nos penhascos, ondas correndo, nuvens à deriva, rajadas de vento e folhas voando. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
 
 ## Transformações (fase 1)
 

@@ -24,7 +24,6 @@ export function backdrop(scene: Phaser.Scene, title: string): void {
   scene.add
     .text(W / 2, VIEW.portrait ? 130 : 56, title, {
       fontFamily: FONT,
-      fontStyle: 'bold',
       fontSize: VIEW.portrait ? '76px' : '52px',
       color: '#fff7dc',
       stroke: '#10223a',

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Copia os sprites do Tiny Swords (Pixel Frog) para public/assets.
 # Os PNGs não vão para o Git: a licença do pacote não permite redistribuir os arquivos.
-# Uso: scripts/import-assets.sh <Tiny_Swords_Enemy_Pack.zip> <Tiny_Swords_Free_Pack.zip>
+# Uso: scripts/import-assets.sh <Tiny_Swords_Enemy_Pack.zip> <Tiny_Swords_Free_Pack.zip> [anak_manja.zip]
+# O terceiro zip (fonte Anak Manja) é opcional; requer python3 + fonttools para gerar os acentos.
 set -euo pipefail
 ENEMY_ZIP=${1:?informe o zip do Enemy Pack}
 FREE_ZIP=${2:?informe o zip do Free Pack}
@@ -32,6 +33,9 @@ cp "$E/Harpoon Shark/Harpoon.png" "$A/chars/harpoon.png"
 cp "$E/Extra/Skull decorations/Skull Spike_01.png" "$A/terrain/skull_spike.png"
 cp "$E/Extra/Skull decorations/Bones_01.png" "$A/terrain/bones.png"
 cp "$E/Extra/Hex Shaman Transformation Spell/Hex Shaman_Transformation Spell.png" "$A/fx/transform.png"
+cp "$E/Hex Shaman/Hex Shaman_Idle.png" "$A/chars/shaman_idle.png"
+cp "$E/Hex Shaman/Hex Shaman_Attack.png" "$A/chars/shaman_attack.png"
+cp "$F/Terrain/Tileset/Water Foam.png" "$A/terrain/water_foam.png"
 
 cp "$F/Terrain/Tileset/Tilemap_color1.png" "$A/terrain/tilemap.png"
 cp "$F/Terrain/Decorations/Rocks in the Water/Water Rocks_01.png" "$A/terrain/water_rocks.png"
@@ -45,3 +49,10 @@ cp "$E/Extra/Dead Tree/Dead Tree.png" "$A/terrain/dead_tree.png"
 cp "$F/Particle FX/Water Splash.png" "$A/fx/splash.png"
 cp "$F/Particle FX/Dust_01.png" "$A/fx/dust.png"
 echo "Sprites copiados para $A"
+
+if [ -n "${3:-}" ]; then
+  mkdir -p "$TMP/font"
+  unzip -q "$3" -d "$TMP/font"
+  TTF=$(find "$TMP/font" -iname '*.ttf' | head -1)
+  python3 "$ROOT/scripts/build-font.py" "$TTF"
+fi

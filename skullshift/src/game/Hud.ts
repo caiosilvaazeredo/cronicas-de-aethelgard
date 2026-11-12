@@ -54,7 +54,6 @@ export class Hud {
       const label = scene.add
         .text(right ? ax - labelGap : ax + labelGap, y, p.name, {
           fontFamily: FONT,
-          fontStyle: 'bold',
           fontSize,
           color: '#' + p.color.toString(16).padStart(6, '0'),
           stroke: '#10223a',
@@ -83,7 +82,6 @@ export class Hud {
     this.goText = scene.add
       .text(W / 2, touchLayout ? 128 : portrait ? 206 : 74, '', {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '40px',
         color: '#fff7dc',
         stroke: '#10223a',

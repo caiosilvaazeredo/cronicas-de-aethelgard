@@ -54,7 +54,6 @@ export class UIScene extends Phaser.Scene {
         this.add
           .text(W / 2, top + (VIEW.h - top) / 2, 'Escolha "Toque na tela"\nna tela de controles\npara jogar pelo celular', {
             fontFamily: FONT,
-            fontStyle: 'bold',
             fontSize: '40px',
             color: '#9fb4c8',
             align: 'center',
@@ -87,7 +86,6 @@ export class UIScene extends Phaser.Scene {
     const t = this.add
       .text(W / 2, this.worldMidY - 230, text, {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '46px',
         color: '#fff7dc',
         stroke: '#10223a',
@@ -156,7 +154,6 @@ export class UIScene extends Phaser.Scene {
     const title = this.add
       .text(W / 2, ry + 52, v.title, {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '62px',
         color: '#fff7dc',
         stroke: '#10223a',
@@ -170,7 +167,6 @@ export class UIScene extends Phaser.Scene {
     const sub = this.add
       .text(W / 2, ry + 138, v.sub, {
         fontFamily: FONT,
-        fontStyle: 'bold',
         fontSize: '26px',
         color: '#fff7dc',
         stroke: '#10223a',

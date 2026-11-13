@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { Controller, Intent } from './controls';
 import type { Fighter } from './Fighter';
 import type { Level } from './level';
+import type { Ability } from './variants';
 
 const AGGRO = 520;
 
@@ -13,11 +14,53 @@ export class EnemyAI implements Controller {
   private thinkT = 0;
   private aggro = false;
 
+  /** Lagarto de Areia: monte de areia que treme enquanto ele está enterrado. */
+  private mound?: Phaser.GameObjects.Graphics;
+  private surfacedAt = 0;
+
   constructor(
     private self: Fighter,
     private getTarget: () => Fighter | null,
     private level: Level,
-  ) {}
+    /** Habilidade da variante (investida, enterrar...). */
+    private ability?: Ability,
+  ) {
+    if (ability === 'burrow') this.self.buried = true;
+  }
+
+  /** Enterrado: espera o jogador chegar perto e salta para fora atacando. */
+  private burrow(it: Intent, dist: number, dy: number): boolean {
+    const me = this.self;
+    const s = me.sprite.scene;
+    const now = s.time.now;
+    if (!me.alive) {
+      this.mound?.destroy();
+      this.mound = undefined;
+      return false;
+    }
+    if (me.buried) {
+      if (!this.mound) this.mound = s.add.graphics().setDepth(me.sprite.depth - 0.1);
+      const g = this.mound;
+      const wob = Math.sin(now / 90) * 2;
+      g.clear();
+      g.fillStyle(0x1d1a2b, 1).fillEllipse(me.x, me.feet - 4, 64 + wob, 22);
+      g.fillStyle(0xd8b070, 1).fillEllipse(me.x, me.feet - 5, 58 + wob, 17);
+      g.fillStyle(0xfff1a8, 1).fillEllipse(me.x - 8, me.feet - 9, 18, 5);
+      if (dist < 170 && dy < 80) {
+        me.buried = false;
+        this.surfacedAt = now;
+        g.clear();
+        it.jump = true;
+        it.attack = true;
+        this.attackDelay = 0.6;
+      }
+      return true;
+    }
+    this.mound?.clear();
+    // Longe do jogador por um tempo: volta para baixo da areia.
+    if (now - this.surfacedAt > 3500 && dist > 320 && me.onGround && me.state !== 'attack') me.buried = true;
+    return false;
+  }
 
   read(): Intent {
     const me = this.self;
@@ -35,6 +78,10 @@ export class EnemyAI implements Controller {
     const dx = t.x - me.x;
     const dist = Math.abs(dx);
     const dy = Math.abs(t.feet - me.feet);
+    if (this.ability === 'burrow') {
+      me.faceTarget = t.x;
+      if (this.burrow(it, dist, dy)) return it;
+    }
     if (dist > AGGRO || dy > 140) {
       this.aggro = false;
       me.faceTarget = null;
@@ -78,7 +125,14 @@ export class EnemyAI implements Controller {
       }
     } else {
       const reach = me.def.melee!.reach;
-      if (dist > reach * 0.85) {
+      // Tubarão-Martelo: de média distância, dispara em linha reta até o jogador.
+      const charging = this.ability === 'charge' && dist > reach && dist < 460 && dy < 50 && this.attackDelay <= 0.3;
+      if (charging) {
+        if (safe(dir)) {
+          it.move = dir;
+          it.sprint = true;
+        }
+      } else if (dist > reach * 0.85) {
         if (safe(dir)) it.move = dir * 0.75;
         if (this.attackDelay < 0.3) this.attackDelay = 0.3; // tempo de reação ao chegar
       } else if (this.attackDelay <= 0 && me.state !== 'attack') {

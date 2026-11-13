@@ -3,6 +3,14 @@ export type CharId =
   | 'spider' | 'bat' | 'torchgob' // fase 2 (caverna)
   | 'imp' | 'minotaur' // fase 3 (vulcão)
   | 'bee' | 'sgnome'; // fase 4 (céu)
+/** Variantes de inimigos (src/game/variants.ts): paleta, tamanho, acessórios e habilidade. */
+export type VariantId =
+  | 'shark_hammer' | 'shark_coral' | 'shark_elite'
+  | 'lizard_sand' | 'lizard_tide'
+  | 'goblin_pirate' | 'goblin_captain' | 'goblin_bomber'
+  | 'gnoll_wreck';
+/** Quem pode aparecer como inimigo numa fase. */
+export type EnemyId = CharId | VariantId;
 export type ItemId =
   | 'bone' | 'harpoon' | 'spear' | 'crest'
   | 'web' | 'wing' | 'torch'
@@ -38,6 +46,8 @@ export interface ProjectileDef {
 
 export interface CharDef {
   id: CharId;
+  /** Variante de inimigo: o personagem original (para regras como o salto do tubarão). */
+  base?: CharId;
   name: string;
   /** Tamanho do quadro (quadrado) na spritesheet. */
   frame: number;

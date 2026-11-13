@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
-import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type ItemId } from '../game/characters';
+import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { PrincesBoss } from '../game/princes';
+import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER } from '../game/areas';
 import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
@@ -41,6 +42,8 @@ interface Item {
 
 interface Projectile {
   sprite: Phaser.GameObjects.Sprite;
+  /** Bomba explode ao cair; rede prende o jogador em vez de derrubar. */
+  effect?: 'bomb' | 'net';
   /** Item em que o projétil vira ao cair no chão (osso, arpão). */
   kind?: ItemId;
   gravity: number;
@@ -75,7 +78,7 @@ export class GameScene extends Phaser.Scene {
   level!: Level;
   players: Fighter[] = [];
   private controllers: Controller[] = [];
-  private enemies: Array<{ f: Fighter; ai: EnemyAI }> = [];
+  private enemies: Array<{ f: Fighter; ai: EnemyAI; acc?: Array<{ img: Phaser.GameObjects.Image; a: Accessory }> }> = [];
   private hangers: Hanger[] = [];
   /** Cena de conversa: o jogo congela enquanto os balões aparecem. */
   private cutscene = false;
@@ -190,14 +193,14 @@ export class GameScene extends Phaser.Scene {
       def.screens.forEach((s, si) => {
         for (const [t, char] of s.enemies ?? []) {
           const ex = this.level.tileX(si, t);
-          const f = new Fighter(this, ex, ground(ex), char, 1, 'enemy');
+          const f = new Fighter(this, ex, ground(ex), char as CharId, 1, 'enemy');
           this.setupSwim(f);
           f.facing = -1;
           f.onProjectile = (ff) => this.spawnProjectile(ff);
           this.physics.add.collider(f.sprite, this.level.ground);
           // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
           if (def.haunt) f.sprite.setTint(0xc8b8ff);
-          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
+          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability), acc: this.setupVariant(f) });
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
@@ -446,8 +449,10 @@ export class GameScene extends Phaser.Scene {
     }
     this.updateHangers();
     this.updateWebTraps();
+    this.updateRoot(time);
 
     this.fighters.forEach((f) => f.update(delta));
+    this.updateAccessories();
     this.level.update(time, delta);
 
     if (this.mode === 'story') this.updateStoryScreens();
@@ -459,7 +464,7 @@ export class GameScene extends Phaser.Scene {
     for (const f of this.fighters) {
       if (!f.alive || f.zipping) continue;
       if (f.def.swim && f.waterY !== undefined) continue; // o lagarto nada
-      if (f.def.id === 'shark' && this.level.hasWater && !this.level.isLava) {
+      if (baseOf(f.def) === 'shark' && this.level.hasWater && !this.level.isLava) {
         // O tubarão nunca se afoga: ao cair (descendo) na água, afunda e é lançado para cima.
         if (f.feet > WATER_Y + 4 && f.body.velocity.y >= 0) this.sharkLeap(f);
         continue;
@@ -694,9 +699,24 @@ export class GameScene extends Phaser.Scene {
         ? this.add.image(s.x, s.y, 'aura').setTint(f.color).setScale(0.55, 0.4).setDepth(DEPTH.projectiles - 1).setBlendMode(Phaser.BlendModes.ADD)
         : undefined;
     // Osso sai em arco e cai; o arpão vai quase reto. Os dois viram item ao cair no chão.
-    const arc = pd.tex === 'bone' ? { vy: -150, g: 430 } : { vy: -30, g: 110 };
+    const arc = pd.arc ?? (pd.tex === 'bone' ? { vy: -150, g: 430 } : { vy: -30, g: 110 });
     const kind: ItemId | undefined = pd.tex === 'bone' ? 'bone' : pd.tex === 'harpoon' ? 'harpoon' : undefined;
-    this.projectiles.push({ sprite: s, glow, kind, gravity: arc.g, owner: f, vx: pd.speed * f.facing, vy: arc.vy, life: 3, bounced: false });
+    const effect = pd.tex === 'bomb' ? 'bomb' : pd.tex === 'net_ball' ? 'net' : undefined;
+    // Bomba: mira mais ou menos onde o jogador está (a força do arco depende da distância).
+    let vx = pd.speed * f.facing;
+    if (effect === 'bomb') {
+      const t = this.players[0];
+      const dist = t ? Math.min(520, Math.abs(t.x - f.x)) : 300;
+      vx = f.facing * Math.max(120, dist * 0.95);
+    }
+    this.projectiles.push({ sprite: s, glow, kind, effect, gravity: arc.g, owner: f, vx, vy: arc.vy, life: 3, bounced: false });
+    // Tubarão de Coral: mais dois arpões em leque.
+    if (variantOf(f.def.id)?.ability === 'triple') {
+      for (const dvy of [-170, 120]) {
+        const s2 = this.add.sprite(s.x, s.y, pd.tex).setDepth(DEPTH.projectiles).setFlipX(f.facing < 0).setAngle(pd.angle * f.facing);
+        this.projectiles.push({ sprite: s2, kind: undefined, gravity: arc.g, owner: f, vx: pd.speed * f.facing * 0.9, vy: arc.vy + dvy, life: 3, bounced: false });
+      }
+    }
   }
 
   private updateProjectiles(dt: number): void {
@@ -711,7 +731,8 @@ export class GameScene extends Phaser.Scene {
       // Caiu: no chão vira item que dá para pegar; na água, some com um respingo.
       const landY = p.vy > 0 ? this.level.landingY(p.sprite.x, p.sprite.y - p.vy * dt + 10, p.sprite.y + 10) : null;
       if (landY !== null) {
-        if (p.kind) this.spawnItem(p.sprite.x, p.kind, false, 9000, undefined, landY);
+        if (p.effect === 'bomb') this.explode(p.sprite.x, landY, p.owner);
+        else if (p.kind) this.spawnItem(p.sprite.x, p.kind, false, 9000, undefined, landY);
         else this.fx('dust', p.sprite.x, landY - 8, 0.8);
         p.life = 0;
         continue;
@@ -741,6 +762,13 @@ export class GameScene extends Phaser.Scene {
         if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
           this.sparks(p.sprite.x, p.sprite.y);
           this.deflect(p);
+        } else if (p.effect === 'net' && b === this.players[0] && this.mode === 'story') {
+          // Rede de pesca: prende o jogador por um tempo em vez de derrubar.
+          this.rootPlayer(1600, 'net_ball', 'PRESO NA REDE!');
+          p.life = 0;
+        } else if (p.effect === 'bomb') {
+          this.explode(p.sprite.x, p.sprite.y + 20, p.owner);
+          p.life = 0;
         } else {
           this.killFighter(b, p.owner, 'hit');
           p.life = 0;
@@ -766,6 +794,17 @@ export class GameScene extends Phaser.Scene {
   private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water' | 'fall' | 'eaten'): void {
     if (!victim.alive) return;
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
+    // Elite: o golpe tira uma "camada" de armadura em vez de derrubar.
+    if (cause === 'hit' && victim.armor > 0) {
+      victim.armor--;
+      sfx('hit');
+      victim.knockback(dir, 420);
+      victim.sprite.setTintFill(0xffffff);
+      this.time.delayedCall(90, () => victim.sprite.active && victim.sprite.clearTint());
+      this.sparks(victim.x, victim.feet - victim.def.head * 0.5);
+      this.popText(victim.x, victim.feet - victim.def.head - 30, victim.armor ? `${victim.armor + 1}` : '!', '#ffe066');
+      return;
+    }
     const dropped = cause === 'hit' ? victim.def.drops : undefined;
     const x = victim.x;
     sfx(victim.isPlayer ? 'death' : 'hit');
@@ -791,6 +830,7 @@ export class GameScene extends Phaser.Scene {
     const pi = this.players.indexOf(victim);
     if (pi === -1) {
       this.time.delayedCall(700, () => {
+        for (const e of this.enemies) if (e.f === victim) e.acc?.forEach(({ img }) => img.destroy());
         this.enemies = this.enemies.filter((e) => e.f !== victim);
         victim.destroy();
       });
@@ -1800,29 +1840,70 @@ export class GameScene extends Phaser.Scene {
       void this.boss.intro();
     }
     this.boss?.update(time, dt);
-    if (this.rootWeb) {
-      if (time >= this.rootedUntil || !p.alive) {
-        this.rootWeb.destroy();
-        this.rootWeb = undefined;
-      } else this.rootWeb.setPosition(p.x, p.feet - 40);
-    }
   }
 
-  private rootPlayer(ms: number): void {
+  /** Teia (ou rede) prendendo o jogador: segue o corpo até soltar. */
+  private updateRoot(time: number): void {
+    if (!this.rootWeb) return;
+    const p = this.players[0];
+    if (time >= this.rootedUntil || !p?.alive) {
+      this.rootWeb.destroy();
+      this.rootWeb = undefined;
+    } else this.rootWeb.setPosition(p.x, p.feet - 40);
+  }
+
+  private rootPlayer(ms: number, tex = 'web_ball', text = 'PRESO!'): void {
     this.rootedUntil = this.time.now + ms;
     this.rootWeb?.destroy();
     const p = this.players[0];
-    this.rootWeb = this.add.image(p.x, p.feet - 40, 'web_ball').setScale(2.2).setAlpha(0.85).setDepth(DEPTH.fighters + 0.5);
-    this.popText(p.x, p.feet - 150, 'PRESO!', '#ffffff');
+    this.rootWeb = this.add.image(p.x, p.feet - 40, tex).setScale(tex === 'web_ball' ? 2.2 : 1.6).setAlpha(0.85).setDepth(DEPTH.fighters + 0.5);
+    this.popText(p.x, p.feet - 150, text, '#ffffff');
+  }
+
+  /** Variante: vida extra (elite) e acessórios desenhados que acompanham a cabeça. */
+  private setupVariant(f: Fighter): Array<{ img: Phaser.GameObjects.Image; a: Accessory }> | undefined {
+    const v = variantOf(f.def.id);
+    if (!v) return undefined;
+    f.armor = (v.hp ?? 1) - 1;
+    const k = v.scale ?? 1;
+    return (v.accessories ?? []).map((a) => ({ a, img: this.add.image(f.x, f.feet, `acc_${a}`).setScale(k).setDepth(DEPTH.fighters + (a === 'buoy' ? 0.1 : 0.2)) }));
+  }
+
+  /** Acessórios seguem a cabeça (ou a cintura, no caso da boia) de quem os usa. */
+  private updateAccessories(): void {
+    for (const e of this.enemies) {
+      if (!e.acc) continue;
+      const v = variantOf(e.f.def.id);
+      for (const { img, a } of e.acc) {
+        if (!v || !e.f.alive) {
+          img.setVisible(false);
+          continue;
+        }
+        const o = accessoryOffset(v.base, a, v.scale ?? 1);
+        img.setPosition(e.f.x + e.f.facing * o.dx, e.f.feet - o.dy).setFlipX(e.f.facing < 0).setVisible(e.f.sprite.visible).setAlpha(e.f.sprite.alpha);
+      }
+    }
+  }
+
+  /** Bomba do Goblin Bombardeiro: explode e derruba quem estiver perto (menos o dono). */
+  private explode(x: number, y: number, owner: Fighter): void {
+    const b = this.add.sprite(x, y - 20, 'boom').setScale(1.4).setDepth(DEPTH.fx).play('boom');
+    b.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => b.destroy());
+    sfx('boom');
+    this.cameras.main.shake(160, 0.008);
+    for (const f of this.fighters) {
+      if (!f.alive || f.team === owner.team || f.invulnerable) continue;
+      if (Math.abs(f.x - x) < 80 && Math.abs(f.feet - 30 - y) < 90) this.killFighter(f, owner, 'hit');
+    }
   }
 
   /** Inimigo criado no meio da fase (filhotes da Aranha-Rainha). */
-  private spawnEnemy(char: CharId, x: number, feet: number): Fighter {
-    const f = new Fighter(this, x, feet, char, 1, 'enemy');
+  private spawnEnemy(char: EnemyId, x: number, feet: number): Fighter {
+    const f = new Fighter(this, x, feet, char as CharId, 1, 'enemy');
     f.facing = -1;
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
-    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level) });
+    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability), acc: this.setupVariant(f) });
     this.smokeBurst(x, feet, 0x8a6ad0, 0.7);
     return f;
   }

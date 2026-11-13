@@ -62,6 +62,24 @@ O modo história agora começa num **mapa do mundo**, no estilo das áreas do Su
 - **A história oficial:** o Xamã diz que cada rei guarda um **fragmento da Coroa dos Ossos**. Correntes roxas ligam o santuário a cada área; vencer uma área parte a corrente dela ("FRAGMENTO DA COROA n/9") e o céu sobre o santuário fica um pouco mais escuro a cada uma. *(Os reis são, na verdade, os selos da prisão do Xamã — isso só se revela no final, como em Shadow of the Colossus.)*
 - **Progresso:** o save guarda as fases concluídas (`done`); saves antigos são convertidos sozinhos. Habilidades passaram a ser liberadas nas áreas fixas ou na área que as exige (Mãos de Osso: Ilhas da Maré · Cambalhota: Oficina da Chave · Machado: Pradaria · Martelo: Forja · Picareta: Bosque do Lenhador).
 
+### Variantes de inimigos
+
+Cada área terá variações dos personagens do Enemy Pack, criadas em `src/game/variants.ts`: **paleta trocada à mão** (cor por cor da arte original), **elite** (sprite ampliado e golpes extras para derrotar: pisca em branco e mostra quantos faltam), **acessórios desenhados** em pixel art que seguem a cabeça (bandana, tapa-olho, chapéu de capitão, capacete de concha, boia) e **habilidades** próprias. Cada variante vira um personagem novo (`CHARS`), então pode ser usada em qualquer fase (`enemies: [[tile, 'goblin_captain']]`).
+
+Ilhas da Maré:
+
+| Variante | Base | Habilidade |
+|---|---|---|
+| Tubarão-Martelo (cinza, olhos vermelhos) | Tubarão | **Investida**: dispara correndo até o jogador e golpeia de perto |
+| Tubarão de Coral (rosa) | Tubarão | **Arpão triplo** em leque |
+| Tubarão Couraçado (azul-marinho, capacete de concha) | Tubarão | **Elite**: maior, 3 golpes |
+| Lagarto de Areia (cor de areia) | Lagarto | **Enterrado**: só aparece um monte de areia tremendo; salta atacando quando o jogador chega perto e volta para baixo depois |
+| Lagarto da Maré (azul) | Lagarto | **Cuspe d'água** à distância |
+| Goblin Pirata (bandana e tapa-olho) | Goblin | Lanceiro comum |
+| Capitão Goblin (tricórnio com caveira) | Goblin | **Elite**: maior, 3 golpes |
+| Goblin Bombardeiro (bandana) | Goblin | **Bombas** em arco que explodem ao cair |
+| Gnoll Náufrago (boia) | Gnoll | **Rede de pesca**: prende o jogador por um tempo (como a teia) |
+
 A lista abaixo é a ordem interna das fases (`LEVELS`). O modo história tem **23 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
 
 | # | Fase | Tipo | O que tem |

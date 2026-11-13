@@ -97,6 +97,10 @@ export class Fighter {
   isPlayer = false;
   /** Habilidades liberadas (só o jogador). */
   abilities = new Set<string>();
+  /** Golpes extras que aguenta antes de cair (inimigos elite). */
+  armor = 0;
+  /** Enterrado na areia (Lagarto de Areia): invisível e intocável. */
+  buried = false;
   /** Carregando um objeto sobre a cabeça (chave, ovelha): não ataca nem dá pulo duplo. */
   carrying = false;
   /** Martelada no chão em andamento. */
@@ -143,7 +147,7 @@ export class Fighter {
     return this.body.blocked.down || this.body.touching.down;
   }
   get invulnerable(): boolean {
-    return this.scene.time.now < this.invulnUntil;
+    return this.buried || this.scene.time.now < this.invulnUntil;
   }
   get isGuarding(): boolean {
     return this.state === 'guard';
@@ -453,7 +457,7 @@ export class Fighter {
     }
 
     // Pisca enquanto invulnerável.
-    this.sprite.setAlpha(this.invulnerable ? (Math.floor(now / 80) % 2 ? 0.35 : 1) : 1);
+    this.sprite.setAlpha(this.buried ? 0 : this.invulnerable ? (Math.floor(now / 80) % 2 ? 0.35 : 1) : 1);
     this.updateMarkers();
   }
 

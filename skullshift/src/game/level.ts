@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { BODY_FONT, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
-import type { CharId, ItemId } from './characters';
+import type { CharId, EnemyId, ItemId } from './characters';
 import type { PuzzleDef } from './puzzle';
 
 /**
@@ -26,7 +26,7 @@ export interface ScreenDef {
   floats?: Segment[];
   deco?: Array<[tile: number, kind: DecoKind]>;
   /** Modo história. */
-  enemies?: Array<[tile: number, char: CharId]>;
+  enemies?: Array<[tile: number, char: EnemyId]>;
   storyItems?: Array<[tile: number, item: ItemId, h?: number]>;
   /** Modo versus (os itens reaparecem depois de um tempo). */
   versusItems?: Array<[tile: number, item: ItemId, h?: number]>;

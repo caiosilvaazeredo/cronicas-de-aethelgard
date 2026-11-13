@@ -107,6 +107,14 @@ originais (extraídas com PIL do PNG).
 - **Versus** (`GameScene.updateChaos`): itens caem do céu a cada ~10 s; eventos aleatórios a cada 20–30 s
   (VENTANIA, CHUVA DE OSSOS com sombra no chão, CHUVA DE ITENS, GRAVIDADE BAIXA, AJUDANTES); orbe roxo
   chama um ajudante (criatura do time de quem pegou, 12 s, `summonAssist`). P1 (WASD) também pula no Espaço.
+- **Poderes por jogador** (`GameScene.perks`, `hasPerk`, `applyPerks`): na história vêm do save (habilidades
+  liberadas + aprimoramentos comprados); no versus vêm da `LoadoutScene` (HowTo → loadout → loading → game,
+  `data.loadouts`), até 3 por jogador entre as habilidades e os aprimoramentos de luta já conquistados.
+  MODO TESTE (tecla T / botão): tudo liberado, sem limite.
+- **Espada Rebatedora** (`deflect`, Empório, 70 ouro): o golpe de espada rebate qualquer projétil de volta
+  para quem atirou (laço de projéteis em `updateProjectiles`).
+- **HUD**: caixa de reserva é uma moldura de madeira logo depois do nome do jogador (em pé: entre o MENU e as
+  vidas), com "RESERVA" em cima e a tecla embaixo.
 - **Dificuldade**: Fácil (10 vidas), Padrão (6), Difícil (3) — `deathLimit`. Tela de saves responsiva em pé.
 - **Teclado no celular**: `config.hasKeyboard()` — só aparece depois de uma tecla física ser apertada.
 - **Mapa do mundo**: áreas trancadas no escuro; o Santuário fica numa ilha num mar interno (LAND), coberto

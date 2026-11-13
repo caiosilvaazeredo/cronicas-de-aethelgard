@@ -293,6 +293,8 @@ Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, c
 - **Caixa de reserva:** guarda 1 item (caixa no alto da tela). Agachar + pegar guarda sem transformar; R / Tab, vírgula (teclado 2), SELECT no controle ou um toque na caixa soltam o item, que cai do céu. Ao renascer, ele cai sozinho.
 - **Música:** composta em código com instrumentos sintetizados (ocarina, flauta, harpa, violão, cordas, trompa, marimba, celesta, tímpano) e reverberação de sala, inspirada em Ocarina of Time. Cada área tem o seu estilo e **cada fase tem a sua própria música** (tom, andamento, progressão, solista e melodia).
 - **Ouro e Empório:** inimigos (1), presentes (3), fases (5) e reis (15) dão ouro. No mapa do mundo, o Empório da Orelha-Preta (botão ou tecla B) vende aprimoramentos: Osso Teimoso (transformado, o golpe fatal só desfaz a forma), Vela Extra, Reflexo de Osso, Manto de Nuvem, Ímã de Ossos e Dente de Ouro.
+- **Espada Rebatedora** (Empório): o golpe de espada rebate qualquer projétil de volta.
+- **Versus com poderes:** antes do duelo, cada jogador escolhe até 3 poderes já conquistados na história (martelo, machado, picareta, cambalhota, Mãos de Osso, Osso Teimoso, Espada Rebatedora...). **Modo teste** libera tudo.
 - **História nas fases:** além da conversa antes de cada fase, a caveira e o Xamã falam durante a fase, e às vezes vem um lampejo de memória (tela sépia) da vida de antes.
 - **Controles:** correr com toque duplo, tamanho e opacidade dos botões de toque.
 - **Acessibilidade:** cores para daltonismo (P2 laranja em vez de vermelho) e desligar clarões.

@@ -67,7 +67,8 @@ export class ShopScene extends Phaser.Scene {
     pillButton(this, W - 110, oy + 44, '◀ MAPA', () => this.back(), 180).setScale(0.8);
 
     // Prateleira: um cartão por aprimoramento.
-    const cw = 190;
+    // Cartões cabem na largura, quantos forem os aprimoramentos.
+    const cw = Math.min(190, Math.floor((W - 40) / UPGRADES.length) - 12);
     const x0 = W / 2 - ((UPGRADES.length - 1) * (cw + 12)) / 2;
     const cy = gy + 190;
     UPGRADES.forEach((u, i) => {
@@ -76,10 +77,10 @@ export class ShopScene extends Phaser.Scene {
       const shelf = this.add.rectangle(0, 20, cw - 24, 8, 0x8a5a2b).setStrokeStyle(2, 0x10223a);
       const icon = this.add.image(0, -22, u.icon, 0);
       // Alguns desenhos têm muita margem transparente: aumenta para encher o cartão.
-      const boost: Record<string, number> = { gold: 3.2, skull_avatar: 1.7, cloud_05: 1.5, bone: 1.3 };
+      const boost: Record<string, number> = { gold: 3.2, skull_avatar: 1.7, cloud_05: 1.5, bone: 1.3, tool_sword: 2.6 };
       icon.setScale(Math.min(74 / icon.width, 74 / icon.height) * (boost[u.icon] ?? 1));
       if (u.icon === 'guard_arc') icon.setTint(0x6fb8ff);
-      const name = this.add.text(0, 44, u.name, { fontFamily: FONT, fontSize: '17px', color: '#10223a', align: 'center', wordWrap: { width: cw - 14 } }).setOrigin(0.5);
+      const name = this.add.text(0, 44, u.name, { fontFamily: FONT, fontSize: '16px', color: '#10223a', align: 'center', wordWrap: { width: cw - 12 } }).setOrigin(0.5);
       const tag = this.add.text(0, 70, '', { fontFamily: FONT, fontSize: '18px', color: '#8a5a00' }).setOrigin(0.5);
       const box = this.add.container(x, cy, [frame, shelf, icon, name, tag]);
       frame.setInteractive({ useHandCursor: true }).on('pointerdown', () => (this.sel === i ? this.buy() : this.select(i)));

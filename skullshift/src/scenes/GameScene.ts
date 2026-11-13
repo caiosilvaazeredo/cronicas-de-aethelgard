@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
-import { hasUpgrade } from '../game/upgrades';
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
@@ -18,7 +17,7 @@ import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
-import { addCoins, completeLevel, deathLimit, findSecret, getPact, getReserve, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { addCoins, completeLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -170,7 +169,13 @@ export class GameScene extends Phaser.Scene {
   /** Fase atual (0, 1, 2). */
   levelIndex = 0;
 
-  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number }): void {
+  /** Habilidades e aprimoramentos de cada jogador (história: o save; versus: o que foi escolhido). */
+  private perks: Array<Set<string>> = [];
+  private loadouts?: string[][];
+
+  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number; loadouts?: string[][] }): void {
+    this.loadouts = data.loadouts;
+    this.perks = (data.loadouts ?? []).map((l) => new Set(l));
     this.levelIndex = Phaser.Math.Clamp(data.level ?? 0, 0, LEVELS.length - 1);
     this.mode = data.mode ?? 'story';
     this.devices = data.devices ?? (this.mode === 'story' ? ['kb-full'] : ['kb-left', 'kb-right']);
@@ -263,9 +268,8 @@ export class GameScene extends Phaser.Scene {
       }
       // Habilidades liberadas no save (no modo livre, todas).
       const p0 = this.players[0];
-      if (hasUpgrade('reflex')) p0.parryBonus = 110;
-      for (const a of ABILITIES) if (hasAbility(a.id)) p0.abilities.add(a.id);
-      p0.onPound = (f) => this.pound(f);
+      this.perks = [new Set([...ownedUpgrades(), ...ABILITIES.filter((a) => hasAbility(a.id)).map((a) => a.id)])];
+      this.applyPerks(0);
       if (def.puzzle) {
         const levelId = def.id;
         this.puzzle = new PuzzleSystem(
@@ -369,6 +373,9 @@ export class GameScene extends Phaser.Scene {
       // Os dois começam como esqueleto; cor, aura e etiqueta diferenciam.
       this.addPlayer(new Fighter(this, this.level.tileX(this.screen, b), ground(this.level.tileX(this.screen, b)), 'skull', 1, playerName(1), PLAYER_TINT[1], 'P2'), this.devices[1]);
       this.players[1].facing = -1;
+      // Versus: cada um entra com as habilidades e aprimoramentos que escolheu.
+      this.applyPerks(0);
+      this.applyPerks(1);
       def.screens.forEach((s, si) => {
         for (const [t, kind, h] of s.versusItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
@@ -495,7 +502,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   restartMatch(): void {
-    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex });
+    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex, loadouts: this.loadouts });
   }
 
   update(time: number, delta: number): void {
@@ -887,6 +894,19 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(ms, () => this.tweens.add({ targets: all, alpha: 0, duration: 450, onComplete: end }));
   }
 
+  private hasPerk(pi: number, id: string): boolean {
+    return pi >= 0 && !!this.perks[pi]?.has(id);
+  }
+
+  /** Liga no jogador pi as habilidades (martelo, machado...) e efeitos (reflexo) que ele tem. */
+  private applyPerks(pi: number): void {
+    const p = this.players[pi];
+    if (!p) return;
+    for (const a of ABILITIES) if (this.hasPerk(pi, a.id)) p.abilities.add(a.id);
+    if (this.hasPerk(pi, 'reflex')) p.parryBonus = 110;
+    p.onPound = (f) => this.pound(f);
+  }
+
   // ---------- versus: o caos (itens caindo, eventos, ajudantes) ----------
 
   private chaos: {
@@ -1111,7 +1131,7 @@ export class GameScene extends Phaser.Scene {
     const dt = this.game.loop.delta / 1000;
     this.falling = this.falling.filter((f) => {
       // Desce devagar, balançando (dá tempo de se posicionar). Com o Ímã de Ossos: reto, rápido e atrás de você.
-      const magnet = this.mode === 'story' && hasUpgrade('magnet');
+      const magnet = this.hasPerk(f.pi, 'magnet');
       f.sprite.y += (magnet ? 300 : 150) * dt;
       if (magnet && this.players[f.pi]?.alive) f.x0 += (this.players[f.pi].x - f.x0) * Math.min(1, dt * 6);
       f.sprite.x = f.x0 + (magnet ? 0 : Math.sin((time - f.t0) / 260) * 22);
@@ -1249,6 +1269,25 @@ export class GameScene extends Phaser.Scene {
           continue;
         }
       }
+      // Espada Rebatedora: o golpe de espada de quem tem o aprimoramento rebate o projétil.
+      let swatted = false;
+      for (let i = 0; i < this.players.length && !swatted; i++) {
+        const f = this.players[i];
+        if (!f.alive || f.team === p.owner.team || !this.hasPerk(i, 'deflect')) continue;
+        const hb = f.activeHitBox();
+        if (!hb || !overlap(projBox(p), { ...hb, x1: hb.x1 - 18, x2: hb.x2 + 18, y1: hb.y1 - 18, y2: hb.y2 + 18 })) continue;
+        swatted = true;
+        this.sparks(p.sprite.x, p.sprite.y);
+        sfx('select');
+        this.popText(p.sprite.x, p.sprite.y - 30, 'REBATEU!', '#ffe066');
+        p.owner = f;
+        p.vx = f.facing * Math.max(420, Math.abs(p.vx) * 1.2);
+        p.vy = Math.min(p.vy, -60);
+        p.life = 3;
+        p.boomerang = undefined;
+        p.sprite.setFlipX(f.facing < 0).setTint(f.color ?? 0xffe066);
+      }
+      if (swatted) continue;
       for (const b of this.fighters) {
         if (!b.alive || b.team === p.owner.team || b.invulnerable) continue;
         if (!overlap(projBox(p), bodyBox(b))) continue;
@@ -1311,16 +1350,16 @@ export class GameScene extends Phaser.Scene {
     }
     const story = this.mode === 'story';
     // Osso Teimoso (Empório): transformado, o golpe fatal só desfaz a forma e a caveira segue de pé.
-    if (story && cause === 'hit' && victim === this.players[0] && victim.def.id !== 'skull' && victim.def.id !== 'villager' && !LEVELS[this.levelIndex].undersea && !victim.shiftHide && hasUpgrade('stubborn')) {
+    if (story && cause === 'hit' && this.players.includes(victim) && victim.def.id !== 'skull' && victim.def.id !== 'villager' && !LEVELS[this.levelIndex].undersea && !victim.shiftHide && this.hasPerk(this.players.indexOf(victim), 'stubborn')) {
       victim.knockback(dir, 380);
-      this.transform(0, 'skull');
+      this.transform(this.players.indexOf(victim), 'skull');
       victim.protect(1500);
       this.popText(victim.x, victim.feet - 150, 'OSSO TEIMOSO!', '#d8b8ff');
       this.cameras.main.shake(120, 0.006);
       return;
     }
     // Ouro: cada inimigo derrotado pela caveira vale 1 (2 com o Dente de Ouro).
-    if (story && victim.team !== 0 && killer === this.players[0]) this.earn(hasUpgrade('goldtooth') ? 2 : 1, victim.x, victim.feet - victim.def.head - 20);
+    if (story && victim.team !== 0 && killer === this.players[0]) this.earn(this.hasPerk(0, 'goldtooth') ? 2 : 1, victim.x, victim.feet - victim.def.head - 20);
     // No final (o aldeão) ninguém deixa item: o corpo não troca mais de forma.
     const dropped = cause === 'hit' && !LEVELS[this.levelIndex].finale ? victim.def.drops : undefined;
     const x = victim.x;
@@ -1502,7 +1541,7 @@ export class GameScene extends Phaser.Scene {
               this.announce(pi);
               // Renasceu: o item da reserva cai sozinho (como no Mario ao levar dano).
               if (this.reserves[pi]) this.time.delayedCall(700, () => this.dropReserve(pi));
-              if (this.mode === 'story' && hasUpgrade('cloak')) p.protect(INVULN_TIME * 2);
+              if (this.hasPerk(pi, 'cloak')) p.protect(INVULN_TIME * 2);
             },
           });
         });

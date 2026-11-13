@@ -23,7 +23,7 @@ export class Hud {
   private centeredGo = false;
   private discs: Phaser.GameObjects.Arc[] = [];
   /** Caixa de reserva de cada jogador (como no Mario): moldura + item guardado. */
-  private boxes: Array<{ frame: Phaser.GameObjects.Rectangle; item: Phaser.GameObjects.Image; key: Phaser.GameObjects.Text; kind?: ItemId } | undefined> = [];
+  private boxes: Array<{ box: Phaser.GameObjects.Container; item: Phaser.GameObjects.Image; key: Phaser.GameObjects.Text; size: number; kind?: ItemId } | undefined> = [];
 
   constructor(
     private scene: Phaser.Scene,
@@ -95,27 +95,42 @@ export class Hud {
       );
     }
 
-    // Caixa de reserva no topo, no meio (dois jogadores: uma de cada lado do meio).
+    // Caixa de reserva: uma moldura de madeira (como as placas do jogo) logo depois do nome de
+    // cada jogador, na mesma faixa do avatar — nunca no meio da tela (onde ficam os pontos e o MENU).
     if (reserve && !sp) {
-      const by = portrait ? 108 + pad : 84;
-      const size = portrait ? 84 : 58;
+      const size = portrait ? 92 : touchLayout ? 62 : 70;
       players.forEach((p, i) => {
-        const bx = players.length === 1 ? W / 2 : W / 2 + (i === 0 ? -1 : 1) * (size + 24);
-        const frame = scene.add
-          .rectangle(bx, by, size, size, 0x10223a, 0.72)
-          .setStrokeStyle(4, p.color)
-          .setScrollFactor(0)
-          .setDepth(DEPTH.hud)
-          .setInteractive({ useHandCursor: true })
-          .on('pointerdown', () => reserve.drop(i));
-        const item = scene.add.image(bx, by, '__DEFAULT').setScrollFactor(0).setDepth(DEPTH.hud).setVisible(false);
+        const slot = this.slots[i];
+        if (!slot) return;
+        const right = i === 1;
+        const gap = 22 + size / 2;
+        let bx = right ? slot.label.x - slot.label.width - gap : slot.label.x + slot.label.width + gap;
+        // Em pé o MENU fica no meio do topo: a caixa não pode encostar nele.
+        // Em pé o nome ocupa a esquerda e o MENU o meio: a caixa vai entre o MENU e as vidas.
+        if (portrait) bx = W / 2 + 150 + size / 2 + (right ? size + 30 : 0);
+        const by = slot.label.y;
+        const g = scene.add.graphics();
+        const h = size / 2;
+        // sombra, contorno escuro, madeira, madeira clara por dentro e um fundo escuro para o item
+        g.fillStyle(0x10223a, 0.35).fillRoundedRect(-h + 3, -h + 5, size, size, 10);
+        g.fillStyle(0x10223a, 1).fillRoundedRect(-h - 3, -h - 3, size + 6, size + 6, 12);
+        g.fillStyle(0x9a6a36, 1).fillRoundedRect(-h, -h, size, size, 10);
+        g.fillStyle(0xc89858, 1).fillRoundedRect(-h + 3, -h + 3, size - 6, size - 8, 8);
+        g.fillStyle(0x3a2412, 0.85).fillRoundedRect(-h + 9, -h + 9, size - 18, size - 18, 6);
+        // pregos nos cantos e a faixa na cor do jogador embaixo
+        for (const [cx, cy] of [[-h + 6, -h + 6], [h - 6, -h + 6], [-h + 6, h - 8], [h - 6, h - 8]]) g.fillStyle(0x5a3a1c, 1).fillRect(cx - 2, cy - 2, 4, 4);
+        g.fillStyle(p.color, 1).fillRect(-h + 12, h - 6, size - 24, 4);
+        const item = scene.add.image(0, 0, '__DEFAULT').setVisible(false);
+        const tag = scene.add
+          .text(0, -h - 4, 'RESERVA', { fontFamily: FONT, fontSize: portrait ? '20px' : '13px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 5 })
+          .setOrigin(0.5, 1);
         const key = scene.add
-          .text(bx, by + size / 2 + (portrait ? 18 : 12), reserve.labels[i] ?? '', { fontFamily: FONT, fontSize: portrait ? '26px' : '15px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 5 })
-          .setOrigin(0.5)
-          .setScrollFactor(0)
-          .setDepth(DEPTH.hud)
+          .text(0, h + 4, reserve.labels[i] ?? '', { fontFamily: FONT, fontSize: portrait ? '20px' : '13px', color: '#ffe066', stroke: '#10223a', strokeThickness: 5 })
+          .setOrigin(0.5, 0)
           .setVisible(false);
-        this.boxes[i] = { frame, item, key };
+        const box = scene.add.container(bx, by, [g, item, tag, key]).setScrollFactor(0).setDepth(DEPTH.hud).setSize(size, size);
+        box.setInteractive({ useHandCursor: true }).on('pointerdown', () => reserve.drop(i));
+        this.boxes[i] = { box, item, key, size };
       });
     }
 
@@ -159,16 +174,16 @@ export class Hud {
     const b = this.boxes[player];
     if (!b || b.kind === kind) return;
     b.kind = kind;
-    b.key.setVisible(!!kind);
+    b.key.setVisible(!!kind && !!b.key.text);
     if (!kind) {
       b.item.setVisible(false);
       return;
     }
     b.item.setTexture(ITEM_TEXTURE[kind], 0).setVisible(true).setAngle(kind === 'harpoon' ? 45 : 0);
-    const fit = (b.frame.width - 14) / Math.max(b.item.frame.width, b.item.frame.height);
+    const fit = (b.size - 26) / Math.max(b.item.frame.width, b.item.frame.height);
     b.item.setScale(fit * (kind === 'harpoon' ? 1.25 : 1));
     this.scene.tweens.add({ targets: b.item, scale: { from: fit * 1.6, to: b.item.scale }, duration: 260, ease: 'Back.easeOut' });
-    this.scene.tweens.add({ targets: b.frame, scaleX: { from: 1.25, to: 1 }, scaleY: { from: 1.25, to: 1 }, duration: 260, ease: 'Back.easeOut' });
+    this.scene.tweens.add({ targets: b.box, scale: { from: 1.2, to: 1 }, duration: 260, ease: 'Back.easeOut' });
   }
 
   setScreen(index: number, color = 0xfff7dc): void {
@@ -194,6 +209,7 @@ export class Hud {
     }
     this.dots.forEach((d) => d.setVisible(v));
     this.discs.forEach((d) => d.setVisible(v));
+    this.boxes.forEach((b) => b?.box.setVisible(v));
     if (!v) this.goText.setVisible(false);
   }
 }

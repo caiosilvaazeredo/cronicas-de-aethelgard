@@ -248,8 +248,8 @@ export const RESERVE_LABEL: Record<DeviceId, string> = {
   'kb-right': ',',
   pad0: 'SELECT',
   pad1: 'SELECT',
-  touch: 'TOQUE',
-  gesture: 'TOQUE',
+  touch: '',
+  gesture: '',
 };
 
 /** Nome curto do botão de defesa, para a tela Como jogar. */

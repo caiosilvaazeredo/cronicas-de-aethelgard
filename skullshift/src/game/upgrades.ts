@@ -8,7 +8,7 @@ import { addCoins, getCoins, ownedUpgrades, saveUpgrade } from './progress';
  * Lore: a loja é de uma ovelha de orelha preta que não fala (só a caveira e o Xamã conversam):
  * ela "responde" por placas de madeira. É a ovelha que sempre fugia, nas lembranças do aldeão.
  */
-export type UpgradeId = 'stubborn' | 'candle' | 'reflex' | 'goldtooth' | 'cloak' | 'magnet';
+export type UpgradeId = 'stubborn' | 'candle' | 'reflex' | 'goldtooth' | 'cloak' | 'magnet' | 'deflect';
 
 export interface Upgrade {
   id: UpgradeId;
@@ -29,6 +29,14 @@ export const UPGRADES: Upgrade[] = [
     price: 60,
     how: 'Transformado, o golpe que te mataria só desfaz a transformação: você volta a ser a caveira e continua de pé.',
     sign: 'Béé. (Cai a pele, fica o osso.)',
+  },
+  {
+    id: 'deflect',
+    name: 'Espada Rebatedora',
+    icon: 'tool_sword',
+    price: 70,
+    how: 'O golpe de espada rebate QUALQUER projétil que encostar nela: ossos, arpões, bolotas, fogo... e ele volta para quem atirou.',
+    sign: 'Béé. (Bata no que voa.)',
   },
   {
     id: 'candle',

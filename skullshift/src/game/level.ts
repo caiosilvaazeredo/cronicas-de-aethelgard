@@ -3133,20 +3133,22 @@ export class Level {
       // Ondas presas ao mar (acompanham a câmera), só balançando e cintilando: as duas camadas
       // trocam de força em contratempo, então as cristas aparecem e somem como água de verdade,
       // em vez de deslizar todas juntas para o lado.
-      a.tilePositionX = camX + Math.sin(time / 2300) * 9;
-      a.tilePositionY = Math.sin(time / 1300) * 2.5;
-      b.tilePositionX = (camX * 0.8) / 1.6 + Math.cos(time / 2900) * 12;
-      b.tilePositionY = Math.cos(time / 1700) * 2.5;
+      // As duas camadas de reflexos correm devagar em sentidos opostos (a água se mexe),
+      // sobem e descem um pouco e trocam de brilho em contratempo (cintilam).
+      a.tilePositionX = Math.round((camX + time * 0.018) / 2) * 2;
+      a.tilePositionY = Math.round(Math.sin(time / 1300) * 1.5) * 2;
+      b.tilePositionX = Math.round(((camX * 0.8 - time * 0.012) / 1.6) / 2) * 2;
+      b.tilePositionY = Math.round(Math.cos(time / 1700) * 1.5) * 2;
       const pulse = 0.5 + 0.5 * Math.sin(time / 1400);
-      a.setAlpha(this.waveAlpha[0] * (0.35 + 0.65 * pulse));
-      b.setAlpha(this.waveAlpha[1] * (0.35 + 0.65 * (1 - pulse)));
-      if (this.crest) this.crest.tilePositionX = camX * 1.1 + Math.sin(time / 1500) * 12;
+      a.setAlpha(this.waveAlpha[0] * (0.55 + 0.45 * pulse));
+      b.setAlpha(this.waveAlpha[1] * (0.55 + 0.45 * (1 - pulse)));
+      if (this.crest) this.crest.tilePositionX = Math.round((camX * 1.1 + time * 0.025) / 2) * 2;
       // Espuma: duas linhas correndo em sentidos opostos e balançando (em passos de pixel).
       const [ta, tb] = this.waterTops;
       if (ta && tb) {
-        ta.tilePositionX = Math.round((camX + Math.sin(time / 1700) * 14) / 2) * 2;
+        ta.tilePositionX = Math.round((camX + time * 0.03) / 2) * 2;
         ta.tilePositionY = Math.round(Math.sin(time / 900) * 1.5) * 2;
-        tb.tilePositionX = Math.round((camX * 1.05 + Math.cos(time / 2100) * 16) / 2) * 2;
+        tb.tilePositionX = Math.round((camX * 1.05 - time * 0.022) / 2) * 2;
         tb.tilePositionY = Math.round(Math.cos(time / 1100) * 1.5) * 2;
       }
     }

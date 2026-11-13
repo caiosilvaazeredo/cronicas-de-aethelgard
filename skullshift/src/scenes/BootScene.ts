@@ -292,39 +292,24 @@ export class BootScene extends Phaser.Scene {
     g.generateTexture('leaf', 10, 6);
     g.clear();
 
-    // Cristas: arcos curtos espalhados num ladrilho que se repete sem emenda.
+    // Água em pixel art (sem arcos): reflexos de luz retos e curtos, de comprimentos variados,
+    // às vezes em dupla, com um fio mais escuro embaixo de alguns (dá a sensação de ondulação
+    // plana, como a água do Tiny Swords). Ladrilho que se repete sem emenda.
     const waves = this.textures.createCanvas('waves', 256, 96)!;
     const wc = waves.getContext();
-    wc.strokeStyle = 'rgba(220,245,255,0.9)';
-    wc.lineWidth = 3;
-    wc.lineCap = 'round';
-    // Cristas de tamanhos e alturas diferentes, espalhadas sem padrão (nada de fileira uniforme).
-    const crests: number[][] = [];
-    let seedW = 7;
-    const rw = () => ((seedW = (seedW * 16807) % 2147483647) / 2147483647);
-    for (let k = 0; k < 16; k++) crests.push([Math.floor(rw() * 256), 6 + Math.floor(rw() * 84), 8 + Math.floor(rw() * 30)]);
-    // Sombra azul embaixo de cada crista: dá volume à onda.
-    wc.strokeStyle = 'rgba(20,95,170,0.45)';
-    for (const [x, y, w] of crests) {
-      wc.beginPath();
-      for (let i = 0; i <= w; i++) {
-        const px = (x + i) % 256;
-        const py = y + 5 + Math.sin((i / w) * Math.PI) * -4;
-        if (i === 0 || px === 0) wc.moveTo(px, py);
-        else wc.lineTo(px, py);
-      }
-      wc.stroke();
-    }
-    wc.strokeStyle = 'rgba(220,245,255,0.9)';
-    for (const [x, y, w] of crests) {
-      wc.beginPath();
-      for (let i = 0; i <= w; i++) {
-        const px = (x + i) % 256;
-        const py = y + Math.sin((i / w) * Math.PI) * -4;
-        if (i === 0 || px === 0) wc.moveTo(px, py);
-        else wc.lineTo(px, py);
-      }
-      wc.stroke();
+    let seedW = 11;
+    const rw = () => (seedW = (seedW * 16807) % 2147483647) / 2147483647;
+    const dash = (x: number, y: number, len: number, color: string) => {
+      wc.fillStyle = color;
+      for (let i = 0; i < len; i += 2) wc.fillRect((x + i) % 256, y, 2, 2);
+    };
+    for (let k = 0; k < 26; k++) {
+      const x = Math.floor(rw() * 128) * 2;
+      const y = 4 + Math.floor(rw() * 44) * 2;
+      const len = 4 + Math.floor(rw() * 14) * 2;
+      dash(x, y, len, 'rgba(225,246,255,0.85)');
+      if (rw() < 0.45) dash(x + 4, y + 4, Math.max(4, len - 8), 'rgba(225,246,255,0.5)');
+      if (rw() < 0.5) dash(x + 2, y + 2, Math.max(4, len - 4), 'rgba(20,90,160,0.35)');
     }
     waves.refresh();
 

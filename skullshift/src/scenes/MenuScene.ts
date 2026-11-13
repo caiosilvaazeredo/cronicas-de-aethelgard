@@ -73,10 +73,10 @@ export class MenuScene extends Phaser.Scene {
     const wavesA = this.add.tileSprite(0, gy + 80, W, HH - gy - 80, 'waves').setOrigin(0).setAlpha(0.5);
     const foam = this.add.tileSprite(0, gy + 100, W, 28, 'water_top').setOrigin(0).setAlpha(0.8).setDepth(6);
     this.events.on('update', (t: number) => {
-      wavesA.tilePositionX = Math.sin(t / 2300) * 9;
-      wavesA.tilePositionY = Math.sin(t / 1300) * 2.5;
-      wavesA.setAlpha(0.25 + 0.3 * (0.5 + 0.5 * Math.sin(t / 1400)));
-      foam.tilePositionX = Math.round((Math.sin(t / 1700) * 14) / 2) * 2;
+      wavesA.tilePositionX = Math.round((t * 0.018) / 2) * 2;
+      wavesA.tilePositionY = Math.round(Math.sin(t / 1300) * 1.5) * 2;
+      wavesA.setAlpha(0.4 + 0.25 * (0.5 + 0.5 * Math.sin(t / 1400)));
+      foam.tilePositionX = Math.round((t * 0.03) / 2) * 2;
       foam.tilePositionY = Math.round(Math.sin(t / 560) * 1.5) * 2;
     });
     // Construções do reino ao fundo (atrás da grama).

@@ -94,7 +94,7 @@ originais (extraídas com PIL do PNG).
   `data/tips.ts` (DICA / CURIOSIDADE / BOATO, gerais ou por área). A tela inicial reutiliza `loadingVignette`.
 - **Transformação**: `GameScene.shiftSpin` (clone do corpo gira e acelera, três raios roxos em espiral, clarão
   no meio com a troca, anel e faíscas no fim). O corpo real fica com `Fighter.shiftHide`.
-- **Água**: ondas presas ao mar (só balançam e cintilam em contratempo; nada desliza em fila); texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
+- **Água**: textura `waves` = reflexos retos de pixel (nada de arcos); duas camadas correm devagar em sentidos opostos e cintilam em contratempo; texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
   brilhos em `Level.water`. **Farol**: `SeaSystem.drawLighthouse` empilha duas `bld_red_tower` + fogueira.
 - **Música** (`music.ts`): só FLAUTA, VIOLÃO e HARPA, com amostras reais (soundfont FluidR3_GM recortada em
   `public/assets/sf/*-mp3.js`, licença em `sf/LICENSE.txt`; essa pasta VAI para o git) tocadas pela lib `smplr`.

@@ -144,6 +144,7 @@ export class BootScene extends Phaser.Scene {
     this.makeNewItems();
     this.makePixelWebs();
     this.makeBubble();
+    this.makeGuardArc();
     this.makeVolcano();
     makeTorch(this);
     makeCocoon(this);
@@ -435,6 +436,43 @@ export class BootScene extends Phaser.Scene {
   }
 
   /** Bolha de energia (defesa de quem não tem escudo), tingida com a cor do jogador. */
+  /**
+   * Escudo de energia em meia-lua (quem não tem escudo no sprite): um arco só na frente do
+   * corpo, virado para a direita (vira junto com o personagem). Defende só o que vem de frente.
+   */
+  private makeGuardArc(): void {
+    const tex = this.textures.createCanvas('guard_arc', 72, 140)!;
+    const c = tex.getContext();
+    const cx = -34;
+    const cy = 70;
+    const a0 = -1.05;
+    const a1 = 1.05;
+    // Faixa translúcida do arco.
+    const g = c.createRadialGradient(cx, cy, 70, cx, cy, 102);
+    g.addColorStop(0, 'rgba(255,255,255,0)');
+    g.addColorStop(0.55, 'rgba(255,255,255,0.28)');
+    g.addColorStop(0.9, 'rgba(255,255,255,0.8)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g;
+    c.beginPath();
+    c.arc(cx, cy, 102, a0, a1);
+    c.arc(cx, cy, 70, a1, a0, true);
+    c.closePath();
+    c.fill();
+    // Borda brilhante e pontas.
+    c.strokeStyle = 'rgba(255,255,255,0.95)';
+    c.lineWidth = 4;
+    c.beginPath();
+    c.arc(cx, cy, 96, a0 + 0.05, a1 - 0.05);
+    c.stroke();
+    c.strokeStyle = 'rgba(255,255,255,0.5)';
+    c.lineWidth = 2;
+    c.beginPath();
+    c.arc(cx, cy, 82, a0 + 0.15, a1 - 0.15);
+    c.stroke();
+    tex.refresh();
+  }
+
   private makeBubble(): void {
     const tex = this.textures.createCanvas('bubble', 128, 128)!;
     const c = tex.getContext();

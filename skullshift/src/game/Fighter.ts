@@ -18,6 +18,8 @@ const BODY_H = 50;
 const CROUCH_SPEED = 120;
 /** O segundo pulo (no ar) é um pouco mais fraco. */
 const DOUBLE_JUMP = 0.88;
+/** Janela do contra-golpe (tocar para trás no instante do golpe), em ms. */
+const PARRY_MS = 170;
 /** Pique: multiplicador de velocidade. */
 const SPRINT = 1.6;
 
@@ -109,6 +111,8 @@ export class Fighter {
   pounding = false;
   onPound?: (f: Fighter) => void;
   private lastTurnAt = -9999;
+  private lastMoveSign = 0;
+  private moveStartAt = -9999;
   private lastMove = 0;
 
   constructor(
@@ -127,7 +131,7 @@ export class Fighter {
     this.sprite = scene.physics.add.sprite(x, 0, `${baseChar}_idle`, 0);
     this.sprite.setDepth(DEPTH.fighters);
     // Quem não tem escudo no sprite defende com uma bolha de energia (estilo jogo de luta de plataforma).
-    this.shield = scene.add.image(x, feetY, 'bubble').setDepth(DEPTH.fighters + 1).setVisible(false).setTint(color ?? 0x9fe3ff);
+    this.shield = scene.add.image(x, feetY, 'guard_arc').setDepth(DEPTH.fighters + 1).setVisible(false).setTint(color ?? 0x9fe3ff);
     if (color !== undefined) {
       this.isPlayer = true;
       this.ghostTint = color;
@@ -243,6 +247,17 @@ export class Fighter {
     if (low && !this.crouching) return false;
     const dir = Math.sign(fromX - this.x) || this.facing;
     return dir === this.facing;
+  }
+
+  /**
+   * Contra-golpe: em vez de defender, tocou para trás (para longe de quem ataca) no instante do
+   * golpe. Golpe corpo a corpo: quebra a defesa de quem atacou. Tiro: volta para quem atirou.
+   */
+  parries(fromX: number): boolean {
+    // Andar para trás já defende; o contra vale para quem TOCOU para trás agora (não para o botão de defesa).
+    if (!this.isPlayer || !this.alive || this.intent.guard || this.isStunned || this.zipping) return false;
+    const toward = Math.sign(fromX - this.x) || this.facing;
+    return this.lastMoveSign === -toward && this.scene.time.now - this.moveStartAt <= PARRY_MS;
   }
 
   knockback(dir: number, power = 320): void {
@@ -445,7 +460,8 @@ export class Fighter {
 
     this.sprite.setFlipX(this.facing < 0);
 
-    // Bolha de energia para quem não tem animação própria de defesa: envolve o corpo e pulsa.
+    // Escudo de energia em meia-lua para quem não tem animação própria de defesa: só na frente
+    // do corpo (defende o que vem de frente), virando junto com o personagem.
     const showShield = this.state === 'guard' && !d.guard;
     this.shield.setVisible(showShield);
     if (showShield) {
@@ -453,9 +469,16 @@ export class Fighter {
       const size = (head + 34) / 116;
       const pulse = 1 + Math.sin(now / 90) * 0.03;
       this.shield
-        .setPosition(this.x, this.feet - head * 0.5 - 4)
+        .setPosition(this.x + this.facing * (head * 0.3 + 6), this.feet - head * 0.5 - 4)
         .setScale(size * pulse)
+        .setFlipX(this.facing < 0)
         .setAlpha(0.85);
+    }
+    // Começo de cada movimento (para o contra-golpe: tocar para trás no instante do golpe).
+    const m = Math.sign(this.intent.move);
+    if (m !== this.lastMoveSign) {
+      this.lastMoveSign = m;
+      if (m !== 0) this.moveStartAt = now;
     }
 
     // Pisca enquanto invulnerável.

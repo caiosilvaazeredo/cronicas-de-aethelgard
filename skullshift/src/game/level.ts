@@ -179,6 +179,7 @@ export const LEVEL_1: LevelDef = {
     {
       segments: [[0, 13], [15, 3], [18, 2]],
       deco: [[6, 'rock1'], [11, 'stump']],
+      sign: [1, 'Para TRÁS na hora\ndo golpe: CONTRA!'],
       enemies: [[16, 'lizard'], [9, 'gnoll']],
       storyItems: [[4, 'spear']],
       versusItems: [[9, 'bone']],

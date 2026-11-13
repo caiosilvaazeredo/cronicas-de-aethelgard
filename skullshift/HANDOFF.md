@@ -80,6 +80,10 @@ originais (extraídas com PIL do PNG).
   todas as fases de plataforma. Com pique, todas passam; sem pique, só a Escadaria (exige pique, de propósito)
   e a Biblioteca (pontes-fantasma de alavanca, que o verificador não simula). Rode depois de mexer em fases.
 - Fundos por área em parallax (`Level.areaBackdrop`, escolhido pelo tileset).
+- Defesa sem escudo: **meia-lua** (`guard_arc`, `BootScene.makeGuardArc`) que só protege a frente.
+  **Contra-golpe**: tocar para trás até 170 ms antes do golpe (`Fighter.parries`, `PARRY_MS`) quebra a
+  defesa do atacante corpo a corpo (`GameScene.resolveMelee` → `guardBreak`) e devolve projéteis
+  (laço de projéteis em `GameScene`). Efeito em `GameScene.parryFx`. Placa de dica na fase 1.
 
 ## Ideias para continuar
 

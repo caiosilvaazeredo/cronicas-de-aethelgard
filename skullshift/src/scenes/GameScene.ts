@@ -679,10 +679,19 @@ export class GameScene extends Phaser.Scene {
       if (!hb) continue;
       for (const b of all) {
         if (!b.alive || b.team === a.team || a.attackHits.has(b)) continue;
-        if (!overlap(hb, bodyBox(b))) continue;
+        // Contra-golpe: tocou para trás no instante certo → a defesa de quem atacou quebra.
+        // Vale mesmo se o recuo tirou o corpo do alcance por pouco (o golpe "passou raspando").
+        const near = { ...hb, x1: hb.x1 - 60, x2: hb.x2 + 60 };
+        const parry = !b.invulnerable && overlap(near, bodyBox(b)) && b.parries(a.x);
+        if (!parry && !overlap(hb, bodyBox(b))) continue;
         a.attackHits.add(b);
         if (b.invulnerable) continue;
         const dir = Math.sign(b.x - a.x) || a.facing;
+        if (parry) {
+          this.parryFx(b, a.x);
+          this.guardBreak(a, -dir);
+          continue;
+        }
         if (b.blocksFrom(a.x, hb.low)) {
           if (Math.abs(a.x - b.x) <= POINT_BLANK) {
             // À queima-roupa: o golpe quebra a defesa e deixa o outro tonto.
@@ -703,13 +712,31 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  /** Brilho do contra-golpe: meia-lua dourada piscando e "CONTRA!". */
+  private parryFx(f: Fighter, fromX: number): void {
+    const dir = Math.sign(fromX - f.x) || f.facing;
+    const arc = this.add
+      .image(f.x + dir * (f.def.head * 0.3 + 6), f.feet - f.def.head * 0.5, 'guard_arc')
+      .setTint(0xffe066)
+      .setFlipX(dir < 0)
+      .setScale((f.def.head + 34) / 116)
+      .setDepth(DEPTH.fx);
+    this.tweens.add({ targets: arc, scale: arc.scale * 1.5, alpha: 0, duration: 320, ease: 'Quad.easeOut', onComplete: () => arc.destroy() });
+    this.sparks(f.x + dir * 30, f.feet - f.def.head * 0.5);
+    sfx('select');
+    this.popText(f.x, f.feet - f.labelHeight - 40, 'CONTRA!', '#ffe066');
+    // Um instante de câmera lenta para o momento ficar claro.
+    this.physics.world.timeScale = 2.5;
+    this.time.delayedCall(90, () => (this.physics.world.timeScale = 1));
+  }
+
   private guardBreak(b: Fighter, dir: number): void {
     b.stun(950);
     b.knockback(dir, 260);
     this.cameras.main.shake(140, 0.008);
     if (!b.def.guard) {
       // Bolha de energia estourando.
-      const pop = this.add.image(b.x, b.feet - b.def.head * 0.5, 'bubble').setTint(b.color ?? 0x9fe3ff).setDepth(DEPTH.fx);
+      const pop = this.add.image(b.x + b.facing * (b.def.head * 0.3 + 6), b.feet - b.def.head * 0.5, 'guard_arc').setFlipX(b.facing < 0).setTint(b.color ?? 0x9fe3ff).setDepth(DEPTH.fx);
       pop.setScale((b.def.head + 34) / 116);
       this.tweens.add({ targets: pop, scale: pop.scale * 1.6, alpha: 0, duration: 380, ease: 'Quad.easeOut', onComplete: () => pop.destroy() });
     }
@@ -839,6 +866,17 @@ export class GameScene extends Phaser.Scene {
       for (const b of this.fighters) {
         if (!b.alive || b.team === p.owner.team || b.invulnerable) continue;
         if (!overlap(projBox(p), bodyBox(b))) continue;
+        // Contra-golpe: o tiro volta para quem atirou.
+        if (b.parries(b.x - Math.sign(p.vx) * 10)) {
+          this.parryFx(b, p.sprite.x);
+          p.owner = b;
+          p.vx = -p.vx * 1.15;
+          p.vy = Math.min(p.vy, -40);
+          p.life = 3;
+          p.boomerang = undefined;
+          p.sprite.setFlipX(!p.sprite.flipX).setTint(b.color ?? 0xffe066);
+          break;
+        }
         if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
           this.sparks(p.sprite.x, p.sprite.y);
           this.deflect(p);

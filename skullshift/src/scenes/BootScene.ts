@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
 import { MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
-import { makeBossFx, makeCocoon, makeLavaWave, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
+import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
 
@@ -43,6 +43,11 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('tree', 'terrain/tree.png', { frameWidth: 192, frameHeight: 256 });
     this.load.image('dead_tree', 'terrain/dead_tree.png');
     this.load.image('rock1', 'terrain/rock1.png');
+    // Recursos (Tiny Swords): ferramentas das habilidades, presentes e objetos das fases de chave.
+    for (const k of ['tool_hammer', 'tool_axe', 'tool_sword', 'tool_pickaxe', 'meat', 'wood', 'gold', 'gold_stone', 'gold_stone_big', 'stump']) this.load.image(k, `res/${k}.png`);
+    this.load.spritesheet('sheep_idle', 'res/sheep_idle.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('sheep_move', 'res/sheep_move.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('res_tree', 'res/tree.png', { frameWidth: 192, frameHeight: 192 });
     this.load.image('rock2', 'terrain/rock2.png');
     this.load.image('stump', 'terrain/stump.png');
     // Logo (opcional: gerada por scripts/build-logo.py). Carregada em 2x para ficar nítida em pé.
@@ -82,6 +87,9 @@ export class BootScene extends Phaser.Scene {
       } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
     }
     this.anim('skull_guard', 7, 10, -1);
+    this.anim('sheep_idle', 6, 8, -1);
+    this.anim('sheep_move', 4, 10, -1);
+    this.anim('res_tree', 8, 8, -1);
     this.anim('boss_mino_idle', 16, 12, -1);
     this.anim('boss_mino_run', 8, 12, -1);
     this.anim('boss_mino_attack', 12, 14, 0);
@@ -114,6 +122,7 @@ export class BootScene extends Phaser.Scene {
     makeCocoon(this);
     makeBossFx(this);
     makeLavaWave(this);
+    makePuzzleArt(this);
     makeHauntArt(this);
     makeHauntBackdrop(this, 'haunt_bg', W, H);
     makeMapMansion(this, 'map_mansion');

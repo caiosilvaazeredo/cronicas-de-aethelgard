@@ -40,25 +40,49 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 Cada fase tem **5 cenários** (telas; o voo tem 6): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. No versus, a fase é escolhida no menu (◀ ▶); no modo história, no mapa-múndi, que é uma faixa larga que rola acompanhando o esqueleto.
 
-O modo história tem **13 fases** em ordem (o número é a posição na lista `LEVELS`):
+O modo história tem **22 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
 
 | # | Fase | Tipo | O que tem |
 |---|---|---|---|
-| 1 | Ilhas da Maré | Plataforma (o básico) | Praia com ilhas e água; vidas infinitas. Lagarto, Gnoll, Tubarão-Arpão, Goblin Lanceiro |
-| 2 | Caverna Úmida | Plataforma | Degraus, poços, aranhas penduradas no teto. Aranha, Morcego, Goblin da Tocha |
-| 3 | Ninho das Teias | Plataforma | Teto cheio de aranhas penduradas; dá para passar sem derrotar todas |
-| 4 | Covil da Rainha | Plataforma + **chefe** | Aranhas pelo caminho e a **Aranha-Rainha** no fim |
-| 5 | Forja Vulcânica | Áreas travadas + **chefe** | Cada cenário só abre (a barreira de fogo apaga) quando todos os inimigos dele caem; no fim, o **Minotauro Rubro**. O Minotauro comum ficou menor (72%) |
-| 6 | Fuga da Forja | **Perseguição** | Um paredão de lava avança da esquerda, mais rápido que andar: é preciso correr sem parar |
-| 7 | Santuário das Nuvens | Plataforma | Só as nuvens encantadas aguentam peso. Abelhão, Gnomo do Estilingue |
-| 8 | Correntes do Céu | **Ventos e planar** | Colunas de vento levantam quem entra; segurar PULAR no ar plana |
-| 9 | Voo Noturno | **Voo com tiro** | Montado no morcego gigante, a tela rola sozinha; voa em todas as direções e os ossos saem sozinhos. Ondas de morcegos, diabretes e abelhas atiradoras |
-| 10 | Escadaria da Maré | Combinações de ações | Pulo duplo, pique + pulo duplo, placas explicando |
-| 11 | Casa das Portas | **Quebra-cabeça** | Cômodos fechados; portas com a LUA levam adiante, as outras (e a lua vermelha) devolvem ao começo |
-| 12 | Biblioteca Assombrada | **Quebra-cabeça** | Alavancas acendem pontes-fantasma por poucos segundos; chave no alto das estantes abre a saída |
-| 13 | Casa Sem Luz | **Quebra-cabeça** | Escuridão: encostar nas velas acende a luz; pisos rachados desabam; a saída abre com as 3 velas grandes |
+| 1 | Ilhas da Maré | Plataforma (o básico) | Praia e água; vidas infinitas |
+| 2 | Caverna Úmida | Plataforma | Aranhas penduradas no teto. **Segredo:** um rolo de filme no alto de uma plataforma |
+| 3 | Oficina da Chave | **Chave e porta** | Escada, molas; ensina a carregar a chave |
+| 4 | Ninho das Teias | Plataforma | Teto cheio de aranhas; dá para passar sem derrotar todas |
+| 5 | Covil da Rainha | Plataforma + **chefe** | Aranha-Rainha no fim |
+| 6 | Pradaria dos Ossos | **Corrida e tiro** | Segurar ATACAR dispara ossos; inimigos em ondas |
+| 7 | Blocos Trocados | **Chave e porta** | Alavancas de cor: só os blocos da cor ativa são sólidos |
+| 8 | Forja Vulcânica | Áreas travadas + **chefe** | Minotauro Rubro no fim |
+| 9 | Fuga da Forja | **Perseguição** | Onda gigante de lava, chão que desaba, tirolesas, meteoros |
+| 10 | Mina Rachada | **Chave e porta** | Pedras de ouro que só caem com o martelo |
+| 11 | Duelo no Céu | **Avião + chefe** | Montado no Abelhão; no fim, o Diabrete Gigante (barra de vida, leque de tiros, rajadas miradas, bote, morcegos) |
+| 12 | Santuário das Nuvens | Plataforma | Nuvens encantadas |
+| 13 | Correntes do Céu | Ventos e planar | Colunas de vento; segurar PULAR plana |
+| 14 | Bosque do Lenhador | **Chave e porta** | Machado derruba árvore que vira ponte; ovelha na placa abre o portão |
+| 15 | Voo Noturno | Voo com tiro | Montado no morcego gigante |
+| 16 | Mina de Ouro | **Corrida e tiro** | Tochas, aranhas e morcegos em ondas |
+| 17 | Escadaria da Maré | Combinações | Pulo duplo, pique + pulo duplo |
+| 18 | Torre do Escalador | **Chave e porta** | A chave no alto da torre (picareta) e escada para descer |
+| 19 | Mausoléu do Xamã | **Desafio do mausoléu** | Proteger a urna de 6 ondas de assombrações vindas dos dois lados (3 toques e ela quebra) |
+| 20–22 | Casa das Portas, Biblioteca Assombrada, Casa Sem Luz | Quebra-cabeças | Portas, chave e alavancas, escuridão e velas |
+| ★ | Desenho Perdido (1930) | **Secreta**, corrida e tiro | Em **preto e branco**, com grão de película, vinheta, riscos e tremido de projetor. Aparece no mapa (ilha de filme, ligada à caverna) depois de achar o rolo de filme |
 
-Casas assombradas, perseguição e voo são só do modo história; o versus usa as fases de plataforma.
+**Fases de chave e porta:** leve a **chave dourada** até a **porta trancada** (com ela na mão não dá pulo duplo nem escalar). Cada uma tem **3 presentes** opcionais (carne, madeira e ouro, dos recursos do Tiny Swords) para os 100%; ficam salvos no save e aparecem sob o medalhão no mapa. Mecânicas: escadas (↑ / ▼), molas, alavancas de cor, pedras de ouro, árvores, ovelhas que andam sozinhas (e podem ser carregadas e arremessadas), placas de pressão e portões.
+
+### Habilidades da caveira
+
+Liberadas ao concluir certas fases (um painel "NOVA HABILIDADE!" aparece no mapa); ícones das ferramentas do Tiny Swords:
+
+| Habilidade | Liberada depois de | Como usar |
+|---|---|---|
+| Mãos de Osso | Caverna Úmida | PEGAR levanta chave/ovelha; PEGAR de novo solta; ATACAR arremessa |
+| Cambalhota e Parada de Mão | Oficina da Chave | Agachado + PULAR: salto de parada de mão; virar e pular: cambalhota para trás (ambos mais altos) |
+| Martelo | Forja Vulcânica | No ar, ▼ + ATACAR: martelada no chão (quebra pedras de ouro, atordoa inimigos) |
+| Machado | Santuário das Nuvens | ATACAR numa árvore: ela cai e vira ponte |
+| Picareta | Escadaria da Maré | Encostar numa parede no ar: sobe sozinha (como a aranha) |
+
+No modo livre, todas as habilidades e a fase secreta ficam liberadas.
+
+Casas assombradas, perseguição, voo, chave e porta, corrida e tiro, mausoléu e a secreta são só do modo história; o versus usa as fases de plataforma.
 
 ### Chefes (estilo Mega Man)
 
@@ -202,6 +226,9 @@ Na tela de escolha de controle, cada jogador escolhe o nome (◀ ▶ na plaquinh
 - `src/game/boss.ts` — chefes (entrada, barra de vida, padrões, perigos e derrota).
 - `src/game/haunt.ts` — casas assombradas (portas, chave, alavancas, pontes-fantasma, pisos falsos, velas, escuridão).
 - `src/game/shmup.ts` — fase de voo com tiro.
+- `src/game/escape.ts` — fuga (onda de lava, chão que desaba, tirolesas, meteoros).
+- `src/game/puzzle.ts` — fases de chave e porta (carregar, escadas, molas, blocos de cor, pedras, árvores, ovelhas, placas, portões, presentes).
+- `src/game/mausoleum.ts` — desafio do mausoléu; `src/game/abilities.ts` — habilidades liberadas por fase.
 - `src/game/settings.ts` — configurações e sons 8-bit; `src/game/names.ts` — nomes dos jogadores; `src/game/progress.ts` — saves.
 - `src/game/Fighter.ts` — estados, ataque, defesa, morte e transformação.
 - `src/game/ai.ts` — IA dos inimigos.

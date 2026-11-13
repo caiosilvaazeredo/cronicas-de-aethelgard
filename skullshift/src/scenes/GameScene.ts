@@ -6,11 +6,14 @@ import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type Device
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
-import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
+import { MAIN_COUNT, completeLevel, deathLimit, findSecret, giftsOf, hasSecret, hasSeen, markGift, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
 import { EscapeSystem } from '../game/escape';
+import { PuzzleSystem } from '../game/puzzle';
+import { MausoleumSystem } from '../game/mausoleum';
+import { ABILITIES, hasAbility } from '../game/abilities';
 import { playerName } from '../game/names';
 import { settings, sfx } from '../game/settings';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
@@ -86,6 +89,13 @@ export class GameScene extends Phaser.Scene {
   private shmup?: ShmupSystem;
   /** Fuga: onda de lava, chão desabando, tirolesas e meteoros. */
   private escape?: EscapeSystem;
+  /** Fase de chave e porta. */
+  private puzzle?: PuzzleSystem;
+  /** Desafio do mausoléu. */
+  private mausoleum?: MausoleumSystem;
+  /** Corrida e tiro: próximo disparo e próxima onda de inimigos. */
+  private nextGunShot = 0;
+  private nextGunSpawn = 0;
   /** Correntes de vento (faixas x do mundo). */
   private winds: Array<[number, number]> = [];
   /** Barreira de fogo das áreas travadas (só libera sem inimigos). */
@@ -141,6 +151,10 @@ export class GameScene extends Phaser.Scene {
     this.boss = undefined;
     this.shmup = undefined;
     this.escape = undefined;
+    this.puzzle = undefined;
+    this.mausoleum = undefined;
+    this.nextGunShot = 0;
+    this.nextGunSpawn = 0;
     this.winds = [];
     this.bossStarted = false;
     this.rootedUntil = 0;
@@ -185,6 +199,48 @@ export class GameScene extends Phaser.Scene {
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
+      // Habilidades liberadas no save (no modo livre, todas).
+      const p0 = this.players[0];
+      for (const a of ABILITIES) if (hasAbility(a.id)) p0.abilities.add(a.id);
+      p0.onPound = (f) => this.pound(f);
+      if (def.puzzle) {
+        const levelId = def.id;
+        this.puzzle = new PuzzleSystem(
+          {
+            scene: this,
+            level: this.level,
+            player: () => this.players[0],
+            pickLabel: () => PICK_LABEL[this.devices[0]],
+            giftsBefore: giftsOf(levelId),
+            gift: (i) => markGift(levelId, i),
+            win: (n) => this.storyWin(`${def.winText ?? 'Porta aberta!'}   ·   Presentes: ${n}/3`),
+            popText: (x, y, text, color) => this.popText(x, y, text, color),
+          },
+          def.puzzle,
+        );
+      }
+      if (def.mausoleum) {
+        this.mausoleum = new MausoleumSystem({
+          scene: this,
+          player: () => this.players[0],
+          x0: 40,
+          x1: this.level.width - 40,
+          floor: FLOOR_Y,
+          waves: def.mausoleum.waves,
+          failed: () => {
+            if (this.ended) return;
+            this.ended = true;
+            this.wasted(0, 'A URNA QUEBROU', 2800);
+            this.time.delayedCall(3000, () => this.restartMatch());
+          },
+          win: () => this.storyWin(def.winText ?? 'A urna está a salvo!'),
+          popText: (x, y, text, color) => this.popText(x, y, text, color),
+          bar: () => this.ui,
+          killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
+        });
+      }
+      if (def.retro) this.setupRetro();
+      if (def.secretItem && !hasSecret(def.secretItem.id)) this.placeSecret(def.secretItem);
       if (def.shmup) this.setupShmup();
       if (def.chase)
         this.escape = new EscapeSystem(
@@ -342,7 +398,7 @@ export class GameScene extends Phaser.Scene {
 
   /** História: volta ao mapa (a próxima fase já foi liberada na vitória). */
   nextLevel(): void {
-    if (this.levelIndex >= LEVELS.length - 1) this.scene.start('vn', { devices: this.devices, epilogue: true });
+    if (this.levelIndex === MAIN_COUNT - 1) this.scene.start('vn', { devices: this.devices, epilogue: true });
     else this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
   }
 
@@ -373,6 +429,8 @@ export class GameScene extends Phaser.Scene {
 
     this.players.forEach((p, i) => {
       p.intent = p.alive ? this.controllers[i].read() : emptyIntent();
+      // Corrida e tiro: ATACAR dispara ossos em vez do golpe corpo a corpo.
+      if (i === 0 && this.mode === 'story' && LEVELS[this.levelIndex].gun) p.intent = { ...p.intent, attack: false };
       // Preso na teia da Aranha-Rainha: não anda nem pula (dá para atacar e defender).
       if (i === 0 && time < this.rootedUntil) p.intent = { ...p.intent, move: 0, jump: false, jumpHeld: false, sprint: false };
       p.faceTarget = this.nearestFoe(p)?.x ?? null;
@@ -412,6 +470,9 @@ export class GameScene extends Phaser.Scene {
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
     this.escape?.update(time, dt);
+    this.puzzle?.update(time, dt);
+    this.mausoleum?.update(time, dt);
+    this.updateGun(time);
     this.updateWinds(dt);
     if (this.shmup) {
       this.shmup.update(time, dt);
@@ -432,7 +493,7 @@ export class GameScene extends Phaser.Scene {
       this.ui?.hud?.setGo(this.leader === -1 ? 0 : this.leader === 0 ? 1 : -1, PLAYER_HEX[this.leader] ?? '#fff');
     } else {
       const cleared = !this.enemies.some((e) => e.f.alive && this.level.screenOf(e.f.x) === this.screen);
-      this.ui?.hud?.setGo(cleared && !this.shmup && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
+      this.ui?.hud?.setGo(cleared && !this.shmup && !this.puzzle && !this.mausoleum && this.screen < this.level.screenCount - 1 ? 1 : 0, '#fff7dc');
     }
   }
 
@@ -1488,6 +1549,94 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- fases de outros tipos ----------
 
+  /** Martelada no chão: treme, levanta poeira, quebra pedras de ouro e atordoa quem está perto. */
+  private pound(f: Fighter): void {
+    this.cameras.main.shake(220, 0.01);
+    sfx('boom');
+    this.fx('dust', f.x - 40, f.feet - 6, 1.4);
+    this.fx('dust', f.x + 40, f.feet - 6, 1.4);
+    this.puzzle?.pound(f);
+    for (const e of this.enemies) {
+      if (e.f.alive && Math.abs(e.f.x - f.x) < 150 && Math.abs(e.f.feet - f.feet) < 60) e.f.stun(1400);
+    }
+  }
+
+  /** Corrida e tiro: segurar ATACAR solta ossos retos; inimigos chegam pela frente em ondas. */
+  private updateGun(time: number): void {
+    const g = LEVELS[this.levelIndex].gun;
+    if (!g || this.mode !== 'story' || this.ended || this.cutscene) return;
+    const p = this.players[0];
+    if (p.alive && p.intent.attackHeld && time >= this.nextGunShot && !p.zipping) {
+      this.nextGunShot = time + 170;
+      const s = this.add.sprite(p.x + p.facing * 34, p.feet - p.labelHeight * 0.55, 'bone').setDepth(DEPTH.projectiles).setScale(0.8).play('bone');
+      this.projectiles.push({ sprite: s, gravity: 0, owner: p, vx: 860 * p.facing, vy: 0, life: 1.2, bounced: false });
+      sfx('attack');
+    }
+    if (time >= this.nextGunSpawn && p.alive) {
+      this.nextGunSpawn = time + g.every;
+      const near = this.enemies.filter((e) => e.f.alive && Math.abs(e.f.x - p.x) < W).length;
+      const x = this.camX + this.halfView + 30;
+      const ground = this.level.groundY(x);
+      if (near < 6 && ground !== null && x < this.level.width - 80) {
+        const f = this.spawnEnemy(Phaser.Utils.Array.GetRandom(g.spawns), x, ground);
+        f.facing = -1;
+        if (LEVELS[this.levelIndex].retro) f.sprite.setTint(0xffffff);
+      }
+    }
+  }
+
+  /** Desenho perdido de 1930: preto e branco, contraste alto, vinheta, grão e riscos de película. */
+  private setupRetro(): void {
+    const cam = this.cameras.main;
+    const fx = cam.postFX?.addColorMatrix();
+    fx?.grayscale(1);
+    fx?.contrast(0.35, true);
+    cam.postFX?.addVignette(0.5, 0.5, 0.9, 0.45);
+    const grain = this.add.tileSprite(0, 0, W, H, 'film_grain').setOrigin(0).setScrollFactor(0).setDepth(DEPTH.fx + 9).setAlpha(0.5);
+    const scratches = this.add.graphics().setScrollFactor(0).setDepth(DEPTH.fx + 9);
+    this.time.addEvent({
+      delay: 70,
+      loop: true,
+      callback: () => {
+        grain.tilePositionX = Phaser.Math.Between(0, 256);
+        grain.tilePositionY = Phaser.Math.Between(0, 256);
+        grain.setAlpha(Phaser.Math.FloatBetween(0.35, 0.6));
+        scratches.clear();
+        for (let i = 0; i < 2; i++) {
+          if (Math.random() < 0.5) continue;
+          const x = Phaser.Math.Between(0, W);
+          scratches.fillStyle(Math.random() < 0.5 ? 0xffffff : 0x000000, 0.35).fillRect(x, 0, 2, H);
+        }
+        // Tremido de projetor.
+        cam.setAlpha(Math.random() < 0.06 ? 0.85 : 1);
+      },
+    });
+  }
+
+  /** Item secreto escondido na fase (rolo de filme). */
+  private placeSecret(sec: { id: string; at: [number, number, number] }): void {
+    const [sc, t, h] = sec.at;
+    const x = this.level.tileX(sc, t);
+    const y = FLOOR_Y - h * TILE - 44;
+    const reel = this.add.image(x, y, 'film_reel').setDepth(DEPTH.items);
+    this.tweens.add({ targets: reel, angle: 360, duration: 3000, repeat: -1 });
+    this.tweens.add({ targets: reel, y: y - 8, duration: 800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const ev = this.time.addEvent({
+      delay: 100,
+      loop: true,
+      callback: () => {
+        const p = this.players[0];
+        if (!p.alive || Math.abs(p.x - x) > 40 || Math.abs(p.feet - 40 - y) > 60) return;
+        ev.remove();
+        findSecret(sec.id);
+        sfx('pick');
+        reel.destroy();
+        this.popText(x, y - 60, 'ROLO DE FILME!', '#ffe066');
+        this.time.delayedCall(700, () => this.popText(p.x, p.feet - 200, 'Uma fase secreta apareceu no mapa...', '#d8d0c0'));
+      },
+    });
+  }
+
   /** Voo: a caveira some do chão e passa a voar montada no morcego. */
   private setupShmup(): void {
     const p = this.players[0];
@@ -1505,8 +1654,12 @@ export class GameScene extends Phaser.Scene {
       died: () => this.countStoryDeath(1200),
       win: () => this.storyWin(LEVELS[this.levelIndex].winText ?? 'Céu limpo!'),
       popText: (x, y, text, color) => this.popText(x, y, text, color),
+      boss: !!LEVELS[this.levelIndex].shmupBoss,
+      mount: LEVELS[this.levelIndex].shmupBoss ? 'bee' : 'bat',
+      bar: () => this.ui,
     });
     this.time.delayedCall(400, () => this.shmup?.hint());
+    if (LEVELS[this.levelIndex].shmupBoss) return; // duelo de dia
     // Noite: céu escurecido e estrelas piscando.
     this.add.rectangle(0, -400, W, H + 800, 0x0b1030, 0.55).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.5);
     const rng = new Phaser.Math.RandomDataGenerator(['night']);
@@ -1679,6 +1832,7 @@ export class GameScene extends Phaser.Scene {
     if (LEVELS[this.levelIndex].haunt) return; // casa assombrada: só pela porta de saída
     if (this.mode === 'story' && LEVELS[this.levelIndex].boss) return; // vence derrotando o chefe
     if (this.shmup) return; // voo: vence quando a rolagem termina
+    if (this.puzzle || this.mausoleum) return; // chave e porta / mausoléu: vitória própria
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
     if (p1.alive && p1.x >= end) {

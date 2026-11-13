@@ -13,6 +13,7 @@ export interface Intent {
   crouch: boolean; // segurando para baixo: agachar
   jumpHeld: boolean; // segurando pular (voo do morcego)
   sprint: boolean; // pique: toque duplo na direção (e segurar) ou Shift
+  attackHeld?: boolean; // segurando ataque (tiro contínuo nas fases de corrida e tiro)
 }
 
 export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false, sprint: false });
@@ -142,6 +143,7 @@ export class PlayerController implements Controller {
     let pick = false;
     let crouch = false;
     let jumpHeld = false;
+    let attackHeld = false;
 
     if (this.keys) {
       const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
@@ -153,6 +155,7 @@ export class PlayerController implements Controller {
       pick = just(this.keys.pick);
       crouch = down(this.keys.crouch);
       jumpHeld = down(this.keys.jump);
+      attackHeld = down(this.keys.attack);
     }
 
     const pad = this.padIndex === null ? undefined : connectedPads(this.scene)[this.padIndex];
@@ -170,6 +173,7 @@ export class PlayerController implements Controller {
       if (padJump && !this.prevPadJump) jump = true;
       if (padJump) jumpHeld = true;
       if (padAttack && !this.prevPadAttack) attack = true;
+      if (padAttack) attackHeld = true;
       this.prevPadJump = padJump;
       this.prevPadAttack = padAttack;
       if (b(1) || b(4) || b(5) || b(6) || b(7)) guard = true;
@@ -186,11 +190,12 @@ export class PlayerController implements Controller {
       pick = t.pickPressed;
       crouch = t.crouch;
       jumpHeld = t.jumpHeld;
+      attackHeld = t.attackHeld;
     }
     if (this.gesture) {
       const g = this.gesture.read();
       this.prevMove = g.move;
-      return { move: g.move, jump: g.jump, guard: g.guard, attack: g.attack, pick: g.pick, crouch: g.crouch, jumpHeld: g.jumpHeld, sprint: g.move !== 0 && g.sprint };
+      return { move: g.move, jump: g.jump, guard: g.guard, attack: g.attack, pick: g.pick, crouch: g.crouch, jumpHeld: g.jumpHeld, sprint: g.move !== 0 && g.sprint, attackHeld: g.attack };
     }
     // Pique: tocar duas vezes na mesma direção (rápido) e segurar.
     const now = this.scene.time.now;
@@ -203,7 +208,7 @@ export class PlayerController implements Controller {
     this.prevMove = move;
     const held = !!this.keys?.sprint.some((k) => k.isDown);
     const sprint = move !== 0 && (this.sprinting || held);
-    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint };
+    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint, attackHeld };
   }
 }
 

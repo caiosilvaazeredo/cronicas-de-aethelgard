@@ -1023,3 +1023,137 @@ export function makeLavaWave(scene: Phaser.Scene): void {
   if (!scene.anims.exists('lava_wave'))
     scene.anims.create({ key: 'lava_wave', frames: [0, 1, 2, 3].map((frame) => ({ key: 'lava_wave', frame })), frameRate: 8, repeat: -1 });
 }
+
+// ------------------------------------------------------------------
+// Fases de chave e porta (quebra-cabeças) e fases estilo desenho antigo
+// ------------------------------------------------------------------
+
+export function makePuzzleArt(scene: Phaser.Scene): void {
+  const INK = 0x1d1a2b;
+  // Escada de madeira (tile 64x64, emendável na vertical).
+  const lad = new Px(32, 32);
+  for (let y = 0; y < 32; y++) {
+    lad.set(5, y, 0xb07a48);
+    lad.set(6, y, 0x8a5a35);
+    lad.set(25, y, 0xb07a48);
+    lad.set(26, y, 0x8a5a35);
+  }
+  for (const y of [4, 12, 20, 28]) {
+    lad.rect(7, y, 18, 2, 0x8a5a35);
+    lad.rect(7, y, 18, 1, 0xc08a52);
+  }
+  lad.outline(INK);
+  lad.toTexture(scene, 'ladder', 2);
+
+  // Mola: quadro 0 parada, 1 comprimida.
+  const spring = (squash: boolean) => {
+    const p = new Px(20, 16);
+    p.rect(2, 13, 16, 3, 0x6c7385);
+    p.rect(2, 13, 16, 1, 0x9aa3b5);
+    const coils = squash ? [10, 8] : [11, 8, 5];
+    coils.forEach((y) => p.rect(5, y, 10, 2, 0xd8a530));
+    p.rect(3, squash ? 6 : 2, 14, 3, 0xe04848);
+    p.rect(3, squash ? 6 : 2, 14, 1, 0xff8a7a);
+    p.outline(INK);
+    return p;
+  };
+  sheetTexture(scene, 'spring', [spring(false), spring(true)], 3);
+
+  // Blocos vermelho e azul (ligados: cheios; desligados: só o contorno tracejado).
+  for (const [name, c, light, dark] of [
+    ['red', 0xe04848, 0xff8a7a, 0x8a2034],
+    ['blue', 0x2f86e0, 0x8fd9ff, 0x1c4f8a],
+  ] as const) {
+    const on = new Px(32, 32);
+    on.rect(1, 1, 30, 30, c);
+    on.rect(1, 1, 30, 3, light);
+    on.rect(1, 1, 3, 30, light);
+    on.rect(1, 28, 30, 3, dark);
+    on.rect(28, 1, 3, 30, dark);
+    on.rect(12, 12, 8, 8, light);
+    on.rect(14, 14, 4, 4, c);
+    on.outline(INK);
+    on.toTexture(scene, `block_${name}`, 2);
+    const off = new Px(32, 32);
+    for (let i = 1; i < 31; i++) if (i % 4 < 2) off.set(i, 1, c), off.set(i, 30, c), off.set(1, i, c), off.set(30, i, c);
+    off.toTexture(scene, `block_${name}_off`, 2);
+  }
+
+  // Alavanca de cor (vermelha / azul) — usa o desenho da alavanca da casa assombrada.
+  for (const [name, c] of [
+    ['red', 0xe04848],
+    ['blue', 0x2f86e0],
+  ] as const) {
+    const p = new Px(16, 16);
+    p.rect(2, 12, 12, 4, 0x5c5276);
+    p.rect(2, 12, 12, 1, 0x6e6488);
+    const dir = name === 'red' ? -1 : 1;
+    for (let k = 0; k < 9; k++) p.set(8 + dir * Math.floor(k / 2), 11 - k, 0x8a95a3);
+    p.disc(8 + dir * 4, 2, 2, c);
+    p.set(8 + dir * 4 - 1, 1, 0xffffff);
+    p.outline(INK);
+    p.toTexture(scene, `switch_${name}`, 3);
+  }
+
+  // Placa de pressão (solta / apertada).
+  for (const [key, h] of [
+    ['plate_up', 4],
+    ['plate_down', 2],
+  ] as const) {
+    const p = new Px(28, 8);
+    p.rect(1, 8 - h, 26, h, 0xd8a530);
+    p.rect(1, 8 - h, 26, 1, 0xffe066);
+    p.outline(INK);
+    p.toTexture(scene, key, 2);
+  }
+
+  // Portão de ferro (tile 64x64).
+  const gate = new Px(32, 32);
+  for (let x = 3; x < 32; x += 7) for (let y = 0; y < 32; y++) gate.set(x, y, 0x6c7385), gate.set(x + 1, y, 0x4c5262);
+  for (const y of [4, 27]) gate.rect(0, y, 32, 3, 0x4c5262), gate.rect(0, y, 32, 1, 0x9aa3b5);
+  gate.outline(INK);
+  gate.toTexture(scene, 'gate', 2);
+
+  // Rolo de filme (item secreto que abre a fase em preto e branco).
+  const reel = new Px(18, 18);
+  reel.disc(9, 9, 8, 0x3a3f4c);
+  reel.disc(9, 9, 6, 0x6c7385);
+  for (const [x, y] of [[9, 5], [5, 9], [13, 9], [9, 13]]) reel.disc(x, y, 1, 0x1d1a2b);
+  reel.disc(9, 9, 1, 0xd8d0c0);
+  reel.rect(14, 14, 4, 3, 0x2a2a2a);
+  reel.outline(INK);
+  reel.toTexture(scene, 'film_reel', 3);
+
+  // Urna do mausoléu (o que é preciso proteger).
+  const urn = new Px(22, 28);
+  for (let y = 4; y < 26; y++) {
+    const w = Math.round(6 + Math.sin(((y - 4) / 22) * Math.PI) * 4);
+    for (let x = 11 - w; x <= 11 + w; x++) urn.set(x, y, x < 11 - w + 3 ? 0xd8d0c0 : x > 11 + w - 3 ? 0x8a8478 : 0xb8b0a0);
+  }
+  urn.rect(6, 1, 10, 4, 0x8a8478);
+  urn.rect(6, 1, 10, 1, 0xd8d0c0);
+  urn.rect(4, 25, 14, 3, 0x6c6458);
+  for (let x = 6; x < 17; x++) if (x % 3 === 0) urn.set(x, 14, 0xd8a530);
+  urn.outline(INK);
+  urn.toTexture(scene, 'urn', 3);
+
+  // Brilho de presente (anel atrás dos presentes coloridos).
+  const ring = new Px(24, 24);
+  for (let y = 0; y < 24; y++)
+    for (let x = 0; x < 24; x++) {
+      const d = Math.hypot(x - 11.5, y - 11.5);
+      if (d < 11 && d > 8) ring.set(x, y, checker(x, y) ? 0xfff1a8 : 0xffe066);
+    }
+  ring.toTexture(scene, 'gift_ring', 3);
+
+  // Riscos de película antiga (filtro anos 1930).
+  if (scene.textures.exists('film_grain')) scene.textures.remove('film_grain');
+  const fg = scene.textures.createCanvas('film_grain', 256, 256)!;
+  const c = fg.getContext();
+  for (let i = 0; i < 1400; i++) {
+    const v = Math.random() < 0.5 ? 0 : 255;
+    c.fillStyle = `rgba(${v},${v},${v},${Math.random() * 0.35})`;
+    c.fillRect(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), 2, 2);
+  }
+  fg.refresh();
+}

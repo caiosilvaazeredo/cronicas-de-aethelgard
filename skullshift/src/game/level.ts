@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { BODY_FONT, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
 import type { CharId, ItemId } from './characters';
+import type { PuzzleDef } from './puzzle';
 
 /**
  * Plataforma: início e comprimento em tiles de 64px (locais à tela, 0..19) e altura h
@@ -9,7 +10,7 @@ import type { CharId, ItemId } from './characters';
  */
 export type Segment = [start: number, length: number, h?: number];
 
-export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal';
+export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold';
 export type Theme = 'shore' | 'cave' | 'volcano' | 'sky' | 'haunted';
 
 /** A fase como é jogada no modo escolhido (na história, o último cenário pode virar arena de chefe). */
@@ -68,6 +69,8 @@ export interface HauntDef {
 }
 
 export interface LevelDef {
+  /** Identificador estável (capítulo da história, saves de presentes, mapa). */
+  id: string;
   name: string;
   /** Frase de abertura (a narrativa da fase). */
   intro?: string;
@@ -84,10 +87,24 @@ export interface LevelDef {
   winds?: Array<[screen: number, tile: number, width: number]>;
   /** Fase de voo com tiro (rolagem automática, montado no morcego). */
   shmup?: boolean;
+  /** Voo com chefe no fim (montado no Abelhão). */
+  shmupBoss?: boolean;
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
   boss?: { kind: 'minotaur' | 'spider'; arena: ScreenDef };
+  /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
+  secret?: boolean;
+  /** Fase de chave e porta (quebra-cabeça). */
+  puzzle?: PuzzleDef;
+  /** Corrida e tiro: segurar ATACAR atira ossos; inimigos chegam em ondas. */
+  gun?: { spawns: CharId[]; every: number };
+  /** Desafio do mausoléu: proteger a urna das assombrações. */
+  mausoleum?: { waves: number };
+  /** Filtro de desenho antigo (anos 1930): preto e branco, grão e vinheta. */
+  retro?: boolean;
+  /** Item secreto escondido nesta fase (rolo de filme). */
+  secretItem?: { id: string; at: [screen: number, tile: number, h: number] };
   /** Frase da tela de vitória (modo história). */
   winText?: string;
   /** Casa assombrada (quebra-cabeça): sai pela porta de saída, não pela ponta do mapa. */
@@ -130,6 +147,7 @@ const SHORE_R2: ScreenDef = {
 
 /** Fase 1 — o cenário central reproduz o mockup. Vão de água = buraco: cair nele mata. */
 export const LEVEL_1: LevelDef = {
+  id: 'shore',
   name: 'Ilhas da Maré',
   theme: 'shore',
   tiles: 'tilemap',
@@ -166,7 +184,10 @@ const CAVE_R2: ScreenDef = {
   versusItems: [[9, 'wing', 4]],
 };
 export const LEVEL_2: LevelDef = {
+  id: 'cave',
   name: 'Caverna Úmida',
+  // Segredo: um rolo de filme no alto de uma plataforma abre a fase em preto e branco.
+  secretItem: { id: 'retro', at: [3, 10, 3] },
   intro: 'Olhe para cima: aranhas esperam nas teias do teto.',
   theme: 'cave',
   tiles: 'tiles_cave',
@@ -205,6 +226,7 @@ const SKY_R2: ScreenDef = {
   versusItems: [[9, 'acorn', 4]],
 };
 export const LEVEL_3: LevelDef = {
+  id: 'sky',
   name: 'Santuário das Nuvens',
   intro: 'Só as nuvens encantadas pelo Xamã, as que brilham, aguentam o seu peso.',
   theme: 'sky',
@@ -244,6 +266,7 @@ const VOL_R2: ScreenDef = {
   versusItems: [[10, 'torch']],
 };
 export const LEVEL_VOLCANO: LevelDef = {
+  id: 'volcano',
   name: 'Forja Vulcânica',
   intro: 'A casa do Diabrete. Cada área só abre quando todos os inimigos dela caírem.',
   theme: 'volcano',
@@ -296,6 +319,7 @@ const SIGN_DASH = 'CORRA!\n2× na direção e segure\n+ pulo duplo';
  * pulo duplo para subir, pique + pulo duplo para os vãos largos, e um centro que mistura tudo.
  */
 export const LEVEL_STAIRS: LevelDef = {
+  id: 'stairs',
   name: 'Escadaria da Maré',
   winText: 'O Portão da Maré está diante de você!',
   intro: 'Até o Portão da Maré, só passa quem combina corrida, pulo duplo e coragem.',
@@ -330,6 +354,7 @@ const WALL = 6;
  * outras (sol, estrela, caveira e a lua VERMELHA, a ilusão) devolvem ao começo.
  */
 export const LEVEL_DOORS: LevelDef = {
+  id: 'doors',
   name: 'Casa das Portas',
   intro: 'A casa engana. Siga a lua, e desconfie dela também.',
   theme: 'haunted',
@@ -371,6 +396,7 @@ export const LEVEL_DOORS: LevelDef = {
  * tempo; uma parede só se cruza por portas; a chave fica no alto das prateleiras.
  */
 export const LEVEL_LIBRARY: LevelDef = {
+  id: 'library',
   name: 'Biblioteca Assombrada',
   intro: 'A saída está trancada. Em algum lugar entre as estantes, uma chave espera.',
   theme: 'haunted',
@@ -410,6 +436,7 @@ export const LEVEL_LIBRARY: LevelDef = {
  * logo depois de pisados (não pare em cima deles!). A saída só abre com as 3 velas grandes acesas.
  */
 export const LEVEL_DARK: LevelDef = {
+  id: 'dark',
   name: 'Casa Sem Luz',
   intro: 'Não dá para ver nada. Acenda as velas, e não pare em pisos rachados.',
   theme: 'haunted',
@@ -451,6 +478,7 @@ export const LEVEL_DARK: LevelDef = {
 
 /** Ninho das Teias: o teto é cheio de aranhas penduradas; dá para passar sem derrotar todas. */
 export const LEVEL_NEST: LevelDef = {
+  id: 'nest',
   name: 'Ninho das Teias',
   intro: 'O teto está cheio de aranhas. Olhe para cima, e não pare de andar.',
   theme: 'cave',
@@ -468,6 +496,7 @@ export const LEVEL_NEST: LevelDef = {
 
 /** Covil da Rainha: aranhas pelo caminho e, no fundo, a Aranha-Rainha (chefe). */
 export const LEVEL_QUEEN: LevelDef = {
+  id: 'queen',
   name: 'Covil da Rainha',
   intro: 'No fundo do covil, a Rainha guarda o fragmento entre os ovos.',
   theme: 'cave',
@@ -492,6 +521,7 @@ export const LEVEL_QUEEN: LevelDef = {
 
 /** Fuga da Forja: a montanha desperta e a lava vem atrás. Correr (de verdade) é obrigatório. */
 export const LEVEL_CHASE: LevelDef = {
+  id: 'chase',
   name: 'Fuga da Forja',
   intro: 'Uma onda gigante de lava vem atrás! O chão desaba à frente dela: corra, pule, use a tirolesa.',
   theme: 'volcano',
@@ -520,6 +550,7 @@ export const LEVEL_CHASE: LevelDef = {
 
 /** Correntes do Céu: vãos enormes entre nuvens, cruzados nas correntes de vento e planando. */
 export const LEVEL_WINDS: LevelDef = {
+  id: 'winds',
   name: 'Correntes do Céu',
   intro: 'Entre nas correntes de vento para subir. Segure PULAR no ar para planar.',
   theme: 'sky',
@@ -547,6 +578,7 @@ export const LEVEL_WINDS: LevelDef = {
 
 /** Voo Noturno: montado num morcego gigante, a tela rola sozinha e os ossos saem atirando. */
 export const LEVEL_FLIGHT: LevelDef = {
+  id: 'flight',
   name: 'Voo Noturno',
   intro: 'Montado no morcego: voe em todas as direções. Os ossos saem sozinhos!',
   theme: 'sky',
@@ -558,20 +590,252 @@ export const LEVEL_FLIGHT: LevelDef = {
   versusStart: [3, 16],
 };
 
+// ---------- Fases de chave e porta (quebra-cabeças) ----------
+
+export const LEVEL_KEY1: LevelDef = {
+  id: 'key1',
+  name: 'Oficina da Chave',
+  intro: 'PEGAR levanta a chave dourada. Leve até a porta trancada. Há 3 presentes escondidos.',
+  theme: 'shore',
+  tiles: 'tilemap',
+  winText: 'A chave abriu a porta!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 4, 3]], sign: [3, 'PEGAR levanta a chave.\nLeve até a PORTA.\n↑ sobe a escada.'] },
+    { segments: [[0, 5, 0], [9, 11, 0]], floats: [[12, 2, 3]], sign: [2, 'Com a chave não dá\npara pulo duplo:\nuse a MOLA.'] },
+  ],
+  puzzle: {
+    key: [0, 9, 3],
+    door: [1, 17, 0],
+    gifts: [[0, 2, 0], [0, 15, 5], [1, 12, 3]],
+    ladders: [[0, 7, 0, 3]],
+    springs: [[0, 15, 0], [1, 4, 0]],
+  },
+  storyStart: [0, 1],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_KEY2: LevelDef = {
+  id: 'key2',
+  name: 'Blocos Trocados',
+  intro: 'Golpeie a alavanca para trocar os blocos: só a cor ativa é sólida.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'Blocos no lugar, porta aberta!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[3, 2, 3], [16, 3, 3]], sign: [7, 'Agachado + PULAR:\nparada de mão\n(salto mais alto).'] },
+    { segments: [[0, 20, 0]], floats: [[14, 2, 4]] },
+  ],
+  puzzle: {
+    key: [0, 17, 3],
+    door: [1, 17, 0],
+    gifts: [[0, 3, 3], [0, 1, 0], [1, 14, 4]],
+    switches: [[0, 5, 0], [1, 3, 0], [1, 9, 0]],
+    blocks: [
+      [0, 10, 0, 'red'],
+      [0, 10, 1, 'red'],
+      [0, 10, 2, 'red'],
+      [0, 10, 3, 'red'],
+      [0, 13, 0, 'blue'],
+      [0, 14, 0, 'blue'],
+      [0, 14, 1, 'blue'],
+      [1, 6, 0, 'red'],
+      [1, 6, 1, 'red'],
+      [1, 6, 2, 'red'],
+      [1, 12, 0, 'blue'],
+      [1, 12, 1, 'blue'],
+      [1, 12, 2, 'blue'],
+    ],
+  },
+  storyStart: [0, 1],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_KEY3: LevelDef = {
+  id: 'key3',
+  name: 'Mina Rachada',
+  intro: 'Pedras de ouro bloqueiam a passagem. Martelo: no ar, segure ▼ e aperte ATACAR.',
+  theme: 'volcano',
+  tiles: 'tiles_volcano',
+  winText: 'Pedras quebradas, porta aberta!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[2, 3, 3]], sign: [6, 'MARTELO: no ar,\n▼ + ATACAR\nquebra as pedras.'] },
+    { segments: [[0, 7, 0], [11, 9, 0]], floats: [[12, 2, 4]] },
+  ],
+  puzzle: {
+    key: [0, 16, 0],
+    door: [1, 18, 0],
+    gifts: [[0, 3, 3], [1, 12, 4], [1, 15, 0]],
+    stones: [
+      [0, 11, 0],
+      [0, 11, 1],
+      [0, 11, 2],
+      [1, 13, 0],
+      [1, 13, 1],
+    ],
+    springs: [[1, 6, 0]],
+  },
+  storyStart: [0, 1],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_KEY4: LevelDef = {
+  id: 'key4',
+  name: 'Bosque do Lenhador',
+  intro: 'Derrube a árvore para fazer uma ponte. Uma ovelha numa placa abre o portão.',
+  theme: 'shore',
+  tiles: 'tilemap',
+  winText: 'O bosque abriu caminho!',
+  screens: [
+    { segments: [[0, 7, 0], [12, 8, 0]], floats: [[1, 2, 3]], sign: [3, 'MACHADO: ATACAR\nna árvore a derruba\ne ela vira ponte.'] },
+    { segments: [[0, 20, 0]], floats: [[8, 2, 3]], sign: [9, 'Carregue a OVELHA\naté a placa.'] },
+  ],
+  puzzle: {
+    key: [0, 16, 0],
+    door: [1, 17, 0],
+    gifts: [[0, 1, 3], [1, 8, 3], [1, 19, 0]],
+    trees: [[0, 6, 0, 6]],
+    sheep: [[1, 3, 0]],
+    plates: [[1, 6, 0, 'g']],
+    gates: [[1, 12, 0, 4, 'g']],
+  },
+  storyStart: [0, 1],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_KEY5: LevelDef = {
+  id: 'key5',
+  name: 'Torre do Escalador',
+  intro: 'A chave está no alto da torre. Picareta: encoste na parede no ar e suba.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'Do alto da torre até a porta!',
+  screens: [
+    { segments: [[0, 6, 0], [6, 3, 5], [9, 11, 0]], floats: [[13, 2, 3]], sign: [2, 'PICARETA: pule na\nparede e a caveira\nsobe sozinha.'] },
+    { segments: [[0, 4, 0], [4, 4, 3], [8, 3, 0], [11, 1, 5], [12, 8, 0]] },
+  ],
+  puzzle: {
+    key: [0, 7, 5],
+    door: [1, 17, 0],
+    gifts: [[0, 8, 5], [0, 13, 3], [1, 11, 5]],
+    ladders: [[1, 3, 0, 3]],
+  },
+  storyStart: [0, 1],
+  versusStart: [3, 16],
+};
+
+// ---------- Fases estilo desenho de corrida e tiro, avião, mausoléu e o desenho perdido ----------
+
+export const LEVEL_GUN1: LevelDef = {
+  id: 'gun1',
+  name: 'Pradaria dos Ossos',
+  intro: 'Corrida e tiro! Segure ATACAR para disparar ossos. Os inimigos não param de chegar.',
+  theme: 'shore',
+  tiles: 'tilemap',
+  winText: 'Você atravessou a pradaria atirando!',
+  gun: { spawns: ['gnoll', 'goblin', 'lizard'], every: 2100 },
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], floats: [[14, 3, 3]], deco: [[2, 'tree']], enemies: [[16, 'gnoll']] },
+    { segments: [[0, 5, 0], [5, 4, 1], [11, 9, 0]], floats: [[9, 2, 2]], enemies: [[6, 'goblin'], [15, 'lizard']] },
+    { segments: [[0, 7, 0], [9, 3, 1], [14, 6, 0]], floats: [[12, 2, 3]], enemies: [[10, 'gnoll'], [17, 'goblin']] },
+    { segments: [[0, 4, 0], [6, 8, 0], [16, 4, 1]], floats: [[3, 3, 3]], enemies: [[8, 'lizard'], [12, 'gnoll'], [17, 'goblin']] },
+    { segments: [[0, 20, 0]], deco: [[17, 'tree']], enemies: [[6, 'goblin'], [10, 'gnoll'], [14, 'lizard']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_GUN2: LevelDef = {
+  id: 'gun2',
+  name: 'Mina de Ouro',
+  intro: 'Corrida e tiro na mina! Segure ATACAR: tochas, aranhas e morcegos vêm em ondas.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'A mina foi limpa a tiros!',
+  gun: { spawns: ['torchgob', 'spider', 'bat'], every: 1800 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[3, 'gold'], [15, 'gold']], enemies: [[14, 'torchgob']], hangers: [11] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], floats: [[6, 2, 3]], deco: [[17, 'gold']], enemies: [[9, 'spider'], [16, 'bat']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], deco: [[8, 'gold']], enemies: [[10, 'torchgob'], [17, 'spider']], hangers: [12] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], deco: [[2, 'gold']], enemies: [[5, 'bat'], [15, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'gold'], [16, 'gold']], enemies: [[8, 'spider'], [12, 'torchgob'], [16, 'bat']], hangers: [10] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_PLANE: LevelDef = {
+  id: 'plane',
+  name: 'Duelo no Céu',
+  intro: 'Montado no Abelhão: ondas de inimigos e, no fim, o Diabrete Gigante em pessoa!',
+  theme: 'sky',
+  tiles: 'tiles_sky',
+  winText: 'O Diabrete Gigante caiu do céu!',
+  shmup: true,
+  shmupBoss: true,
+  screens: [{ segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }],
+  storyStart: [0, 3],
+  versusStart: [3, 16],
+};
+
+export const LEVEL_MAUSOLEUM: LevelDef = {
+  id: 'mausoleum',
+  name: 'Mausoléu do Xamã',
+  intro: 'Proteja a urna! Assombrações vêm dos dois lados. Se tocarem a urna 3 vezes, recomeça.',
+  theme: 'haunted',
+  tiles: 'tilemap',
+  winText: 'A urna está a salvo!',
+  mausoleum: { waves: 6 },
+  screens: [{ segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]] }],
+  storyStart: [0, 9],
+  versusStart: [3, 16],
+};
+
+/** Fase secreta: um desenho perdido dos anos 1930 (preto e branco, grão de película). */
+export const LEVEL_RETRO: LevelDef = {
+  id: 'retro',
+  name: 'Desenho Perdido (1930)',
+  intro: 'Um rolo de filme antigo... A caveira entrou num desenho de 1930! Segure ATACAR para atirar.',
+  theme: 'shore',
+  tiles: 'tilemap',
+  winText: 'FIM. (O desenho perdido foi salvo.)',
+  secret: true,
+  retro: true,
+  gun: { spawns: ['gnoll', 'goblin', 'skull'], every: 2300 },
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], floats: [[12, 3, 3]], deco: [[2, 'tree']], enemies: [[15, 'skull']] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], floats: [[9, 2, 3]], enemies: [[7, 'gnoll'], [16, 'skull']] },
+    { segments: [[0, 5, 0], [7, 3, 2], [12, 8, 0]], floats: [[10, 2, 3]], enemies: [[13, 'goblin'], [17, 'skull']] },
+    { segments: [[0, 20, 0]], deco: [[16, 'tree']], enemies: [[6, 'skull'], [10, 'gnoll'], [14, 'goblin']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
+  LEVEL_KEY1,
   LEVEL_NEST,
   LEVEL_QUEEN,
+  LEVEL_GUN1,
+  LEVEL_KEY2,
   LEVEL_VOLCANO,
   LEVEL_CHASE,
+  LEVEL_KEY3,
+  LEVEL_PLANE,
   LEVEL_3,
   LEVEL_WINDS,
+  LEVEL_KEY4,
   LEVEL_FLIGHT,
+  LEVEL_GUN2,
   LEVEL_STAIRS,
+  LEVEL_KEY5,
+  LEVEL_MAUSOLEUM,
   LEVEL_DOORS,
   LEVEL_LIBRARY,
   LEVEL_DARK,
+  // Secretas (sempre no fim).
+  LEVEL_RETRO,
 ];
 
 export class Level {
@@ -1333,6 +1597,10 @@ export class Level {
         break;
       case 'crystal':
         this.crystal(x, ground);
+        break;
+      case 'gold':
+        // Pedra de ouro (recursos do Tiny Swords): decoração da mina.
+        s.add.image(x, base + 30, 'gold_stone_big').setOrigin(0.5, 1).setScale(0.7).setDepth(DEPTH.deco);
         break;
       default:
         s.add.image(x, base + 8, kind).setOrigin(0.5, 1).setDepth(DEPTH.deco).setTint(tint);

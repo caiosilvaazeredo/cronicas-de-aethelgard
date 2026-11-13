@@ -14,6 +14,12 @@ export interface SaveData {
   completed: number;
   difficulty: Difficulty;
   seen: string[];
+  /** Presentes pegos por fase (id da fase → índices 0..2). */
+  gifts?: Record<string, number[]>;
+  /** Segredos achados (ex.: 'retro' = rolo de filme da fase em preto e branco). */
+  secrets?: string[];
+  /** Fases secretas concluídas. */
+  secretDone?: string[];
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -21,7 +27,7 @@ export interface SaveData {
 export const SLOT_COUNT = 3;
 const SLOT_KEY = 'skullshift.slot';
 const saveKey = (n: number) => `skullshift.save.${n}`;
-const TOTAL_LEVELS = LEVELS.length;
+const TOTAL_LEVELS = LEVELS.filter((l) => !l.secret).length;
 
 /** Reserva em memória, caso o navegador não deixe salvar. */
 const memory = new Map<string, string>();
@@ -67,9 +73,12 @@ export function loadSlot(n: number): SaveData | null {
   try {
     const d = JSON.parse(raw) as Partial<SaveData>;
     return {
-      completed: Math.max(0, Math.min(TOTAL_LEVELS, Number(d.completed) || 0)),
+      completed: Math.max(0, Math.min(LEVELS.filter((l) => !l.secret).length, Number(d.completed) || 0)),
       difficulty: d.difficulty === 'hard' ? 'hard' : 'normal',
       seen: Array.isArray(d.seen) ? d.seen : [],
+      gifts: d.gifts && typeof d.gifts === 'object' ? d.gifts : {},
+      secrets: Array.isArray(d.secrets) ? d.secrets : [],
+      secretDone: Array.isArray(d.secretDone) ? d.secretDone : [],
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -126,12 +135,42 @@ export function completedCount(): number {
   return current().completed;
 }
 
+/** Fases principais (as secretas ficam no fim de LEVELS e não contam na sequência). */
+export const MAIN_COUNT = LEVELS.filter((l) => !l.secret).length;
+
 /** Marca a fase como concluída (libera a seguinte). No modo livre, não salva nada. */
 export function completeLevel(index: number): void {
   if (free) return;
   const d = current();
-  d.completed = Math.max(d.completed, index + 1);
+  const lv = LEVELS[index];
+  if (lv?.secret) d.secretDone = [...new Set([...(d.secretDone ?? []), lv.id])];
+  else d.completed = Math.max(d.completed, index + 1);
   saveSlot(currentSlot(), d);
+}
+
+/** Presentes já pegos nesta fase. */
+export function giftsOf(levelId: string): number[] {
+  return current().gifts?.[levelId] ?? [];
+}
+
+export function markGift(levelId: string, i: number): void {
+  const d = current();
+  const g = { ...(d.gifts ?? {}) };
+  g[levelId] = [...new Set([...(g[levelId] ?? []), i])];
+  d.gifts = g;
+  if (!free) saveSlot(currentSlot(), d);
+}
+
+/** Segredos (o rolo de filme abre a fase em preto e branco). */
+export function hasSecret(id: string): boolean {
+  return isFreePlay() || (current().secrets ?? []).includes(id);
+}
+
+export function findSecret(id: string): void {
+  const d = current();
+  if ((d.secrets ?? []).includes(id)) return;
+  d.secrets = [...(d.secrets ?? []), id];
+  if (!free) saveSlot(currentSlot(), d);
 }
 
 /** Falas que só aparecem uma vez (primeira transformação, primeira vez em cada forma). */

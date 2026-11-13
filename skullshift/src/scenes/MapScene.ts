@@ -2,7 +2,9 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT } from '../config';
 import { CHAPTERS } from '../data/lore';
 import type { DeviceId } from '../game/controls';
-import { completedCount, currentSlot, isFreePlay } from '../game/progress';
+import { completedCount, currentSlot, giftsOf, hasSecret, isFreePlay } from '../game/progress';
+import { LEVELS } from '../game/level';
+import { unlockedBy } from '../game/abilities';
 import { pillButton } from '../ui/devices';
 
 const MW = 1280;
@@ -14,29 +16,21 @@ const INK = 0x1d1a2b;
  * Posição de cada fase no mapa (na ordem de LEVELS). O mapa é uma faixa larga que rola
  * na horizontal acompanhando o esqueleto; fases novas sem posição entram no fim da faixa.
  */
-const SPOTS: Array<[number, number]> = [
-  [250, 470], // Ilhas da Maré
-  [620, 470], // Caverna Úmida
-  [930, 500], // Ninho das Teias
-  [1250, 430], // Covil da Rainha
-  [1610, 480], // Forja Vulcânica
-  [1930, 510], // Fuga da Forja
-  [2260, 205], // Santuário das Nuvens
-  [2580, 280], // Correntes do Céu
-  [2890, 170], // Voo Noturno
-  [3220, 380], // Escadaria da Maré
-  [3630, 500], // Casa das Portas
-  [3850, 510], // Biblioteca Assombrada
-  [4070, 480], // Casa Sem Luz
-];
-const S = (i: number) => SPOTS[i];
+/** Fases principais (as secretas aparecem à parte, quando o segredo é achado). */
+const MAIN = LEVELS.filter((l) => !l.secret);
+/**
+ * Posição de cada fase no mapa: uma faixa que segue para a direita, com o céu mais alto
+ * e o casarão embaixo. O mapa rola acompanhando o esqueleto.
+ */
 function spot(i: number): [number, number] {
-  if (SPOTS[i]) return SPOTS[i];
-  const k = i - SPOTS.length;
-  return [3460 + k * 320, k % 2 ? 330 : 450];
+  const l = MAIN[i];
+  const x = 250 + i * 300;
+  if (l.theme === 'sky') return [x, l.shmup ? 170 : 230];
+  if (l.theme === 'haunted') return [x, 500];
+  return [x, i % 2 ? 430 : 490];
 }
-const PATH: Array<[number, number]> = CHAPTERS.map((_, i) => spot(i));
-const NODE_AT = CHAPTERS.map((_, i) => i);
+const PATH: Array<[number, number]> = MAIN.map((_, i) => spot(i));
+const NODE_AT = MAIN.map((_, i) => i);
 const WORLD_W = PATH[PATH.length - 1][0] + 320;
 
 /**
@@ -64,10 +58,12 @@ export class MapScene extends Phaser.Scene {
   init(data: { devices?: DeviceId[]; justCompleted?: number }): void {
     this.lastData = data;
     this.devices = data.devices ?? ['kb-full'];
-    this.unlocked = Math.min(CHAPTERS.length - 1, completedCount());
+    this.unlocked = Math.min(MAIN.length - 1, completedCount());
     const from = data.justCompleted;
     this.current = from !== undefined ? Math.min(from, this.unlocked) : this.unlocked;
     this.walking = false;
+    this.popupOpen = false;
+    this.closePopup = undefined;
     this.nodes = [];
     this.prevPad = { l: false, r: false, a: true, b: true };
   }
@@ -127,7 +123,7 @@ export class MapScene extends Phaser.Scene {
       this.cameras.main.flash(200, 255, 247, 220);
       this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
       this.burst(node.x, node.y);
-      this.time.delayedCall(500, () => this.walkTo(this.unlocked));
+      this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
     }
   }
 
@@ -143,7 +139,10 @@ export class MapScene extends Phaser.Scene {
     };
     if (st.l && !this.prevPad.l) this.step(-1);
     if (st.r && !this.prevPad.r) this.step(1);
-    if (st.a && !this.prevPad.a) this.enter();
+    if (st.a && !this.prevPad.a) {
+      if (this.closePopup) this.closePopup();
+      else this.enter();
+    }
     if (st.b && !this.prevPad.b) this.scene.start('menu', { stage: 'modes' });
     this.prevPad = st;
   }
@@ -196,118 +195,132 @@ export class MapScene extends Phaser.Scene {
   }
 
   private drawIslands(): void {
-    // 1) Ilhas da Maré: ilha verde com árvores e os marcos de caveira.
-    this.island(1.5, 6, 5, 3);
-    this.add.sprite(150, 450, 'tree').setOrigin(0.5, 1).setScale(0.55).setDepth(6).play('tree');
-    this.add.sprite(380, 470, 'tree').setOrigin(0.5, 1).setScale(0.55).setDepth(6).play('tree');
-    this.add.image(170, 560, 'skull_spike').setOrigin(0.5, 1).setScale(0.7).setDepth(6);
+    MAIN.forEach((l, i) => this.drawIsland(l, i));
+    // Ilha do casarão: uma só para as casas assombradas seguidas, com o casarão no meio.
+    const haunted = MAIN.map((l, i) => (l.theme === 'haunted' ? i : -1)).filter((i) => i >= 0);
+    if (haunted.length) {
+      const xs = haunted.map((i) => spot(i)[0]);
+      const a = Math.min(...xs) - 130;
+      const b = Math.max(...xs) + 130;
+      this.island(a / 64, 6.5, Math.ceil((b - a) / 64), 3, 'tiles_cave', 0x8a7aa8);
+      const mid = (a + b) / 2;
+      this.add.image(mid, 448, 'map_mansion').setOrigin(0.5, 1).setDepth(5);
+      this.add
+        .particles(mid, 470, 'vsmoke_0', { x: { min: -(b - a) / 2, max: (b - a) / 2 }, speedX: { min: 4, max: 12 }, speedY: { min: -8, max: -3 }, lifespan: 4000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.35, end: 0 }, tint: 0x8a6ad0, frequency: 500 })
+        .setDepth(6);
+    }
+    // Ilha secreta do desenho perdido (aparece só depois de achar o rolo de filme).
+    const sec = LEVELS.findIndex((l) => l.secret);
+    if (sec >= 0 && hasSecret(LEVELS[sec].id)) {
+      const [x, y] = this.secretSpot();
+      const g = this.add.graphics().setDepth(4);
+      g.fillStyle(0x2a2a2a, 0.9).fillRoundedRect(x - 90, y - 50, 180, 110, 18);
+      g.lineStyle(4, 0xd8d0c0, 1).strokeRoundedRect(x - 90, y - 50, 180, 110, 18);
+      for (let k = 0; k < 8; k++) g.fillStyle(0xd8d0c0, 1).fillRect(x - 80 + k * 22, y - 44, 10, 8).fillRect(x - 80 + k * 22, y + 46, 10, 8);
+      const reel = this.add.image(x + 60, y - 40, 'film_reel').setDepth(6);
+      this.tweens.add({ targets: reel, angle: 360, duration: 3000, repeat: -1 });
+    }
+  }
 
-    // 2) Caverna Úmida: planalto de pedra com a boca escura da caverna.
-    this.island(7.5, 6, 5, 3, 'tiles_cave');
-    this.plateau(8.5, 5, 3, 'tiles_cave');
-    const cave = this.add.graphics().setDepth(5);
-    cave.fillStyle(INK, 1).fillEllipse(640, 406, 74, 62);
-    cave.fillStyle(0x08141a, 1).fillEllipse(640, 410, 60, 50);
-    this.add.image(600, 368, 'web_px').setScale(0.6).setDepth(5);
+  private secretSpot(): [number, number] {
+    const cave = Math.max(0, MAIN.findIndex((l) => l.id === 'cave'));
+    return [spot(cave)[0] + 150, 170];
+  }
 
-    // 3) Ninho das Teias: rochas escuras cobertas de teia.
-    this.island(12.5, 6.5, 4, 2.5, 'tiles_cave', 0x8a9aa8);
-    for (const [x, y, sc] of [[860, 430, 0.55], [990, 440, 0.45], [930, 400, 0.4]] as const) this.add.image(x, y, 'web_px').setScale(sc).setDepth(6);
-    for (const x of [870, 1000]) this.add.sprite(x, 470, 'spider_idle').setScale(0.4).setDepth(6).play('spider_idle');
-
-    // 4) Covil da Rainha: teia gigante e a coroa brilhando no meio.
-    this.island(17.5, 5, 4, 4, 'tiles_cave', 0x7a7088);
-    this.plateau(18, 4, 3, 'tiles_cave', 0x7a7088);
-    this.add.image(1250, 330, 'web_px').setScale(1.1).setDepth(5);
-    const crown = this.add.image(1250, 312, 'queen_crown').setDepth(6);
-    this.tweens.add({ targets: crown, y: 304, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-
-    // 5) Forja Vulcânica: ilha chamuscada com o vulcão de pixels.
-    this.island(23, 5, 5, 4, 'tiles_volcano', 0xd28e78);
-    this.add.image(1610, 428, 'map_volcano').setOrigin(0.5, 1).setDepth(5);
-    this.add
-      .particles(1610, 302, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3600, scale: { start: 0.67, end: 1.33 }, alpha: { start: 0.95, end: 0 }, frequency: 700 })
-      .setDepth(6);
-    this.add
-      .particles(1610, 304, 'spark', { speedY: { min: -60, max: -30 }, speedX: { min: -12, max: 12 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xffb347, 0xff6a1a], frequency: 160 })
-      .setDepth(6);
-
-    // 6) Fuga da Forja: ilhota de rocha com um rio de lava e chamas.
-    {
-      const [x, y] = S(5);
-      this.island((x - 128) / 64, (y - 70) / 64, 4, 2.5, 'tiles_volcano', 0xd28e78);
+  /** Ilha de uma fase, conforme o tema e o tipo. */
+  private drawIsland(l: (typeof LEVELS)[number], i: number): void {
+    const [x, y] = spot(i);
+    const tx = (x - 130) / 64;
+    const ty = (y - 70) / 64;
+    const deco = (key: string, dx: number, dy: number, sc = 1) => this.add.image(x + dx, y + dy, key).setScale(sc).setDepth(6);
+    if (l.theme === 'haunted') {
+      if (l.mausoleum) deco('urn', 0, -50, 0.8);
+      return;
+    }
+    if (l.theme === 'sky') {
+      const c = this.add.graphics().setDepth(4);
+      const tint = l.id === 'sky' ? 0xb9a6ee : 0xf4f8ff;
+      c.fillStyle(0xb27cff, l.id === 'sky' ? 0.22 : 0).fillRoundedRect(x - 130, y - 40, 260, 92, 30);
+      c.fillStyle(tint, 1).fillRoundedRect(x - 120, y - 20, 240, 62, 24);
+      c.fillStyle(0xffffff, 1).fillRoundedRect(x - 116, y - 26, 232, 58, 22);
+      for (let k = x - 102; k <= x + 102; k += 24) c.fillStyle(0xffffff, 1).fillCircle(k, y - 24, 13);
+      this.tweens.add({ targets: c, y: -6, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      if (l.id === 'sky') {
+        const t = this.add.graphics().setDepth(5);
+        t.fillStyle(0xb9a6ee, 1).fillRect(x - 50, y - 76, 18, 50).fillRect(x + 38, y - 64, 16, 38).fillCircle(x, y - 44, 26);
+        t.fillTriangle(x - 54, y - 76, x - 28, y - 76, x - 41, y - 102).fillTriangle(x + 34, y - 64, x + 58, y - 64, x + 46, y - 86);
+      }
+      if (l.winds) {
+        this.add
+          .particles(x, y + 40, 'streak', { x: { min: -30, max: 30 }, speedY: { min: -160, max: -110 }, lifespan: 900, scaleX: 0.15, scaleY: 0.8, rotate: 90, alpha: { start: 0.8, end: 0 }, frequency: 120 })
+          .setDepth(6);
+      }
+      if (l.shmup) {
+        const moon = this.add.graphics().setDepth(3);
+        if (!l.shmupBoss) {
+          moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 40, y - 40, 70);
+          moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 40, y - 40, 46);
+        }
+        const rider = this.add.sprite(x - 60, y - 30, l.shmupBoss ? 'bee_idle' : 'bat_idle').setScale(0.55).setDepth(6).play(l.shmupBoss ? 'bee_idle' : 'bat_idle');
+        this.tweens.add({ targets: rider, x: x + 100, y: y - 10, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        if (l.shmupBoss) this.add.sprite(x + 90, y - 50, 'imp_idle').setScale(0.7).setFlipX(true).setDepth(6).play('imp_idle');
+      }
+      return;
+    }
+    const key = l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
+    const tint = l.theme === 'volcano' ? 0xd28e78 : l.id === 'nest' ? 0x8a9aa8 : l.id === 'queen' ? 0x7a7088 : 0xffffff;
+    this.island(tx, ty, 4, 3, key, tint);
+    if (l.id === 'shore') {
+      this.add.sprite(x - 90, y - 20, 'tree').setOrigin(0.5, 1).setScale(0.5).setDepth(6).play('tree');
+      deco('skull_spike', 80, 30, 0.6);
+    }
+    if (l.id === 'cave') {
+      this.plateau(tx + 0.5, ty - 1, 3, 'tiles_cave');
+      const cave = this.add.graphics().setDepth(5);
+      cave.fillStyle(INK, 1).fillEllipse(x + 20, y - 64, 74, 62);
+      cave.fillStyle(0x08141a, 1).fillEllipse(x + 20, y - 60, 60, 50);
+    }
+    if (l.id === 'nest') for (const [dx, dy] of [[-60, -40], [60, -30]]) deco('web_px', dx, dy, 0.5);
+    if (l.id === 'queen') {
+      deco('web_px', 0, -60, 1);
+      const crown = deco('queen_crown', 0, -80);
+      this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    }
+    if (l.id === 'volcano') {
+      this.add.image(x, y - 20, 'map_volcano').setOrigin(0.5, 1).setDepth(5);
+      this.add
+        .particles(x, y - 146, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3600, scale: { start: 0.67, end: 1.33 }, alpha: { start: 0.95, end: 0 }, frequency: 700 })
+        .setDepth(6);
+    }
+    if (l.chase) {
       const lava = this.add.graphics().setDepth(5);
       lava.fillStyle(INK, 1).fillRect(x - 120, y + 34, 240, 18);
       lava.fillStyle(0xff7a1a, 1).fillRect(x - 116, y + 37, 232, 12);
-      lava.fillStyle(0xffd36b, 1).fillRect(x - 116, y + 37, 232, 4);
-      for (const dx of [-100, -60]) this.add.sprite(x + dx, y + 10, 'torch_item_anim', 0).setDepth(6).play('torch_flame');
+      for (const dx of [-90, -50]) this.add.sprite(x + dx, y + 10, 'torch_item_anim', 0).setDepth(6).play('torch_flame');
     }
-
-    // 7) Santuário das Nuvens: nuvem encantada flutuando no alto.
-    const cx = S(6)[0] - 650;
-    const c = this.add.graphics().setDepth(5);
-    c.fillStyle(0xb27cff, 0.22).fillRoundedRect(cx + 520, 160, 260, 92, 30);
-    c.fillStyle(0xb9a6ee, 1).fillRoundedRect(cx + 530, 180, 240, 62, 24);
-    c.fillStyle(0xf4eeff, 1).fillRoundedRect(cx + 534, 174, 232, 58, 22);
-    for (let x = cx + 548; x <= cx + 752; x += 24) c.fillStyle(0xffffff, 1).fillCircle(x, 176, 13);
-    c.lineStyle(3, 0x9b6bf0, 0.9).strokeRoundedRect(cx + 530, 166, 240, 76, 22);
-    const t = this.add.graphics().setDepth(5);
-    t.fillStyle(0xb9a6ee, 1);
-    t.fillRect(cx + 600, 124, 18, 50).fillRect(cx + 688, 136, 16, 38).fillCircle(cx + 650, 156, 26);
-    t.fillTriangle(cx + 596, 124, cx + 622, 124, cx + 609, 98).fillTriangle(cx + 684, 136, cx + 708, 136, cx + 696, 114);
-    this.tweens.add({ targets: [c, t], y: -6, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-
-    // 8) Correntes do Céu: nuvenzinhas com riscos de vento subindo.
-    {
-      const [x, y] = S(7);
-      for (const [dx, dy] of [[-90, 40], [80, 10]] as const) this.add.image(x + dx, y + dy, 'cloud_05').setScale(0.35).setDepth(5);
-      this.add
-        .particles(x, y + 60, 'streak', { x: { min: -30, max: 30 }, speedY: { min: -160, max: -110 }, lifespan: 900, scaleX: 0.15, scaleY: 0.8, rotate: 90, alpha: { start: 0.8, end: 0 }, frequency: 120 })
-        .setDepth(6);
+    if (l.id === 'stairs') {
+      this.plateau(tx, ty - 1, 1, 'tilemap');
+      this.plateau(tx + 3, ty - 1, 1, 'tilemap');
+      const gate = this.add.graphics().setDepth(6);
+      gate.fillStyle(0xfff1a8, 0.25).fillEllipse(x, y - 60, 70, 84);
+      gate.fillStyle(0x7fd8ff, 0.85).fillRect(x - 16, y - 90, 32, 42);
+      for (const px of [x - 26, x + 14]) {
+        gate.fillStyle(INK).fillRect(px - 2, y - 100, 16, 56);
+        gate.fillStyle(0xb8c4cc).fillRect(px, y - 98, 12, 52);
+      }
+      gate.fillStyle(INK).fillRect(x - 30, y - 112, 60, 16);
+      gate.fillStyle(0xd8e0e6).fillRect(x - 28, y - 110, 56, 12);
     }
-
-    // 9) Voo Noturno: lua cheia e o morcego gigante dando voltas.
-    {
-      const [x, y] = S(8);
-      const moon = this.add.graphics().setDepth(4);
-      moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 40, y - 20, 70);
-      moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 40, y - 20, 46);
-      moon.fillStyle(0xd8d0b0, 1).fillCircle(x + 26, y - 30, 8).fillCircle(x + 56, y - 6, 6);
-      const bat = this.add.sprite(x - 60, y - 10, 'bat_idle').setScale(0.55).setDepth(6).play('bat_idle');
-      this.tweens.add({ targets: bat, x: x + 120, y: y + 20, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut', onYoyo: () => bat.setFlipX(true), onRepeat: () => bat.setFlipX(false) });
+    if (l.puzzle) {
+      // Fase de chave e porta: porta dourada e a chave girando.
+      deco('door_exit', 60, -10, 0.55);
+      const k = deco('key_item', -50, -40, 1);
+      this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
     }
-
-    // 10) Escadaria da Maré: ilha alta em degraus e, no topo, o Portão da Maré.
-    const gx = S(9)[0];
-    this.island((gx - 146) / 64, 5, 5, 3);
-    this.plateau((gx - 146) / 64, 4, 2, 'tilemap');
-    this.plateau((gx + 46) / 64, 4, 2, 'tilemap');
-    const gate = this.add.graphics().setDepth(6);
-    const gy = 300;
-    gate.fillStyle(0xfff1a8, 0.25).fillEllipse(gx, gy - 6, 70, 84);
-    gate.fillStyle(0x7fd8ff, 0.85).fillRect(gx - 16, gy - 36, 32, 42);
-    gate.fillStyle(0xfff7dc, 0.9).fillRect(gx - 6, gy - 30, 12, 34);
-    for (const px of [gx - 26, gx + 14]) {
-      gate.fillStyle(INK).fillRect(px - 2, gy - 46, 16, 56);
-      gate.fillStyle(0xb8c4cc).fillRect(px, gy - 44, 12, 52);
-      gate.fillStyle(0x8a95a3).fillRect(px + 8, gy - 44, 4, 52);
-    }
-    gate.fillStyle(INK).fillRect(gx - 30, gy - 58, 60, 16);
-    gate.fillStyle(0xd8e0e6).fillRect(gx - 28, gy - 56, 56, 12);
-    this.tweens.add({ targets: gate, alpha: { from: 1, to: 0.8 }, duration: 900, yoyo: true, repeat: -1 });
-
-    // 11-13) Ilha do Casarão: o casarão assombrado do Barqueiro, com névoa lilás.
-    const hx = S(11)[0];
-    this.island((S(10)[0] - 108) / 64, 5.5, 10, 3.5, 'tiles_cave', 0x8a7aa8);
-    this.add.image(hx, 452, 'map_mansion').setOrigin(0.5, 1).setDepth(5);
-    this.add
-      .particles(hx, 470, 'vsmoke_0', { x: { min: -260, max: 260 }, speedX: { min: 4, max: 12 }, speedY: { min: -8, max: -3 }, lifespan: 4000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.35, end: 0 }, tint: 0x8a6ad0, frequency: 500 })
-      .setDepth(6);
-
-    // Fases novas sem ilha própria: ilhotas simples.
-    for (let i = SPOTS.length; i < CHAPTERS.length; i++) {
-      const [x, y] = spot(i);
-      this.island(x / 64 - 2, y / 64 - 1.5, 4, 3);
+    if (l.gun) {
+      deco('bone', -60, -30, 0.9);
+      deco('bone', 50, -40, 0.9).setAngle(40);
+      if (l.theme === 'cave') deco('gold_stone_big', 70, -20, 0.5);
     }
   }
 
@@ -355,6 +368,11 @@ export class MapScene extends Phaser.Scene {
           .text(0, 44, CHAPTERS[i].title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: locked ? '#c9d1d8' : '#fff7dc', stroke: '#10223a', strokeThickness: 6 })
           .setOrigin(0.5),
       );
+      // Fases de chave: os 3 presentes (aceso = já pego).
+      if (MAIN[i].puzzle && !locked) {
+        const got = giftsOf(MAIN[i].id);
+        ['meat', 'wood', 'gold'].forEach((tex, k) => items.push(this.add.image(-22 + k * 22, 66, tex).setScale(k === 2 ? 0.2 : 0.32).setAlpha(got.includes(k) ? 1 : 0.25)));
+      }
       const node = this.add.container(x, y, items).setDepth(10).setSize(70, 70);
       node.setInteractive({ useHandCursor: !locked }).on('pointerdown', () => {
         if (locked) return;
@@ -366,6 +384,79 @@ export class MapScene extends Phaser.Scene {
       if (!locked && !cleared) this.tweens.add({ targets: node, scale: 1.12, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.nodes.push(node);
     });
+    // Nó secreto (em preto e branco), ligado à caverna por uma trilha cinza.
+    const sec = LEVELS.findIndex((l) => l.secret);
+    if (sec >= 0 && hasSecret(LEVELS[sec].id)) {
+      const [x, y] = this.secretSpot();
+      const cave = Math.max(0, MAIN.findIndex((l) => l.id === 'cave'));
+      const [cx, cy] = spot(cave);
+      const path = this.add.graphics().setDepth(7);
+      const len = Math.hypot(x - cx, y - cy);
+      for (let d = 30; d < len - 30; d += 20) {
+        const px = cx + ((x - cx) * d) / len;
+        const py = cy + ((y - cy) * d) / len;
+        path.fillStyle(INK, 1).fillRect(px - 6, py - 6, 12, 12);
+        path.fillStyle(0xd8d0c0, 1).fillRect(px - 4, py - 4, 8, 8);
+      }
+      const g = this.add.graphics();
+      g.fillStyle(INK, 1).fillCircle(0, 0, 30);
+      g.fillStyle(0x8a8478, 1).fillCircle(0, 0, 26);
+      g.fillStyle(0xd8d0c0, 1).fillCircle(0, -2, 20);
+      g.fillStyle(0x2a2a2a, 1).fillCircle(0, 0, 14);
+      const t = this.add.text(0, 44, CHAPTERS[sec].title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: '#d8d0c0', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
+      const q = this.add.text(0, 0, '?', { fontFamily: FONT, fontSize: '20px', color: '#ffffff' }).setOrigin(0.5);
+      const node = this.add.container(x, y, [g, q, t]).setDepth(10).setSize(70, 70);
+      node.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
+        if (this.walking) return;
+        this.scene.start(isFreePlay() ? 'game' : 'vn', { mode: 'story', devices: this.devices, level: sec });
+      });
+      this.tweens.add({ targets: node, angle: { from: -4, to: 4 }, duration: 500, yoyo: true, repeat: -1 });
+    }
+  }
+
+  /** Concluiu uma fase que libera habilidade: painel "NOVA HABILIDADE!" antes de andar. */
+  private popupOpen = false;
+  private closePopup?: () => void;
+
+  private showAbilities(list: ReturnType<typeof unlockedBy>, then: () => void): void {
+    if (!list.length) {
+      // Solta a trava um instante depois (o mesmo Enter não deve entrar na fase).
+      this.time.delayedCall(150, () => (this.popupOpen = false));
+      return then();
+    }
+    this.popupOpen = true;
+    const a = list[0];
+    const cam = this.cameras.main;
+    const W2 = cam.width;
+    const H2 = cam.height;
+    const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W2 * 2, H2 * 2, 0x07040c, 0.7).setInteractive()];
+    const g = this.add.graphics();
+    g.fillStyle(INK, 1).fillRoundedRect(-330, -170, 660, 340, 26);
+    g.fillStyle(0x10223a, 1).fillRoundedRect(-322, -162, 644, 324, 22);
+    g.lineStyle(4, 0xffe066, 1).strokeRoundedRect(-322, -162, 644, 324, 22);
+    items.push(g);
+    items.push(this.add.text(0, -128, 'NOVA HABILIDADE!', { fontFamily: FONT, fontSize: '40px', color: '#ffe066', stroke: '#1d1a2b', strokeThickness: 8 }).setOrigin(0.5));
+    const icon = this.add.image(-220, 10, a.icon).setScale(a.icon === 'key_item' ? 2 : 2.4);
+    items.push(icon);
+    this.tweens.add({ targets: icon, angle: { from: -10, to: 10 }, duration: 600, yoyo: true, repeat: -1 });
+    items.push(this.add.text(-140, -70, a.name.toUpperCase(), { fontFamily: FONT, fontSize: '28px', color: '#fff7dc' }));
+    items.push(this.add.text(-140, -28, a.how, { fontFamily: BODY_FONT, fontSize: '19px', color: '#bfd0e0', wordWrap: { width: 440 }, lineSpacing: 4 }));
+    const ok = pillButton(this, 0, 120, 'ENTENDI', () => close(), 200, 0xffe066);
+    items.push(ok);
+    const box = this.add.container(cam.scrollX + W2 / 2, cam.scrollY + H2 / 2, items).setDepth(60).setScale(0.6).setAlpha(0);
+    this.tweens.add({ targets: box, scale: 1, alpha: 1, duration: 260, ease: 'Back.easeOut' });
+    this.burst(box.x, box.y - 120);
+    const kb = this.input.keyboard!;
+    const close = () => {
+      kb.off('keydown-ENTER', close);
+      kb.off('keydown-SPACE', close);
+      box.destroy();
+      this.closePopup = undefined;
+      this.showAbilities(list.slice(1), then);
+    };
+    kb.once('keydown-ENTER', close);
+    kb.once('keydown-SPACE', close);
+    this.closePopup = close;
   }
 
   private burst(x: number, y: number): void {
@@ -384,6 +475,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   private step(dir: number): void {
+    if (this.popupOpen) return;
     const to = Phaser.Math.Clamp(this.current + dir, 0, this.unlocked);
     if (to !== this.current) this.walkTo(to);
   }
@@ -446,6 +538,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   private enter(): void {
+    if (this.popupOpen) return;
     // Enter / A durante a caminhada: acelera em vez de entrar.
     if (this.walking) return this.hurry();
     // Modo livre (testes): direto para a fase, sem a visual novel.

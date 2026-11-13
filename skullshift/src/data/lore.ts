@@ -1,4 +1,5 @@
 import type { CharId } from '../game/characters';
+import { LEVELS } from '../game/level';
 /**
  * Lore do Skullshift — "O Barqueiro de Nuvens".
  *
@@ -35,6 +36,7 @@ export interface Line {
 export const SPEAKER_NAME: Record<Speaker, string> = {
   skull: 'Ossian',
   shaman: 'Xamã Hex',
+
 };
 
 export interface Chapter {
@@ -49,8 +51,9 @@ const S = (text: string): Line => ({ who: 'skull', side: 'left', text });
 const X = (text: string): Line => ({ who: 'shaman', side: 'right', text });
 
 /** Um capítulo por fase, na ordem de LEVELS. */
-export const CHAPTERS: Chapter[] = [
-  {
+/** Capítulos por fase (chave = id da fase em LEVELS). */
+export const CHAPTER_BY_ID: Record<string, Chapter> = {
+  shore: {
     title: 'Ilhas da Maré',
     blurb: 'Onde a caveira desperta. O primeiro fragmento da coroa brilha no fim da praia.',
     lines: [
@@ -66,7 +69,7 @@ export const CHAPTERS: Chapter[] = [
       X('Porque é isso que um conselheiro faz. Vai. O primeiro fragmento está no fim das ilhas.'),
     ],
   },
-  {
+  cave: {
     title: 'Caverna Úmida',
     blurb: 'Degraus de pedra, poços escuros e teias no teto. O segundo fragmento está lá no fundo.',
     lines: [
@@ -80,7 +83,7 @@ export const CHAPTERS: Chapter[] = [
       X('Muitas letras se parecem no escuro. Cuidado com as aranhas do teto. Segue.'),
     ],
   },
-  {
+  nest: {
     title: 'Ninho das Teias',
     blurb: 'Aranhas penduradas por todo o teto. Dá para passar sem derrotar todas.',
     lines: [
@@ -92,7 +95,7 @@ export const CHAPTERS: Chapter[] = [
       X('Já atravessei muita coisa carregando alguém nas costas.'),
     ],
   },
-  {
+  queen: {
     title: 'Covil da Rainha',
     blurb: 'Ovos, teias grossas e, no fundo, a Aranha-Rainha guardando um fragmento.',
     lines: [
@@ -105,7 +108,7 @@ export const CHAPTERS: Chapter[] = [
       X('...Vai, Ossian. Ela está acordando.'),
     ],
   },
-  {
+  volcano: {
     title: 'Forja Vulcânica',
     blurb: 'A forja do Diabrete, que tenta fundir os fragmentos numa coroa só dele.',
     lines: [
@@ -122,7 +125,7 @@ export const CHAPTERS: Chapter[] = [
       X('Pega o fragmento. O Diabrete não pode completar a coroa.'),
     ],
   },
-  {
+  chase: {
     title: 'Fuga da Forja',
     blurb: 'Sem o Minotauro, a montanha acordou. A lava vem atrás: corra sem parar.',
     lines: [
@@ -134,7 +137,7 @@ export const CHAPTERS: Chapter[] = [
       X('Não preciso. Eu flutuo.'),
     ],
   },
-  {
+  sky: {
     title: 'Santuário das Nuvens',
     blurb: 'O lar do Xamã. O último fragmento espera no altar, entre as nuvens encantadas.',
     lines: [
@@ -149,7 +152,7 @@ export const CHAPTERS: Chapter[] = [
       X('Nada. Coisas de velho. Vai, Ossian. Termina o que começaste.'),
     ],
   },
-  {
+  winds: {
     title: 'Correntes do Céu',
     blurb: 'Vãos enormes entre as nuvens. Só o vento leva de uma ilha à outra.',
     lines: [
@@ -161,7 +164,7 @@ export const CHAPTERS: Chapter[] = [
       X('Mais do que tu lembras de ter vivido.'),
     ],
   },
-  {
+  flight: {
     title: 'Voo Noturno',
     blurb: 'Montado num morcego gigante, pela noite, até a Escadaria da Maré.',
     lines: [
@@ -173,7 +176,7 @@ export const CHAPTERS: Chapter[] = [
       S('Quer mesmo?'),
     ],
   },
-  {
+  stairs: {
     title: 'Escadaria da Maré',
     blurb: 'Ilhas soltas subindo até o Portão da Maré. Só passa quem corre e salta de novo no ar.',
     lines: [
@@ -188,7 +191,7 @@ export const CHAPTERS: Chapter[] = [
       X('Chegaram ao portão. Vai, Ossian. Desta vez eu fico daqui, olhando.'),
     ],
   },
-  {
+  doors: {
     title: 'Casa das Portas',
     blurb: 'O portão não dava em casa. Dava numa casa. Portas por toda parte, e quase todas mentem.',
     lines: [
@@ -202,7 +205,7 @@ export const CHAPTERS: Chapter[] = [
       X('Inquilinos. Ossos que se recusaram a seguir a lua. Não pares para conversar.'),
     ],
   },
-  {
+  library: {
     title: 'Biblioteca Assombrada',
     blurb: 'Estantes até o teto, pontes que só existem por um instante e uma porta trancada.',
     lines: [
@@ -214,7 +217,7 @@ export const CHAPTERS: Chapter[] = [
       X('...Larga esse livro, Ossian. Pega a chave.'),
     ],
   },
-  {
+  dark: {
     title: 'Casa Sem Luz',
     blurb: 'Escuridão quase total. Velas para acender e pisos rachados que não aguentam ninguém.',
     lines: [
@@ -226,7 +229,117 @@ export const CHAPTERS: Chapter[] = [
       X('...É. Desta vez eu não vou te buscar se caíres. Nem se não caíres.'),
     ],
   },
-];
+  key1: {
+    title: 'Oficina da Chave',
+    blurb: 'Uma oficina abandonada na praia. A porta só abre com a chave dourada.',
+    lines: [
+      S('Uma porta trancada no meio da praia? Quem tranca uma porta sem parede?'),
+      X('Alguém que queria que só um tipo de viajante passasse. Os que carregam o que é seu.'),
+      X('Tuas mãos de osso agora seguram coisas. Pega a chave e leva até a porta.'),
+      S('E esses presentes coloridos espalhados?'),
+      X('Lembranças de quem passou antes. Pega, se quiser. Ninguém mais vai buscar.'),
+    ],
+  },
+  gun1: {
+    title: 'Pradaria dos Ossos',
+    blurb: 'Uma pradaria cheia de saqueadores. Segure ATACAR: os ossos saem em rajada.',
+    lines: [
+      S('Eles não param de vir, Hex!'),
+      X('Então não pares de atirar. Segura o golpe e teus ossos voam sozinhos.'),
+      S('Desde quando eu atiro ossos?'),
+      X('Desde sempre. Tu só não tinhas motivo para lembrar.'),
+    ],
+  },
+  key2: {
+    title: 'Blocos Trocados',
+    blurb: 'Blocos vermelhos e azuis que aparecem e somem com uma alavanca.',
+    lines: [
+      S('Os blocos somem quando eu bato na alavanca. Vermelho, azul, vermelho...'),
+      X('Só uma cor existe de cada vez. Escolhe bem qual mundo deixas de pé.'),
+      S('Agachado eu pulo mais alto agora. Parada de mão.'),
+      X('Cambalhotas também. Um corpo leve faz truques que um corpo vivo não faria.'),
+      S('Você sempre fala desse "corpo vivo".'),
+      X('É só um jeito de falar, Ossian.'),
+    ],
+  },
+  key3: {
+    title: 'Mina Rachada',
+    blurb: 'Pedras de ouro bloqueiam a mina. Um martelo resolve.',
+    lines: [
+      S('O Minotauro deixou isto para trás. Um martelo.'),
+      X('No ar, desce com tudo: a martelada no chão quebra as pedras de ouro.'),
+      S('Ouro tapando a passagem. Que desperdício.'),
+      X('Aqui ouro não compra nada. Nem saída.'),
+    ],
+  },
+  plane: {
+    title: 'Duelo no Céu',
+    blurb: 'Montado no Abelhão, contra o Diabrete Gigante.',
+    lines: [
+      S('O Diabrete cresceu? Ele está do tamanho de uma nuvem!'),
+      X('Comeu as brasas da forja. Agora quer o céu. Monta no Abelhão e derruba ele.'),
+      S('Você não vem?'),
+      X('Daqui de baixo eu vejo melhor. Atira até a barra dele esvaziar.'),
+    ],
+  },
+  key4: {
+    title: 'Bosque do Lenhador',
+    blurb: 'Um bosque com um precipício, um portão e uma ovelha teimosa.',
+    lines: [
+      S('Um machado? No Santuário só tinha nuvem.'),
+      X('Achei por aí. Derruba a árvore na direção certa e ela vira ponte.'),
+      S('E a ovelha?'),
+      X('Põe ela na placa. O portão abre com peso. Como quase tudo nesta terra.'),
+      S('Quase tudo?'),
+      X('Tu não pesas nada, Ossian. Por isso a placa não sente teus passos.'),
+    ],
+  },
+  gun2: {
+    title: 'Mina de Ouro',
+    blurb: 'Uma mina escura cheia de goblins, aranhas e morcegos.',
+    lines: [
+      S('Mais tiros. Mais ossos. Mais coisa vindo da escuridão.'),
+      X('A mina guarda ouro e guarda medo. Atira nos dois.'),
+      S('Hex, de quem é este ouro?'),
+      X('De quem ficou. Quem atravessa não leva nada.'),
+    ],
+  },
+  key5: {
+    title: 'Torre do Escalador',
+    blurb: 'A chave está no alto de uma torre de pedra.',
+    lines: [
+      S('A chave está lá em cima. Não tem escada.'),
+      X('Tens a picareta agora. Pula na parede e sobe.'),
+      S('Mas com a chave na mão eu não consigo escalar.'),
+      X('Então desce pelo outro lado. Nem toda subida precisa de volta.'),
+    ],
+  },
+  mausoleum: {
+    title: 'Mausoléu do Xamã',
+    blurb: 'Uma urna no centro do mausoléu e assombrações vindo dos dois lados.',
+    lines: [
+      S('Uma urna. Com o seu nome nela, Hex.'),
+      X('Não deixa que as assombrações toquem nela. Três toques e ela quebra.'),
+      S('O que tem dentro?'),
+      X('O que sobrou de um barqueiro. Protege, Ossian. Por favor.'),
+      S('...Você nunca disse "por favor" antes.'),
+    ],
+  },
+  retro: {
+    title: 'Desenho Perdido (1930)',
+    blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',
+    lines: [
+      S('Hex? Por que está tudo cinza? E esse chiado?'),
+      X('Achaste um rolo de filme. Esta é uma lembrança muito, muito antiga.'),
+      S('Lembrança de quem?'),
+      X('Minha. De antes do barco. De quando eu também ria de desenhos assim.'),
+      S('Você também foi... vivo?'),
+      X('Atira, Ossian. O filme está acabando.'),
+    ],
+  },};
+
+/** Um capítulo por fase, na ordem de LEVELS. */
+export const CHAPTERS: Chapter[] = LEVELS.map((l) => CHAPTER_BY_ID[l.id] ?? { title: l.name, blurb: l.intro ?? '', lines: [] });
 
 /** Depois da última fase: a coroa inteira, o portão aberto, e uma escolha que fica com quem joga. */
 export const EPILOGUE: Chapter = {

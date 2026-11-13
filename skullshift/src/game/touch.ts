@@ -21,6 +21,7 @@ export interface TouchState {
   crouch: boolean;
   jumpPressed: boolean;
   attackPressed: boolean;
+  attackHeld: boolean;
   pickPressed: boolean;
   jumpHeld: boolean;
 }
@@ -188,6 +189,7 @@ export class TouchPad {
       crouch: get('crouch'),
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
+      attackHeld: attack,
       pickPressed: pick && !this.prevPick,
       jumpHeld: jump,
     };

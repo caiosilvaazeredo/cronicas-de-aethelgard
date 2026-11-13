@@ -95,6 +95,15 @@ export class Fighter {
   ghostTint = 0xffffff;
   /** Jogador (toca sons); inimigos ficam em silêncio. */
   isPlayer = false;
+  /** Habilidades liberadas (só o jogador). */
+  abilities = new Set<string>();
+  /** Carregando um objeto sobre a cabeça (chave, ovelha): não ataca nem dá pulo duplo. */
+  carrying = false;
+  /** Martelada no chão em andamento. */
+  pounding = false;
+  onPound?: (f: Fighter) => void;
+  private lastTurnAt = -9999;
+  private lastMove = 0;
 
   constructor(
     private scene: Phaser.Scene,
@@ -153,6 +162,7 @@ export class Fighter {
     this.crouching = false;
     this.climbDir = 0;
     this.dashUntil = 0;
+    this.pounding = false;
     if (this.dashGravityOff) {
       this.dashGravityOff = false;
       this.body.setAllowGravity(true);
@@ -304,6 +314,9 @@ export class Fighter {
       } else if (it.move !== 0) {
         this.facing = it.move > 0 ? 1 : -1;
       }
+      // Virou de lado agora? (para a cambalhota para trás)
+      if (it.move !== 0 && this.lastMove !== 0 && Math.sign(it.move) !== Math.sign(this.lastMove)) this.lastTurnAt = now;
+      if (it.move !== 0) this.lastMove = it.move;
 
       const backing = it.move !== 0 && Math.sign(it.move) !== this.facing;
       const guarding = it.guard || (backing && near);
@@ -311,14 +324,40 @@ export class Fighter {
       // quem já está agachado continua, até soltar o botão ou pular).
       this.setCrouch(it.crouch && (grounded || this.crouching) && this.body.velocity.y >= 0);
 
-      if (it.attack && this.cooldown <= 0) {
+      // Martelada no chão (habilidade Martelo): no ar, ▼ + ATACAR.
+      if (this.pounding && grounded) {
+        this.pounding = false;
+        this.onPound?.(this);
+      }
+      if (!this.pounding && it.attack && it.crouch && !grounded && this.abilities.has('hammer') && !this.carrying) {
+        this.pounding = true;
+        this.body.setVelocity(0, 1300);
+        this.scene.tweens.add({ targets: this.sprite, angle: 360 * this.facing, duration: 220, onComplete: () => this.sprite.setAngle(0) });
+      } else if (this.pounding) {
+        this.body.setVelocityX(0);
+      } else if (it.attack && this.cooldown <= 0 && !this.carrying) {
         this.startAttack();
       } else {
         if (it.jump) {
           if (grounded) {
+            // Parada de mão (agachado) e cambalhota para trás (logo depois de virar): saltos mais altos.
+            let k = this.carrying ? 0.92 : 1;
+            let trick = 0;
+            if (this.abilities.has('flip') && !this.carrying) {
+              if (this.crouching) {
+                k = 1.34;
+                trick = 1;
+              } else if (now - this.lastTurnAt < 240 && it.move !== 0) {
+                k = 1.28;
+                trick = -1;
+              }
+            }
             this.setCrouch(false);
-            this.body.setVelocityY(-JUMP_V);
-            this.jumps = 1;
+            this.body.setVelocityY(-JUMP_V * k);
+            this.jumps = this.carrying ? 2 : 1;
+            if (trick) {
+              this.scene.tweens.add({ targets: this.sprite, angle: { from: 0, to: 360 * this.facing * trick }, duration: 460, ease: 'Cubic.easeOut', onComplete: () => this.sprite.setAngle(0) });
+            }
             if (this.isPlayer) sfx('jump');
           } else if (this.jumps < 2 && !d.fly && !this.swimming) {
             // Pulo duplo: um segundo impulso no ar, com uma cambalhota.
@@ -389,7 +428,7 @@ export class Fighter {
       }
     }
 
-    if (d.climb && this.state !== 'stun') this.updateClimb(dt, grounded);
+    if ((d.climb || this.abilities.has('pickaxe')) && this.state !== 'stun' && !this.carrying) this.updateClimb(dt, grounded);
     if (d.swim) this.updateSwim(dt, now);
 
     if (this.knockT > 0) {

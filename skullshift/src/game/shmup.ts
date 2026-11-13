@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { DEPTH, FONT } from '../config';
 import type { Intent } from './controls';
 import { sfx } from './settings';
+import type { BossBar } from './boss';
 
 /** O que a cena do jogo oferece à fase de voo. */
 export interface ShmupHost {
@@ -19,6 +20,10 @@ export interface ShmupHost {
   died(): boolean;
   win(): void;
   popText(x: number, y: number, text: string, color: string): void;
+  /** Chefe no fim (Diabrete Gigante) e montaria (morcego ou abelhão). */
+  boss?: boolean;
+  mount?: 'bat' | 'bee';
+  bar?: () => BossBar | undefined;
 }
 
 interface Foe {
@@ -67,7 +72,8 @@ export class ShmupSystem {
     this.camX = host.halfView();
     this.x = this.camX - host.halfView() + 220;
     this.y = (host.top + host.bottom) / 2;
-    this.bat = s.add.sprite(0, 0, 'bat_idle').setScale(1.35).play('bat_idle');
+    const mount = host.mount === 'bee' ? 'bee_idle' : 'bat_idle';
+    this.bat = s.add.sprite(0, 0, mount).setScale(host.mount === 'bee' ? 1.25 : 1.35).play(mount);
     const skull = s.add.sprite(-4, -58, 'skull_idle').setScale(0.62).play('skull_idle');
     const aura = s.add.image(0, -30, 'aura').setTint(host.color).setScale(0.9, 0.8).setAlpha(0.5);
     this.rider = s.add.container(this.x, this.y, [aura, this.bat, skull]).setDepth(DEPTH.fighters + 1);
@@ -209,12 +215,117 @@ export class ShmupSystem {
       return false;
     });
 
+    // Chefe: no fim da rolagem, o Diabrete Gigante entra.
+    if (this.host.boss && !this.bossSpawned && this.camX >= maxCam && this.waves.length === 0 && this.foes.length === 0) this.spawnBoss();
+    if (this.boss) this.updateBoss(time, dt);
+
     // Fim da fase: a rolagem chegou ao fim e o céu ficou limpo.
-    if (!this.done && this.camX >= maxCam && this.waves.length === 0 && this.foes.length === 0 && this.alive) {
+    if (!this.done && !this.host.boss && this.camX >= maxCam && this.waves.length === 0 && this.foes.length === 0 && this.alive) {
       this.done = true;
       this.host.popText(this.x, this.y - 90, 'CÉU LIMPO!', '#9dffb0');
       s.time.delayedCall(900, () => this.host.win());
     }
+  }
+
+  // ---------- chefe: Diabrete Gigante ----------
+
+  private bossSpawned = false;
+  private boss?: { sprite: Phaser.GameObjects.Sprite; hp: number; max: number; t: number; next: number; k: number; dashing: number; hurt: number; dying: boolean };
+
+  private spawnBoss(): void {
+    const s = this.host.scene;
+    this.bossSpawned = true;
+    const sprite = s.add.sprite(this.right + 200, (this.host.top + this.host.bottom) / 2, 'imp_idle').setScale(3).setFlipX(true).setDepth(DEPTH.fighters).play('imp_idle');
+    this.boss = { sprite, hp: 40, max: 40, t: 0, next: s.time.now + 2200, k: 0, dashing: 0, hurt: 0, dying: false };
+    s.cameras.main.shake(400, 0.006);
+    sfx('boss');
+    this.host.bar?.()?.bossWarning();
+    s.time.delayedCall(1200, () => {
+      this.host.bar?.()?.showBossBar('DIABRETE GIGANTE', 'Senhor dos Céus', 0xe05a2a);
+      this.host.bar?.()?.setBossHp(1);
+    });
+  }
+
+  private updateBoss(time: number, dt: number): void {
+    const b = this.boss!;
+    const s = this.host.scene;
+    if (b.dying) return;
+    b.t += dt;
+    const homeX = this.right - 200;
+    // Entra pela direita e flutua; no bote avança até o jogador e volta.
+    if (b.dashing > 0) {
+      b.dashing -= dt;
+      b.sprite.x += -900 * dt;
+      if (b.dashing <= 0) b.sprite.x = Math.max(b.sprite.x, this.left + 200);
+    } else b.sprite.x = Phaser.Math.Linear(b.sprite.x, homeX, 0.04);
+    b.sprite.y = (this.host.top + this.host.bottom) / 2 + Math.sin(b.t * 1.3) * 150;
+    b.sprite.setAlpha(time < b.hurt ? 0.6 : 1);
+    // Padrões em sequência (mais rápidos com metade da vida).
+    if (time >= b.next && b.dashing <= 0 && this.alive) {
+      const angry = b.hp <= b.max / 2;
+      b.next = time + (angry ? 1500 : 2200);
+      const k = b.k++ % 4;
+      const shoot = (a: number, speed: number) => {
+        const o = s.add.image(b.sprite.x - 80, b.sprite.y, 'spark').setTint(0xff7a1a).setScale(1.1).setDepth(DEPTH.projectiles);
+        this.shots.push({ obj: o, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: 14, enemy: true });
+      };
+      if (k === 0) for (let i = -3; i <= 3; i++) shoot(Math.PI + i * 0.18, 360);
+      else if (k === 1) {
+        for (let i = 0; i < (angry ? 5 : 3); i++)
+          s.time.delayedCall(i * 160, () => {
+            if (!this.boss || this.boss.dying) return;
+            shoot(Phaser.Math.Angle.Between(b.sprite.x, b.sprite.y, this.x, this.y), 480);
+          });
+      } else if (k === 2) {
+        b.dashing = 0.9;
+        this.host.popText(b.sprite.x, b.sprite.y - 140, '!', '#ff5c5c');
+      } else {
+        const y = Phaser.Math.Between(this.host.top + 60, this.host.bottom - 60);
+        this.line('bat', angry ? 4 : 3, y);
+      }
+    }
+    // Tiros do jogador acertam o chefe.
+    for (const sh of this.shots) {
+      if (sh.enemy || sh.r < 0) continue;
+      if (Phaser.Math.Distance.Between(sh.obj.x, sh.obj.y, b.sprite.x, b.sprite.y) < 110) {
+        sh.r = -1;
+        b.hp--;
+        b.hurt = time + 90;
+        this.host.bar?.()?.setBossHp(b.hp / b.max);
+        if (b.hp <= 0) return this.bossDown();
+      }
+    }
+    // Encostar no chefe derruba.
+    this.hits(b.sprite.x, b.sprite.y, 90, time);
+  }
+
+  /** Derrota em cadeia: explosões pelo corpo, clarão e orbes em estrela. */
+  private bossDown(): void {
+    const b = this.boss!;
+    const s = this.host.scene;
+    b.dying = true;
+    for (const sh of this.shots) if (sh.enemy) sh.r = -1;
+    this.host.bar?.()?.setBossHp(0);
+    for (let i = 0; i < 14; i++) {
+      s.time.delayedCall(i * 100, () => {
+        b.sprite.setTintFill(i % 2 ? 0xffffff : 0xff7a1a);
+        this.pop(b.sprite.x + Phaser.Math.Between(-90, 90), b.sprite.y + Phaser.Math.Between(-90, 90));
+      });
+    }
+    s.time.delayedCall(1500, () => {
+      s.cameras.main.flash(500, 255, 255, 255);
+      const cx = b.sprite.x;
+      const cy = b.sprite.y;
+      b.sprite.destroy();
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * Math.PI * 2;
+        const o = s.add.image(cx, cy, 'orb').setDepth(DEPTH.fx + 2);
+        s.tweens.add({ targets: o, x: cx + Math.cos(a) * 600, y: cy + Math.sin(a) * 600, alpha: 0, duration: 1500, onComplete: () => o.destroy() });
+      }
+      this.host.bar?.()?.hideBossBar();
+      this.done = true;
+      s.time.delayedCall(1700, () => this.host.win());
+    });
   }
 
   private fire(): void {

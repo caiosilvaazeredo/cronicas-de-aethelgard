@@ -58,6 +58,13 @@ export class Fighter {
   private knockT = 0;
   private knockV = 0;
   private invulnUntil = 0;
+  /** Durante a transformação o corpo de verdade some (quem aparece é o giro com raios). */
+  shiftHide = false;
+
+  /** Fica intocável por um instante (transformação). */
+  protect(ms: number): void {
+    this.invulnUntil = Math.max(this.invulnUntil, this.scene.time.now + ms);
+  }
   private stunUntil = 0;
   private stars: Phaser.GameObjects.Image[] = [];
   private jumps = 0;
@@ -482,7 +489,7 @@ export class Fighter {
     }
 
     // Pisca enquanto invulnerável.
-    this.sprite.setAlpha(this.buried ? 0 : this.invulnerable ? (Math.floor(now / 80) % 2 ? 0.35 : 1) : 1);
+    this.sprite.setAlpha(this.buried || this.shiftHide ? 0 : this.invulnerable ? (Math.floor(now / 80) % 2 ? 0.35 : 1) : 1);
     this.updateMarkers();
   }
 

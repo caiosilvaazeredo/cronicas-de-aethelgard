@@ -66,7 +66,7 @@ export function loadingVignette(
   cx: number,
   ground: number,
   width: number,
-  opts: { area?: string; king?: string; scale?: number } = {},
+  opts: { area?: string; king?: string; scale?: number; ground?: boolean; depth?: number } = {},
 ): LoadingShow {
   const scale = opts.scale ?? 0.75;
   const left = cx - width / 2;
@@ -79,12 +79,15 @@ export function loadingVignette(
   const add = <T extends Phaser.GameObjects.GameObject>(o: T): T => {
     objs.push(o);
     (o as unknown as Phaser.GameObjects.Components.Mask).setMask?.(mask);
+    if (opts.depth !== undefined) (o as unknown as Phaser.GameObjects.Components.Depth).setDepth?.(opts.depth);
     return o;
   };
   const addFixed = <T extends Phaser.GameObjects.GameObject>(o: T): T => (objs.push(o), o);
 
   // Chão: uma ilhota de grama e pedra do Tiny Swords.
-  if (scene.textures.exists('tilemap')) {
+  if (opts.ground === false) {
+    /* o palco já tem chão (tela inicial) */
+  } else if (scene.textures.exists('tilemap')) {
     const n = Math.ceil(width / 64);
     for (let i = 0; i < n; i++) {
       const col = i === 0 ? 5 : i === n - 1 ? 7 : 6;

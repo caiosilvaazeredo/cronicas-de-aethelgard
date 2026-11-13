@@ -26,7 +26,7 @@ export class BootScene extends Phaser.Scene {
     this.t0 = Date.now();
     const HH = this.scale.height;
     const P = HH > H;
-    const cy = P ? HH * 0.42 : 340;
+    const cy = P ? HH * 0.42 : 322;
     this.add.rectangle(0, 0, W, HH, 0x0e1a2b).setOrigin(0);
     this.add.text(W / 2, P ? HH * 0.2 : 110, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '110px' : '72px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 12 }).setOrigin(0.5);
     loadingVignette(this, W / 2, cy, P ? 1100 : 760, { scale: P ? 1.3 : 1 });
@@ -290,6 +290,19 @@ export class BootScene extends Phaser.Scene {
     const crests = [
       [20, 10, 30], [110, 30, 22], [190, 14, 34], [60, 52, 26], [160, 66, 20], [230, 82, 24], [10, 86, 18],
     ];
+    // Sombra azul embaixo de cada crista: dá volume à onda.
+    wc.strokeStyle = 'rgba(20,95,170,0.45)';
+    for (const [x, y, w] of crests) {
+      wc.beginPath();
+      for (let i = 0; i <= w; i++) {
+        const px = (x + i) % 256;
+        const py = y + 5 + Math.sin((i / w) * Math.PI) * -4;
+        if (i === 0 || px === 0) wc.moveTo(px, py);
+        else wc.lineTo(px, py);
+      }
+      wc.stroke();
+    }
+    wc.strokeStyle = 'rgba(220,245,255,0.9)';
     for (const [x, y, w] of crests) {
       wc.beginPath();
       for (let i = 0; i <= w; i++) {
@@ -301,6 +314,35 @@ export class BootScene extends Phaser.Scene {
       wc.stroke();
     }
     waves.refresh();
+
+    // Linha d'água em pixel art: espuma ondulada (degraus de 2 px) com uma faixa clara embaixo.
+    const top = this.textures.createCanvas('water_top', 128, 28)!;
+    const tc = top.getContext();
+    for (let x = 0; x < 128; x += 2) {
+      const y = 10 + Math.round((Math.sin((x / 128) * Math.PI * 4) * 3 + Math.sin((x / 128) * Math.PI * 2 + 1) * 1.5) / 2) * 2;
+      tc.fillStyle = 'rgba(255,255,255,0.95)';
+      tc.fillRect(x, y, 2, 3);
+      tc.fillStyle = 'rgba(255,255,255,0.45)';
+      tc.fillRect(x, y + 3, 2, 4);
+      tc.fillStyle = 'rgba(255,255,255,0.18)';
+      tc.fillRect(x, y + 7, 2, 6);
+    }
+    // Bolhinhas de espuma soltas.
+    tc.fillStyle = 'rgba(255,255,255,0.9)';
+    for (const [x, y] of [[14, 4], [52, 2], [90, 6], [118, 3]]) tc.fillRect(x, y, 3, 3);
+    top.refresh();
+
+    // Profundidade: mais claro perto da superfície, mais escuro no fundo.
+    const grad = this.textures.createCanvas('water_grad', 4, 256)!;
+    const gc = grad.getContext();
+    const gg = gc.createLinearGradient(0, 0, 0, 256);
+    gg.addColorStop(0, 'rgba(255,255,255,0.26)');
+    gg.addColorStop(0.3, 'rgba(255,255,255,0)');
+    gg.addColorStop(0.55, 'rgba(8,30,80,0)');
+    gg.addColorStop(1, 'rgba(8,30,80,0.42)');
+    gc.fillStyle = gg;
+    gc.fillRect(0, 0, 4, 256);
+    grad.refresh();
 
     g.fillStyle(0xffffff);
     const pts: number[] = [];

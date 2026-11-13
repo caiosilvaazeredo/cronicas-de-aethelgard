@@ -1,7 +1,8 @@
 import { audio, settings } from './settings';
 
 /**
- * Trilha 8-bit gerada na hora (sem arquivos de áudio). Cada tema é descrito por um "estilo"
+ * Trilha gerada na hora (sem arquivos de áudio), com timbres macios (marimba, flauta, piano
+ * elétrico, baixo redondo) e um passa-baixa geral: sem agudos estridentes. Cada tema é descrito por um "estilo"
  * (andamento, tom, modo, progressão de acordes, timbres, bateria) e a melodia é composta a partir
  * de uma semente fixa: o mesmo tema sempre toca igual. Forma A A B A, em laço.
  *
@@ -82,7 +83,7 @@ const STYLES: Record<Track, Style> = {
   // O Xamã.
   final: { bpm: 172, root: 40, mode: HARMONIC, progA: [0, 5, 1, 4, 0, 5, 3, 4], progB: [3, 4, 5, 4, 3, 1, 4, 4], beats: 4, lead: 'sawtooth', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.74, seed: 149, arp: 'always' },
   // Memórias: caixinha de música.
-  memory: { bpm: 70, root: 53, mode: IONIAN, progA: [0, 5, 3, 4, 0, 5, 1, 4], progB: [3, 4, 5, 0, 3, 4, 1, 4], beats: 3, lead: 'sine', bassVoice: 'triangle', bass: 'root', drums: 'none', density: 0.55, seed: 157, arp: 'always', echo: true, leadOct: 3 },
+  memory: { bpm: 70, root: 48, mode: IONIAN, progA: [0, 5, 3, 4, 0, 5, 1, 4], progB: [3, 4, 5, 0, 3, 4, 1, 4], beats: 3, lead: 'sine', bassVoice: 'triangle', bass: 'root', drums: 'none', density: 0.55, seed: 157, arp: 'always', echo: true, leadOct: 2 },
   // Conversas da história.
   story: { bpm: 80, root: 45, mode: DORIAN, progA: [0, 3, 0, 4, 5, 3, 1, 4], progB: [3, 4, 0, 5, 3, 4, 6, 4], beats: 4, lead: 'triangle', bassVoice: 'triangle', bass: 'root', drums: 'none', density: 0.4, seed: 163, echo: true },
   // Versus: duelo.
@@ -168,7 +169,10 @@ function compose(st: Style): Step[] {
           let len = 1;
           while (s + len < spb && bar[s + len] === undefined && len < 4) len++;
           if (cadence) len = spb - s;
-          return { midi: midiOf(d, leadOct - 1), len };
+          // Teto em Dó5: a melodia nunca sobe para a região estridente.
+          let midi = midiOf(d, leadOct - 1);
+          while (midi > 79) midi -= 12;
+          return { midi, len };
         }),
       );
     });
@@ -186,7 +190,7 @@ function compose(st: Style): Step[] {
         const step: Step = {};
         step.lead = mel[bi][s];
         // Na repetição, a última colcheia de cada compasso par ganha um floreio uma oitava acima.
-        if (variant === 1 && step.lead && bi % 2 === 1 && s === 0) step.lead = { ...step.lead, midi: step.lead.midi + 12 };
+        if (variant === 1 && step.lead && bi % 2 === 1 && s === 0 && step.lead.midi <= 60) step.lead = { ...step.lead, midi: step.lead.midi + 12 };
         switch (st.bass) {
           case 'root':
             if (s === 0) step.bass = { midi: root, len: spb / 2 };
@@ -207,7 +211,7 @@ function compose(st: Style): Step[] {
             break;
         }
         if (withArp && st.bass !== 'waltz') {
-          const tones = chordTones(c).map((t) => midiOf(t, 2));
+          const tones = chordTones(c).map((t) => midiOf(t, 1));
           step.arp = [tones[s % 3], tones[(s + 1) % 3]];
         }
         const ch = pat[s % pat.length];
@@ -238,19 +242,6 @@ function compose(st: Style): Step[] {
 // ------------------------------------------------------------------
 
 const waves = new Map<string, PeriodicWave>();
-function pulse(a: AudioContext, duty: number): PeriodicWave {
-  const key = `p${duty}`;
-  let w = waves.get(key);
-  if (!w) {
-    const N = 32;
-    const re = new Float32Array(N);
-    const im = new Float32Array(N);
-    for (let k = 1; k < N; k++) re[k] = (2 / (k * Math.PI)) * Math.sin(k * Math.PI * duty);
-    w = a.createPeriodicWave(re, im);
-    waves.set(key, w);
-  }
-  return w;
-}
 
 const freq = (m: number) => 440 * Math.pow(2, (m - 69) / 12);
 
@@ -265,21 +256,58 @@ function musicVol(): number {
   return (s.master / 10) * (s.music / 10);
 }
 
+/**
+ * Timbres macios (sem serrilhado de chiptune): cada voz é uma soma de poucos harmônicos graves.
+ * pulse12 = marimba (ataque de madeira, some rápido) · pulse25 = piano elétrico · square = clarinete
+ * · sawtooth = metais suaves · triangle = flauta · sine = caixinha de música.
+ */
+const TIMBRE: Record<Voice, { h: number[]; pluck: boolean; attack: number }> = {
+  pulse12: { h: [1, 0, 0, 0.28], pluck: true, attack: 0.004 },
+  pulse25: { h: [1, 0.42, 0.12, 0.05], pluck: true, attack: 0.006 },
+  square: { h: [1, 0, 0.3, 0, 0.1], pluck: false, attack: 0.03 },
+  sawtooth: { h: [1, 0.45, 0.22, 0.1, 0.04], pluck: false, attack: 0.035 },
+  triangle: { h: [1, 0.12, 0.05], pluck: false, attack: 0.04 },
+  sine: { h: [1, 0, 0.08], pluck: true, attack: 0.004 },
+};
+
+function timbre(a: AudioContext, voice: Voice): PeriodicWave {
+  let w = waves.get(voice);
+  if (!w) {
+    const h = TIMBRE[voice].h;
+    const re = new Float32Array(h.length + 1);
+    const im = new Float32Array(h.length + 1);
+    h.forEach((x, i) => (im[i + 1] = x));
+    w = a.createPeriodicWave(re, im);
+    waves.set(voice, w);
+  }
+  return w;
+}
+
 function osc(a: AudioContext, dest: AudioNode, voice: Voice, f: number, t: number, dur: number, v: number): void {
+  const tb = TIMBRE[voice];
   const o = a.createOscillator();
-  if (voice === 'pulse12') o.setPeriodicWave(pulse(a, 0.125));
-  else if (voice === 'pulse25') o.setPeriodicWave(pulse(a, 0.25));
-  else o.type = voice;
+  o.setPeriodicWave(timbre(a, voice));
   o.frequency.setValueAtTime(f, t);
   const g = a.createGain();
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(v, t + 0.008);
-  g.gain.exponentialRampToValueAtTime(v * 0.6, t + Math.min(0.12, dur * 0.5));
-  g.gain.setValueAtTime(v * 0.6, t + Math.max(0.01, dur - 0.04));
-  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  g.gain.linearRampToValueAtTime(v, t + tb.attack);
+  if (tb.pluck) {
+    // Marimba/piano: bate e vai sumindo (com uma cauda curta depois da nota).
+    const tail = Math.max(dur, 0.22) + 0.18;
+    g.gain.exponentialRampToValueAtTime(v * 0.25, t + Math.min(0.16, tail * 0.5));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + tail);
+    o.connect(g).connect(dest);
+    o.start(t);
+    o.stop(t + tail + 0.02);
+    return;
+  }
+  // Sopro: sustenta e solta devagar.
+  g.gain.linearRampToValueAtTime(v * 0.8, t + Math.min(0.14, dur * 0.5) + tb.attack);
+  g.gain.setValueAtTime(v * 0.8, t + Math.max(tb.attack + 0.01, dur - 0.06));
+  g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.05);
   o.connect(g).connect(dest);
   o.start(t);
-  o.stop(t + dur + 0.02);
+  o.stop(t + dur + 0.08);
 }
 
 function noise(a: AudioContext, dest: AudioNode, t: number, dur: number, v: number, hp: number): void {
@@ -291,8 +319,10 @@ function noise(a: AudioContext, dest: AudioNode, t: number, dur: number, v: numb
   const src = a.createBufferSource();
   src.buffer = noiseBuf;
   const f = a.createBiquadFilter();
-  f.type = 'highpass';
+  // Passa-faixa grave: vassourinha/shaker, sem chiado.
+  f.type = 'bandpass';
   f.frequency.value = hp;
+  f.Q.value = 0.9;
   const g = a.createGain();
   g.gain.setValueAtTime(v, t);
   g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
@@ -329,13 +359,14 @@ function schedule(): void {
     const step = steps[playing.i % steps.length];
     const odd = playing.i % 2 === 1;
     const t = playing.next + (odd ? (st.swing ?? 0) * eighth : 0);
-    if (step.lead) osc(a, leadBus, st.lead, freq(step.lead.midi), t, step.lead.len * eighth * 0.92, st.lead === 'sawtooth' || st.lead === 'square' ? 0.045 : 0.07);
-    if (step.bass) osc(a, bus, st.bassVoice, freq(step.bass.midi), t, step.bass.len * eighth * 0.9, st.bassVoice === 'sawtooth' ? 0.045 : 0.09);
-    if (step.arp) step.arp.forEach((m, k) => osc(a, bus!, 'pulse12', freq(m), t + k * eighth * 0.5, eighth * 0.45, 0.022));
+    if (step.lead) osc(a, leadBus, st.lead, freq(step.lead.midi), t, step.lead.len * eighth * 0.92, 0.085);
+    // Baixo redondo (senoide com um pouco de corpo), nunca serrilhado.
+    if (step.bass) osc(a, bus, 'triangle', freq(step.bass.midi), t, step.bass.len * eighth * 0.9, 0.13);
+    if (step.arp) step.arp.forEach((m, k) => osc(a, bus!, 'pulse12', freq(m), t + k * eighth * 0.5, eighth * 0.45, 0.03));
     if (step.kick) drum(a, bus, t, 150, 45, 0.16, 0.22);
     if (step.tom) drum(a, bus, t, 210, 90, 0.18, 0.16);
-    if (step.snare) noise(a, bus, t, 0.11, 0.09, 1200);
-    if (step.hat) noise(a, bus, t, 0.03, 0.04, 6000);
+    if (step.snare) noise(a, bus, t, 0.12, 0.11, 700);
+    if (step.hat) noise(a, bus, t, 0.05, 0.035, 1500);
     playing.i++;
     playing.next += eighth;
   }
@@ -345,7 +376,16 @@ function buses(a: AudioContext): void {
   if (bus) return;
   bus = a.createGain();
   bus.gain.value = musicVol();
-  bus.connect(a.destination);
+  // Passa-baixa em tudo: nenhuma frequência alta chega à saída.
+  const lp = a.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = 2200;
+  lp.Q.value = 0.5;
+  const lp2 = a.createBiquadFilter();
+  lp2.type = 'lowpass';
+  lp2.frequency.value = 3200;
+  lp2.Q.value = 0.5;
+  bus.connect(lp).connect(lp2).connect(a.destination);
   leadBus = a.createGain();
   leadBus.connect(bus);
 }
@@ -401,5 +441,5 @@ export function jingle(kind: 'win' | 'seal' | 'lose'): void {
       : kind === 'seal'
         ? [[57, 0, 0.3], [60, 0.3, 0.3], [63, 0.6, 0.3], [66, 0.9, 0.9], [54, 0.9, 0.9]]
         : [[64, 0, 0.2], [63, 0.2, 0.2], [62, 0.4, 0.2], [61, 0.6, 0.6]];
-  for (const [m, dt, d] of seq) osc(a, bus!, kind === 'seal' ? 'triangle' : 'pulse25', freq(m), t + dt, d, 0.08);
+  for (const [m, dt, d] of seq) osc(a, bus!, kind === 'seal' ? 'triangle' : 'pulse25', freq(m), t + dt, d, 0.1);
 }

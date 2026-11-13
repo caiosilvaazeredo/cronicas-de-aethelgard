@@ -290,7 +290,8 @@ Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, c
 - **Jogo:** velocidade do texto da história (lento, normal, rápido, instantâneo), comentários da caveira, intensidade do tremor da tela.
 - **Tela:** tela cheia, brilho.
 - **Áudio:** volume geral, dos efeitos e da música. Os efeitos são sons 8-bit sintetizados na hora (pulo, golpe, morte, transformação, portas, explosões, alerta do chefe, menus).
-- **Música:** trilha 8-bit composta em código (`src/game/music.ts`), sem arquivos: um tema por área (calipso na Maré, galope na Pradaria, dórico com eco na Lagoa, frígio pesado na Forja, valsa no Reino das Asas, lócrio quase parado no Santuário...), além de menu, mapa do mundo, chefes, Xamã, voo, versus, memórias (caixinha de música) e conversas.
+- **Caixa de reserva:** guarda 1 item (caixa no alto da tela). Agachar + pegar guarda sem transformar; R / Tab, vírgula (teclado 2), SELECT no controle ou um toque na caixa soltam o item, que cai do céu. Ao renascer, ele cai sozinho.
+- **Música:** trilha composta em código, com timbres macios (marimba, flauta, piano elétrico) e sem agudos (`src/game/music.ts`), sem arquivos: um tema por área (calipso na Maré, galope na Pradaria, dórico com eco na Lagoa, frígio pesado na Forja, valsa no Reino das Asas, lócrio quase parado no Santuário...), além de menu, mapa do mundo, chefes, Xamã, voo, versus, memórias (caixinha de música) e conversas.
 - **Controles:** correr com toque duplo, tamanho e opacidade dos botões de toque.
 - **Acessibilidade:** cores para daltonismo (P2 laranja em vez de vermelho) e desligar clarões.
 

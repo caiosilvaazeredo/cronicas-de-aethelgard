@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
+import { loadingVignette } from '../ui/loading';
 import { LEVELS } from '../game/level';
 import { setFreePlay } from '../game/progress';
 import { sfx } from '../game/settings';
@@ -47,29 +48,105 @@ export class MenuScene extends Phaser.Scene {
     const HH = this.scale.height;
     // Linha do chão: deitado como no jogo; em pé, um pouco abaixo do meio.
     const gy = P ? Math.round(HH * 0.6) : 432;
+    // Cenário vivo: céu, nuvens passando, castelo e torre ao fundo, mar com espuma, árvores e
+    // arbustos balançando. No chão, os personagens passam em cenas curtas (perseguições,
+    // transformações, desfile...) e, lá no alto, o Xamã observa da sua nuvem.
     this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, ((gy + 68) * 720) / 500);
-    this.add.image(40, P ? 470 : 70, 'cloud_01').setOrigin(0);
-    this.add.image(560, P ? 40 + gy * 0.45 : 40, 'cloud_03').setOrigin(0);
-    this.add.image(900, P ? 110 + gy * 0.6 : 110, 'cloud_05').setOrigin(0);
+    const clouds: Array<[string, number, number, number, number]> = [
+      ['cloud_01', 40, P ? 470 : 70, 1, 9],
+      ['cloud_03', 560, P ? 40 + gy * 0.45 : 40, 0.9, 14],
+      ['cloud_05', 900, P ? 110 + gy * 0.6 : 110, 1, 7],
+      ['cloud_02', 1300, P ? gy * 0.3 : 230, 0.6, 18],
+      ['cloud_04', 260, P ? gy * 0.72 : 290, 0.5, 22],
+    ];
+    const drifting = clouds.map(([k, x, y, sc, v]) => ({ img: this.add.image(x, y, k).setOrigin(0).setScale(sc).setAlpha(sc < 0.8 ? 0.8 : 1), v }));
+    this.events.on('update', (_t: number, dt: number) => {
+      for (const c of drifting) {
+        c.img.x += (c.v * dt) / 1000;
+        if (c.img.x > W + 40) c.img.x = -c.img.displayWidth - 40;
+      }
+    });
+    // Mar: corpo, degradê de profundidade, cristas e espuma ondulada.
     this.add.rectangle(0, gy + 68, W, HH - gy - 68, 0x39b5fd).setOrigin(0);
+    this.add.image(0, gy + 68, 'water_grad').setOrigin(0).setDisplaySize(W, Math.max(200, HH - gy - 68));
+    const wavesA = this.add.tileSprite(0, gy + 80, W, HH - gy - 80, 'waves').setOrigin(0).setAlpha(0.5);
+    const foam = this.add.tileSprite(0, gy + 100, W, 28, 'water_top').setOrigin(0).setAlpha(0.8).setDepth(6);
+    this.events.on('update', (t: number) => {
+      wavesA.tilePositionX = t * 0.02;
+      wavesA.tilePositionY = Math.sin(t / 900) * 3;
+      foam.tilePositionX = Math.round((t * 0.03) / 2) * 2;
+      foam.tilePositionY = Math.round(Math.sin(t / 560) * 1.5) * 2;
+    });
+    // Construções do reino ao fundo (atrás da grama).
+    const bs = P ? 1.5 : 1;
+    this.add.image(P ? 250 : 190, gy + 30, 'bld_blue_castle').setOrigin(0.5, 0.86).setScale(0.95 * bs);
+    this.add.image(P ? 1090 : 1110, gy + 30, 'bld_red_tower').setOrigin(0.5, 0.9).setScale(1.05 * bs);
+    this.add.image(P ? 860 : 930, gy + 30, 'bld_blue_house1').setOrigin(0.5, 0.86).setScale(0.9 * bs);
+    for (const [x, sc] of [[60, 0.9], [420, 0.8], [800, 0.85], [1230, 0.95]] as const) {
+      if (this.textures.exists('res_tree')) this.add.sprite(x, gy + 34, 'res_tree').setOrigin(0.5, 0.88).setScale(sc * bs).play({ key: 'res_tree', startFrame: (x >> 5) % 8 });
+    }
     for (let i = 0; i < 20; i++) {
       const col = i === 0 ? 5 : i === 19 ? 7 : 6;
-      this.add.image(i * 64, gy, 'tilemap', 27 + col).setOrigin(0);
-      this.add.image(i * 64, gy + 64, 'tilemap', 45 + col).setOrigin(0);
+      this.add.image(i * 64, gy, 'tilemap', 27 + col).setOrigin(0).setDepth(2);
+      this.add.image(i * 64, gy + 64, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
     }
-    // Dois esqueletos: azul (P1) e vermelho (P2).
-    const sk = P ? 1.6 : 1;
-    [
-      [P ? 300 : 330, 0x2f86e0, false],
-      [P ? 980 : 950, 0xe5463a, true],
-    ].forEach(([x, color, flip]) => {
-      const feet = gy + 40;
-      const aura = this.add.image(x as number, feet - 32 * sk, 'aura').setTint(color as number).setScale(1.05 * sk, 1.1 * sk);
-      this.tweens.add({ targets: aura, alpha: { from: 0.95, to: 0.55 }, duration: 650, yoyo: true, repeat: -1 });
-      this.add.ellipse(x as number, feet - 2, 58 * sk, 16 * sk).setStrokeStyle(3, color as number).setFillStyle(color as number, 0.22);
-      this.add.sprite(x as number, feet + (96 - 126) * sk, 'skull_idle').setScale(sk).play('skull_idle').setFlipX(flip as boolean);
+    for (const [x, k] of [[330, 'bush1'], [700, 'bush2'], [1020, 'bush3']] as const) {
+      if (!this.textures.exists(k)) continue;
+      if (!this.anims.exists(`menu_${k}`)) this.anims.create({ key: `menu_${k}`, frames: this.anims.generateFrameNumbers(k, { start: 0, end: 7 }), frameRate: 8, repeat: -1 });
+      this.add.sprite(x, gy + 44, k).setOrigin(0.5, 0.78).setScale(0.8 * bs).setDepth(3).play(`menu_${k}`);
+    }
+    // Personagens em cena no gramado: troca de cena de tempos em tempos.
+    const feet = gy + 40;
+    let show = loadingVignette(this, W / 2, feet, W, { ground: false, depth: 4, scale: P ? 1.5 : 1 });
+    this.time.addEvent({
+      delay: 7600,
+      loop: true,
+      callback: () => {
+        show.destroy();
+        show = loadingVignette(this, W / 2, feet, W, { ground: false, depth: 4, scale: P ? 1.5 : 1 });
+      },
+    });
+    // O Xamã na nuvem, olhando tudo de cima (só na tela de título).
+    if (this.stage === 'title') {
+      const sx = P ? W - 230 : 1090;
+      const sy = P ? Math.round(HH * 0.4) : 250;
+      const glow = this.add.image(0, -10, 'aura').setTint(0x9b6bf0).setBlendMode(Phaser.BlendModes.ADD).setScale(1.5, 1.3).setAlpha(0.6);
+      const cl = this.add.image(0, 52, 'cloud_05').setScale(0.34);
+      const sh = this.add.sprite(0, 0, 'shaman_idle').play('shaman_idle').setFlipX(true);
+      const rig = this.add.container(sx, sy, [glow, cl, sh]).setScale(P ? 1.5 : 1).setDepth(5);
+      this.tweens.add({ targets: rig, y: sy - 12, duration: 1500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.tweens.add({ targets: glow, alpha: 0.3, duration: 900, yoyo: true, repeat: -1 });
+      this.time.addEvent({
+        delay: 5200,
+        loop: true,
+        callback: () => {
+          // De vez em quando ele conjura: faíscas roxas descem até o gramado.
+          sh.play('shaman_attack').once('animationcomplete', () => sh.play('shaman_idle'));
+          for (let i = 0; i < 8; i++) {
+            const sp = this.add.image(rig.x - 30, rig.y, 'spark').setTint(i % 2 ? 0xb46bff : 0xe8d4ff).setScale(0.5).setBlendMode(Phaser.BlendModes.ADD).setDepth(5);
+            this.tweens.add({ targets: sp, x: rig.x - Phaser.Math.Between(120, 520), y: feet - Phaser.Math.Between(10, 90), alpha: 0, scale: 0.15, delay: 250 + i * 50, duration: 900, ease: 'Quad.easeIn', onComplete: () => sp.destroy() });
+          }
+        },
+      });
+    }
+    // Folhas ao vento.
+    this.time.addEvent({
+      delay: 900,
+      loop: true,
+      callback: () => {
+        const lf = this.add.image(-20, Phaser.Math.Between(80, gy), 'leaf').setTint(Phaser.Math.RND.pick([0x8fd14f, 0xc8e06a, 0xffd36b])).setDepth(5).setScale(1.4);
+        this.tweens.add({ targets: lf, x: W + 40, y: lf.y + Phaser.Math.Between(-60, 120), angle: 720, duration: Phaser.Math.Between(5000, 8000), onComplete: () => lf.destroy() });
+      },
     });
 
+    // Tudo o que vem depois (logo, botões, opções) fica na frente do cenário.
+    const bgCount = this.children.list.length;
+    this.time.delayedCall(0, () => {
+      for (const o of this.children.list.slice(bgCount)) {
+        const d = o as unknown as Phaser.GameObjects.Components.Depth;
+        if (d.depth === 0) d.setDepth(10);
+      }
+    });
     const hasLogo = this.textures.exists('logo');
     if (this.stage === 'title') {
       // Tela inicial: logo grande respirando + JOGAR.

@@ -1758,14 +1758,12 @@ export class GameScene extends Phaser.Scene {
   private transform(pi: number, char: CharId): void {
     const p = this.players[pi];
     sfx('pick');
-    // Nuvem de fumaça cobre o personagem; a troca acontece escondida nela.
-    this.smokeBurst(p.x, p.feet, PLAYER_TINT[pi], 1);
-    this.time.delayedCall(90, () => {
-      if (!p.alive) return;
+    // Magia do Xamã: o corpo gira cada vez mais rápido, raios roxos sobem em espiral e,
+    // no clarão do meio, quem está girando já é a outra criatura.
+    this.shiftSpin(p, () => {
       p.applyChar(char);
-      p.sprite.setTintFill(0xffffff);
-      this.time.delayedCall(120, () => p.sprite.clearTint());
       this.ui?.hud?.setChar(pi, char);
+    }, () => {
       if (this.mode === 'story' && pi === 0 && char !== 'skull') this.firstShift(p, char);
     });
     const t = this.add
@@ -1794,6 +1792,90 @@ export class GameScene extends Phaser.Scene {
         .setDepth(DEPTH.fx);
       this.tweens.add({ targets: h, y: h.y - 30, alpha: 0, delay: 1400, duration: 700, onComplete: () => h.destroy() });
     }
+  }
+
+  /** Giro da transformação: 'swap' troca a forma no meio (no clarão); 'done' roda no fim. */
+  private shiftSpin(p: Fighter, swap: () => void, done: () => void): void {
+    const DUR = 640;
+    const PURPLE = 0xb46bff;
+    const t0 = this.time.now;
+    p.shiftHide = true;
+    p.protect(DUR + 250);
+    const src = p.sprite;
+    const clone = this.add.sprite(src.x, src.y, src.texture.key, src.frame.name).setDepth(DEPTH.fighters + 1).setOrigin(src.originX, src.originY);
+    const back = this.add.graphics().setDepth(DEPTH.fighters + 0.5).setBlendMode(Phaser.BlendModes.ADD);
+    const front = this.add.graphics().setDepth(DEPTH.fighters + 1.5).setBlendMode(Phaser.BlendModes.ADD);
+    const glow = this.add.image(p.x, p.feet - 40, 'aura').setTint(PURPLE).setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.fighters + 0.4).setAlpha(0);
+    let swapped = false;
+    const finish = () => {
+      this.events.off('update', tick);
+      this.events.off('shutdown', finish);
+      [clone, back, front, glow].forEach((o) => o.active && o.destroy());
+      p.shiftHide = false;
+    };
+    const tick = () => {
+      const t = (this.time.now - t0) / DUR;
+      if (t >= 1 || !p.alive) {
+        if (!swapped && p.alive) swap();
+        finish();
+        if (!p.alive) return;
+        // Estouro final: anel roxo e faíscas.
+        const ring = this.add.ellipse(p.x, p.feet - 4, 40, 12).setStrokeStyle(5, PURPLE).setDepth(DEPTH.fighters + 2);
+        this.tweens.add({ targets: ring, scaleX: 4, scaleY: 3, alpha: 0, duration: 380, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
+        for (let i = 0; i < 12; i++) {
+          const a = (i / 12) * Math.PI * 2;
+          const s = this.add.image(p.x, p.feet - 44, 'spark').setTint(i % 2 ? PURPLE : 0xe8d4ff).setDepth(DEPTH.fighters + 3).setScale(0.5).setBlendMode(Phaser.BlendModes.ADD);
+          this.tweens.add({ targets: s, x: p.x + Math.cos(a) * 80, y: p.feet - 44 + Math.sin(a) * 64, alpha: 0, scale: 0.1, duration: 420, ease: 'Quad.easeOut', onComplete: () => s.destroy() });
+        }
+        done();
+        return;
+      }
+      if (!swapped && t >= 0.5) {
+        swapped = true;
+        swap();
+        this.cameras.main.flash(90, 190, 130, 255);
+      }
+      // O clone copia o corpo de verdade (posição, quadro e forma) e gira no lugar.
+      const phase = t * t * Math.PI * 9; // acelera
+      const turn = Math.cos(phase);
+      clone
+        .setTexture(src.texture.key, src.frame.name)
+        .setOrigin(src.originX, src.originY)
+        .setPosition(src.x, src.y - Math.sin(t * Math.PI) * 14)
+        .setFlipX(src.flipX !== turn < 0)
+        .setScale(Math.abs(src.scaleX) * Math.max(0.12, Math.abs(turn)), src.scaleY * (1 + Math.sin(t * Math.PI) * 0.08));
+      const flash = Math.abs(t - 0.5) < 0.1;
+      if (flash) clone.setTintFill(0xf0dcff);
+      else clone.setTint(Phaser.Display.Color.GetColor(255 - 60 * Math.sin(t * Math.PI), 255 - 110 * Math.sin(t * Math.PI), 255));
+      glow.setPosition(p.x, p.feet - 44).setAlpha(Math.sin(t * Math.PI) * 0.9).setScale(1.2 + Math.sin(t * Math.PI) * 0.5, 1.5);
+      // Três raios em espiral subindo dos pés à cabeça; a parte de trás fica atrás do corpo.
+      back.clear();
+      front.clear();
+      const head = Math.max(90, p.labelHeight);
+      const N = 9;
+      for (let k = 0; k < 3; k++) {
+        const base = phase * 1.3 + (k * Math.PI * 2) / 3;
+        let px = 0;
+        let py = 0;
+        for (let i = 0; i <= N; i++) {
+          const u = i / N;
+          const ang = base + u * Math.PI * 2.2;
+          const R = (26 + 30 * Math.sin(u * Math.PI)) * (0.6 + 0.6 * Math.sin(t * Math.PI));
+          const x = p.x + Math.cos(ang) * R + Phaser.Math.Between(-5, 5);
+          const y = p.feet - u * (head + 18) + Phaser.Math.Between(-4, 4);
+          if (i > 0) {
+            const g = Math.sin(ang) > 0 ? front : back;
+            g.lineStyle(7, PURPLE, 0.5).lineBetween(px, py, x, y);
+            g.lineStyle(3, 0xf3e6ff, 0.95).lineBetween(px, py, x, y);
+          }
+          px = x;
+          py = y;
+        }
+      }
+    };
+    this.events.on('update', tick);
+    this.events.once('shutdown', finish);
+    tick();
   }
 
   // ---------- fim de fase ----------

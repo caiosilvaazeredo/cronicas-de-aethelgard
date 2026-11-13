@@ -53,7 +53,7 @@ export class LoadingScene extends Phaser.Scene {
     this.tweens.add({ targets: title, scale: 1, alpha: 1, duration: 420, ease: 'Back.easeOut' });
 
     const king = def && area && area.levels[area.levels.length - 1] === def.id ? t!.kingAnim : undefined;
-    loadingVignette(this, W / 2, P ? HH * 0.44 : 340, P ? 1100 : 760, { area: area?.id, king, scale: P ? 1.3 : 1 });
+    loadingVignette(this, W / 2, P ? HH * 0.44 : 322, P ? 1100 : 760, { area: area?.id, king, scale: P ? 1.3 : 1 });
     tipCard(this, W / 2, P ? HH * 0.62 : 510, P ? 1120 : 900, area?.id, P ? 1.5 : 1);
 
     // Barra que enche sozinha; no fim, a fase começa.

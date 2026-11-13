@@ -2939,6 +2939,8 @@ export class Level {
   private clouds: Array<{ img: Phaser.GameObjects.Image; speed: number }> = [];
   private waves: Phaser.GameObjects.TileSprite[] = [];
   private crest?: Phaser.GameObjects.TileSprite;
+  /** Linhas d'água onduladas (atrás e na frente dos personagens). */
+  private waterTops: Phaser.GameObjects.TileSprite[] = [];
   private lavaBody?: Phaser.GameObjects.TileSprite;
   private lavaTop: Phaser.GameObjects.TileSprite[] = [];
   private cloudSpan = 0;
@@ -3058,6 +3060,14 @@ export class Level {
       b.tilePositionX = (camX * 0.8 - time * 0.015) / 1.6;
       b.tilePositionY = Math.cos(time / 1100) * 3;
       if (this.crest) this.crest.tilePositionX = camX * 1.1 + time * 0.03;
+      // Espuma: duas linhas correndo em sentidos opostos e balançando (em passos de pixel).
+      const [ta, tb] = this.waterTops;
+      if (ta && tb) {
+        ta.tilePositionX = Math.round((camX + time * 0.035) / 2) * 2;
+        ta.tilePositionY = Math.round(Math.sin(time / 520) * 1.5) * 2;
+        tb.tilePositionX = Math.round((camX * 1.05 - time * 0.028) / 2) * 2;
+        tb.tilePositionY = Math.round(Math.cos(time / 640) * 1.5) * 2;
+      }
     }
     if (this.lavaBody) {
       const camX = this.scene.cameras.main.scrollX;
@@ -3430,6 +3440,33 @@ export class Level {
       s.add.tileSprite(0, WATER_Y + 8, W, 260, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.3 : 0.55),
       s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.18 : 0.3).setTileScale(1.6, 1.3),
     ];
+    if (!lava) {
+      // Profundidade em degradê, espuma ondulada na superfície e brilhos de sol piscando.
+      s.add.image(0, WATER_Y, 'water_grad').setOrigin(0).setDisplaySize(W, 300).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.6 : 1);
+      this.waterTops = [
+        s.add.tileSprite(0, WATER_Y - 12, W, 28, 'water_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setTint(edge).setAlpha(0.9),
+        s.add.tileSprite(0, WATER_Y + 2, W, 28, 'water_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.52).setAlpha(dark || swamp ? 0.5 : 0.85).setTint(dark || swamp ? edge : 0xffffff),
+      ];
+      const glints = dark ? 8 : 16;
+      for (let i = 0; i < glints; i++) {
+        const gl = s.add
+          .rectangle(Phaser.Math.Between(0, W), WATER_Y + Phaser.Math.Between(26, 170), Phaser.Math.Between(8, 22), 3, 0xffffff)
+          .setScrollFactor(0, 1)
+          .setDepth(DEPTH.water)
+          .setAlpha(0);
+        s.tweens.add({
+          targets: gl,
+          alpha: dark || swamp ? 0.35 : 0.75,
+          scaleX: 1.6,
+          duration: Phaser.Math.Between(500, 900),
+          delay: Phaser.Math.Between(0, 3000),
+          yoyo: true,
+          repeat: -1,
+          repeatDelay: Phaser.Math.Between(600, 2600),
+          onRepeat: () => (gl.x = Phaser.Math.Between(0, W)),
+        });
+      }
+    }
     if (lava) {
       this.waves.forEach((w) => w.destroy());
       // Lava viva: corpo com veios de casca escura que correm devagar e uma crista clara

@@ -84,7 +84,19 @@ originais (extraídas com PIL do PNG).
   **Contra-golpe**: tocar para trás até 170 ms antes do golpe (`Fighter.parries`, `PARRY_MS`) quebra a
   defesa do atacante corpo a corpo (`GameScene.resolveMelee` → `guardBreak`) e devolve projéteis
   (laço de projéteis em `GameScene`). Efeito em `GameScene.parryFx`. Placa de dica na fase 1.
-- **Música** (`music.ts`): cada tema é um `Style` (andamento, tônica, modo, progressões A/B, timbres,
+- **Caixa de reserva** (como no Mario): `GameScene.reserves/dropReserve/updateReserve`, HUD em `Hud.setReserve`
+  (caixa tocável no topo), tecla em `controls.ts` (`reserve`: R/Tab, vírgula, SELECT), salva em `progress.reserve`.
+  Agachar + pegar guarda; pegar item já transformado manda a forma atual para a caixa (se vazia); ao renascer
+  o item cai sozinho. Desligada em voo, submerso, final e secreta (`reserveOn`).
+- **Carregamento**: `PreloadScene` (carrega o mínimo) → `BootScene` (cena animada + dica + barra) → menu.
+  `LoadingScene` é a tela de entrada de fase (MapScene/HowTo → `loading` → `vn`/`game`). Cenas em
+  `ui/loading.ts` (`loadingVignette`: perseguição, fuga, transformação, voo, desfile, ovelha, rei) e textos em
+  `data/tips.ts` (DICA / CURIOSIDADE / BOATO, gerais ou por área). A tela inicial reutiliza `loadingVignette`.
+- **Transformação**: `GameScene.shiftSpin` (clone do corpo gira e acelera, três raios roxos em espiral, clarão
+  no meio com a troca, anel e faíscas no fim). O corpo real fica com `Fighter.shiftHide`.
+- **Água**: texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
+  brilhos em `Level.water`. **Farol**: `SeaSystem.drawLighthouse` empilha duas `bld_red_tower` + fogueira.
+- **Música** (`music.ts`, timbres macios em `TIMBRE` + passa-baixa geral, sem agudos): cada tema é um `Style` (andamento, tônica, modo, progressões A/B, timbres,
   baixo, bateria, eco); `compose()` cria a melodia com semente fixa, forma A A B A. `playMusic(track)` nas
   cenas (Menu, World, Map = id da área, Game = área/voo/versus/chefe, Memory, Story); `jingle('win')` em
   `storyWin`. Volume em Configurações → Áudio → Música (`settings.music`). Novo tema: adicionar em `STYLES`.

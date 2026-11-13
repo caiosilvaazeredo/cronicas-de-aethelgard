@@ -310,8 +310,12 @@ export class SeaSystem {
       const spread = 0.16;
       const len = 900;
       const side = Math.cos(a);
-      g.fillStyle(0xfff1a8, 0.12 + Math.abs(side) * 0.14);
-      g.fillTriangle(bx, by, bx + side * len, by - len * spread * Math.abs(side), bx + side * len, by + len * spread * Math.abs(side));
+      // Facho morno em três camadas (miolo mais forte), sem tapar o céu.
+      for (const [k, al] of [[1, 0.05], [0.62, 0.06], [0.3, 0.08]] as const) {
+        const w = len * spread * Math.abs(side) * k;
+        g.fillStyle(0xffe2a0, al * (0.5 + Math.abs(side) * 0.5));
+        g.fillTriangle(bx, by, bx + side * len, by - w, bx + side * len, by + w);
+      }
     }
   }
 
@@ -544,20 +548,24 @@ export class SeaSystem {
   /** Farol listrado ao fundo, com o facho de luz girando. */
   private drawLighthouse(x: number, base: number): void {
     const s = this.host.scene;
-    const g = s.add.graphics().setDepth(DEPTH.terrain - 0.5);
-    const h = 380;
-    const top = base - h;
-    for (let y = 0; y < h; y += 4) {
-      const half = 34 + (y / h) * 26;
-      const band = Math.floor(y / 60) % 2;
-      g.fillStyle(INK, 1).fillRect(x - half - 3, top + y, half * 2 + 6, 4);
-      g.fillStyle(band ? 0xd42a3c : 0xf4ead0, 1).fillRect(x - half, top + y, half * 2, 4);
-    }
-    g.fillStyle(INK, 1).fillRect(x - 46, top - 60, 92, 64);
-    g.fillStyle(0x2a2a3a, 1).fillRect(x - 42, top - 56, 84, 8);
-    g.fillStyle(0xfff1a8, 1).fillRect(x - 30, top - 46, 60, 40);
-    g.fillStyle(0xd42a3c, 1).fillTriangle(x - 50, top - 58, x + 50, top - 58, x, top - 100);
+    // Feito com a torre do próprio Tiny Swords: uma torre larga embaixo, outra menor em cima
+    // (a lanterna) e uma fogueira acesa no topo, de onde sai o facho.
+    const d = DEPTH.terrain - 0.5;
+    const FEET = 230 / 256; // base da torre dentro do quadro
+    const DECK = 149; // altura do chão ao terraço, em px do sprite
+    const s1 = 1.7;
+    const s2 = 1.05;
+    const deck1 = base - DECK * s1;
+    const deck2 = deck1 + 18 - DECK * s2;
+    s.add.ellipse(x, base - 2, 250, 26, 0x10223a, 0.25).setDepth(d);
+    s.add.image(x, base, 'bld_red_tower').setOrigin(0.5, FEET).setScale(s1).setDepth(d);
+    s.add.image(x, deck1 + 18, 'bld_red_tower').setOrigin(0.5, FEET).setScale(s2).setDepth(d);
+    const fy = deck2 + 2;
+    const glow = s.add.image(x, fy - 14, 'aura').setTint(0xffd36b).setBlendMode(Phaser.BlendModes.ADD).setScale(1.5).setDepth(d).setAlpha(0.8);
+    s.tweens.add({ targets: glow, alpha: 0.45, scale: 1.25, duration: 520, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const fire = s.add.sprite(x, fy, 'torch_item', 0).setOrigin(0.5, 0.85).setScale(1.7).setDepth(d);
+    if (s.anims.exists('torch_flame')) fire.play('torch_flame');
     this.beam = s.add.graphics().setDepth(DEPTH.terrain - 0.45).setBlendMode(Phaser.BlendModes.ADD);
-    this.beamAt = [x, top - 26];
+    this.beamAt = [x, fy - 22];
   }
 }

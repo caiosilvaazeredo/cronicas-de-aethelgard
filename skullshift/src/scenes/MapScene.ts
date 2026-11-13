@@ -432,6 +432,15 @@ export class MapScene extends Phaser.Scene {
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
     }
+    // Forja Vulcânica (fases novas).
+    if (l.field?.geysers) {
+      const f = this.add.graphics().setDepth(6);
+      f.fillStyle(0xff7a1a, 1).fillTriangle(x + 30, y + 4, x + 50, y + 4, x + 40, y - 50);
+      f.fillStyle(0xffe066, 1).fillTriangle(x + 34, y + 4, x + 46, y + 4, x + 40, y - 30);
+      this.tweens.add({ targets: f, alpha: 0.4, duration: 500, yoyo: true, repeat: -1 });
+    }
+    if (l.sea?.crateTex === 'basalt') deco('basalt', 40, -4, 0.6);
+    if (l.sea?.plankTex === 'obsidian_plank') deco('obsidian_plank', 0, -10, 0.9);
     // Caverna das Teias (fases novas).
     if (l.id === 'webbridge') deco('web_plank', 0, -10, 0.9);
     if (l.id === 'cocoons') {

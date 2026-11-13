@@ -62,6 +62,8 @@ export interface SeaDef {
   masts?: Array<[screen: number, tile: number, h: number, height: number]>;
   /** Farol ao fundo, com o facho girando. */
   lighthouse?: At;
+  /** Troca a arte dos caixotes (ex.: 'basalt' boiando na lava). */
+  crateTex?: string;
   /** Troca a arte das tábuas (ex.: 'web_plank' nas pontes de teia). */
   plankTex?: string;
   /** Troca a arte das águas-vivas por uma imagem parada (ex.: 'cocoon' pendurado). */
@@ -139,6 +141,21 @@ export function makeSeaArt(scene: Phaser.Scene): void {
   for (let i = 0; i < 10; i++) crate.set(i, Math.round(i * 1.3), 0x7a4a1a);
   crate.outline(INK);
   crate.toTexture(scene, 'crate', 3);
+  // Bloco de basalto (boia na lava) e laje de obsidiana (afunda).
+  const bas = new Px(21, 14);
+  bas.rect(0, 0, 21, 14, 0x4a3a3a);
+  bas.rect(0, 0, 21, 2, 0x7a5a4a);
+  for (const [x, y] of [[4, 5], [12, 8], [17, 4]]) bas.rect(x, y, 2, 2, 0x2a1e1e);
+  bas.rect(0, 12, 21, 2, 0xd84a2a);
+  bas.outline(INK);
+  bas.toTexture(scene, 'basalt', 3);
+  const obs = new Px(21, 5);
+  obs.rect(0, 0, 21, 5, 0x2a2a38);
+  obs.rect(0, 0, 21, 1, 0x6a5aa0);
+  obs.set(6, 2, 0x9a7aff);
+  obs.set(15, 3, 0x9a7aff);
+  obs.outline(INK);
+  obs.toTexture(scene, 'obsidian_plank', 3);
   // Fio de teia esticado (ponte que se rompe).
   const wp = new Px(21, 5);
   for (let x = 0; x < 21; x++) {
@@ -211,7 +228,7 @@ export class SeaSystem {
       const w = n * TILE;
       const zone = this.ledge(x, 0, w);
       const imgs: Phaser.GameObjects.Image[] = [];
-      for (let k = 0; k < n; k++) imgs.push(s.add.image(0, 0, 'crate').setOrigin(0, 0).setDepth(DEPTH.terrain + 0.4));
+      for (let k = 0; k < n; k++) imgs.push(s.add.image(0, 0, def.crateTex ?? 'crate').setOrigin(0, 0).setDepth(DEPTH.terrain + 0.4));
       this.crates.push({ x, w, zone, imgs, phase: Math.random() * 6 });
     }
     for (const [sc, t, n, h] of def.planks ?? []) {

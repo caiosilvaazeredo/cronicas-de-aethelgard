@@ -82,7 +82,7 @@ export const AREAS: AreaDef[] = [
     king: 'Minotauro Rubro',
     kingAnim: 'minotaur_idle',
     color: 0xe0542e,
-    levels: ['volcano', 'chase', 'key3'],
+    levels: ['forgegate', 'chase', 'key3', 'lavatide', 'geysers', 'forgegun', 'obsidian', 'anvil', 'magma', 'volcano'],
     pos: [860, 505],
     unlock: 'after-pradaria',
   },

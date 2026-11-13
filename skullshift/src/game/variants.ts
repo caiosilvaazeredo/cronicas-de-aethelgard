@@ -27,7 +27,9 @@ export type Ability =
   /** Osso bumerangue: vai e volta. */
   | 'boomerang'
   /** Cospe bolas de teia que prendem o jogador. */
-  | 'web';
+  | 'web'
+  /** Cospe bolas de fogo. */
+  | 'fire';
 
 export type Accessory = 'bandana' | 'eyepatch' | 'captain' | 'shellhelm' | 'buoy' | 'horns';
 
@@ -69,6 +71,22 @@ const GNOLL_BRUTE = { 0xefe054: 0xc87a3a, 0xaf8c58: 0x8a4a22, 0xb492a7: 0x5a2a1a
 const SPIDER_JUMPER = { 0x764e7b: 0x3a8a4a, 0x4c375e: 0x2a6a3a, 0x2c283e: 0x1a4a2a, 0xb487a3: 0x9ae06a, 0xdde678: 0xffe066 };
 const SPIDER_WEB = { 0x764e7b: 0xc8c8d8, 0x4c375e: 0x9a9ab0, 0x2c283e: 0x6a6a80, 0xb487a3: 0xffffff, 0xdde678: 0xff5a5a };
 const BAT_VAMPIRE = { 0x4d4162: 0x5a1020, 0x71568d: 0xa01e30, 0x5d657c: 0x3a2a30, 0x8f9eae: 0x6a4a52, 0x464554: 0x2a1a1e, 0xe4ee67: 0xffe066 };
+/** Forja: minotauro de lava (brasa), de obsidiana (preto com chifres roxos); lagarto de magma. */
+const MINO_LAVA = { 0x78a7ab: 0xd8642e, 0x789e9c: 0xb84a22, 0xb8d2c3: 0xffb060, 0x667279: 0x3a2a2a, 0x576064: 0x2a1e1e, 0x3e4151: 0x1a1414, 0x435060: 0x2e2222, 0xfff977: 0xffe066 };
+const MINO_OBSIDIAN = {
+  0x78a7ab: 0x3a3a4a,
+  0x789e9c: 0x2a2a38,
+  0xb8d2c3: 0x6a6a8a,
+  0x667279: 0x1a1a24,
+  0x576064: 0x121218,
+  0x3e4151: 0x0a0a10,
+  0xcfbb85: 0x9a7aff,
+  0x9f976a: 0x6a4ad0,
+  0xe9e5b2: 0xc8b0ff,
+  0xd3c08c: 0xa88aff,
+  0xfff977: 0xc8b0ff,
+};
+const LIZARD_MAGMA = { 0x3cbe57: 0xd84a2a, 0x4b867b: 0x8a2a1a, 0xffed44: 0xffd36b, 0x693d5b: 0x2a1a1a };
 const GNOLL_WRECK = { 0xefe054: 0xb8c8a0, 0xaf8c58: 0x7a8a6a, 0xb492a7: 0x4a8a9a, 0x6d5e51: 0x4a5a5a, 0x514744: 0x2e3a3a };
 
 export const VARIANTS: VariantDef[] = [
@@ -85,6 +103,9 @@ export const VARIANTS: VariantDef[] = [
   { id: 'spider_web', base: 'spider', name: 'Aranha Tecelã', palette: SPIDER_WEB, ability: 'web' },
   { id: 'spider_widow', base: 'spider', name: 'Viúva-Negra', palette: SPIDER_QUEEN_PALETTE, scale: 1.4, hp: 3 },
   { id: 'bat_vampire', base: 'bat', name: 'Morcego Vampiro', palette: BAT_VAMPIRE, ability: 'charge', speedMul: 1.2 },
+  { id: 'minotaur_lava', base: 'minotaur', name: 'Minotauro de Lava', palette: MINO_LAVA, ability: 'charge', speedMul: 1.2 },
+  { id: 'minotaur_obsidian', base: 'minotaur', name: 'Minotauro de Obsidiana', palette: MINO_OBSIDIAN, scale: 1.2, hp: 3, speedMul: 0.9 },
+  { id: 'lizard_magma', base: 'lizard', name: 'Lagarto de Magma', palette: LIZARD_MAGMA, ability: 'fire' },
   { id: 'gnoll_hunter', base: 'gnoll', name: 'Gnoll Caçador', palette: GNOLL_HUNTER, ability: 'boomerang', speedMul: 1.1 },
   { id: 'gnoll_stalker', base: 'gnoll', name: 'Gnoll Espreitador', palette: GNOLL_STALKER, ability: 'burrow', mound: [0x5a8a3a, 0x9ac85a] },
   { id: 'gnoll_brute', base: 'gnoll', name: 'Gnoll Brutamontes', palette: GNOLL_BRUTE, scale: 1.35, hp: 3, speedMul: 0.85, accessories: ['horns'] },
@@ -181,6 +202,14 @@ function makeArt(scene: Phaser.Scene): void {
   ball.rect(3, 3, 2, 2, 0xffffff);
   ball.outline(INK);
   ball.toTexture(scene, 'water_ball', 2);
+  // Bola de fogo (cuspe do Lagarto de Magma).
+  const fire = new Px(12, 10);
+  fire.disc(7, 5, 4, 0xff6a1a);
+  fire.disc(7, 5, 2, 0xffe066);
+  fire.rect(1, 4, 3, 2, 0xff9a3a);
+  fire.set(0, 5, 0xd84a2a);
+  fire.outline(INK);
+  fire.toTexture(scene, 'fire_ball', 2);
   // Bomba redonda com pavio.
   const bomb = new Px(12, 13);
   bomb.disc(6, 8, 4, 0x2a2a3a);
@@ -241,6 +270,9 @@ export function makeVariants(scene: Phaser.Scene): void {
     } else if (v.ability === 'bomb') {
       def.melee = undefined;
       def.projectile = { release: 3, tex: 'bomb', speed: 360, angle: 0, spin: false, arc: { vy: -420, g: 900 } };
+    } else if (v.ability === 'fire') {
+      def.melee = undefined;
+      def.projectile = { release: 3, tex: 'fire_ball', speed: 540, angle: 0, spin: false, arc: { vy: -80, g: 300 } };
     } else if (v.ability === 'web') {
       def.melee = undefined;
       def.projectile = { release: 4, tex: 'web_ball', speed: 440, angle: 0, spin: false, arc: { vy: -120, g: 380 } };

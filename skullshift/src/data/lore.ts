@@ -284,7 +284,7 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     title: 'Mina Rachada',
     blurb: 'Pedras de ouro bloqueiam a mina. Um martelo resolve.',
     lines: [
-      S('O Minotauro deixou isto para trás. Um martelo.'),
+      S('Peguei um martelo de ferreiro na fuga. Ainda está quente.'),
       X('No ar, desce com tudo: a martelada no chão quebra as pedras de ouro.'),
       S('Ouro tapando a passagem. Que desperdício.'),
       X('Aqui ouro não compra nada. Nem saída.'),
@@ -596,6 +596,72 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Uma parede de blocos vermelhos fecha o caminho. Troca a cor na alavanca.'),
       S('Com a chave na mão eu não posso bater na alavanca.'),
       X('Então solta a chave, bate, e pega de novo. Nem tudo se resolve com pressa.'),
+    ],
+  },
+  forgegate: {
+    title: 'Portões da Forja',
+    blurb: 'A entrada da montanha de fogo.',
+    lines: [
+      S('O chão está fervendo, Hex. E aquele buraco borbulhando?'),
+      X('Gêiser. Ele borbulha antes de cuspir fogo. Espera passar e corre.'),
+      S('O Minotauro Rubro mora aqui dentro?'),
+      X('No coração da montanha. Martelando a lava. Guardando o quinto fragmento.'),
+    ],
+  },
+  lavatide: {
+    title: 'Maré de Lava',
+    blurb: 'A lava sobe e desce como a maré.',
+    lines: [
+      S('A lava está subindo! Que nem a maré nas ilhas!'),
+      X('A montanha respira como o mar. Sobe no basalto: ele boia.'),
+      S('Tudo neste mundo sobe e desce. Até eu.'),
+      X('Tu só sobes, Ossian. Eu garanto.'),
+    ],
+  },
+  geysers: {
+    title: 'Gêiseres de Fogo',
+    blurb: 'Campos de gêiseres disparando em ritmo.',
+    lines: [
+      S('Um, dois, três... eles disparam em sequência.'),
+      X('Como um coração. Aprende o ritmo e passa entre as batidas.'),
+      S('Você conhece bem esta montanha.'),
+      X('Conheço bem todas as prisões. Quer dizer... todos os lugares.'),
+    ],
+  },
+  forgegun: {
+    title: 'Tiro na Forja',
+    blurb: 'Diabretes e minotauros de lava, sem parar.',
+    lines: [
+      S('Minotauros vermelhos! Eles correm que nem touro bravo!'),
+      X('Então atira antes que cheguem. Segura ATACAR.'),
+    ],
+  },
+  obsidian: {
+    title: 'Ponte de Obsidiana',
+    blurb: 'Lajes de pedra negra que afundam na lava.',
+    lines: [
+      S('Lajes pretas boiando na lava. E canhões!'),
+      X('A obsidiana afunda depois que pisas. Não para.'),
+      S('Quem colocou canhões numa forja?'),
+      X('O Minotauro não gosta de visita. Nenhum rei gosta.'),
+    ],
+  },
+  anvil: {
+    title: 'Bigorna do Ferreiro',
+    blurb: 'A oficina do ferreiro, trancada por pedras de ouro.',
+    lines: [
+      S('Uma oficina. Bigornas, ferramentas... eu sei usar essas coisas.'),
+      X('Sabes? Interessante. Usa o martelo nas pedras e pega a chave.'),
+      S('Eu tinha calos nas mãos de tanto trabalhar. Eu lembro.'),
+      X('Ossos não têm calos, Ossian.'),
+    ],
+  },
+  magma: {
+    title: 'Coração de Magma',
+    blurb: 'O coração da montanha. Nada passa sem lutar.',
+    lines: [
+      S('Os caminhos se fecham com fogo até eu derrubar todo mundo.'),
+      X('O Minotauro não deixa ninguém passar sem lutar. Depois daqui, é ele.'),
     ],
   },
   retro: {

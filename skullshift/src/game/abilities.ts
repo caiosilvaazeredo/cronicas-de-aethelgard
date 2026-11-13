@@ -37,7 +37,7 @@ export const ABILITIES: Ability[] = [
     id: 'hammer',
     name: 'Martelo',
     icon: 'tool_hammer',
-    after: 'volcano',
+    after: 'chase',
     how: 'No ar, segure ▼ e aperte ATACAR: martelada no chão. Quebra pedras de ouro rachadas e atordoa quem estiver perto.',
   },
   {

@@ -14,6 +14,8 @@ export interface FieldDef {
   stampede?: { every: number; count: number; from: 'left' | 'right' };
   /** Rochas: nascem em (cenário, tile, altura) e rolam na direção dir a cada `every` ms. */
   boulders?: Array<[screen: number, tile: number, h: number, dir: 1 | -1, every: number]>;
+  /** Gêiseres de fogo: borbulham (aviso) e soltam uma coluna de fogo a cada `every` ms. */
+  geysers?: Array<[screen: number, tile: number, h: number, every: number, offset?: number]>;
 }
 
 export interface FieldHost {
@@ -53,7 +55,7 @@ export class FieldSystem {
   private runners: Runner[] = [];
   private boulders: Boulder[] = [];
   private spawners: Array<{ x: number; y: number; dir: number; every: number; next: number }> = [];
-  private dust?: Phaser.GameObjects.Particles.ParticleEmitter;
+  private geysers: Array<{ x: number; floor: number; every: number; next: number; state: 'idle' | 'warn' | 'fire'; at: number; g: Phaser.GameObjects.Graphics }> = [];
 
   constructor(
     private host: FieldHost,
@@ -62,6 +64,16 @@ export class FieldSystem {
     const s = host.scene;
     const now = s.time.now;
     this.nextStampede = now + (def.stampede?.every ?? 0);
+    for (const [sc, t, h, every, offset] of def.geysers ?? []) {
+      const x = host.level.tileX(sc, t);
+      const floor = FLOOR_Y - h * TILE;
+      // Boca do gêiser: uma rachadura brilhante no chão.
+      const mouth = s.add.graphics().setDepth(DEPTH.deco + 0.6);
+      mouth.fillStyle(0x1d1a2b, 1).fillEllipse(x, floor + 2, 46, 12);
+      mouth.fillStyle(0xff6a1a, 1).fillEllipse(x, floor + 2, 36, 7);
+      const g = s.add.graphics().setDepth(DEPTH.fighters + 0.3);
+      this.geysers.push({ x, floor, every, next: now + 1500 + (offset ?? 0), state: 'idle', at: 0, g });
+    }
     for (const [sc, t, h, dir, every] of def.boulders ?? []) {
       this.spawners.push({ x: host.level.tileX(sc, t), y: FLOOR_Y - h * TILE - 34, dir, every, next: now + 1200 });
     }
@@ -71,6 +83,52 @@ export class FieldSystem {
     const p = this.host.player();
     this.updateStampede(time, dt, p);
     this.updateBoulders(time, dt, p);
+    this.updateGeysers(time, p);
+  }
+
+  // ---------- gêiseres de fogo ----------
+
+  private updateGeysers(time: number, p: Fighter): void {
+    const s = this.host.scene;
+    const H = 230;
+    for (const gy of this.geysers) {
+      const g = gy.g;
+      if (gy.state === 'idle' && time > gy.next - 800) {
+        gy.state = 'warn';
+        gy.at = time;
+      }
+      if (gy.state === 'warn') {
+        // Borbulha: chamas baixinhas tremendo.
+        g.clear();
+        const k = Math.sin(time / 50) * 3;
+        g.fillStyle(0xff6a1a, 0.9).fillTriangle(gy.x - 14, gy.floor, gy.x + 14, gy.floor, gy.x + k, gy.floor - 22);
+        g.fillStyle(0xffe066, 1).fillTriangle(gy.x - 6, gy.floor, gy.x + 6, gy.floor, gy.x - k, gy.floor - 12);
+        if (time > gy.next) {
+          gy.state = 'fire';
+          gy.at = time;
+          if (Math.abs(p.x - gy.x) < W) sfx('boom');
+        }
+      } else if (gy.state === 'fire') {
+        const t = (time - gy.at) / 1100;
+        const h = H * Math.min(1, t * 5) * (t > 0.8 ? (1 - t) * 5 : 1);
+        g.clear();
+        for (const [w, c] of [[44, 0xd84a2a], [32, 0xff7a1a], [18, 0xffe066]] as const) {
+          const wob = Math.sin(time / 40 + w) * 4;
+          g.fillStyle(c, 1).fillRect(gy.x - w / 2 + wob, gy.floor - h, w, h);
+          g.fillStyle(c, 1).fillTriangle(gy.x - w / 2 + wob, gy.floor - h, gy.x + w / 2 + wob, gy.floor - h, gy.x + wob, gy.floor - h - w * 0.8);
+        }
+        if (Math.random() < 0.3) {
+          const e = s.add.image(gy.x + Phaser.Math.Between(-14, 14), gy.floor - h, 'spark').setTint(0xffb040).setScale(0.3).setDepth(DEPTH.fx);
+          s.tweens.add({ targets: e, y: e.y - 60, alpha: 0, duration: 500, onComplete: () => e.destroy() });
+        }
+        if (p.alive && !p.invulnerable && Math.abs(p.x - gy.x) < 26 && p.feet > gy.floor - h - 10 && p.feet <= gy.floor + 4) this.host.killPlayer();
+        if (t >= 1) {
+          g.clear();
+          gy.state = 'idle';
+          gy.next = time + gy.every;
+        }
+      }
+    }
   }
 
   // ---------- estouro da manada ----------

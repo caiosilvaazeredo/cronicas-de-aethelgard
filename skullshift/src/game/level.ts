@@ -1607,6 +1607,213 @@ export const LEVEL_EGGS: LevelDef = {
   versusStart: [3, 16],
 };
 
+
+// ---------- Área 5: Forja Vulcânica (fases novas) ----------
+
+const VOLC = { theme: 'volcano' as const, tiles: 'tiles_volcano', storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+
+/** Portões da Forja: a entrada da montanha, com os primeiros gêiseres. */
+export const LEVEL_FORGEGATE: LevelDef = {
+  ...VOLC,
+  id: 'forgegate',
+  name: 'Portões da Forja',
+  intro: 'A montanha de fogo. Gêiseres borbulham antes de soltar a coluna de fogo: espere passar!',
+  winText: 'Você passou pelos portões da forja!',
+  field: {
+    geysers: [
+      [0, 12, 1, 3200],
+      [1, 14, 0, 3000],
+      [1, 17, 0, 3000, 1500],
+      [3, 8, 0, 2800],
+      [3, 10, 0, 2800, 1400],
+      [4, 6, 0, 3000],
+      [4, 12, 0, 3000, 1000],
+    ],
+  },
+  screens: [
+    { segments: [[0, 7, 0], [10, 4, 1], [16, 4, 0]], floats: [[8, 2, 2]], deco: [[2, 'rock2']], enemies: [[17, 'imp']], sign: [3, 'Gêiser borbulhando:\nespere o fogo passar!'] },
+    { segments: [[0, 5, 0], [7, 3, 1], [12, 8, 0]], enemies: [[9, 'lizard_magma'], [15, 'imp']] },
+    { segments: [[0, 6, 0], [8, 2, 2], [12, 8, 0]], floats: [[10, 2, 3]], deco: [[17, 'dead_tree']], enemies: [[14, 'minotaur_lava']] },
+    { segments: [[0, 4, 1], [6, 6, 0], [14, 6, 1]], enemies: [[16, 'lizard_magma']] },
+    { segments: [[0, 20, 0]], deco: [[18, 'skull_spike']], enemies: [[9, 'imp'], [15, 'minotaur_lava']] },
+  ],
+};
+
+/** Maré de Lava: a lava sobe e desce; blocos de basalto boiam nela. */
+export const LEVEL_LAVATIDE: LevelDef = {
+  ...VOLC,
+  id: 'lavatide',
+  name: 'Maré de Lava',
+  intro: 'A lava sobe e desce como maré. Quando ela vier, fique no alto ou em cima do basalto!',
+  winText: 'Você venceu a maré de lava!',
+  sea: {
+    tide: { high: 80, hold: 4500, move: 2400 },
+    crateTex: 'basalt',
+    crates: [
+      [1, 9, 2],
+      [3, 4, 2],
+      [3, 9, 2],
+      [3, 14, 2],
+    ],
+  },
+  screens: [
+    { segments: [[0, 7, 0], [7, 3, 1], [10, 5, 0], [15, 2, 2], [17, 3, 0]], floats: [[12, 2, 2]], enemies: [[18, 'imp']], sign: [3, 'A lava sobe e desce.\nFique no alto!'] },
+    { segments: [[0, 3, 1], [3, 6, 0], [11, 4, 0], [15, 5, 1]], floats: [[6, 2, 2]], enemies: [[5, 'lizard_magma'], [13, 'imp']] },
+    { segments: [[0, 5, 0], [5, 2, 2], [7, 6, 0], [13, 2, 2], [15, 5, 0]], floats: [[9, 3, 3]], enemies: [[10, 'minotaur_lava']] },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 1], [16, 4, 0]], enemies: [[12, 'imp']] },
+    { segments: [[0, 6, 0], [6, 3, 2], [9, 6, 0], [15, 5, 1]], floats: [[11, 3, 3]], enemies: [[11, 'lizard_magma'], [17, 'minotaur_obsidian']] },
+  ],
+};
+
+/** Gêiseres de Fogo: campos inteiros de gêiseres em ritmo. */
+export const LEVEL_GEYSERS: LevelDef = {
+  ...VOLC,
+  id: 'geysers',
+  name: 'Gêiseres de Fogo',
+  intro: 'Os gêiseres disparam em sequência. Observe o ritmo e passe entre as colunas de fogo.',
+  winText: 'Nem um chamuscado!',
+  field: {
+    geysers: [
+      [0, 6, 0, 2400],
+      [0, 9, 0, 2400, 800],
+      [0, 12, 0, 2400, 1600],
+      [1, 3, 0, 2600],
+      [1, 10, 1, 2200],
+      [1, 16, 0, 2600, 1300],
+      [2, 8, 0, 2000],
+      [2, 10, 0, 2000, 700],
+      [2, 12, 0, 2000, 1400],
+      [3, 4, 0, 1800],
+      [3, 8, 0, 1800, 600],
+      [3, 11, 0, 1800, 1200],
+      [3, 15, 0, 1800],
+      [4, 5, 0, 2200],
+      [4, 10, 0, 2200, 1100],
+      [4, 15, 0, 2200],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[14, 3, 2]], enemies: [[17, 'imp']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[18, 'lizard_magma']] },
+    { segments: [[0, 4, 0], [6, 8, 0], [16, 4, 0]], floats: [[4, 2, 2], [14, 2, 2]], enemies: [[17, 'minotaur_lava']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3], [12, 3, 3]], enemies: [[18, 'imp']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'minotaur_obsidian']] },
+  ],
+};
+
+/** Tiro na Forja: corrida e tiro entre diabretes e minotauros de lava. */
+export const LEVEL_FORGEGUN: LevelDef = {
+  ...VOLC,
+  id: 'forgegun',
+  name: 'Tiro na Forja',
+  intro: 'Corrida e tiro! Diabretes, minotauros de lava e lagartos de magma vêm sem parar.',
+  winText: 'A forja foi limpa a tiros!',
+  gun: { spawns: ['imp', 'minotaur_lava', 'lizard_magma'] as CharId[], every: 2000 },
+  field: { geysers: [[2, 10, 0, 2600]] },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], enemies: [[14, 'imp']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'lizard_magma'], [16, 'imp']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'minotaur_lava']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], enemies: [[5, 'imp'], [16, 'minotaur_obsidian']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'lizard_magma'], [12, 'imp'], [16, 'minotaur_lava']] },
+  ],
+};
+
+/** Ponte de Obsidiana: lajes que afundam na lava e canhões da forja. */
+export const LEVEL_OBSIDIAN: LevelDef = {
+  ...VOLC,
+  id: 'obsidian',
+  name: 'Ponte de Obsidiana',
+  intro: 'Lajes de obsidiana afundam na lava logo depois de pisadas. E os canhões da forja não param.',
+  winText: 'Você atravessou a ponte de obsidiana!',
+  sea: {
+    plankTex: 'obsidian_plank',
+    planks: [
+      [0, 6, 2, 0],
+      [0, 8, 3, 1],
+      [1, 4, 3, 1],
+      [1, 7, 2, 2],
+      [1, 9, 3, 1],
+      [1, 12, 2, 0],
+      [2, 5, 2, 1],
+      [2, 7, 2, 1],
+      [2, 12, 2, 1],
+      [2, 14, 2, 0],
+      [3, 3, 3, 0],
+      [3, 6, 2, 1],
+      [3, 8, 3, 2],
+      [3, 11, 3, 1],
+      [3, 14, 3, 0],
+    ],
+    cannons: [
+      [0, 18, 0, -1, 2600],
+      [2, 19, 0, -1, 2400],
+      [4, 19, 0, -1, 2200],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [11, 9, 0]], enemies: [[16, 'imp']] },
+    { segments: [[0, 4, 1], [14, 6, 0]], enemies: [[17, 'lizard_magma']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], enemies: [[10, 'imp']] },
+    { segments: [[0, 3, 0], [17, 3, 0]], floats: [[9, 2, 4]], enemies: [[18, 'minotaur_lava']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'lizard_magma'], [14, 'minotaur_obsidian']] },
+  ],
+};
+
+/** Bigorna do Ferreiro: chave e porta com pedras de ouro (martelo). */
+export const LEVEL_ANVIL: LevelDef = {
+  ...VOLC,
+  id: 'anvil',
+  name: 'Bigorna do Ferreiro',
+  intro: 'Pedras de ouro bloqueiam a oficina. Use o MARTELO (no ar, ▼ + ATACAR) e leve a chave até a porta.',
+  winText: 'A porta da oficina abriu!',
+  puzzle: {
+    key: [1, 8, 3],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 14, 3],
+      [1, 2, 0],
+      [2, 5, 4],
+    ],
+    ladders: [[1, 5, 0, 3]],
+    springs: [[2, 5, 0]],
+    stones: [
+      [0, 9, 0],
+      [1, 14, 0],
+      [1, 14, 1],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[13, 3, 3]], sign: [3, 'No ar: ▼ + ATACAR\nquebra as pedras.'] },
+    { segments: [[0, 6, 0], [6, 4, 3], [10, 10, 0]] },
+    { segments: [[0, 20, 0]], floats: [[4, 3, 4]] },
+  ],
+};
+
+/** Coração de Magma: cada área só abre quando todos os inimigos dela caírem. */
+export const LEVEL_MAGMA: LevelDef = {
+  ...VOLC,
+  id: 'magma',
+  name: 'Coração de Magma',
+  intro: 'O coração da montanha. Cada área só abre quando todos os inimigos dela caírem.',
+  winText: 'O caminho até o Minotauro está aberto!',
+  clearToAdvance: true,
+  field: {
+    geysers: [
+      [0, 7, 0, 3000],
+      [2, 6, 0, 2600],
+      [2, 14, 0, 2600, 1300],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3], [12, 3, 3]], enemies: [[9, 'imp'], [15, 'lizard_magma']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'minotaur_lava'], [16, 'imp']] },
+    { segments: [[0, 20, 0]], enemies: [[10, 'minotaur_obsidian']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], enemies: [[9, 'lizard_magma'], [12, 'imp'], [17, 'minotaur_lava']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'minotaur_obsidian'], [13, 'imp'], [16, 'lizard_magma']] },
+  ],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -1657,6 +1864,14 @@ export const LEVELS: LevelDef[] = [
   LEVEL_COCOONS,
   LEVEL_WEBGUN,
   LEVEL_EGGS,
+  // Área 5 (Forja Vulcânica), fases novas.
+  LEVEL_FORGEGATE,
+  LEVEL_LAVATIDE,
+  LEVEL_GEYSERS,
+  LEVEL_FORGEGUN,
+  LEVEL_OBSIDIAN,
+  LEVEL_ANVIL,
+  LEVEL_MAGMA,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];
@@ -1801,6 +2016,11 @@ export class Level {
       a.y = this.waterY - 10 + Math.round(Math.sin(time / 520) * 2) * 2;
       b.tilePositionX = Math.round((camX + time * 0.045) / 2) * 2;
       b.y = this.waterY - 6 + Math.round(Math.cos(time / 610)) * 2;
+      const c = this.lavaTop[2];
+      if (c) {
+        c.tilePositionX = Math.round((camX - time * 0.02) / 2) * 2;
+        c.y = this.waterY - 14 + Math.round(Math.sin(time / 480) * 2) * 2;
+      }
     }
   }
 
@@ -2077,13 +2297,17 @@ export class Level {
         s.add.tileSprite(0, WATER_Y - 6, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water),
       ];
       this.waves = [];
+      // Maré de lava: crista de lava na frente do cenário (a lava subindo fica bem visível).
+      if (this.def.sea?.tide) {
+        this.lavaTop.push(s.add.tileSprite(0, WATER_Y - 14, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.55));
+      }
       this.trackWater(before);
       s.time.addEvent({
         delay: 140,
         loop: true,
         callback: () => {
           const b = s.add
-            .sprite(Phaser.Math.Between(0, W), WATER_Y + Phaser.Math.Between(0, 60), 'lava_bubble', 0)
+            .sprite(Phaser.Math.Between(0, W), this.waterY + Phaser.Math.Between(0, 60), 'lava_bubble', 0)
             .setOrigin(0.5, 1)
             .setScrollFactor(0, 1)
             .setDepth(DEPTH.water);
@@ -2095,8 +2319,10 @@ export class Level {
     }
     // Fases com maré: crista de ondas na frente do cenário (a água subindo fica bem visível).
     if (this.def.sea?.tide) {
-      const crest = s.add.tileSprite(0, WATER_Y - 6, W, 22, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.55).setAlpha(0.75);
-      s.add.rectangle(0, WATER_Y - 2, W, 4, 0xe8f8ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.56).setAlpha(0.85);
+      const crest = lava
+        ? s.add.tileSprite(0, WATER_Y - 14, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.55)
+        : s.add.tileSprite(0, WATER_Y - 6, W, 22, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.55).setAlpha(0.75);
+      if (!lava) s.add.rectangle(0, WATER_Y - 2, W, 4, 0xe8f8ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.56).setAlpha(0.85);
       s.add.rectangle(0, WATER_Y + 2, W, H, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.54).setAlpha(0.32);
       this.crest = crest;
     }

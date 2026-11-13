@@ -1008,6 +1008,7 @@ export class GameScene extends Phaser.Scene {
     const tag = this.add.text(x, p.feet - 120, `AJUDANTE DE ${p.label}`, { fontFamily: FONT, fontSize: '16px', color: PLAYER_HEX[pi], stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx);
     const follow = () => (f.alive ? tag.setPosition(f.x, f.feet - f.labelHeight - 30) : tag.setVisible(false));
     this.events.on('update', follow);
+    this.events.once('shutdown', () => this.events.off('update', follow));
     this.time.delayedCall(12000, () => {
       this.events.off('update', follow);
       tag.destroy();

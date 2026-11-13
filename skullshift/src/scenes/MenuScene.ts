@@ -61,7 +61,7 @@ export class MenuScene extends Phaser.Scene {
       ['cloud_04', 260, P ? gy * 0.72 : 290, 0.5, 22],
     ];
     const drifting = clouds.map(([k, x, y, sc, v]) => ({ img: this.add.image(x, y, k).setOrigin(0).setScale(sc).setAlpha(sc < 0.8 ? 0.8 : 1), v }));
-    this.events.on('update', (_t: number, dt: number) => {
+    this.onUpdate((_t: number, dt: number) => {
       for (const c of drifting) {
         c.img.x += (c.v * dt) / 1000;
         if (c.img.x > W + 40) c.img.x = -c.img.displayWidth - 40;
@@ -72,7 +72,7 @@ export class MenuScene extends Phaser.Scene {
     this.add.image(0, gy + 68, 'water_grad').setOrigin(0).setDisplaySize(W, Math.max(200, HH - gy - 68));
     const wavesA = this.add.tileSprite(0, gy + 80, W, HH - gy - 80, 'waves').setOrigin(0).setAlpha(0.5);
     const foam = this.add.tileSprite(0, gy + 100, W, 28, 'water_top').setOrigin(0).setAlpha(0.8).setDepth(6);
-    this.events.on('update', (t: number) => {
+    this.onUpdate((t: number) => {
       wavesA.tilePositionX = Math.round((t * 0.018) / 2) * 2;
       wavesA.tilePositionY = Math.round(Math.sin(t / 1300) * 1.5) * 2;
       wavesA.setAlpha(0.4 + 0.25 * (0.5 + 0.5 * Math.sin(t / 1400)));
@@ -120,7 +120,7 @@ export class MenuScene extends Phaser.Scene {
       this.setForm(w, id, feet);
       return w;
     });
-    this.events.on('update', (_t: number, dt: number) => {
+    this.onUpdate((_t: number, dt: number) => {
       for (const w of walkers) {
         if (w.pause > 0) {
           w.pause -= dt;
@@ -474,5 +474,11 @@ export class MenuScene extends Phaser.Scene {
     };
     this.events.on('update', tick);
     this.events.once('shutdown', () => this.events.off('update', tick));
+  }
+
+  /** Ouve o 'update' só enquanto esta tela existir (ao sair ou reiniciar, o ouvinte é removido). */
+  private onUpdate(fn: (time: number, dt: number) => void): void {
+    this.events.on('update', fn);
+    this.events.once('shutdown', () => this.events.off('update', fn));
   }
 }

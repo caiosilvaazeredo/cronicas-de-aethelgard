@@ -432,6 +432,13 @@ export class MapScene extends Phaser.Scene {
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
     }
+    // Caverna das Teias (fases novas).
+    if (l.id === 'webbridge') deco('web_plank', 0, -10, 0.9);
+    if (l.id === 'cocoons') {
+      const c = deco('cocoon', -30, -40, 1.2);
+      this.tweens.add({ targets: c, y: c.y + 10, duration: 1000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    }
+    if (l.id === 'darkcave') this.add.sprite(x - 40, y - 10, 'torch_item_anim', 0).setDepth(6).play('torch_flame');
     // Pradaria dos Ossos.
     if (l.id === 'road' || l.id === 'farm') this.add.image(x - 50, y + 4, 'bld_yellow_house1').setOrigin(0.5, 1).setScale(0.45).setDepth(6);
     if (l.id === 'stampede' || l.id === 'farm') {

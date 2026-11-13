@@ -548,6 +548,56 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Coincidência. Derruba ele, Ossian. O fragmento espera.'),
     ],
   },
+  webbridge: {
+    title: 'Pontes de Teia',
+    blurb: 'Fios de teia esticados sobre o abismo. Eles se rompem.',
+    lines: [
+      S('Isso é uma ponte? É um fio de teia!'),
+      X('Fios fortes, mas não para sempre. Pisa e corre.'),
+      S('Quem teceu pontes no meio da caverna?'),
+      X('A Rainha. Ela gosta que as visitas cheguem até ela.'),
+    ],
+  },
+  darkcave: {
+    title: 'Caverna Escura',
+    blurb: 'Breu total. Só as tochas mostram o caminho.',
+    lines: [
+      S('Hex? Eu não enxergo nada.'),
+      X('Encosta nas tochas. Elas acendem. As três grandes abrem a saída.'),
+      S('Engraçado. Eu tinha medo do escuro? Não... era outra pessoa que tinha.'),
+      X('Concentra nas tochas, Ossian.'),
+    ],
+  },
+  cocoons: {
+    title: 'Salão dos Casulos',
+    blurb: 'Casulos pendurados nos fios, balançando.',
+    lines: [
+      S('Esses casulos... tem alguém dentro?'),
+      X('Tem o almoço da Rainha. Não encosta, ou vira o jantar.'),
+      S('Que nojo.'),
+      X('Que fome, diria ela.'),
+    ],
+  },
+  webgun: {
+    title: 'Tiro na Teia',
+    blurb: 'Aranhas saltadoras e morcegos vampiros, sem parar.',
+    lines: [
+      S('Elas pulam! As aranhas verdes pulam!'),
+      X('Então não para de atirar. Segura ATACAR.'),
+      S('E os morcegos vermelhos?'),
+      X('Esses mergulham. Atira neles antes.'),
+    ],
+  },
+  eggs: {
+    title: 'Câmara dos Ovos',
+    blurb: 'O ninho da Rainha. A chave está lá em cima.',
+    lines: [
+      S('Ovos. Milhares de ovos. E a chave lá no alto do ninho.'),
+      X('Uma parede de blocos vermelhos fecha o caminho. Troca a cor na alavanca.'),
+      S('Com a chave na mão eu não posso bater na alavanca.'),
+      X('Então solta a chave, bate, e pega de novo. Nem tudo se resolve com pressa.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

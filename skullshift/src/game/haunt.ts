@@ -115,7 +115,9 @@ export class HauntSystem {
     for (const c of def.candles ?? []) {
       const x = lvl.tileX(c.screen, c.tile);
       const y = topOf(c.h) + 2;
-      const sprite = s.add.sprite(x, y, c.big ? 'candelabra' : 'candle', 0).setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.5);
+      const sprite = def.torches
+        ? s.add.sprite(x, y, 'torch_item_anim', 0).setOrigin(0.5, 1).setScale(c.big ? 1.5 : 1).setDepth(DEPTH.deco + 0.5).setAlpha(0.5)
+        : s.add.sprite(x, y, c.big ? 'candelabra' : 'candle', 0).setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.5);
       this.candles.push({ x, y, big: !!c.big, lit: false, sprite });
     }
     // Escuridão: uma camada preta que segue a câmera, com "furos" onde há luz.
@@ -336,12 +338,13 @@ export class HauntSystem {
       if (c.lit || !p.alive) continue;
       if (Math.abs(p.x - c.x) > 44 || Math.abs(p.feet - c.y) > 90) continue;
       c.lit = true;
-      c.sprite.play(c.big ? 'candelabra_lit' : 'candle_lit');
+      if (this.def.torches) c.sprite.setAlpha(1).play('torch_flame');
+      else c.sprite.play(c.big ? 'candelabra_lit' : 'candle_lit');
       this.host.scene.cameras.main.flash(120, 255, 210, 140);
       if (c.big) {
         const total = this.needsBigCandles;
         const lit = this.candles.filter((o) => o.big && o.lit).length;
-        this.host.popText(c.x, c.y - 140, `VELA GRANDE ${lit}/${total}`, '#ffe066');
+        this.host.popText(c.x, c.y - 140, `${this.def.torches ? 'TOCHA GRANDE' : 'VELA GRANDE'} ${lit}/${total}`, '#ffe066');
         if (lit === total) this.host.popText(p.x, p.feet - 200, 'A SAÍDA SE ABRIU!', '#9dffb0');
       }
     }
@@ -350,7 +353,7 @@ export class HauntSystem {
   private updateDark(p: Fighter, time: number): void {
     const rt = this.dark;
     const brush = this.brush;
-    if (!rt || !brush) return;
+    if (!rt || !brush || !rt.active) return;
     const view = this.host.scene.cameras.main.worldView;
     rt.setPosition(view.x - 100, view.y - 300);
     rt.clear();

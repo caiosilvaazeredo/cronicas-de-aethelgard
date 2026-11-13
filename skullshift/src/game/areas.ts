@@ -71,7 +71,7 @@ export const AREAS: AreaDef[] = [
     king: 'Aranha-Rainha',
     kingAnim: 'spider_idle',
     color: 0x8a6ad0,
-    levels: ['cave', 'nest', 'key2', 'princes', 'queen'],
+    levels: ['cave', 'nest', 'webbridge', 'key2', 'darkcave', 'cocoons', 'webgun', 'princes', 'eggs', 'queen'],
     pos: [470, 505],
     unlock: 'after-pradaria',
   },

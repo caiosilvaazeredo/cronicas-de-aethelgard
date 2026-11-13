@@ -62,6 +62,10 @@ export interface SeaDef {
   masts?: Array<[screen: number, tile: number, h: number, height: number]>;
   /** Farol ao fundo, com o facho girando. */
   lighthouse?: At;
+  /** Troca a arte das tábuas (ex.: 'web_plank' nas pontes de teia). */
+  plankTex?: string;
+  /** Troca a arte das águas-vivas por uma imagem parada (ex.: 'cocoon' pendurado). */
+  jellyTex?: string;
 }
 
 export interface SeaHost {
@@ -135,6 +139,15 @@ export function makeSeaArt(scene: Phaser.Scene): void {
   for (let i = 0; i < 10; i++) crate.set(i, Math.round(i * 1.3), 0x7a4a1a);
   crate.outline(INK);
   crate.toTexture(scene, 'crate', 3);
+  // Fio de teia esticado (ponte que se rompe).
+  const wp = new Px(21, 5);
+  for (let x = 0; x < 21; x++) {
+    wp.set(x, 1 + (x % 7 === 3 ? 1 : 0), 0xe8e8f0);
+    wp.set(x, 3, 0xc8c8d8);
+    if (x % 4 === 0) wp.rect(x, 1, 1, 3, 0xffffff);
+  }
+  wp.outline(INK);
+  wp.toTexture(scene, 'web_plank', 3);
   // Tábua solta.
   const plank = new Px(21, 5);
   plank.rect(0, 0, 21, 5, 0x9a6a3a);
@@ -207,7 +220,7 @@ export class SeaSystem {
       const top = topOf(h);
       const zone = this.ledge(x, top, w);
       const imgs: Phaser.GameObjects.Image[] = [];
-      for (let k = 0; k < n; k++) imgs.push(s.add.image(x - w / 2 + k * TILE, top - 2, 'plank').setOrigin(0, 0).setDepth(DEPTH.terrain + 0.4));
+      for (let k = 0; k < n; k++) imgs.push(s.add.image(x - w / 2 + k * TILE, top - 2, def.plankTex ?? 'plank').setOrigin(0, 0).setDepth(DEPTH.terrain + 0.4));
       this.planks.push({ x, w, top, zone, imgs, state: 'up', at: 0 });
     }
     for (const [sc, t, h, dir, every, offset] of def.cannons ?? []) {
@@ -217,7 +230,19 @@ export class SeaSystem {
       this.cannons.push({ x, y, dir, every, next: now + 1500 + (offset ?? 0), img });
     }
     for (const [sc, t, hTop, hBottom] of def.jellies ?? []) {
-      const sprite = s.add.sprite(X(sc, t), topOf(hBottom), 'jelly').setDepth(DEPTH.fighters + 0.2).play({ key: 'jelly', startFrame: t % 2 });
+      const sprite = def.jellyTex
+        ? s.add.sprite(X(sc, t), topOf(hBottom), def.jellyTex).setScale(1.4).setDepth(DEPTH.fighters + 0.2)
+        : s.add.sprite(X(sc, t), topOf(hBottom), 'jelly').setDepth(DEPTH.fighters + 0.2).play({ key: 'jelly', startFrame: t % 2 });
+      // Casulo pendurado: um fio de teia até o teto.
+      if (def.jellyTex === 'cocoon') {
+        const thread = s.add.graphics().setDepth(DEPTH.fighters + 0.1);
+        const draw = () => {
+          if (!sprite.active || !thread.active) return;
+          thread.clear().lineStyle(2, 0xe8e8f0, 0.8).lineBetween(sprite.x, 0, sprite.x, sprite.y - 30);
+        };
+        s.events.on('update', draw);
+        s.events.once('shutdown', () => s.events.off('update', draw));
+      }
       this.jellies.push({ sprite, top: topOf(hTop) - 40, bottom: topOf(hBottom) - 40, t: (sc * 7 + t) * 0.9 });
     }
     for (const [sc, t, h] of def.corals ?? []) {

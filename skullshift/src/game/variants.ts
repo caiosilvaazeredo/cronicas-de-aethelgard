@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { CHARS, type CharDef, type CharId, type VariantId } from './characters';
-import { recolorSheet, shrinkSheet } from './sheets';
+import { SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from './sheets';
 import { Px } from '../ui/pixelart';
 
 /**
@@ -25,7 +25,9 @@ export type Ability =
   /** Arremessa redes de pesca que prendem o jogador (como teia). */
   | 'net'
   /** Osso bumerangue: vai e volta. */
-  | 'boomerang';
+  | 'boomerang'
+  /** Cospe bolas de teia que prendem o jogador. */
+  | 'web';
 
 export type Accessory = 'bandana' | 'eyepatch' | 'captain' | 'shellhelm' | 'buoy' | 'horns';
 
@@ -63,6 +65,10 @@ const GOBLIN_BOMBER = { 0xb65555: 0x3a3a3a, 0x688c8a: 0x7a5a3a, 0x9cbeaa: 0xa07a
 const GNOLL_HUNTER = { 0xefe054: 0xa89a7a, 0xaf8c58: 0x6a5a4a, 0xb492a7: 0x3a3030, 0x6d5e51: 0x3a3030, 0x514744: 0x221c1c };
 const GNOLL_STALKER = { 0xefe054: 0x9ac85a, 0xaf8c58: 0x5a8a3a, 0xb492a7: 0x3a6a2a, 0x6d5e51: 0x4a6a2a, 0x514744: 0x2a4a1a };
 const GNOLL_BRUTE = { 0xefe054: 0xc87a3a, 0xaf8c58: 0x8a4a22, 0xb492a7: 0x5a2a1a, 0x6d5e51: 0x3a2018, 0x514744: 0x22140e };
+/** Caverna das Teias: aranha saltadora (verde), tecelã (branca), viúva-negra; morcego vampiro (carmim). */
+const SPIDER_JUMPER = { 0x764e7b: 0x3a8a4a, 0x4c375e: 0x2a6a3a, 0x2c283e: 0x1a4a2a, 0xb487a3: 0x9ae06a, 0xdde678: 0xffe066 };
+const SPIDER_WEB = { 0x764e7b: 0xc8c8d8, 0x4c375e: 0x9a9ab0, 0x2c283e: 0x6a6a80, 0xb487a3: 0xffffff, 0xdde678: 0xff5a5a };
+const BAT_VAMPIRE = { 0x4d4162: 0x5a1020, 0x71568d: 0xa01e30, 0x5d657c: 0x3a2a30, 0x8f9eae: 0x6a4a52, 0x464554: 0x2a1a1e, 0xe4ee67: 0xffe066 };
 const GNOLL_WRECK = { 0xefe054: 0xb8c8a0, 0xaf8c58: 0x7a8a6a, 0xb492a7: 0x4a8a9a, 0x6d5e51: 0x4a5a5a, 0x514744: 0x2e3a3a };
 
 export const VARIANTS: VariantDef[] = [
@@ -75,6 +81,10 @@ export const VARIANTS: VariantDef[] = [
   { id: 'goblin_captain', base: 'goblin', name: 'Capitão Goblin', palette: GOBLIN_CAPTAIN, scale: 1.3, hp: 3, speedMul: 0.9, accessories: ['captain', 'eyepatch'] },
   { id: 'goblin_bomber', base: 'goblin', name: 'Goblin Bombardeiro', palette: GOBLIN_BOMBER, ability: 'bomb', accessories: ['bandana'] },
   { id: 'gnoll_wreck', base: 'gnoll', name: 'Gnoll Náufrago', palette: GNOLL_WRECK, ability: 'net', accessories: ['buoy'] },
+  { id: 'spider_jumper', base: 'spider', name: 'Aranha Saltadora', palette: SPIDER_JUMPER, ability: 'charge', speedMul: 1.15 },
+  { id: 'spider_web', base: 'spider', name: 'Aranha Tecelã', palette: SPIDER_WEB, ability: 'web' },
+  { id: 'spider_widow', base: 'spider', name: 'Viúva-Negra', palette: SPIDER_QUEEN_PALETTE, scale: 1.4, hp: 3 },
+  { id: 'bat_vampire', base: 'bat', name: 'Morcego Vampiro', palette: BAT_VAMPIRE, ability: 'charge', speedMul: 1.2 },
   { id: 'gnoll_hunter', base: 'gnoll', name: 'Gnoll Caçador', palette: GNOLL_HUNTER, ability: 'boomerang', speedMul: 1.1 },
   { id: 'gnoll_stalker', base: 'gnoll', name: 'Gnoll Espreitador', palette: GNOLL_STALKER, ability: 'burrow', mound: [0x5a8a3a, 0x9ac85a] },
   { id: 'gnoll_brute', base: 'gnoll', name: 'Gnoll Brutamontes', palette: GNOLL_BRUTE, scale: 1.35, hp: 3, speedMul: 0.85, accessories: ['horns'] },
@@ -231,6 +241,9 @@ export function makeVariants(scene: Phaser.Scene): void {
     } else if (v.ability === 'bomb') {
       def.melee = undefined;
       def.projectile = { release: 3, tex: 'bomb', speed: 360, angle: 0, spin: false, arc: { vy: -420, g: 900 } };
+    } else if (v.ability === 'web') {
+      def.melee = undefined;
+      def.projectile = { release: 4, tex: 'web_ball', speed: 440, angle: 0, spin: false, arc: { vy: -120, g: 380 } };
     } else if (v.ability === 'net') {
       def.projectile = { release: 3, tex: 'net_ball', speed: 480, angle: 0, spin: false, arc: { vy: -160, g: 420 } };
     }

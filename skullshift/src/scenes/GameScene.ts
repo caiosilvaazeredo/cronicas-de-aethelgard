@@ -171,6 +171,7 @@ export class GameScene extends Phaser.Scene {
     this.escape = undefined;
     this.puzzle = undefined;
     this.sea = undefined;
+    this.haunt = undefined;
     this.field = undefined;
     this.mausoleum = undefined;
     this.nextGunShot = 0;
@@ -215,7 +216,7 @@ export class GameScene extends Phaser.Scene {
           f.onProjectile = (ff) => this.spawnProjectile(ff);
           this.physics.add.collider(f.sprite, this.level.ground);
           // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
-          if (def.haunt) f.sprite.setTint(0xc8b8ff);
+          if (def.haunt && def.theme === 'haunted') f.sprite.setTint(0xc8b8ff);
           this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
@@ -755,7 +756,7 @@ export class GameScene extends Phaser.Scene {
     // Osso sai em arco e cai; o arpão vai quase reto. Os dois viram item ao cair no chão.
     const arc = pd.arc ?? (pd.tex === 'bone' ? { vy: -150, g: 430 } : { vy: -30, g: 110 });
     const kind: ItemId | undefined = pd.tex === 'bone' ? 'bone' : pd.tex === 'harpoon' ? 'harpoon' : undefined;
-    const effect = pd.tex === 'bomb' ? 'bomb' : pd.tex === 'net_ball' ? 'net' : undefined;
+    const effect = pd.tex === 'bomb' ? 'bomb' : pd.tex === 'net_ball' || pd.tex === 'web_ball' ? 'net' : undefined;
     // Bomba: mira mais ou menos onde o jogador está (a força do arco depende da distância).
     let vx = pd.speed * f.facing;
     if (effect === 'bomb') {
@@ -841,7 +842,7 @@ export class GameScene extends Phaser.Scene {
           this.deflect(p);
         } else if (p.effect === 'net' && b === this.players[0] && this.mode === 'story') {
           // Rede de pesca: prende o jogador por um tempo em vez de derrubar.
-          this.rootPlayer(1600, 'net_ball', 'PRESO NA REDE!');
+          this.rootPlayer(1600, p.sprite.texture.key === 'web_ball' ? 'web_ball' : 'net_ball', p.sprite.texture.key === 'web_ball' ? 'PRESO NA TEIA!' : 'PRESO NA REDE!');
           p.life = 0;
         } else if (p.effect === 'bomb') {
           this.explode(p.sprite.x, p.sprite.y + 20, p.owner);

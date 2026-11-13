@@ -68,6 +68,8 @@ export interface HauntDef {
   candles?: Array<{ screen: number; tile: number; h?: number; big?: boolean }>;
   /** Fase no escuro: só se enxerga perto de luz. */
   dark?: boolean;
+  /** Tochas no lugar das velas (caverna escura). */
+  torches?: boolean;
 }
 
 export interface LevelDef {
@@ -1436,6 +1438,175 @@ export const LEVEL_GNOLLKING: LevelDef = {
   versusStart: [3, 16],
 };
 
+
+// ---------- Área 4: Caverna das Teias (fases novas) ----------
+
+/** Pontes de Teia: fios esticados que se rompem logo depois de pisados. */
+export const LEVEL_WEBBRIDGE: LevelDef = {
+  id: 'webbridge',
+  name: 'Pontes de Teia',
+  intro: 'As pontes são fios de teia: elas se rompem logo depois de pisadas. Não pare!',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'Você atravessou as pontes de teia!',
+  sea: {
+    plankTex: 'web_plank',
+    planks: [
+      [0, 6, 2, 0],
+      [0, 8, 3, 1],
+      [1, 4, 3, 1],
+      [1, 7, 2, 2],
+      [1, 9, 3, 1],
+      [1, 12, 2, 0],
+      [2, 5, 2, 1],
+      [2, 7, 2, 1],
+      [2, 12, 2, 1],
+      [2, 14, 2, 0],
+      [3, 3, 3, 0],
+      [3, 6, 2, 1],
+      [3, 8, 3, 2],
+      [3, 11, 3, 1],
+      [3, 14, 3, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [11, 9, 0]], hangers: [3, 14], deco: [[1, 'rock2']], enemies: [[16, 'spider_jumper']], sign: [2, 'Pontes de teia:\nnão pare em cima!'] },
+    { segments: [[0, 4, 1], [14, 6, 0]], hangers: [8], enemies: [[17, 'spider_web']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], hangers: [3], enemies: [[10, 'bat_vampire'], [18, 'spider']] },
+    { segments: [[0, 3, 0], [17, 3, 0]], floats: [[9, 2, 4]], hangers: [10], enemies: [[18, 'spider_jumper']] },
+    { segments: [[0, 20, 0]], hangers: [5, 10, 15], enemies: [[8, 'spider_web'], [14, 'spider_widow']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Caverna Escura: só se enxerga perto das tochas. */
+export const LEVEL_DARKCAVE: LevelDef = {
+  id: 'darkcave',
+  name: 'Caverna Escura',
+  intro: 'Breu total. Encoste nas tochas para acendê-las; as 3 grandes abrem a saída.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'As tochas mostraram a saída!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[8, 3, 2]], enemies: [[14, 'spider']], sign: [2, 'ESTÁ ESCURO...\nEncoste nas tochas\npara acendê-las.'] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'spider_jumper'], [16, 'bat']] },
+    { segments: [[0, 5, 0], [7, 3, 2], [12, 8, 0]], floats: [[10, 2, 3]], enemies: [[15, 'spider_web']] },
+    { segments: [[0, 7, 0], [9, 2, 1], [13, 7, 0]], enemies: [[4, 'bat_vampire'], [16, 'spider_jumper']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'spider_widow']], sign: [12, 'A saída só abre com\nas 3 TOCHAS GRANDES acesas.'] },
+  ],
+  haunt: {
+    dark: true,
+    torches: true,
+    candles: [
+      { screen: 0, tile: 5 },
+      { screen: 0, tile: 15, big: true },
+      { screen: 1, tile: 3 },
+      { screen: 1, tile: 10, h: 1 },
+      { screen: 1, tile: 17, big: true },
+      { screen: 2, tile: 2 },
+      { screen: 2, tile: 14 },
+      { screen: 3, tile: 3 },
+      { screen: 3, tile: 18, big: true },
+      { screen: 4, tile: 5 },
+    ],
+    doors: [{ id: 'exit', screen: 4, tile: 17, exit: true }],
+  },
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Salão dos Casulos: casulos pendurados balançam no caminho (encostar derruba). */
+export const LEVEL_COCOONS: LevelDef = {
+  id: 'cocoons',
+  name: 'Salão dos Casulos',
+  intro: 'Casulos pendurados sobem e descem nos fios. Encostar neles é virar comida!',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'Você passou pelo salão dos casulos!',
+  sea: {
+    jellyTex: 'cocoon',
+    jellies: [
+      [0, 8, 4, 1],
+      [0, 13, 5, 2],
+      [1, 6, 4, 2],
+      [1, 14, 4, 1],
+      [2, 9, 5, 1],
+      [2, 16, 4, 1],
+      [3, 5, 4, 1],
+      [3, 10, 4, 1],
+      [3, 15, 5, 2],
+      [4, 6, 4, 1],
+      [4, 10, 5, 1],
+      [4, 14, 4, 1],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], hangers: [4, 16], enemies: [[17, 'spider']], sign: [2, 'Casulos balançando:\nnão encoste!'] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], hangers: [10], enemies: [[11, 'spider_web'], [17, 'spider_jumper']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3], [12, 3, 3]], hangers: [3], enemies: [[14, 'spider_widow']] },
+    { segments: [[0, 4, 0], [6, 3, 2], [11, 9, 0]], enemies: [[16, 'bat_vampire']] },
+    { segments: [[0, 20, 0]], hangers: [8, 12], enemies: [[17, 'spider_widow']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Tiro na Teia: corrida e tiro pela caverna. */
+export const LEVEL_WEBGUN: LevelDef = {
+  id: 'webgun',
+  name: 'Tiro na Teia',
+  intro: 'Corrida e tiro! Aranhas saltadoras e morcegos vampiros vêm em ondas.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'A caverna foi limpa a tiros!',
+  gun: { spawns: ['spider_jumper', 'bat_vampire', 'spider'] as CharId[], every: 1800 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], hangers: [11], enemies: [[14, 'spider']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'spider_web'], [16, 'bat']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], hangers: [12], enemies: [[10, 'spider_jumper']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], enemies: [[5, 'bat_vampire'], [15, 'spider_widow']] },
+    { segments: [[0, 20, 0]], hangers: [10], enemies: [[8, 'spider_web'], [12, 'spider'], [16, 'spider_jumper']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Câmara dos Ovos: a chave está no ninho; uma parede de blocos de cor no caminho. */
+export const LEVEL_EGGS: LevelDef = {
+  id: 'eggs',
+  name: 'Câmara dos Ovos',
+  intro: 'A chave está no alto do ninho. Para passar a parede, troque a cor dos blocos.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'A câmara dos ovos se abriu!',
+  puzzle: {
+    key: [1, 8, 3],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 15, 3],
+      [1, 2, 0],
+      [2, 13, 3],
+    ],
+    ladders: [[1, 5, 0, 3]],
+    springs: [[0, 12, 0]],
+    switches: [[2, 6, 0]],
+    blocks: [
+      [2, 10, 0, 'red'],
+      [2, 10, 1, 'red'],
+      [2, 10, 2, 'red'],
+      [2, 10, 3, 'red'],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[14, 3, 3]], sign: [2, 'A chave está no ninho,\nlá em cima.'] },
+    { segments: [[0, 6, 0], [6, 4, 3], [10, 10, 0]] },
+    { segments: [[0, 20, 0]], floats: [[12, 3, 3]], sign: [3, 'Solte a chave (PEGAR),\ngolpeie a alavanca\ne pegue de novo.'] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -1480,6 +1651,12 @@ export const LEVELS: LevelDef[] = [
   LEVEL_CARAVAN,
   LEVEL_WINDMILL,
   LEVEL_GNOLLKING,
+  // Área 4 (Caverna das Teias), fases novas.
+  LEVEL_WEBBRIDGE,
+  LEVEL_DARKCAVE,
+  LEVEL_COCOONS,
+  LEVEL_WEBGUN,
+  LEVEL_EGGS,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];

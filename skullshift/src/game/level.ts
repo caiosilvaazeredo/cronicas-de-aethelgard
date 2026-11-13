@@ -763,7 +763,7 @@ export const LEVEL_GUN2: LevelDef = {
   name: 'Mina de Ouro',
   intro: 'Corrida e tiro na mina! Segure ATACAR: tochas, aranhas e morcegos vêm em ondas.',
   theme: 'cave',
-  tiles: 'tiles_cave',
+  tiles: 'tiles_mine',
   winText: 'A mina foi limpa a tiros!',
   gun: { spawns: ['torchgob', 'spider', 'bat'], every: 1800 },
   screens: [
@@ -1981,6 +1981,234 @@ export const LEVEL_GNOMEKING: LevelDef = {
   },
 };
 
+
+// ---------- Área 7: Minas dos Goblins ----------
+
+const MINE = { theme: 'cave' as const, tiles: 'tiles_mine', storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+
+export const LEVEL_MINEENTRY: LevelDef = {
+  ...MINE,
+  id: 'mineentry',
+  name: 'Boca da Mina',
+  intro: 'As minas dos goblins. Tochas, ouro e pedras soltas no teto: olhe a poeira caindo!',
+  winText: 'Você entrou nas minas!',
+  field: {
+    rockfall: [
+      [2, 10, 3600],
+      [4, 8, 3200],
+      [4, 13, 3200, 1600],
+    ],
+  },
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], deco: [[3, 'gold'], [16, 'gold']], enemies: [[15, 'torchgob']], sign: [3, 'Poeira caindo do teto:\nlá vem pedra!'] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], deco: [[14, 'gold']], hangers: [9], enemies: [[16, 'torchgob_blue']] },
+    { segments: [[0, 8, 0], [10, 4, 1], [16, 4, 0]], floats: [[8, 2, 2]], enemies: [[12, 'torchgob']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 2], [13, 2, 2]], enemies: [[9, 'torchgob_miner'], [17, 'bat']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'gold'], [17, 'gold']], enemies: [[10, 'torchgob_chief']] },
+  ],
+};
+
+export const LEVEL_CAVEIN: LevelDef = {
+  ...MINE,
+  id: 'cavein',
+  name: 'Desabamento',
+  intro: 'O teto da galeria está desabando! A poeira avisa onde a pedra vai cair.',
+  winText: 'Você escapou do desabamento!',
+  field: {
+    rockfall: [
+      [0, 6, 2400],
+      [0, 10, 2400, 800],
+      [0, 14, 2400, 1600],
+      [1, 4, 2200],
+      [1, 9, 2200, 700],
+      [1, 15, 2200, 1400],
+      [2, 7, 2000],
+      [2, 11, 2000, 600],
+      [2, 15, 2000, 1200],
+      [3, 5, 1800],
+      [3, 9, 1800, 600],
+      [3, 13, 1800, 1200],
+      [4, 6, 2000],
+      [4, 12, 2000, 1000],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], deco: [[2, 'gold']], enemies: [[17, 'torchgob']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[18, 'torchgob_miner']] },
+    { segments: [[0, 4, 0], [6, 8, 0], [16, 4, 0]], floats: [[4, 2, 2], [14, 2, 2]], enemies: [[17, 'torchgob_blue']] },
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3], [12, 3, 3]], enemies: [[18, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[16, 'gold']], enemies: [[8, 'torchgob_chief']] },
+  ],
+};
+
+export const LEVEL_DARKMINE: LevelDef = {
+  ...MINE,
+  id: 'darkmine',
+  name: 'Galeria Escura',
+  intro: 'As tochas da galeria se apagaram. Acenda-as; as 3 grandes abrem a saída.',
+  winText: 'A galeria se iluminou!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[8, 3, 2]], enemies: [[14, 'torchgob']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'bat'], [16, 'torchgob_blue']] },
+    { segments: [[0, 5, 0], [7, 3, 2], [12, 8, 0]], floats: [[10, 2, 3]], enemies: [[15, 'torchgob_miner']] },
+    { segments: [[0, 7, 0], [9, 2, 1], [13, 7, 0]], enemies: [[4, 'spider'], [16, 'torchgob']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'torchgob_chief']], sign: [12, 'A saída só abre com\nas 3 TOCHAS GRANDES acesas.'] },
+  ],
+  haunt: {
+    dark: true,
+    torches: true,
+    candles: [
+      { screen: 0, tile: 4 },
+      { screen: 0, tile: 16, big: true },
+      { screen: 1, tile: 2 },
+      { screen: 1, tile: 10, h: 1 },
+      { screen: 1, tile: 18, big: true },
+      { screen: 2, tile: 3 },
+      { screen: 2, tile: 15 },
+      { screen: 3, tile: 2 },
+      { screen: 3, tile: 17, big: true },
+      { screen: 4, tile: 4 },
+    ],
+    doors: [{ id: 'exit', screen: 4, tile: 17, exit: true }],
+  },
+};
+
+export const LEVEL_GOLDVEIN: LevelDef = {
+  ...MINE,
+  id: 'goldvein',
+  name: 'Veio de Ouro',
+  intro: 'Pedras de ouro fecham as galerias. Martelo nelas e leve a chave até a porta.',
+  winText: 'O veio de ouro se abriu!',
+  puzzle: {
+    key: [1, 8, 3],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 15, 3],
+      [1, 2, 0],
+      [2, 6, 4],
+    ],
+    ladders: [[1, 5, 0, 3]],
+    springs: [
+      [0, 12, 0],
+      [2, 6, 0],
+    ],
+    stones: [
+      [0, 8, 0],
+      [0, 8, 1],
+      [1, 14, 0],
+      [2, 11, 0],
+      [2, 11, 1],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[14, 3, 3]], deco: [[2, 'gold']] },
+    { segments: [[0, 6, 0], [6, 4, 3], [10, 10, 0]], deco: [[17, 'gold']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 4]] },
+  ],
+};
+
+export const LEVEL_DYNAMITE: LevelDef = {
+  ...MINE,
+  id: 'dynamite',
+  name: 'Dinamite',
+  intro: 'Goblins mineiros jogam bombas em arco. E as pedras rolam pelos trilhos.',
+  winText: 'Nenhuma explosão te pegou!',
+  field: {
+    boulders: [
+      [1, 18, 1, -1, 3400],
+      [3, 18, 0, -1, 3000],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[8, 3, 2]], enemies: [[12, 'torchgob_miner'], [17, 'torchgob']] },
+    { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 1]], enemies: [[11, 'torchgob_miner']] },
+    { segments: [[0, 5, 0], [5, 3, 2], [8, 12, 0]], floats: [[14, 2, 3]], enemies: [[10, 'torchgob_miner'], [17, 'torchgob_blue']] },
+    { segments: [[0, 6, 0], [8, 12, 0]], enemies: [[11, 'torchgob_miner'], [16, 'torchgob_miner']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'gold']], enemies: [[8, 'torchgob_chief'], [14, 'torchgob_miner']] },
+  ],
+};
+
+export const LEVEL_FLOODED: LevelDef = {
+  ...MINE,
+  id: 'flooded',
+  name: 'Mina Alagada',
+  intro: 'A água da mina sobe e desce. Fique no alto, ou em cima dos caixotes.',
+  winText: 'Você atravessou a mina alagada!',
+  sea: {
+    tide: { high: 80, hold: 4500, move: 2400 },
+    crates: [
+      [1, 9, 2],
+      [3, 4, 2],
+      [3, 9, 2],
+      [3, 14, 2],
+    ],
+  },
+  screens: [
+    { segments: [[0, 7, 0], [7, 3, 1], [10, 5, 0], [15, 2, 2], [17, 3, 0]], floats: [[12, 2, 2]], enemies: [[18, 'torchgob']] },
+    { segments: [[0, 3, 1], [3, 6, 0], [11, 4, 0], [15, 5, 1]], floats: [[6, 2, 2]], enemies: [[13, 'torchgob_blue']] },
+    { segments: [[0, 5, 0], [5, 2, 2], [7, 6, 0], [13, 2, 2], [15, 5, 0]], floats: [[9, 3, 3]], enemies: [[10, 'torchgob_miner']] },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 1], [16, 4, 0]], enemies: [[12, 'torchgob']] },
+    { segments: [[0, 6, 0], [6, 3, 2], [9, 6, 0], [15, 5, 1]], floats: [[11, 3, 3]], enemies: [[17, 'torchgob_chief']] },
+  ],
+};
+
+export const LEVEL_BLUEFIRE: LevelDef = {
+  ...MINE,
+  id: 'bluefire',
+  name: 'Fogo Azul',
+  intro: 'O fogo aqui embaixo é azul e corre atrás de você. E os gêiseres não param.',
+  winText: 'Você atravessou o fogo azul!',
+  field: {
+    geysers: [
+      [0, 9, 0, 2600],
+      [1, 6, 0, 2400],
+      [1, 15, 0, 2400, 1200],
+      [3, 8, 0, 2200],
+      [3, 12, 0, 2200, 1100],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[12, 3, 3]], enemies: [[15, 'torchgob_blue']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'torchgob_blue'], [17, 'bat']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'torchgob_blue']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3]], enemies: [[15, 'torchgob_blue'], [18, 'torchgob_miner']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'torchgob_blue'], [14, 'torchgob_chief']] },
+  ],
+};
+
+export const LEVEL_TREASURY: LevelDef = {
+  ...MINE,
+  id: 'treasury',
+  name: 'Tesouro dos Goblins',
+  intro: 'O tesouro do Rei. Cada área só abre quando todos os guardas caírem.',
+  winText: 'O caminho até o Rei Goblin está aberto!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[2, 'gold'], [15, 'gold']], enemies: [[9, 'torchgob'], [16, 'torchgob_blue']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'gold']], enemies: [[10, 'torchgob_miner'], [16, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'gold'], [14, 'gold']], enemies: [[11, 'torchgob_chief']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'gold']], enemies: [[9, 'torchgob_blue'], [12, 'torchgob_miner'], [17, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'gold'], [10, 'gold'], [16, 'gold']], enemies: [[8, 'torchgob_chief'], [13, 'torchgob_blue'], [16, 'torchgob_miner']] },
+  ],
+};
+
+export const LEVEL_GOBLINKING: LevelDef = {
+  ...MINE,
+  id: 'goblinking',
+  name: 'Trono do Rei Goblin',
+  intro: 'O Rei Goblin da Tocha conta cada pepita. E guarda o fragmento no meio do ouro.',
+  winText: 'O Rei Goblin caiu! Fragmento da coroa recuperado!',
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[2, 'gold'], [16, 'gold']], enemies: [[14, 'torchgob_miner'], [18, 'torchgob']] },
+    { segments: [[0, 6, 0], [8, 6, 1], [16, 4, 0]], enemies: [[10, 'torchgob_chief']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'goblinking',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'gold'], [18, 'gold']] },
+  },
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -2048,6 +2276,16 @@ export const LEVELS: LevelDef[] = [
   LEVEL_MOSS,
   LEVEL_GNOMEVILLAGE,
   LEVEL_GNOMEKING,
+  // Área 7 (Minas dos Goblins).
+  LEVEL_MINEENTRY,
+  LEVEL_CAVEIN,
+  LEVEL_DARKMINE,
+  LEVEL_GOLDVEIN,
+  LEVEL_DYNAMITE,
+  LEVEL_FLOODED,
+  LEVEL_BLUEFIRE,
+  LEVEL_TREASURY,
+  LEVEL_GOBLINKING,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];

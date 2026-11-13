@@ -382,7 +382,7 @@ export class MapScene extends Phaser.Scene {
       }
       return;
     }
-    const key = ['tiles_sand', 'tiles_ship', 'tiles_prairie', 'tiles_forest', 'tiles_swamp'].includes(l.tiles) ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
+    const key = ['tiles_sand', 'tiles_ship', 'tiles_prairie', 'tiles_forest', 'tiles_swamp', 'tiles_mine'].includes(l.tiles) ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
     const tint = l.theme === 'volcano' ? 0xd28e78 : l.id === 'nest' ? 0x8a9aa8 : l.id === 'queen' ? 0x7a7088 : 0xffffff;
     this.island(tx, ty, 4, 3, key, tint);
     if (l.id === 'shore') {
@@ -431,6 +431,14 @@ export class MapScene extends Phaser.Scene {
       deco('door_exit', 60, -10, 0.55);
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
+    }
+    // Minas dos Goblins.
+    if (['mineentry', 'cavein', 'dynamite', 'treasury', 'goblinking', 'bluefire', 'flooded'].includes(l.id)) deco('gold_stone_big', 50, -6, 0.4);
+    if (l.id === 'bluefire') this.add.sprite(x - 40, y - 10, 'torch_item_anim', 0).setTint(0x7fd8ff).setDepth(6).play('torch_flame');
+    if (l.id === 'goblinking') {
+      this.add.sprite(x - 10, y - 10, 'king_torchgob_idle').setScale(0.55).setFlipX(true).setDepth(6).play('king_torchgob_idle');
+      const crown = deco('queen_crown', -10, -70, 0.6);
+      this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     // Bosque dos Gnomos.
     if (l.tiles === 'tiles_forest') this.add.sprite(x - 70, y - 14, 'tree').setOrigin(0.5, 1).setScale(0.4).setDepth(6).play('tree');

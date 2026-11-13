@@ -75,7 +75,12 @@ originais (extraídas com PIL do PNG).
   Enfrentar → `ShamanBoss` (jogador vira `villager`) → epílogo `ENDING_FREE`. Voltar para casa →
   `ENDING_HOME`. Save guarda `ending`; o mapa do mundo muda conforme o final.
 - Voo: morcego solta ondas sônicas, abelha solta ferrões (`shmup.ts`).
-- Outras áreas ainda com as fases antigas redistribuídas (menos de 10 cada).
+- Áreas completas (10 fases + rei): Maré, Pradaria (Rei Gnoll, `gnollking.ts`), Teias (Aranha-Rainha),
+  Forja (Minotauro), Bosque (Rei Gnomo), Minas (Rei Goblin da Tocha). Reis Gnomo/Goblin/Lagarto em `kings.ts`.
+- Mecânicas genéricas: `FieldSystem` (manada, rochas/toras rolando, gêiseres, cogumelos, desabamento),
+  `SeaSystem` (maré de água/lava, caixotes/basalto/toras, tábuas/teia/obsidiana, canhões, casulos, corais),
+  escuridão com tochas (`haunt.torches`).
+- Faltam: Lagoa (10 fases novas + Rei Lagarto já escrito), Céu de Brasa (+7, tons vermelhos), Reino das Asas (+9).
 
 ## Próximos passos (em ordem)
 

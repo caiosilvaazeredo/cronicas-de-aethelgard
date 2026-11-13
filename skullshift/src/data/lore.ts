@@ -742,6 +742,86 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('É a cor da realeza. Só isso. Vai.'),
     ],
   },
+  mineentry: {
+    title: 'Boca da Mina',
+    blurb: 'As minas dos goblins, cheias de tochas e ouro.',
+    lines: [
+      S('Quanto ouro! E quanta tocha acesa.'),
+      X('Os goblins cavam há séculos. O teto é velho: quando cair poeira, sai de baixo.'),
+      S('Cavam para quê? Ouro aqui não compra nada. Você mesmo disse.'),
+      X('O Rei Goblin não sabe disso. Nem precisa saber.'),
+    ],
+  },
+  cavein: {
+    title: 'Desabamento',
+    blurb: 'O teto da galeria está desabando.',
+    lines: [
+      S('O teto inteiro está caindo!'),
+      X('A poeira avisa onde a pedra cai. Corre entre elas.'),
+    ],
+  },
+  darkmine: {
+    title: 'Galeria Escura',
+    blurb: 'As tochas se apagaram.',
+    lines: [
+      S('Escuro de novo. Alguém apagou as tochas de propósito.'),
+      X('Acende as tochas. As três grandes abrem a saída.'),
+      S('Minha irmã tinha medo do escuro. Eu deixava uma vela acesa para ela.'),
+      X('...Tua irmã. Hm. Acende as tochas, Ossian.'),
+    ],
+  },
+  goldvein: {
+    title: 'Veio de Ouro',
+    blurb: 'Pedras de ouro fecham as galerias.',
+    lines: [
+      S('Pedras de ouro de novo. Martelo nelas!'),
+      X('No ar, desce com tudo. E leva a chave até a porta.'),
+    ],
+  },
+  dynamite: {
+    title: 'Dinamite',
+    blurb: 'Goblins mineiros jogam bombas.',
+    lines: [
+      S('Eles estão jogando bombas!'),
+      X('Mineiros. Explodem a rocha e quem estiver perto. Desvia do arco.'),
+    ],
+  },
+  flooded: {
+    title: 'Mina Alagada',
+    blurb: 'A água da mina sobe e desce.',
+    lines: [
+      S('Maré dentro de uma mina? Isso não faz sentido.'),
+      X('A água sobe por baixo. Desce de novo. Como tudo aqui.'),
+      S('Como tudo aqui... volta.'),
+      X('Fica no alto, Ossian.'),
+    ],
+  },
+  bluefire: {
+    title: 'Fogo Azul',
+    blurb: 'O fogo das profundezas é azul.',
+    lines: [
+      S('Fogo azul! E os goblins com ele correm que nem doidos.'),
+      X('É o fogo do fundo da terra. Mais quente que o vermelho. Não deixa encostar.'),
+    ],
+  },
+  treasury: {
+    title: 'Tesouro dos Goblins',
+    blurb: 'O tesouro do Rei. Guardado por todos.',
+    lines: [
+      S('Montanhas de ouro. E guardas em todo canto.'),
+      X('Cada área só abre quando todos caírem. Depois, o Rei.'),
+    ],
+  },
+  goblinking: {
+    title: 'Trono do Rei Goblin',
+    blurb: 'O Rei Goblin da Tocha guarda o fragmento no meio do ouro.',
+    lines: [
+      S('O Rei Goblin. Capuz preto e tocha vermelha.'),
+      X('Ele bate a tocha no chão e solta ondas de fogo: pula. E corre de um lado ao outro.'),
+      S('Hex, quando o último rei cair, o que acontece com este mundo?'),
+      X('Nada que tu vás ver, Ossian. Tu estarás em casa.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

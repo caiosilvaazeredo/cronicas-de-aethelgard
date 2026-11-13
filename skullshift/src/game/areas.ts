@@ -104,7 +104,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei Goblin da Tocha',
     kingAnim: 'torchgob_idle',
     color: 0xc8823a,
-    levels: ['gun2'],
+    levels: ['mineentry', 'gun2', 'cavein', 'darkmine', 'goldvein', 'dynamite', 'flooded', 'bluefire', 'treasury', 'goblinking'],
     pos: [1100, 255],
     unlock: 'after-pradaria',
   },

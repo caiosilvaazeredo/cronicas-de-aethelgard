@@ -81,6 +81,19 @@ export interface FieldHost {
 
 /** Capim dourado (recolor do tileset de grama) para a Pradaria. */
 export function makeFieldTiles(scene: Phaser.Scene): void {
+  // Minas: terra e rocha em tons de ocre (a caverna das teias é azul-esverdeada).
+  recolorSheet(scene, 'tiles_cave', 'tiles_mine', 64, 64, {
+    0x569b8d: 0x9a7a4a,
+    0x528e89: 0x8a6a3a,
+    0x63a486: 0xb08a50,
+    0x669d9d: 0x7a6a5a,
+    0x506a69: 0x5a4a3a,
+    0x3e4c56: 0x3a2e2a,
+    0x3b6566: 0x4a3a2a,
+    0x8cc3c4: 0xa89a8a,
+    0xc6f0db: 0xe8d8b0,
+    0x47777c: 0x6a5a3a,
+  });
   // Bosque: grama verde-escura. Lagoa: verde-musgo, pedra limosa.
   recolorSheet(scene, 'tilemap', 'tiles_forest', 64, 64, { 0x9bb94e: 0x5a9a3a, 0x80ac5e: 0x3f7a32, 0xb8b958: 0x7ab84a, 0x618559: 0x2f5a2a });
   recolorSheet(scene, 'tilemap', 'tiles_swamp', 64, 64, {

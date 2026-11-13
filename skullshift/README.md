@@ -177,6 +177,14 @@ Com um oponente perto, segurar para **trás** faz o personagem andar devagar com
 - **Revivendo:** o xamã chega numa nuvem trazendo o espírito do personagem pendurado numa linha, conjura, o corpo inteiro se forma no chão e ele vai embora flutuando devagar.
 - **Água:** respingo na superfície, ondas, gotas e bolhas, e o corpo afunda recortado pela linha d'água. Também há espuma batendo nos penhascos, ondas correndo, nuvens à deriva, rajadas de vento e folhas voando. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
 
+### Controles das fases de voo
+
+Nas fases de voo (Voo Noturno e Duelo no Céu) o tiro **não é automático**: segure ATACAR para atirar. Teclado e controle: direcionais (W/↑ sobe, S/↓ desce) voam em todas as direções. No toque, os botões de sempre dão lugar a um **manche analógico** (arraste a bolinha, 8 direções) e a um botão **TIRO** grande. Com gestos/mouse: arrastar voa, toque rápido atira um osso e segundo dedo (ou botão direito) atira sem parar.
+
+### Mapa no celular em pé
+
+O mapa fica ampliado no meio da tela, com o painel da fase e botões grandes **◀ ENTRAR ▶** embaixo. Arrastar o mapa para os lados troca de fase; tocar 2× numa fase faz o esqueleto correr até ela.
+
 ### Gestos ou mouse
 
 Na tela de controles há a opção **Gestos ou mouse**: joga-se só com o dedo na tela (sem botões virtuais) ou só com o mouse. Onde o dedo/clique encosta vira o centro de um manche flutuante (aparece translúcido na tela):

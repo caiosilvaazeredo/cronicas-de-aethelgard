@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BODY_FONT, FONT } from '../config';
+import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import { CHAPTERS } from '../data/lore';
 import type { DeviceId } from '../game/controls';
 import { completedCount, currentSlot, giftsOf, hasSecret, isFreePlay } from '../game/progress';
@@ -64,6 +64,7 @@ export class MapScene extends Phaser.Scene {
     this.walking = false;
     this.popupOpen = false;
     this.closePopup = undefined;
+    this.uiCam = undefined;
     this.nodes = [];
     this.prevPad = { l: false, r: false, a: true, b: true };
   }
@@ -72,9 +73,18 @@ export class MapScene extends Phaser.Scene {
     const cam = this.cameras.main;
     cam.setBackgroundColor('#39b5fd');
     // O mapa é uma faixa larga: a câmera acompanha o esqueleto na horizontal.
-    // Em pé, a faixa (720 de altura) fica centralizada na tela alta.
-    const offY = Math.max(0, (cam.height - MH) / 2);
-    cam.setBounds(0, -offY, WORLD_W, MH + offY * 2);
+    // Deitado, a faixa ocupa a tela. Em pé, ela fica ampliada no meio, com a interface
+    // (painel da fase e botões grandes) numa câmera própria embaixo.
+    const P = VIEW.portrait;
+    const offY = 0;
+    if (P) {
+      const H = cam.height;
+      const top = 250 + PORTRAIT.topPad;
+      const band = Math.max(MH, H - top - 820);
+      const zoom = Phaser.Math.Clamp(band / MH, 1, 2.2);
+      cam.setViewport(0, top, MW, MH * zoom).setZoom(zoom);
+      cam.setBounds(0, 0, WORLD_W, MH);
+    } else cam.setBounds(0, 0, WORLD_W, MH);
 
     this.drawSea();
     this.drawIslands();
@@ -86,6 +96,8 @@ export class MapScene extends Phaser.Scene {
     this.placeHero(PATH[NODE_AT[this.current]]);
     cam.startFollow(this.hero, true, 0.1, 0.1);
     cam.centerOn(this.hero.x, MH / 2);
+    const worldObjs = [...this.children.list];
+    if (P) return this.createPortraitUI(worldObjs);
     // Interface presa na tela (não rola com o mapa).
     const ui = <T extends Phaser.GameObjects.Components.ScrollFactor & Phaser.GameObjects.Components.Transform>(o: T): T => {
       o.setScrollFactor(0);
@@ -121,6 +133,66 @@ export class MapScene extends Phaser.Scene {
     if (done !== undefined && this.unlocked > done) {
       const node = this.nodes[this.unlocked];
       this.cameras.main.flash(200, 255, 247, 220);
+      this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
+      this.burst(node.x, node.y);
+      this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
+    }
+  }
+
+  /** Câmera da interface (só em pé): os objetos do mundo não aparecem nela. */
+  private uiCam?: Phaser.Cameras.Scene2D.Camera;
+
+  /** Em pé: título e MENU em cima; painel da fase e botões grandes ◀ ENTRAR ▶ embaixo. */
+  private createPortraitUI(worldObjs: Phaser.GameObjects.GameObject[]): void {
+    const H = this.scale.height;
+    const uiCam = this.cameras.add(0, 0, MW, H);
+    this.uiCam = uiCam;
+    uiCam.ignore(worldObjs);
+    const first = this.children.list.length;
+    const top = PORTRAIT.topPad;
+    this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
+    this.add.text(MW / 2, 175 + top, isFreePlay() ? 'MODO LIVRE · TESTES' : `SELECIONAR FASE · SAVE ${currentSlot()}`, { fontFamily: FONT, fontSize: '52px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
+    pillButton(this, 150, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.1);
+    const mapBottom = this.cameras.main.y + this.cameras.main.height;
+    this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
+    const g = this.add.graphics();
+    g.fillStyle(0x1b3a78, 1).fillRoundedRect(40, mapBottom + 30, MW - 80, 240, 22);
+    g.lineStyle(4, 0xfff7dc, 0.8).strokeRoundedRect(40, mapBottom + 30, MW - 80, 240, 22);
+    this.infoTitle = this.add.text(76, mapBottom + 56, '', { fontFamily: FONT, fontSize: '42px', color: '#ffe066' });
+    this.info = this.add.text(76, mapBottom + 120, '', { fontFamily: BODY_FONT, fontSize: '30px', color: '#fff7dc', wordWrap: { width: MW - 160 }, lineSpacing: 6 });
+    const by = mapBottom + 400;
+    pillButton(this, 190, by, '◀', () => this.step(-1), 200, 0xbfe9ff).setScale(1.6);
+    pillButton(this, MW / 2, by, 'ENTRAR', () => this.enter(), 300, 0xffe066).setScale(1.6);
+    pillButton(this, MW - 190, by, '▶', () => this.step(1), 200, 0xbfe9ff).setScale(1.6);
+    this.add
+      .text(MW / 2, by + 130, 'Arraste o mapa para os lados · toque 2× numa fase para correr até ela', { fontFamily: BODY_FONT, fontSize: '26px', color: '#bfd0e0' })
+      .setOrigin(0.5);
+    this.cameras.main.ignore(this.children.list.slice(first));
+    this.updateInfo();
+
+    // Arrastar o mapa para os lados troca de fase (um passo por arrastada).
+    let startX = 0;
+    let startY = -1;
+    this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
+      const c = this.cameras.main;
+      startY = p.y >= c.y && p.y <= c.y + c.height ? p.y : -1;
+      startX = p.x;
+    });
+    this.input.on('pointerup', (p: Phaser.Input.Pointer) => {
+      if (startY < 0) return;
+      const dx = p.x - startX;
+      if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(p.y - startY)) this.step(dx < 0 ? 1 : -1);
+      startY = -1;
+    });
+
+    const kb = this.input.keyboard!;
+    for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.step(-1));
+    for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.step(1));
+    for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
+    kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
+    const done = this.lastData.justCompleted;
+    if (done !== undefined && this.unlocked > done) {
+      const node = this.nodes[this.unlocked];
       this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
       this.burst(node.x, node.y);
       this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
@@ -443,9 +515,12 @@ export class MapScene extends Phaser.Scene {
     items.push(this.add.text(-140, -28, a.how, { fontFamily: BODY_FONT, fontSize: '19px', color: '#bfd0e0', wordWrap: { width: 440 }, lineSpacing: 4 }));
     const ok = pillButton(this, 0, 120, 'ENTENDI', () => close(), 200, 0xffe066);
     items.push(ok);
-    const box = this.add.container(cam.scrollX + W2 / 2, cam.scrollY + H2 / 2, items).setDepth(60).setScale(0.6).setAlpha(0);
-    this.tweens.add({ targets: box, scale: 1, alpha: 1, duration: 260, ease: 'Back.easeOut' });
-    this.burst(box.x, box.y - 120);
+    const box = this.uiCam
+      ? this.add.container(MW / 2, this.scale.height / 2, items).setDepth(60).setScale(1.5 * 0.6).setAlpha(0)
+      : this.add.container(cam.scrollX + W2 / 2, cam.scrollY + H2 / 2, items).setDepth(60).setScale(0.6).setAlpha(0);
+    if (this.uiCam) cam.ignore(box);
+    this.tweens.add({ targets: box, scale: this.uiCam ? 1.5 : 1, alpha: 1, duration: 260, ease: 'Back.easeOut' });
+    if (!this.uiCam) this.burst(box.x, box.y - 120);
     const kb = this.input.keyboard!;
     const close = () => {
       kb.off('keydown-ENTER', close);
@@ -462,6 +537,7 @@ export class MapScene extends Phaser.Scene {
   private burst(x: number, y: number): void {
     for (let i = 0; i < 14; i++) {
       const s = this.add.image(x, y, 'spark').setTint(0xffe066).setScale(0.5).setDepth(40);
+      this.uiCam?.ignore(s);
       const a = (i / 14) * Math.PI * 2;
       this.tweens.add({ targets: s, x: x + Math.cos(a) * 70, y: y + Math.sin(a) * 70, scale: 0, duration: 600, onComplete: () => s.destroy() });
     }

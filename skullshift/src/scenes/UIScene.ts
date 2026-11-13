@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { DEPTH, BODY_FONT, FONT, PORTRAIT, SPLIT, VIEW, W } from '../config';
 import { Hud } from '../game/Hud';
+import { LEVELS } from '../game/level';
 import { TouchPad } from '../game/touch';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
 import { sfx } from '../game/settings';
@@ -131,7 +132,9 @@ export class UIScene extends Phaser.Scene {
     this.hud.setScreen(g.screen, g.mode === 'versus' && g.leader >= 0 ? PLAYER_TINT[g.leader] : 0xfff7dc);
 
     const sides = g.mode === 'story' ? (['full'] as const) : (['left', 'right'] as const);
-    this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i]) : undefined));
+    // Fases de voo: manche e TIRO no lugar dos botões de sempre.
+    const flight = g.mode === 'story' && !!LEVELS[g.levelIndex]?.shmup;
+    this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i], undefined, false, flight) : undefined));
 
     const menuY = VIEW.portrait ? 120 + PORTRAIT.topPad : 720 - 34;
     this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => this.togglePause(), 120)

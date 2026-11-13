@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { settings } from './settings';
 import { DEPTH, FONT, VIEW, W, portraitPanelTop } from '../config';
 
-type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick';
+type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick' | 'stick';
 
 interface Button {
   id: ButtonId;
@@ -24,6 +24,8 @@ export interface TouchState {
   attackHeld: boolean;
   pickPressed: boolean;
   jumpHeld: boolean;
+  /** Manche de voo puxado para cima. */
+  up: boolean;
 }
 
 type Spec = [ButtonId, number, number, number, string];
@@ -36,7 +38,18 @@ const LABELS: Record<ButtonId, string> = {
   jump: 'PULA',
   attack: 'ATQ',
   pick: 'PEGA',
+  stick: '',
 };
+
+/** Fases de voo: manche analógico à esquerda e botão de TIRO à direita. */
+const FLIGHT_LANDSCAPE: Spec[] = [
+  ['stick', 190, 540, 110, ''],
+  ['attack', 1110, 560, 90, ''],
+];
+const FLIGHT_PORTRAIT: Spec[] = [
+  ['stick', 0.27, 0.5, 0.17, ''],
+  ['attack', 0.76, 0.5, 0.14, ''],
+];
 
 /** Deitado: posições absolutas no canvas 1280x720. */
 const LANDSCAPE_FULL: Spec[] = [
@@ -100,9 +113,17 @@ export class TouchPad {
     tint = 0xfff7dc,
     area?: { top: number; h: number },
     flip = false,
+    flight = false,
   ) {
     const specs: Array<[ButtonId, number, number, number]> = [];
-    if (VIEW.portrait) {
+    if (flight) {
+      // Voo: só o manche e o tiro (1 jogador).
+      if (VIEW.portrait) {
+        const top = area?.top ?? portraitPanelTop();
+        const h = area?.h ?? VIEW.h - top;
+        for (const [id, u, v, r] of FLIGHT_PORTRAIT) specs.push([id, u * W, top + v * h, r * W]);
+      } else for (const [id, x, y, r] of FLIGHT_LANDSCAPE) specs.push([id, x, y, r]);
+    } else if (VIEW.portrait) {
       const top = area?.top ?? portraitPanelTop();
       const h = area?.h ?? VIEW.h - top;
       for (const [id, u, v, r] of side === 'full' ? PORTRAIT_FULL : PORTRAIT_HALF) {
@@ -136,7 +157,7 @@ export class TouchPad {
     const size = [0.82, 1, 1.15][st.touchSize] ?? 1;
     for (const [id, x, y, r0] of specs) {
       const r = r0 * size;
-      const text = LABELS[id];
+      const text = flight && id === 'attack' ? 'TIRO' : LABELS[id];
       const bg = scene.add
         .circle(x, y, r, 0x10223a, 0.42 * op)
         .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8 * op)
@@ -152,8 +173,22 @@ export class TouchPad {
         .setAlpha(Math.max(0.35, op))
         .setRotation(flip ? Math.PI : 0);
       this.buttons.push({ id, x, y, r, bg, label, down: false });
+      if (id === 'stick') {
+        // Bolinha do manche (segue o dedo) e marcas das 4 direções.
+        this.knob = scene.add.circle(x, y, r * 0.42, tint, 0.55 * op).setStrokeStyle(4, 0x10223a, 0.8).setDepth(DEPTH.hud + 6);
+        for (const [dx, dy, t] of [[0, -1, '▲'], [0, 1, '▼'], [-1, 0, '◀'], [1, 0, '▶']] as const) {
+          scene.add
+            .text(x + dx * r * 0.72, y + dy * r * 0.72, t, { fontFamily: FONT, fontSize: `${Math.round(r * 0.24)}px`, color: '#fff7dc' })
+            .setOrigin(0.5)
+            .setAlpha(0.6 * op)
+            .setDepth(DEPTH.hud + 6);
+        }
+      }
     }
   }
+
+  private knob?: Phaser.GameObjects.Arc;
+  private stickDir = { x: 0, y: 0 };
 
   setVisible(v: boolean): void {
     this.visible = v;
@@ -161,20 +196,37 @@ export class TouchPad {
       b.bg.setVisible(v);
       b.label.setVisible(v);
     }
+    this.knob?.setVisible(v);
   }
 
   /** Lê todos os dedos na tela e devolve o estado dos botões. */
   read(): TouchState {
     for (const b of this.buttons) b.down = false;
+    this.stickDir = { x: 0, y: 0 };
     if (this.visible) {
       for (const p of this.scene.input.manager.pointers) {
         if (!p || !p.isDown) continue;
         for (const b of this.buttons) {
+          if (b.id === 'stick') {
+            // Manche: a posição do dedo em relação ao centro dá a direção (8 direções).
+            const dx = p.x - b.x;
+            const dy = p.y - b.y;
+            const d = Math.hypot(dx, dy);
+            if (d > b.r * 1.7) continue;
+            b.down = true;
+            const k = Math.min(1, d / (b.r * 0.6));
+            this.stickDir = { x: d ? (dx / d) * k : 0, y: d ? (dy / d) * k : 0 };
+            continue;
+          }
           // Área de toque um pouco maior que o desenho.
           if (Phaser.Math.Distance.Between(p.x, p.y, b.x, b.y) <= b.r * 1.25) b.down = true;
         }
       }
     }
+    const stick = this.buttons.find((b) => b.id === 'stick');
+    if (stick && this.knob) this.knob.setPosition(stick.x + this.stickDir.x * stick.r * 0.6, stick.y + this.stickDir.y * stick.r * 0.6);
+    const sx = this.stickDir.x;
+    const sy = this.stickDir.y;
     for (const b of this.buttons) {
       b.bg.setFillStyle(b.down ? 0xfff7dc : 0x10223a, b.down ? 0.55 : 0.42);
     }
@@ -183,10 +235,11 @@ export class TouchPad {
     const attack = get('attack');
     const pick = get('pick');
     const st: TouchState = {
-      left: get('left'),
-      right: get('right'),
+      left: get('left') || sx < -0.35,
+      right: get('right') || sx > 0.35,
       guard: get('guard'),
-      crouch: get('crouch'),
+      crouch: get('crouch') || sy > 0.35,
+      up: sy < -0.35,
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
       attackHeld: attack,

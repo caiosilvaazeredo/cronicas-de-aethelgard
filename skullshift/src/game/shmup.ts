@@ -140,16 +140,16 @@ export class ShmupSystem {
     // Jogador.
     if (this.alive) {
       const it = this.host.intent();
-      const up = it.jumpHeld || it.jump;
+      const up = !!it.up || it.jumpHeld || it.jump;
       const dy = (it.crouch ? 1 : 0) - (up ? 1 : 0);
       this.x += it.move * SPEED * dt + SCROLL * dt * (this.done ? 0 : 1);
       this.y += dy * SPEED * dt;
       this.x = Phaser.Math.Clamp(this.x, this.left + 60, this.right - 80);
       this.y = Phaser.Math.Clamp(this.y, this.host.top + 40, this.host.bottom - 20);
       this.bat.setAngle(Phaser.Math.Linear(this.bat.angle, dy * 12 + it.move * 6, 0.2));
-      // Tiro automático para a frente; apertar ATACAR solta um osso na hora.
-      if (it.attack || time >= this.nextShot) {
-        this.nextShot = time + 300;
+      // Tiro só enquanto segura ATACAR (sem tiro automático).
+      if ((it.attack || it.attackHeld) && time >= this.nextShot) {
+        this.nextShot = time + 200;
         this.fire();
       }
       this.rider.setPosition(this.x, this.y + Math.sin(time / 160) * 4);
@@ -374,7 +374,7 @@ export class ShmupSystem {
   hint(): void {
     const s = this.host.scene;
     const t = s.add
-      .text(this.camX, this.host.top + 40, '↑ ↓ ← →  voar  ·  os ossos saem sozinhos (ATACAR atira na hora)', { fontFamily: FONT, fontSize: '22px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 })
+      .text(this.camX, this.host.top + 40, '↑ ↓ ← →  voar  ·  segure ATACAR (ou TIRO) para atirar', { fontFamily: FONT, fontSize: '22px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: this.host.halfView() * 2 - 60 } })
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 3);
     s.tweens.add({ targets: t, alpha: 0, delay: 3500, duration: 600, onComplete: () => t.destroy() });

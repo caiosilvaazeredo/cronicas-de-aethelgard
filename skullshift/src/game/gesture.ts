@@ -21,6 +21,8 @@ export interface GestureState {
   guard: boolean;
   attack: boolean;
   pick: boolean;
+  /** Arrastando para cima (usado no voo). */
+  up: boolean;
 }
 
 const DEAD = 22; // px de arrasto antes de andar
@@ -67,7 +69,7 @@ export class GestureInput {
 
   read(): GestureState {
     const now = this.scene.time.now;
-    const out: GestureState = { move: 0, sprint: false, jump: false, jumpHeld: false, crouch: false, guard: false, attack: false, pick: false };
+    const out: GestureState = { move: 0, sprint: false, jump: false, jumpHeld: false, crouch: false, guard: false, attack: false, pick: false, up: false };
     const pointers = this.scene.input.manager.pointers.filter(Boolean);
     const mouse = this.scene.input.mousePointer;
 
@@ -104,6 +106,7 @@ export class GestureInput {
       if (Math.abs(dx) > DEAD) out.move = Math.sign(dx);
       out.sprint = Math.abs(dx) > RUN;
       out.crouch = dy > 55 && dy > Math.abs(dx) * 0.8;
+      out.up = dy < -40 && -dy > Math.abs(dx) * 0.5;
       // Deslizada rápida para cima: pulo. A janela anda junto com o dedo.
       if (this.flickY - m.y > FLICK && now - this.flickT <= FLICK_MS) {
         out.jump = true;

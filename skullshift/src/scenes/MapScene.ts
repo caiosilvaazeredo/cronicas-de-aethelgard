@@ -432,6 +432,15 @@ export class MapScene extends Phaser.Scene {
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
     }
+    // Lagoa dos Lagartos.
+    if (l.swamp) {
+      if (l.sea?.plankTex === 'lily') deco('lily', 20, -2, 0.8);
+      if (l.id === 'lizardking') {
+        this.add.sprite(x, y - 14, 'king_lizard_idle').setScale(0.5).setFlipX(true).setDepth(6).play('king_lizard_idle');
+        const crown = deco('queen_crown', 0, -80, 0.6);
+        this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      } else if (!l.puzzle) deco('dead_tree', -60, 0, 0.35);
+    }
     // Minas dos Goblins.
     if (['mineentry', 'cavein', 'dynamite', 'treasury', 'goblinking', 'bluefire', 'flooded'].includes(l.id)) deco('gold_stone_big', 50, -6, 0.4);
     if (l.id === 'bluefire') this.add.sprite(x - 40, y - 10, 'torch_item_anim', 0).setTint(0x7fd8ff).setDepth(6).play('torch_flame');

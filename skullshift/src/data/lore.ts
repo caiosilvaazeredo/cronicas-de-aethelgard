@@ -822,6 +822,100 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Nada que tu vás ver, Ossian. Tu estarás em casa.'),
     ],
   },
+  swampedge: {
+    title: 'Margem do Pântano',
+    blurb: 'Água parada, musgo e lagartos.',
+    lines: [
+      S('Que água verde. E esse cheiro de folha podre.'),
+      X('A lagoa dos lagartos. O Rei Lagarto mora no meio dela e nunca dorme.'),
+      S('Nunca? Nem um cochilo?'),
+      X('Quem guarda um selo... quer dizer, um fragmento... não pode dormir.'),
+    ],
+  },
+  lilypads: {
+    title: 'Vitórias-Régias',
+    blurb: 'Folhas gigantes que afundam ao pisar.',
+    lines: [
+      S('Folhas do tamanho de uma mesa!'),
+      X('Seguram um esqueleto por um instante. Só um instante.'),
+    ],
+  },
+  swamptide: {
+    title: 'Cheia do Pântano',
+    blurb: 'A água do pântano sobe e desce.',
+    lines: [
+      S('A água sobe aqui também. Até no pântano tem maré?'),
+      X('Toda água deste mundo obedece ao mesmo ritmo.'),
+      S('Ao ritmo de quem?'),
+      X('Sobe nas toras, Ossian.'),
+    ],
+  },
+  poisonmarsh: {
+    title: 'Brejo Venenoso',
+    blurb: 'Espinhos e lagartos roxos cuspindo veneno.',
+    lines: [
+      S('Lagartos roxos. Roxos como você, Hex.'),
+      X('O veneno deles é roxo. Eu não tenho veneno.'),
+      S('Tem certeza?'),
+      X('Desvia dos espinhos.'),
+    ],
+  },
+  fisherman: {
+    title: 'Casa do Pescador',
+    blurb: 'Um caranguejo do brejo levou a chave.',
+    lines: [
+      S('Uma casinha de pescador. Igual às da minha... das que eu vi.'),
+      X('Um caranguejo levou a chave. Já sabes o que fazer.'),
+    ],
+  },
+  deeplagoon: {
+    title: 'Fundo da Lagoa',
+    blurb: 'No fundo da lagoa, só um lagarto atravessa.',
+    lines: [
+      S('O caminho afunda na lagoa.'),
+      X('Lá embaixo, eu te dou a forma de um lagarto. Lagartos nadam.'),
+      S('Você não precisa mais de item nenhum para me transformar, né?'),
+      X('Quanto mais selos caem... quer dizer, quanto mais fragmentos juntas, mais eu posso.'),
+    ],
+  },
+  swampgun: {
+    title: 'Tiro no Brejo',
+    blurb: 'Lagartos e náufragos sem parar.',
+    lines: [
+      S('Eles saem da água de todo lado!'),
+      X('Segura ATACAR e avança.'),
+    ],
+  },
+  mangrove: {
+    title: 'Mangue',
+    blurb: 'Raízes, galhos e troncos caídos sobre a água.',
+    lines: [
+      S('Raízes por todo lado. Parece uma floresta afogada.'),
+      X('Era uma floresta. A água subiu um dia e nunca mais desceu.'),
+      S('Quem fez a água subir?'),
+      X('As toras estão rolando. Atenção.'),
+    ],
+  },
+  lizardvillage: {
+    title: 'Aldeia dos Lagartos',
+    blurb: 'A aldeia dos lagartos. Ninguém passa sem lutar.',
+    lines: [
+      S('Uma aldeia de lagartos. Eles têm casas, Hex. Família.'),
+      X('E defendem o Rei. Cada área só abre quando todos caírem.'),
+      S('Eu não gosto de lutar com quem tem família.'),
+      X('Eles não são de verdade, Ossian. Nada aqui é. Só tu.'),
+    ],
+  },
+  lizardking: {
+    title: 'Trono do Rei Lagarto',
+    blurb: 'O Rei Lagarto nunca dorme.',
+    lines: [
+      S('O Rei Lagarto. Ele está olhando para mim... e para você, Hex.'),
+      X('Ele cospe veneno, estica a língua: baixa, pula; alta, agacha. E salta espalhando poças.'),
+      S('Por que ele te olha com tanto ódio?'),
+      X('Velhas desavenças. Derruba ele e acabou.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

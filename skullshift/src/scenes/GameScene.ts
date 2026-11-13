@@ -1983,11 +1983,12 @@ export class GameScene extends Phaser.Scene {
   /** Caverna Submarina: vira Tubarão (com fumaça) e passa a nadar livre. */
   private becomeShark(p: Fighter): void {
     if (!p.alive) return;
-    p.applyChar('shark', p.feet);
+    const as = LEVELS[this.levelIndex].underseaAs ?? 'shark';
+    p.applyChar(as, p.feet);
     p.freeSwim = true;
     p.waterY = this.level.waterY;
     this.smokeBurst(p.x, p.feet, PLAYER_TINT[0], 0.8);
-    this.ui?.hud?.setChar(0, 'shark');
+    this.ui?.hud?.setChar(0, as);
   }
 
   /** Variante: vida extra (elite) e acessórios desenhados que acompanham a cabeça. */

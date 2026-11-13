@@ -108,8 +108,11 @@ export interface LevelDef {
   field?: FieldDef;
   /** Elementos do mar (maré, canhões, caixotes, águas-vivas...). */
   sea?: SeaDef;
-  /** Fase debaixo d'água: a caveira vira Tubarão e nada livre. */
+  /** Fase debaixo d'água: a caveira vira Tubarão (ou `underseaAs`) e nada livre. */
   undersea?: boolean;
+  underseaAs?: 'shark' | 'lizard';
+  /** Água do pântano (verde-escura) em vez do mar azul. */
+  swamp?: boolean;
   /** Corrida e tiro: segurar ATACAR atira ossos; inimigos chegam em ondas. */
   gun?: { spawns: CharId[]; every: number };
   /** Desafio do mausoléu: proteger a urna das assombrações. */
@@ -2209,6 +2212,255 @@ export const LEVEL_GOBLINKING: LevelDef = {
   },
 };
 
+
+// ---------- Área 3: Lagoa dos Lagartos ----------
+
+const SWAMP = { theme: 'shore' as const, tiles: 'tiles_swamp', swamp: true, storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+
+export const LEVEL_SWAMPEDGE: LevelDef = {
+  ...SWAMP,
+  id: 'swampedge',
+  name: 'Margem do Pântano',
+  intro: 'A lagoa dos lagartos. Água parada, musgo e lagartos que cospem veneno.',
+  winText: 'Você chegou à lagoa!',
+  sea: { plankTex: 'lily', planks: [[2, 8, 2, 0], [3, 6, 2, 0]] },
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], deco: [[2, 'dead_tree'], [15, 'bush']], enemies: [[15, 'lizard']], sign: [3, 'Lagoa dos Lagartos.\nCuidado com o veneno!'] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], deco: [[14, 'bush']], enemies: [[8, 'lizard_poison'], [16, 'lizard']] },
+    { segments: [[0, 8, 0], [10, 10, 0]], floats: [[13, 2, 2]], enemies: [[14, 'lizard_tide']] },
+    { segments: [[0, 6, 0], [8, 12, 0]], deco: [[12, 'stone']], enemies: [[12, 'lizard_poison'], [17, 'gnoll_wreck']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'dead_tree'], [16, 'bush']], enemies: [[10, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_LILYPADS: LevelDef = {
+  ...SWAMP,
+  id: 'lilypads',
+  name: 'Vitórias-Régias',
+  intro: 'Folhas gigantes boiam na lagoa. Elas afundam logo depois de pisadas!',
+  winText: 'Você atravessou as vitórias-régias!',
+  sea: {
+    plankTex: 'lily',
+    planks: [
+      [0, 6, 2, 0],
+      [0, 9, 2, 0],
+      [1, 4, 2, 0],
+      [1, 7, 2, 0],
+      [1, 10, 2, 0],
+      [1, 13, 2, 0],
+      [2, 5, 2, 0],
+      [2, 8, 2, 0],
+      [2, 12, 2, 0],
+      [3, 3, 2, 0],
+      [3, 6, 2, 0],
+      [3, 9, 2, 0],
+      [3, 12, 2, 0],
+      [3, 15, 2, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [12, 8, 0]], deco: [[2, 'bush']], enemies: [[16, 'lizard']], sign: [3, 'Folhas afundam:\nnão pare em cima!'] },
+    { segments: [[0, 3, 0], [16, 4, 0]], enemies: [[18, 'lizard_poison']] },
+    { segments: [[0, 4, 0], [15, 5, 0]], enemies: [[17, 'lizard_tide']] },
+    { segments: [[0, 2, 0], [18, 2, 0]] },
+    { segments: [[0, 20, 0]], deco: [[6, 'dead_tree']], enemies: [[9, 'lizard_poison'], [15, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_SWAMPTIDE: LevelDef = {
+  ...SWAMP,
+  id: 'swamptide',
+  name: 'Cheia do Pântano',
+  intro: 'A água do pântano sobe e desce. Fique no alto ou em cima das toras.',
+  winText: 'A cheia passou!',
+  sea: {
+    tide: { high: 80, hold: 4500, move: 2400 },
+    crateTex: 'log_float',
+    crates: [
+      [1, 9, 2],
+      [3, 4, 2],
+      [3, 9, 2],
+      [3, 14, 2],
+    ],
+  },
+  screens: [
+    { segments: [[0, 7, 0], [7, 3, 1], [10, 5, 0], [15, 2, 2], [17, 3, 0]], floats: [[12, 2, 2]], enemies: [[18, 'lizard']] },
+    { segments: [[0, 3, 1], [3, 6, 0], [11, 4, 0], [15, 5, 1]], floats: [[6, 2, 2]], enemies: [[13, 'lizard_poison']] },
+    { segments: [[0, 5, 0], [5, 2, 2], [7, 6, 0], [13, 2, 2], [15, 5, 0]], floats: [[9, 3, 3]], enemies: [[10, 'lizard_tide']] },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 1], [16, 4, 0]], enemies: [[12, 'lizard_poison']] },
+    { segments: [[0, 6, 0], [6, 3, 2], [9, 6, 0], [15, 5, 1]], floats: [[11, 3, 3]], enemies: [[17, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_POISONMARSH: LevelDef = {
+  ...SWAMP,
+  id: 'poisonmarsh',
+  name: 'Brejo Venenoso',
+  intro: 'Espinhos venenosos no chão e lagartos roxos cuspindo veneno de todo lado.',
+  winText: 'Você saiu do brejo inteiro!',
+  sea: {
+    corals: [
+      [0, 8, 0],
+      [0, 12, 0],
+      [1, 4, 0],
+      [1, 13, 0],
+      [2, 9, 0],
+      [3, 3, 0],
+      [3, 15, 0],
+      [4, 7, 0],
+      [4, 12, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[9, 3, 2]], deco: [[2, 'dead_tree']], enemies: [[16, 'lizard_poison']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [12, 8, 0]], enemies: [[10, 'lizard_poison'], [17, 'lizard_poison']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 2]], enemies: [[12, 'lizard_croc']] },
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3], [12, 3, 3]], enemies: [[9, 'lizard_poison'], [18, 'lizard_tide']] },
+    { segments: [[0, 20, 0]], deco: [[16, 'dead_tree']], enemies: [[9, 'lizard_poison'], [14, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_FISHERMAN: LevelDef = {
+  ...SWAMP,
+  id: 'fisherman',
+  name: 'Casa do Pescador',
+  intro: 'A chave da casa do pescador sumiu com um caranguejo do brejo. Acerte-o e leve a chave!',
+  winText: 'A porta do pescador abriu!',
+  puzzle: {
+    key: [1, 10, 0],
+    keyOnCrab: true,
+    crabs: [
+      [1, 10, 0, 8],
+      [0, 14, 0, 4],
+    ],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 6, 3],
+      [1, 15, 3],
+      [2, 9, 4],
+    ],
+    springs: [
+      [0, 3, 0],
+      [2, 7, 0],
+    ],
+    ladders: [[2, 12, 0, 2]],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3]], deco: [[1, 'hut'], [18, 'bush']] },
+    { segments: [[0, 20, 0]], floats: [[14, 3, 3]], sign: [3, 'O caranguejo do brejo\nlevou a chave!'] },
+    { segments: [[0, 12, 0], [12, 8, 2]], floats: [[8, 3, 4]], deco: [[2, 'hut']] },
+  ],
+};
+
+export const LEVEL_DEEPLAGOON: LevelDef = {
+  ...SWAMP,
+  id: 'deeplagoon',
+  name: 'Fundo da Lagoa',
+  intro: 'No fundo da lagoa, a caveira vira Lagarto e nada livre. ↑ (ou PULAR) sobe, ▼ desce.',
+  winText: 'Você atravessou o fundo da lagoa!',
+  undersea: true,
+  underseaAs: 'lizard',
+  sea: {
+    corals: [
+      [0, 10, 0],
+      [1, 8, 0],
+      [1, 12, 0],
+      [2, 7, 0],
+      [2, 15, 0],
+      [3, 2, 0],
+      [4, 12, 0],
+    ],
+    jellies: [
+      [0, 13, 4, 1],
+      [1, 10, 4, 1],
+      [2, 9, 3, 0],
+      [2, 16, 4, 1],
+      [3, 10, 4, 1],
+      [4, 6, 4, 1],
+      [4, 15, 4, 1],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [6, 2, 3], [8, 12, 0]], enemies: [[16, 'lizard_tide']], sign: [2, '↑ ou PULAR sobe · ▼ desce'] },
+    { segments: [[0, 4, 0], [4, 2, 4], [6, 8, 0], [14, 2, 3], [16, 4, 0]], enemies: [[18, 'lizard_poison']] },
+    { segments: [[0, 3, 0], [3, 3, 3], [6, 6, 0], [12, 2, 4], [14, 6, 0]], enemies: [[9, 'lizard_tide']] },
+    { segments: [[0, 5, 0], [5, 2, 4], [7, 6, 0], [13, 3, 2], [16, 4, 0]], enemies: [[17, 'lizard_poison']] },
+    { segments: [[0, 8, 0], [8, 2, 4], [10, 10, 0]], enemies: [[14, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_SWAMPGUN: LevelDef = {
+  ...SWAMP,
+  id: 'swampgun',
+  name: 'Tiro no Brejo',
+  intro: 'Corrida e tiro! Lagartos e náufragos saem do brejo sem parar.',
+  winText: 'O brejo foi limpo a tiros!',
+  gun: { spawns: ['lizard', 'lizard_poison', 'gnoll_wreck'] as CharId[], every: 1900 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], enemies: [[14, 'lizard']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'lizard_poison'], [16, 'gnoll_wreck']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'lizard_croc']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], enemies: [[5, 'lizard_tide'], [16, 'lizard_poison']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'lizard_poison'], [12, 'gnoll_wreck'], [16, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_MANGROVE: LevelDef = {
+  ...SWAMP,
+  id: 'mangrove',
+  name: 'Mangue',
+  intro: 'Raízes e galhos sobre a água. Toras rolam pelos troncos caídos.',
+  winText: 'Você atravessou o mangue!',
+  field: {
+    boulderTex: 'log_roll',
+    boulders: [
+      [1, 18, 2, -1, 3600],
+      [3, 18, 1, -1, 3200],
+    ],
+    mushrooms: [[2, 3, 0]],
+  },
+  screens: [
+    { segments: [[0, 5, 0], [8, 3, 1], [14, 6, 0]], floats: [[5, 3, 2], [11, 3, 2]], deco: [[2, 'dead_tree']], enemies: [[17, 'lizard_croc']] },
+    { segments: [[0, 4, 0], [7, 3, 2], [13, 7, 2]], floats: [[4, 3, 1]], enemies: [[16, 'lizard_poison']] },
+    { segments: [[0, 6, 0], [11, 3, 2], [16, 4, 0]], floats: [[7, 3, 4]], enemies: [[17, 'lizard_tide']] },
+    { segments: [[0, 3, 0], [6, 4, 1], [13, 7, 1]], floats: [[3, 3, 2], [10, 3, 3]], enemies: [[16, 'lizard_croc']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'dead_tree'], [15, 'dead_tree']], enemies: [[9, 'lizard_poison'], [14, 'lizard_croc']] },
+  ],
+};
+
+export const LEVEL_LIZARDVILLAGE: LevelDef = {
+  ...SWAMP,
+  id: 'lizardvillage',
+  name: 'Aldeia dos Lagartos',
+  intro: 'A aldeia dos lagartos. Cada área só abre quando todos os moradores caírem.',
+  winText: 'O caminho até o Rei Lagarto está aberto!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[2, 'hut'], [15, 'hut']], enemies: [[9, 'lizard'], [16, 'lizard_poison']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'hut']], enemies: [[10, 'lizard_tide'], [16, 'lizard']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'hut'], [15, 'hut']], enemies: [[11, 'lizard_croc']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'hut']], enemies: [[9, 'lizard_poison'], [12, 'lizard'], [17, 'lizard_tide']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'hut'], [16, 'hut']], enemies: [[8, 'lizard_croc'], [13, 'lizard_poison'], [16, 'lizard']] },
+  ],
+};
+
+export const LEVEL_LIZARDKING: LevelDef = {
+  ...SWAMP,
+  id: 'lizardking',
+  name: 'Trono do Rei Lagarto',
+  intro: 'O Rei Lagarto nunca dorme. Ele cospe veneno, estica a língua e salta espalhando poças.',
+  winText: 'O Rei Lagarto caiu! Fragmento da coroa recuperado!',
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[2, 'dead_tree']], enemies: [[14, 'lizard_poison'], [18, 'lizard']] },
+    { segments: [[0, 6, 0], [8, 6, 1], [16, 4, 0]], enemies: [[10, 'lizard_croc']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'lizardking',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'dead_tree'], [18, 'dead_tree']] },
+  },
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -2286,6 +2538,17 @@ export const LEVELS: LevelDef[] = [
   LEVEL_BLUEFIRE,
   LEVEL_TREASURY,
   LEVEL_GOBLINKING,
+  // Área 3 (Lagoa dos Lagartos).
+  LEVEL_SWAMPEDGE,
+  LEVEL_LILYPADS,
+  LEVEL_SWAMPTIDE,
+  LEVEL_POISONMARSH,
+  LEVEL_FISHERMAN,
+  LEVEL_DEEPLAGOON,
+  LEVEL_SWAMPGUN,
+  LEVEL_MANGROVE,
+  LEVEL_LIZARDVILLAGE,
+  LEVEL_LIZARDKING,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];
@@ -2682,10 +2945,11 @@ export class Level {
     const s = this.scene;
     const dark = theme === 'cave';
     const lava = theme === 'volcano';
-    const body = lava ? 0xe8501f : dark ? 0x1d5d6b : 0x39b5fd;
+    const swamp = !!this.def.swamp;
+    const body = lava ? 0xe8501f : swamp ? 0x3a6a4a : dark ? 0x1d5d6b : 0x39b5fd;
     // Tudo o que é criado aqui com rolagem só no Y é "água" e sobe/desce com a maré.
     const before = new Set(s.children.list);
-    const edge = lava ? 0xffd36b : dark ? 0x5fa9b5 : 0x8fd9ff;
+    const edge = lava ? 0xffd36b : swamp ? 0x8ac89a : dark ? 0x5fa9b5 : 0x8fd9ff;
     s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
     if (lava) s.add.rectangle(0, WATER_Y + 40, W, H, 0xb8321a).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.6);
     s.add.rectangle(0, WATER_Y, W, 4, edge).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);

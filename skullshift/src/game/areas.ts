@@ -60,7 +60,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei Lagarto',
     kingAnim: 'lizard_idle',
     color: 0x58b947,
-    levels: [],
+    levels: ['swampedge', 'lilypads', 'swamptide', 'poisonmarsh', 'fisherman', 'deeplagoon', 'swampgun', 'mangrove', 'lizardvillage', 'lizardking'],
     pos: [430, 205],
     unlock: 'after-pradaria',
   },

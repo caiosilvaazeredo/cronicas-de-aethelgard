@@ -75,7 +75,11 @@ originais (extraídas com PIL do PNG).
   `SeaSystem` (maré de água/lava, caixotes, tábuas, canhões, casulos/águas-vivas, corais/espinhos),
   escuridão com tochas (`haunt.torches`), submerso (`undersea` + `underseaAs`), pântano (`swamp`), céu de brasa (`ember`).
 - Memórias (`MemoryScene`) e final (`StoryScene` + `REVELATION`/`ENDING_FREE`/`ENDING_HOME`).
-- Varredura automática: todas as fases carregam sem erro (script em scratchpad: inicia cada índice de `LEVELS`).
+- Varredura automática: todas as fases carregam sem erro.
+- `scripts/check-reach.cjs`: verificador de alcance (pulo/pulo duplo/molas/cogumelos/vento/escadas/caixotes) em
+  todas as fases de plataforma. Com pique, todas passam; sem pique, só a Escadaria (exige pique, de propósito)
+  e a Biblioteca (pontes-fantasma de alavanca, que o verificador não simula). Rode depois de mexer em fases.
+- Fundos por área em parallax (`Level.areaBackdrop`, escolhido pelo tileset).
 
 ## Ideias para continuar
 

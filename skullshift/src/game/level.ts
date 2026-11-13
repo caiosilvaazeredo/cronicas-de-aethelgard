@@ -3093,9 +3093,76 @@ export class Level {
     else if (t === 'volcano') this.volcanoBackground();
     else if (t === 'haunted') this.hauntedBackground();
     else this.skyBackground(t === 'sky');
+    this.areaBackdrop();
     if (this.hasWater) this.water(t);
     else if (t === 'haunted') this.hauntedVoid();
     else this.cloudSea();
+  }
+
+  /**
+   * Fundo próprio de cada área (silhuetas em parallax, feitas com sprites do jogo tingidos):
+   * colinas e casas na Pradaria, fileiras de árvores no Bosque, árvores mortas e névoa na Lagoa,
+   * velas de navio na Maré, escoras de madeira e lanternas nas Minas, teias gigantes nas Teias.
+   */
+  private areaBackdrop(): void {
+    const s = this.scene;
+    const tiles = this.def.tiles;
+    const span = (f: number) => W + (this.width - W) * f + 200;
+    const rng = new Phaser.Math.RandomDataGenerator([`backdrop-${this.def.id}`]);
+    const D = DEPTH.clouds + 0.3;
+    if (tiles === 'tiles_prairie') {
+      const g = s.add.graphics().setScrollFactor(0.15, 1).setDepth(D);
+      for (let x = -200; x < span(0.15); x += rng.between(220, 320)) {
+        const w = rng.between(320, 520);
+        g.fillStyle(0xd8e0a0, 0.3).fillEllipse(x, 480, w, rng.between(150, 220));
+      }
+      for (let x = 120; x < span(0.3); x += rng.between(420, 620)) {
+        s.add.image(x, 452, `bld_yellow_house${1 + rng.between(0, 2)}`).setOrigin(0.5, 1).setScale(0.45).setTint(0x8a8a5a).setAlpha(0.6).setScrollFactor(0.3, 1).setDepth(D + 0.1);
+      }
+    } else if (tiles === 'tiles_forest') {
+      for (const [f, tint, sc, y, a] of [
+        [0.2, 0x2f5a4a, 0.7, 470, 0.55],
+        [0.4, 0x3f7a4a, 0.95, 490, 0.7],
+      ] as const) {
+        for (let x = -100; x < span(f); x += rng.between(70, 120)) {
+          s.add.sprite(x, y, 'tree').setOrigin(0.5, 1).setScale(sc * rng.realInRange(0.85, 1.15)).setTint(tint).setAlpha(a).setScrollFactor(f, 1).setDepth(D + f).play({ key: 'tree', startFrame: rng.between(0, 7) });
+        }
+      }
+    } else if (tiles === 'tiles_swamp') {
+      for (let x = -100; x < span(0.3); x += rng.between(160, 260)) {
+        s.add.image(x, 470, 'dead_tree').setOrigin(0.5, 1).setScale(rng.realInRange(0.5, 0.8)).setTint(0x3a5a4a).setAlpha(0.55).setScrollFactor(0.3, 1).setDepth(D);
+      }
+      for (let i = 0; i < 3; i++) {
+        const mist = s.add.rectangle(0, 380 + i * 34, W, 30, 0xd8f0e0, 0.12).setOrigin(0).setScrollFactor(0, 1).setDepth(D + 0.4);
+        s.tweens.add({ targets: mist, alpha: 0.04, duration: 2400 + i * 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      }
+    } else if (tiles === 'tiles_sand' || tiles === 'tiles_ship') {
+      // Velas de navios no horizonte.
+      const g = s.add.graphics().setScrollFactor(0.12, 1).setDepth(D);
+      for (let x = 160; x < span(0.12); x += rng.between(380, 600)) {
+        const h = rng.between(50, 80);
+        g.fillStyle(0x5a7a9a, 0.5).fillRect(x - 2, 470 - h, 4, h);
+        g.fillStyle(0xe8f0f8, 0.55).fillTriangle(x + 3, 470 - h, x + 3, 462, x + h * 0.6, 462);
+        g.fillStyle(0xd0dce8, 0.5).fillTriangle(x - 3, 470 - h + 10, x - 3, 462, x - h * 0.4, 462);
+        g.fillStyle(0x6a5a4a, 0.5).fillRect(x - h * 0.45, 462, h * 1.1, 8);
+      }
+    } else if (tiles === 'tiles_mine') {
+      // Escoras de madeira da mina e lanternas penduradas.
+      const g = s.add.graphics().setScrollFactor(0.5, 1).setDepth(D);
+      for (let x = 60; x < span(0.5); x += 300) {
+        g.fillStyle(0x3a2a1a, 0.7).fillRect(x, 120, 16, 360);
+        g.fillStyle(0x3a2a1a, 0.7).fillRect(x + 160, 120, 16, 360);
+        g.fillStyle(0x4a3420, 0.75).fillRect(x - 10, 110, 196, 20);
+        const glow = s.add.image(x + 88, 160, 'aura').setTint(0xffb040).setScale(0.6).setAlpha(0.35).setScrollFactor(0.5, 1).setDepth(D + 0.05).setBlendMode(Phaser.BlendModes.ADD);
+        s.tweens.add({ targets: glow, alpha: 0.2, duration: 900 + (x % 400), yoyo: true, repeat: -1 });
+        g.fillStyle(0x1d1a2b, 0.8).fillRect(x + 82, 130, 12, 18);
+        g.fillStyle(0xffc060, 0.8).fillRect(x + 84, 133, 8, 12);
+      }
+    } else if (this.def.theme === 'cave' && tiles === 'tiles_cave' && !this.def.undersea) {
+      for (let x = 100; x < span(0.35); x += rng.between(380, 560)) {
+        s.add.image(x, rng.between(60, 140), 'web_px').setScale(rng.realInRange(1.6, 2.4)).setTint(0x9fc6cc).setAlpha(0.12).setScrollFactor(0.35, 1).setDepth(D);
+      }
+    }
   }
 
   /** Casarão por dentro: parede, janelas com lua, relâmpagos de vez em quando e poeira no ar. */

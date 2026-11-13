@@ -1119,7 +1119,18 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       S('Você também foi... vivo?'),
       X('Atira, Ossian. O filme está acabando.'),
     ],
-  },};
+  },
+  hollowtree: {
+    title: 'Árvore Oca',
+    blurb: 'Uma árvore gigante que não estava ali antes. Dentro dela, um tesouro.',
+    lines: [
+      S('Hex, essa árvore não estava aqui quando eu passei.'),
+      X('Árvores velhas aparecem para quem já andou o bastante. Esta guarda ouro.'),
+      S('E quem guardou ouro dentro de uma árvore?'),
+      X('Alguém que pensava em voltar. Ninguém volta. Pega tudo.'),
+    ],
+  },
+};
 
 /** Um capítulo por fase, na ordem de LEVELS. */
 export const CHAPTERS: Chapter[] = LEVELS.map((l) => CHAPTER_BY_ID[l.id] ?? { title: l.name, blurb: l.intro ?? '', lines: [] });

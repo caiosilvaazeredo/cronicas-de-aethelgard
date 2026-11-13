@@ -312,7 +312,7 @@ export class HowToScene extends Phaser.Scene {
     const cols = P ? 2 : 3;
     const tips: Array<[string, string]> = [
       ['skull_avatar', 'Um golpe mata.\nVocê também!'],
-      ['shield', 'Segure para TRÁS: defesa.\nColado no rival, o golpe\nQUEBRA a defesa.'],
+      ['shield', 'DEFESA: segure o botão.\nToque para TRÁS na hora\ndo golpe: CONTRA!'],
       ['crouch', 'Agachado: desvia de tiros\ne dá golpe baixo.'],
       ['double', 'Aperte pular no ar:\npulo duplo.'],
       ['items', 'Item de outro personagem\nno chão: PEGAR transforma.'],

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BODY_FONT, FONT, VIEW, W, wantsTouchControls } from '../config';
+import { BODY_FONT, FONT, VIEW, W, hasKeyboard, wantsTouchControls } from '../config';
 import { DEVICES, connectedPads, padOrdinal, type DeviceId } from '../game/controls';
 import { backdrop } from '../ui/backdrop';
 import { isFreePlay } from '../game/progress';
@@ -47,7 +47,8 @@ export class ControlsScene extends Phaser.Scene {
     this.tray = undefined;
     this.padCount = -1;
     this.prevPad = [];
-    this.choice = data.devices ?? this.defaults();
+    // Escolha guardada que não vale mais (ex.: teclado no celular sem teclado): volta ao padrão.
+    this.choice = data.devices && data.devices.every((d) => this.enabled(d)) ? data.devices : this.defaults();
   }
 
   private get players(): number {
@@ -62,6 +63,7 @@ export class ControlsScene extends Phaser.Scene {
     const ord = padOrdinal(d);
     if (ord !== null) return connectedPads(this).length > ord;
     if (d === 'touch') return wantsTouchControls();
+    if (d.startsWith('kb')) return hasKeyboard();
     return true;
   }
 
@@ -135,7 +137,7 @@ export class ControlsScene extends Phaser.Scene {
     const pads = connectedPads(this);
     if (pads.length !== this.padCount) {
       this.padCount = pads.length;
-      this.choice = this.choice.map((c, i) => (this.enabled(c) ? c : this.options(i)[0] ?? 'kb-full'));
+      this.choice = this.choice.map((c, i) => (this.enabled(c) ? c : this.options(i)[0] ?? (wantsTouchControls() ? 'touch' : 'kb-full')));
       this.refresh();
     }
     pads.forEach((pad, k) => {

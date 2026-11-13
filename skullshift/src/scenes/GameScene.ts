@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
 import { hasUpgrade } from '../game/upgrades';
-import { DEPTH, FLOOR_Y, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
+import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -181,6 +181,7 @@ export class GameScene extends Phaser.Scene {
     this.webs = [];
     this.items = [];
     this.falling = [];
+    this.chaos = { nextDrop: 0, nextEvent: 0, event: undefined, until: 0, gravity: 0, orbs: [], hazards: [], windDir: 1 };
     this.reserves = [];
     this.projectiles = [];
     this.boss = undefined;
@@ -566,6 +567,7 @@ export class GameScene extends Phaser.Scene {
     this.updateItems(time);
     this.updateReserve(time);
     this.updateBeats(time);
+    if (this.mode !== 'story' && !this.ended) this.updateChaos(time);
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
     this.escape?.update(time, dt);
@@ -883,6 +885,198 @@ export class GameScene extends Phaser.Scene {
     };
     this.events.once('shutdown', end);
     this.time.delayedCall(ms, () => this.tweens.add({ targets: all, alpha: 0, duration: 450, onComplete: end }));
+  }
+
+  // ---------- versus: o caos (itens caindo, eventos, ajudantes) ----------
+
+  private chaos: {
+    nextDrop: number;
+    nextEvent: number;
+    event?: 'wind' | 'bones' | 'items' | 'lowgrav' | 'assist';
+    until: number;
+    gravity: number;
+    orbs: Array<{ x: number; feet: number; img: Phaser.GameObjects.Container; expire: number }>;
+    hazards: Array<{ x: number; y: number; vy: number; img: Phaser.GameObjects.Image; mark: Phaser.GameObjects.Ellipse; land: number; t0: number }>;
+    windDir: number;
+  } = { nextDrop: 0, nextEvent: 0, until: 0, gravity: 0, orbs: [], hazards: [], windDir: 1 };
+
+  private static readonly DROP_ITEMS: ItemId[] = ['bone', 'harpoon', 'spear', 'crest', 'web', 'wing', 'torch', 'honey', 'ember', 'acorn', 'horn'];
+
+  /** Um ponto de chão dentro da tela (para o item cair em cima de algo). */
+  private groundInView(): [number, number] | null {
+    const v = this.cameras.main.worldView;
+    for (let k = 0; k < 12; k++) {
+      const x = Phaser.Math.Between(Math.round(v.x + 80), Math.round(v.right - 80));
+      const g = this.level.groundY(x);
+      if (g !== null) return [x, g];
+    }
+    return null;
+  }
+
+  /** Item caindo do céu de paraquedas de fumaça: vira item no chão (some depois de um tempo). */
+  private dropItem(kind: ItemId): void {
+    const spot = this.groundInView();
+    if (!spot) return;
+    const [x, g] = spot;
+    const top = this.cameras.main.worldView.y - 40;
+    const spr = this.add.sprite(x, top, ITEM_TEXTURE[kind], 0).setDepth(DEPTH.items + 1);
+    if (kind === 'torch') spr.play('torch_flame');
+    const glow = this.add.image(x, top, 'aura').setTint(0xfff1a8).setBlendMode(Phaser.BlendModes.ADD).setScale(0.6).setDepth(DEPTH.items);
+    const mark = this.add.ellipse(x, g, 46, 12, 0xfff7a8, 0.5).setDepth(DEPTH.items);
+    this.tweens.add({ targets: mark, scaleX: 1.4, alpha: 0.2, duration: 300, yoyo: true, repeat: -1 });
+    this.tweens.add({
+      targets: [spr, glow],
+      y: g - 24,
+      duration: 1400,
+      ease: 'Sine.easeIn',
+      onUpdate: () => spr.setX(x + Math.sin(this.time.now / 180) * 10),
+      onComplete: () => {
+        [spr, glow, mark].forEach((o) => o.destroy());
+        this.spawnItem(x, kind, false, 12000, undefined, g);
+      },
+    });
+  }
+
+  /** Orbe do ajudante: quem pegar chama uma criatura que luta ao seu lado por um tempo. */
+  private dropAssist(): void {
+    const spot = this.groundInView();
+    if (!spot) return;
+    const [x, g] = spot;
+    const glow = this.add.image(0, 0, 'aura').setTint(0xb46bff).setBlendMode(Phaser.BlendModes.ADD).setScale(0.8);
+    const core = this.add.circle(0, 0, 14, 0xe8d4ff).setStrokeStyle(4, 0x7a3ad0);
+    const q = this.add.text(0, 0, '★', { fontFamily: FONT, fontSize: '18px', color: '#7a3ad0' }).setOrigin(0.5);
+    const lab = this.add.text(0, -40, 'AJUDANTE', { fontFamily: FONT, fontSize: '14px', color: '#e8d4ff', stroke: '#2a1640', strokeThickness: 5 }).setOrigin(0.5);
+    const img = this.add.container(x, this.cameras.main.worldView.y - 40, [glow, core, q, lab]).setDepth(DEPTH.items + 1);
+    this.tweens.add({ targets: img, y: g - 34, duration: 1200, ease: 'Bounce.easeOut' });
+    this.tweens.add({ targets: glow, scale: 1.1, alpha: 0.5, duration: 500, yoyo: true, repeat: -1 });
+    this.chaos.orbs.push({ x, feet: g, img, expire: this.time.now + 15000 });
+  }
+
+  /** Chama um ajudante para o jogador pi: criatura aleatória, do time dele, por 12 s. */
+  private summonAssist(pi: number): void {
+    const p = this.players[pi];
+    const char = Phaser.Utils.Array.GetRandom(['gnoll', 'goblin', 'lizard', 'shark', 'sgnome', 'torchgob', 'imp', 'minotaur'] as CharId[]);
+    const x = p.x - p.facing * 60;
+    const f = new Fighter(this, x, p.feet, char, p.team, 'enemy');
+    this.setupSwim(f);
+    f.facing = p.facing;
+    f.onProjectile = (ff) => this.spawnProjectile(ff);
+    this.physics.add.collider(f.sprite, this.level.ground);
+    const foe = () => this.players[1 - pi] ?? null;
+    this.enemies.push({ f, ai: new EnemyAI(f, foe, this.level) });
+    f.sprite.setTint(PLAYER_TINT[pi]);
+    this.time.delayedCall(260, () => f.sprite.active && f.sprite.clearTint());
+    this.smokeBurst(x, p.feet, 0xb46bff, 1);
+    sfx('pick');
+    const tag = this.add.text(x, p.feet - 120, `AJUDANTE DE ${p.label}`, { fontFamily: FONT, fontSize: '16px', color: PLAYER_HEX[pi], stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx);
+    const follow = () => (f.alive ? tag.setPosition(f.x, f.feet - f.labelHeight - 30) : tag.setVisible(false));
+    this.events.on('update', follow);
+    this.time.delayedCall(12000, () => {
+      this.events.off('update', follow);
+      tag.destroy();
+      if (!f.alive) return;
+      // Vai embora numa nuvem roxa.
+      this.smokeBurst(f.x, f.feet, 0xb46bff, 1);
+      f.kill('hit', 1);
+      this.time.delayedCall(300, () => {
+        this.enemies = this.enemies.filter((e) => e.f !== f);
+        f.destroy();
+      });
+    });
+  }
+
+  private updateChaos(time: number): void {
+    const c = this.chaos;
+    if (!c.nextDrop) {
+      c.nextDrop = time + 6000;
+      c.nextEvent = time + 18000;
+      c.gravity = GRAVITY;
+      this.physics.world.gravity.y = GRAVITY;
+    }
+    const dt = this.game.loop.delta / 1000;
+    if (time > c.nextDrop) {
+      c.nextDrop = time + Phaser.Math.Between(8000, 13000);
+      if (Math.random() < 0.25) this.dropAssist();
+      else this.dropItem(Phaser.Utils.Array.GetRandom(GameScene.DROP_ITEMS));
+    }
+    // Eventos aleatórios, com aviso no meio da tela.
+    if (!c.event && time > c.nextEvent) {
+      const ev = Phaser.Utils.Array.GetRandom(['wind', 'bones', 'items', 'lowgrav', 'assist'] as const);
+      c.event = ev;
+      c.until = time + (ev === 'items' || ev === 'assist' ? 1500 : 8000);
+      c.windDir = Math.random() < 0.5 ? -1 : 1;
+      const TEXT: Record<typeof ev, [string, string]> = {
+        wind: ['VENTANIA!', c.windDir > 0 ? 'o vento empurra para a direita ➜' : '⬅ o vento empurra para a esquerda'],
+        bones: ['CHUVA DE OSSOS!', 'olhe as sombras no chão'],
+        items: ['CHUVA DE ITENS!', 'corra para pegar primeiro'],
+        lowgrav: ['GRAVIDADE BAIXA!', 'pulos altíssimos'],
+        assist: ['AJUDANTES!', 'pegue o orbe roxo: uma criatura luta com você'],
+      };
+      this.ui?.banner(TEXT[ev][0], 1600, TEXT[ev][1]);
+      sfx('boss');
+      if (ev === 'items') for (let k = 0; k < 4; k++) this.time.delayedCall(k * 250, () => this.dropItem(Phaser.Utils.Array.GetRandom(GameScene.DROP_ITEMS)));
+      if (ev === 'assist') for (let k = 0; k < 2; k++) this.time.delayedCall(k * 400, () => this.dropAssist());
+      if (ev === 'lowgrav') this.physics.world.gravity.y = c.gravity * 0.45;
+    }
+    if (c.event && time > c.until) {
+      if (c.event === 'lowgrav') this.physics.world.gravity.y = c.gravity;
+      c.event = undefined;
+      c.nextEvent = time + Phaser.Math.Between(20000, 30000);
+    }
+    const fighters = [...this.players, ...this.enemies.map((e) => e.f)];
+    if (c.event === 'wind') {
+      for (const f of fighters) if (f.alive) f.body.x += c.windDir * 95 * dt;
+      if (Math.random() < 0.5) {
+        const v = this.cameras.main.worldView;
+        const y = Phaser.Math.Between(Math.round(v.y + 40), Math.round(v.bottom - 120));
+        const streak = this.add.rectangle(c.windDir > 0 ? v.x : v.right, y, Phaser.Math.Between(40, 120), 3, 0xffffff, 0.5).setDepth(DEPTH.fx);
+        this.tweens.add({ targets: streak, x: streak.x + c.windDir * v.width, duration: 600, onComplete: () => streak.destroy() });
+      }
+    }
+    if (c.event === 'bones' && Math.random() < dt * 3) {
+      const spot = this.groundInView();
+      if (spot) {
+        const [x, g] = spot;
+        const mark = this.add.ellipse(x, g, 50, 14, 0x10223a, 0.45).setDepth(DEPTH.items);
+        const img = this.add.image(x, this.cameras.main.worldView.y - 60, 'bone', 0).setScale(1.4).setDepth(DEPTH.fx);
+        c.hazards.push({ x, y: img.y, vy: 0, img, mark, land: g, t0: time });
+      }
+    }
+    c.hazards = c.hazards.filter((h) => {
+      // Fica um instante parado no alto (a sombra avisa) e despenca.
+      if (time - h.t0 > 650) h.vy += 2600 * dt;
+      h.y += h.vy * dt;
+      h.img.setY(h.y).setAngle(h.img.angle + 600 * dt);
+      h.mark.setScale(0.6 + Math.min(1, (time - h.t0) / 900) * 0.6);
+      for (const f of fighters)
+        if (f.alive && !f.invulnerable && Math.abs(f.x - h.x) < 34 && h.y > f.feet - f.def.head && h.y < f.feet) {
+          this.killFighter(f, null, 'hit');
+          h.y = h.land;
+        }
+      if (h.y >= h.land) {
+        this.fx('dust', h.x, h.land - 16, 1.1);
+        h.img.destroy();
+        h.mark.destroy();
+        return false;
+      }
+      return true;
+    });
+    // Orbes de ajudante: pegar com o botão de pegar (ou só encostar, no toque).
+    c.orbs = c.orbs.filter((o) => {
+      if (time > o.expire) {
+        o.img.destroy();
+        return false;
+      }
+      for (let i = 0; i < this.players.length; i++) {
+        const p = this.players[i];
+        if (!p.alive || Math.abs(p.x - o.x) > 44 || Math.abs(p.feet - o.feet) > 40) continue;
+        if (!p.intent.pick && this.devices[i] !== 'touch') continue;
+        o.img.destroy();
+        this.summonAssist(i);
+        return false;
+      }
+      return true;
+    });
   }
 
   // ---------- caixa de reserva ----------
@@ -1934,6 +2128,8 @@ export class GameScene extends Phaser.Scene {
       this.events.off('shutdown', finish);
       [clone, back, front, glow].forEach((o) => o.active && o.destroy());
       p.shiftHide = false;
+      // Se uma conversa congelar o jogo logo em seguida, o corpo já tem de aparecer.
+      if (p.sprite.active) p.sprite.setAlpha(1).setVisible(true);
     };
     const tick = () => {
       const t = (this.time.now - t0) / DUR;

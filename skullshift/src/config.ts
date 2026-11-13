@@ -39,6 +39,16 @@ export const FONT = '"Anak Manja PT", "Arial Black", "Arial Bold", Arial, sans-s
 export const BODY_FONT = '"Matcha Style", "Trebuchet MS", Arial, sans-serif';
 
 /** Mostra os controles na tela: aparelho com toque, ou ?touch=1 na URL (para testar no PC). */
+/**
+ * Teclado físico: no computador vale sempre; no celular/tablet só depois que alguém apertar uma
+ * tecla de verdade (teclado conectado). Assim o celular não oferece "Teclado" sem ter um.
+ */
+let keyboardSeen = false;
+if (typeof window !== 'undefined') window.addEventListener('keydown', () => (keyboardSeen = true), { capture: true });
+export function hasKeyboard(): boolean {
+  return keyboardSeen || !wantsTouchControls();
+}
+
 export function wantsTouchControls(): boolean {
   try {
     if (new URLSearchParams(location.search).get('touch') === '1') return true;

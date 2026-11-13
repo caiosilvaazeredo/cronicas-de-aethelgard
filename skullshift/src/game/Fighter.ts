@@ -263,7 +263,8 @@ export class Fighter {
    * golpe. Golpe corpo a corpo: quebra a defesa de quem atacou. Tiro: volta para quem atirou.
    */
   parries(fromX: number): boolean {
-    // Andar para trás já defende; o contra vale para quem TOCOU para trás agora (não para o botão de defesa).
+    // O contra vale para quem TOCOU para trás AGORA (um toque novo, no tempo certo). Quem já vinha
+    // segurando a direção precisa soltar e tocar de novo; segurar a defesa também não conta.
     if (!this.isPlayer || !this.alive || this.intent.guard || this.isStunned || this.zipping) return false;
     const toward = Math.sign(fromX - this.x) || this.facing;
     return this.lastMoveSign === -toward && this.scene.time.now - this.moveStartAt <= PARRY_MS + this.parryBonus;
@@ -338,7 +339,8 @@ export class Fighter {
       // Para onde olhar: oponente próximo (estilo luta) ou direção do movimento.
       // Fugindo de um oponente longe, corre normalmente; perto, anda de costas defendendo.
       const near = this.faceTarget !== null && Math.abs(this.faceTarget - this.x) < 220;
-      if (this.faceTarget !== null && (near || it.move === 0)) {
+      // Jogador: sem andar de costas. Andando, olha para onde anda; parado, encara o oponente.
+      if (this.faceTarget !== null && (it.move === 0 || (near && !this.isPlayer))) {
         const dir = Math.sign(this.faceTarget - this.x);
         if (dir !== 0) this.facing = dir as 1 | -1;
       } else if (it.move !== 0) {
@@ -349,7 +351,8 @@ export class Fighter {
       if (it.move !== 0) this.lastMove = it.move;
 
       const backing = it.move !== 0 && Math.sign(it.move) !== this.facing;
-      const guarding = it.guard || (backing && near);
+      // Defesa só com o botão (no jogador). A IA ainda recua defendendo.
+      const guarding = it.guard || (!this.isPlayer && backing && near);
       // Agachar só no chão (ao encolher, o corpo perde o contato por um quadro; por isso
       // quem já está agachado continua, até soltar o botão ou pular).
       this.setCrouch(it.crouch && (grounded || this.crouching) && this.body.velocity.y >= 0);

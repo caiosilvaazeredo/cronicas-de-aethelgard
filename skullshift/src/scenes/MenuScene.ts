@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
-import { loadingVignette } from '../ui/loading';
+import { CHARS, type CharId } from '../game/characters';
 import { LEVELS } from '../game/level';
 import { setFreePlay } from '../game/progress';
 import { sfx } from '../game/settings';
@@ -72,9 +72,10 @@ export class MenuScene extends Phaser.Scene {
     const wavesA = this.add.tileSprite(0, gy + 80, W, HH - gy - 80, 'waves').setOrigin(0).setAlpha(0.5);
     const foam = this.add.tileSprite(0, gy + 100, W, 28, 'water_top').setOrigin(0).setAlpha(0.8).setDepth(6);
     this.events.on('update', (t: number) => {
-      wavesA.tilePositionX = t * 0.02;
-      wavesA.tilePositionY = Math.sin(t / 900) * 3;
-      foam.tilePositionX = Math.round((t * 0.03) / 2) * 2;
+      wavesA.tilePositionX = Math.sin(t / 2300) * 9;
+      wavesA.tilePositionY = Math.sin(t / 1300) * 2.5;
+      wavesA.setAlpha(0.25 + 0.3 * (0.5 + 0.5 * Math.sin(t / 1400)));
+      foam.tilePositionX = Math.round((Math.sin(t / 1700) * 14) / 2) * 2;
       foam.tilePositionY = Math.round(Math.sin(t / 560) * 1.5) * 2;
     });
     // Construções do reino ao fundo (atrás da grama).
@@ -85,11 +86,12 @@ export class MenuScene extends Phaser.Scene {
       const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(3);
       this.add.ellipse(x, base - 2, img.displayWidth * 0.82, 20 * bs, 0x10223a, 0.25).setDepth(2.5);
     };
-    stand(P ? 250 : 200, 'bld_blue_castle', 249 / 256, 0.9);
-    stand(P ? 1090 : 1110, 'bld_red_tower', 230 / 256, 1);
-    stand(P ? 860 : 930, 'bld_blue_house1', 173 / 192, 0.9);
-    if (!P) stand(520, 'bld_blue_house3', 172 / 192, 0.8);
-    for (const [x, sc] of [[40, 0.9], [400, 0.8], [790, 0.85], [1240, 0.95]] as const) {
+    // Uma vila de casinhas (sem castelos), em três tons do mesmo reino.
+    const HOUSES: Array<[number, string, number, number]> = P
+      ? [[200, 'bld_blue_house1', 173, 0.9], [560, 'bld_blue_house2', 178, 0.85], [920, 'bld_blue_house3', 172, 0.9]]
+      : [[150, 'bld_blue_house1', 173, 0.95], [330, 'bld_blue_house2', 178, 0.85], [600, 'bld_blue_house3', 172, 0.8], [880, 'bld_blue_house1', 173, 0.85], [1130, 'bld_blue_house2', 178, 0.95]];
+    for (const [x, key, foot, sc] of HOUSES) stand(x, key, foot / 192, sc);
+    for (const [x, sc] of (P ? [[40, 0.9], [380, 0.8], [760, 0.85], [1240, 0.95]] : [[30, 0.9], [470, 0.75], [740, 0.8], [1010, 0.8], [1250, 0.95]]) as Array<[number, number]>) {
       if (!this.textures.exists('res_tree')) continue;
       this.add.ellipse(x, base - 2, 70 * sc * bs, 14 * bs, 0x10223a, 0.25).setDepth(2.5);
       this.add.sprite(x, base, 'res_tree').setOrigin(0.5, 0.9).setScale(sc * bs).setDepth(3).play({ key: 'res_tree', startFrame: (x >> 5) % 8 });
@@ -104,16 +106,35 @@ export class MenuScene extends Phaser.Scene {
       if (!this.anims.exists(`menu_${k}`)) this.anims.create({ key: `menu_${k}`, frames: this.anims.generateFrameNumbers(k, { start: 0, end: 7 }), frameRate: 8, repeat: -1 });
       this.add.sprite(x, gy + 44, k).setOrigin(0.5, 0.78).setScale(0.8 * bs).setDepth(3).play(`menu_${k}`);
     }
-    // Personagens em cena no gramado: troca de cena de tempos em tempos.
+    // Gente da vila andando pelo gramado. O Xamã, lá de cima, escolhe um de vez em quando e o
+    // transforma de longe: um raio roxo desce até ele, raios giram em volta e, no clarão, o
+    // MESMO personagem vira outra criatura (sem cópia) e segue andando.
     const feet = gy + 40;
-    let show = loadingVignette(this, W / 2, feet, W, { ground: false, depth: 4, scale: P ? 1.5 : 1 });
-    this.time.addEvent({
-      delay: 7600,
-      loop: true,
-      callback: () => {
-        show.destroy();
-        show = loadingVignette(this, W / 2, feet, W, { ground: false, depth: 4, scale: P ? 1.5 : 1 });
-      },
+    const sk = P ? 1.5 : 1;
+    const FORMS: CharId[] = ['skull', 'gnoll', 'goblin', 'lizard', 'sgnome', 'torchgob', 'imp', 'shark', 'spider'];
+    const walkers = (P ? [[260, 1], [820, -1]] : [[260, 1], [640, -1], [1000, 1]]).map(([x, dir], i) => {
+      const id = FORMS[i === 0 ? 0 : 1 + ((i * 3) % (FORMS.length - 1))];
+      const spr = this.add.sprite(x, feet, `${id}_run`).setDepth(4).setScale(sk);
+      const w = { spr, id, dir, speed: 55 + i * 12, pause: 0 };
+      this.setForm(w, id, feet);
+      return w;
+    });
+    this.events.on('update', (_t: number, dt: number) => {
+      for (const w of walkers) {
+        if (w.pause > 0) {
+          w.pause -= dt;
+          if (w.pause <= 0) w.spr.play(`${w.id}_run`);
+          continue;
+        }
+        w.spr.x += (w.dir * w.speed * dt) / 1000;
+        if (w.spr.x < 60 || w.spr.x > W - 60) w.dir = -w.dir;
+        w.spr.setFlipX(w.dir < 0);
+        // Às vezes param um pouco, como quem conversa na praça.
+        if (Math.random() < dt / 9000) {
+          w.pause = 1200;
+          w.spr.play(`${w.id}_idle`);
+        }
+      }
     });
     // O Xamã na nuvem, olhando tudo de cima (só na tela de título).
     if (this.stage === 'title') {
@@ -125,18 +146,15 @@ export class MenuScene extends Phaser.Scene {
       const rig = this.add.container(sx, sy, [glow, cl, sh]).setScale(P ? 1.5 : 1).setDepth(5);
       this.tweens.add({ targets: rig, y: sy - 12, duration: 1500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.tweens.add({ targets: glow, alpha: 0.3, duration: 900, yoyo: true, repeat: -1 });
-      this.time.addEvent({
-        delay: 5200,
-        loop: true,
-        callback: () => {
-          // De vez em quando ele conjura: faíscas roxas descem até o gramado.
-          sh.play('shaman_attack').once('animationcomplete', () => sh.play('shaman_idle'));
-          for (let i = 0; i < 8; i++) {
-            const sp = this.add.image(rig.x - 30, rig.y, 'spark').setTint(i % 2 ? 0xb46bff : 0xe8d4ff).setScale(0.5).setBlendMode(Phaser.BlendModes.ADD).setDepth(5);
-            this.tweens.add({ targets: sp, x: rig.x - Phaser.Math.Between(120, 520), y: feet - Phaser.Math.Between(10, 90), alpha: 0, scale: 0.15, delay: 250 + i * 50, duration: 900, ease: 'Quad.easeIn', onComplete: () => sp.destroy() });
-          }
-        },
-      });
+      let k = 0;
+      const cast = () => {
+        const w = walkers[k++ % walkers.length];
+        sh.setFlipX(w.spr.x < rig.x).play('shaman_attack').once('animationcomplete', () => sh.play('shaman_idle'));
+        const next = Phaser.Utils.Array.GetRandom(FORMS.filter((f) => f !== w.id));
+        this.time.delayedCall(260, () => this.zap(rig, w, next, feet));
+      };
+      this.time.delayedCall(1500, cast);
+      this.time.addEvent({ delay: 4200, startAt: 1500, loop: true, callback: cast });
     }
     // Folhas ao vento.
     this.time.addEvent({
@@ -236,7 +254,7 @@ export class MenuScene extends Phaser.Scene {
         [
           'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
           'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
-          'Segure para TRÁS para andar defendendo. Sobre o item de outro personagem, aperte PEGAR para se transformar.',
+          'DEFESA no botão (Q, K, B). Toque para TRÁS na hora do golpe: CONTRA! Sobre o item de outro personagem, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
           fontFamily: BODY_FONT,
@@ -353,5 +371,92 @@ export class MenuScene extends Phaser.Scene {
       setFreePlay(false);
       this.scene.start('controls', { mode, level: this.level });
     }
+  }
+
+  /** Troca a forma de quem anda na vila (mesmo sprite), com os pés no chão. */
+  private setForm(w: { spr: Phaser.GameObjects.Sprite; id: CharId }, id: CharId, feet: number): void {
+    w.id = id;
+    const d = CHARS[id];
+    const k = id === 'minotaur' ? 0.72 : 1;
+    w.spr.setTexture(`${id}_run`).setOrigin(0.5, d.feetY / d.frame).setY(feet + 4);
+    w.spr.setScale(Math.abs(w.spr.scaleX) / (w.spr.getData('k') ?? 1) * k).setData('k', k);
+    w.spr.play(`${id}_run`);
+  }
+
+  /** O raio do Xamã: desce em zigue-zague até o alvo, gira em volta dele e o transforma. */
+  private zap(rig: Phaser.GameObjects.Container, w: { spr: Phaser.GameObjects.Sprite; id: CharId; pause: number }, next: CharId, feet: number): void {
+    const PURPLE = 0xb46bff;
+    const g = this.add.graphics().setDepth(6);
+    const from = { x: rig.x - 26 * rig.scale, y: rig.y - 30 * rig.scale };
+    const t0 = this.time.now;
+    const TRAVEL = 650;
+    const SPIN = 700;
+    w.pause = TRAVEL + SPIN + 300;
+    const tick = () => {
+      if (!g.active) return;
+      const t = this.time.now - t0;
+      const to = { x: w.spr.x, y: feet - 40 };
+      g.clear();
+      if (t < TRAVEL + 120) {
+        // Raio: da mão do Xamã até a ponta que avança, tremendo.
+        const u = Math.min(1, t / TRAVEL);
+        const tip = { x: from.x + (to.x - from.x) * u, y: from.y + (to.y - from.y) * u };
+        const seg = 9;
+        let px = from.x;
+        let py = from.y;
+        for (let i = 1; i <= seg; i++) {
+          const v = i / seg;
+          const x = from.x + (tip.x - from.x) * v + (i < seg ? Phaser.Math.Between(-12, 12) : 0);
+          const y = from.y + (tip.y - from.y) * v + (i < seg ? Phaser.Math.Between(-8, 8) : 0);
+          g.lineStyle(10, 0x7a3ad0, 0.45).lineBetween(px, py, x, y);
+          g.lineStyle(5, PURPLE, 0.9).lineBetween(px, py, x, y);
+          g.lineStyle(2, 0xf6ecff, 1).lineBetween(px, py, x, y);
+          px = x;
+          py = y;
+        }
+        g.fillStyle(0xf0e2ff, 0.9).fillCircle(tip.x, tip.y, 6);
+      }
+      if (t >= TRAVEL) {
+        // Raios girando em volta do alvo, cada vez mais rápido.
+        const s2 = Math.min(1, (t - TRAVEL) / SPIN);
+        const head = 90 * (w.spr.scaleY || 1);
+        for (let r = 0; r < 3; r++) {
+          let px = 0;
+          let py = 0;
+          for (let i = 0; i <= 8; i++) {
+            const u = i / 8;
+            const ang = s2 * s2 * 14 + (r * Math.PI * 2) / 3 + u * Math.PI * 2;
+            const R = 26 + 18 * Math.sin(u * Math.PI);
+            const x = w.spr.x + Math.cos(ang) * R;
+            const y = feet - u * head;
+            if (i > 0) {
+              g.lineStyle(7, 0x7a3ad0, 0.45).lineBetween(px, py, x, y);
+              g.lineStyle(3, PURPLE, 0.95).lineBetween(px, py, x, y);
+              g.lineStyle(1, 0xf6ecff, 1).lineBetween(px, py, x, y);
+            }
+            px = x;
+            py = y;
+          }
+        }
+        w.spr.setTint(Phaser.Display.Color.GetColor(255 - 80 * s2, 255 - 130 * s2, 255));
+      }
+      if (t >= TRAVEL + SPIN) {
+        this.events.off('update', tick);
+        g.destroy();
+        w.spr.clearTint();
+        this.setForm(w as { spr: Phaser.GameObjects.Sprite; id: CharId }, next, feet);
+        w.spr.play(`${next}_idle`);
+        this.cameras.main.flash(80, 190, 140, 255);
+        for (let i = 0; i < 10; i++) {
+          const a = (i / 10) * Math.PI * 2;
+          const sp = this.add.image(w.spr.x, feet - 40, 'spark').setTint(i % 2 ? PURPLE : 0xe8d4ff).setScale(0.5).setBlendMode(Phaser.BlendModes.ADD).setDepth(6);
+          this.tweens.add({ targets: sp, x: w.spr.x + Math.cos(a) * 70, y: feet - 40 + Math.sin(a) * 50, alpha: 0, scale: 0.1, duration: 420, onComplete: () => sp.destroy() });
+        }
+        const pop = this.add.text(w.spr.x, feet - 130, CHARS[next].name.toUpperCase() + '!', { fontFamily: FONT, fontSize: '22px', color: '#e8d4ff', stroke: '#2a1640', strokeThickness: 6 }).setOrigin(0.5).setDepth(7);
+        this.tweens.add({ targets: pop, y: pop.y - 30, alpha: 0, duration: 1100, onComplete: () => pop.destroy() });
+      }
+    };
+    this.events.on('update', tick);
+    this.events.once('shutdown', () => this.events.off('update', tick));
   }
 }

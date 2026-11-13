@@ -12,6 +12,15 @@ const INK = 0x1d1a2b;
  * Escolha do save do modo história: 3 slots. Cada um mostra até onde chegou, a dificuldade
  * e a data do último jogo; CONTINUAR ou APAGAR. Slot vazio: NOVO JOGO em Normal ou Difícil.
  */
+const CARD_W = 370;
+const CARD_H = 400;
+/** Dificuldades: id, nome no botão, regra, cor do botão e cor do texto no save. */
+const DIFFS: Array<[Difficulty, string, string, number, string]> = [
+  ['easy', 'FÁCIL', 'recomeça a fase após 9 mortes', 0xb8f0b0, '#2e7d32'],
+  ['normal', 'PADRÃO', 'recomeça a fase após 5 mortes', 0xbfe9ff, '#2f86e0'],
+  ['hard', 'DIFÍCIL', 'recomeça a fase na 3ª morte', 0xff9a8a, '#c0392b'],
+];
+
 export class SlotsScene extends Phaser.Scene {
   private cards: Phaser.GameObjects.Container[] = [];
   private sel = 0;
@@ -76,10 +85,15 @@ export class SlotsScene extends Phaser.Scene {
     this.cards.forEach((c) => c.destroy());
     this.cards = [];
     const P = VIEW.portrait;
-    const k = this.scale.height / 2770;
+    // Em pé: os três cartões empilhados no espaço entre o título e os botões de baixo,
+    // na maior escala que couber (sem encostar um no outro).
+    const HH = this.scale.height;
+    const top = 250;
+    const bottom = HH - 330;
+    const sc = Math.min(1.7, (bottom - top) / (SLOT_COUNT * (CARD_H + 30)), (W - 60) / (CARD_W + 20));
     for (let i = 0; i < SLOT_COUNT; i++) {
       const c = this.card(i);
-      if (P) c.setPosition(W / 2, (560 + i * 560) * k).setScale(1.5 * Math.min(1, k * 1.1));
+      if (P) c.setPosition(W / 2, top + (CARD_H + 30) * sc * (i + 0.5)).setScale(sc);
       else c.setPosition(W / 2 + (i - 1) * 400, 330);
       this.cards.push(c);
     }
@@ -90,8 +104,8 @@ export class SlotsScene extends Phaser.Scene {
     const data = loadSlot(n);
     const on = i === this.sel;
     const items: Phaser.GameObjects.GameObject[] = [];
-    const w = 370;
-    const h = 380;
+    const w = CARD_W;
+    const h = CARD_H;
     if (on) {
       const glow = this.add.graphics();
       glow.fillStyle(0xffe066, 1).fillRoundedRect(-w / 2 - 10, -h / 2 - 10, w + 20, h + 20, 26);
@@ -109,12 +123,14 @@ export class SlotsScene extends Phaser.Scene {
     items.push(hit);
 
     if (!data) {
-      items.push(this.add.text(0, -84, 'VAZIO', { fontFamily: FONT, fontSize: '30px', color: '#8a95a3' }).setOrigin(0.5));
-      items.push(this.add.text(0, -40, 'Novo jogo — escolha a dificuldade:', { fontFamily: BODY_FONT, fontSize: '17px', color: '#3c5368' }).setOrigin(0.5));
-      items.push(pillButton(this, 0, -4, 'NORMAL', () => this.start(n, 'normal'), 250, 0xbfe9ff));
-      items.push(this.add.text(0, 50, 'recomeça a fase após 5 mortes', { fontFamily: BODY_FONT, fontSize: '14px', color: '#3c5368' }).setOrigin(0.5));
-      items.push(pillButton(this, 0, 98, 'DIFÍCIL', () => this.start(n, 'hard'), 250, 0xff9a8a));
-      items.push(this.add.text(0, 152, 'recomeça a fase na 3ª morte', { fontFamily: BODY_FONT, fontSize: '14px', color: '#3c5368' }).setOrigin(0.5));
+      items.push(this.add.text(0, -118, 'VAZIO', { fontFamily: FONT, fontSize: '28px', color: '#8a95a3' }).setOrigin(0.5));
+      items.push(this.add.text(0, -84, 'Novo jogo — escolha a dificuldade:', { fontFamily: BODY_FONT, fontSize: '17px', color: '#3c5368' }).setOrigin(0.5));
+      // Um botão por dificuldade, com a regra embaixo (espaço de sobra entre eles).
+      DIFFS.forEach(([d, label, note, color], k) => {
+        const y = -40 + k * 80;
+        items.push(pillButton(this, 0, y, label, () => this.start(n, d), 240, color).setScale(0.85));
+        items.push(this.add.text(0, y + 34, note, { fontFamily: BODY_FONT, fontSize: '14px', color: '#3c5368' }).setOrigin(0.5));
+      });
       return this.add.container(0, 0, items);
     }
 
@@ -135,12 +151,8 @@ export class SlotsScene extends Phaser.Scene {
       g.fillStyle(k < done ? 0x58b947 : 0x5f6872).fillCircle(x, -26, 6);
     }
     items.push(g);
-    const hard = data.difficulty === 'hard';
-    items.push(
-      this.add
-        .text(0, 12, hard ? 'DIFÍCIL' : 'NORMAL', { fontFamily: FONT, fontSize: '20px', color: hard ? '#c0392b' : '#2f86e0' })
-        .setOrigin(0.5),
-    );
+    const diff = DIFFS.find(([d]) => d === data.difficulty) ?? DIFFS[1];
+    items.push(this.add.text(0, 12, diff[1], { fontFamily: FONT, fontSize: '20px', color: diff[4] }).setOrigin(0.5));
     const date = data.updated ? new Date(data.updated).toLocaleDateString('pt-BR') : '—';
     items.push(this.add.text(0, 40, `último jogo: ${date}`, { fontFamily: BODY_FONT, fontSize: '15px', color: '#3c5368' }).setOrigin(0.5));
     items.push(pillButton(this, 0, 96, done >= total ? 'REVER  ▶' : 'CONTINUAR  ▶', () => this.continue(n), 250, 0xffe066));
@@ -149,7 +161,7 @@ export class SlotsScene extends Phaser.Scene {
     return this.add.container(0, 0, items);
   }
 
-  /** Enter / A: continua o save ou, se vazio, começa no Normal. */
+  /** Enter / A: continua o save ou, se vazio, começa no Padrão. */
   private primary(i: number): void {
     if (loadSlot(i + 1)) this.continue(i + 1);
     else this.start(i + 1, 'normal');

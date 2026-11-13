@@ -274,11 +274,11 @@ export class WorldScene extends Phaser.Scene {
     '....................',
     '....................',
     '...#######...####...',
-    '..##########.#####..',
-    '.##################.',
-    '.##################.',
-    '.##################.',
-    '..################..',
+    '..######.....#####..',
+    '.#######.###.######.',
+    '.#######.###.######.',
+    '.#######.###.######.',
+    '..######.....#####..',
     '..#######..#######..',
     '...#####....#####...',
     '....................',
@@ -448,6 +448,12 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'centro':
+        // Trancado: nada à vista, só a tempestade (o suspense fica para o fim).
+        if (!open) {
+          for (const [dx, dy, sc] of [[-60, -20, 0.5], [50, -40, 0.45], [0, 10, 0.6], [-20, -70, 0.4]] as const)
+            this.add.image(x + dx, y + dy, 'cloud_03').setScale(sc).setTint(0x2a1a40).setDepth(8.6).setAlpha(0.95);
+          break;
+        }
         deco('bld_purple_monastery', 10, 20, 0.6);
         deco('bld_purple_tower', -90, 34, 0.45);
         deco('bld_purple_tower', 110, 34, 0.45);
@@ -461,12 +467,37 @@ export class WorldScene extends Phaser.Scene {
       if (!open) k.setTintFill(0x10223a).setAlpha(0.5);
       if (areaCleared(a)) k.setAlpha(0.35).setAngle(90).setY(y);
     }
-    // Névoa e "???" nas áreas trancadas.
+    // Áreas trancadas ficam no ESCURO (terra, casas e rei apagados) até chegar a vez delas.
+    // O santuário do Xamã, no meio do mar interno, fica numa tempestade escura até o fim.
     if (!open) {
       const fog = this.add.graphics().setDepth(9);
-      fog.fillStyle(0xdfe7ee, 0.78).fillEllipse(x, y, 230, 130);
-      fog.fillStyle(0xffffff, 0.5).fillEllipse(x - 40, y - 20, 120, 60).fillEllipse(x + 50, y + 16, 110, 50);
-      this.tweens.add({ targets: fog, alpha: 0.85, duration: 2000 + i * 120, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      const big = a === CENTER ? 1.25 : 1;
+      for (let k = 0; k < 5; k++) fog.fillStyle(a === CENTER ? 0x140a22 : 0x0c1422, 0.2).fillEllipse(x, y, (260 - k * 26) * big, (170 - k * 16) * big);
+      fog.fillStyle(a === CENTER ? 0x1c0f30 : 0x101a2a, 0.55).fillEllipse(x - 40, y - 20, 140, 60).fillEllipse(x + 50, y + 16, 130, 50);
+      this.tweens.add({ targets: fog, alpha: 0.8, duration: 2200 + i * 140, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      if (a === CENTER) {
+        // Relâmpagos roxos, de vez em quando, dentro da tempestade.
+        const bolt = this.add.graphics().setDepth(9.5);
+        this.time.addEvent({
+          delay: 2600,
+          loop: true,
+          callback: () => {
+            bolt.clear();
+            let px = x + Phaser.Math.Between(-60, 60);
+            let py = y - 90;
+            for (let s = 0; s < 6; s++) {
+              const nx = px + Phaser.Math.Between(-18, 18);
+              const ny = py + 22;
+              bolt.lineStyle(4, 0x7a3ad0, 0.6).lineBetween(px, py, nx, ny);
+              bolt.lineStyle(2, 0xe8d4ff, 0.9).lineBetween(px, py, nx, ny);
+              px = nx;
+              py = ny;
+            }
+            bolt.setAlpha(1);
+            this.tweens.add({ targets: bolt, alpha: 0, duration: 320 });
+          },
+        });
+      }
     }
     // Plaquinha com o nome.
     const t = areaTitle(a);

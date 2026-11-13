@@ -153,7 +153,7 @@ Ao entrar na arena, um portão de ferro desce atrás do jogador, a tela pisca **
 - **Lagarto (passiva: nado):** na água (fases 1 e 2) ele não se afoga. Não anda: o corpo deita para a frente (encabeça) como quem nada, mais quanto mais rápido vai, com uma ondulação no ritmo das braçadas. Boia com a cabeça para fora, nada com aceleração macia deixando ondinhas e rastro, mergulha segurando ▼ (soltando bolhas) e salta para fora com PULAR. Uma camada translúcida na frente da água faz a parte submersa de qualquer personagem parecer dentro d'água.
 - **Pique:** toque duas vezes na direção e segure para correr bem mais rápido, levantando poeira. No teclado de 1 jogador, Shift também ativa o pique.
 - **Escudo de energia em meia-lua:** quem não tem escudo no sprite (todos menos o esqueleto) defende com um arco de energia na cor do jogador, **só na frente do corpo**: defende apenas o que vem de frente (golpe pelas costas acerta). Quando a defesa quebra, o arco estoura.
-- **Contra-golpe:** em vez de defender, toque **para trás** (para longe de quem ataca) **no instante exato** do golpe (janela de ~0,17 s): o golpe corpo a corpo **quebra a defesa de quem atacou** (fica tonto), e o tiro **volta para quem atirou** (na cor do jogador). Aparece "CONTRA!" com uma meia-lua dourada e um instante de câmera lenta.
+- **Contra-golpe:** em vez de defender, toque **para trás** (para longe de quem ataca) **no instante exato** do golpe — um toque novo: quem já vinha segurando a direção precisa soltar e tocar de novo (janela de ~0,17 s): o golpe corpo a corpo **quebra a defesa de quem atacou** (fica tonto), e o tiro **volta para quem atirou** (na cor do jogador). Aparece "CONTRA!" com uma meia-lua dourada e um instante de câmera lenta.
 - **Aranhas penduradas:** o fio balança no teto da caverna. Quando um jogador passa por baixo, a aranha salta em cima dele (a defesa não segura ataque de cima) e depois vira uma inimiga comum. No versus, ela ataca os dois.
 - **Morcego × teia:** se o morcego encosta numa teia do teto, ele gruda. Uma aranha desce pelo fio, cospe teia até ele virar um casulo, a tela pisca e só sobra a aranha mastigando no lugar dele. Para jogador, a tela perde a cor e a faixa **"VIROU COMIDA DE ARANHA"** fica uns 3 segundos na tela antes de o Xamã trazê-lo de volta.
 
@@ -224,7 +224,7 @@ Em seguida, a tela **Como jogar** mostra os botões do dispositivo escolhido.
 | Atacar | F ou J | F | Enter ou 0 (numérico) | X | ATQ |
 | Pegar item | E ou L | E | . ou 1 (numérico) | Y | PEGA |
 
-Com um oponente perto, segurar para **trás** faz o personagem andar devagar com o escudo levantado, como em jogo de luta. O escudo bloqueia golpes e projéteis que vêm pela frente.
+A defesa é só no **botão de defesa** (andar para trás não defende sozinho). O escudo bloqueia golpes e projéteis que vêm pela frente.
 
 **Movimentos:**
 - **Agachar:** o personagem anda agachado, mais devagar. Ossos e arpões passam por cima dele, e o golpe dado agachado é **baixo**: só a defesa agachada segura.

@@ -141,7 +141,8 @@ export const CENTER: AreaDef = {
   kingAnim: 'shaman_idle',
   color: 0x9b6bf0,
   levels: ['stairs', 'mausoleum', 'doors', 'library', 'dark', 'finale'],
-  pos: [640, 345],
+  // No meio de um mar interno, isolado de todas as áreas por água.
+  pos: [640, 335],
   unlock: 'all',
 };
 

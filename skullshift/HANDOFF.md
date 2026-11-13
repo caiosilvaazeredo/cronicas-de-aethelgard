@@ -94,26 +94,28 @@ originais (extraídas com PIL do PNG).
   `data/tips.ts` (DICA / CURIOSIDADE / BOATO, gerais ou por área). A tela inicial reutiliza `loadingVignette`.
 - **Transformação**: `GameScene.shiftSpin` (clone do corpo gira e acelera, três raios roxos em espiral, clarão
   no meio com a troca, anel e faíscas no fim). O corpo real fica com `Fighter.shiftHide`.
-- **Água**: texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
+- **Água**: ondas presas ao mar (só balançam e cintilam em contratempo; nada desliza em fila); texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
   brilhos em `Level.water`. **Farol**: `SeaSystem.drawLighthouse` empilha duas `bld_red_tower` + fogueira.
-- **Música** (`music.ts`): instrumentos sintetizados no espírito de Ocarina of Time — sopro (ocarina, flauta:
-  `wind`), corda dedilhada por Karplus-Strong (harpa, violão, pizzicato: `pluck`), naipe/trompa/contrabaixo
-  (`bowed`), marimba/celesta/órgão (`tone`), tímpano e tambores (`drum`), sala com reverberação e passa-baixa
-  geral (sem agudos). Cada tema é um `Style` em `STYLES`; **cada fase tem a sua música**:
-  `playMusic(tema, idDaFase)` → `variantOf` deriva tom, andamento, progressão (`PROGS`), solista e melodia.
-  `jingle('win'|'seal'|'lose'|'flash')`, `duckMusic(ms)`. Volume em Configurações → Áudio → Música.
-- **Ouro e Empório** (`upgrades.ts`, `ShopScene`): ouro em `progress.coins` (inimigo 1, presente 3, fase 5, rei 15;
-  `GameScene.earn`). Loja no mapa do mundo (botão EMPÓRIO / tecla B). Aprimoramentos em `UPGRADES`
-  (`hasUpgrade`): Osso Teimoso (golpe fatal transformado → volta a ser caveira, em `killFighter`), Vela Extra
-  (`deathLimit` +1), Reflexo de Osso (`Fighter.parryBonus`), Manto de Nuvem (invulnerável em dobro ao renascer),
-  Ímã de Ossos (reserva cai reto e rápido), Dente de Ouro (ouro em dobro). Lore: a dona é a ovelha de orelha
-  preta das lembranças; não fala, responde por placas. Novo aprimoramento: entrada em `UPGRADES` + efeito.
-- **Nado do tubarão**: `sheets.swimSheet` gera `<id>_swim` e `<id>_swim_attack` (corpo deitado 90°, sem sombra, só com os pixels do próprio sprite: membros desenhados em código foram testados e REMOVIDOS a pedido, não repetir,
-  ondulando) para todo id que começa com `shark` (BootScene); usadas em `Fighter.updateFreeSwim`/`startAttack`.
-- **Chefes sem coroa**: as coroas feitas em código (`queen_crown`) ficaram invisíveis (`setAlpha(0)`) a pedido.
-- **Construções no fundo**: `DecoKind` ganhou castle/monastery/barracks/archery; cor por tileset
-  (`BUILDING_COLOR`), base assentada no chão (`BUILDING_FOOT`) com sombra; `EXTRA_BUILDINGS[idDaFase]` põe
-  prédios no trecho de chão mais largo do cenário.
+- **Música** (`music.ts`): só FLAUTA, VIOLÃO e HARPA, com amostras reais (soundfont FluidR3_GM recortada em
+  `public/assets/sf/*-mp3.js`, licença em `sf/LICENSE.txt`; essa pasta VAI para o git) tocadas pela lib `smplr`.
+  Famílias de arranjo: 'storm' (valsa em menor, oom-pah-pah — clima de Song of Storms), 'gerudo' (rasgueado
+  flamenco, cadência andaluza — clima de Gerudo Valley) e 'calm' (dedilhado). Cada fase tem a sua música
+  (`variantOf` pelo id). **Troca sem corte**: um relógio só; `playMusic` agenda a música nova para o próximo
+  compasso e o andamento desliza (nunca reinicia). `jingle`/`duckMusic` só abaixam a música, não param.
+- **Defesa**: só no botão (o jogador NÃO defende andando para trás; a IA sim). Contra: toque NOVO para trás
+  no tempo certo (`Fighter.parries`, `moveStartAt`); quem já segurava a direção precisa soltar e tocar de novo.
+- **Versus** (`GameScene.updateChaos`): itens caem do céu a cada ~10 s; eventos aleatórios a cada 20–30 s
+  (VENTANIA, CHUVA DE OSSOS com sombra no chão, CHUVA DE ITENS, GRAVIDADE BAIXA, AJUDANTES); orbe roxo
+  chama um ajudante (criatura do time de quem pegou, 12 s, `summonAssist`). P1 (WASD) também pula no Espaço.
+- **Dificuldade**: Fácil (10 vidas), Padrão (6), Difícil (3) — `deathLimit`. Tela de saves responsiva em pé.
+- **Teclado no celular**: `config.hasKeyboard()` — só aparece depois de uma tecla física ser apertada.
+- **Mapa do mundo**: áreas trancadas no escuro; o Santuário fica numa ilha num mar interno (LAND), coberto
+  por tempestade com relâmpagos até ser liberado.
+- **Área bônus**: `LEVEL_HOLLOW` ('hollowtree', secret) — Árvore Oca, no mapa da Maré depois da Maré Alta.
+  ATENÇÃO: código antigo usa `LEVELS.findIndex(l => l.secret)` para a fase 'retro'; ela tem de continuar
+  sendo a primeira secreta da lista.
+- **Tela inicial**: vila só de casinhas; o Xamã escolhe um morador e o transforma de longe (`MenuScene.zap`:
+  raio roxo, giro de raios, mesmo sprite troca de forma).
 - **História dentro das fases** (`data/beats.ts`): `BEATS[idDaFase] = [[cenário, 's'|'x'|'f', texto], ...]`.
   's' caveira (balão), 'x' Xamã de longe (balão no alto), 'f' lampejo de memória (tela sépia, vulto do aldeão,
   `GameScene.memoryFlash`). Dispara ao chegar ao cenário (`GameScene.updateBeats`; no voo, por tempo).

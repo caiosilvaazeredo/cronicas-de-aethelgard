@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0",
+    "smplr": "^0.16.1"
   },
   "devDependencies": {
     "typescript": "~5.8.2",

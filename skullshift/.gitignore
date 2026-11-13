@@ -1,6 +1,7 @@
 node_modules
 dist
 # Sprites do Tiny Swords: importe com scripts/import-assets.sh (licença não permite redistribuir)
-public/assets/
+public/assets/*
+!public/assets/sf/
 # Fonte Anak Manja (gerada por scripts/build-font.py)
 public/fonts/

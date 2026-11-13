@@ -193,7 +193,9 @@ export function swimSheet(scene: Phaser.Scene, src: string, dst: string, frame: 
     rctx.clearRect(0, 0, frame, frame);
     rctx.save();
     rctx.translate(px, py);
-    rctx.scale(1.18, 0.9); // mais comprido e mais baixo: corpo de peixe, não de bola
+    // Mais comprido e mais baixo (corpo de peixe), respirando de leve a cada braçada.
+    const breathe = Math.sin((i / n) * Math.PI * 2);
+    rctx.scale(1.2 + breathe * 0.04, 0.88 - breathe * 0.03);
     rctx.rotate(Math.PI / 2);
     rctx.drawImage(tmp, -px, -py);
     rctx.restore();

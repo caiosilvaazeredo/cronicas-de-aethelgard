@@ -8,7 +8,7 @@ import { LEVELS } from './level';
  * Modo livre (temporário, para testes): todas as fases abertas, vidas infinitas e nada salvo.
  */
 
-export type Difficulty = 'normal' | 'hard';
+export type Difficulty = 'easy' | 'normal' | 'hard';
 
 export interface SaveData {
   /** Quantas fases principais foram concluídas (para a tela de saves). */
@@ -90,7 +90,7 @@ export function loadSlot(n: number): SaveData | null {
     return {
       completed: done.length,
       done,
-      difficulty: d.difficulty === 'hard' ? 'hard' : 'normal',
+      difficulty: d.difficulty === 'hard' || d.difficulty === 'easy' ? d.difficulty : 'normal',
       seen: Array.isArray(d.seen) ? d.seen : [],
       gifts: d.gifts && typeof d.gifts === 'object' ? d.gifts : {},
       secrets: Array.isArray(d.secrets) ? d.secrets : [],
@@ -157,6 +157,10 @@ export function completedCount(): number {
 }
 
 /** A fase (id) já foi concluída neste save? */
+export function isSecretDone(id: string): boolean {
+  return !!current().secretDone?.includes(id);
+}
+
 export function isDone(id: string): boolean {
   return (current().done ?? []).includes(id);
 }
@@ -282,5 +286,6 @@ export function getDifficulty(): Difficulty {
 export function deathLimit(level: number, d: Difficulty = getDifficulty()): number {
   if (level === 0 || free) return Infinity;
   // Vela Extra (Empório): uma vida a mais.
-  return (d === 'hard' ? 3 : 6) + (current().upgrades?.includes('candle') ? 1 : 0);
+  // Fácil: 10 vidas · Padrão: 6 · Difícil: 3.
+  return (d === 'hard' ? 3 : d === 'easy' ? 10 : 6) + (current().upgrades?.includes('candle') ? 1 : 0);
 }

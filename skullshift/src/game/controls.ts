@@ -73,7 +73,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
   'kb-left': {
     left: [KC.A],
     right: [KC.D],
-    jump: [KC.W],
+    jump: [KC.W, KC.SPACE],
     guard: [KC.Q],
     attack: [KC.F, KC.G],
     pick: [KC.E],

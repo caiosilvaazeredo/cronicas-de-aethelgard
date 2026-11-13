@@ -175,7 +175,7 @@ export class BootScene extends Phaser.Scene {
       if (!id.startsWith('shark')) continue;
       const d = CHARS[id];
       const pivot: [number, number] = [d.frame / 2 - 11, d.feetY - 34];
-      swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 7);
+      swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 9);
       swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2);
       this.anim(`${id}_swim`, d.run.n, 11, -1);
       this.anim(`${id}_swim_attack`, d.attack.n, d.attack.fps, 0);
@@ -297,9 +297,11 @@ export class BootScene extends Phaser.Scene {
     wc.strokeStyle = 'rgba(220,245,255,0.9)';
     wc.lineWidth = 3;
     wc.lineCap = 'round';
-    const crests = [
-      [20, 10, 30], [110, 30, 22], [190, 14, 34], [60, 52, 26], [160, 66, 20], [230, 82, 24], [10, 86, 18],
-    ];
+    // Cristas de tamanhos e alturas diferentes, espalhadas sem padrão (nada de fileira uniforme).
+    const crests: number[][] = [];
+    let seedW = 7;
+    const rw = () => ((seedW = (seedW * 16807) % 2147483647) / 2147483647);
+    for (let k = 0; k < 16; k++) crests.push([Math.floor(rw() * 256), 6 + Math.floor(rw() * 84), 8 + Math.floor(rw() * 30)]);
     // Sombra azul embaixo de cada crista: dá volume à onda.
     wc.strokeStyle = 'rgba(20,95,170,0.45)';
     for (const [x, y, w] of crests) {

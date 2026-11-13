@@ -3,7 +3,7 @@ import { playMusic, type Track } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import { chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
-import { currentSlot, getPact, giftsOf, hasPact, hasSecret, isDone, isFreePlay } from '../game/progress';
+import { currentSlot, getPact, giftsOf, hasPact, hasSecret, isDone, isFreePlay, isSecretDone } from '../game/progress';
 import { LEVELS, type LevelDef } from '../game/level';
 import { AREAS, AREA_GOAL, areaById, areaCleared, areaOfLevel, areaTitle, levelIndex, levelUnlocked, type AreaDef } from '../game/areas';
 import { unlockedBy } from '../game/abilities';
@@ -633,6 +633,31 @@ export class MapScene extends Phaser.Scene {
       if (!locked && !cleared) this.tweens.add({ targets: node, scale: 1.12, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.nodes.push(node);
     });
+    // Área bônus: a Árvore Oca (Ilhas da Maré), aparece depois da Maré Alta.
+    const hol = LEVELS.findIndex((l) => l.id === 'hollowtree');
+    if (hol >= 0 && this.area.id === 'mare' && (isFreePlay() || isDone('hightide'))) {
+      const hi = Math.max(0, this.MAIN.findIndex((l) => l?.id === 'hightide'));
+      const [hx, hy] = this.spot(hi);
+      const x = hx + 150;
+      const y = 200;
+      const path = this.add.graphics().setDepth(7);
+      const len = Math.hypot(x - hx, y - hy);
+      for (let d = 30; d < len - 30; d += 20) {
+        const px = hx + ((x - hx) * d) / len;
+        const py = hy + ((y - hy) * d) / len;
+        path.fillStyle(INK, 1).fillRect(px - 6, py - 6, 12, 12);
+        path.fillStyle(0xffd84a, 1).fillRect(px - 4, py - 4, 8, 8);
+      }
+      const tree = this.add.image(x, y + 30, 'stump').setOrigin(0.5, 1).setScale(0.55).setDepth(8);
+      const done = isSecretDone('hollowtree');
+      const t = this.add.text(0, 50, done ? 'ÁRVORE OCA ✓' : 'ÁRVORE OCA · BÔNUS', { fontFamily: FONT, fontSize: '16px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
+      const node = this.add.container(x, y, [t]).setDepth(10).setSize(120, 120);
+      this.tweens.add({ targets: tree, scaleY: 0.57, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      node.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
+        if (this.walking) return;
+        this.scene.start('loading', { next: isFreePlay() ? 'game' : 'vn', data: { mode: 'story', devices: this.devices, level: hol } });
+      });
+    }
     // Nó secreto (em preto e branco), ligado à caverna por uma trilha cinza.
     const sec = LEVELS.findIndex((l) => l.secret);
     if (sec >= 0 && hasSecret(LEVELS[sec].id) && this.area.levels.includes('cave')) {

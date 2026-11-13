@@ -29,7 +29,6 @@ const BUILDING_COLOR: Record<string, string> = {
 const BUILDING_FOOT: Record<string, number> = { castle: 249 / 256, tower: 230 / 256, house1: 173 / 192, house2: 178 / 192, house3: 172 / 192, monastery: 310 / 320, barracks: 245 / 256, archery: 240 / 256 };
 /** Prédios a mais no fundo de algumas fases: [cenário, tipo]. */
 const EXTRA_BUILDINGS: Record<string, Array<[number, DecoKind]>> = {
-  shore: [[0, 'house'], [4, 'tower']],
   crabs: [[2, 'house']],
   hightide: [[3, 'archery']],
   floodgates: [[2, 'barracks']],
@@ -219,18 +218,19 @@ export const LEVEL_1: LevelDef = {
   theme: 'shore',
   tiles: 'tilemap',
   screens: [
-    { ...mirror(SHORE_R2), enemies: [[13, 'gnoll']], storyItems: [[4, 'crest']] },
-    { ...mirror(SHORE_R1), enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone']] },
+    // Praia limpa (sem casas nem a árvore oca: ela vira a área bônus no mapa, mais adiante).
+    { ...mirror(SHORE_R2), deco: [[6, 'rock2'], [17, 'tree']], enemies: [[13, 'gnoll']], storyItems: [[4, 'crest']] },
+    { ...mirror(SHORE_R1), deco: [[2, 'tree'], [12, 'rock1']], enemies: [[11, 'lizard'], [17, 'goblin']], storyItems: [[2, 'bone']] },
     {
       segments: [[0, 13], [15, 3], [18, 2]],
-      deco: [[6, 'rock1'], [11, 'stump']],
+      deco: [[6, 'rock1'], [11, 'rock2']],
       sign: [1, 'Para TRÁS na hora\ndo golpe: CONTRA!'],
       enemies: [[16, 'lizard'], [9, 'gnoll']],
       storyItems: [[4, 'spear']],
       versusItems: [[9, 'bone']],
     },
-    { ...SHORE_R1, enemies: [[8, 'shark'], [17, 'goblin']], storyItems: [[2, 'harpoon']] },
-    { ...SHORE_R2, enemies: [[5, 'lizard'], [12, 'shark'], [16, 'goblin']], storyItems: [] },
+    { ...SHORE_R1, deco: [[3, 'rock2'], [16, 'tree']], enemies: [[8, 'shark'], [17, 'goblin']], storyItems: [[2, 'harpoon']] },
+    { ...SHORE_R2, deco: [[2, 'tree'], [9, 'rock1']], enemies: [[5, 'lizard'], [12, 'shark'], [16, 'goblin']], storyItems: [] },
   ],
   storyStart: [0, 2],
   versusStart: [3, 16],
@@ -881,6 +881,33 @@ export const LEVEL_MAUSOLEUM: LevelDef = {
   mausoleum: { waves: 6 },
   screens: [{ segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]] }],
   storyStart: [0, 9],
+  versusStart: [3, 16],
+};
+
+/**
+ * Área bônus das Ilhas da Maré: a Árvore Oca. Aparece no mapa da Maré depois da Maré Alta.
+ * Fase curta de chave e porta dentro do tronco, com 3 presentes (ouro para o Empório).
+ */
+export const LEVEL_HOLLOW: LevelDef = {
+  id: 'hollowtree',
+  name: 'Árvore Oca',
+  intro: 'Uma árvore enorme, oca por dentro. Leve a chave até a porta lá no alto. Os 3 presentes valem ouro.',
+  theme: 'shore',
+  tiles: 'tiles_forest',
+  secret: true,
+  winText: 'A árvore guardava um tesouro!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[5, 3, 2], [11, 3, 4]], deco: [[1, 'tree'], [18, 'bush']], sign: [2, 'Área bônus!\nPresentes valem ouro.'] },
+    { segments: [[0, 8, 0], [10, 10, 1]], floats: [[3, 2, 3], [14, 3, 4]], deco: [[17, 'tree']] },
+  ],
+  puzzle: {
+    key: [0, 12, 4],
+    door: [1, 17, 1],
+    gifts: [[0, 6, 2], [1, 3, 3], [1, 15, 4]],
+    ladders: [[0, 9, 0, 4]],
+    springs: [[1, 8, 0]],
+  },
+  storyStart: [0, 1],
   versusStart: [3, 16],
 };
 
@@ -2972,6 +2999,7 @@ export const LEVELS: LevelDef[] = [
   LEVEL_WINGGUARD,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
+  LEVEL_HOLLOW,
 ];
 
 export class Level {
@@ -2983,6 +3011,8 @@ export class Level {
   readonly floats: Segment[];
   private clouds: Array<{ img: Phaser.GameObjects.Image; speed: number }> = [];
   private waves: Phaser.GameObjects.TileSprite[] = [];
+  /** Opacidade base de cada camada de ondas (a cintilação varia em cima disso). */
+  private waveAlpha: [number, number] = [0.55, 0.3];
   private crest?: Phaser.GameObjects.TileSprite;
   /** Linhas d'água onduladas (atrás e na frente dos personagens). */
   private waterTops: Phaser.GameObjects.TileSprite[] = [];
@@ -3100,18 +3130,24 @@ export class Level {
     if (this.waves.length) {
       const camX = this.scene.cameras.main.scrollX;
       const [a, b] = this.waves;
-      a.tilePositionX = camX + time * 0.02;
-      a.tilePositionY = Math.sin(time / 900) * 3;
-      b.tilePositionX = (camX * 0.8 - time * 0.015) / 1.6;
-      b.tilePositionY = Math.cos(time / 1100) * 3;
-      if (this.crest) this.crest.tilePositionX = camX * 1.1 + time * 0.03;
+      // Ondas presas ao mar (acompanham a câmera), só balançando e cintilando: as duas camadas
+      // trocam de força em contratempo, então as cristas aparecem e somem como água de verdade,
+      // em vez de deslizar todas juntas para o lado.
+      a.tilePositionX = camX + Math.sin(time / 2300) * 9;
+      a.tilePositionY = Math.sin(time / 1300) * 2.5;
+      b.tilePositionX = (camX * 0.8) / 1.6 + Math.cos(time / 2900) * 12;
+      b.tilePositionY = Math.cos(time / 1700) * 2.5;
+      const pulse = 0.5 + 0.5 * Math.sin(time / 1400);
+      a.setAlpha(this.waveAlpha[0] * (0.35 + 0.65 * pulse));
+      b.setAlpha(this.waveAlpha[1] * (0.35 + 0.65 * (1 - pulse)));
+      if (this.crest) this.crest.tilePositionX = camX * 1.1 + Math.sin(time / 1500) * 12;
       // Espuma: duas linhas correndo em sentidos opostos e balançando (em passos de pixel).
       const [ta, tb] = this.waterTops;
       if (ta && tb) {
-        ta.tilePositionX = Math.round((camX + time * 0.035) / 2) * 2;
-        ta.tilePositionY = Math.round(Math.sin(time / 520) * 1.5) * 2;
-        tb.tilePositionX = Math.round((camX * 1.05 - time * 0.028) / 2) * 2;
-        tb.tilePositionY = Math.round(Math.cos(time / 640) * 1.5) * 2;
+        ta.tilePositionX = Math.round((camX + Math.sin(time / 1700) * 14) / 2) * 2;
+        ta.tilePositionY = Math.round(Math.sin(time / 900) * 1.5) * 2;
+        tb.tilePositionX = Math.round((camX * 1.05 + Math.cos(time / 2100) * 16) / 2) * 2;
+        tb.tilePositionY = Math.round(Math.cos(time / 1100) * 1.5) * 2;
       }
     }
     if (this.lavaBody) {
@@ -3485,6 +3521,7 @@ export class Level {
       s.add.tileSprite(0, WATER_Y + 8, W, 260, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.3 : 0.55),
       s.add.tileSprite(0, WATER_Y + 30, W, 240, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.18 : 0.3).setTileScale(1.6, 1.3),
     ];
+    this.waveAlpha = dark ? [0.3, 0.18] : [0.6, 0.38];
     if (!lava) {
       // Profundidade em degradê, espuma ondulada na superfície e brilhos de sol piscando.
       s.add.image(0, WATER_Y, 'water_grad').setOrigin(0).setDisplaySize(W, 300).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(dark ? 0.6 : 1);

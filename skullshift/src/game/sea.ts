@@ -548,24 +548,21 @@ export class SeaSystem {
   /** Farol listrado ao fundo, com o facho de luz girando. */
   private drawLighthouse(x: number, base: number): void {
     const s = this.host.scene;
-    // Feito com a torre do próprio Tiny Swords: uma torre larga embaixo, outra menor em cima
-    // (a lanterna) e uma fogueira acesa no topo, de onde sai o facho.
+    // Uma única torre do Tiny Swords (a mesma arte do resto do jogo), assentada no chão com
+    // sombra, e uma fogueira-farol acesa no terraço de cima, de onde sai o facho.
     const d = DEPTH.terrain - 0.5;
     const FEET = 230 / 256; // base da torre dentro do quadro
-    const DECK = 149; // altura do chão ao terraço, em px do sprite
-    const s1 = 1.7;
-    const s2 = 1.05;
-    const deck1 = base - DECK * s1;
-    const deck2 = deck1 + 18 - DECK * s2;
-    s.add.ellipse(x, base - 2, 250, 26, 0x10223a, 0.25).setDepth(d);
-    s.add.image(x, base, 'bld_red_tower').setOrigin(0.5, FEET).setScale(s1).setDepth(d);
-    s.add.image(x, deck1 + 18, 'bld_red_tower').setOrigin(0.5, FEET).setScale(s2).setDepth(d);
-    const fy = deck2 + 2;
-    const glow = s.add.image(x, fy - 14, 'aura').setTint(0xffd36b).setBlendMode(Phaser.BlendModes.ADD).setScale(1.5).setDepth(d).setAlpha(0.8);
-    s.tweens.add({ targets: glow, alpha: 0.45, scale: 1.25, duration: 520, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-    const fire = s.add.sprite(x, fy, 'torch_item', 0).setOrigin(0.5, 0.85).setScale(1.7).setDepth(d);
+    const DECK = 168; // do chão até o piso do terraço, em px do desenho
+    const sc = 1.25;
+    s.add.ellipse(x, base - 2, 170, 20, 0x10223a, 0.25).setDepth(d);
+    s.add.image(x, base + 4, 'bld_red_tower').setOrigin(0.5, FEET).setScale(sc).setDepth(d);
+    const fy = base + 4 - DECK * sc;
+    const glow = s.add.image(x, fy - 16, 'aura').setTint(0xffd36b).setBlendMode(Phaser.BlendModes.ADD).setScale(1.3).setDepth(d).setAlpha(0.75);
+    s.tweens.add({ targets: glow, alpha: 0.4, scale: 1.1, duration: 520, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Só a chama aparece por cima da mureta do terraço (o cabo fica escondido atrás dela).
+    const fire = s.add.sprite(x, fy + 30, 'torch_item', 0).setOrigin(0.5, 0.85).setScale(1.2).setDepth(d - 0.01);
     if (s.anims.exists('torch_flame')) fire.play('torch_flame');
     this.beam = s.add.graphics().setDepth(DEPTH.terrain - 0.45).setBlendMode(Phaser.BlendModes.ADD);
-    this.beamAt = [x, fy - 22];
+    this.beamAt = [x, fy - 20];
   }
 }

@@ -97,7 +97,7 @@ export interface LevelDef {
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
-  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking' | 'shaman' | 'gnollking'; arena: ScreenDef };
+  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking' | 'shaman' | 'gnollking' | 'gnomeking' | 'goblinking' | 'lizardking'; arena: ScreenDef };
   /** Luta final: a caveira, de volta ao corpo, joga como o aldeão. */
   finale?: boolean;
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
@@ -697,7 +697,7 @@ export const LEVEL_KEY4: LevelDef = {
   name: 'Bosque do Lenhador',
   intro: 'Derrube a árvore para fazer uma ponte. Uma ovelha numa placa abre o portão.',
   theme: 'shore',
-  tiles: 'tilemap',
+  tiles: 'tiles_forest',
   winText: 'O bosque abriu caminho!',
   screens: [
     { segments: [[0, 7, 0], [12, 8, 0]], floats: [[1, 2, 3]], sign: [3, 'MACHADO: ATACAR\nna árvore a derruba\ne ela vira ponte.'] },
@@ -721,7 +721,7 @@ export const LEVEL_KEY5: LevelDef = {
   name: 'Torre do Escalador',
   intro: 'A chave está no alto da torre. Picareta: encoste na parede no ar e suba.',
   theme: 'cave',
-  tiles: 'tiles_cave',
+  tiles: 'tiles_forest',
   winText: 'Do alto da torre até a porta!',
   screens: [
     { segments: [[0, 6, 0], [6, 3, 5], [9, 11, 0]], floats: [[13, 2, 3]], sign: [2, 'PICARETA: pule na\nparede e a caveira\nsobe sozinha.'] },
@@ -1814,6 +1814,173 @@ export const LEVEL_MAGMA: LevelDef = {
   ],
 };
 
+
+// ---------- Área 6: Bosque dos Gnomos ----------
+
+const WOOD = { theme: 'shore' as const, tiles: 'tiles_forest', storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+
+export const LEVEL_WOODS: LevelDef = {
+  ...WOOD,
+  id: 'woods',
+  name: 'Entrada do Bosque',
+  intro: 'O bosque dos gnomos. Eles atiram bolotas com estilingue e rolam toras ladeira abaixo.',
+  winText: 'Você entrou no bosque!',
+  field: { boulderTex: 'log_roll', boulders: [[2, 15, 1, -1, 4200]] },
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], deco: [[1, 'tree'], [6, 'bush'], [17, 'tree']], enemies: [[15, 'sgnome']], sign: [3, 'Bosque dos Gnomos.\nCuidado com as bolotas!'] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], deco: [[14, 'tree']], enemies: [[8, 'sgnome_red'], [16, 'goblin']] },
+    { segments: [[0, 8, 0], [10, 4, 1], [16, 4, 0]], floats: [[8, 2, 2]], deco: [[3, 'tree']], enemies: [[12, 'sgnome']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 2], [13, 2, 2]], deco: [[9, 'bush']], enemies: [[9, 'sgnome_red'], [17, 'sgnome']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'house'], [12, 'tree'], [18, 'tree']], enemies: [[10, 'sgnome_elder']] },
+  ],
+};
+
+export const LEVEL_MUSHROOMS: LevelDef = {
+  ...WOOD,
+  id: 'mushrooms',
+  name: 'Cogumelos Saltitantes',
+  intro: 'Paredes altas demais para pular? Caia em cima dos cogumelos: eles te lançam lá no alto!',
+  winText: 'Que pulos!',
+  field: {
+    mushrooms: [
+      [0, 6, 0],
+      [1, 7, 0],
+      [2, 8, 0],
+      [3, 4, 0],
+      [4, 6, 0],
+      [4, 12, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 8, 0], [8, 4, 3], [12, 8, 0]], deco: [[1, 'tree']], enemies: [[16, 'sgnome']], sign: [3, 'Caia no cogumelo:\nele te lança no alto!'] },
+    { segments: [[0, 9, 0], [9, 4, 4], [13, 7, 0]], enemies: [[17, 'sgnome_red']] },
+    { segments: [[0, 4, 0], [7, 3, 0], [13, 7, 0]], floats: [[10, 2, 5]], enemies: [[16, 'sgnome_moss']] },
+    { segments: [[0, 6, 0], [6, 3, 5], [9, 11, 0]], deco: [[15, 'bush']], enemies: [[14, 'sgnome_elder']] },
+    { segments: [[0, 20, 0]], floats: [[8, 3, 5]], deco: [[2, 'tree'], [18, 'tree']], enemies: [[16, 'sgnome_red']] },
+  ],
+};
+
+export const LEVEL_TREETOPS: LevelDef = {
+  ...WOOD,
+  id: 'treetops',
+  name: 'Copas das Árvores',
+  intro: 'O chão some no rio. O caminho é por cima, de copa em copa.',
+  winText: 'Você atravessou pelas copas!',
+  field: { mushrooms: [[1, 1, 0]] },
+  screens: [
+    { segments: [[0, 6, 0], [16, 4, 0]], floats: [[5, 3, 2], [9, 3, 3], [13, 3, 2]], deco: [[2, 'tree']], enemies: [[18, 'sgnome']] },
+    { segments: [[0, 3, 0], [17, 3, 0]], floats: [[2, 3, 2], [6, 2, 3], [9, 3, 4], [13, 3, 3]], enemies: [[18, 'sgnome_red']] },
+    { segments: [[0, 4, 0], [15, 5, 0]], floats: [[3, 3, 3], [7, 3, 4], [11, 3, 3]], enemies: [[17, 'sgnome_red']] },
+    { segments: [[0, 3, 0], [16, 4, 0]], floats: [[2, 2, 2], [5, 3, 3], [9, 2, 4], [12, 3, 3]], enemies: [[18, 'sgnome_elder']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tree'], [12, 'tree']], enemies: [[8, 'sgnome'], [14, 'sgnome_red']] },
+  ],
+};
+
+export const LEVEL_LOGRIVER: LevelDef = {
+  ...WOOD,
+  id: 'logriver',
+  name: 'Rio de Toras',
+  intro: 'Toras boiam no rio: dá para pisar nelas. As tábuas soltas afundam.',
+  winText: 'Você atravessou o rio de toras!',
+  sea: {
+    crateTex: 'log_float',
+    crates: [
+      [0, 6, 2],
+      [0, 9, 2],
+      [1, 3, 2],
+      [1, 6, 2],
+      [1, 12, 2],
+      [1, 14, 2],
+      [2, 4, 2],
+      [2, 7, 2],
+      [2, 10, 2],
+      [3, 5, 2],
+      [3, 8, 2],
+      [3, 13, 2],
+      [3, 15, 2],
+    ],
+    planks: [[2, 12, 2, 0]],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [12, 8, 0]], deco: [[2, 'tree']], enemies: [[16, 'sgnome']] },
+    { segments: [[0, 3, 0], [9, 3, 1], [16, 4, 0]], enemies: [[10, 'sgnome_red']] },
+    { segments: [[0, 4, 0], [14, 6, 0]], enemies: [[17, 'sgnome_moss']] },
+    { segments: [[0, 5, 0], [11, 2, 1], [17, 3, 0]], enemies: [[18, 'sgnome']] },
+    { segments: [[0, 20, 0]], deco: [[5, 'house'], [16, 'tree']], enemies: [[9, 'sgnome_elder'], [15, 'goblin']] },
+  ],
+};
+
+export const LEVEL_ACORNGUN: LevelDef = {
+  ...WOOD,
+  id: 'acorngun',
+  name: 'Tiro no Bosque',
+  intro: 'Corrida e tiro! Gnomos de estilingue por toda parte.',
+  winText: 'O bosque foi limpo a tiros!',
+  gun: { spawns: ['sgnome', 'sgnome_red', 'goblin'] as CharId[], every: 1900 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], deco: [[2, 'tree']], enemies: [[14, 'sgnome']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'sgnome_red'], [16, 'goblin']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'sgnome_elder']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], deco: [[17, 'tree']], enemies: [[5, 'sgnome'], [16, 'sgnome_red']] },
+    { segments: [[0, 20, 0]], deco: [[10, 'house']], enemies: [[8, 'sgnome_red'], [12, 'goblin'], [16, 'sgnome_elder']] },
+  ],
+};
+
+export const LEVEL_MOSS: LevelDef = {
+  ...WOOD,
+  id: 'moss',
+  name: 'Musgo Traiçoeiro',
+  intro: 'Montinhos de musgo tremendo escondem gnomos. E as toras não param de rolar.',
+  winText: 'Nenhum gnomo te pegou!',
+  field: {
+    boulderTex: 'log_roll',
+    boulders: [
+      [1, 18, 1, -1, 3600],
+      [3, 18, 0, -1, 3200],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], deco: [[3, 'bush'], [12, 'bush']], enemies: [[7, 'sgnome_moss'], [14, 'sgnome_moss']], sign: [2, 'Musgo que treme\nnão é musgo...'] },
+    { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 1]], enemies: [[5, 'sgnome_moss'], [11, 'sgnome_red']] },
+    { segments: [[0, 5, 0], [5, 3, 2], [8, 12, 0]], floats: [[14, 2, 3]], enemies: [[10, 'sgnome_moss'], [13, 'sgnome_moss'], [17, 'sgnome']] },
+    { segments: [[0, 6, 0], [8, 12, 0]], deco: [[2, 'tree']], enemies: [[3, 'sgnome_moss'], [11, 'sgnome_elder']] },
+    { segments: [[0, 20, 0]], deco: [[8, 'bush'], [15, 'tree']], enemies: [[6, 'sgnome_moss'], [10, 'sgnome_moss'], [14, 'sgnome_red']] },
+  ],
+};
+
+export const LEVEL_GNOMEVILLAGE: LevelDef = {
+  ...WOOD,
+  id: 'gnomevillage',
+  name: 'Vila dos Gnomos',
+  intro: 'A vila dos gnomos. Cada área só abre quando todos os moradores caírem.',
+  winText: 'A vila se rendeu!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[2, 'house'], [14, 'house']], enemies: [[9, 'sgnome'], [16, 'sgnome_red']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'house']], enemies: [[10, 'sgnome_moss'], [16, 'goblin']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'tower'], [15, 'house']], enemies: [[11, 'sgnome_elder']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'house']], enemies: [[9, 'sgnome_red'], [12, 'sgnome'], [17, 'sgnome_moss']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'house'], [16, 'tower']], enemies: [[8, 'sgnome_elder'], [13, 'sgnome_red'], [16, 'goblin']] },
+  ],
+};
+
+export const LEVEL_GNOMEKING: LevelDef = {
+  ...WOOD,
+  id: 'gnomeking',
+  name: 'Árvore do Rei Gnomo',
+  intro: 'O Rei Gnomo guarda o fragmento no pé da árvore mais velha do bosque.',
+  winText: 'O Rei Gnomo caiu! Fragmento da coroa recuperado!',
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[2, 'tree'], [16, 'tree']], enemies: [[14, 'sgnome_red'], [18, 'sgnome']] },
+    { segments: [[0, 6, 0], [8, 6, 1], [16, 4, 0]], deco: [[3, 'bush']], enemies: [[10, 'sgnome_elder']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'gnomeking',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'tree'], [18, 'tree']] },
+  },
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -1872,6 +2039,15 @@ export const LEVELS: LevelDef[] = [
   LEVEL_OBSIDIAN,
   LEVEL_ANVIL,
   LEVEL_MAGMA,
+  // Área 6 (Bosque dos Gnomos).
+  LEVEL_WOODS,
+  LEVEL_MUSHROOMS,
+  LEVEL_TREETOPS,
+  LEVEL_LOGRIVER,
+  LEVEL_ACORNGUN,
+  LEVEL_MOSS,
+  LEVEL_GNOMEVILLAGE,
+  LEVEL_GNOMEKING,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];

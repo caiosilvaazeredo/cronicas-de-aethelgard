@@ -12,6 +12,7 @@ import { FieldSystem } from '../game/field';
 import { SharkKingBoss } from '../game/sharkking';
 import { ShamanBoss } from '../game/shamanboss';
 import { GnollKingBoss } from '../game/gnollking';
+import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
 import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
@@ -1938,6 +1939,9 @@ export class GameScene extends Phaser.Scene {
         });
       } else if (k === 'shaman') this.boss = new ShamanBoss(host);
       else if (k === 'gnollking') this.boss = new GnollKingBoss(host);
+      else if (k === 'gnomeking') this.boss = new GnomeKingBoss(host);
+      else if (k === 'goblinking') this.boss = new GoblinKingBoss(host);
+      else if (k === 'lizardking') this.boss = new LizardKingBoss(host);
       else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
       void this.boss.intro();
     }

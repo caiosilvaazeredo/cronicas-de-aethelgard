@@ -12,7 +12,11 @@ export type VariantId =
   | 'gnoll_wreck'
   | 'gnoll_hunter' | 'gnoll_stalker' | 'gnoll_brute'
   | 'spider_jumper' | 'spider_web' | 'spider_widow' | 'bat_vampire'
-  | 'minotaur_lava' | 'minotaur_obsidian' | 'lizard_magma';
+  | 'minotaur_lava' | 'minotaur_obsidian' | 'lizard_magma'
+  | 'sgnome_red' | 'sgnome_moss' | 'sgnome_elder'
+  | 'torchgob_blue' | 'torchgob_miner' | 'torchgob_chief'
+  | 'lizard_poison' | 'lizard_croc'
+  | 'bee_ember' | 'bee_storm';
 /** Quem pode aparecer como inimigo numa fase. */
 export type EnemyId = CharId | VariantId;
 export type ItemId =

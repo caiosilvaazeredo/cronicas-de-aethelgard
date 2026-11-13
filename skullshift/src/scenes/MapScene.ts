@@ -382,7 +382,7 @@ export class MapScene extends Phaser.Scene {
       }
       return;
     }
-    const key = l.tiles === 'tiles_sand' || l.tiles === 'tiles_ship' || l.tiles === 'tiles_prairie' ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
+    const key = ['tiles_sand', 'tiles_ship', 'tiles_prairie', 'tiles_forest', 'tiles_swamp'].includes(l.tiles) ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
     const tint = l.theme === 'volcano' ? 0xd28e78 : l.id === 'nest' ? 0x8a9aa8 : l.id === 'queen' ? 0x7a7088 : 0xffffff;
     this.island(tx, ty, 4, 3, key, tint);
     if (l.id === 'shore') {
@@ -431,6 +431,16 @@ export class MapScene extends Phaser.Scene {
       deco('door_exit', 60, -10, 0.55);
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
+    }
+    // Bosque dos Gnomos.
+    if (l.tiles === 'tiles_forest') this.add.sprite(x - 70, y - 14, 'tree').setOrigin(0.5, 1).setScale(0.4).setDepth(6).play('tree');
+    if (l.field?.mushrooms) deco('mushroom', 40, 0, 0.8);
+    if (l.sea?.crateTex === 'log_float') deco('log_float', 30, 0, 0.7);
+    if (l.id === 'gnomevillage') this.add.image(x + 40, y + 4, 'bld_blue_house2').setOrigin(0.5, 1).setScale(0.45).setDepth(6);
+    if (l.id === 'gnomeking') {
+      this.add.sprite(x + 10, y - 10, 'king_gnome_idle').setScale(0.6).setFlipX(true).setDepth(6).play('king_gnome_idle');
+      const crown = deco('queen_crown', 10, -66, 0.6);
+      this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     // Forja Vulcânica (fases novas).
     if (l.field?.geysers) {

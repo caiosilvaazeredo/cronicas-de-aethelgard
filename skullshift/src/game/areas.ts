@@ -93,7 +93,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei Gnomo',
     kingAnim: 'sgnome_idle',
     color: 0x3f9a5a,
-    levels: ['key4', 'key5'],
+    levels: ['woods', 'key4', 'mushrooms', 'treetops', 'key5', 'logriver', 'acorngun', 'moss', 'gnomevillage', 'gnomeking'],
     pos: [1085, 455],
     unlock: 'after-pradaria',
   },

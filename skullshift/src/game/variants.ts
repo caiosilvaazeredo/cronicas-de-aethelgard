@@ -29,7 +29,9 @@ export type Ability =
   /** Cospe bolas de teia que prendem o jogador. */
   | 'web'
   /** Cospe bolas de fogo. */
-  | 'fire';
+  | 'fire'
+  /** Cospe veneno. */
+  | 'poison';
 
 export type Accessory = 'bandana' | 'eyepatch' | 'captain' | 'shellhelm' | 'buoy' | 'horns';
 
@@ -87,6 +89,20 @@ const MINO_OBSIDIAN = {
   0xfff977: 0xc8b0ff,
 };
 const LIZARD_MAGMA = { 0x3cbe57: 0xd84a2a, 0x4b867b: 0x8a2a1a, 0xffed44: 0xffd36b, 0x693d5b: 0x2a1a1a };
+/** Bosque: gnomos de chapéu vermelho, de musgo e ancião (roxo). */
+const GNOME_RED = { 0xe09844: 0xd42a3c, 0x9c664b: 0x8a1a2a, 0xf2ec7d: 0xff8a8a };
+const GNOME_MOSS = { 0xe09844: 0x5a8a3a, 0x9c664b: 0x3a5a2a, 0xf2ec7d: 0x9ac85a, 0x9cbeaa: 0x6a8a5a };
+const GNOME_ELDER = { 0xe09844: 0x7a4ab8, 0x9c664b: 0x4a2a7a, 0xf2ec7d: 0xb48aff, 0x9cbeaa: 0x3a6a8a };
+/** Minas: goblin da tocha de fogo azul, mineiro (capacete cinza), chefe (capuz dourado). */
+const TORCH_BLUE = { 0xffdc00: 0x7fd8ff, 0xcf8935: 0x3a8ad8, 0x955c3c: 0x1f5f9a, 0x714646: 0x2a3a6a };
+const TORCH_MINER = { 0x714646: 0x6a6a7a, 0x8d6e52: 0x5a4a3a, 0x9a7655: 0x7a6a5a };
+const TORCH_CHIEF = { 0x714646: 0xd8a530, 0x8abc61: 0x6a9a4a, 0x417168: 0x3a6a2a };
+/** Lagoa: lagarto venenoso (roxo) e crocodilo (elite, verde-escuro). */
+const LIZARD_POISON = { 0x3cbe57: 0x9a4ad0, 0x4b867b: 0x5a2a8a, 0xffed44: 0xc8f05a, 0x693d5b: 0x2a1a3a };
+const LIZARD_CROC = { 0x3cbe57: 0x3a6a2a, 0x4b867b: 0x2a4a1a, 0xffed44: 0xa8c85a, 0x693d5b: 0x4a3a1a };
+/** Céu de Brasa: abelha de brasa (vermelha) e abelha da tempestade (elite, cinza). */
+const BEE_EMBER = { 0xefe054: 0xff6a3a, 0xb28d5a: 0xa01e30, 0x9f866e: 0x6a1020, 0x6c554b: 0x3a0a10, 0xdad9bb: 0xffd0a0, 0xc6b799: 0xffb070 };
+const BEE_STORM = { 0xefe054: 0xc8c8e0, 0xb28d5a: 0x4a4a6a, 0x9f866e: 0x2a2a4a, 0x6c554b: 0x1a1a2a, 0xdad9bb: 0xe0f0ff, 0xc6b799: 0x9ab0ff };
 const GNOLL_WRECK = { 0xefe054: 0xb8c8a0, 0xaf8c58: 0x7a8a6a, 0xb492a7: 0x4a8a9a, 0x6d5e51: 0x4a5a5a, 0x514744: 0x2e3a3a };
 
 export const VARIANTS: VariantDef[] = [
@@ -106,6 +122,16 @@ export const VARIANTS: VariantDef[] = [
   { id: 'minotaur_lava', base: 'minotaur', name: 'Minotauro de Lava', palette: MINO_LAVA, ability: 'charge', speedMul: 1.2 },
   { id: 'minotaur_obsidian', base: 'minotaur', name: 'Minotauro de Obsidiana', palette: MINO_OBSIDIAN, scale: 1.2, hp: 3, speedMul: 0.9 },
   { id: 'lizard_magma', base: 'lizard', name: 'Lagarto de Magma', palette: LIZARD_MAGMA, ability: 'fire' },
+  { id: 'sgnome_red', base: 'sgnome', name: 'Gnomo de Chapéu Vermelho', palette: GNOME_RED, ability: 'triple' },
+  { id: 'sgnome_moss', base: 'sgnome', name: 'Gnomo do Musgo', palette: GNOME_MOSS, ability: 'burrow', mound: [0x3a5a2a, 0x6a9a4a] },
+  { id: 'sgnome_elder', base: 'sgnome', name: 'Gnomo Ancião', palette: GNOME_ELDER, scale: 1.35, hp: 3 },
+  { id: 'torchgob_blue', base: 'torchgob', name: 'Goblin do Fogo Azul', palette: TORCH_BLUE, ability: 'charge', speedMul: 1.2 },
+  { id: 'torchgob_miner', base: 'torchgob', name: 'Goblin Mineiro', palette: TORCH_MINER, ability: 'bomb' },
+  { id: 'torchgob_chief', base: 'torchgob', name: 'Chefe Goblin', palette: TORCH_CHIEF, scale: 1.35, hp: 3 },
+  { id: 'lizard_poison', base: 'lizard', name: 'Lagarto Venenoso', palette: LIZARD_POISON, ability: 'poison' },
+  { id: 'lizard_croc', base: 'lizard', name: 'Lagarto-Crocodilo', palette: LIZARD_CROC, scale: 1.3, hp: 3, speedMul: 0.9 },
+  { id: 'bee_ember', base: 'bee', name: 'Abelha de Brasa', palette: BEE_EMBER, ability: 'charge', speedMul: 1.2 },
+  { id: 'bee_storm', base: 'bee', name: 'Abelha da Tempestade', palette: BEE_STORM, scale: 1.3, hp: 3 },
   { id: 'gnoll_hunter', base: 'gnoll', name: 'Gnoll Caçador', palette: GNOLL_HUNTER, ability: 'boomerang', speedMul: 1.1 },
   { id: 'gnoll_stalker', base: 'gnoll', name: 'Gnoll Espreitador', palette: GNOLL_STALKER, ability: 'burrow', mound: [0x5a8a3a, 0x9ac85a] },
   { id: 'gnoll_brute', base: 'gnoll', name: 'Gnoll Brutamontes', palette: GNOLL_BRUTE, scale: 1.35, hp: 3, speedMul: 0.85, accessories: ['horns'] },
@@ -210,6 +236,14 @@ function makeArt(scene: Phaser.Scene): void {
   fire.set(0, 5, 0xd84a2a);
   fire.outline(INK);
   fire.toTexture(scene, 'fire_ball', 2);
+  // Gota de veneno (Lagarto Venenoso).
+  const poison = new Px(10, 10);
+  poison.disc(5, 6, 4, 0x8ad84a);
+  poison.disc(5, 6, 2, 0xc8f05a);
+  poison.rect(4, 0, 2, 3, 0x8ad84a);
+  poison.set(3, 4, 0xffffff);
+  poison.outline(INK);
+  poison.toTexture(scene, 'poison_ball', 2);
   // Bomba redonda com pavio.
   const bomb = new Px(12, 13);
   bomb.disc(6, 8, 4, 0x2a2a3a);
@@ -270,6 +304,9 @@ export function makeVariants(scene: Phaser.Scene): void {
     } else if (v.ability === 'bomb') {
       def.melee = undefined;
       def.projectile = { release: 3, tex: 'bomb', speed: 360, angle: 0, spin: false, arc: { vy: -420, g: 900 } };
+    } else if (v.ability === 'poison') {
+      def.melee = undefined;
+      def.projectile = { release: 3, tex: 'poison_ball', speed: 520, angle: 0, spin: false, arc: { vy: -90, g: 300 } };
     } else if (v.ability === 'fire') {
       def.melee = undefined;
       def.projectile = { release: 3, tex: 'fire_ball', speed: 540, angle: 0, spin: false, arc: { vy: -80, g: 300 } };

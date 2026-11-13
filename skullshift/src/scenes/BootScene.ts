@@ -4,9 +4,10 @@ import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALE
 import { MINO_SCALE } from '../game/characters';
 import { makeVariants } from '../game/variants';
 import { makeSeaArt, makeSeaTiles } from '../game/sea';
-import { makeFieldTiles } from '../game/field';
+import { makeFieldArt, makeFieldTiles } from '../game/field';
 import { makeKingShark } from '../game/sharkking';
 import { makeGnollKing } from '../game/gnollking';
+import { makeKings } from '../game/kings';
 import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
@@ -154,9 +155,11 @@ export class BootScene extends Phaser.Scene {
     this.makeVillagerAvatar();
     makeSeaTiles(this);
     makeFieldTiles(this);
+    makeFieldArt(this);
     makeSeaArt(this);
     makeKingShark(this);
     makeGnollKing(this);
+    makeKings(this);
     makeHauntArt(this);
     makeHauntBackdrop(this, 'haunt_bg', W, H);
     makeMapMansion(this, 'map_mansion');

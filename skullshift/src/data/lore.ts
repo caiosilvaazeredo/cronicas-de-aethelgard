@@ -664,6 +664,84 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('O Minotauro não deixa ninguém passar sem lutar. Depois daqui, é ele.'),
     ],
   },
+  woods: {
+    title: 'Entrada do Bosque',
+    blurb: 'O bosque dos gnomos de estilingue.',
+    lines: [
+      S('Árvores enormes. E alguém atirando bolotas na minha cabeça.'),
+      X('Gnomos. Pequenos, teimosos e com boa mira.'),
+      S('Esse cheiro de madeira... eu conheço.'),
+      X('Todo bosque cheira igual, Ossian.'),
+    ],
+  },
+  mushrooms: {
+    title: 'Cogumelos Saltitantes',
+    blurb: 'Cogumelos que lançam quem cai em cima.',
+    lines: [
+      S('As paredes são altas demais para pular.'),
+      X('Cai em cima dos cogumelos vermelhos. Eles te jogam lá no alto.'),
+      S('E se eu comer um?'),
+      X('Tu não tens estômago, Ossian.'),
+    ],
+  },
+  treetops: {
+    title: 'Copas das Árvores',
+    blurb: 'O chão some no rio. O caminho é por cima.',
+    lines: [
+      S('O rio engoliu o caminho.'),
+      X('Então vai por cima, de copa em copa. Não olha para baixo.'),
+      S('Lá de cima dá para ver telhados azuis, longe, longe...'),
+      X('É só o reflexo do céu na água.'),
+    ],
+  },
+  logriver: {
+    title: 'Rio de Toras',
+    blurb: 'Toras boiando no rio: dá para pisar nelas.',
+    lines: [
+      S('Toras boiando. Alguém cortou essas árvores.'),
+      X('Os gnomos jogam as toras no rio para levar até a vila. Pisa nelas.'),
+      S('Eu cortava lenha. Atrás de uma casa azul. Eu tenho certeza.'),
+      X('Atravessa o rio, Ossian.'),
+    ],
+  },
+  acorngun: {
+    title: 'Tiro no Bosque',
+    blurb: 'Gnomos de estilingue por toda parte.',
+    lines: [
+      S('Uma chuva de bolotas!'),
+      X('Responde com ossos. Segura ATACAR.'),
+    ],
+  },
+  moss: {
+    title: 'Musgo Traiçoeiro',
+    blurb: 'Montes de musgo que escondem gnomos.',
+    lines: [
+      S('Aquele musgo tremeu. Igual ao capim da pradaria.'),
+      X('Gnomos do musgo. Eles aprenderam com os Gnolls.'),
+      S('Ou alguém ensinou os dois.'),
+      X('...Cuidado com as toras.'),
+    ],
+  },
+  gnomevillage: {
+    title: 'Vila dos Gnomos',
+    blurb: 'A vila dos gnomos. Ninguém passa sem lutar.',
+    lines: [
+      S('Uma vila de verdade. Casas, chaminés, varais...'),
+      X('Os moradores defendem o Rei. Cada área só abre quando todos caírem.'),
+      S('Eu morava numa vila assim, não morava?'),
+      X('Tu moravas onde eu te encontrei: na praia.'),
+    ],
+  },
+  gnomeking: {
+    title: 'Árvore do Rei Gnomo',
+    blurb: 'O Rei Gnomo guarda o fragmento no pé da árvore mais velha.',
+    lines: [
+      S('Um gnomo do tamanho de uma casa. Com chapéu roxo.'),
+      X('Ele joga bolotas em arco, rola toras gigantes e sacode a árvore.'),
+      S('Roxo, de novo. Todos os reis usam o seu roxo, Hex.'),
+      X('É a cor da realeza. Só isso. Vai.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

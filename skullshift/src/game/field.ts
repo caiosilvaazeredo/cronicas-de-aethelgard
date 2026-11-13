@@ -3,6 +3,7 @@ import { DEPTH, FLOOR_Y, TILE, W } from '../config';
 import type { Fighter } from './Fighter';
 import type { Level } from './level';
 import { recolorSheet } from './sheets';
+import { Px } from '../ui/pixelart';
 import { sfx } from './settings';
 
 /**
@@ -16,6 +17,58 @@ export interface FieldDef {
   boulders?: Array<[screen: number, tile: number, h: number, dir: 1 | -1, every: number]>;
   /** Gêiseres de fogo: borbulham (aviso) e soltam uma coluna de fogo a cada `every` ms. */
   geysers?: Array<[screen: number, tile: number, h: number, every: number, offset?: number]>;
+  /** Arte das rochas que rolam (ex.: 'log_roll', tora no bosque). */
+  boulderTex?: string;
+  /** Cogumelos saltitantes: quicam quem cai em cima (bem alto). */
+  mushrooms?: Array<[screen: number, tile: number, h: number]>;
+  /** Desabamento: pedras caem do teto em pontos marcados, a cada `every` ms. */
+  rockfall?: Array<[screen: number, tile: number, every: number, offset?: number]>;
+}
+
+/** Arte do bosque e da mina (pixel art em código). */
+export function makeFieldArt(scene: Phaser.Scene): void {
+  if (scene.textures.exists('mushroom')) return;
+  const INK = 0x1d1a2b;
+  // Cogumelo vermelho de bolinhas (mola).
+  const m = new Px(22, 18);
+  for (let y = 0; y < 9; y++) {
+    const half = Math.round(Math.sqrt(Math.max(0, 100 - (9 - y) * (9 - y) * 1.2)));
+    for (let x = 11 - half; x <= 10 + half; x++) m.set(x, y, 0xd42a3c);
+  }
+  for (const [x, y] of [[6, 4], [14, 3], [10, 6], [17, 6]]) m.rect(x, y, 2, 2, 0xfff7dc);
+  m.rect(1, 8, 20, 2, 0xa01e30);
+  m.rect(8, 10, 6, 8, 0xf4ead0);
+  m.rect(8, 10, 6, 1, 0xd8c8a0);
+  m.outline(INK);
+  m.toTexture(scene, 'mushroom', 3);
+  // Tora rolando (vista de lado: anéis do tronco).
+  const lg = new Px(18, 18);
+  lg.disc(9, 9, 8, 0x8a5a2a);
+  lg.disc(9, 9, 6, 0xc89a5a);
+  lg.disc(9, 9, 4, 0xa0703a);
+  lg.disc(9, 9, 2, 0xc89a5a);
+  lg.outline(INK);
+  lg.toTexture(scene, 'log_roll', 3);
+  // Tora boiando (plataforma no rio).
+  const lf = new Px(21, 10);
+  lf.rect(0, 1, 21, 8, 0x8a5a2a);
+  lf.rect(0, 1, 21, 2, 0xb07a40);
+  lf.rect(2, 4, 6, 1, 0x6a4020);
+  lf.rect(12, 6, 6, 1, 0x6a4020);
+  lf.disc(20, 5, 3, 0xc89a5a);
+  lf.outline(INK);
+  lf.toTexture(scene, 'log_float', 3);
+  // Vitória-régia (afunda ao pisar, na lagoa).
+  const lily = new Px(21, 6);
+  for (let x = 0; x < 21; x++) {
+    const h = x < 3 || x > 17 ? 2 : 4;
+    lily.rect(x, 5 - h, 1, h, x === 10 ? 0x2a5a2a : 0x5aa83a);
+  }
+  lily.rect(3, 1, 15, 1, 0x8ad86a);
+  lily.set(15, 2, 0xff9ac0);
+  lily.set(16, 2, 0xffd0e0);
+  lily.outline(INK);
+  lily.toTexture(scene, 'lily', 3);
 }
 
 export interface FieldHost {
@@ -28,6 +81,18 @@ export interface FieldHost {
 
 /** Capim dourado (recolor do tileset de grama) para a Pradaria. */
 export function makeFieldTiles(scene: Phaser.Scene): void {
+  // Bosque: grama verde-escura. Lagoa: verde-musgo, pedra limosa.
+  recolorSheet(scene, 'tilemap', 'tiles_forest', 64, 64, { 0x9bb94e: 0x5a9a3a, 0x80ac5e: 0x3f7a32, 0xb8b958: 0x7ab84a, 0x618559: 0x2f5a2a });
+  recolorSheet(scene, 'tilemap', 'tiles_swamp', 64, 64, {
+    0x9bb94e: 0x7a8a3a,
+    0x80ac5e: 0x5a6a32,
+    0xb8b958: 0x9aa85a,
+    0x618559: 0x3a4a2a,
+    0x669d9d: 0x5a7a5a,
+    0x506a69: 0x3a5a4a,
+    0x8cc3c4: 0x7a9a7a,
+    0xc6f0db: 0xa8c8a0,
+  });
   recolorSheet(scene, 'tilemap', 'tiles_prairie', 64, 64, {
     0x9bb94e: 0xc8b85a,
     0x80ac5e: 0xa89a4a,
@@ -55,6 +120,9 @@ export class FieldSystem {
   private runners: Runner[] = [];
   private boulders: Boulder[] = [];
   private spawners: Array<{ x: number; y: number; dir: number; every: number; next: number }> = [];
+  private mushrooms: Array<{ x: number; top: number; img: Phaser.GameObjects.Image }> = [];
+  private falls: Array<{ x: number; every: number; next: number; warned: boolean }> = [];
+  private rocks: Array<{ img: Phaser.GameObjects.Image; vy: number; dead?: boolean }> = [];
   private geysers: Array<{ x: number; floor: number; every: number; next: number; state: 'idle' | 'warn' | 'fire'; at: number; g: Phaser.GameObjects.Graphics }> = [];
 
   constructor(
@@ -63,6 +131,14 @@ export class FieldSystem {
   ) {
     const s = host.scene;
     const now = s.time.now;
+    makeFieldArt(s);
+    for (const [sc, t, h] of def.mushrooms ?? []) {
+      const x = host.level.tileX(sc, t);
+      const top = FLOOR_Y - h * TILE;
+      const img = s.add.image(x, top + 4, 'mushroom').setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.6);
+      this.mushrooms.push({ x, top, img });
+    }
+    for (const [sc, t, every, offset] of def.rockfall ?? []) this.falls.push({ x: host.level.tileX(sc, t), every, next: now + 1500 + (offset ?? 0), warned: false });
     this.nextStampede = now + (def.stampede?.every ?? 0);
     for (const [sc, t, h, every, offset] of def.geysers ?? []) {
       const x = host.level.tileX(sc, t);
@@ -84,6 +160,63 @@ export class FieldSystem {
     this.updateStampede(time, dt, p);
     this.updateBoulders(time, dt, p);
     this.updateGeysers(time, p);
+    this.updateMushrooms(p);
+    this.updateRockfall(time, dt, p);
+  }
+
+  // ---------- cogumelos e desabamento ----------
+
+  private updateMushrooms(p: Fighter): void {
+    for (const m of this.mushrooms) {
+      if (!p.alive || p.zipping || p.body.velocity.y <= 0) continue;
+      if (Math.abs(p.x - m.x) > 34 || p.feet < m.top - 60 || p.feet > m.top - 20) continue;
+      p.body.setVelocityY(-1050);
+      sfx('jump');
+      this.host.scene.tweens.add({ targets: m.img, scaleY: 0.7, scaleX: 1.2, duration: 80, yoyo: true });
+    }
+  }
+
+  private updateRockfall(time: number, dt: number, p: Fighter): void {
+    const s = this.host.scene;
+    const lvl = this.host.level;
+    const screen = lvl.screenOf(p.x);
+    for (const f of this.falls) {
+      if (lvl.screenOf(f.x) !== screen) continue;
+      if (!f.warned && time > f.next - 700) {
+        f.warned = true;
+        // Poeirinha caindo do teto avisa onde a pedra vai cair.
+        for (let i = 0; i < 4; i++) {
+          const d = s.add.image(f.x + Phaser.Math.Between(-16, 16), 20, 'spark').setTint(0xc8b8a0).setScale(0.25).setDepth(DEPTH.fx);
+          s.tweens.add({ targets: d, y: 160 + i * 20, alpha: 0, duration: 650, onComplete: () => d.destroy() });
+        }
+      }
+      if (time > f.next) {
+        f.next = time + f.every;
+        f.warned = false;
+        this.rocks.push({ img: s.add.image(f.x, -30, 'stone2').setScale(1.1).setDepth(DEPTH.fighters - 0.1), vy: 200 });
+      }
+    }
+    for (const r of this.rocks) {
+      const prev = r.img.y;
+      r.vy += 1600 * dt;
+      r.img.y += r.vy * dt;
+      r.img.angle += 200 * dt;
+      const land = lvl.landingY(r.img.x, prev + 24, r.img.y + 24);
+      if (land !== null || r.img.y > 800) {
+        r.dead = true;
+        if (land !== null) {
+          s.cameras.main.shake(90, 0.004);
+          const d = s.add.sprite(r.img.x, land - 10, 'dust').setScale(1).setDepth(DEPTH.fx).play('dust');
+          d.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => d.destroy());
+        }
+        continue;
+      }
+      if (p.alive && !p.invulnerable && Math.abs(p.x - r.img.x) < 30 && Math.abs(p.feet - 40 - r.img.y) < 44) this.host.killPlayer();
+    }
+    this.rocks = this.rocks.filter((r) => {
+      if (r.dead) r.img.destroy();
+      return !r.dead;
+    });
   }
 
   // ---------- gêiseres de fogo ----------
@@ -189,7 +322,7 @@ export class FieldSystem {
     for (const sp of this.spawners) {
       if (lvl.screenOf(sp.x) !== screen || time < sp.next) continue;
       sp.next = time + sp.every;
-      const img = s.add.image(sp.x, sp.y, 'stone1').setScale(1.1).setDepth(DEPTH.fighters - 0.2);
+      const img = s.add.image(sp.x, sp.y, this.def.boulderTex ?? 'stone1').setScale(this.def.boulderTex ? 1 : 1.1).setDepth(DEPTH.fighters - 0.2);
       this.boulders.push({ img, vx: sp.dir * 230, vy: 0, r: 30 });
     }
     const hb = p.alive ? p.activeHitBox() : null;

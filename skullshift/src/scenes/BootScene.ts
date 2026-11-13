@@ -176,7 +176,7 @@ export class BootScene extends Phaser.Scene {
       const d = CHARS[id];
       const pivot: [number, number] = [d.frame / 2 - 11, d.feetY - 34];
       swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 7);
-      swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2);
+      swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2, 0.35);
       this.anim(`${id}_swim`, d.run.n, 11, -1);
       this.anim(`${id}_swim_attack`, d.attack.n, d.attack.fps, 0);
     }

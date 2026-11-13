@@ -547,11 +547,16 @@ export class Fighter {
       const want = it.move * this.def.speed * 0.95;
       b.setVelocityX(Phaser.Math.Linear(b.velocity.x, want, Math.min(1, dt * 5)));
       if (it.move !== 0) this.facing = it.move > 0 ? 1 : -1;
-      const anim = `${this.def.id}_run`;
+      // Folha de nado (corpo deitado, ondulando) quando existe; senão, a de corrida.
+      const swim = `${this.def.id}_swim`;
+      const anim = this.scene.anims.exists(swim) ? swim : `${this.def.id}_run`;
       if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
-      this.sprite.anims.timeScale = 0.5 + Math.min(1, Math.abs(b.velocity.x) / this.def.speed) * 0.6;
+      // Parado ele só abana a cauda devagar; nadando, bate mais rápido.
+      const speed01 = Math.min(1, Math.hypot(b.velocity.x, b.velocity.y) / this.def.speed);
+      this.sprite.anims.timeScale = 0.35 + speed01 * 0.9;
     }
-    const pitch = (b.velocity.y / (this.def.speed * 0.8)) * 25 * this.facing;
+    // Aponta o focinho para onde nada: sobe e desce inclinando o corpo todo.
+    const pitch = (b.velocity.y / (this.def.speed * 0.8)) * 38 * this.facing;
     this.sprite.setAngle(Phaser.Math.Linear(this.sprite.angle, pitch, Math.min(1, dt * 6)));
     if (now - this.lastWake > 420) {
       this.lastWake = now;
@@ -649,7 +654,10 @@ export class Fighter {
     this.attackHits.clear();
     this.attackId++;
     if (this.isPlayer) sfx('attack');
-    this.sprite.play(this.crouching && this.hasCrouchPose ? `${this.def.id}_crouch_attack` : `${this.def.id}_attack`);
+    // Nadando (nado livre), o ataque também é deitado.
+    const swimAtk = `${this.def.id}_swim_attack`;
+    if (this.freeSwim && this.scene.anims.exists(swimAtk)) this.sprite.play(swimAtk);
+    else this.sprite.play(this.crouching && this.hasCrouchPose ? `${this.def.id}_crouch_attack` : `${this.def.id}_attack`);
   }
 
   private setState(s: State): void {

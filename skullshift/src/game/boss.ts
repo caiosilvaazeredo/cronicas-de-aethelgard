@@ -696,7 +696,7 @@ export class SpiderQueenBoss extends Boss {
 
   constructor(host: BossHost) {
     super(host, 22, 'boss_spider_idle', 2.6, 133, 192, 190, 150, 'ARANHA-RAINHA', 'Mãe do Covil', 0xd42a3c);
-    this.crown = host.scene.add.image(0, -400, 'queen_crown').setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.crown = host.scene.add.image(0, -400, 'queen_crown').setAlpha(0).setDepth(DEPTH.fighters - 0.4).setVisible(false);
     this.thread = host.scene.add.graphics().setDepth(DEPTH.fighters - 0.6);
   }
 

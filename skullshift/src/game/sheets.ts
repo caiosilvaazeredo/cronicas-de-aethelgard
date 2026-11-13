@@ -152,3 +152,67 @@ export const BEE_KING_PALETTE: Record<number, number> = {
   0xdad9bb: 0xfff1d8,
   0xc6b799: 0xffb0d0,
 };
+
+/**
+ * Folha de NADO feita a partir de uma folha em pé (o Tubarão do pacote só existe andando):
+ * tira a sombra do chão (pixels translúcidos), deita o corpo 90° (cabeça para a frente, barriga
+ * para baixo) em torno do centro do corpo e, quadro a quadro, ondula o corpo como um peixe:
+ * a cauda (parte de trás) balança mais, a cabeça quase nada.
+ */
+export function swimSheet(scene: Phaser.Scene, src: string, dst: string, frame: number, pivot: [number, number], wiggle: number): void {
+  const from = toCanvas(scene, src);
+  const n = Math.floor(from.width / frame);
+  const out = document.createElement('canvas');
+  out.width = from.width;
+  out.height = frame;
+  const octx = out.getContext('2d')!;
+  octx.imageSmoothingEnabled = false;
+  const tmp = document.createElement('canvas');
+  tmp.width = frame;
+  tmp.height = frame;
+  const tctx = tmp.getContext('2d')!;
+  const rot = document.createElement('canvas');
+  rot.width = frame;
+  rot.height = frame;
+  const rctx = rot.getContext('2d')!;
+  rctx.imageSmoothingEnabled = false;
+  const [px, py] = pivot;
+  for (let i = 0; i < n; i++) {
+    // 1) quadro em pé, sem a sombra
+    tctx.clearRect(0, 0, frame, frame);
+    tctx.drawImage(from, i * frame, 0, frame, frame, 0, 0, frame, frame);
+    const img = tctx.getImageData(0, 0, frame, frame);
+    for (let k = 3; k < img.data.length; k += 4) if (img.data[k] < 200) img.data[k] = 0;
+    tctx.putImageData(img, 0, 0);
+    // 2) deita 90° (sentido horário): a cabeça, que estava em cima, passa a apontar para a direita
+    rctx.clearRect(0, 0, frame, frame);
+    rctx.save();
+    rctx.translate(px, py);
+    // Um pouco mais comprido e mais baixo: corpo de peixe, não de bola.
+    rctx.scale(1.18, 0.9);
+    rctx.rotate(Math.PI / 2);
+    rctx.drawImage(tmp, -px, -py);
+    rctx.restore();
+    // 3) ondulação: cada coluna sobe/desce numa onda que corre da cabeça para a cauda
+    const r = rctx.getImageData(0, 0, frame, frame);
+    const o = octx.createImageData(frame, frame);
+    const phase = (i / n) * Math.PI * 2;
+    for (let x = 0; x < frame; x++) {
+      // 0 na cabeça (direita), 1 na ponta da cauda (esquerda)
+      const tail = Math.max(0, Math.min(1, (px + 34 - x) / 80));
+      const dy = Math.round(Math.sin(phase - tail * 3.2) * wiggle * tail);
+      for (let y = 0; y < frame; y++) {
+        const sy = y - dy;
+        if (sy < 0 || sy >= frame) continue;
+        const a = (sy * frame + x) * 4;
+        const b = (y * frame + x) * 4;
+        o.data[b] = r.data[a];
+        o.data[b + 1] = r.data[a + 1];
+        o.data[b + 2] = r.data[a + 2];
+        o.data[b + 3] = r.data[a + 3];
+      }
+    }
+    octx.putImageData(o, i * frame, 0);
+  }
+  addSheet(scene, dst, out, frame, frame);
+}

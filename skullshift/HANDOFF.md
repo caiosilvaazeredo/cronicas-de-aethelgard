@@ -108,6 +108,9 @@ originais (extraídas com PIL do PNG).
   (`deathLimit` +1), Reflexo de Osso (`Fighter.parryBonus`), Manto de Nuvem (invulnerável em dobro ao renascer),
   Ímã de Ossos (reserva cai reto e rápido), Dente de Ouro (ouro em dobro). Lore: a dona é a ovelha de orelha
   preta das lembranças; não fala, responde por placas. Novo aprimoramento: entrada em `UPGRADES` + efeito.
+- **Nado do tubarão**: `sheets.swimSheet` gera `<id>_swim` e `<id>_swim_attack` (corpo deitado 90°, sem sombra,
+  ondulando) para todo id que começa com `shark` (BootScene); usadas em `Fighter.updateFreeSwim`/`startAttack`.
+- **Chefes sem coroa**: as coroas feitas em código (`queen_crown`) ficaram invisíveis (`setAlpha(0)`) a pedido.
 - **Construções no fundo**: `DecoKind` ganhou castle/monastery/barracks/archery; cor por tileset
   (`BUILDING_COLOR`), base assentada no chão (`BUILDING_FOOT`) com sombra; `EXTRA_BUILDINGS[idDaFase]` põe
   prédios no trecho de chão mais largo do cenário.

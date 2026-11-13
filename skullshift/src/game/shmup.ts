@@ -81,7 +81,7 @@ interface BossDef {
 const BOSSES: Record<'imp' | 'bee' | 'bat', BossDef> = {
   imp: { key: 'imp_idle', scale: 3, hp: 40, name: 'DIABRETE GIGANTE', title: 'Senhor dos Céus', color: 0xe05a2a, shot: 0xff7a1a, patterns: 4, crown: false },
   bee: { key: 'king_bee_idle', scale: 2.1, hp: 90, name: 'REI DAS ABELHAS', title: 'Soberano da Colmeia', color: 0xb0306a, shot: 0xffd36b, patterns: 4, crown: false },
-  bat: { key: 'king_bat_idle', scale: 2.3, hp: 60, name: 'REI DOS MORCEGOS', title: 'Senhor da Noite Eterna', color: 0xa01e30, shot: 0xff4a5a, patterns: 5, crown: true },
+  bat: { key: 'king_bat_idle', scale: 2.3, hp: 60, name: 'REI DOS MORCEGOS', title: 'Senhor da Noite Eterna', color: 0xa01e30, shot: 0xff4a5a, patterns: 5, crown: false },
 };
 
 interface Foe {
@@ -331,7 +331,7 @@ export class ShmupSystem {
     // O rei é o do reino inimigo: com o morcego, o Rei das Abelhas; com a abelha, o Rei dos Morcegos.
     const def = BOSSES[this.host.boss === 'king' ? this.enemy : 'imp'];
     const sprite = s.add.sprite(this.right + 200, (this.host.top + this.host.bottom) / 2, def.key).setScale(def.scale).setFlipX(true).setDepth(DEPTH.fighters).play(def.key);
-    const crown = def.crown ? s.add.image(sprite.x, sprite.y, 'queen_crown').setScale(1.3).setDepth(DEPTH.fighters + 0.1) : undefined;
+    const crown = def.crown ? s.add.image(sprite.x, sprite.y, 'queen_crown').setAlpha(0).setScale(1.3).setDepth(DEPTH.fighters + 0.1) : undefined;
     // O morcego bate muito mais forte: o Diabrete aguenta mais quando ele é o aliado.
     const hp = def === BOSSES.imp && !this.hard ? 60 : def.hp;
     this.boss = { def, sprite, crown, hp, max: hp, t: 0, next: s.time.now + 2200, k: 0, dashing: 0, hurt: 0, dying: false };

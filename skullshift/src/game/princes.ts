@@ -43,9 +43,9 @@ export class PrincesBoss extends Boss {
     this.hoverY = host.floor - 30;
     this.feet = this.hoverY;
     const s = host.scene;
-    this.crown = s.add.image(0, -400, 'queen_crown').setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.crown = s.add.image(0, -400, 'queen_crown').setAlpha(0).setDepth(DEPTH.fighters - 0.4).setVisible(false);
     this.bee = s.add.sprite(-400, -400, 'prince_bee_idle').setScale(1.6).setDepth(DEPTH.fighters - 0.5).setVisible(false).play('prince_bee_idle');
-    this.beeCrown = s.add.image(0, -400, 'queen_crown').setScale(0.7).setTint(0xbfe9ff).setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.beeCrown = s.add.image(0, -400, 'queen_crown').setAlpha(0).setScale(0.7).setTint(0xbfe9ff).setDepth(DEPTH.fighters - 0.4).setVisible(false);
   }
 
   protected get idleAnim(): string {

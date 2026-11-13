@@ -37,7 +37,7 @@ abstract class KingBoss extends Boss {
 
   constructor(host: BossHost, hp: number, key: string, scale: number, feetY: number, hurtW: number, hurtH: number, name: string, title: string, color: number) {
     super(host, hp, `${key}_idle`, scale, feetY, 192, hurtW, hurtH, name, title, color);
-    this.crown = host.scene.add.image(0, -400, 'queen_crown').setScale(1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.crown = host.scene.add.image(0, -400, 'queen_crown').setAlpha(0).setScale(1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
   }
 
   /** Chama capangas (no máximo `max` vivos). */

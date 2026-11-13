@@ -40,7 +40,7 @@ export class GnollKingBoss extends Boss {
 
   constructor(host: BossHost) {
     super(host, 22, 'king_gnoll_idle', 2.2, 131, 192, 150, 170, 'REI GNOLL', 'Senhor da Pradaria', 0xe0a83a);
-    this.crown = host.scene.add.image(0, -400, 'queen_crown').setScale(1.1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.crown = host.scene.add.image(0, -400, 'queen_crown').setAlpha(0).setScale(1.1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
   }
 
   protected get idleAnim(): string {

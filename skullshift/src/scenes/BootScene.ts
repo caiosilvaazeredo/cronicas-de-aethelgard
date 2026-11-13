@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
-import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
+import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet, swimSheet } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
 import { makeVariants } from '../game/variants';
 import { makeSeaArt, makeSeaTiles } from '../game/sea';
@@ -170,6 +170,16 @@ export class BootScene extends Phaser.Scene {
     makeLavaWave(this);
     makePuzzleArt(this);
     makeVariants(this);
+    // Tubarões (e variantes) ganham folhas de nado: corpo deitado e ondulando, sem a sombra do chão.
+    for (const id of Object.keys(CHARS) as CharId[]) {
+      if (!id.startsWith('shark')) continue;
+      const d = CHARS[id];
+      const pivot: [number, number] = [d.frame / 2 - 11, d.feetY - 34];
+      swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 7);
+      swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2);
+      this.anim(`${id}_swim`, d.run.n, 11, -1);
+      this.anim(`${id}_swim_attack`, d.attack.n, d.attack.fps, 0);
+    }
     for (let i = 1; i <= 4; i++) this.anim(`bush${i}`, 8, 8, -1);
     this.makeVillagerAvatar();
     makeSeaTiles(this);

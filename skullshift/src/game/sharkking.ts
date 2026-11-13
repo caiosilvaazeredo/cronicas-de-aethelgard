@@ -71,7 +71,7 @@ export class SharkKingBoss extends Boss {
     this.x = (arena.basin[0] + arena.basin[1]) / 2;
     const s = host.scene;
     this.fin = s.add.graphics().setDepth(DEPTH.fighters + 0.7);
-    this.crown = s.add.image(0, -400, 'queen_crown').setScale(1.1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
+    this.crown = s.add.image(0, -400, 'queen_crown').setAlpha(0).setScale(1.1).setDepth(DEPTH.fighters - 0.4).setVisible(false);
   }
 
   protected get idleAnim(): string {

@@ -67,27 +67,17 @@ originais (extraídas com PIL do PNG).
 
 ## Estado atual
 
-- Área 1 **Ilhas da Maré completa**: 10 fases (`shore, crabs, hightide, wreck, deck, undersea,
-  floodgates, masts, reef, sharkking`), 9 variantes, Rei Tubarão-Arpão (`sharkking.ts`).
-- Mapa do mundo como continente (`WorldScene`, máscara `LAND` + chão por área), construções do Free Pack.
-- Memórias (`MEMORIES` em `lore.ts`, cena `MemoryScene`): uma a cada fragmento (ordem de `sealsBroken()`).
-- Final: fase `finale` (último do centro) → `StoryScene` mostra `REVELATION` + escolha.
-  Enfrentar → `ShamanBoss` (jogador vira `villager`) → epílogo `ENDING_FREE`. Voltar para casa →
-  `ENDING_HOME`. Save guarda `ending`; o mapa do mundo muda conforme o final.
-- Voo: morcego solta ondas sônicas, abelha solta ferrões (`shmup.ts`).
-- Áreas completas (10 fases + rei): Maré, Pradaria (Rei Gnoll, `gnollking.ts`), Teias (Aranha-Rainha),
-  Forja (Minotauro), Bosque (Rei Gnomo), Minas (Rei Goblin da Tocha). Reis Gnomo/Goblin/Lagarto em `kings.ts`.
-- Mecânicas genéricas: `FieldSystem` (manada, rochas/toras rolando, gêiseres, cogumelos, desabamento),
-  `SeaSystem` (maré de água/lava, caixotes/basalto/toras, tábuas/teia/obsidiana, canhões, casulos, corais),
-  escuridão com tochas (`haunt.torches`).
-- Faltam: Lagoa (10 fases novas + Rei Lagarto já escrito), Céu de Brasa (+7, tons vermelhos), Reino das Asas (+9).
+- **Todas as 9 áreas completas** (10 fases + rei cada) e o centro (6 fases, final com o Xamã). 96 fases + 1 secreta.
+- Reis: Tubarão (`sharkking.ts`), Gnoll (`gnollking.ts`), Gnomo/Goblin/Lagarto (`kings.ts`), Aranha-Rainha e
+  Minotauro (`boss.ts`), Príncipes (`princes.ts`), Diabrete e reis das asas (voo, `shmup.ts`), Xamã (`shamanboss.ts`).
+- Variantes: ~30 em `variants.ts` (todas as áreas). Inimigos 'wing' dependem do acordo (`GameScene.resolveWing`).
+- Mecânicas genéricas: `FieldSystem` (manada, rochas/toras, gêiseres, cogumelos, desabamento/meteoros),
+  `SeaSystem` (maré de água/lava, caixotes, tábuas, canhões, casulos/águas-vivas, corais/espinhos),
+  escuridão com tochas (`haunt.torches`), submerso (`undersea` + `underseaAs`), pântano (`swamp`), céu de brasa (`ember`).
+- Memórias (`MemoryScene`) e final (`StoryScene` + `REVELATION`/`ENDING_FREE`/`ENDING_HOME`).
+- Varredura automática: todas as fases carregam sem erro (script em scratchpad: inicia cada índice de `LEVELS`).
 
-## Próximos passos (em ordem)
+## Ideias para continuar
 
-1. Completar cada área com 10 fases, variantes e rei, nesta ordem: Pradaria (Rei Gnoll),
-   Teias (Aranha-Rainha já existe), Forja (Minotauro já existe), Bosque (Rei Gnomo),
-   Minas (Rei Goblin da Tocha), Lagoa (Rei Lagarto), Céu de Brasa (Diabrete, fases em tons
-   vermelhos), Reino das Asas (reis já existem no voo).
-2. Para cada área: variantes em `variants.ts` (+ `VariantId`), fases em `level.ts` (+ `LEVELS`),
-   ids em `areas.ts`, capítulos em `lore.ts`, enfeite da ilha em `MapScene.drawIsland`, teste no navegador.
-3. README e publicação a cada área concluída.
+- Balancear dificuldade jogando de verdade (os testes automatizados tiram vida dos chefes direto).
+- Mais variedade visual por área (decorações próprias), músicas, mais segredos/presentes nas fases.

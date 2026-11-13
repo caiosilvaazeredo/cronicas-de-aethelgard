@@ -40,27 +40,35 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 Cada fase tem **5 cenários** (telas; o voo tem 6): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. No versus, a fase é escolhida no menu (◀ ▶); no modo história, no mapa-múndi, que é uma faixa larga que rola acompanhando o esqueleto.
 
-### Mundo em áreas (em construção)
+### Mundo em áreas
 
-O modo história agora começa num **mapa do mundo**, no estilo das áreas do Super Mario Wonder: uma **ilha central** (o Santuário do Xamã) e **9 áreas** em volta, cada uma com o seu **rei** no fim. Escolher uma área abre o mapa dela, com as suas fases (a meta é **10 fases por área**; as vagas que faltam aparecem como "em construção").
+O modo história começa num **mapa do mundo** no estilo das áreas do Super Mario Wonder: um **continente** montado com o tileset do jogo (cada área com o seu chão: areia, capim dourado, pântano, rocha roxa, vulcão, bosque, mina), as construções do Free Pack (o monastério e as torres roxas do Xamã no centro, casas, castelos) e, no céu, o **Céu de Brasa** (vermelho) e o **Reino das Asas**. São **9 áreas** com **10 fases** cada e um **rei** no fim, mais a **ilha central** (Santuário do Xamã), com o caminho para o final.
 
-| Área | Rei | Fases atuais |
+| Área | Rei (estilo da luta) | Fases |
 |---|---|---|
-| Ilhas da Maré | Rei Tubarão-Arpão | Ilhas da Maré |
-| Pradaria dos Ossos | Rei Gnoll | Oficina da Chave, Pradaria dos Ossos |
-| Lagoa dos Lagartos | Rei Lagarto | (novas) |
-| Caverna das Teias | Aranha-Rainha | Caverna Úmida, Ninho das Teias, Blocos Trocados, Ninho dos Príncipes, Covil da Rainha |
-| Forja Vulcânica | Minotauro Rubro | Forja Vulcânica, Fuga da Forja, Mina Rachada |
-| Bosque dos Gnomos | Rei Gnomo | Bosque do Lenhador, Torre do Escalador |
-| Minas dos Goblins | Rei Goblin da Tocha | Mina de Ouro |
-| Céu de Brasa | Diabrete Gigante | Santuário das Nuvens, Correntes do Céu, Duelo no Céu |
-| Colmeia Real **ou** Reino da Noite | Rei das Abelhas ou Rei dos Morcegos | Voo Noturno |
-| *Santuário do Xamã (centro)* | — | Escadaria da Maré, Mausoléu, Casa das Portas, Biblioteca, Casa Sem Luz (o final) |
+| Ilhas da Maré | **Rei Tubarão-Arpão**: comanda a maré da arena; na alta só a barbatana aparece (salto em arco, arpões que viram plataformas, tubarões de coral); na baixa encalha e fica vulnerável | Ilhas da Maré, Praia dos Caranguejos, Maré Alta, Destroços do Naufrágio, Navio Pirata: Convés, Caverna Submarina (vira Tubarão), Comportas do Farol, Navio Pirata: Mastros, Recife de Coral, Arena do Rei |
+| Pradaria dos Ossos | **Rei Gnoll**: osso gigante bumerangue, salto com ondas, uivo (caçadores), chuva de ossos | Estrada dos Ossos, Oficina da Chave, Estouro da Manada, Pradaria dos Ossos, Cemitério de Ossos, Fazenda dos Gnolls, Capim Alto, Caravana, Moinhos do Vento, Covil do Rei |
+| Lagoa dos Lagartos | **Rei Lagarto**: veneno mirado, língua varrendo, salto com poças, lagartos venenosos | Margem do Pântano, Vitórias-Régias, Cheia do Pântano, Brejo Venenoso, Casa do Pescador, Fundo da Lagoa (vira Lagarto), Tiro no Brejo, Mangue, Aldeia dos Lagartos, Trono do Rei |
+| Caverna das Teias | **Aranha-Rainha** (e os **Príncipes** no meio) | Caverna Úmida, Ninho das Teias, Pontes de Teia, Blocos Trocados, Caverna Escura (tochas), Salão dos Casulos, Tiro na Teia, Ninho dos Príncipes, Câmara dos Ovos, Covil da Rainha |
+| Forja Vulcânica | **Minotauro Rubro** | Portões da Forja, Fuga da Forja, Mina Rachada, Maré de Lava, Gêiseres de Fogo, Tiro na Forja, Ponte de Obsidiana, Bigorna do Ferreiro, Coração de Magma, Forja Vulcânica |
+| Bosque dos Gnomos | **Rei Gnomo**: bolotas em arco, tora gigante rolando, gnomos, galhos caindo | Entrada do Bosque, Bosque do Lenhador, Cogumelos Saltitantes, Copas das Árvores, Torre do Escalador, Rio de Toras, Tiro no Bosque, Musgo Traiçoeiro, Vila dos Gnomos, Árvore do Rei |
+| Minas dos Goblins | **Rei Goblin da Tocha**: ondas de fogo, tochas em arco, mineiros com bombas, desabamento, investida | Boca da Mina, Mina de Ouro, Desabamento, Galeria Escura, Veio de Ouro, Dinamite, Mina Alagada, Fogo Azul, Tesouro dos Goblins, Trono do Rei |
+| Céu de Brasa | **Diabrete Gigante** (voo) | Santuário das Nuvens, Nuvens de Brasa, Correntes do Céu, Chuva de Meteoros, Tiro no Céu de Brasa, Ventos de Fogo, Castelo nas Nuvens, Enxame de Brasa, Cofre das Nuvens, Duelo no Céu |
+| Colmeia Real **ou** Reino da Noite | **Rei das Abelhas** ou **Rei dos Morcegos** (voo), conforme o acordo | Portal das Asas, Rota do Vento, Castelo das Asas, Voo na Tempestade, Câmara Real, Correntes Reais, Voo ao Entardecer, Tiro Real, Guarda Real, Voo Noturno |
+| *Santuário do Xamã (centro)* | **Xamã Hex** (final) | Escadaria da Maré, Mausoléu, Casa das Portas, Biblioteca, Casa Sem Luz, Trono do Xamã |
 
-- **Liberação:** Ilhas da Maré e depois Pradaria dos Ossos (ensinam o básico). Vencida a Pradaria, as outras áreas abrem em **qualquer ordem**. O reino das asas só aparece depois do **acordo dos Príncipes** (o nome e o rei mudam com a escolha). O Santuário abre quando todas as áreas caem.
-- **Navegação:** setas/direcional escolhem a área mais próxima naquela direção; toque/clique escolhe e, de novo, entra. Em pé, botões grandes ◀ ENTRAR ▶. No mapa da área, ◀ MUNDO (ou Esc / B) volta.
-- **A história oficial:** o Xamã diz que cada rei guarda um **fragmento da Coroa dos Ossos**. Correntes roxas ligam o santuário a cada área; vencer uma área parte a corrente dela ("FRAGMENTO DA COROA n/9") e o céu sobre o santuário fica um pouco mais escuro a cada uma. *(Os reis são, na verdade, os selos da prisão do Xamã — isso só se revela no final, como em Shadow of the Colossus.)*
-- **Progresso:** o save guarda as fases concluídas (`done`); saves antigos são convertidos sozinhos. Habilidades passaram a ser liberadas nas áreas fixas ou na área que as exige (Mãos de Osso: Ilhas da Maré · Cambalhota: Oficina da Chave · Machado: Pradaria · Martelo: Forja · Picareta: Bosque do Lenhador).
+- **Liberação:** Ilhas da Maré e depois Pradaria dos Ossos (fixas). Vencida a Pradaria, as outras áreas abrem em **qualquer ordem**. O Reino das Asas só aparece depois do **acordo dos Príncipes** (nome, rei e inimigos mudam com a escolha). O Santuário abre quando todas as áreas caem.
+- **Navegação:** setas/direcional escolhem a área mais próxima naquela direção; toque/clique escolhe e, de novo, entra. No mapa da área, ◀ MUNDO (ou Esc / B) volta.
+- **Mecânicas por área:** maré (automática, por alavancas e comandada pelo chefe), caixotes/toras/basalto que boiam, tábuas/teias/lajes/folhas/nuvens que afundam, canhões, águas-vivas e casulos, corais e espinhos, estouro de manada, rochas e toras rolando, gêiseres de fogo, maré de lava, cogumelos saltitantes, desabamento e meteoros, escuridão com tochas, fases debaixo d'água (a caveira vira Tubarão ou Lagarto), caranguejos que roubam a chave, inimigos que dependem do acordo.
+- **Progresso:** o save guarda as fases concluídas (`done`), o acordo (`pact`) e o final (`ending`); saves antigos são convertidos sozinhos. Habilidades: Mãos de Osso (Ilhas da Maré) · Cambalhota (Oficina da Chave) · Machado (Pradaria) · Martelo (Fuga da Forja) · Picareta (Bosque do Lenhador).
+
+### A história: fragmentos, memórias e o final
+
+- O Xamã diz que cada rei guarda um **fragmento da Coroa dos Ossos**. Correntes roxas ligam o santuário a cada área; vencer um rei parte a corrente ("FRAGMENTO DA COROA n/9") e o céu sobre o santuário escurece um pouco. Todos os reis usam o roxo do Xamã. As falas do Xamã escorregam ("selo... quer dizer, fragmento").
+- **Memórias:** a cada fragmento, a caveira recupera um pedaço da memória, num quadro em **sépia**: a casa azul perto do mar, a lenha, as ovelhas e a irmã, a Vila da Ponte, a Feira das Lanternas, a chuva, **alguém de roxo na ponte**, a água gelada e "meu nome não é Ossian". As memórias mostram quem ela era: o **aldeão** (Pawn do Free Pack).
+- **Final (Trono do Xamã):** os reis eram **selos** da prisão de Hex, e a caveira quebrou todos. A coroa inteira devolve o corpo: a caveira vira o **aldeão**. Hex revela que estava na ponte. A escolha:
+  - **Enfrentar o Xamã:** luta final jogando como o aldeão (feitiços mirados, ecos dos reis, salto com onda roxa, correntes varrendo). Vencendo, os selos voltam, o mundo fica livre e o aldeão volta a ser a caveira (as correntes reaparecem no mapa).
+  - **Voltar para casa com a ajuda dele:** o aldeão volta inteiro para a vila e o mundo inteiro fica com o Xamã (o mapa do mundo fica roxo e escuro).
 
 ### Variantes de inimigos
 

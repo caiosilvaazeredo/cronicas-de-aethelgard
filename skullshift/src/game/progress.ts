@@ -29,6 +29,9 @@ export interface SaveData {
   ending?: 'free' | 'home';
   /** Item guardado na caixa de reserva (como no Mario), entre fases. */
   reserve?: string;
+  /** Ouro para gastar no Empório e aprimoramentos comprados. */
+  coins?: number;
+  upgrades?: string[];
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -95,6 +98,8 @@ export function loadSlot(n: number): SaveData | null {
       pact: d.pact === 'bat' || d.pact === 'bee' ? d.pact : undefined,
       ending: d.ending === 'free' || d.ending === 'home' ? d.ending : undefined,
       reserve: typeof d.reserve === 'string' ? d.reserve : undefined,
+      coins: Math.max(0, Number(d.coins) || 0),
+      upgrades: Array.isArray(d.upgrades) ? d.upgrades : [],
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -135,7 +140,7 @@ function current(): SaveData {
 // ---------- modo livre ----------
 
 let free = false;
-const freeSave: SaveData = { completed: TOTAL_LEVELS - 1, difficulty: 'normal', seen: ['first-shift'], updated: 0 };
+const freeSave: SaveData = { completed: TOTAL_LEVELS - 1, difficulty: 'normal', seen: ['first-shift'], coins: 300, updated: 0 };
 
 export function setFreePlay(on: boolean): void {
   free = on;
@@ -212,6 +217,27 @@ export function setEnding(e: 'free' | 'home'): void {
   if (!free) saveSlot(currentSlot(), d);
 }
 
+export function getCoins(): number {
+  return current().coins ?? 0;
+}
+
+/** Soma (ou gasta, se negativo) ouro. No modo livre vale só enquanto a página está aberta. */
+export function addCoins(n: number): void {
+  const d = current();
+  d.coins = Math.max(0, (d.coins ?? 0) + n);
+  if (!free) saveSlot(currentSlot(), d);
+}
+
+export function ownedUpgrades(): string[] {
+  return current().upgrades ?? [];
+}
+
+export function saveUpgrade(id: string): void {
+  const d = current();
+  d.upgrades = [...new Set([...(d.upgrades ?? []), id])];
+  if (!free) saveSlot(currentSlot(), d);
+}
+
 export function getReserve(): string | undefined {
   return current().reserve;
 }
@@ -255,5 +281,6 @@ export function getDifficulty(): Difficulty {
  */
 export function deathLimit(level: number, d: Difficulty = getDifficulty()): number {
   if (level === 0 || free) return Infinity;
-  return d === 'hard' ? 3 : 6;
+  // Vela Extra (Empório): uma vida a mais.
+  return (d === 'hard' ? 3 : 6) + (current().upgrades?.includes('candle') ? 1 : 0);
 }

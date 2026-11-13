@@ -79,11 +79,20 @@ export class MenuScene extends Phaser.Scene {
     });
     // Construções do reino ao fundo (atrás da grama).
     const bs = P ? 1.5 : 1;
-    this.add.image(P ? 250 : 190, gy + 30, 'bld_blue_castle').setOrigin(0.5, 0.86).setScale(0.95 * bs);
-    this.add.image(P ? 1090 : 1110, gy + 30, 'bld_red_tower').setOrigin(0.5, 0.9).setScale(1.05 * bs);
-    this.add.image(P ? 860 : 930, gy + 30, 'bld_blue_house1').setOrigin(0.5, 0.86).setScale(0.9 * bs);
-    for (const [x, sc] of [[60, 0.9], [420, 0.8], [800, 0.85], [1230, 0.95]] as const) {
-      if (this.textures.exists('res_tree')) this.add.sprite(x, gy + 34, 'res_tree').setOrigin(0.5, 0.88).setScale(sc * bs).play({ key: 'res_tree', startFrame: (x >> 5) % 8 });
+    // Assentadas na grama: a base do desenho na linha do chão, com sombra embaixo.
+    const base = gy + 30;
+    const stand = (x: number, key: string, foot: number, sc: number) => {
+      const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(3);
+      this.add.ellipse(x, base - 2, img.displayWidth * 0.82, 20 * bs, 0x10223a, 0.25).setDepth(2.5);
+    };
+    stand(P ? 250 : 200, 'bld_blue_castle', 249 / 256, 0.9);
+    stand(P ? 1090 : 1110, 'bld_red_tower', 230 / 256, 1);
+    stand(P ? 860 : 930, 'bld_blue_house1', 173 / 192, 0.9);
+    if (!P) stand(520, 'bld_blue_house3', 172 / 192, 0.8);
+    for (const [x, sc] of [[40, 0.9], [400, 0.8], [790, 0.85], [1240, 0.95]] as const) {
+      if (!this.textures.exists('res_tree')) continue;
+      this.add.ellipse(x, base - 2, 70 * sc * bs, 14 * bs, 0x10223a, 0.25).setDepth(2.5);
+      this.add.sprite(x, base, 'res_tree').setOrigin(0.5, 0.9).setScale(sc * bs).setDepth(3).play({ key: 'res_tree', startFrame: (x >> 5) % 8 });
     }
     for (let i = 0; i < 20; i++) {
       const col = i === 0 ? 5 : i === 19 ? 7 : 6;
@@ -108,8 +117,8 @@ export class MenuScene extends Phaser.Scene {
     });
     // O Xamã na nuvem, olhando tudo de cima (só na tela de título).
     if (this.stage === 'title') {
-      const sx = P ? W - 230 : 1090;
-      const sy = P ? Math.round(HH * 0.4) : 250;
+      const sx = P ? W - 230 : 990;
+      const sy = P ? Math.round(HH * 0.4) : 205;
       const glow = this.add.image(0, -10, 'aura').setTint(0x9b6bf0).setBlendMode(Phaser.BlendModes.ADD).setScale(1.5, 1.3).setAlpha(0.6);
       const cl = this.add.image(0, 52, 'cloud_05').setScale(0.34);
       const sh = this.add.sprite(0, 0, 'shaman_idle').play('shaman_idle').setFlipX(true);

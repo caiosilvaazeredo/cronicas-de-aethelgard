@@ -60,6 +60,8 @@ export class Fighter {
   private invulnUntil = 0;
   /** Durante a transformação o corpo de verdade some (quem aparece é o giro com raios). */
   shiftHide = false;
+  /** Milissegundos a mais na janela do contra (Reflexo de Osso, do Empório). */
+  parryBonus = 0;
 
   /** Fica intocável por um instante (transformação). */
   protect(ms: number): void {
@@ -264,7 +266,7 @@ export class Fighter {
     // Andar para trás já defende; o contra vale para quem TOCOU para trás agora (não para o botão de defesa).
     if (!this.isPlayer || !this.alive || this.intent.guard || this.isStunned || this.zipping) return false;
     const toward = Math.sign(fromX - this.x) || this.facing;
-    return this.lastMoveSign === -toward && this.scene.time.now - this.moveStartAt <= PARRY_MS;
+    return this.lastMoveSign === -toward && this.scene.time.now - this.moveStartAt <= PARRY_MS + this.parryBonus;
   }
 
   knockback(dir: number, power = 320): void {

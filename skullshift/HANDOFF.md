@@ -102,6 +102,15 @@ originais (extraídas com PIL do PNG).
   geral (sem agudos). Cada tema é um `Style` em `STYLES`; **cada fase tem a sua música**:
   `playMusic(tema, idDaFase)` → `variantOf` deriva tom, andamento, progressão (`PROGS`), solista e melodia.
   `jingle('win'|'seal'|'lose'|'flash')`, `duckMusic(ms)`. Volume em Configurações → Áudio → Música.
+- **Ouro e Empório** (`upgrades.ts`, `ShopScene`): ouro em `progress.coins` (inimigo 1, presente 3, fase 5, rei 15;
+  `GameScene.earn`). Loja no mapa do mundo (botão EMPÓRIO / tecla B). Aprimoramentos em `UPGRADES`
+  (`hasUpgrade`): Osso Teimoso (golpe fatal transformado → volta a ser caveira, em `killFighter`), Vela Extra
+  (`deathLimit` +1), Reflexo de Osso (`Fighter.parryBonus`), Manto de Nuvem (invulnerável em dobro ao renascer),
+  Ímã de Ossos (reserva cai reto e rápido), Dente de Ouro (ouro em dobro). Lore: a dona é a ovelha de orelha
+  preta das lembranças; não fala, responde por placas. Novo aprimoramento: entrada em `UPGRADES` + efeito.
+- **Construções no fundo**: `DecoKind` ganhou castle/monastery/barracks/archery; cor por tileset
+  (`BUILDING_COLOR`), base assentada no chão (`BUILDING_FOOT`) com sombra; `EXTRA_BUILDINGS[idDaFase]` põe
+  prédios no trecho de chão mais largo do cenário.
 - **História dentro das fases** (`data/beats.ts`): `BEATS[idDaFase] = [[cenário, 's'|'x'|'f', texto], ...]`.
   's' caveira (balão), 'x' Xamã de longe (balão no alto), 'f' lampejo de memória (tela sépia, vulto do aldeão,
   `GameScene.memoryFlash`). Dispara ao chegar ao cenário (`GameScene.updateBeats`; no voo, por tempo).

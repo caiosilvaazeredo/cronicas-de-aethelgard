@@ -12,7 +12,52 @@ import type { FieldDef } from './field';
  */
 export type Segment = [start: number, length: number, h?: number];
 
-export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold' | 'bush' | 'stone' | 'house' | 'hut' | 'tower';
+/** Cor das construções por tileset (o reino de cada área). */
+const BUILDING_COLOR: Record<string, string> = {
+  tilemap: 'blue',
+  tiles_sand: 'blue',
+  tiles_ship: 'blue',
+  tiles_prairie: 'yellow',
+  tiles_forest: 'purple',
+  tiles_swamp: 'black',
+  tiles_mine: 'yellow',
+  tiles_volcano: 'red',
+  tiles_sky: 'red',
+  tiles_cave: 'black',
+};
+/** Onde fica a base de cada construção dentro do desenho (fração da altura). */
+const BUILDING_FOOT: Record<string, number> = { castle: 249 / 256, tower: 230 / 256, house1: 173 / 192, house2: 178 / 192, house3: 172 / 192, monastery: 310 / 320, barracks: 245 / 256, archery: 240 / 256 };
+/** Prédios a mais no fundo de algumas fases: [cenário, tipo]. */
+const EXTRA_BUILDINGS: Record<string, Array<[number, DecoKind]>> = {
+  shore: [[0, 'house'], [4, 'tower']],
+  crabs: [[2, 'house']],
+  hightide: [[3, 'archery']],
+  floodgates: [[2, 'barracks']],
+  reef: [[0, 'house']],
+  sharkking: [[0, 'castle']],
+  farm: [[2, 'barracks']],
+  caravan: [[1, 'archery']],
+  windmill: [[3, 'monastery']],
+  gnollking: [[0, 'castle']],
+  swampedge: [[4, 'monastery']],
+  fisherman: [[1, 'archery']],
+  lizardking: [[0, 'castle']],
+  woods: [[2, 'archery']],
+  gnomevillage: [[2, 'monastery']],
+  gnomeking: [[0, 'castle']],
+  mineentry: [[0, 'barracks'], [2, 'house']],
+  treasury: [[1, 'castle']],
+  forgegate: [[0, 'barracks'], [3, 'tower']],
+  anvil: [[1, 'archery']],
+  sky: [[2, 'tower']],
+  cloudcastle: [[1, 'castle'], [3, 'monastery']],
+  wingsgate: [[1, 'castle']],
+  wingcastle: [[0, 'barracks'], [2, 'castle']],
+  wingguard: [[1, 'monastery']],
+  stairs: [[0, 'monastery']],
+};
+
+export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold' | 'bush' | 'stone' | 'house' | 'hut' | 'tower' | 'castle' | 'monastery' | 'barracks' | 'archery';
 export type Theme = 'shore' | 'cave' | 'volcano' | 'sky' | 'haunted';
 
 /** A fase como é jogada no modo escolhido (na história, o último cenário pode virar arena de chefe). */
@@ -3636,6 +3681,23 @@ export class Level {
         const x = this.tileX(i, tile);
         this.addDeco(x, kind, tile, this.groundY(x) ?? FLOOR_Y);
       }
+      // Prédios extras do reino (quartel, arquearia, mosteiro, castelo...) em algumas fases:
+      // vão no trecho de chão mais largo do cenário, se couberem.
+      for (const [scr, kind] of EXTRA_BUILDINGS[this.def.id] ?? []) {
+        if (scr !== i) continue;
+        const need = kind === 'castle' ? 6 : 4;
+        const spot = this.segments
+          .filter(([a, n]) => Math.floor(a / 20) === i && n >= need)
+          .sort((p, q) => q[1] - p[1])[0];
+        if (!spot) continue;
+        const [a, n, h] = spot;
+        const taken = new Set((sc.deco ?? []).map(([t]) => t));
+        // Longe da placa e das outras decorações: ponta direita ou esquerda do trecho.
+        const right = a - i * 20 + n - need / 2 - 0.5;
+        const left = a - i * 20 + need / 2 - 0.5;
+        const tile = [...taken].some((t) => Math.abs(t - right) < 3) || (sc.sign && Math.abs(sc.sign[0] - right) < 3) ? left : right;
+        this.addDeco(this.tileX(i, tile), kind, tile | 0, FLOOR_Y - (h ?? 0) * TILE);
+      }
       if (sc.sign) {
         const x = this.tileX(i, sc.sign[0]);
         this.addSign(x, this.groundY(x) ?? FLOOR_Y, sc.sign[1]);
@@ -3881,11 +3943,20 @@ export class Level {
         break;
       case 'house':
       case 'hut':
-      case 'tower': {
-        // Construções do Free Pack ao fundo (amarelas na Pradaria, azuis no resto).
-        const color = this.def.tiles === 'tiles_prairie' ? 'yellow' : kind === 'tower' ? 'black' : 'blue';
-        const key = kind === 'tower' ? `bld_${color}_tower` : `bld_${color}_house${1 + (seed % 3)}`;
-        s.add.image(x, base + 20, key).setOrigin(0.5, 1).setScale(0.85).setDepth(DEPTH.deco - 0.2).setTint(tint);
+      case 'tower':
+      case 'castle':
+      case 'monastery':
+      case 'barracks':
+      case 'archery': {
+        // Construções do Free Pack ao fundo, na cor do reino da área, assentadas no chão
+        // (a base do desenho fica na linha da grama, com uma sombra embaixo).
+        const color = BUILDING_COLOR[this.def.tiles ?? 'tilemap'] ?? 'blue';
+        const name = kind === 'house' || kind === 'hut' ? `house${1 + (seed % 3)}` : kind;
+        const img = s.add.image(x, 0, `bld_${kind === 'tower' && color === 'blue' ? 'black' : color}_${name}`);
+        const foot = BUILDING_FOOT[name] ?? 0.9;
+        const sc = kind === 'castle' ? 0.95 : 0.85;
+        s.add.ellipse(x, ground + 2, img.width * sc * 0.8, 18, 0x10223a, 0.22).setDepth(DEPTH.deco - 0.25);
+        img.setOrigin(0.5, foot).setPosition(x, ground + 6).setScale(sc).setDepth(DEPTH.deco - 0.2).setTint(tint);
         break;
       }
       default:

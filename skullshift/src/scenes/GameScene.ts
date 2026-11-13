@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
-import { DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
+import { hasUpgrade } from '../game/upgrades';
+import { DEPTH, FLOOR_Y, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -17,7 +18,7 @@ import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
-import { completeLevel, deathLimit, findSecret, getPact, getReserve, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { addCoins, completeLevel, deathLimit, findSecret, getPact, getReserve, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -261,6 +262,7 @@ export class GameScene extends Phaser.Scene {
       }
       // Habilidades liberadas no save (no modo livre, todas).
       const p0 = this.players[0];
+      if (hasUpgrade('reflex')) p0.parryBonus = 110;
       for (const a of ABILITIES) if (hasAbility(a.id)) p0.abilities.add(a.id);
       p0.onPound = (f) => this.pound(f);
       if (def.puzzle) {
@@ -272,7 +274,10 @@ export class GameScene extends Phaser.Scene {
             player: () => this.players[0],
             pickLabel: () => PICK_LABEL[this.devices[0]],
             giftsBefore: giftsOf(levelId),
-            gift: (i) => markGift(levelId, i),
+            gift: (i) => {
+              markGift(levelId, i);
+              this.earn(3, this.players[0].x, this.players[0].feet - 120);
+            },
             win: (n) => this.storyWin(`${def.winText ?? 'Porta aberta!'}   ·   Presentes: ${n}/3`),
             popText: (x, y, text, color) => this.popText(x, y, text, color),
             killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
@@ -789,6 +794,14 @@ export class GameScene extends Phaser.Scene {
     this.popText(b.x, b.feet - 120, 'QUEBROU!', '#ffe066');
   }
 
+  /** Ganha ouro (para o Empório), com um "+N" dourado subindo. */
+  private earn(n: number, x: number, y: number): void {
+    addCoins(n);
+    const t = this.add.text(x, y, `+${n}`, { fontFamily: FONT, fontSize: '20px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx + 2);
+    const c = this.add.image(x - 22, y, 'gold').setScale(0.28).setDepth(DEPTH.fx + 2);
+    this.tweens.add({ targets: [t, c], y: y - 34, alpha: 0, duration: 800, ease: 'Quad.easeOut', onComplete: () => (t.destroy(), c.destroy()) });
+  }
+
   // ---------- história dentro da fase ----------
 
   /** Dispara as falas/lampejos do cenário atual, um de cada vez (nunca por cima de outra fala). */
@@ -903,9 +916,11 @@ export class GameScene extends Phaser.Scene {
     });
     const dt = this.game.loop.delta / 1000;
     this.falling = this.falling.filter((f) => {
-      // Desce devagar, balançando (dá tempo de se posicionar).
-      f.sprite.y += 150 * dt;
-      f.sprite.x = f.x0 + Math.sin((time - f.t0) / 260) * 22;
+      // Desce devagar, balançando (dá tempo de se posicionar). Com o Ímã de Ossos: reto, rápido e atrás de você.
+      const magnet = this.mode === 'story' && hasUpgrade('magnet');
+      f.sprite.y += (magnet ? 300 : 150) * dt;
+      if (magnet && this.players[f.pi]?.alive) f.x0 += (this.players[f.pi].x - f.x0) * Math.min(1, dt * 6);
+      f.sprite.x = f.x0 + (magnet ? 0 : Math.sin((time - f.t0) / 260) * 22);
       f.sprite.setAlpha(Math.floor(time / 90) % 2 === 0 ? 1 : 0.55);
       f.glow.setPosition(f.sprite.x, f.sprite.y);
       const p = this.players[f.pi];
@@ -1100,6 +1115,18 @@ export class GameScene extends Phaser.Scene {
       this.popText(victim.x, victim.feet - victim.def.head - 30, victim.armor ? `${victim.armor + 1}` : '!', '#ffe066');
       return;
     }
+    const story = this.mode === 'story';
+    // Osso Teimoso (Empório): transformado, o golpe fatal só desfaz a forma e a caveira segue de pé.
+    if (story && cause === 'hit' && victim === this.players[0] && victim.def.id !== 'skull' && victim.def.id !== 'villager' && !LEVELS[this.levelIndex].undersea && !victim.shiftHide && hasUpgrade('stubborn')) {
+      victim.knockback(dir, 380);
+      this.transform(0, 'skull');
+      victim.protect(1500);
+      this.popText(victim.x, victim.feet - 150, 'OSSO TEIMOSO!', '#d8b8ff');
+      this.cameras.main.shake(120, 0.006);
+      return;
+    }
+    // Ouro: cada inimigo derrotado pela caveira vale 1 (2 com o Dente de Ouro).
+    if (story && victim.team !== 0 && killer === this.players[0]) this.earn(hasUpgrade('goldtooth') ? 2 : 1, victim.x, victim.feet - victim.def.head - 20);
     // No final (o aldeão) ninguém deixa item: o corpo não troca mais de forma.
     const dropped = cause === 'hit' && !LEVELS[this.levelIndex].finale ? victim.def.drops : undefined;
     const x = victim.x;
@@ -1281,6 +1308,7 @@ export class GameScene extends Phaser.Scene {
               this.announce(pi);
               // Renasceu: o item da reserva cai sozinho (como no Mario ao levar dano).
               if (this.reserves[pi]) this.time.delayedCall(700, () => this.dropReserve(pi));
+              if (this.mode === 'story' && hasUpgrade('cloak')) p.protect(INVULN_TIME * 2);
             },
           });
         });
@@ -2376,6 +2404,7 @@ export class GameScene extends Phaser.Scene {
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
     completeLevel(this.levelIndex);
+    addCoins(LEVELS[this.levelIndex].boss ? 15 : 5);
     this.victory(0, `${this.levelTag().toUpperCase()} CONCLUÍDA!`, `${sub}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
   }
 

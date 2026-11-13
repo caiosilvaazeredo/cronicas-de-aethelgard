@@ -34,6 +34,10 @@ export const TIPS: Tip[] = [
   { kind: 'DICA', text: 'Folhas de lírio afundam devagar. Não pare em cima delas.' },
   { kind: 'DICA', text: 'Pontes de teia rompem se você ficar parado. Atravesse correndo.' },
   { kind: 'DICA', text: 'No versus, quem derruba o outro ganha a vez e corre para o lado dele. Chegue ao fim para vencer.' },
+  { kind: 'DICA', text: 'Inimigos derrotados, presentes e fases vencidas dão ouro. Gaste no Empório da Orelha-Preta, no mapa do mundo (tecla B).' },
+  { kind: 'DICA', text: 'Osso Teimoso, do Empório: transformado, o golpe fatal só desfaz a forma. Você volta a ser a caveira e segue de pé.' },
+  { kind: 'CURIOSIDADE', text: 'A dona do Empório é uma ovelha de orelha preta. Ela não fala: responde por placas. E cobra caro.' },
+  { kind: 'BOATO', text: 'Dizem que a ovelha do Empório apareceu na praia no mesmo dia que a caveira. E que já a conhecia.' },
   // ---------- curiosidades ----------
   { kind: 'CURIOSIDADE', text: 'Toda a música do jogo é composta pelo próprio código, nota a nota, sem um único arquivo de áudio.' },
   { kind: 'CURIOSIDADE', text: 'A caveira consegue virar 11 criaturas diferentes. Cada uma tem um comentário sarcástico na primeira vez.' },

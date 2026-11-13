@@ -33,6 +33,7 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
     rows: [
       { key: 'master', label: 'Volume geral', help: 'Volume de todos os sons.', kind: 'slider', min: 0, max: 10 },
       { key: 'sfx', label: 'Efeitos sonoros', help: 'Pulos, golpes, portas, explosões (sons 8-bit).', kind: 'slider', min: 0, max: 10 },
+      { key: 'music', label: 'Música', help: 'Trilha 8-bit: um tema para cada área, chefes e memórias.', kind: 'slider', min: 0, max: 10 },
     ],
   },
   {

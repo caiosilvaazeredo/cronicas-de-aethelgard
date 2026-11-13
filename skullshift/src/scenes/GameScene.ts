@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { jingle, playMusic, type Track } from '../game/music';
 import { DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
@@ -193,6 +194,10 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     this.level = new Level(this, def);
+    // Trilha: tema da área (voo tem o seu; versus, o duelo).
+    if (this.mode !== 'story') playMusic('versus');
+    else if (def.shmup) playMusic('flight');
+    else playMusic((areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
@@ -1984,6 +1989,7 @@ export class GameScene extends Phaser.Scene {
       else if (k === 'goblinking') this.boss = new GoblinKingBoss(host);
       else if (k === 'lizardking') this.boss = new LizardKingBoss(host);
       else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
+      playMusic(k === 'shaman' ? 'final' : 'boss');
       void this.boss.intro();
     }
     this.boss?.update(time, dt);
@@ -2092,6 +2098,7 @@ export class GameScene extends Phaser.Scene {
 
   /** Vitória no modo história (fim do mapa, porta de saída ou chefe derrotado). */
   private storyWin(sub: string): void {
+    if (!this.ended) jingle('win');
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
     completeLevel(this.levelIndex);

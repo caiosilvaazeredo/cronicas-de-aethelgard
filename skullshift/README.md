@@ -289,7 +289,8 @@ Pegar é **opcional**. Em cima de um item aparece um balão na cor do jogador, c
 
 - **Jogo:** velocidade do texto da história (lento, normal, rápido, instantâneo), comentários da caveira, intensidade do tremor da tela.
 - **Tela:** tela cheia, brilho.
-- **Áudio:** volume geral e dos efeitos. Os efeitos são sons 8-bit sintetizados na hora (pulo, golpe, morte, transformação, portas, explosões, alerta do chefe, menus).
+- **Áudio:** volume geral, dos efeitos e da música. Os efeitos são sons 8-bit sintetizados na hora (pulo, golpe, morte, transformação, portas, explosões, alerta do chefe, menus).
+- **Música:** trilha 8-bit composta em código (`src/game/music.ts`), sem arquivos: um tema por área (calipso na Maré, galope na Pradaria, dórico com eco na Lagoa, frígio pesado na Forja, valsa no Reino das Asas, lócrio quase parado no Santuário...), além de menu, mapa do mundo, chefes, Xamã, voo, versus, memórias (caixinha de música) e conversas.
 - **Controles:** correr com toque duplo, tamanho e opacidade dos botões de toque.
 - **Acessibilidade:** cores para daltonismo (P2 laranja em vez de vermelho) e desligar clarões.
 
@@ -311,7 +312,7 @@ Na tela de escolha de controle, cada jogador escolhe o nome (◀ ▶ na plaquinh
 - `src/game/escape.ts` — fuga (onda de lava, chão que desaba, tirolesas, meteoros).
 - `src/game/puzzle.ts` — fases de chave e porta (carregar, escadas, molas, blocos de cor, pedras, árvores, ovelhas, placas, portões, presentes).
 - `src/game/mausoleum.ts` — desafio do mausoléu; `src/game/abilities.ts` — habilidades liberadas por fase.
-- `src/game/settings.ts` — configurações e sons 8-bit; `src/game/names.ts` — nomes dos jogadores; `src/game/progress.ts` — saves.
+- `src/game/settings.ts` — configurações e sons 8-bit; `src/game/music.ts` — trilha 8-bit por área; `src/game/names.ts` — nomes dos jogadores; `src/game/progress.ts` — saves.
 - `src/game/Fighter.ts` — estados, ataque, defesa, morte e transformação.
 - `src/game/ai.ts` — IA dos inimigos.
 - `src/game/Hud.ts` — avatares, indicador dos 5 cenários e seta "VAI".

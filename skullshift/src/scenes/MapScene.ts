@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { playMusic, type Track } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import { chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
@@ -95,6 +96,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   create(): void {
+    playMusic(this.area.id as Track);
     const cam = this.cameras.main;
     cam.setBackgroundColor('#39b5fd');
     // O mapa é uma faixa larga: a câmera acompanha o esqueleto na horizontal.

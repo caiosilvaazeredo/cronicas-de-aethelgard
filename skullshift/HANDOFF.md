@@ -84,8 +84,12 @@ originais (extraídas com PIL do PNG).
   **Contra-golpe**: tocar para trás até 170 ms antes do golpe (`Fighter.parries`, `PARRY_MS`) quebra a
   defesa do atacante corpo a corpo (`GameScene.resolveMelee` → `guardBreak`) e devolve projéteis
   (laço de projéteis em `GameScene`). Efeito em `GameScene.parryFx`. Placa de dica na fase 1.
+- **Música** (`music.ts`): cada tema é um `Style` (andamento, tônica, modo, progressões A/B, timbres,
+  baixo, bateria, eco); `compose()` cria a melodia com semente fixa, forma A A B A. `playMusic(track)` nas
+  cenas (Menu, World, Map = id da área, Game = área/voo/versus/chefe, Memory, Story); `jingle('win')` em
+  `storyWin`. Volume em Configurações → Áudio → Música (`settings.music`). Novo tema: adicionar em `STYLES`.
 
 ## Ideias para continuar
 
 - Balancear dificuldade jogando de verdade (os testes automatizados tiram vida dos chefes direto).
-- Mais variedade visual por área (decorações próprias), músicas, mais segredos/presentes nas fases.
+- Mais variedade visual por área (decorações próprias), mais segredos/presentes nas fases.

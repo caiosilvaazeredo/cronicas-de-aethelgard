@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { LEVELS } from '../game/level';
@@ -39,6 +40,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   create(): void {
+    playMusic('menu');
     this.texts = [];
     this.levelRow = [];
     const P = VIEW.portrait;

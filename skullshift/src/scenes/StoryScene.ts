@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { ENDING_FREE, ENDING_HOME, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
 import { completeLevel, setEnding } from '../game/progress';
@@ -76,6 +77,7 @@ export class StoryScene extends Phaser.Scene {
   }
 
   create(): void {
+    playMusic(this.epilogue ? 'memory' : LEVELS[this.level]?.id === 'finale' ? 'centro' : 'story');
     const H = VIEW.h;
     const theme = this.epilogue ? 'shore' : LEVELS[this.level].theme;
     this.add.image(0, 0, BG[theme]).setOrigin(0).setDisplaySize(W, H);

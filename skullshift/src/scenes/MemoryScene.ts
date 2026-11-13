@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { MEMORIES, type Memory } from '../data/lore';
 import type { DeviceId } from '../game/controls';
@@ -39,6 +40,7 @@ export class MemoryScene extends Phaser.Scene {
   }
 
   create(): void {
+    playMusic('memory');
     const H = this.scale.height;
     const m = MEMORIES[this.n - 1];
     markSeen(`memory-${this.n}`);

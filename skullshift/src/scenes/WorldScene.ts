@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
 import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
@@ -50,6 +51,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   create(): void {
+    playMusic('world');
     const cam = this.cameras.main;
     cam.setBackgroundColor('#39b5fd');
     const P = VIEW.portrait;

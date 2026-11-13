@@ -17,6 +17,8 @@ export interface Settings {
   brightness: number;
   master: number;
   sfx: number;
+  /** Volume da música, 0 a 10. */
+  music: number;
   doubleTapSprint: boolean;
   /** Tamanho dos botões de toque: 0 pequeno · 1 médio · 2 grande */
   touchSize: number;
@@ -33,6 +35,7 @@ export const DEFAULTS: Settings = {
   brightness: 10,
   master: 8,
   sfx: 8,
+  music: 6,
   doubleTapSprint: true,
   touchSize: 1,
   touchOpacity: 10,
@@ -114,7 +117,8 @@ export function applySettings(): void {
 
 let ctx: AudioContext | null = null;
 
-function audio(): AudioContext | null {
+/** Contexto de áudio compartilhado (efeitos e música). */
+export function audio(): AudioContext | null {
   if (ctx) return ctx;
   try {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;

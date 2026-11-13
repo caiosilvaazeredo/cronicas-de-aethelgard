@@ -4,6 +4,7 @@ import { Boss, type BossHost } from './boss';
 import type { CharId } from './characters';
 import type { Fighter } from './Fighter';
 import { sfx } from './settings';
+import { FINALE_WORLDS } from './finale';
 
 /** Ecos dos reis derrotados que o Xamã chama de volta (variantes e inimigos de cada área). */
 const ECHOES: CharId[] = ['shark_coral', 'goblin_pirate', 'lizard_tide', 'gnoll_wreck', 'spider', 'imp', 'torchgob', 'shark_hammer'] as CharId[];
@@ -19,8 +20,13 @@ export class ShamanBoss extends Boss {
   private echoes: Fighter[] = [];
   private aura: Phaser.GameObjects.Image;
 
-  constructor(host: BossHost) {
-    super(host, 24, 'shaman_idle', 2.2, 133, 192, 120, 170, 'XAMÃ HEX', 'Barqueiro das Almas', 0x9b6bf0);
+  /** Mundo atual da luta final (0 a 8): uma barra de vida por mundo. */
+  private world: number;
+
+  constructor(host: BossHost, world = 0) {
+    const w = FINALE_WORLDS[world];
+    super(host, 6, 'shaman_idle', 2.2, 133, 192, 120, 170, 'XAMÃ HEX', `Barra ${world + 1}/${FINALE_WORLDS.length} · ${w.name}`, w.color);
+    this.world = world;
     this.hoverY = host.floor - 40;
     this.feet = this.hoverY;
     this.aura = host.scene.add.image(0, -400, 'aura').setTint(0x9b6bf0).setScale(2.4, 2).setAlpha(0.45).setDepth(DEPTH.fighters - 0.6).setBlendMode(Phaser.BlendModes.ADD);
@@ -42,6 +48,69 @@ export class ShamanBoss extends Boss {
 
   private flyTo(x: number, feet: number, ms: number): Promise<void> {
     return new Promise((r) => this.scene.tweens.add({ targets: this, x, feet, duration: ms, ease: 'Sine.easeInOut', onComplete: () => r() }));
+  }
+
+  /** Fala de abertura em cada mundo (no primeiro, o desafio; nos outros, a chegada). */
+  protected async afterIntro(): Promise<void> {
+    const w = FINALE_WORLDS[this.world];
+    const text =
+      this.world === 0
+        ? 'Nove selos, nove mundos. Vou arrastar-te por todos eles, Ossian. E em cada um serás um dos MEUS.'
+        : `${w.name}. ${w.kingName()} voltou para te ajudar? Que comovente.`;
+    await this.host.say?.(() => ({ x: this.x, y: this.feet - 200 }), text, 'Xamã Hex', 0x9b6bf0);
+  }
+
+  /** Barra do mundo derrubada: fala, ergue o cajado, abre um vórtice e leva todos para o próximo. */
+  protected async defeat(): Promise<void> {
+    if (this.world >= FINALE_WORLDS.length - 1 || !this.host.teleport) return super.defeat();
+    if (this.dying) return;
+    this.dying = true;
+    this.fighting = false;
+    this.gen++;
+    this.clearHazards();
+    for (const e of this.echoes) if (e.alive) e.sprite.setVisible(false);
+    const s = this.scene;
+    this.host.freeze(true);
+    this.host.bar()?.setBossHp(0);
+    this.sprite.setTintFill(0xffffff);
+    s.cameras.main.shake(200, 0.01);
+    await this.wait(200);
+    this.sprite.clearTint();
+    this.play('shaman_idle');
+    await this.host.say?.(() => ({ x: this.x, y: this.feet - 200 }), FINALE_WORLDS[this.world].line, 'Xamã Hex', 0x9b6bf0);
+    // Ergue o cajado: um vórtice roxo cresce em volta dele e engole a arena.
+    this.replay('shaman_attack');
+    sfx('boss');
+    const cx = this.x;
+    const cy = this.feet - 90;
+    const vortex = s.add.graphics().setDepth(DEPTH.fx + 3);
+    const t0 = s.time.now;
+    await new Promise<void>((done) => {
+      const tick = () => {
+        const t = (s.time.now - t0) / 1400;
+        vortex.clear();
+        for (let r = 0; r < 4; r++) {
+          const R = (40 + r * 70) * (0.3 + t * 2.2);
+          vortex.lineStyle(10 - r * 2, r % 2 ? 0xb46bff : 0x7a3ad0, 0.7).beginPath();
+          for (let k = 0; k <= 40; k++) {
+            const a = (k / 40) * Math.PI * 2 + t * 9 * (r % 2 ? -1 : 1);
+            const rr = R * (1 + Math.sin(a * 3 + t * 6) * 0.08);
+            const x = cx + Math.cos(a) * rr;
+            const y = cy + Math.sin(a) * rr * 0.6;
+            if (k === 0) vortex.moveTo(x, y);
+            else vortex.lineTo(x, y);
+          }
+          vortex.strokePath();
+        }
+        if (t >= 1) {
+          s.events.off('update', tick);
+          done();
+        }
+      };
+      s.events.on('update', tick);
+    });
+    s.cameras.main.flash(300, 190, 140, 255);
+    this.host.teleport();
   }
 
   protected defeatText(): string {
@@ -66,7 +135,7 @@ export class ShamanBoss extends Boss {
     const n = this.phase2 ? 5 : 3;
     for (let i = 0; i < n && this.ok(t); i++) {
       this.faceToPlayer();
-      this.sprite.play('shaman_attack');
+      this.replay('shaman_attack');
       const ox = this.x + this.facing * 50;
       const oy = this.feet - 110;
       const p = this.player;
@@ -96,7 +165,7 @@ export class ShamanBoss extends Boss {
   private async echo(t: number): Promise<void> {
     this.echoes = this.echoes.filter((e) => e.alive);
     if (this.echoes.length >= 3) return this.slam(t);
-    this.sprite.play('shaman_attack');
+    this.replay('shaman_attack');
     this.exclaim();
     const s = this.scene;
     for (let i = 0; i < (this.phase2 ? 2 : 1) && this.ok(t); i++) {
@@ -157,7 +226,7 @@ export class ShamanBoss extends Boss {
   /** Correntes roxas varrendo a arena: as baixas se pula, as altas se agacha. */
   private async chains(t: number): Promise<void> {
     const s = this.scene;
-    this.sprite.play('shaman_attack');
+    this.replay('shaman_attack');
     const n = this.phase2 ? 4 : 3;
     for (let i = 0; i < n && this.ok(t); i++) {
       const low = i % 2 === 0;

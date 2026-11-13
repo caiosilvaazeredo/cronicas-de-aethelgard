@@ -107,6 +107,13 @@ originais (extraídas com PIL do PNG).
 - **Versus** (`GameScene.updateChaos`): itens caem do céu a cada ~10 s; eventos aleatórios a cada 20–30 s
   (VENTANIA, CHUVA DE OSSOS com sombra no chão, CHUVA DE ITENS, GRAVIDADE BAIXA, AJUDANTES); orbe roxo
   chama um ajudante (criatura do time de quem pegou, 12 s, `summonAssist`). P1 (WASD) também pula no Espaço.
+- **Luta final pelos 9 mundos** (`game/finale.ts`): o Xamã tem uma barra (6 golpes) por mundo. Cada mundo é uma
+  arena própria (`finaleWorldDef`: chão/céu/clima do mundo); a caveira vira um lacaio daquele mundo
+  (`GameScene.becomeMinion`) e o rei daquele mundo luta ao lado (`spawnFinaleAlly`, personagens `ally_*` feitos
+  com a arte dos reis por `makeFinaleAllies`; o alvo da IA é um "fantasma" invisível que segue o Xamã; os golpes
+  dos aliados acertam o chefe via `BossHost.allies`). Barra derrubada: `ShamanBoss.defeat` fala a linha do
+  mundo, abre um vórtice e chama `host.teleport` → `GameScene.finaleTeleport` reinicia a cena com
+  `finalePhase + 1` (mortes continuam contando). No 9º mundo a derrota é a normal (epílogo livre).
 - **Poderes por jogador** (`GameScene.perks`, `hasPerk`, `applyPerks`): na história vêm do save (habilidades
   liberadas + aprimoramentos comprados); no versus vêm da `LoadoutScene` (HowTo → loadout → loading → game,
   `data.loadouts`), até 3 por jogador entre as habilidades e os aprimoramentos de luta já conquistados.

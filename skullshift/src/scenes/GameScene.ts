@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
+import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game/finale';
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
@@ -173,7 +174,18 @@ export class GameScene extends Phaser.Scene {
   private perks: Array<Set<string>> = [];
   private loadouts?: string[][];
 
-  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number; loadouts?: string[][] }): void {
+  /** Luta final: em que mundo está (uma barra de vida do Xamã por mundo). */
+  private finalePhase = 0;
+  private allies: Fighter[] = [];
+  private bossAnchor?: Fighter;
+
+  init(data: { mode?: Mode; devices?: DeviceId[]; level?: number; loadouts?: string[][]; finalePhase?: number; deaths?: number }): void {
+    this.finalePhase = data.finalePhase ?? 0;
+    // Reinício da cena (teleporte da luta final): nada de conversa ou pausa herdada.
+    this.cutscene = false;
+    this.quip = undefined;
+    this.allies = [];
+    this.bossAnchor = undefined;
     this.loadouts = data.loadouts;
     this.perks = (data.loadouts ?? []).map((l) => new Set(l));
     this.levelIndex = Phaser.Math.Clamp(data.level ?? 0, 0, LEVELS.length - 1);
@@ -205,7 +217,8 @@ export class GameScene extends Phaser.Scene {
     this.lockWall = undefined;
     this.lockedScreen = -1;
     this.leader = -1;
-    this.deaths = 0;
+    // Na luta final as mortes continuam contando de um mundo para o outro.
+    this.deaths = data.deaths ?? 0;
     this.ended = false;
     this.transitioning = false;
     this.winner = undefined;
@@ -213,7 +226,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
+    // Padrões do chefe que ainda estejam no meio param quando a cena sai (ou reinicia).
+    this.events.once('shutdown', () => this.boss?.destroy());
+    const raw = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
+    // Luta final: a arena é o mundo da vez (chão, céu e clima daquele mundo).
+    const def = raw.finale && this.mode === 'story' ? finaleWorldDef(raw, this.finalePhase) : raw;
     this.level = new Level(this, def);
     this.reserveOn = !def.shmup && !def.finale && !def.undersea && !def.secret;
     this.beatsLeft = this.mode === 'story' ? [...(BEATS[def.id] ?? [])] : [];
@@ -259,7 +276,7 @@ export class GameScene extends Phaser.Scene {
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
       // Trono do Xamã: a caveira, de volta ao corpo, é o aldeão.
-      if (def.finale) this.time.delayedCall(10, () => this.becomeVillager(this.players[0]));
+      if (def.finale) this.time.delayedCall(10, () => this.becomeMinion(this.players[0], true));
       // Caverna Submarina: tudo debaixo d'água e a caveira vira Tubarão (nada livre).
       if (def.undersea) {
         this.level.tide = UNDERSEA_TIDE;
@@ -1534,7 +1551,7 @@ export class GameScene extends Phaser.Scene {
               glow.setVisible(false);
               p.respawn(rig.x, this.level.groundY(rig.x) ?? floor);
               if (LEVELS[this.levelIndex].undersea && this.mode === 'story') this.becomeShark(p);
-              if (LEVELS[this.levelIndex].finale && this.mode === 'story') this.becomeVillager(p);
+              if (LEVELS[this.levelIndex].finale && this.mode === 'story') this.becomeMinion(p, false);
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
@@ -2481,6 +2498,8 @@ export class GameScene extends Phaser.Scene {
           if (on) this.players[0].body.setVelocityX(0);
         },
         bar: () => this.ui,
+        allies: () => this.allies,
+        teleport: () => this.finaleTeleport(),
         defeated: (text?: string) => this.storyWin(text ?? def.winText ?? 'Chefe derrotado!'),
         say: async (anchor: () => { x: number; y: number }, text: string, name: string, color: number) => {
           if (!this.scene.isActive() || this.ended) return;
@@ -2520,7 +2539,11 @@ export class GameScene extends Phaser.Scene {
             return () => zone.active && zone.destroy();
           },
         });
-      } else if (k === 'shaman') this.boss = new ShamanBoss(host);
+      } else if (k === 'shaman') {
+        this.boss = new ShamanBoss(host, this.finalePhase);
+        // O rei chega depois do alerta e da barra encher (sem cobrir os avisos da entrada).
+        this.time.delayedCall(3600, () => this.spawnFinaleAlly());
+      }
       else if (k === 'gnollking') this.boss = new GnollKingBoss(host);
       else if (k === 'gnomeking') this.boss = new GnomeKingBoss(host);
       else if (k === 'goblinking') this.boss = new GoblinKingBoss(host);
@@ -2558,6 +2581,62 @@ export class GameScene extends Phaser.Scene {
   }
 
   /** Final: o corpo de aldeão (não troca de forma com itens). */
+  /** Luta final: a caveira vira um lacaio do mundo da vez (com o giro roxo, na chegada). */
+  private becomeMinion(p: Fighter, spin: boolean): void {
+    if (!p.alive) return;
+    const id = FINALE_WORLDS[this.finalePhase].minion();
+    if (!spin) {
+      p.applyChar(id, p.feet);
+      this.ui?.hud?.setChar(0, id);
+      return;
+    }
+    this.shiftSpin(p, () => {
+      p.applyChar(id, p.feet);
+      this.ui?.hud?.setChar(0, id);
+    }, () => undefined);
+  }
+
+  /** O rei do mundo da vez aparece numa nuvem roxa e luta ao lado da caveira. */
+  private spawnFinaleAlly(): void {
+    if (this.ended || !this.boss) return;
+    const w = FINALE_WORLDS[this.finalePhase];
+    makeFinaleAllies(this);
+    const p = this.players[0];
+    const x = Phaser.Math.Clamp(p.x - 90, 80, this.level.width - 80);
+    const f = new Fighter(this, x, FLOOR_Y, allyId(w), 0, 'enemy');
+    f.facing = 1;
+    f.protect(1e12);
+    f.onProjectile = (ff) => this.spawnProjectile(ff);
+    this.physics.add.collider(f.sprite, this.level.ground);
+    // O alvo do rei é um "fantasma" invisível que acompanha o Xamã.
+    const anchor = new Fighter(this, this.boss.x, FLOOR_Y, 'villager', 1, 'enemy');
+    anchor.sprite.setVisible(false).setActive(false);
+    anchor.body.setAllowGravity(false).setEnable(false);
+    anchor.protect(1e12);
+    this.bossAnchor = anchor;
+    const follow = () => {
+      if (this.boss && anchor.sprite.scene) anchor.sprite.setPosition(this.boss.x, this.boss.feet - 60);
+    };
+    this.events.on('update', follow);
+    this.events.once('shutdown', () => this.events.off('update', follow));
+    this.enemies.push({ f, ai: new EnemyAI(f, () => anchor, this.level) });
+    this.allies.push(f);
+    this.smokeBurst(x, FLOOR_Y, w.color, 1.2);
+    this.ui?.banner(`${w.kingName().toUpperCase()} LUTA AO SEU LADO!`, 1800, 'o selo dele foi quebrado: agora ele está livre');
+  }
+
+  /** Barra do mundo caiu: todos são puxados para o próximo mundo. */
+  private finaleTeleport(): void {
+    if (this.ended) return;
+    this.ended = true;
+    const cam = this.cameras.main;
+    for (const f of this.fighters) if (f.alive) this.tweens.add({ targets: f.sprite, angle: 720, scale: 0.1, alpha: 0, duration: 700, ease: 'Quad.easeIn' });
+    cam.fadeOut(700, 60, 20, 90);
+    cam.once('camerafadeoutcomplete', () =>
+      this.scene.restart({ mode: 'story', devices: this.devices, level: this.levelIndex, finalePhase: this.finalePhase + 1, deaths: this.deaths, loadouts: this.loadouts }),
+    );
+  }
+
   private becomeVillager(p: Fighter): void {
     if (!p.alive) return;
     p.applyChar('villager', p.feet);

@@ -28,6 +28,10 @@ export interface BossHost {
   choose?(title: string, options: string[]): Promise<number>;
   /** Empurra o jogador (rajada de asas). */
   push?(vx: number): void;
+  /** Aliados que lutam ao lado do jogador (os golpes deles também acertam o chefe). */
+  allies?(): Fighter[];
+  /** Luta final: leva todo mundo para o próximo mundo. */
+  teleport?(): void;
 }
 
 /** Barra de vida do chefe (na interface). */
@@ -80,6 +84,7 @@ export abstract class Boss {
   protected dying = false;
   protected hurtUntil = 0;
   private lastAttackId = -1;
+  private allyHits = new Map<Fighter, number>();
   private waitingRespawn = false;
   protected onGround = true;
   protected airborne = false;
@@ -133,7 +138,14 @@ export abstract class Boss {
     this.sprite.setFlipX(this.facing < 0);
   }
 
+  /** Toca de novo do começo (ex.: cada tiro do Xamã), se o chefe ainda existe. */
+  protected replay(anim: string): void {
+    if (this.sprite.active && this.sprite.anims) this.sprite.play(anim);
+  }
+
   protected play(anim: string): void {
+    // A cena pode ter sido reiniciada (teleporte da luta final) com um padrão ainda no meio.
+    if (!this.sprite.active || !this.sprite.anims) return;
     if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
   }
 
@@ -228,6 +240,15 @@ export abstract class Boss {
       const r = new Phaser.Geom.Rectangle(hb.x1, hb.y1, hb.x2 - hb.x1, hb.y2 - hb.y1);
       if (Phaser.Geom.Rectangle.Overlaps(r, this.hurtBox)) {
         this.lastAttackId = p.attackId;
+        this.hit(time);
+      }
+    }
+    // Golpes dos aliados (reis libertados, na luta final).
+    for (const a of this.host.allies?.() ?? []) {
+      const ab = a.alive ? a.activeHitBox() : null;
+      if (!ab || this.allyHits.get(a) === a.attackId || time < this.hurtUntil) continue;
+      if (Phaser.Geom.Rectangle.Overlaps(new Phaser.Geom.Rectangle(ab.x1, ab.y1, ab.x2 - ab.x1, ab.y2 - ab.y1), this.hurtBox)) {
+        this.allyHits.set(a, a.attackId);
         this.hit(time);
       }
     }

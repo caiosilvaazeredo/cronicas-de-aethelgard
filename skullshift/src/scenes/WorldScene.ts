@@ -2,7 +2,8 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
 import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
-import { currentSlot, isDone, isFreePlay } from '../game/progress';
+import { currentSlot, getEnding, hasSeen, isDone, isFreePlay } from '../game/progress';
+import { MEMORIES } from '../data/lore';
 import { pillButton } from '../ui/devices';
 
 const MW = 1280;
@@ -164,6 +165,9 @@ export class WorldScene extends Phaser.Scene {
 
   private header(): string {
     const n = AREAS.length;
+    const e = getEnding();
+    if (e === 'home') return 'O MUNDO PERTENCE AO XAMÃ';
+    if (e === 'free') return 'O MUNDO ESTÁ LIVRE';
     return `${isFreePlay() ? 'MODO LIVRE' : `SAVE ${currentSlot()}`} · FRAGMENTOS DA COROA ${sealsBroken()}/${n}`;
   }
 
@@ -481,7 +485,8 @@ export class WorldScene extends Phaser.Scene {
   private drawChains(): void {
     const g = this.add.graphics().setDepth(1.5);
     this.chainG = g;
-    for (const a of AREAS) this.chain(g, a, areaCleared(a));
+    // Final livre: os selos voltaram (correntes inteiras de novo).
+    for (const a of AREAS) this.chain(g, a, areaCleared(a) && getEnding() !== 'free');
   }
 
   private chain(g: Phaser.GameObjects.Graphics, a: AreaDef, broken: boolean): void {
@@ -503,6 +508,15 @@ export class WorldScene extends Phaser.Scene {
   private gloom?: Phaser.GameObjects.Graphics;
 
   private drawGloom(): void {
+    // Final "voltar para casa": o Xamã tomou tudo (o mapa inteiro fica roxo e escuro).
+    if (getEnding() === 'home') {
+      this.add.rectangle(-MW, -MH, MW * 3, MH * 3, 0x2a0a4a, 0.42).setOrigin(0).setDepth(13);
+      this.add
+        .particles(0, MH, 'spark', { x: { min: 0, max: MW }, speedY: { min: -60, max: -30 }, lifespan: 5000, scale: { start: 0.3, end: 0 }, tint: [0x9b6bf0, 0xb48aff], alpha: { start: 0.8, end: 0 }, frequency: 90 })
+        .setDepth(13);
+      return;
+    }
+    if (getEnding() === 'free') return;
     const n = sealsBroken();
     if (!n) return;
     const g = this.add.graphics().setDepth(2.5);
@@ -539,7 +553,14 @@ export class WorldScene extends Phaser.Scene {
       if (this.uiCam) this.cameras.main.ignore(t);
       this.tweens.add({ targets: t, scale: 1, duration: 300, ease: 'Back.easeOut' });
       this.tweens.add({ targets: t, alpha: 0, delay: 2200, duration: 500, onComplete: () => t.destroy() });
-      this.time.delayedCall(900, () => (this.busy = false));
+      // Um pedaço da memória volta junto com o fragmento.
+      const n = sealsBroken();
+      if (n >= 1 && n <= MEMORIES.length && !hasSeen(`memory-${n}`) && !isFreePlay()) {
+        this.time.delayedCall(2400, () => {
+          this.cameras.main.fadeOut(600, 0, 0, 0);
+          this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('memory', { devices: this.devices, n, area: a.id }));
+        });
+      } else this.time.delayedCall(900, () => (this.busy = false));
     });
   }
 }

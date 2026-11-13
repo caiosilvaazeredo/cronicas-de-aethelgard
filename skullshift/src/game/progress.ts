@@ -25,6 +25,8 @@ export interface SaveData {
   secretDone?: string[];
   /** Acordo feito na luta dos Príncipes: quem voa com a caveira. */
   pact?: 'bat' | 'bee';
+  /** Final visto: 'free' (enfrentou e venceu o Xamã) ou 'home' (voltou para casa com ele). */
+  ending?: 'free' | 'home';
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -89,6 +91,7 @@ export function loadSlot(n: number): SaveData | null {
       secrets: Array.isArray(d.secrets) ? d.secrets : [],
       secretDone: Array.isArray(d.secretDone) ? d.secretDone : [],
       pact: d.pact === 'bat' || d.pact === 'bee' ? d.pact : undefined,
+      ending: d.ending === 'free' || d.ending === 'home' ? d.ending : undefined,
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -194,6 +197,16 @@ export function findSecret(id: string): void {
 /** Acordo dos Príncipes ('bat' = poupou o morcego, 'bee' = derrotou o morcego). Modo livre: morcego. */
 export function getPact(): 'bat' | 'bee' {
   return current().pact ?? 'bat';
+}
+
+export function getEnding(): 'free' | 'home' | undefined {
+  return current().ending;
+}
+
+export function setEnding(e: 'free' | 'home'): void {
+  const d = current();
+  d.ending = e;
+  if (!free) saveSlot(currentSlot(), d);
 }
 
 export function hasPact(): boolean {

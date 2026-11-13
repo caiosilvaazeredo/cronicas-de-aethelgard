@@ -25,7 +25,8 @@ import { getPact, hasPact } from '../game/progress';
  */
 
 /** Só a caveira e o Xamã conversam ao longo da história. */
-export type Speaker = 'skull' | 'shaman';
+/** 'human' = a própria caveira depois de recuperar o corpo (o aldeão), no final. */
+export type Speaker = 'skull' | 'shaman' | 'human';
 
 export interface Line {
   who: Speaker;
@@ -37,6 +38,7 @@ export interface Line {
 export const SPEAKER_NAME: Record<Speaker, string> = {
   skull: 'Ossian',
   shaman: 'Xamã Hex',
+  human: 'Ossian',
 
 };
 
@@ -50,6 +52,7 @@ export interface Chapter {
 
 const S = (text: string): Line => ({ who: 'skull', side: 'left', text });
 const X = (text: string): Line => ({ who: 'shaman', side: 'right', text });
+const V = (text: string): Line => ({ who: 'human', side: 'left', text });
 
 /** Um capítulo por fase, na ordem de LEVELS. */
 /** Capítulos por fase (chave = id da fase em LEVELS). */
@@ -464,6 +467,7 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Eu? É para ti, Ossian. Sempre foi para ti.'),
     ],
   },
+  finale: { title: 'O Trono do Xamã', blurb: 'A coroa está inteira. Os selos caíram.', lines: [] },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',
@@ -486,9 +490,128 @@ export const CHAPTERS: Chapter[] = LEVELS.map((l) => CHAPTER_BY_ID[l.id] ?? { ti
  */
 export function chapterFor(i: number): Chapter {
   const id = LEVELS[i]?.id;
+  if (id === 'finale') return REVELATION;
   const variant = hasPact() && getPact() === 'bee' ? CHAPTER_BY_ID[`${id}_bee`] : undefined;
   return variant ?? CHAPTERS[i];
 }
+
+// ---------- memórias (uma a cada fragmento recuperado, na ordem em que vêm) ----------
+
+/** Cena de cada memória (o que aparece no quadro em sépia). */
+export type MemoryScene = 'home' | 'wood' | 'sheep' | 'village' | 'lanterns' | 'rain' | 'purple' | 'water' | 'name';
+
+export interface Memory {
+  title: string;
+  scene: MemoryScene;
+  /** Pensamentos da caveira (voz interior). */
+  lines: string[];
+}
+
+/**
+ * A caveira recupera a memória aos poucos: um pedaço a cada rei derrotado. As memórias mostram
+ * quem ela era (um aldeão) e, perto do fim, a noite em que caiu da ponte — e quem estava lá.
+ */
+export const MEMORIES: Memory[] = [
+  {
+    title: 'Uma casa azul',
+    scene: 'home',
+    lines: ['Quando o fragmento brilhou, eu vi uma casa. Azul, perto do mar.', 'Alguém lá dentro chamava para o jantar. Chamava... a mim?'],
+  },
+  {
+    title: 'Mãos de verdade',
+    scene: 'wood',
+    lines: ['Eu tinha mãos. Mãos de verdade, com calo de rachar lenha.', 'Lembro do cheiro de madeira cortada. Ossos não sentem cheiro.'],
+  },
+  {
+    title: 'As ovelhas',
+    scene: 'sheep',
+    lines: ['Eu cuidava de ovelhas. E de uma irmã mais nova, que tinha medo do escuro.', 'Eu prometi que sempre voltaria antes de anoitecer.'],
+  },
+  {
+    title: 'Vila da Ponte',
+    scene: 'village',
+    lines: ['O vilarejo se chamava Vila da Ponte. Uma ponte velha cruzava o rio.', 'Hex nunca falou de rios. Só de maré.'],
+  },
+  {
+    title: 'A Feira das Lanternas',
+    scene: 'lanterns',
+    lines: ['Na Feira das Lanternas, cada um soltava uma luz no rio por quem já tinha partido.', 'A luz quente que eu vejo quando caio... parece com elas.'],
+  },
+  {
+    title: 'A chuva',
+    scene: 'rain',
+    lines: ['Naquela noite choveu. A ponte estava escorregadia.', 'Minha irmã ficou do outro lado. Eu fui buscá-la.'],
+  },
+  {
+    title: 'Alguém de roxo',
+    scene: 'purple',
+    lines: ['Tinha alguém na ponte. De roxo. Ele me estendeu a mão.', 'Eu não lembro se ele me segurou... ou se me empurrou.'],
+  },
+  {
+    title: 'A água gelada',
+    scene: 'water',
+    lines: ['A água estava gelada. Depois, uma nuvem.', 'E uma voz: "Ainda não". A mesma voz de sempre.'],
+  },
+  {
+    title: 'Meu nome',
+    scene: 'name',
+    lines: ['Meu nome... meu nome não é Ossian. Foi ele quem me deu esse nome.', 'Falta pouco para eu lembrar de tudo.'],
+  },
+];
+
+// ---------- o final ----------
+
+/**
+ * Trono do Xamã (antes da escolha): a coroa inteira devolve o corpo à caveira, que vira o
+ * aldeão que era. Os selos caíram: Hex está livre e revela tudo. Depois, a escolha.
+ */
+export const REVELATION: Chapter = {
+  title: 'O Trono do Xamã',
+  blurb: 'A coroa está inteira. Os selos caíram.',
+  lines: [
+    S('A coroa está inteira, Hex. E agora? Cadê o Portão da Maré?'),
+    X('Não existe portão, Ossian. Existiam selos. Nove. E tu quebraste todos para mim.'),
+    S('Os reis... eles não guardavam fragmentos?'),
+    X('Guardavam a minha prisão. Tu foste a chave mais paciente que eu já tive.'),
+    X('E eu cumpro o que prometo. Coloca a coroa. Ela te devolve o que a ponte levou.'),
+    V('...Minhas mãos. Meu rosto. Eu sou... eu de novo. Eu lembro de tudo.'),
+    V('Foi você na ponte. Você me estendeu a mão e me deixou cair.'),
+    X('Eu precisava de alguém sem medo de cair. Um morto não tem medo de nada.'),
+    X('Agora escolhe. Eu abro o caminho do rio e tu voltas para casa, para a tua irmã. Inteiro.'),
+    X('Este mundo fica comigo, é claro. Ninguém vai sentir falta dele.'),
+    V('E se eu disser não?'),
+    X('Então tenta me derrubar. Se conseguires, os selos voltam... e tu voltas a ser osso. Para sempre.'),
+  ],
+};
+
+
+/** Escolheu enfrentar o Xamã e venceu: volta a ser a caveira, e o mundo fica livre. */
+export const ENDING_FREE: Chapter = {
+  title: 'Os Selos',
+  blurb: 'O mundo está livre.',
+  lines: [
+    X('Tu... preferiste os ossos... a tua casa?'),
+    V('Minha irmã tem a vila inteira. Este mundo só tinha a mim.'),
+    X('Os selos estão voltando. Eu volto para a prisão. E tu...'),
+    S('Eu volto a ser osso. Tudo bem. Agora eu sei quem eu sou.'),
+    S('E da próxima vez que eu cair, ninguém vai me puxar de volta.'),
+    S('Vou atravessar a luz quando for a hora. Do meu jeito.'),
+  ],
+};
+
+/** Escolheu voltar para casa com a ajuda do Xamã: volta inteiro, e o mundo fica com ele. */
+export const ENDING_HOME: Chapter = {
+  title: 'O Caminho do Rio',
+  blurb: 'Você voltou para casa.',
+  lines: [
+    V('Eu quero ir para casa.'),
+    X('Sábia escolha. O rio te leva. Não olhes para trás.'),
+    V('...As ilhas estão ficando roxas. Os reis, as criaturas. Tudo.'),
+    X('Já não é problema teu. Vai. A tua irmã está esperando na ponte.'),
+    V('Eu cheguei antes de anoitecer. Como prometi.'),
+    V('Mas às vezes, quando olho o rio, vejo nuvens roxas. E alguém sorrindo lá dentro.'),
+  ],
+};
 
 /** Depois da última fase: a coroa inteira, o portão aberto, e uma escolha que fica com quem joga. */
 export const EPILOGUE: Chapter = {

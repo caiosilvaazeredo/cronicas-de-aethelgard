@@ -94,7 +94,9 @@ export interface LevelDef {
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
-  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking'; arena: ScreenDef };
+  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking' | 'shaman'; arena: ScreenDef };
+  /** Luta final: a caveira, de volta ao corpo, joga como o aldeão. */
+  finale?: boolean;
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
   secret?: boolean;
   /** Fase de chave e porta (quebra-cabeça). */
@@ -1211,6 +1213,27 @@ export const LEVEL_SHARKKING: LevelDef = {
   versusStart: [3, 16],
 };
 
+/** Trono do Xamã: a revelação, a escolha e, se o jogador escolher lutar, o Xamã. */
+export const LEVEL_FINALE: LevelDef = {
+  id: 'finale',
+  name: 'Trono do Xamã',
+  intro: 'A coroa devolveu o seu corpo. Agora, o Xamã.',
+  theme: 'haunted',
+  tiles: 'tilemap',
+  winText: 'O Xamã caiu. Os selos voltaram.',
+  finale: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 2], [12, 3, 3]], deco: [[3, 'skull_spike'], [16, 'skull_spike']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'shaman',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'skull_spike'], [18, 'skull_spike']] },
+  },
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -1235,6 +1258,7 @@ export const LEVELS: LevelDef[] = [
   LEVEL_DOORS,
   LEVEL_LIBRARY,
   LEVEL_DARK,
+  LEVEL_FINALE,
   // Área 1 (Ilhas da Maré).
   LEVEL_CRABS,
   LEVEL_HIGHTIDE,

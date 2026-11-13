@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
-import { EPILOGUE, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { ENDING_FREE, ENDING_HOME, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { completeLevel, setEnding } from '../game/progress';
+import { areaOfLevel, areaTitle } from '../game/areas';
 import { CHARS } from '../game/characters';
 import type { DeviceId } from '../game/controls';
 import { LEVELS } from '../game/level';
@@ -12,18 +14,20 @@ const INK = 0x1d1a2b;
 /** Folha, quadro e onde ficam os pés/cabeça de cada retrato. */
 function portraitOf(who: Speaker): { key: string; frame: number; feetY: number; head: number } {
   if (who === 'shaman') return { key: 'shaman_idle', frame: 192, feetY: 133, head: 80 };
-  const d = CHARS[who];
-  return { key: `${who}_idle`, frame: d.frame, feetY: d.feetY, head: d.head };
+  const id = who === 'human' ? 'villager' : who;
+  const d = CHARS[id];
+  return { key: `${id}_idle`, frame: d.frame, feetY: d.feetY, head: d.head };
 }
 
 /** Cor da plaquinha de nome. */
 function nameColor(who: Speaker): number {
   if (who === 'skull') return PLAYER_TINT[0];
   if (who === 'shaman') return 0x9b6bf0;
+  if (who === 'human') return 0x58b947;
   return 0xc0392b;
 }
 
-const BG: Record<string, string> = { shore: 'sky', cave: 'cave_bg', volcano: 'volcano_bg', sky: 'sky_high' };
+const BG: Record<string, string> = { shore: 'sky', cave: 'cave_bg', volcano: 'volcano_bg', sky: 'sky_high', haunted: 'haunt_bg' };
 
 /**
  * Visual novel antes de cada fase (modo história): fundo da fase, retratos grandes dos
@@ -45,6 +49,12 @@ export class StoryScene extends Phaser.Scene {
   private prevPad = { a: true, b: true };
   private boxTop = 0;
   private epilogue = false;
+  /** Final escolhido no Trono do Xamã (o texto que está passando agora). */
+  private ending?: 'home';
+  private chose = false;
+  private choiceSel = 0;
+  private choiceRows: Array<{ bg: Phaser.GameObjects.Graphics; t: Phaser.GameObjects.Text; w: number; y: number }> = [];
+  private choiceBox?: Phaser.GameObjects.Container;
   lastData: { devices?: DeviceId[]; level?: number; epilogue?: boolean } = {};
 
   constructor() {
@@ -56,7 +66,10 @@ export class StoryScene extends Phaser.Scene {
     this.devices = data.devices ?? ['kb-full'];
     this.level = data.level ?? 0;
     this.epilogue = !!data.epilogue;
-    this.lines = (this.epilogue ? EPILOGUE : chapterFor(this.level))?.lines ?? [];
+    this.ending = undefined;
+    this.chose = false;
+    // Epílogo (depois de vencer o Xamã): o final em que o mundo fica livre.
+    this.lines = (this.epilogue ? ENDING_FREE : chapterFor(this.level))?.lines ?? [];
     this.index = -1;
     this.slots = { left: {}, right: {} };
     this.prevPad = { a: true, b: true };
@@ -71,9 +84,13 @@ export class StoryScene extends Phaser.Scene {
     shade.fillGradientStyle(0x0b1626, 0x0b1626, 0x0b1626, 0x0b1626, 0, 0, 0.75, 0.75).fillRect(0, H * 0.35, W, H * 0.65);
 
     // Título do capítulo no alto.
-    const ch = this.epilogue ? EPILOGUE : chapterFor(this.level);
+    const ch = this.epilogue ? ENDING_FREE : chapterFor(this.level);
+    // Título: área e número da fase dentro dela (as áreas têm ordem livre).
+    const area = areaOfLevel(this.level);
+    const k = area ? area.levels.indexOf(LEVELS[this.level].id) + 1 : this.level + 1;
+    const where = this.epilogue ? 'EPÍLOGO' : area ? `${areaTitle(area).name.toUpperCase()} ${k}` : `CAPÍTULO ${k}`;
     this.add
-      .text(W / 2, VIEW.portrait ? 120 : 46, `${this.epilogue ? 'EPÍLOGO' : `CAPÍTULO ${this.level + 1}`} · ${ch.title.toUpperCase()}`, {
+      .text(W / 2, VIEW.portrait ? 120 : 46, `${where} · ${ch.title.toUpperCase()}`, {
         fontFamily: FONT,
         fontSize: VIEW.portrait ? '48px' : '34px',
         color: '#fff7dc',
@@ -151,6 +168,7 @@ export class StoryScene extends Phaser.Scene {
 
   /** Termina de escrever a fala atual ou passa para a próxima. */
   private advance(): void {
+    if (this.choiceBox) return this.confirmChoice();
     if (this.typing) {
       this.typing.remove();
       this.typing = undefined;
@@ -239,7 +257,94 @@ export class StoryScene extends Phaser.Scene {
     this.slots[side] = { who, sprite: sp };
   }
 
+  /** Trono do Xamã: depois da revelação, a escolha (enfrentar ou voltar para casa). */
+  private get isFinale(): boolean {
+    return LEVELS[this.level]?.id === 'finale' && !this.epilogue;
+  }
+
+  private showChoice(): void {
+    this.chose = true;
+    const H = this.scale.height;
+    const P = VIEW.portrait;
+    const opts = ['ENFRENTAR O XAMÃ', 'VOLTAR PARA CASA COM A AJUDA DELE'];
+    const sub = ['Se vencer, o mundo fica livre... e você volta a ser osso.', 'Você volta inteiro para casa. O mundo fica com o Xamã.'];
+    const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.7).setInteractive()];
+    const pw = P ? 1000 : 820;
+    const rh = P ? 170 : 116;
+    const ph = rh * 2 + (P ? 200 : 150);
+    const g = this.add.graphics();
+    g.fillStyle(INK, 1).fillRoundedRect(-pw / 2 - 6, -ph / 2 - 6, pw + 12, ph + 12, 26);
+    g.fillStyle(0x10223a, 0.97).fillRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    g.lineStyle(4, 0x9b6bf0, 1).strokeRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    items.push(g);
+    items.push(this.add.text(0, -ph / 2 + (P ? 60 : 44), 'A ESCOLHA', { fontFamily: FONT, fontSize: P ? '52px' : '38px', color: '#ffe066', stroke: '#1d1a2b', strokeThickness: 8 }).setOrigin(0.5));
+    this.choiceRows = [];
+    opts.forEach((label, i) => {
+      const y = -ph / 2 + (P ? 140 : 100) + i * rh + rh / 2;
+      const w = pw - 60;
+      const bg = this.add.graphics();
+      const t = this.add.text(0, y - (P ? 22 : 16), label, { fontFamily: FONT, fontSize: P ? '36px' : '26px', color: '#fff7dc' }).setOrigin(0.5);
+      const st = this.add.text(0, y + (P ? 28 : 20), sub[i], { fontFamily: BODY_FONT, fontSize: P ? '26px' : '18px', color: '#bfd0e0' }).setOrigin(0.5);
+      const z = this.add
+        .zone(0, y, w, rh - 14)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => this.selectChoice(i))
+        .on('pointerdown', () => {
+          this.selectChoice(i);
+          this.confirmChoice();
+        });
+      this.choiceRows.push({ bg, t, w, y });
+      items.push(bg, t, st, z);
+    });
+    this.choiceBox = this.add.container(W / 2, H / 2, items).setDepth(50).setAlpha(0);
+    this.tweens.add({ targets: this.choiceBox, alpha: 1, duration: 300 });
+    this.selectChoice(0);
+    const kb = this.input.keyboard!;
+    for (const k of ['UP', 'LEFT', 'W', 'A']) kb.on(`keydown-${k}`, () => this.selectChoice(this.choiceSel - 1));
+    for (const k of ['DOWN', 'RIGHT', 'S', 'D']) kb.on(`keydown-${k}`, () => this.selectChoice(this.choiceSel + 1));
+  }
+
+  private selectChoice(i: number): void {
+    if (!this.choiceBox) return;
+    this.choiceSel = Phaser.Math.Wrap(i, 0, this.choiceRows.length);
+    const rh = VIEW.portrait ? 170 : 116;
+    this.choiceRows.forEach((r, k) => {
+      const on = k === this.choiceSel;
+      r.bg.clear();
+      r.bg.fillStyle(on ? 0x9b6bf0 : 0x2a3a5a, 1).fillRoundedRect(-r.w / 2, r.y - (rh - 14) / 2, r.w, rh - 14, 14);
+      r.t.setColor(on ? '#ffffff' : '#fff7dc');
+    });
+  }
+
+  private confirmChoice(): void {
+    const box = this.choiceBox;
+    if (!box) return;
+    this.choiceBox = undefined;
+    box.destroy();
+    if (this.choiceSel === 0) {
+      // Enfrentar: a luta final (o final livre vem depois da vitória).
+      this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });
+      return;
+    }
+    // Voltar para casa: o Xamã vence sem lutar.
+    setEnding('home');
+    completeLevel(this.level);
+    this.ending = 'home';
+    this.lines = ENDING_HOME.lines;
+    this.index = -1;
+    this.advance();
+  }
+
   private play(): void {
+    if (this.choiceBox) return this.confirmChoice();
+    if (this.isFinale && !this.chose) return this.showChoice();
+    if (this.ending === 'home' || this.epilogue) {
+      // Fim: a tela some num branco morno e volta ao mapa do mundo (agora livre ou dominado).
+      if (this.epilogue) setEnding('free');
+      this.cameras.main.fadeOut(1600, 255, 247, 220);
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('world', { devices: this.devices, ending: true }));
+      return;
+    }
     if (this.epilogue) {
       // Fim em aberto: a tela some num branco morno, e a escolha fica com quem joga.
       this.cameras.main.fadeOut(1400, 255, 247, 220);

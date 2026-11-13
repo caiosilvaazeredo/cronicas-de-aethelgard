@@ -9,8 +9,9 @@ import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { PrincesBoss } from '../game/princes';
 import { SeaSystem } from '../game/sea';
 import { SharkKingBoss } from '../game/sharkking';
+import { ShamanBoss } from '../game/shamanboss';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
-import { CENTER } from '../game/areas';
+import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
 import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
@@ -213,6 +214,8 @@ export class GameScene extends Phaser.Scene {
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
+      // Trono do Xamã: a caveira, de volta ao corpo, é o aldeão.
+      if (def.finale) this.time.delayedCall(10, () => this.becomeVillager(this.players[0]));
       // Caverna Submarina: tudo debaixo d'água e a caveira vira Tubarão (nada livre).
       if (def.undersea) {
         this.level.tide = UNDERSEA_TIDE;
@@ -329,7 +332,7 @@ export class GameScene extends Phaser.Scene {
       const limit = deathLimit(this.levelIndex);
       this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
     }
-    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? `Fase ${this.levelIndex + 1} — ${def.name}` : `VERSUS · ${def.name}`, 1600, def.intro));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? `${this.levelTag()} — ${def.name}` : `VERSUS · ${def.name}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-R', () => this.ended && this.restartMatch());
@@ -837,7 +840,8 @@ export class GameScene extends Phaser.Scene {
       this.popText(victim.x, victim.feet - victim.def.head - 30, victim.armor ? `${victim.armor + 1}` : '!', '#ffe066');
       return;
     }
-    const dropped = cause === 'hit' ? victim.def.drops : undefined;
+    // No final (o aldeão) ninguém deixa item: o corpo não troca mais de forma.
+    const dropped = cause === 'hit' && !LEVELS[this.levelIndex].finale ? victim.def.drops : undefined;
     const x = victim.x;
     sfx(victim.isPlayer ? 'death' : 'hit');
     victim.kill(cause === 'water' ? 'water' : 'hit', dir);
@@ -1010,6 +1014,7 @@ export class GameScene extends Phaser.Scene {
               glow.setVisible(false);
               p.respawn(rig.x, this.level.groundY(rig.x) ?? floor);
               if (LEVELS[this.levelIndex].undersea && this.mode === 'story') this.becomeShark(p);
+              if (LEVELS[this.levelIndex].finale && this.mode === 'story') this.becomeVillager(p);
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
@@ -1888,7 +1893,8 @@ export class GameScene extends Phaser.Scene {
             return () => zone.active && zone.destroy();
           },
         });
-      } else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
+      } else if (k === 'shaman') this.boss = new ShamanBoss(host);
+      else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
       void this.boss.intro();
     }
     this.boss?.update(time, dt);
@@ -1910,6 +1916,20 @@ export class GameScene extends Phaser.Scene {
     const p = this.players[0];
     this.rootWeb = this.add.image(p.x, p.feet - 40, tex).setScale(tex === 'web_ball' ? 2.2 : 1.6).setAlpha(0.85).setDepth(DEPTH.fighters + 0.5);
     this.popText(p.x, p.feet - 150, text, '#ffffff');
+  }
+
+  /** "Ilhas da Maré 3": a área e o número da fase dentro dela. */
+  private levelTag(): string {
+    const a = areaOfLevel(this.levelIndex);
+    if (!a) return `Fase ${this.levelIndex + 1}`;
+    return `${areaTitle(a).name} ${a.levels.indexOf(LEVELS[this.levelIndex].id) + 1}`;
+  }
+
+  /** Final: o corpo de aldeão (não troca de forma com itens). */
+  private becomeVillager(p: Fighter): void {
+    if (!p.alive) return;
+    p.applyChar('villager', p.feet);
+    this.ui?.hud?.setChar(0, 'villager');
   }
 
   /** Caverna Submarina: vira Tubarão (com fumaça) e passa a nadar livre. */
@@ -1975,7 +1995,7 @@ export class GameScene extends Phaser.Scene {
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
     completeLevel(this.levelIndex);
-    this.victory(0, `FASE ${this.levelIndex + 1} CONCLUÍDA!`, `${sub}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
+    this.victory(0, `${this.levelTag().toUpperCase()} CONCLUÍDA!`, `${sub}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
   }
 
   /** Porta da casa assombrada: leva o jogador a outro ponto (e outro cenário) na hora. */

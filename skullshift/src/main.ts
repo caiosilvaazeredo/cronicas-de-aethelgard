@@ -8,6 +8,7 @@ import { MenuScene } from './scenes/MenuScene';
 import { UIScene } from './scenes/UIScene';
 import { MapScene } from './scenes/MapScene';
 import { WorldScene } from './scenes/WorldScene';
+import { MemoryScene } from './scenes/MemoryScene';
 import { StoryScene } from './scenes/StoryScene';
 import { SlotsScene } from './scenes/SlotsScene';
 import { SettingsScene } from './scenes/SettingsScene';
@@ -46,7 +47,7 @@ function boot(): void {
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
     input: { gamepad: true, activePointers: 5 },
-    scene: [BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, StoryScene, GameScene, UIScene, SettingsScene],
+    scene: [BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene],
   });
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
   game.events.once('ready', () => applySettings());
@@ -69,7 +70,7 @@ function onResize(): void {
     for (const s of game.scene.getScenes(true)) {
       const key = s.scene.key;
       if (key === 'game') (s as GameScene).relayout();
-      else if (key === 'menu' || key === 'slots' || key === 'settings' || key === 'controls' || key === 'howto' || key === 'map' || key === 'world' || key === 'vn') {
+      else if (key === 'menu' || key === 'slots' || key === 'settings' || key === 'controls' || key === 'howto' || key === 'map' || key === 'world' || key === 'memory' || key === 'vn') {
         s.scene.restart((s as unknown as { lastData?: object }).lastData);
       }
     }

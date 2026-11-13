@@ -140,7 +140,7 @@ export const CENTER: AreaDef = {
   king: 'Xamã Hex',
   kingAnim: 'shaman_idle',
   color: 0x9b6bf0,
-  levels: ['stairs', 'mausoleum', 'doors', 'library', 'dark'],
+  levels: ['stairs', 'mausoleum', 'doors', 'library', 'dark', 'finale'],
   pos: [640, 345],
   unlock: 'all',
 };

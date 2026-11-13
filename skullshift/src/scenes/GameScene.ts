@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { jingle, playMusic, type Track } from '../game/music';
+import { duckMusic, jingle, playMusic, type Track } from '../game/music';
+import { BEATS, type Beat } from '../data/beats';
 import { DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
@@ -124,6 +125,11 @@ export class GameScene extends Phaser.Scene {
   private skipLine?: () => void;
   private prevSkip = true;
   private quip?: SpeechBubble;
+  /** História dentro da fase: falas e lampejos ainda por disparar, fila e o que está na tela. */
+  private beatsLeft: Beat[] = [];
+  private beatQueue: Beat[] = [];
+  private beatBusyUntil = 0;
+  private beatT0 = 0;
   /** Teias fixas no teto (área de cada uma), onde o morcego gruda. */
   private webs: Phaser.Geom.Rectangle[] = [];
   private items: Item[] = [];
@@ -203,14 +209,18 @@ export class GameScene extends Phaser.Scene {
     const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     this.level = new Level(this, def);
     this.reserveOn = !def.shmup && !def.finale && !def.undersea && !def.secret;
+    this.beatsLeft = this.mode === 'story' ? [...(BEATS[def.id] ?? [])] : [];
+    this.beatQueue = [];
+    this.beatBusyUntil = 0;
+    this.beatT0 = this.time.now;
     if (this.mode === 'story') {
       const r = getReserve() as ItemId | undefined;
       this.reserves = [r && r in ITEM_TO_CHAR ? r : undefined];
     } else this.reserves = [undefined, undefined];
     // Trilha: tema da área (voo tem o seu; versus, o duelo).
     if (this.mode !== 'story') playMusic('versus');
-    else if (def.shmup) playMusic('flight');
-    else playMusic((areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track);
+    else if (def.shmup) playMusic('flight', def.id);
+    else playMusic((areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.id);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
@@ -550,6 +560,7 @@ export class GameScene extends Phaser.Scene {
     this.updateProjectiles(dt);
     this.updateItems(time);
     this.updateReserve(time);
+    this.updateBeats(time);
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
     this.escape?.update(time, dt);
@@ -776,6 +787,89 @@ export class GameScene extends Phaser.Scene {
     }
     this.sparks(b.x, b.feet - 34);
     this.popText(b.x, b.feet - 120, 'QUEBROU!', '#ffe066');
+  }
+
+  // ---------- história dentro da fase ----------
+
+  /** Dispara as falas/lampejos do cenário atual, um de cada vez (nunca por cima de outra fala). */
+  private updateBeats(time: number): void {
+    if (!this.beatsLeft.length && !this.beatQueue.length) return;
+    // Fases que não mudam de cenário (voo, fuga): as falas vêm com o tempo.
+    const auto = !!LEVELS[this.levelIndex].shmup;
+    const elapsed = time - this.beatT0;
+    this.beatsLeft = this.beatsLeft.filter((b) => {
+      const due = auto ? elapsed > 6000 + b[0] * 13000 : this.screen >= b[0] && (b[0] > 0 || elapsed > 2500);
+      if (due) this.beatQueue.push(b);
+      return !due;
+    });
+    if (!this.beatQueue.length || time < this.beatBusyUntil || this.cutscene || this.ended || this.quip) return;
+    const p = this.players[0];
+    if (!p || !p.alive) return;
+    // Não fala no meio da entrada do chefe.
+    if (this.bossStarted) return;
+    const [, kind, text] = this.beatQueue.shift()!;
+    const ms = Math.max(2800, text.length * 58);
+    this.beatBusyUntil = time + ms + 900;
+    if (kind === 'f') {
+      this.memoryFlash(text, ms);
+      return;
+    }
+    const view = this.cameras.main.worldView;
+    const b =
+      kind === 'x'
+        ? new SpeechBubble(this, () => ({ x: this.cameras.main.worldView.right - Math.min(260, view.width * 0.3), y: this.cameras.main.worldView.y + 190 }), text, `${SPEAKER_NAME.shaman} (de longe)`, 0x9b6bf0)
+        : new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.labelHeight - 56 }), text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+    this.quip = b;
+    this.time.delayedCall(ms, () => {
+      b.close();
+      if (this.quip === b) this.quip = undefined;
+    });
+  }
+
+  /** Lampejo de memória: a tela fica sépia por um instante e a caveira lembra de algo da vida de antes. */
+  private memoryFlash(text: string, ms: number): void {
+    const cam = this.cameras.main;
+    const p = this.players[0];
+    const w = cam.width;
+    const h = cam.height;
+    const D = DEPTH.fx + 6;
+    jingle('flash');
+    duckMusic(ms);
+    cam.flash(160, 255, 240, 210);
+    const sepia = this.add.rectangle(w / 2, h / 2, w * 3, h * 3, 0xd9b478).setScrollFactor(0).setDepth(D).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
+    const dim = this.add.rectangle(w / 2, h / 2, w * 3, h * 3, 0x2a1a0c).setScrollFactor(0).setDepth(D).setAlpha(0);
+    const label = this.add
+      .text(w / 2, h * 0.24, '· LEMBRANÇA ·', { fontFamily: FONT, fontSize: '20px', color: '#ffe9b8', stroke: '#2a1a0c', strokeThickness: 6 })
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setDepth(D + 1)
+      .setAlpha(0);
+    const body = this.add
+      .text(w / 2, h * 0.24 + 22, `"${text}"`, { fontFamily: BODY_FONT, fontSize: '25px', color: '#fff7dc', stroke: '#2a1a0c', strokeThickness: 7, align: 'center', lineSpacing: 6, wordWrap: { width: Math.min(820, w * 0.8) } })
+      .setOrigin(0.5, 0)
+      .setScrollFactor(0)
+      .setDepth(D + 1)
+      .setAlpha(0);
+    // Por um instante, quem está ali é o aldeão que ela foi (um vulto por cima da caveira).
+    const ghost =
+      this.textures.exists('villager_idle') && p.def.id !== 'villager'
+        ? this.add.sprite(p.x, p.feet, 'villager_idle').setOrigin(0.5, CHARS.villager.feetY / CHARS.villager.frame).play('villager_idle').setTint(0xffe2b0).setAlpha(0).setDepth(DEPTH.fighters + 2)
+        : undefined;
+    const follow = () => ghost?.setPosition(p.x, p.feet).setFlipX(p.facing < 0);
+    this.events.on('update', follow);
+    const all = [sepia, dim, label, body];
+    this.tweens.add({ targets: sepia, alpha: 0.85, duration: 260 });
+    this.tweens.add({ targets: dim, alpha: 0.22, duration: 260 });
+    this.tweens.add({ targets: [label, body], alpha: 1, duration: 320, delay: 120 });
+    if (ghost) this.tweens.add({ targets: ghost, alpha: 0.6, duration: 300, yoyo: true, hold: Math.max(400, ms - 900) });
+    const end = () => {
+      this.events.off('update', follow);
+      this.events.off('shutdown', end);
+      ghost?.destroy();
+      all.forEach((o) => o.active && o.destroy());
+    };
+    this.events.once('shutdown', end);
+    this.time.delayedCall(ms, () => this.tweens.add({ targets: all, alpha: 0, duration: 450, onComplete: end }));
   }
 
   // ---------- caixa de reserva ----------
@@ -2169,7 +2263,7 @@ export class GameScene extends Phaser.Scene {
       else if (k === 'goblinking') this.boss = new GoblinKingBoss(host);
       else if (k === 'lizardking') this.boss = new LizardKingBoss(host);
       else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
-      playMusic(k === 'shaman' ? 'final' : 'boss');
+      playMusic(k === 'shaman' ? 'final' : 'boss', k === 'shaman' ? undefined : def.id);
       void this.boss.intro();
     }
     this.boss?.update(time, dt);

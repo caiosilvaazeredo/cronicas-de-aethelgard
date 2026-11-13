@@ -96,10 +96,16 @@ originais (extraídas com PIL do PNG).
   no meio com a troca, anel e faíscas no fim). O corpo real fica com `Fighter.shiftHide`.
 - **Água**: texturas `water_top` (espuma ondulada) e `water_grad` (profundidade) em `BootScene`; camadas e
   brilhos em `Level.water`. **Farol**: `SeaSystem.drawLighthouse` empilha duas `bld_red_tower` + fogueira.
-- **Música** (`music.ts`, timbres macios em `TIMBRE` + passa-baixa geral, sem agudos): cada tema é um `Style` (andamento, tônica, modo, progressões A/B, timbres,
-  baixo, bateria, eco); `compose()` cria a melodia com semente fixa, forma A A B A. `playMusic(track)` nas
-  cenas (Menu, World, Map = id da área, Game = área/voo/versus/chefe, Memory, Story); `jingle('win')` em
-  `storyWin`. Volume em Configurações → Áudio → Música (`settings.music`). Novo tema: adicionar em `STYLES`.
+- **Música** (`music.ts`): instrumentos sintetizados no espírito de Ocarina of Time — sopro (ocarina, flauta:
+  `wind`), corda dedilhada por Karplus-Strong (harpa, violão, pizzicato: `pluck`), naipe/trompa/contrabaixo
+  (`bowed`), marimba/celesta/órgão (`tone`), tímpano e tambores (`drum`), sala com reverberação e passa-baixa
+  geral (sem agudos). Cada tema é um `Style` em `STYLES`; **cada fase tem a sua música**:
+  `playMusic(tema, idDaFase)` → `variantOf` deriva tom, andamento, progressão (`PROGS`), solista e melodia.
+  `jingle('win'|'seal'|'lose'|'flash')`, `duckMusic(ms)`. Volume em Configurações → Áudio → Música.
+- **História dentro das fases** (`data/beats.ts`): `BEATS[idDaFase] = [[cenário, 's'|'x'|'f', texto], ...]`.
+  's' caveira (balão), 'x' Xamã de longe (balão no alto), 'f' lampejo de memória (tela sépia, vulto do aldeão,
+  `GameScene.memoryFlash`). Dispara ao chegar ao cenário (`GameScene.updateBeats`; no voo, por tempo).
+  Toda fase nova precisa de: capítulo em `lore.ts` (≥4 falas) + entradas em `beats.ts`.
 
 ## Ideias para continuar
 

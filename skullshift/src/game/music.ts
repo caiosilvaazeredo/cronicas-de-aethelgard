@@ -1,17 +1,23 @@
 import { audio, settings } from './settings';
 
 /**
- * Trilha gerada na hora (sem arquivos de áudio), com timbres macios (marimba, flauta, piano
- * elétrico, baixo redondo) e um passa-baixa geral: sem agudos estridentes. Cada tema é descrito por um "estilo"
- * (andamento, tom, modo, progressão de acordes, timbres, bateria) e a melodia é composta a partir
- * de uma semente fixa: o mesmo tema sempre toca igual. Forma A A B A, em laço.
+ * Trilha gerada na hora (sem arquivos de áudio), com instrumentos sintetizados no espírito de
+ * Ocarina of Time: ocarina e flauta (sopro com vibrato), harpa e violão (corda dedilhada por
+ * Karplus-Strong), cordas (naipe com ataque lento), trompa, marimba, celesta, pizzicato e tímpano,
+ * tudo numa sala com reverberação. Um passa-baixa geral tira os agudos estridentes.
  *
- * Uso: `playMusic('mare')` (repete o tema atual se for o mesmo), `stopMusic()`, `jingle('win')`.
+ * Cada tema é um "estilo" (andamento, tom, modo, progressão, instrumentos, percussão) e a melodia
+ * é composta a partir de uma semente fixa. Cada FASE tem a sua música: `playMusic(tema, idDaFase)`
+ * deriva do estilo da área um tom, um andamento, uma progressão, um instrumento solista e uma
+ * melodia próprios (sempre os mesmos para a mesma fase). Forma A A B A, em laço.
  */
 
 type Drums = 'none' | 'soft' | 'rock' | 'march' | 'tribal' | 'waltz' | 'gallop';
 type Bass = 'root' | 'walk' | 'drive' | 'waltz' | 'pedal';
-type Voice = 'pulse12' | 'pulse25' | 'square' | 'triangle' | 'sine' | 'sawtooth';
+/** Solistas. */
+type Lead = 'ocarina' | 'flute' | 'horn' | 'marimba' | 'celesta' | 'harp' | 'guitar' | 'strings' | 'organ';
+/** Acompanhamento dedilhado. */
+type Comp = 'harp' | 'guitar' | 'marimba' | 'celesta';
 
 interface Style {
   bpm: number;
@@ -23,20 +29,27 @@ interface Style {
   progA: number[];
   progB: number[];
   beats: 3 | 4;
-  lead: Voice;
-  bassVoice: Voice;
+  /** Solistas possíveis: cada fase da área usa um deles. */
+  leads: Lead[];
+  comp: Comp;
   bass: Bass;
+  /** Baixo: pizzicato (dedilhado) ou contrabaixo com arco. */
+  bassInst: 'pizz' | 'bowed';
+  /** Naipe de cordas sustentando o acorde (0 = sem). */
+  pad: number;
   drums: Drums;
   /** 0 a 1: quantas colcheias têm nota. */
   density: number;
   seed: number;
-  /** Arpejo de acompanhamento (semicolcheias) na seção B ou sempre. */
+  /** Arpejo de acompanhamento na seção B ou sempre. */
   arp?: 'B' | 'always';
   echo?: boolean;
   /** Atraso das colcheias fracas (balanço), 0 a 0.3. */
   swing?: number;
   /** Oitavas acima do baixo para a melodia. */
   leadOct?: number;
+  /** Tímpano na cabeça do compasso. */
+  timpani?: boolean;
 }
 
 const IONIAN = [0, 2, 4, 5, 7, 9, 11];
@@ -54,47 +67,93 @@ export type Track =
   | 'centro' | 'boss' | 'final' | 'memory' | 'story' | 'versus' | 'flight';
 
 const STYLES: Record<Track, Style> = {
-  // Abertura: aventura com um fundo melancólico.
-  menu: { bpm: 104, root: 45, mode: AEOLIAN, progA: [0, 5, 2, 6, 0, 5, 3, 4], progB: [3, 4, 2, 5, 3, 4, 6, 4], beats: 4, lead: 'pulse25', bassVoice: 'triangle', bass: 'walk', drums: 'soft', density: 0.55, seed: 11, arp: 'B' },
-  // Mapa do mundo: calmo, andando de ilha em ilha.
-  world: { bpm: 92, root: 48, mode: IONIAN, progA: [0, 3, 4, 0, 5, 3, 1, 4], progB: [5, 3, 0, 4, 5, 1, 3, 4], beats: 4, lead: 'triangle', bassVoice: 'triangle', bass: 'root', drums: 'soft', density: 0.5, seed: 23, arp: 'always' },
-  // Ilhas da Maré: calipso balançado.
-  mare: { bpm: 116, root: 50, mode: IONIAN, progA: [0, 0, 3, 4, 0, 5, 3, 4], progB: [3, 3, 0, 5, 1, 4, 0, 4], beats: 4, lead: 'pulse25', bassVoice: 'triangle', bass: 'walk', drums: 'soft', density: 0.62, seed: 37, swing: 0.18, arp: 'B' },
-  // Pradaria: galope folclórico em 6/8.
-  pradaria: { bpm: 138, root: 43, mode: MIXO, progA: [0, 6, 3, 0, 0, 6, 4, 0], progB: [3, 3, 0, 0, 6, 6, 4, 4], beats: 3, lead: 'pulse12', bassVoice: 'triangle', bass: 'waltz', drums: 'gallop', density: 0.7, seed: 41 },
-  // Lagoa: dórico lento, com eco de pântano.
-  lagoa: { bpm: 84, root: 45, mode: DORIAN, progA: [0, 3, 0, 3, 6, 3, 4, 0], progB: [5, 3, 6, 0, 5, 3, 4, 4], beats: 4, lead: 'triangle', bassVoice: 'sine', bass: 'pedal', drums: 'tribal', density: 0.45, seed: 53, echo: true },
-  // Caverna das Teias: menor harmônica, dedilhada e rarefeita.
-  teias: { bpm: 96, root: 40, mode: HARMONIC, progA: [0, 0, 5, 4, 0, 3, 5, 4], progB: [3, 5, 1, 4, 3, 5, 4, 4], beats: 4, lead: 'pulse12', bassVoice: 'triangle', bass: 'root', drums: 'soft', density: 0.4, seed: 67, arp: 'always', echo: true },
-  // Forja: frígio pesado, baixo martelando.
-  forja: { bpm: 152, root: 40, mode: PHRYGIAN, progA: [0, 1, 0, 6, 0, 1, 5, 6], progB: [3, 1, 3, 4, 5, 1, 6, 6], beats: 4, lead: 'square', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.6, seed: 71 },
-  // Bosque: lídio, curioso e leve.
-  bosque: { bpm: 108, root: 41, mode: LYDIAN, progA: [0, 1, 0, 1, 4, 3, 1, 4], progB: [3, 4, 2, 5, 3, 1, 4, 4], beats: 4, lead: 'triangle', bassVoice: 'triangle', bass: 'walk', drums: 'soft', density: 0.58, seed: 83, arp: 'always' },
-  // Minas: pentatônica menor com tambores de túnel.
-  minas: { bpm: 124, root: 45, mode: [0, 3, 5, 7, 10], progA: [0, 0, 2, 1, 0, 0, 3, 3], progB: [2, 2, 0, 0, 3, 3, 1, 3], beats: 4, lead: 'pulse25', bassVoice: 'triangle', bass: 'drive', drums: 'tribal', density: 0.6, seed: 97 },
-  // Céu de Brasa: frígio dominante, rápido e quente.
-  ceu: { bpm: 146, root: 40, mode: PHRYG_DOM, progA: [0, 1, 0, 6, 0, 1, 3, 4], progB: [3, 1, 6, 0, 3, 1, 4, 4], beats: 4, lead: 'pulse25', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.65, seed: 101, arp: 'B' },
-  // Reino das Asas: valsa de corte, menor harmônica.
-  reino: { bpm: 126, root: 43, mode: HARMONIC, progA: [0, 3, 4, 0, 5, 3, 4, 4], progB: [5, 1, 4, 0, 5, 3, 4, 4], beats: 3, lead: 'pulse12', bassVoice: 'triangle', bass: 'waltz', drums: 'waltz', density: 0.66, seed: 113, echo: true },
-  // Santuário: lócrio, quase parado. Algo está errado aqui.
-  centro: { bpm: 72, root: 42, mode: LOCRIAN, progA: [0, 1, 0, 4, 0, 1, 6, 4], progB: [4, 1, 4, 0, 6, 1, 4, 4], beats: 4, lead: 'triangle', bassVoice: 'sine', bass: 'pedal', drums: 'none', density: 0.35, seed: 127, echo: true, arp: 'B' },
-  // Chefes: urgência.
-  boss: { bpm: 164, root: 45, mode: AEOLIAN, progA: [0, 0, 5, 6, 0, 0, 3, 4], progB: [5, 6, 0, 0, 5, 6, 4, 4], beats: 4, lead: 'square', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.72, seed: 131 },
-  // O Xamã.
-  final: { bpm: 172, root: 40, mode: HARMONIC, progA: [0, 5, 1, 4, 0, 5, 3, 4], progB: [3, 4, 5, 4, 3, 1, 4, 4], beats: 4, lead: 'sawtooth', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.74, seed: 149, arp: 'always' },
-  // Memórias: caixinha de música.
-  memory: { bpm: 70, root: 48, mode: IONIAN, progA: [0, 5, 3, 4, 0, 5, 1, 4], progB: [3, 4, 5, 0, 3, 4, 1, 4], beats: 3, lead: 'sine', bassVoice: 'triangle', bass: 'root', drums: 'none', density: 0.55, seed: 157, arp: 'always', echo: true, leadOct: 2 },
-  // Conversas da história.
-  story: { bpm: 80, root: 45, mode: DORIAN, progA: [0, 3, 0, 4, 5, 3, 1, 4], progB: [3, 4, 0, 5, 3, 4, 6, 4], beats: 4, lead: 'triangle', bassVoice: 'triangle', bass: 'root', drums: 'none', density: 0.4, seed: 163, echo: true },
-  // Versus: duelo.
-  versus: { bpm: 140, root: 43, mode: DORIAN, progA: [0, 0, 6, 6, 3, 3, 4, 4], progB: [5, 5, 3, 3, 0, 0, 4, 4], beats: 4, lead: 'pulse25', bassVoice: 'sawtooth', bass: 'drive', drums: 'rock', density: 0.68, seed: 173 },
-  // Fases de voo.
-  flight: { bpm: 156, root: 47, mode: MIXO, progA: [0, 6, 3, 4, 0, 6, 3, 0], progB: [3, 4, 5, 6, 3, 4, 6, 6], beats: 4, lead: 'pulse12', bassVoice: 'triangle', bass: 'drive', drums: 'rock', density: 0.7, seed: 181, arp: 'always' },
+  // Abertura: ocarina sobre harpa e cordas, em três tempos (como um tema de título).
+  menu: { bpm: 96, root: 45, mode: AEOLIAN, progA: [0, 5, 2, 6, 0, 5, 3, 4], progB: [3, 4, 2, 5, 3, 4, 6, 4], beats: 3, leads: ['ocarina'], comp: 'harp', bass: 'root', bassInst: 'bowed', pad: 0.7, drums: 'none', density: 0.55, seed: 11, arp: 'always' },
+  // Mapa do mundo: flauta e harpa, campo aberto.
+  world: { bpm: 100, root: 48, mode: IONIAN, progA: [0, 3, 4, 0, 5, 3, 1, 4], progB: [5, 3, 0, 4, 5, 1, 3, 4], beats: 4, leads: ['flute'], comp: 'harp', bass: 'root', bassInst: 'pizz', pad: 0.6, drums: 'soft', density: 0.5, seed: 23, arp: 'always' },
+  // Ilhas da Maré: marimba e violão num calipso de praia.
+  mare: { bpm: 112, root: 50, mode: IONIAN, progA: [0, 0, 3, 4, 0, 5, 3, 4], progB: [3, 3, 0, 5, 1, 4, 0, 4], beats: 4, leads: ['marimba', 'flute', 'ocarina'], comp: 'guitar', bass: 'walk', bassInst: 'pizz', pad: 0.3, drums: 'soft', density: 0.62, seed: 37, swing: 0.18, arp: 'B' },
+  // Pradaria: cantiga de rancho em três tempos, ocarina e violão.
+  pradaria: { bpm: 132, root: 43, mode: MIXO, progA: [0, 6, 3, 0, 0, 6, 4, 0], progB: [3, 3, 0, 0, 6, 6, 4, 4], beats: 3, leads: ['ocarina', 'flute', 'guitar'], comp: 'guitar', bass: 'waltz', bassInst: 'pizz', pad: 0.35, drums: 'gallop', density: 0.7, seed: 41 },
+  // Lagoa: harpa correndo como água, flauta ao longe.
+  lagoa: { bpm: 84, root: 45, mode: DORIAN, progA: [0, 3, 0, 3, 6, 3, 4, 0], progB: [5, 3, 6, 0, 5, 3, 4, 4], beats: 4, leads: ['flute', 'ocarina', 'harp'], comp: 'harp', bass: 'pedal', bassInst: 'bowed', pad: 0.8, drums: 'none', density: 0.45, seed: 53, echo: true, arp: 'always' },
+  // Caverna das Teias: celesta rarefeita sobre cordas graves.
+  teias: { bpm: 92, root: 40, mode: HARMONIC, progA: [0, 0, 5, 4, 0, 3, 5, 4], progB: [3, 5, 1, 4, 3, 5, 4, 4], beats: 4, leads: ['celesta', 'harp', 'flute'], comp: 'celesta', bass: 'root', bassInst: 'bowed', pad: 0.9, drums: 'none', density: 0.4, seed: 67, arp: 'B', echo: true },
+  // Forja: trompa e tímpano, tambores da montanha.
+  forja: { bpm: 138, root: 40, mode: PHRYGIAN, progA: [0, 1, 0, 6, 0, 1, 5, 6], progB: [3, 1, 3, 4, 5, 1, 6, 6], beats: 4, leads: ['horn', 'strings', 'marimba'], comp: 'marimba', bass: 'drive', bassInst: 'pizz', pad: 0.6, drums: 'tribal', density: 0.6, seed: 71, timpani: true },
+  // Bosque: ocarina saltitante com marimba (bosque perdido).
+  bosque: { bpm: 116, root: 41, mode: LYDIAN, progA: [0, 1, 0, 1, 4, 3, 1, 4], progB: [3, 4, 2, 5, 3, 1, 4, 4], beats: 4, leads: ['ocarina', 'flute', 'marimba'], comp: 'marimba', bass: 'walk', bassInst: 'pizz', pad: 0.3, drums: 'soft', density: 0.66, seed: 83, arp: 'always' },
+  // Minas: marimba e tambores (cidade de pedra).
+  minas: { bpm: 120, root: 45, mode: [0, 3, 5, 7, 10], progA: [0, 0, 2, 1, 0, 0, 3, 3], progB: [2, 2, 0, 0, 3, 3, 1, 3], beats: 4, leads: ['marimba', 'horn', 'guitar'], comp: 'marimba', bass: 'drive', bassInst: 'pizz', pad: 0.3, drums: 'tribal', density: 0.6, seed: 97 },
+  // Céu de Brasa: violão rasgado e trompa (vale do deserto).
+  ceu: { bpm: 136, root: 40, mode: PHRYG_DOM, progA: [0, 1, 0, 6, 0, 1, 3, 4], progB: [3, 1, 6, 0, 3, 1, 4, 4], beats: 4, leads: ['horn', 'guitar', 'flute'], comp: 'guitar', bass: 'walk', bassInst: 'pizz', pad: 0.4, drums: 'march', density: 0.65, seed: 101, arp: 'always' },
+  // Reino das Asas: valsa de corte com cordas.
+  reino: { bpm: 120, root: 43, mode: HARMONIC, progA: [0, 3, 4, 0, 5, 3, 4, 4], progB: [5, 1, 4, 0, 5, 3, 4, 4], beats: 3, leads: ['strings', 'flute', 'celesta'], comp: 'harp', bass: 'waltz', bassInst: 'pizz', pad: 0.7, drums: 'waltz', density: 0.66, seed: 113, echo: true },
+  // Santuário: órgão e cordas, quase parado (templo). Algo está errado aqui.
+  centro: { bpm: 66, root: 42, mode: LOCRIAN, progA: [0, 1, 0, 4, 0, 1, 6, 4], progB: [4, 1, 4, 0, 6, 1, 4, 4], beats: 4, leads: ['organ', 'ocarina', 'celesta'], comp: 'harp', bass: 'pedal', bassInst: 'bowed', pad: 1, drums: 'none', density: 0.35, seed: 127, echo: true, arp: 'B' },
+  // Chefes: cordas marcadas, trompa e tímpano.
+  boss: { bpm: 152, root: 45, mode: AEOLIAN, progA: [0, 0, 5, 6, 0, 0, 3, 4], progB: [5, 6, 0, 0, 5, 6, 4, 4], beats: 4, leads: ['horn', 'strings'], comp: 'marimba', bass: 'drive', bassInst: 'pizz', pad: 0.8, drums: 'march', density: 0.72, seed: 131, timpani: true },
+  // O Xamã: órgão, cordas e tímpano.
+  final: { bpm: 158, root: 40, mode: HARMONIC, progA: [0, 5, 1, 4, 0, 5, 3, 4], progB: [3, 4, 5, 4, 3, 1, 4, 4], beats: 4, leads: ['organ'], comp: 'harp', bass: 'drive', bassInst: 'bowed', pad: 1, drums: 'march', density: 0.74, seed: 149, arp: 'always', timpani: true },
+  // Memórias: caixinha de música (celesta) com cordas ao fundo.
+  memory: { bpm: 70, root: 48, mode: IONIAN, progA: [0, 5, 3, 4, 0, 5, 1, 4], progB: [3, 4, 5, 0, 3, 4, 1, 4], beats: 3, leads: ['celesta'], comp: 'harp', bass: 'root', bassInst: 'bowed', pad: 0.6, drums: 'none', density: 0.55, seed: 157, arp: 'always', echo: true },
+  // Conversas da história: harpa e flauta baixinho.
+  story: { bpm: 78, root: 45, mode: DORIAN, progA: [0, 3, 0, 4, 5, 3, 1, 4], progB: [3, 4, 0, 5, 3, 4, 6, 4], beats: 4, leads: ['flute', 'ocarina'], comp: 'harp', bass: 'root', bassInst: 'bowed', pad: 0.6, drums: 'none', density: 0.4, seed: 163, echo: true, arp: 'always' },
+  // Versus: violão e trompa, duelo.
+  versus: { bpm: 136, root: 43, mode: DORIAN, progA: [0, 0, 6, 6, 3, 3, 4, 4], progB: [5, 5, 3, 3, 0, 0, 4, 4], beats: 4, leads: ['horn', 'guitar'], comp: 'guitar', bass: 'drive', bassInst: 'pizz', pad: 0.4, drums: 'march', density: 0.68, seed: 173, arp: 'always' },
+  // Fases de voo: trompa e cordas, cavalgada.
+  flight: { bpm: 148, root: 47, mode: MIXO, progA: [0, 6, 3, 4, 0, 6, 3, 0], progB: [3, 4, 5, 6, 3, 4, 6, 6], beats: 4, leads: ['horn', 'flute', 'strings'], comp: 'harp', bass: 'drive', bassInst: 'pizz', pad: 0.7, drums: 'gallop', density: 0.7, seed: 181, arp: 'always' },
 };
+
+/** Progressões de 8 compassos (graus da escala) para variar de fase para fase. */
+const PROGS: number[][] = [
+  [0, 3, 4, 0, 5, 3, 1, 4],
+  [0, 5, 3, 4, 0, 5, 1, 4],
+  [0, 4, 5, 3, 0, 4, 3, 4],
+  [0, 2, 3, 4, 5, 3, 1, 4],
+  [0, 6, 5, 4, 0, 6, 3, 4],
+  [5, 3, 0, 4, 5, 3, 1, 4],
+  [3, 4, 0, 5, 3, 4, 1, 4],
+  [0, 0, 3, 3, 5, 4, 3, 4],
+  [0, 1, 0, 6, 0, 1, 3, 4],
+  [3, 0, 4, 5, 3, 0, 1, 4],
+];
+
+function hash(str: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+
+/** A música de uma fase: mesma "cara" da área, mas tom, andamento, progressão, solista e melodia próprios. */
+function variantOf(base: Style, id: string): Style {
+  const h = hash(id);
+  const r = rng(h);
+  const pick = <T>(a: T[]): T => a[Math.floor(r() * a.length)];
+  const penta = base.mode.length === 5;
+  const leads = [...base.leads];
+  // O solista roda pela lista da área (o primeiro é o mais comum).
+  const lead = leads[Math.floor(r() * (leads.length + 1)) % leads.length];
+  return {
+    ...base,
+    seed: (h % 99991) + 7,
+    root: base.root + pick([-3, -2, 0, 0, 2, 3, 5]),
+    bpm: Math.round(base.bpm * (0.9 + r() * 0.2)),
+    progA: penta ? base.progA.map((d, i) => base.progA[(i + (h % 4) * 2) % 8] ?? d) : r() < 0.3 ? base.progA : pick(PROGS),
+    progB: penta ? base.progB : r() < 0.3 ? base.progB : pick(PROGS),
+    density: Math.max(0.3, Math.min(0.8, base.density + (r() - 0.5) * 0.2)),
+    arp: r() < 0.25 ? (base.arp === 'always' ? 'B' : 'always') : base.arp,
+    leads: [lead],
+  };
+}
 
 interface Note { midi: number; len: number }
 interface Step {
   lead?: Note;
+  /** Acorde sustentado pelas cordas (notas MIDI) durante 'padLen' colcheias. */
+  pad?: number[];
+  padLen?: number;
+  timp?: number;
   bass?: Note;
   arp?: number[];
   kick?: boolean;
@@ -169,9 +228,9 @@ function compose(st: Style): Step[] {
           let len = 1;
           while (s + len < spb && bar[s + len] === undefined && len < 4) len++;
           if (cadence) len = spb - s;
-          // Teto em Dó5: a melodia nunca sobe para a região estridente.
+          // Teto no Lá5: a melodia fica na região cantável da ocarina.
           let midi = midiOf(d, leadOct - 1);
-          while (midi > 79) midi -= 12;
+          while (midi > 81) midi -= 12;
           return { midi, len };
         }),
       );
@@ -214,6 +273,12 @@ function compose(st: Style): Step[] {
           const tones = chordTones(c).map((t) => midiOf(t, 1));
           step.arp = [tones[s % 3], tones[(s + 1) % 3]];
         }
+        // Cordas: o acorde inteiro, sustentado pelo compasso.
+        if (s === 0 && st.pad > 0) {
+          step.pad = chordTones(c).map((t) => midiOf(t, 1));
+          step.padLen = spb;
+        }
+        if (s === 0 && st.timpani && bi % 2 === 0) step.timp = root - 12 < 36 ? root : root - 12;
         const ch = pat[s % pat.length];
         if (ch === 'k') step.kick = true;
         if (ch === 's') step.snare = true;
@@ -238,90 +303,200 @@ function compose(st: Style): Step[] {
 }
 
 // ------------------------------------------------------------------
-// Tocador
+// Instrumentos
 // ------------------------------------------------------------------
 
+const freq = (m: number) => 440 * Math.pow(2, (m - 69) / 12);
 const waves = new Map<string, PeriodicWave>();
 
-const freq = (m: number) => 440 * Math.pow(2, (m - 69) / 12);
-
-let bus: GainNode | null = null;
-let leadBus: GainNode | null = null;
-let playing: { track: Track; style: Style; steps: Step[]; i: number; next: number } | null = null;
-let timer: number | undefined;
-let noiseBuf: AudioBuffer | null = null;
-
-function musicVol(): number {
-  const s = settings();
-  return (s.master / 10) * (s.music / 10);
-}
-
-/**
- * Timbres macios (sem serrilhado de chiptune): cada voz é uma soma de poucos harmônicos graves.
- * pulse12 = marimba (ataque de madeira, some rápido) · pulse25 = piano elétrico · square = clarinete
- * · sawtooth = metais suaves · triangle = flauta · sine = caixinha de música.
- */
-const TIMBRE: Record<Voice, { h: number[]; pluck: boolean; attack: number }> = {
-  pulse12: { h: [1, 0, 0, 0.28], pluck: true, attack: 0.004 },
-  pulse25: { h: [1, 0.42, 0.12, 0.05], pluck: true, attack: 0.006 },
-  square: { h: [1, 0, 0.3, 0, 0.1], pluck: false, attack: 0.03 },
-  sawtooth: { h: [1, 0.45, 0.22, 0.1, 0.04], pluck: false, attack: 0.035 },
-  triangle: { h: [1, 0.12, 0.05], pluck: false, attack: 0.04 },
-  sine: { h: [1, 0, 0.08], pluck: true, attack: 0.004 },
-};
-
-function timbre(a: AudioContext, voice: Voice): PeriodicWave {
-  let w = waves.get(voice);
+function wave(a: AudioContext, key: string, harmonics: number[]): PeriodicWave {
+  let w = waves.get(key);
   if (!w) {
-    const h = TIMBRE[voice].h;
-    const re = new Float32Array(h.length + 1);
-    const im = new Float32Array(h.length + 1);
-    h.forEach((x, i) => (im[i + 1] = x));
+    const re = new Float32Array(harmonics.length + 1);
+    const im = new Float32Array(harmonics.length + 1);
+    harmonics.forEach((x, i) => (im[i + 1] = x));
     w = a.createPeriodicWave(re, im);
-    waves.set(voice, w);
+    waves.set(key, w);
   }
   return w;
 }
 
-function osc(a: AudioContext, dest: AudioNode, voice: Voice, f: number, t: number, dur: number, v: number): void {
-  const tb = TIMBRE[voice];
-  const o = a.createOscillator();
-  o.setPeriodicWave(timbre(a, voice));
-  o.frequency.setValueAtTime(f, t);
-  const g = a.createGain();
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.linearRampToValueAtTime(v, t + tb.attack);
-  if (tb.pluck) {
-    // Marimba/piano: bate e vai sumindo (com uma cauda curta depois da nota).
-    const tail = Math.max(dur, 0.22) + 0.18;
-    g.gain.exponentialRampToValueAtTime(v * 0.25, t + Math.min(0.16, tail * 0.5));
-    g.gain.exponentialRampToValueAtTime(0.0001, t + tail);
-    o.connect(g).connect(dest);
-    o.start(t);
-    o.stop(t + tail + 0.02);
-    return;
-  }
-  // Sopro: sustenta e solta devagar.
-  g.gain.linearRampToValueAtTime(v * 0.8, t + Math.min(0.14, dur * 0.5) + tb.attack);
-  g.gain.setValueAtTime(v * 0.8, t + Math.max(tb.attack + 0.01, dur - 0.06));
-  g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.05);
-  o.connect(g).connect(dest);
-  o.start(t);
-  o.stop(t + dur + 0.08);
-}
-
-function noise(a: AudioContext, dest: AudioNode, t: number, dur: number, v: number, hp: number): void {
+let noiseBuf: AudioBuffer | null = null;
+function noiseBuffer(a: AudioContext): AudioBuffer {
   if (!noiseBuf) {
     noiseBuf = a.createBuffer(1, a.sampleRate, a.sampleRate);
     const d = noiseBuf.getChannelData(0);
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
   }
+  return noiseBuf;
+}
+
+/** Sopro (ocarina, flauta): tom quase puro, ataque macio, vibrato que entra depois e um fio de ar. */
+function wind(a: AudioContext, dest: AudioNode, kind: 'ocarina' | 'flute', f: number, t: number, dur: number, v: number): void {
+  const o = a.createOscillator();
+  o.setPeriodicWave(kind === 'ocarina' ? wave(a, 'ocarina', [1, 0.1, 0.05]) : wave(a, 'flute', [1, 0.32, 0.1, 0.04]));
+  o.frequency.setValueAtTime(f * 0.985, t);
+  o.frequency.linearRampToValueAtTime(f, t + 0.05); // a nota "chega" de baixo, como no sopro
+  const lfo = a.createOscillator();
+  lfo.frequency.value = 5.2;
+  const depth = a.createGain();
+  depth.gain.setValueAtTime(0, t);
+  depth.gain.linearRampToValueAtTime(dur > 0.3 ? f * 0.007 : 0, t + Math.min(dur, 0.35));
+  lfo.connect(depth).connect(o.frequency);
+  const g = a.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(v, t + 0.045);
+  g.gain.setValueAtTime(v * 0.92, t + Math.max(0.05, dur - 0.06));
+  g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.07);
+  o.connect(g).connect(dest);
+  // Ar do sopro: ruído estreito em volta da nota, só no ataque.
+  const n = a.createBufferSource();
+  n.buffer = noiseBuffer(a);
+  const bp = a.createBiquadFilter();
+  bp.type = 'bandpass';
+  bp.frequency.value = Math.min(1800, f * 2);
+  bp.Q.value = 3;
+  const ng = a.createGain();
+  ng.gain.setValueAtTime(v * (kind === 'flute' ? 0.5 : 0.3), t);
+  ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+  n.connect(bp).connect(ng).connect(dest);
+  n.start(t, Math.random() * 0.5, 0.15);
+  o.start(t);
+  lfo.start(t);
+  o.stop(t + dur + 0.1);
+  lfo.stop(t + dur + 0.1);
+}
+
+/** Corda dedilhada (harpa, violão, pizzicato): Karplus-Strong, uma amostra por nota (guardada). */
+const plucks = new Map<string, AudioBuffer>();
+function pluckBuffer(a: AudioContext, midi: number, kind: 'harp' | 'guitar' | 'pizz'): { buf: AudioBuffer; rate: number } {
+  const sr = a.sampleRate;
+  const f = freq(midi);
+  const N = Math.max(2, Math.round(sr / f));
+  const key = `${kind}${midi}`;
+  let buf = plucks.get(key);
+  if (!buf) {
+    const dur = kind === 'pizz' ? 0.7 : kind === 'guitar' ? 1.3 : 1.8;
+    const decay = kind === 'pizz' ? 0.988 : kind === 'guitar' ? 0.995 : 0.997;
+    const len = Math.floor(sr * dur);
+    buf = a.createBuffer(1, len, sr);
+    const d = buf.getChannelData(0);
+    const ring = new Float32Array(N);
+    for (let i = 0; i < N; i++) ring[i] = Math.random() * 2 - 1;
+    // Dedo macio: suaviza a excitação (harpa mais redonda que o violão).
+    for (let k = 0; k < (kind === 'guitar' ? 2 : 4); k++) for (let i = 0; i < N; i++) ring[i] = (ring[i] + ring[(i + 1) % N]) / 2;
+    let peak = 0;
+    for (let i = 0; i < len; i++) {
+      const j = i % N;
+      const v = ring[j];
+      d[i] = v;
+      ring[j] = decay * 0.5 * (v + ring[(j + 1) % N]);
+      peak = Math.max(peak, Math.abs(v));
+    }
+    const fade = Math.floor(sr * 0.05);
+    for (let i = 0; i < len; i++) d[i] = (d[i] / (peak || 1)) * (i > len - fade ? (len - i) / fade : 1);
+    plucks.set(key, buf);
+  }
+  return { buf, rate: f / (sr / N) };
+}
+
+function pluck(a: AudioContext, dest: AudioNode, kind: 'harp' | 'guitar' | 'pizz', midi: number, t: number, v: number): void {
+  const { buf, rate } = pluckBuffer(a, midi, kind);
   const src = a.createBufferSource();
-  src.buffer = noiseBuf;
+  src.buffer = buf;
+  src.playbackRate.value = rate;
+  const g = a.createGain();
+  g.gain.value = v;
+  src.connect(g).connect(dest);
+  src.start(t);
+}
+
+/** Naipe de cordas / trompa / contrabaixo: dentes de serra desafinados por um filtro, com arco lento. */
+function bowed(a: AudioContext, dest: AudioNode, kind: 'strings' | 'horn' | 'bass' | 'pad', f: number, t: number, dur: number, v: number): void {
+  const lp = a.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.Q.value = kind === 'horn' ? 1.2 : 0.6;
+  const cut = kind === 'horn' ? Math.min(1500, f * 3.2) : kind === 'bass' ? 420 : kind === 'pad' ? Math.min(1100, f * 3) : Math.min(1900, f * 4);
+  const attack = kind === 'pad' ? 0.3 : kind === 'strings' ? 0.09 : kind === 'horn' ? 0.06 : 0.04;
+  // O filtro abre com o ataque (metais e arco "acendem" o timbre).
+  lp.frequency.setValueAtTime(cut * 0.45, t);
+  lp.frequency.linearRampToValueAtTime(cut, t + attack * 1.5);
+  const g = a.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(v, t + attack);
+  g.gain.setValueAtTime(v * 0.9, t + Math.max(attack + 0.01, dur - 0.08));
+  g.gain.linearRampToValueAtTime(0.0001, t + dur + (kind === 'pad' ? 0.5 : 0.14));
+  const end = t + dur + (kind === 'pad' ? 0.55 : 0.18);
+  for (const cents of kind === 'horn' ? [0] : [-7, 6]) {
+    const o = a.createOscillator();
+    o.type = 'sawtooth';
+    o.frequency.value = f;
+    o.detune.value = cents;
+    o.connect(lp);
+    o.start(t);
+    o.stop(end);
+  }
+  if (kind === 'strings') {
+    const lfo = a.createOscillator();
+    lfo.frequency.value = 5.6;
+    const dg = a.createGain();
+    dg.gain.value = 0.06;
+    lfo.connect(dg).connect(g.gain);
+    lfo.start(t);
+    lfo.stop(end);
+  }
+  lp.connect(g).connect(dest);
+}
+
+/** Barras e sinos (marimba, celesta) e órgão: soma de senoides. */
+function tone(a: AudioContext, dest: AudioNode, kind: 'marimba' | 'celesta' | 'organ', f: number, t: number, dur: number, v: number): void {
+  const o = a.createOscillator();
+  o.setPeriodicWave(kind === 'marimba' ? wave(a, 'marimba', [1, 0, 0, 0.3]) : kind === 'celesta' ? wave(a, 'celesta', [1, 0, 0.18, 0, 0, 0.06]) : wave(a, 'organ', [1, 0.6, 0.25, 0.35, 0, 0.1]));
+  o.frequency.value = f;
+  const g = a.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  if (kind === 'organ') {
+    g.gain.linearRampToValueAtTime(v, t + 0.05);
+    g.gain.setValueAtTime(v, t + Math.max(0.06, dur - 0.05));
+    g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.12);
+    o.connect(g).connect(dest);
+    o.start(t);
+    o.stop(t + dur + 0.15);
+    return;
+  }
+  const tail = kind === 'celesta' ? Math.max(dur, 0.5) + 0.7 : Math.max(dur, 0.2) + 0.22;
+  g.gain.linearRampToValueAtTime(v, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(v * 0.3, t + Math.min(0.18, tail * 0.4));
+  g.gain.exponentialRampToValueAtTime(0.0001, t + tail);
+  o.connect(g).connect(dest);
+  o.start(t);
+  o.stop(t + tail + 0.02);
+}
+
+function playLead(a: AudioContext, dest: AudioNode, inst: Lead, midi: number, t: number, dur: number): void {
+  const f = freq(midi);
+  switch (inst) {
+    case 'ocarina':
+    case 'flute':
+      return wind(a, dest, inst, f, t, dur, 0.16);
+    case 'horn':
+      return bowed(a, dest, 'horn', f / 2, t, dur, 0.2);
+    case 'strings':
+      return bowed(a, dest, 'strings', f, t, dur, 0.11);
+    case 'harp':
+    case 'guitar':
+      return pluck(a, dest, inst, midi, t, 0.42);
+    default:
+      return tone(a, dest, inst, inst === 'organ' ? f / 2 : f, t, dur, inst === 'organ' ? 0.09 : 0.17);
+  }
+}
+
+function noiseHit(a: AudioContext, dest: AudioNode, t: number, dur: number, v: number, center: number): void {
+  const src = a.createBufferSource();
+  src.buffer = noiseBuffer(a);
   const f = a.createBiquadFilter();
-  // Passa-faixa grave: vassourinha/shaker, sem chiado.
   f.type = 'bandpass';
-  f.frequency.value = hp;
+  f.frequency.value = center;
   f.Q.value = 0.9;
   const g = a.createGain();
   g.gain.setValueAtTime(v, t);
@@ -330,6 +505,7 @@ function noise(a: AudioContext, dest: AudioNode, t: number, dur: number, v: numb
   src.start(t, Math.random() * 0.5, dur + 0.02);
 }
 
+/** Tambores de pele (bumbo, tom, tímpano): senoide que cai de altura. */
 function drum(a: AudioContext, dest: AudioNode, t: number, f0: number, f1: number, dur: number, v: number): void {
   const o = a.createOscillator();
   o.type = 'sine';
@@ -343,6 +519,20 @@ function drum(a: AudioContext, dest: AudioNode, t: number, f0: number, f1: numbe
   o.stop(t + dur + 0.02);
 }
 
+// ------------------------------------------------------------------
+// Tocador
+// ------------------------------------------------------------------
+
+let bus: GainNode | null = null;
+let leadBus: GainNode | null = null;
+let playing: { key: string; track: Track; style: Style; steps: Step[]; i: number; next: number } | null = null;
+let timer: number | undefined;
+
+function musicVol(): number {
+  const s = settings();
+  return (s.master / 10) * (s.music / 10);
+}
+
 function schedule(): void {
   const a = audio();
   if (!a || !playing || !bus || !leadBus) return;
@@ -353,66 +543,102 @@ function schedule(): void {
   bus.gain.setTargetAtTime(musicVol() * 0.9, a.currentTime, 0.05);
   const { style: st, steps } = playing;
   const eighth = 60 / st.bpm / 2;
+  const lead = st.leads[0];
   // Aba escondida ou travada: não despeja um monte de notas atrasadas de uma vez.
   if (playing.next < a.currentTime - 0.1) playing.next = a.currentTime + 0.05;
   while (playing.next < a.currentTime + 0.25) {
     const step = steps[playing.i % steps.length];
     const odd = playing.i % 2 === 1;
     const t = playing.next + (odd ? (st.swing ?? 0) * eighth : 0);
-    if (step.lead) osc(a, leadBus, st.lead, freq(step.lead.midi), t, step.lead.len * eighth * 0.92, 0.085);
-    // Baixo redondo (senoide com um pouco de corpo), nunca serrilhado.
-    if (step.bass) osc(a, bus, 'triangle', freq(step.bass.midi), t, step.bass.len * eighth * 0.9, 0.13);
-    if (step.arp) step.arp.forEach((m, k) => osc(a, bus!, 'pulse12', freq(m), t + k * eighth * 0.5, eighth * 0.45, 0.03));
-    if (step.kick) drum(a, bus, t, 150, 45, 0.16, 0.22);
-    if (step.tom) drum(a, bus, t, 210, 90, 0.18, 0.16);
-    if (step.snare) noise(a, bus, t, 0.12, 0.11, 700);
-    if (step.hat) noise(a, bus, t, 0.05, 0.035, 1500);
+    if (step.lead) playLead(a, leadBus, lead, step.lead.midi, t, step.lead.len * eighth * 0.94);
+    if (step.bass) {
+      if (st.bassInst === 'pizz') pluck(a, bus, 'pizz', step.bass.midi, t, 0.55);
+      else bowed(a, bus, 'bass', freq(step.bass.midi), t, step.bass.len * eighth * 0.95, 0.2);
+    }
+    if (step.pad && st.pad > 0) for (const m of step.pad) bowed(a, bus, 'pad', freq(m), t, (step.padLen ?? 8) * eighth * 0.98, 0.035 * st.pad);
+    if (step.arp)
+      step.arp.forEach((m, k) => {
+        const at = t + k * eighth * 0.5;
+        if (st.comp === 'harp' || st.comp === 'guitar') pluck(a, bus!, st.comp, m, at, st.comp === 'guitar' ? 0.2 : 0.24);
+        else tone(a, bus!, st.comp, freq(m), at, eighth * 0.45, 0.06);
+      });
+    if (step.timp !== undefined) drum(a, bus, t, freq(step.timp) * 1.25, freq(step.timp), 0.7, 0.3);
+    if (step.kick) drum(a, bus, t, 130, 48, 0.18, 0.2);
+    if (step.tom) drum(a, bus, t, 200, 95, 0.22, 0.17);
+    if (step.snare) noiseHit(a, bus, t, 0.13, 0.09, 650);
+    if (step.hat) noiseHit(a, bus, t, 0.05, 0.035, 1400);
     playing.i++;
     playing.next += eighth;
   }
+}
+
+/** Sala: reverberação feita de ruído que decai (sem arquivo de impulso). */
+function room(a: AudioContext): AudioBuffer {
+  const len = Math.floor(a.sampleRate * 2.2);
+  const buf = a.createBuffer(2, len, a.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    let lp = 0;
+    for (let i = 0; i < len; i++) {
+      const env = Math.pow(1 - i / len, 3);
+      lp += ((Math.random() * 2 - 1) - lp) * 0.25; // cauda abafada
+      d[i] = lp * env;
+    }
+  }
+  return buf;
 }
 
 function buses(a: AudioContext): void {
   if (bus) return;
   bus = a.createGain();
   bus.gain.value = musicVol();
-  // Passa-baixa em tudo: nenhuma frequência alta chega à saída.
+  // Passa-baixa em tudo: nenhuma frequência estridente chega à saída.
   const lp = a.createBiquadFilter();
   lp.type = 'lowpass';
-  lp.frequency.value = 2200;
+  lp.frequency.value = 3000;
   lp.Q.value = 0.5;
   const lp2 = a.createBiquadFilter();
   lp2.type = 'lowpass';
-  lp2.frequency.value = 3200;
+  lp2.frequency.value = 4200;
   lp2.Q.value = 0.5;
-  bus.connect(lp).connect(lp2).connect(a.destination);
+  lp.connect(lp2).connect(a.destination);
+  bus.connect(lp);
+  const verb = a.createConvolver();
+  verb.buffer = room(a);
+  const wet = a.createGain();
+  wet.gain.value = 0.55;
+  bus.connect(verb).connect(wet).connect(lp);
   leadBus = a.createGain();
   leadBus.connect(bus);
 }
 
-/** Toca um tema (se já estiver tocando, continua de onde está). */
-export function playMusic(track: Track): void {
-  if (playing?.track === track) return;
+/**
+ * Toca um tema (se já estiver tocando, continua de onde está). Com 'variant' (o id da fase),
+ * a música é a versão daquela fase: outro tom, andamento, progressão, solista e melodia.
+ */
+export function playMusic(track: Track, variant?: string): void {
+  const key = variant ? `${track}:${variant}` : track;
+  if (playing?.key === key) return;
   const a = audio();
   if (!a) return;
   buses(a);
-  const style = STYLES[track];
+  const style = variant ? variantOf(STYLES[track], variant) : STYLES[track];
   // Eco só nos temas que pedem (pântano, cavernas, memórias).
   leadBus!.disconnect();
   leadBus = a.createGain();
   leadBus.connect(bus!);
   if (style.echo) {
     const d = a.createDelay(1);
-    d.delayTime.value = (60 / style.bpm) * 0.75;
+    d.delayTime.value = Math.min(0.95, (60 / style.bpm) * 0.75);
     const fb = a.createGain();
-    fb.gain.value = 0.32;
+    fb.gain.value = 0.3;
     const wet = a.createGain();
-    wet.gain.value = 0.5;
+    wet.gain.value = 0.4;
     leadBus.connect(d);
     d.connect(fb).connect(d);
     d.connect(wet).connect(bus!);
   }
-  playing = { track, style, steps: compose(style), i: 0, next: a.currentTime + 0.12 };
+  playing = { key, track, style, steps: compose(style), i: 0, next: a.currentTime + 0.12 };
   if (timer === undefined) timer = window.setInterval(schedule, 40);
   schedule();
 }
@@ -426,20 +652,39 @@ export function stopMusic(): void {
 
 export const currentTrack = (): Track | undefined => playing?.track;
 
-/** Vinhetas curtas: vitória de fase, selo quebrado, derrota. */
-export function jingle(kind: 'win' | 'seal' | 'lose'): void {
-  stopMusic();
+/** Abaixa a música por um instante (lembranças) e volta. */
+export function duckMusic(ms: number): void {
+  const a = audio();
+  if (!a || !leadBus) return;
+  const g = leadBus.gain;
+  g.cancelScheduledValues(a.currentTime);
+  g.setTargetAtTime(0.25, a.currentTime, 0.08);
+  g.setTargetAtTime(1, a.currentTime + ms / 1000, 0.3);
+}
+
+/** Vinhetas curtas: vitória de fase, selo quebrado, derrota, lembrança. */
+export function jingle(kind: 'win' | 'seal' | 'lose' | 'flash'): void {
   const a = audio();
   if (!a) return;
   buses(a);
-  const v = musicVol();
-  if (v <= 0) return;
+  if (musicVol() <= 0) return;
   const t = a.currentTime + 0.05;
+  if (kind === 'flash') {
+    // Lembrança: três notas de caixinha de música por cima da música (que continua).
+    [76, 72, 79].forEach((m, i) => tone(a, bus!, 'celesta', freq(m), t + i * 0.22, 0.6, 0.16));
+    return;
+  }
+  stopMusic();
   const seq: [number, number, number][] =
     kind === 'win'
-      ? [[60, 0, 0.12], [64, 0.12, 0.12], [67, 0.24, 0.12], [72, 0.36, 0.5], [67, 0.36, 0.5]]
+      ? [[60, 0, 0.14], [64, 0.14, 0.14], [67, 0.28, 0.14], [72, 0.42, 0.9], [67, 0.42, 0.9], [64, 0.42, 0.9]]
       : kind === 'seal'
-        ? [[57, 0, 0.3], [60, 0.3, 0.3], [63, 0.6, 0.3], [66, 0.9, 0.9], [54, 0.9, 0.9]]
-        : [[64, 0, 0.2], [63, 0.2, 0.2], [62, 0.4, 0.2], [61, 0.6, 0.6]];
-  for (const [m, dt, d] of seq) osc(a, bus!, kind === 'seal' ? 'triangle' : 'pulse25', freq(m), t + dt, d, 0.1);
+        ? [[57, 0, 0.3], [60, 0.3, 0.3], [63, 0.6, 0.3], [66, 0.9, 1.2], [54, 0.9, 1.2]]
+        : [[64, 0, 0.2], [63, 0.2, 0.2], [62, 0.4, 0.2], [61, 0.6, 0.8]];
+  for (const [m, dt, d] of seq) {
+    if (kind === 'win') {
+      bowed(a, bus!, 'horn', freq(m) / 2, t + dt, d, 0.18);
+      pluck(a, bus!, 'harp', m, t + dt, 0.35);
+    } else bowed(a, bus!, 'strings', freq(m), t + dt, d, 0.12);
+  }
 }

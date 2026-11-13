@@ -634,6 +634,10 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Minotauros vermelhos! Eles correm que nem touro bravo!'),
       X('Então atira antes que cheguem. Segura ATACAR.'),
+      S('Quem treinou tanto touro de lava?'),
+      X('O Minotauro não treina: forja. Cada soldado sai da bigorna já sabendo quem proteger.'),
+      S('Proteger de mim?'),
+      X('De ti. De mim. No fundo, da mesma coisa.'),
     ],
   },
   obsidian: {
@@ -662,6 +666,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Os caminhos se fecham com fogo até eu derrubar todo mundo.'),
       X('O Minotauro não deixa ninguém passar sem lutar. Depois daqui, é ele.'),
+      S('Dá para sentir a montanha batendo debaixo do pé.'),
+      X('É o fragmento. Eles pulsam quando alguém chega perto. Como se tivessem medo.'),
     ],
   },
   woods: {
@@ -710,6 +716,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Uma chuva de bolotas!'),
       X('Responde com ossos. Segura ATACAR.'),
+      S('Por que eles defendem tanto um bosque?'),
+      X('Porque foram plantados aqui para isso. Gnomo não pergunta; gnomo guarda.'),
     ],
   },
   moss: {
@@ -758,6 +766,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('O teto inteiro está caindo!'),
       X('A poeira avisa onde a pedra cai. Corre entre elas.'),
+      S('Estas vigas estão podres. Há quanto tempo cavam aqui?'),
+      X('Desde que alguém mandou esconder o fragmento bem fundo. Faz muito, muito tempo.'),
     ],
   },
   darkmine: {
@@ -776,6 +786,10 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Pedras de ouro de novo. Martelo nelas!'),
       X('No ar, desce com tudo. E leva a chave até a porta.'),
+      S('Tanto ouro e ninguém leva embora.'),
+      X('Levar para onde? Não há mercado fora deste reino. Não há fora.'),
+      S('Você disse que o Portão da Maré leva para fora.'),
+      X('Disse. E leva. Para ti.'),
     ],
   },
   dynamite: {
@@ -784,6 +798,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Eles estão jogando bombas!'),
       X('Mineiros. Explodem a rocha e quem estiver perto. Desvia do arco.'),
+      S('Se eu explodir junto, você me busca?'),
+      X('Sempre. Em pedaços, se for preciso. Eu não perco nenhum dos meus.'),
     ],
   },
   flooded: {
@@ -802,6 +818,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Fogo azul! E os goblins com ele correm que nem doidos.'),
       X('É o fogo do fundo da terra. Mais quente que o vermelho. Não deixa encostar.'),
+      S('Por que este fogo é azul?'),
+      X('É fogo que não aquece. Os goblins usam para ver sem serem vistos. Eu não gosto de nenhum dos dois.'),
     ],
   },
   treasury: {
@@ -810,6 +828,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Montanhas de ouro. E guardas em todo canto.'),
       X('Cada área só abre quando todos caírem. Depois, o Rei.'),
+      S('Se o rei tem tudo isto, por que ainda quer o fragmento?'),
+      X('Ele não QUER o fragmento, Ossian. Ele... esquece. Reis são gananciosos, é isso.'),
     ],
   },
   goblinking: {
@@ -838,6 +858,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Folhas do tamanho de uma mesa!'),
       X('Seguram um esqueleto por um instante. Só um instante.'),
+      S('Estas flores só abrem quando eu passo.'),
+      X('Sentem movimento. Aqui pouca coisa anda de pé há muito tempo.'),
     ],
   },
   swamptide: {
@@ -866,6 +888,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Uma casinha de pescador. Igual às da minha... das que eu vi.'),
       X('Um caranguejo levou a chave. Já sabes o que fazer.'),
+      S('Um lagarto pescando. Parece em paz.'),
+      X('Paz de quem não sabe o que vigia. Não o acordes para isso; só passa.'),
     ],
   },
   deeplagoon: {
@@ -884,6 +908,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Eles saem da água de todo lado!'),
       X('Segura ATACAR e avança.'),
+      S('Eles atacam sem raiva. Parece obrigação.'),
+      X('É obrigação. A mais antiga que eles têm.'),
     ],
   },
   mangrove: {
@@ -932,6 +958,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Está chovendo pedra pegando fogo!'),
       X('As fagulhas avisam onde cai. Fica longe delas.'),
+      S('O céu inteiro está caindo em cima de mim!'),
+      X('Só os pedaços soltos. O que importa no céu continua preso no lugar. Por enquanto.'),
     ],
   },
   embergun: {
@@ -940,6 +968,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Abelhas vermelhas e diabretes por todo lado!'),
       X('Segura ATACAR. O céu não perdoa quem hesita.'),
+      S('Diabretes pequenos, diabrete gigante. Onde ficam os de tamanho médio?'),
+      X('Viram gigantes ou viram cinza. Aqui em cima não há meio-termo.'),
     ],
   },
   firewinds: {
@@ -948,6 +978,10 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('O vento aqui é quente. E sai fogo das pedras.'),
       X('Entra no vento, plana, e não pousa em cima dos jatos.'),
+      S('Você fica bem neste calor todo?'),
+      X('Fico longe dele. Fogo lembra demais as lanternas.'),
+      S('Que lanternas?'),
+      X('...Modo de dizer. Sobe com o vento, anda.'),
     ],
   },
   cloudcastle: {
@@ -966,6 +1000,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Um enxame inteiro! E canhões!'),
       X('As abelhas de brasa mergulham. As da tempestade aguentam três golpes.'),
+      S('Elas estão perdidas aqui, Hex.'),
+      X('Como tu estavas na praia. A diferença é que tu tens a mim.'),
     ],
   },
   skykey: {
@@ -994,6 +1030,10 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Voar de novo! Meu aliado conhece o caminho.'),
       X('Segura o tiro e desvia de tudo. A rota é longa.'),
+      S('Daqui de cima o reino parece uma roda. Tudo girando em volta da tua ilha.'),
+      X('Bela imagem. Nunca tinha reparado.'),
+      S('Mentira.'),
+      X('...Um pouco.'),
     ],
   },
   wingcastle: {
@@ -1002,6 +1042,10 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Torres por todo lado. E guardas em cada uma.'),
       X('Cada área só abre quando todos caírem.'),
+      S('Tem um trono para cada um dos reis, pintado na parede. Nove.'),
+      X('Arte antiga. Do tempo em que eles se reuniam.'),
+      S('Para quê?'),
+      X('Para decidir o que fazer comigo. Digo: com o reino.'),
     ],
   },
   stormflight: {
@@ -1010,6 +1054,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Raios, chuva e inimigos. Tudo de uma vez.'),
       X('A tempestade é velha. Ela nunca parou desde que eu... desde que o reino existe.'),
+      S('Eu não gosto de chuva. Não sei por quê.'),
+      X('Ninguém gosta. Atravessa depressa e não penses nisso.'),
     ],
   },
   wingkey: {
@@ -1018,6 +1064,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('Uma câmara trancada no alto da torre.'),
       X('Molas e escadas. Leva a chave até a porta, sem pressa.'),
+      S('Mais uma chave. Já abri tanta porta por você, Hex.'),
+      X('Por nós. E esta é quase a última.'),
     ],
   },
   wingwinds: {
@@ -1026,6 +1074,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('O vento sopra entre as torres. Dá para planar até o outro lado.'),
       X('Entra no vento, segura o pulo. E cuidado com quem mergulha.'),
+      S('O vento aqui tem voz. Parece alguém chamando.'),
+      X('É só vento. Se ouvires um nome, não respondas.'),
     ],
   },
   duskflight: {
@@ -1034,6 +1084,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('O sol está se pondo. Eu lembro de um pôr do sol num rio... com lanternas.'),
       X('Não há rio aqui. Voa, Ossian. A noite do rei está chegando.'),
+      S('O céu sobre a ilha do meio está preto agora.'),
+      X('Sinal de que estamos perto. Coisas grandes fazem sombra.'),
     ],
   },
   winggun: {
@@ -1042,6 +1094,8 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     lines: [
       S('As muralhas estão cheias de guardas.'),
       X('Segura ATACAR e atravessa.'),
+      S('Eles gritam alguma coisa antes de atacar. Parece "não solte".'),
+      X('Gritam "não passe". Tu ouviste errado.'),
     ],
   },
   wingguard: {

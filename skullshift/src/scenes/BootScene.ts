@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
 import { MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
-import { makeBossFx, makeCocoon, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
+import { makeBossFx, makeCocoon, makeLavaWave, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
 
@@ -113,6 +113,7 @@ export class BootScene extends Phaser.Scene {
     makeTorch(this);
     makeCocoon(this);
     makeBossFx(this);
+    makeLavaWave(this);
     makeHauntArt(this);
     makeHauntBackdrop(this, 'haunt_bg', W, H);
     makeMapMansion(this, 'map_mansion');

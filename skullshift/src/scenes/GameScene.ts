@@ -10,6 +10,7 @@ import { completeLevel, deathLimit, hasSeen, markSeen } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
+import { EscapeSystem } from '../game/escape';
 import { playerName } from '../game/names';
 import { settings, sfx } from '../game/settings';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
@@ -83,12 +84,8 @@ export class GameScene extends Phaser.Scene {
   private rootWeb?: Phaser.GameObjects.Image;
   /** Fase de voo com tiro. */
   private shmup?: ShmupSystem;
-  /** Perseguição: frente da onda de lava (x do mundo) e quando volta a andar. */
-  private chaseX = 0;
-  private chaseFrom = 0;
-  private chaseWall?: Phaser.GameObjects.Container;
-  private chaseLava?: Phaser.GameObjects.TileSprite;
-  private chaseWasAlive = true;
+  /** Fuga: onda de lava, chão desabando, tirolesas e meteoros. */
+  private escape?: EscapeSystem;
   /** Correntes de vento (faixas x do mundo). */
   private winds: Array<[number, number]> = [];
   /** Barreira de fogo das áreas travadas (só libera sem inimigos). */
@@ -143,7 +140,7 @@ export class GameScene extends Phaser.Scene {
     this.projectiles = [];
     this.boss = undefined;
     this.shmup = undefined;
-    this.chaseWall = undefined;
+    this.escape = undefined;
     this.winds = [];
     this.bossStarted = false;
     this.rootedUntil = 0;
@@ -189,7 +186,19 @@ export class GameScene extends Phaser.Scene {
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
       if (def.shmup) this.setupShmup();
-      if (def.chase) this.setupChase(def.chase);
+      if (def.chase)
+        this.escape = new EscapeSystem(
+          {
+            scene: this,
+            level: this.level,
+            player: () => this.players[0],
+            checkpointX: () => this.checkpointX,
+            burn: () => this.killFighter(this.players[0], null, 'water'),
+            popText: (x, y, text, color) => text && this.popText(x, y, text, color),
+            paused: () => this.cutscene || this.ended,
+          },
+          def.chase,
+        );
       if (def.winds) this.setupWinds(def.winds);
       if (def.haunt) {
         this.haunt = new HauntSystem(
@@ -402,7 +411,7 @@ export class GameScene extends Phaser.Scene {
     this.updateItems(time);
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
-    this.updateChase(time, dt);
+    this.escape?.update(time, dt);
     this.updateWinds(dt);
     if (this.shmup) {
       this.shmup.update(time, dt);
@@ -1509,48 +1518,6 @@ export class GameScene extends Phaser.Scene {
     moon.fillStyle(0xfff7dc, 0.18).fillCircle(W - 220, 150, 90);
     moon.fillStyle(0xf4f0d0, 1).fillCircle(W - 220, 150, 56);
     moon.fillStyle(0xd8d0b0, 1).fillCircle(W - 238, 136, 10).fillCircle(W - 200, 170, 7);
-  }
-
-  /** Perseguição: paredão de lava com chamas na frente, vindo da esquerda. */
-  private setupChase(c: { speed: number; delay: number }): void {
-    this.chaseX = this.checkpointX - 640;
-    this.chaseFrom = this.time.now + c.delay;
-    this.chaseLava = this.add.tileSprite(0, -400, 1400, 1500, 'lava_body').setOrigin(1, 0);
-    const items: Phaser.GameObjects.GameObject[] = [this.chaseLava];
-    for (let y = -320; y < FLOOR_Y + 120; y += 70) {
-      items.push(this.add.sprite(-6, y, 'torch_item_anim', 0).setOrigin(0.5, 1).setScale(1.8).play({ key: 'torch_flame', startFrame: Math.floor(Math.abs(y / 70)) % 4 }));
-    }
-    const sparks = this.add.particles(0, 0, 'spark', {
-      x: { min: -40, max: 10 },
-      y: { min: -300, max: FLOOR_Y + 100 },
-      speedX: { min: 40, max: 160 },
-      speedY: { min: -80, max: 20 },
-      lifespan: 700,
-      scale: { start: 0.5, end: 0 },
-      tint: [0xffd36b, 0xff7a1a],
-      frequency: 30,
-    });
-    items.push(sparks);
-    this.chaseWall = this.add.container(this.chaseX, 0, items).setDepth(DEPTH.fighters + 2);
-  }
-
-  private updateChase(time: number, dt: number): void {
-    const c = LEVELS[this.levelIndex].chase;
-    if (!c || !this.chaseWall || this.mode !== 'story' || this.ended) return;
-    const p = this.players[0];
-    // Renasceu: a lava recua para trás do checkpoint e espera um pouco.
-    if (p.alive && !this.chaseWasAlive) {
-      this.chaseX = this.checkpointX - 600;
-      this.chaseFrom = time + 1600;
-    }
-    this.chaseWasAlive = p.alive;
-    if (p.alive && !p.reviving && time >= this.chaseFrom && !this.cutscene) {
-      this.chaseX += c.speed * dt;
-      if (Math.floor(time / 500) !== Math.floor((time - dt * 1000) / 500)) this.cameras.main.shake(160, 0.002);
-    }
-    this.chaseWall.setX(this.chaseX);
-    if (this.chaseLava) this.chaseLava.tilePositionY -= 60 * dt;
-    if (p.alive && !p.reviving && p.x - 24 < this.chaseX) this.killFighter(p, null, 'water');
   }
 
   /** Correntes de vento: colunas translúcidas com riscos subindo. */

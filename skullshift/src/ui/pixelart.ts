@@ -934,3 +934,92 @@ export function makeBossFx(scene: Phaser.Scene): void {
   crown.outline(0x1d1a2b);
   crown.toTexture(scene, 'queen_crown', 3);
 }
+
+// ------------------------------------------------------------------
+// Onda gigante de lava (Fuga da Forja)
+// ------------------------------------------------------------------
+
+/**
+ * Onda de lava em pixel art (pixel 3×, 4 quadros): corpo em faixas de calor, crista quente que
+ * se enrola para a frente, veios de casca escura que correm e gotas espirrando da ponta.
+ * A frente da onda é o lado direito do quadro.
+ */
+export function makeLavaWave(scene: Phaser.Scene): void {
+  const WW = 112;
+  const WH = 112;
+  const frames: Px[] = [];
+  const band = (d: number, x: number, y: number) => {
+    if (d <= 0) return 0xfff1a8;
+    if (d < 3) return 0xffd36b;
+    if (d < 6) return checker(x, y) ? 0xffd36b : 0xff9a2a;
+    if (d < 12) return 0xff9a2a;
+    if (d < 16) return checker(x, y) ? 0xff9a2a : 0xe8501f;
+    if (d < 30) return 0xe8501f;
+    if (d < 34) return checker(x, y) ? 0xe8501f : 0xb8321a;
+    return 0xb8321a;
+  };
+  for (let f = 0; f < 4; f++) {
+    const p = new Px(WW, WH);
+    const cx = 74;
+    const cy = 36;
+    const R = 24;
+    // Corpo: sobe em curva suave da esquerda até o topo do tubo.
+    const surf = (x: number) => {
+      const t = Math.min(1, x / cx);
+      const e = t * t * (3 - 2 * t);
+      return Math.round(WH - 4 - e * (WH - 4 - (cy - R)) + Math.sin((x + f * 5) / 6) * 1.2);
+    };
+    for (let x = 0; x <= cx; x++) {
+      const top = surf(x);
+      for (let y = top; y < WH; y++) {
+        let c = band(y - top, x, y);
+        const vein = (x * 2 + y * 3 - f * 7 + 400) % 29;
+        if (y - top > 10 && vein < 2) c = 0x7a1e16;
+        p.set(x, y, c);
+      }
+    }
+    // Face da onda abaixo do tubo (parede que cai até a lava), mais escura.
+    for (let x = cx; x < cx + 10; x++)
+      for (let y = cy + R - 4; y < WH; y++) {
+        const d = x - cx;
+        p.set(x, y, d < 2 ? 0xe8501f : checker(x, y) ? 0xb8321a : 0x7a1e16);
+      }
+    // Interior do tubo: sombra quente.
+    for (let y = cy - R; y <= cy + R; y++)
+      for (let x = cx - R; x <= cx + R; x++) {
+        const dd = Math.hypot(x - cx, y - cy);
+        if (dd < R - 6 && x > cx - 8) p.set(x, y, dd < R - 12 ? (checker(x, y) ? 0x2a0a08 : 0x4a1410) : 0x7a1e16);
+      }
+    // Lábio da crista: faixa grossa que contorna o tubo e enrola para dentro.
+    for (let a = -110; a <= 170; a += 2) {
+      const rad = (a * Math.PI) / 180;
+      const r = R - Math.max(0, (a - 60) / 12);
+      const thick = Math.round(a < 0 ? 8 : 8 - (a / 170) * 5);
+      for (let k = 0; k < thick; k++) {
+        const x = Math.round(cx + Math.cos(rad) * (r - k));
+        const y = Math.round(cy + Math.sin(rad) * (r - k));
+        p.set(x, y, band(k - 1, x, y));
+      }
+    }
+    // Espuma de fogo e gotas espirrando da ponta (mudam a cada quadro).
+    const sprayBase: Array<[number, number]> = [
+      [cx + 22, cy - 20],
+      [cx + 28, cy - 10],
+      [cx + 16, cy - 28],
+      [cx + 32, cy - 2],
+      [cx + 10, cy - 32],
+    ];
+    sprayBase.forEach(([x, y], i) => {
+      const ox = ((f + i) % 4) * 2;
+      const oy = -((f * 3 + i * 2) % 6);
+      p.set(x + ox, y + oy, i % 2 ? 0xfff1a8 : 0xffd36b);
+      if (i < 3) p.set(x + ox + 1, y + oy, 0xff9a2a);
+      if (i === 0) p.set(x + ox, y + oy + 1, 0xff9a2a);
+    });
+    p.outline(0x2a0a08);
+    frames.push(p);
+  }
+  sheetTexture(scene, 'lava_wave', frames, 3);
+  if (!scene.anims.exists('lava_wave'))
+    scene.anims.create({ key: 'lava_wave', frames: [0, 1, 2, 3].map((frame) => ({ key: 'lava_wave', frame })), frameRate: 8, repeat: -1 });
+}

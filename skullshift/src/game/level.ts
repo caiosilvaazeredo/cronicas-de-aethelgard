@@ -79,7 +79,7 @@ export interface LevelDef {
   /** Modo história: cenário e tile de início (o fim é a ponta oposta). */
   storyStart: [screen: number, tile: number];
   /** Perseguição: uma onda de lava avança da esquerda; parar é morrer. */
-  chase?: { speed: number; delay: number };
+  chase?: { speed: number; delay: number; zips?: Array<[screen: number, fromTile: number, fromH: number, toTile: number, toH: number]> };
   /** Correntes de vento (cenário, tile, largura em tiles): levantam quem entra; segurar pulo plana. */
   winds?: Array<[screen: number, tile: number, width: number]>;
   /** Fase de voo com tiro (rolagem automática, montado no morcego). */
@@ -493,17 +493,26 @@ export const LEVEL_QUEEN: LevelDef = {
 /** Fuga da Forja: a montanha desperta e a lava vem atrás. Correr (de verdade) é obrigatório. */
 export const LEVEL_CHASE: LevelDef = {
   name: 'Fuga da Forja',
-  intro: 'A lava vem atrás de você. Corra sem parar (2× na direção e segure)!',
+  intro: 'Uma onda gigante de lava vem atrás! O chão desaba à frente dela: corra, pule, use a tirolesa.',
   theme: 'volcano',
   tiles: 'tiles_volcano',
-  winText: 'Você escapou da lava!',
-  chase: { speed: 255, delay: 2600 },
+  winText: 'Você escapou da onda de lava!',
+  chase: {
+    speed: 230,
+    delay: 3000,
+    // Tirolesas sobre os lagos de lava (cenários 2 e 4).
+    zips: [
+      [2, 3, 1, 16, 0],
+      [4, 4, 2, 14, 0],
+    ],
+  },
   screens: [
-    { segments: [[0, 8, 0], [10, 3, 0], [15, 5, 1]], deco: [[2, 'dead_tree']] },
-    { segments: [[0, 3, 1], [5, 4, 0], [11, 2, 1], [15, 5, 0]], floats: [[9, 2, 2]] },
-    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 2], [16, 4, 0]] },
-    { segments: [[0, 5, 0], [7, 2, 1], [11, 2, 1], [15, 5, 0]], floats: [[9, 2, 3]] },
-    { segments: [[0, 6, 0], [8, 3, 1], [13, 7, 0]], deco: [[18, 'skull_spike']] },
+    { segments: [[0, 8, 0], [10, 3, 0], [15, 5, 1]] },
+    { segments: [[0, 3, 1], [5, 4, 0], [11, 2, 1], [15, 5, 0]], floats: [[9, 2, 2]], enemies: [[17, 'torchgob']] },
+    // Lago de lava: só a tirolesa atravessa.
+    { segments: [[0, 5, 1], [16, 4, 0]] },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 2], [16, 4, 0]], enemies: [[12, 'imp'], [17, 'torchgob']] },
+    { segments: [[0, 6, 2], [14, 6, 0]] },
   ],
   storyStart: [0, 3],
   versusStart: [3, 16],
@@ -577,6 +586,16 @@ export class Level {
   private lavaBody?: Phaser.GameObjects.TileSprite;
   private lavaTop: Phaser.GameObjects.TileSprite[] = [];
   private cloudSpan = 0;
+  /** Fases de fuga: o chão desaba coluna por coluna (guardamos as peças de cada coluna). */
+  private readonly collapsible: boolean;
+  private colObjs = new Map<number, Array<Phaser.GameObjects.Image | Phaser.GameObjects.Sprite>>();
+  private home = new Map<Phaser.GameObjects.Image | Phaser.GameObjects.Sprite, [number, number]>();
+  private solidZones: Phaser.GameObjects.Zone[] = [];
+  private origSegments: Segment[] = [];
+  private origFloats: Segment[] = [];
+  /** Colunas (tiles globais) à esquerda disto já caíram; até shakingBefore estão tremendo. */
+  collapsedBefore = 0;
+  shakingBefore = 0;
 
   constructor(private scene: Phaser.Scene, def: LevelDef) {
     this.def = def;
@@ -586,6 +605,9 @@ export class Level {
       (list ?? []).map(([a, n, h]) => [a + i * SCREEN_TILES, n, h ?? 0] as Segment);
     this.segments = def.screens.flatMap((s, i) => glob(s.segments, i));
     this.floats = def.screens.flatMap((s, i) => glob(s.floats, i));
+    this.collapsible = !!def.chase;
+    this.origSegments = this.segments.map((x) => [...x] as Segment);
+    this.origFloats = this.floats.map((x) => [...x] as Segment);
     this.buildBackground();
     this.buildTerrain();
   }
@@ -1030,23 +1052,24 @@ export class Level {
         this.addSolid(start, n, h);
         continue;
       }
-      if (this.hasWater) {
+      if (this.hasWater && !this.collapsible) {
         for (let i = 0; i < n; i++) {
-          s.add
+          const foam = s.add
             .sprite((start + i) * TILE + TILE / 2, GRASS_Y + TILE + 28, 'water_foam')
             .setDepth(DEPTH.waterRocks)
             .setTint(this.theme === 'cave' ? 0x9fc6cc : this.isLava ? 0xff8c3a : 0xffffff)
             .play({ key: 'water_foam', startFrame: (start + i) % 16 });
+          this.reg(start + i, foam);
         }
       }
       for (let i = 0; i < n; i++) {
         const col = n === 1 ? 8 : i === 0 ? 5 : i === n - 1 ? 7 : 6;
         const x = (start + i) * TILE;
-        s.add.image(x, gy, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
+        this.reg(start + i, s.add.image(x, gy, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint));
         // Rocha até a base (a última fileira tem a borda com espuma).
         for (let r = 1; r <= h + 1; r++) {
           const row = r === h + 1 ? 5 : 4;
-          s.add.image(x, gy + r * TILE, key, row * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
+          this.reg(start + i, s.add.image(x, gy + r * TILE, key, row * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint));
         }
       }
       if (this.theme === 'shore') {
@@ -1071,17 +1094,10 @@ export class Level {
       } else {
         for (let i = 0; i < n; i++) {
           const col = n === 1 ? 3 : i === 0 ? 0 : i === n - 1 ? 2 : 1;
-          s.add.image((start + i) * TILE, top - 40, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint);
+          this.reg(start + i, s.add.image((start + i) * TILE, top - 40, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain).setTint(this.rockTint));
         }
       }
-      const w = n * TILE;
-      const zone = s.add.zone(start * TILE + w / 2, top + 7, w, 14);
-      s.physics.add.existing(zone, true);
-      const body = zone.body as Phaser.Physics.Arcade.StaticBody;
-      body.checkCollision.down = false;
-      body.checkCollision.left = false;
-      body.checkCollision.right = false;
-      this.ground.add(zone);
+      this.addFloatZone(start, n, h);
     }
 
     this.def.screens.forEach((sc, i) => {
@@ -1111,6 +1127,112 @@ export class Level {
     const zone = this.scene.add.zone(start * TILE + w / 2, top + zh / 2, w, zh);
     this.scene.physics.add.existing(zone, true);
     this.ground.add(zone);
+    this.solidZones.push(zone);
+  }
+
+  private addFloatZone(start: number, n: number, h: number): void {
+    const top = topOf(h);
+    const w = n * TILE;
+    const zone = this.scene.add.zone(start * TILE + w / 2, top + 7, w, 14);
+    this.scene.physics.add.existing(zone, true);
+    const body = zone.body as Phaser.Physics.Arcade.StaticBody;
+    body.checkCollision.down = false;
+    body.checkCollision.left = false;
+    body.checkCollision.right = false;
+    this.ground.add(zone);
+    this.solidZones.push(zone);
+  }
+
+  /** Guarda uma peça do desenho na sua coluna (para desabar junto). */
+  private reg(col: number, o: Phaser.GameObjects.Image | Phaser.GameObjects.Sprite): void {
+    if (!this.collapsible) return;
+    const list = this.colObjs.get(col) ?? [];
+    list.push(o);
+    this.colObjs.set(col, list);
+    this.home.set(o, [o.x, o.y]);
+  }
+
+  /** As colunas até `col` (exclusive) começam a tremer: aviso de que vão cair. */
+  shakeTo(col: number): void {
+    for (let c = this.shakingBefore; c < col; c++) {
+      for (const o of this.colObjs.get(c) ?? []) {
+        const [hx] = this.home.get(o)!;
+        this.scene.tweens.add({ targets: o, x: { from: hx - 2, to: hx + 2 }, duration: 55, yoyo: true, repeat: -1 });
+      }
+    }
+    this.shakingBefore = Math.max(this.shakingBefore, col);
+  }
+
+  /**
+   * As colunas até `col` (exclusive) desabam: as peças caem girando na lava e a colisão some.
+   * Devolve o x central das colunas que caíram agora (para poeira e pedrinhas).
+   */
+  collapseTo(col: number): number[] {
+    const fallen: number[] = [];
+    for (let c = this.collapsedBefore; c < col; c++) {
+      const objs = this.colObjs.get(c) ?? [];
+      if (objs.length) fallen.push(c * TILE + TILE / 2);
+      objs.forEach((o, k) => {
+        this.scene.tweens.killTweensOf(o);
+        this.scene.tweens.add({
+          targets: o,
+          y: o.y + 420,
+          angle: Phaser.Math.Between(-35, 35),
+          alpha: 0,
+          duration: 900 + k * 40,
+          ease: 'Quad.easeIn',
+          onComplete: () => o.setVisible(false),
+        });
+      });
+    }
+    if (col > this.collapsedBefore) {
+      this.collapsedBefore = col;
+      this.shakingBefore = Math.max(this.shakingBefore, col);
+      this.rebuildSolids();
+    }
+    return fallen;
+  }
+
+  /** Renascimento: tudo a partir da coluna `col` volta ao lugar (o resto continua caído). */
+  restoreFrom(col: number): void {
+    for (const [c, objs] of this.colObjs) {
+      if (c < col) continue;
+      for (const o of objs) {
+        this.scene.tweens.killTweensOf(o);
+        const [hx, hy] = this.home.get(o)!;
+        o.setPosition(hx, hy).setAngle(0).setAlpha(1).setVisible(true);
+      }
+    }
+    this.collapsedBefore = Math.min(this.collapsedBefore, col);
+    this.shakingBefore = this.collapsedBefore;
+    this.rebuildSolids();
+  }
+
+  /** Recria a colisão do chão só nas colunas que ainda estão de pé. */
+  private rebuildSolids(): void {
+    for (const z of this.solidZones) z.destroy();
+    this.solidZones = [];
+    const clip = (list: Segment[]) =>
+      list
+        .map(([a, n, h]) => {
+          const a2 = Math.max(a, this.collapsedBefore);
+          return [a2, a + n - a2, h ?? 0] as Segment;
+        })
+        .filter(([, n]) => n > 0);
+    // Junta pedaços vizinhos de mesma altura (evita "degraus" invisíveis entre colisões).
+    const merge = (list: Segment[]) =>
+      list.reduce<Segment[]>((acc, seg) => {
+        const last = acc[acc.length - 1];
+        if (last && last[0] + last[1] === seg[0] && (last[2] ?? 0) === (seg[2] ?? 0)) last[1] += seg[1];
+        else acc.push([...seg] as Segment);
+        return acc;
+      }, []);
+    const segs = merge(clip(this.origSegments));
+    const fls = clip(this.origFloats);
+    this.segments.splice(0, this.segments.length, ...segs);
+    this.floats.splice(0, this.floats.length, ...fls);
+    for (const [a, n, h] of segs) this.addSolid(a, n, h ?? 0);
+    for (const [a, n, h] of fls) this.addFloatZone(a, n, h ?? 0);
   }
 
   /**

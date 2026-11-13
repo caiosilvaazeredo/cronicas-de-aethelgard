@@ -807,8 +807,9 @@ export class MapScene extends Phaser.Scene {
     // Modo livre (testes): direto para a fase, sem a visual novel.
     const level = this.levelAt(this.current);
     if (level < 0) return;
-    if (isFreePlay()) this.scene.start('game', { mode: 'story', devices: this.devices, level });
-    else this.scene.start('vn', { devices: this.devices, level });
+    // Tela de carregamento com dica antes da história/fase.
+    const next = isFreePlay() ? { next: 'game', data: { mode: 'story', devices: this.devices, level } } : { next: 'vn', data: { devices: this.devices, level } };
+    this.scene.start('loading', next);
   }
 }
 

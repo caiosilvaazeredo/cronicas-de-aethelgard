@@ -27,6 +27,8 @@ export interface SaveData {
   pact?: 'bat' | 'bee';
   /** Final visto: 'free' (enfrentou e venceu o Xamã) ou 'home' (voltou para casa com ele). */
   ending?: 'free' | 'home';
+  /** Item guardado na caixa de reserva (como no Mario), entre fases. */
+  reserve?: string;
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -92,6 +94,7 @@ export function loadSlot(n: number): SaveData | null {
       secretDone: Array.isArray(d.secretDone) ? d.secretDone : [],
       pact: d.pact === 'bat' || d.pact === 'bee' ? d.pact : undefined,
       ending: d.ending === 'free' || d.ending === 'home' ? d.ending : undefined,
+      reserve: typeof d.reserve === 'string' ? d.reserve : undefined,
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -206,6 +209,16 @@ export function getEnding(): 'free' | 'home' | undefined {
 export function setEnding(e: 'free' | 'home'): void {
   const d = current();
   d.ending = e;
+  if (!free) saveSlot(currentSlot(), d);
+}
+
+export function getReserve(): string | undefined {
+  return current().reserve;
+}
+
+export function setReserve(item: string | undefined): void {
+  const d = current();
+  d.reserve = item;
   if (!free) saveSlot(currentSlot(), d);
 }
 

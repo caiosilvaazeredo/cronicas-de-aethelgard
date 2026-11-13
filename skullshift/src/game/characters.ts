@@ -290,6 +290,9 @@ export const ITEM_TO_CHAR: Record<ItemId, CharId> = {
   horn: 'minotaur',
 };
 
+/** Item de cada forma (para devolver a forma atual à caixa de reserva). */
+export const CHAR_TO_ITEM: Partial<Record<string, ItemId>> = Object.fromEntries(Object.entries(ITEM_TO_CHAR).map(([k, v]) => [v, k as ItemId]));
+
 export const ITEM_TEXTURE: Record<ItemId, string> = {
   bone: 'bone',
   harpoon: 'harpoon',

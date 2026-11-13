@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { jingle, playMusic, type Track } from '../game/music';
 import { DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
-import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
+import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
@@ -16,7 +16,7 @@ import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
-import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { completeLevel, deathLimit, findSecret, getPact, getReserve, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -127,6 +127,12 @@ export class GameScene extends Phaser.Scene {
   /** Teias fixas no teto (área de cada uma), onde o morcego gruda. */
   private webs: Phaser.Geom.Rectangle[] = [];
   private items: Item[] = [];
+  /** Caixa de reserva de cada jogador (um item guardado, como no Mario). */
+  reserves: Array<ItemId | undefined> = [];
+  /** Esta fase deixa usar a reserva (não vale no voo, no submerso nem no final). */
+  reserveOn = false;
+  /** Itens da reserva caindo do céu. */
+  private falling: Array<{ pi: number; kind: ItemId; sprite: Phaser.GameObjects.Sprite; glow: Phaser.GameObjects.Image; x0: number; t0: number }> = [];
   private projectiles: Projectile[] = [];
   /** Versus: quem tem a vez de avançar (-1 = ninguém ainda). */
   leader = -1;
@@ -167,6 +173,8 @@ export class GameScene extends Phaser.Scene {
     this.hangers = [];
     this.webs = [];
     this.items = [];
+    this.falling = [];
+    this.reserves = [];
     this.projectiles = [];
     this.boss = undefined;
     this.shmup = undefined;
@@ -194,6 +202,11 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     const def = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     this.level = new Level(this, def);
+    this.reserveOn = !def.shmup && !def.finale && !def.undersea && !def.secret;
+    if (this.mode === 'story') {
+      const r = getReserve() as ItemId | undefined;
+      this.reserves = [r && r in ITEM_TO_CHAR ? r : undefined];
+    } else this.reserves = [undefined, undefined];
     // Trilha: tema da área (voo tem o seu; versus, o duelo).
     if (this.mode !== 'story') playMusic('versus');
     else if (def.shmup) playMusic('flight');
@@ -536,6 +549,7 @@ export class GameScene extends Phaser.Scene {
     this.resolveMelee();
     this.updateProjectiles(dt);
     this.updateItems(time);
+    this.updateReserve(time);
     this.haunt?.update(time);
     this.updateBossArena(time, dt);
     this.escape?.update(time, dt);
@@ -762,6 +776,70 @@ export class GameScene extends Phaser.Scene {
     }
     this.sparks(b.x, b.feet - 34);
     this.popText(b.x, b.feet - 120, 'QUEBROU!', '#ffe066');
+  }
+
+  // ---------- caixa de reserva ----------
+
+  private setReserve(pi: number, kind: ItemId | undefined): void {
+    this.reserves[pi] = kind;
+    this.ui?.hud?.setReserve(pi, kind);
+    if (this.mode === 'story' && pi === 0) setReserve(kind);
+  }
+
+  /** Solta o item guardado: ele cai do alto da tela, balançando e piscando, sobre o jogador. */
+  dropReserve(pi: number): void {
+    const kind = this.reserves[pi];
+    const p = this.players[pi];
+    if (!kind || !p || !p.alive || !this.reserveOn || this.cutscene || this.ended) return;
+    if (this.falling.some((f) => f.pi === pi)) return;
+    this.setReserve(pi, undefined);
+    sfx('select');
+    const view = this.cameras.main.worldView;
+    const x = Phaser.Math.Clamp(p.x, view.x + 40, view.right - 40);
+    const glow = this.add.image(x, view.y - 30, 'aura').setTint(PLAYER_TINT[pi]).setScale(0.7, 0.6).setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.items);
+    const sprite = this.add.sprite(x, view.y - 30, ITEM_TEXTURE[kind], 0).setDepth(DEPTH.items + 1);
+    if (kind === 'harpoon') sprite.setAngle(45);
+    if (kind === 'torch') sprite.play('torch_flame');
+    this.falling.push({ pi, kind, sprite, glow, x0: x, t0: this.time.now });
+  }
+
+  private updateReserve(time: number): void {
+    this.players.forEach((p, i) => {
+      if (p.intent.reserve) this.dropReserve(i);
+    });
+    const dt = this.game.loop.delta / 1000;
+    this.falling = this.falling.filter((f) => {
+      // Desce devagar, balançando (dá tempo de se posicionar).
+      f.sprite.y += 150 * dt;
+      f.sprite.x = f.x0 + Math.sin((time - f.t0) / 260) * 22;
+      f.sprite.setAlpha(Math.floor(time / 90) % 2 === 0 ? 1 : 0.55);
+      f.glow.setPosition(f.sprite.x, f.sprite.y);
+      const p = this.players[f.pi];
+      const catchIt = p && p.alive && Math.abs(p.x - f.sprite.x) < 46 && f.sprite.y > p.feet - 130 && f.sprite.y < p.feet + 10;
+      const done = () => {
+        f.sprite.destroy();
+        f.glow.destroy();
+        return false;
+      };
+      if (catchIt) {
+        const char = ITEM_TO_CHAR[f.kind];
+        if (p.def.id === char) this.setReserve(f.pi, f.kind); // mesma forma: volta para a caixa
+        else {
+          const had = CHAR_TO_ITEM[p.def.id];
+          if (had) this.setReserve(f.pi, had);
+          this.transform(f.pi, char);
+        }
+        return done();
+      }
+      // Chegou ao chão: vira item normal (some depois de um tempo).
+      const land = this.level.landingY(f.sprite.x, f.sprite.y - 160 * dt, f.sprite.y + 24);
+      if (land !== null) {
+        this.spawnItem(f.sprite.x, f.kind, false, 9000, undefined, land);
+        return done();
+      }
+      if (f.sprite.y > this.level.deathY + 80 || f.sprite.y > SKY_FALL_Y) return done();
+      return true;
+    });
   }
 
   private popText(x: number, y: number, text: string, color: string): void {
@@ -1107,6 +1185,8 @@ export class GameScene extends Phaser.Scene {
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
               this.announce(pi);
+              // Renasceu: o item da reserva cai sozinho (como no Mario ao levar dano).
+              if (this.reserves[pi]) this.time.delayedCall(700, () => this.dropReserve(pi));
             },
           });
         });
@@ -1544,7 +1624,25 @@ export class GameScene extends Phaser.Scene {
         const p = this.players[i];
         if (!p.alive || p.def.id === char) continue;
         if (Math.abs(p.x - it.sprite.x) > 40 || Math.abs(p.feet - it.floor) > 30) continue;
+        if (p.intent.pick && p.intent.crouch && this.reserveOn) {
+          // Agachar + pegar: guarda na caixa sem transformar (o que estava lá cai no chão).
+          const old = this.reserves[i];
+          this.setReserve(i, it.kind);
+          this.popText(p.x, p.feet - 110, 'GUARDADO!', '#9fe8ff');
+          sfx('pick');
+          it.active = false;
+          it.sprite.setVisible(false);
+          it.glow.setVisible(false);
+          it.prompt.setVisible(false);
+          if (it.home && this.mode === 'versus') it.respawnAt = time + ITEM_RESPAWN;
+          if (old) this.time.delayedCall(10, () => this.spawnItem(it.sprite.x, old, false, 9000, undefined, it.floor));
+          shown = true;
+          break;
+        }
         if (p.intent.pick) {
+          // Já transformado e caixa vazia: a forma atual vai para a reserva (como a flor no Mario).
+          const had = CHAR_TO_ITEM[p.def.id];
+          if (had && this.reserveOn && !this.reserves[i]) this.setReserve(i, had);
           this.transform(i, char);
           it.active = false;
           it.sprite.setVisible(false);
@@ -1556,7 +1654,7 @@ export class GameScene extends Phaser.Scene {
         }
         if (!shown) {
           it.prompt
-            .setText(`${PICK_LABEL[this.devices[i]]}  pegar\n${CHARS[char].name}`)
+            .setText(`${PICK_LABEL[this.devices[i]]}  pegar\n${CHARS[char].name}${this.reserveOn ? `\n▼+${PICK_LABEL[this.devices[i]]} guardar` : ''}`)
             .setBackgroundColor(PLAYER_HEX[i])
             .setPosition(it.sprite.x, it.floor + 46)
             .setVisible(true);

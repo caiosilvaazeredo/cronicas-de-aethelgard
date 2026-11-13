@@ -3,7 +3,7 @@ import { DEPTH, FONT, H, PORTRAIT, W } from '../config';
 
 /** bottom: deitado (como o mockup) · top: deitado com botões de toque · portrait: em pé. */
 export type HudStyle = 'bottom' | 'top' | 'portrait' | 'split';
-import type { CharId } from './characters';
+import { ITEM_TEXTURE, type CharId, type ItemId } from './characters';
 
 interface Slot {
   avatar: Phaser.GameObjects.Image;
@@ -22,6 +22,8 @@ export class Hud {
   private dots: Phaser.GameObjects.Arc[] = [];
   private centeredGo = false;
   private discs: Phaser.GameObjects.Arc[] = [];
+  /** Caixa de reserva de cada jogador (como no Mario): moldura + item guardado. */
+  private boxes: Array<{ frame: Phaser.GameObjects.Rectangle; item: Phaser.GameObjects.Image; key: Phaser.GameObjects.Text; kind?: ItemId } | undefined> = [];
 
   constructor(
     private scene: Phaser.Scene,
@@ -33,6 +35,8 @@ export class Hud {
      * de 140 px que começa em y=0 local; 'place' posiciona/gira a faixa (o P2 fica de ponta-cabeça).
      */
     split?: { only: number; x: number; y: number; rotation: number },
+    /** Caixa de reserva: tecla mostrada embaixo e o que fazer ao tocar nela. */
+    reserve?: { labels: string[]; drop: (player: number) => void },
   ) {
     const before = scene.children.list.length;
     const touchLayout = style === 'top';
@@ -91,6 +95,30 @@ export class Hud {
       );
     }
 
+    // Caixa de reserva no topo, no meio (dois jogadores: uma de cada lado do meio).
+    if (reserve && !sp) {
+      const by = portrait ? 108 + pad : 84;
+      const size = portrait ? 84 : 58;
+      players.forEach((p, i) => {
+        const bx = players.length === 1 ? W / 2 : W / 2 + (i === 0 ? -1 : 1) * (size + 24);
+        const frame = scene.add
+          .rectangle(bx, by, size, size, 0x10223a, 0.72)
+          .setStrokeStyle(4, p.color)
+          .setScrollFactor(0)
+          .setDepth(DEPTH.hud)
+          .setInteractive({ useHandCursor: true })
+          .on('pointerdown', () => reserve.drop(i));
+        const item = scene.add.image(bx, by, '__DEFAULT').setScrollFactor(0).setDepth(DEPTH.hud).setVisible(false);
+        const key = scene.add
+          .text(bx, by + size / 2 + (portrait ? 18 : 12), reserve.labels[i] ?? '', { fontFamily: FONT, fontSize: portrait ? '26px' : '15px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 5 })
+          .setOrigin(0.5)
+          .setScrollFactor(0)
+          .setDepth(DEPTH.hud)
+          .setVisible(false);
+        this.boxes[i] = { frame, item, key };
+      });
+    }
+
     this.goText = scene.add
       .text(sp ? W - 160 : W / 2, sp ? 106 : touchLayout ? 128 : portrait ? 206 + pad : 74, '', {
         fontFamily: FONT,
@@ -124,6 +152,23 @@ export class Hud {
       duration: 280,
       ease: 'Back.easeOut',
     });
+  }
+
+  /** Mostra o item guardado (ou esvazia a caixa). */
+  setReserve(player: number, kind: ItemId | undefined): void {
+    const b = this.boxes[player];
+    if (!b || b.kind === kind) return;
+    b.kind = kind;
+    b.key.setVisible(!!kind);
+    if (!kind) {
+      b.item.setVisible(false);
+      return;
+    }
+    b.item.setTexture(ITEM_TEXTURE[kind], 0).setVisible(true).setAngle(kind === 'harpoon' ? 45 : 0);
+    const fit = (b.frame.width - 14) / Math.max(b.item.frame.width, b.item.frame.height);
+    b.item.setScale(fit * (kind === 'harpoon' ? 1.25 : 1));
+    this.scene.tweens.add({ targets: b.item, scale: { from: fit * 1.6, to: b.item.scale }, duration: 260, ease: 'Back.easeOut' });
+    this.scene.tweens.add({ targets: b.frame, scaleX: { from: 1.25, to: 1 }, scaleY: { from: 1.25, to: 1 }, duration: 260, ease: 'Back.easeOut' });
   }
 
   setScreen(index: number, color = 0xfff7dc): void {

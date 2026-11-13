@@ -9,18 +9,36 @@ import { makeKingShark } from '../game/sharkking';
 import { makeGnollKing } from '../game/gnollking';
 import { makeKings } from '../game/kings';
 import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
-import { H, W } from '../config';
+import { FONT, H, W } from '../config';
+import { loadingVignette, tipCard } from '../ui/loading';
 import { CHARS, type CharId } from '../game/characters';
 
 /** Carrega os sprites, cria animações e gera as texturas desenhadas por código. */
 export class BootScene extends Phaser.Scene {
+  private t0 = 0;
+
   constructor() {
     super('boot');
   }
 
   preload(): void {
-    const bar = this.add.rectangle(W / 2 - 200, H / 2, 0, 12, 0xfff7dc).setOrigin(0, 0.5);
-    this.load.on('progress', (p: number) => (bar.width = 400 * p));
+    // Tela de carregamento: cena animada com os personagens, dica/curiosidade e barra de ossos.
+    this.t0 = Date.now();
+    const HH = this.scale.height;
+    const P = HH > H;
+    const cy = P ? HH * 0.42 : 340;
+    this.add.rectangle(0, 0, W, HH, 0x0e1a2b).setOrigin(0);
+    this.add.text(W / 2, P ? HH * 0.2 : 110, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '110px' : '72px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 12 }).setOrigin(0.5);
+    loadingVignette(this, W / 2, cy, P ? 1100 : 760, { scale: P ? 1.3 : 1 });
+    tipCard(this, W / 2, P ? HH * 0.62 : 510, P ? 1120 : 900, undefined, P ? 1.5 : 1);
+    const by = P ? HH * 0.76 : 628;
+    this.add.rectangle(W / 2, by, 424, 26, 0x10223a).setStrokeStyle(3, 0xfff7dc, 0.8);
+    const bar = this.add.rectangle(W / 2 - 206, by, 0, 14, 0xffe066).setOrigin(0, 0.5);
+    const pct = this.add.text(W / 2, by + 34, 'CARREGANDO 0%', { fontFamily: FONT, fontSize: '18px', color: '#9fb4c8' }).setOrigin(0.5);
+    this.load.on('progress', (p: number) => {
+      bar.width = 412 * p;
+      pct.setText(`CARREGANDO ${Math.round(p * 100)}%`);
+    });
 
     this.load.setPath('assets');
     for (const id of Object.keys(CHARS) as CharId[]) {
@@ -170,7 +188,8 @@ export class BootScene extends Phaser.Scene {
     this.makePuff();
     this.makeWindAndWaves();
 
-    this.scene.start('menu');
+    // Fica pelo menos um instante para dar tempo de ver a animação e ler a dica.
+    this.time.delayedCall(Math.max(0, 2600 - (Date.now() - this.t0)), () => this.scene.start('menu'));
   }
 
   /** Retrato do aldeão (o pacote não tem): o rosto recortado do primeiro quadro, ampliado. */

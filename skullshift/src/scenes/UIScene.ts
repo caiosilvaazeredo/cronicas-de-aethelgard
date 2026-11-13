@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { RESERVE_LABEL } from '../game/controls';
 import { DEPTH, BODY_FONT, FONT, PORTRAIT, SPLIT, VIEW, W } from '../config';
 import { Hud } from '../game/Hud';
 import { LEVELS } from '../game/level';
@@ -19,7 +20,7 @@ export interface VictoryInfo {
  * HUD, botões de toque, botão de menu, faixas e a parte de tela da animação de vitória.
  * É recriada quando o celular gira (o estado vem do GameScene).
  */
-type HudLike = Pick<Hud, 'setChar' | 'setScreen' | 'setGo' | 'setVisible'>;
+type HudLike = Pick<Hud, 'setChar' | 'setScreen' | 'setGo' | 'setVisible' | 'setReserve'>;
 
 export class UIScene extends Phaser.Scene {
   hud?: HudLike;
@@ -77,6 +78,7 @@ export class UIScene extends Phaser.Scene {
       setScreen: (n, c) => (h1.setScreen(n, c), h2.setScreen(n, c)),
       setGo: (d, c) => (h1.setGo(d, c), h2.setGo(d, c)),
       setVisible: (v) => (h1.setVisible(v), h2.setVisible(v)),
+      setReserve: () => undefined,
     };
     const area = { top: panelTop, h: VIEW.h - panelTop };
     this.pads = [new TouchPad(this, 'full', PLAYER_TINT[0], area, false), new TouchPad(this, 'full', PLAYER_TINT[1], area, true)];
@@ -132,7 +134,10 @@ export class UIScene extends Phaser.Scene {
       g.players.map((p, i) => ({ name: p.label, char: p.def.id, color: PLAYER_TINT[i] })),
       g.level.screenCount,
       style,
+      undefined,
+      g.reserveOn ? { labels: g.devices.map((d) => RESERVE_LABEL[d]), drop: (i) => g.dropReserve(i) } : undefined,
     );
+    g.reserves.forEach((k, i) => this.hud?.setReserve(i, k));
     this.hud.setScreen(g.screen, g.mode === 'versus' && g.leader >= 0 ? PLAYER_TINT[g.leader] : 0xfff7dc);
 
     const sides = g.mode === 'story' ? (['full'] as const) : (['left', 'right'] as const);

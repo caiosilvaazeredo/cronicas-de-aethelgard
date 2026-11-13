@@ -15,6 +15,7 @@ export interface Intent {
   sprint: boolean; // pique: toque duplo na direção (e segurar) ou Shift
   attackHeld?: boolean; // segurando ataque (tiro contínuo nas fases de corrida e tiro)
   up?: boolean; // para cima (voo): ↑/W, analógico ou manche de toque
+  reserve?: boolean; // apertou agora: soltar o item da reserva
 }
 
 export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false, sprint: false });
@@ -34,6 +35,7 @@ export interface KeyLayout {
   pick: number[];
   crouch: number[];
   sprint?: number[];
+  reserve?: number[];
 }
 
 /** Dispositivos que um jogador pode escolher na tela de controles. */
@@ -66,6 +68,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     pick: [KC.E, KC.L],
     crouch: [KC.S, KC.DOWN],
     sprint: [KC.SHIFT],
+    reserve: [KC.R, KC.TAB],
   },
   'kb-left': {
     left: [KC.A],
@@ -75,6 +78,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     attack: [KC.F, KC.G],
     pick: [KC.E],
     crouch: [KC.S],
+    reserve: [KC.R],
   },
   'kb-right': {
     left: [KC.LEFT],
@@ -84,6 +88,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     attack: [KC.ENTER, KC.NUMPAD_ZERO],
     pick: [KC.PERIOD, KC.NUMPAD_ONE],
     crouch: [KC.DOWN],
+    reserve: [KC.COMMA, KC.NUMPAD_THREE],
   },
 };
 
@@ -109,6 +114,7 @@ export class PlayerController implements Controller {
   private prevPadJump = false;
   private prevPadAttack = false;
   private prevPadPick = false;
+  private prevPadReserve = false;
   private gesture?: GestureInput;
 
   constructor(
@@ -130,6 +136,7 @@ export class PlayerController implements Controller {
         pick: mk(layout.pick),
         crouch: mk(layout.crouch),
         sprint: mk(layout.sprint ?? []),
+        reserve: mk(layout.reserve ?? []),
       };
     }
     this.padIndex = padOrdinal(device);
@@ -146,6 +153,7 @@ export class PlayerController implements Controller {
     let jumpHeld = false;
     let attackHeld = false;
     let up = false;
+    let reserve = false;
 
     if (this.keys) {
       const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
@@ -159,6 +167,7 @@ export class PlayerController implements Controller {
       jumpHeld = down(this.keys.jump);
       attackHeld = down(this.keys.attack);
       up = down(this.keys.jump);
+      reserve = just(this.keys.reserve);
     }
 
     const pad = this.padIndex === null ? undefined : connectedPads(this.scene)[this.padIndex];
@@ -173,6 +182,10 @@ export class PlayerController implements Controller {
       const padPick = b(3);
       if (padPick && !this.prevPadPick) pick = true;
       this.prevPadPick = padPick;
+      // Select / View: solta o item da reserva.
+      const padReserve = b(8);
+      if (padReserve && !this.prevPadReserve) reserve = true;
+      this.prevPadReserve = padReserve;
       if (padJump && !this.prevPadJump) jump = true;
       if (padJump) jumpHeld = true;
       if (padAttack && !this.prevPadAttack) attack = true;
@@ -213,7 +226,7 @@ export class PlayerController implements Controller {
     this.prevMove = move;
     const held = !!this.keys?.sprint.some((k) => k.isDown);
     const sprint = move !== 0 && (this.sprinting || held);
-    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint, attackHeld, up };
+    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint, attackHeld, up, reserve };
   }
 }
 
@@ -226,6 +239,17 @@ export const PICK_LABEL: Record<DeviceId, string> = {
   pad1: 'Y',
   touch: 'PEGA',
   gesture: 'SEGURE',
+};
+
+/** Nome curto do botão que solta o item da reserva (a caixa no topo também é tocável). */
+export const RESERVE_LABEL: Record<DeviceId, string> = {
+  'kb-full': 'R',
+  'kb-left': 'R',
+  'kb-right': ',',
+  pad0: 'SELECT',
+  pad1: 'SELECT',
+  touch: 'TOQUE',
+  gesture: 'TOQUE',
 };
 
 /** Nome curto do botão de defesa, para a tela Como jogar. */

@@ -20,11 +20,43 @@ export interface ShmupHost {
   died(): boolean;
   win(): void;
   popText(x: number, y: number, text: string, color: string): void;
-  /** Chefe no fim (Diabrete Gigante) e montaria (morcego ou abelhão). */
-  boss?: boolean;
-  mount?: 'bat' | 'bee';
+  /** Chefe no fim: o Diabrete Gigante ou o rei inimigo (depende do acordo). */
+  boss?: 'imp' | 'king';
+  /**
+   * Acordo dos Príncipes: quem a caveira monta.
+   * 'bat' = Príncipe dos Morcegos (forte: tiro triplo, grito sônico, escudo) contra o reino das abelhas.
+   * 'bee' = Príncipe das Abelhas (só o tiro simples) contra o reino dos morcegos, mais forte e numeroso.
+   */
+  pact: 'bat' | 'bee';
   bar?: () => BossBar | undefined;
 }
+
+/** Poderes de cada montaria. */
+const MOUNT = {
+  bat: { key: 'prince_bat_idle', scale: 1.2, speed: 390, rate: 190, spread: true, screech: true, shield: true },
+  bee: { key: 'prince_bee_idle', scale: 1.15, speed: 300, rate: 260, spread: false, screech: false, shield: false },
+} as const;
+
+const SCREECH_MS = 6000;
+const SHIELD_MS = 12000;
+
+interface BossDef {
+  key: string;
+  scale: number;
+  hp: number;
+  name: string;
+  title: string;
+  color: number;
+  shot: number;
+  patterns: number;
+  crown: boolean;
+}
+
+const BOSSES: Record<'imp' | 'bee' | 'bat', BossDef> = {
+  imp: { key: 'imp_idle', scale: 3, hp: 40, name: 'DIABRETE GIGANTE', title: 'Senhor dos Céus', color: 0xe05a2a, shot: 0xff7a1a, patterns: 4, crown: false },
+  bee: { key: 'king_bee_idle', scale: 2.1, hp: 90, name: 'REI DAS ABELHAS', title: 'Soberano da Colmeia', color: 0xb0306a, shot: 0xffd36b, patterns: 4, crown: true },
+  bat: { key: 'king_bat_idle', scale: 2.3, hp: 60, name: 'REI DOS MORCEGOS', title: 'Senhor da Noite Eterna', color: 0xa01e30, shot: 0xff4a5a, patterns: 5, crown: true },
+};
 
 interface Foe {
   sprite: Phaser.GameObjects.Sprite;
@@ -46,10 +78,9 @@ interface Shot {
 }
 
 const SCROLL = 150;
-const SPEED = 330;
 
 /**
- * Voo noturno (fase de tiro com rolagem automática): a caveira monta um morcego gigante.
+ * Fase de voo (tiro com rolagem automática): a caveira monta o príncipe escolhido no acordo.
  * A tela anda sozinha; dá para voar em todas as direções e atirar ossos para a frente.
  * Ondas de morcegos, abelhas atiradoras e diabretes em zigue-zague. Um toque derruba.
  */
@@ -66,17 +97,39 @@ export class ShmupSystem {
   private alive = true;
   private invulnUntil = 0;
   private done = false;
+  private readonly mount: (typeof MOUNT)['bat' | 'bee'];
+  /** Reino inimigo: o contrário da montaria. */
+  private readonly enemy: 'bat' | 'bee';
+  /** Com a abelha (acordo recusado) os inimigos são mais fortes e vêm em maior número. */
+  private readonly hard: boolean;
+  private screechReady = 0;
+  private screechWasReady = true;
+  private prevSpecial = true;
+  private shieldUp = false;
+  private shieldAt = 0;
+  private shield?: Phaser.GameObjects.Graphics;
+  private meter: Phaser.GameObjects.Graphics;
 
   constructor(private host: ShmupHost) {
     const s = host.scene;
+    this.mount = MOUNT[host.pact];
+    this.enemy = host.pact === 'bat' ? 'bee' : 'bat';
+    this.hard = host.pact === 'bee';
     this.camX = host.halfView();
     this.x = this.camX - host.halfView() + 220;
     this.y = (host.top + host.bottom) / 2;
-    const mount = host.mount === 'bee' ? 'bee_idle' : 'bat_idle';
-    this.bat = s.add.sprite(0, 0, mount).setScale(host.mount === 'bee' ? 1.25 : 1.35).play(mount);
+    this.bat = s.add.sprite(0, 0, this.mount.key).setScale(this.mount.scale).play(this.mount.key);
     const skull = s.add.sprite(-4, -58, 'skull_idle').setScale(0.62).play('skull_idle');
     const aura = s.add.image(0, -30, 'aura').setTint(host.color).setScale(0.9, 0.8).setAlpha(0.5);
-    this.rider = s.add.container(this.x, this.y, [aura, this.bat, skull]).setDepth(DEPTH.fighters + 1);
+    const parts: Phaser.GameObjects.GameObject[] = [aura, this.bat, skull];
+    if (this.mount.shield) {
+      this.shield = s.add.graphics();
+      this.shieldUp = true;
+      parts.unshift(this.shield);
+    }
+    this.meter = s.add.graphics();
+    parts.push(this.meter);
+    this.rider = s.add.container(this.x, this.y, parts).setDepth(DEPTH.fighters + 1);
     this.planWaves();
   }
 
@@ -90,12 +143,13 @@ export class ShmupSystem {
       const level = at / end;
       const kind = k % 5;
       const y0 = rng.between(this.host.top + 80, this.host.bottom - 80);
-      if (kind === 0) this.waves.push({ at, spawn: () => this.line('bat', 3 + Math.round(level * 2), y0) });
-      else if (kind === 1) this.waves.push({ at, spawn: () => this.vee(y0) });
-      else if (kind === 2) this.waves.push({ at, spawn: () => this.pair('bee') });
-      else if (kind === 3) this.waves.push({ at, spawn: () => this.line('imp', 2 + Math.round(level * 2), y0) });
-      else this.waves.push({ at, spawn: () => (this.pair('bee'), this.line('bat', 3, y0)) });
-      at += rng.between(380, 520) - level * 120;
+      const more = this.hard ? 2 : 0;
+      if (kind === 0) this.waves.push({ at, spawn: () => this.line('bat', 3 + more + Math.round(level * 2), y0) });
+      else if (kind === 1) this.waves.push({ at, spawn: () => (this.vee(y0), this.hard && this.line('imp', 2, y0 > 300 ? y0 - 160 : y0 + 160)) });
+      else if (kind === 2) this.waves.push({ at, spawn: () => (this.pair('bee'), this.hard && this.spawn('bee', this.right + 60, (this.host.top + this.host.bottom) / 2, 600)) });
+      else if (kind === 3) this.waves.push({ at, spawn: () => this.line('imp', 2 + more + Math.round(level * 2), y0) });
+      else this.waves.push({ at, spawn: () => (this.pair('bee'), this.line('bat', 3 + more, y0)) });
+      at += (rng.between(380, 520) - level * 120) * (this.hard ? 0.72 : 1);
       k++;
     }
   }
@@ -104,9 +158,14 @@ export class ShmupSystem {
     const s = this.host.scene;
     s.time.delayedCall(delay, () => {
       if (this.done) return;
-      const key = kind === 'bat' ? 'bat_idle' : kind === 'bee' ? 'bee_idle' : 'imp_idle';
-      const sprite = s.add.sprite(x, y, key).setScale(kind === 'bat' ? 0.8 : 0.75).setFlipX(true).setDepth(DEPTH.fighters).play(key);
-      this.foes.push({ sprite, kind, hp: kind === 'bee' ? 3 : 1, t: 0, baseY: y, vx: kind === 'bee' ? -SCROLL * 0.2 : kind === 'imp' ? -260 : -200, shootAt: s.time.now + 900, r: kind === 'bee' ? 36 : 28 });
+      // 'bat' = voador em onda, 'bee' = atirador que para na borda, 'imp' = zigue-zague.
+      // Voadores e atiradores são do reino inimigo (morcegos ou abelhas, conforme o acordo).
+      const key = kind === 'imp' ? 'imp_idle' : `${this.enemy}_idle`;
+      const scale = kind === 'bee' ? 0.95 : kind === 'bat' ? 0.8 : 0.75;
+      const sprite = s.add.sprite(x, y, key).setScale(scale).setFlipX(true).setDepth(DEPTH.fighters).play(key);
+      if (kind === 'bee') sprite.setTint(this.enemy === 'bee' ? 0xffe0a0 : 0xffb0b0);
+      const hp = (kind === 'bee' ? 3 : 1) + (this.hard ? 1 : 0);
+      this.foes.push({ sprite, kind, hp, t: 0, baseY: y, vx: kind === 'bee' ? -SCROLL * 0.2 : kind === 'imp' ? -260 : -200, shootAt: s.time.now + 900, r: kind === 'bee' ? 40 : 28 });
     });
   }
 
@@ -142,16 +201,21 @@ export class ShmupSystem {
       const it = this.host.intent();
       const up = !!it.up || it.jumpHeld || it.jump;
       const dy = (it.crouch ? 1 : 0) - (up ? 1 : 0);
-      this.x += it.move * SPEED * dt + SCROLL * dt * (this.done ? 0 : 1);
-      this.y += dy * SPEED * dt;
+      this.x += it.move * this.mount.speed * dt + SCROLL * dt * (this.done ? 0 : 1);
+      this.y += dy * this.mount.speed * dt;
       this.x = Phaser.Math.Clamp(this.x, this.left + 60, this.right - 80);
       this.y = Phaser.Math.Clamp(this.y, this.host.top + 40, this.host.bottom - 20);
       this.bat.setAngle(Phaser.Math.Linear(this.bat.angle, dy * 12 + it.move * 6, 0.2));
       // Tiro só enquanto segura ATACAR (sem tiro automático).
       if ((it.attack || it.attackHeld) && time >= this.nextShot) {
-        this.nextShot = time + 200;
+        this.nextShot = time + this.mount.rate;
         this.fire();
       }
+      // Grito sônico do Príncipe dos Morcegos (PEGAR / DEFENDER / botão GRITO).
+      const special = it.pick || it.guard;
+      if (this.mount.screech && special && !this.prevSpecial && time >= this.screechReady) this.screech(time);
+      this.prevSpecial = special;
+      this.drawPowers(time);
       this.rider.setPosition(this.x, this.y + Math.sin(time / 160) * 4);
       this.rider.setAlpha(time < this.invulnUntil && Math.floor(time / 80) % 2 ? 0.35 : 1);
     }
@@ -173,10 +237,12 @@ export class ShmupSystem {
         else f.sprite.x += SCROLL * dt;
         f.sprite.y = f.baseY + Math.sin(f.t * 2) * 30;
         if (time >= f.shootAt && this.alive) {
-          f.shootAt = time + 1300;
+          f.shootAt = time + (this.hard ? 950 : 1300);
           const a = Phaser.Math.Angle.Between(f.sprite.x, f.sprite.y, this.x, this.y);
-          const o = s.add.image(f.sprite.x - 30, f.sprite.y, 'spark').setTint(0xffd36b).setScale(0.9).setDepth(DEPTH.projectiles);
-          this.shots.push({ obj: o, vx: Math.cos(a) * 360, vy: Math.sin(a) * 360, r: 12, enemy: true });
+          for (const da of this.hard ? [-0.22, 0, 0.22] : [0]) {
+            const o = s.add.image(f.sprite.x - 30, f.sprite.y, 'spark').setTint(this.enemy === 'bee' ? 0xffd36b : 0xff6a7a).setScale(0.9).setDepth(DEPTH.projectiles);
+            this.shots.push({ obj: o, vx: Math.cos(a + da) * 360, vy: Math.sin(a + da) * 360, r: 12, enemy: true });
+          }
         }
       }
       if (f.sprite.x < this.left - 120) f.hp = -1;
@@ -230,18 +296,23 @@ export class ShmupSystem {
   // ---------- chefe: Diabrete Gigante ----------
 
   private bossSpawned = false;
-  private boss?: { sprite: Phaser.GameObjects.Sprite; hp: number; max: number; t: number; next: number; k: number; dashing: number; hurt: number; dying: boolean };
+  private boss?: { def: BossDef; sprite: Phaser.GameObjects.Sprite; crown?: Phaser.GameObjects.Image; hp: number; max: number; t: number; next: number; k: number; dashing: number; hurt: number; dying: boolean };
 
   private spawnBoss(): void {
     const s = this.host.scene;
     this.bossSpawned = true;
-    const sprite = s.add.sprite(this.right + 200, (this.host.top + this.host.bottom) / 2, 'imp_idle').setScale(3).setFlipX(true).setDepth(DEPTH.fighters).play('imp_idle');
-    this.boss = { sprite, hp: 40, max: 40, t: 0, next: s.time.now + 2200, k: 0, dashing: 0, hurt: 0, dying: false };
+    // O rei é o do reino inimigo: com o morcego, o Rei das Abelhas; com a abelha, o Rei dos Morcegos.
+    const def = BOSSES[this.host.boss === 'king' ? this.enemy : 'imp'];
+    const sprite = s.add.sprite(this.right + 200, (this.host.top + this.host.bottom) / 2, def.key).setScale(def.scale).setFlipX(true).setDepth(DEPTH.fighters).play(def.key);
+    const crown = def.crown ? s.add.image(sprite.x, sprite.y, 'queen_crown').setScale(1.3).setDepth(DEPTH.fighters + 0.1) : undefined;
+    // O morcego bate muito mais forte: o Diabrete aguenta mais quando ele é o aliado.
+    const hp = def === BOSSES.imp && !this.hard ? 60 : def.hp;
+    this.boss = { def, sprite, crown, hp, max: hp, t: 0, next: s.time.now + 2200, k: 0, dashing: 0, hurt: 0, dying: false };
     s.cameras.main.shake(400, 0.006);
     sfx('boss');
     this.host.bar?.()?.bossWarning();
     s.time.delayedCall(1200, () => {
-      this.host.bar?.()?.showBossBar('DIABRETE GIGANTE', 'Senhor dos Céus', 0xe05a2a);
+      this.host.bar?.()?.showBossBar(def.name, def.title, def.color);
       this.host.bar?.()?.setBossHp(1);
     });
   }
@@ -260,13 +331,14 @@ export class ShmupSystem {
     } else b.sprite.x = Phaser.Math.Linear(b.sprite.x, homeX, 0.04);
     b.sprite.y = (this.host.top + this.host.bottom) / 2 + Math.sin(b.t * 1.3) * 150;
     b.sprite.setAlpha(time < b.hurt ? 0.6 : 1);
+    b.crown?.setPosition(b.sprite.x - 8, b.sprite.y - 30 * b.def.scale);
     // Padrões em sequência (mais rápidos com metade da vida).
     if (time >= b.next && b.dashing <= 0 && this.alive) {
       const angry = b.hp <= b.max / 2;
-      b.next = time + (angry ? 1500 : 2200);
-      const k = b.k++ % 4;
+      b.next = time + (angry ? 1500 : 2200) * (this.hard ? 0.85 : 1);
+      const k = b.k++ % b.def.patterns;
       const shoot = (a: number, speed: number) => {
-        const o = s.add.image(b.sprite.x - 80, b.sprite.y, 'spark').setTint(0xff7a1a).setScale(1.1).setDepth(DEPTH.projectiles);
+        const o = s.add.image(b.sprite.x - 80, b.sprite.y, 'spark').setTint(b.def.shot).setScale(1.1).setDepth(DEPTH.projectiles);
         this.shots.push({ obj: o, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: 14, enemy: true });
       };
       if (k === 0) for (let i = -3; i <= 3; i++) shoot(Math.PI + i * 0.18, 360);
@@ -279,15 +351,22 @@ export class ShmupSystem {
       } else if (k === 2) {
         b.dashing = 0.9;
         this.host.popText(b.sprite.x, b.sprite.y - 140, '!', '#ff5c5c');
-      } else {
+      } else if (k === 3) {
         const y = Phaser.Math.Between(this.host.top + 60, this.host.bottom - 60);
         this.line('bat', angry ? 4 : 3, y);
+      } else {
+        // Só o Rei dos Morcegos: anel sônico em todas as direções (duas voltas com raiva).
+        for (let r = 0; r < (angry ? 2 : 1); r++)
+          s.time.delayedCall(r * 380, () => {
+            if (!this.boss || this.boss.dying) return;
+            for (let i = 0; i < 14; i++) shoot((i / 14) * Math.PI * 2 + r * 0.22, 300);
+          });
       }
     }
     // Tiros do jogador acertam o chefe.
     for (const sh of this.shots) {
       if (sh.enemy || sh.r < 0) continue;
-      if (Phaser.Math.Distance.Between(sh.obj.x, sh.obj.y, b.sprite.x, b.sprite.y) < 110) {
+      if (Phaser.Math.Distance.Between(sh.obj.x, sh.obj.y, b.sprite.x, b.sprite.y) < 50 * b.def.scale) {
         sh.r = -1;
         b.hp--;
         b.hurt = time + 90;
@@ -296,7 +375,7 @@ export class ShmupSystem {
       }
     }
     // Encostar no chefe derruba.
-    this.hits(b.sprite.x, b.sprite.y, 90, time);
+    this.hits(b.sprite.x, b.sprite.y, 30 * b.def.scale, time);
   }
 
   /** Derrota em cadeia: explosões pelo corpo, clarão e orbes em estrela. */
@@ -317,6 +396,7 @@ export class ShmupSystem {
       const cx = b.sprite.x;
       const cy = b.sprite.y;
       b.sprite.destroy();
+      b.crown?.destroy();
       for (let i = 0; i < 12; i++) {
         const a = (i / 12) * Math.PI * 2;
         const o = s.add.image(cx, cy, 'orb').setDepth(DEPTH.fx + 2);
@@ -330,14 +410,93 @@ export class ShmupSystem {
 
   private fire(): void {
     const s = this.host.scene;
-    const o = s.add.sprite(this.x + 50, this.y - 40, 'bone').setScale(0.8).setDepth(DEPTH.projectiles).play('bone');
-    this.shots.push({ obj: o, vx: 900, vy: 0, r: 14, enemy: false });
+    // Com o Príncipe dos Morcegos: três ossos em leque. Com a abelha: um só.
+    for (const vy of this.mount.spread ? [-140, 0, 140] : [0]) {
+      const o = s.add.sprite(this.x + 50, this.y - 40, 'bone').setScale(0.8).setDepth(DEPTH.projectiles).play('bone');
+      this.shots.push({ obj: o, vx: 900, vy, r: 14, enemy: false });
+    }
+  }
+
+  /** Grito sônico: anel que apaga os tiros inimigos por perto e machuca quem estiver nele. */
+  private screech(time: number): void {
+    const s = this.host.scene;
+    this.screechReady = time + SCREECH_MS;
+    this.screechWasReady = false;
+    sfx('boss');
+    s.cameras.main.shake(180, 0.006);
+    const R = 380;
+    for (let k = 0; k < 3; k++) {
+      const ring = s.add.graphics().setDepth(DEPTH.fx + 1);
+      const st = { r: 30, a: 1 };
+      s.tweens.add({
+        targets: st,
+        r: R,
+        a: 0,
+        delay: k * 90,
+        duration: 520,
+        ease: 'Quad.easeOut',
+        onUpdate: () => {
+          ring.clear();
+          ring.lineStyle(7, 0x1d1a2b, st.a).strokeCircle(this.x, this.y - 20, st.r);
+          ring.lineStyle(3, 0xbfe9ff, st.a).strokeCircle(this.x, this.y - 20, st.r);
+        },
+        onComplete: () => ring.destroy(),
+      });
+    }
+    for (const sh of this.shots) if (sh.enemy && Phaser.Math.Distance.Between(sh.obj.x, sh.obj.y, this.x, this.y) < R) sh.r = -1;
+    for (const f of this.foes) {
+      if (f.hp <= 0 || Phaser.Math.Distance.Between(f.sprite.x, f.sprite.y, this.x, this.y) > R) continue;
+      f.hp -= 2;
+      if (f.hp <= 0) this.pop(f.sprite.x, f.sprite.y);
+    }
+    const b = this.boss;
+    if (b && !b.dying && Phaser.Math.Distance.Between(b.sprite.x, b.sprite.y, this.x, this.y) < R + 60) {
+      b.hp = Math.max(0, b.hp - 3);
+      b.hurt = time + 150;
+      this.host.bar?.()?.setBossHp(b.hp / b.max);
+      if (b.hp <= 0) this.bossDown();
+    }
+  }
+
+  /** Escudo (bolha azul) e carga do grito, desenhados em volta da montaria. */
+  private drawPowers(time: number): void {
+    if (this.shield) {
+      if (!this.shieldUp && time >= this.shieldAt) {
+        this.shieldUp = true;
+        this.host.popText(this.x, this.y - 110, 'ESCUDO!', '#bfe9ff');
+      }
+      this.shield.clear();
+      if (this.shieldUp) {
+        const a = 0.35 + Math.sin(time / 200) * 0.1;
+        this.shield.lineStyle(4, 0xbfe9ff, a + 0.3).strokeCircle(0, -20, 74).fillStyle(0x8fd9ff, a * 0.4).fillCircle(0, -20, 74);
+      }
+    }
+    if (!this.mount.screech) return;
+    const g = this.meter;
+    g.clear();
+    const left = Math.max(0, this.screechReady - time);
+    const frac = 1 - left / SCREECH_MS;
+    g.lineStyle(6, 0x10223a, 0.8).beginPath().arc(0, -20, 86, -Math.PI / 2, Math.PI * 1.5).strokePath();
+    g.lineStyle(4, frac >= 1 ? 0xffe066 : 0x6a7ab0, 0.9).beginPath().arc(0, -20, 86, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * frac).strokePath();
+    if (frac >= 1 && !this.screechWasReady) {
+      this.screechWasReady = true;
+      this.host.popText(this.x, this.y - 130, 'GRITO PRONTO!', '#ffe066');
+    }
   }
 
   /** Algo encostou no jogador? (com o tempo de invencibilidade depois de renascer). */
   private hits(x: number, y: number, r: number, time: number): boolean {
     if (!this.alive || time < this.invulnUntil || this.done) return false;
     if (Phaser.Math.Distance.Between(x, y, this.x, this.y - 20) > r + 26) return false;
+    if (this.shieldUp) {
+      // O escudo do morcego segura um golpe e volta depois de um tempo.
+      this.shieldUp = false;
+      this.shieldAt = time + SHIELD_MS;
+      this.invulnUntil = time + 1200;
+      sfx('hit');
+      this.host.scene.cameras.main.shake(120, 0.006);
+      return true;
+    }
     this.die(time);
     return true;
   }
@@ -359,6 +518,10 @@ export class ShmupSystem {
       this.rider.setVisible(true).setPosition(this.x, this.y);
       this.alive = true;
       this.invulnUntil = s.time.now + 2200;
+      if (this.mount.shield) {
+        this.shieldUp = true;
+        this.shieldAt = 0;
+      }
       void time;
     });
   }
@@ -374,7 +537,12 @@ export class ShmupSystem {
   hint(): void {
     const s = this.host.scene;
     const t = s.add
-      .text(this.camX, this.host.top + 40, '↑ ↓ ← →  voar  ·  segure ATACAR (ou TIRO) para atirar', { fontFamily: FONT, fontSize: '22px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: this.host.halfView() * 2 - 60 } })
+      .text(
+        this.camX,
+        this.host.top + 40,
+        this.mount.screech
+          ? '↑ ↓ ← →  voar  ·  segure ATACAR (TIRO) para atirar  ·  PEGAR / DEFENDER (GRITO): grito sônico'
+          : '↑ ↓ ← →  voar  ·  segure ATACAR (ou TIRO) para atirar', { fontFamily: FONT, fontSize: '22px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: this.host.halfView() * 2 - 60 } })
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 3);
     s.tweens.add({ targets: t, alpha: 0, delay: 3500, duration: 600, onComplete: () => t.destroy() });

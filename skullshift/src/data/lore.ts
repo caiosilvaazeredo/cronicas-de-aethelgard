@@ -1,5 +1,6 @@
 import type { CharId } from '../game/characters';
 import { LEVELS } from '../game/level';
+import { getPact, hasPact } from '../game/progress';
 /**
  * Lore do Skullshift — "O Barqueiro de Nuvens".
  *
@@ -166,11 +167,25 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
   },
   flight: {
     title: 'Voo Noturno',
-    blurb: 'Montado num morcego gigante, pela noite, até a Escadaria da Maré.',
+    blurb: 'Com o Príncipe dos Morcegos, pela noite, até o Rei das Abelhas.',
     lines: [
-      S('Um morcego do tamanho de um barco? Você quer que eu monte nisso?'),
-      X('Ele me deve um favor. Te leva pela noite até a Escadaria da Maré.'),
-      X('Os ossos saem sozinhos para a frente. Desvia do resto.'),
+      S('O príncipe diz que o Rei das Abelhas guarda o caminho até a Escadaria da Maré.'),
+      X('Guarda. E não vai gostar de ver o sobrinho dele derrotado.'),
+      S('Eu não traí ninguém. Escolhi um lado.'),
+      X('Aqui, escolher um lado é a mesma coisa. Voa, Ossian. A noite é do morcego.'),
+      S('Você está me ajudando demais ultimamente, Hex.'),
+      X('...Estamos perto do fim. Quero que chegues lá.'),
+      S('Quer mesmo?'),
+    ],
+  },
+  flight_bee: {
+    title: 'Voo Noturno',
+    blurb: 'Com o Príncipe das Abelhas, pela noite, até o Rei dos Morcegos.',
+    lines: [
+      S('A abelha disse que o Rei dos Morcegos quer vingança pelo filho.'),
+      X('E a noite é dele. Cada sombra é um morcego. Vão ser muitos, e mais fortes.'),
+      S('E eu com um ossinho por vez.'),
+      X('Tu quiseste derrubar o príncipe. Agora derruba o pai.'),
       S('Você está me ajudando demais ultimamente, Hex.'),
       X('...Estamos perto do fim. Quero que chegues lá.'),
       S('Quer mesmo?'),
@@ -272,14 +287,40 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Aqui ouro não compra nada. Nem saída.'),
     ],
   },
+  princes: {
+    title: 'Ninho dos Príncipes',
+    blurb: 'Dois príncipes, um ninho e um acordo que muda o céu.',
+    lines: [
+      S('Hex, essa caverna está cheia de asas. Morcegos E abelhas?'),
+      X('Dois reinos que se odeiam. Os príncipes brigam por este ninho há séculos.'),
+      S('E eu vou ter que passar no meio dessa briga.'),
+      X('Os príncipes falam, Ossian. Coisa rara por aqui. Escuta o que eles oferecerem.'),
+      S('Desde quando você confia em quem fala?'),
+      X('Não confio. Mas um príncipe que te deve a vida... voa muito bem.'),
+    ],
+  },
   plane: {
     title: 'Duelo no Céu',
-    blurb: 'Montado no Abelhão, contra o Diabrete Gigante.',
+    blurb: 'Montado no Príncipe dos Morcegos, contra o Diabrete Gigante.',
     lines: [
       S('O Diabrete cresceu? Ele está do tamanho de uma nuvem!'),
-      X('Comeu as brasas da forja. Agora quer o céu. Monta no Abelhão e derruba ele.'),
+      X('Comeu as brasas da forja. Agora quer o céu. Teu novo aliado te leva até ele.'),
+      S('O morcego solta três ossos de uma vez e ainda grita. Isso não é trapaça?'),
+      X('É um príncipe. O grito apaga os tiros por perto, e as asas dele seguram um golpe.'),
       S('Você não vem?'),
       X('Daqui de baixo eu vejo melhor. Atira até a barra dele esvaziar.'),
+    ],
+  },
+  plane_bee: {
+    title: 'Duelo no Céu',
+    blurb: 'Montado no Príncipe das Abelhas, contra o Diabrete Gigante.',
+    lines: [
+      S('O Diabrete cresceu? Ele está do tamanho de uma nuvem!'),
+      X('Comeu as brasas da forja. Agora quer o céu. Monta no Príncipe das Abelhas e derruba ele.'),
+      S('Ele só solta um ossinho por vez, Hex.'),
+      X('Tu escolheste derrubar o morcego. Agora o reino dele inteiro quer a tua cabeça. Desvia muito e atira sempre.'),
+      S('Você parece... satisfeito.'),
+      X('Um aliado fraco precisa mais de mim. Só isso.'),
     ],
   },
   key4: {
@@ -340,6 +381,16 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
 
 /** Um capítulo por fase, na ordem de LEVELS. */
 export const CHAPTERS: Chapter[] = LEVELS.map((l) => CHAPTER_BY_ID[l.id] ?? { title: l.name, blurb: l.intro ?? '', lines: [] });
+
+/**
+ * Capítulo da fase i para o save atual: as fases de voo mudam conforme o acordo dos Príncipes
+ * (variante "<id>_bee" quando a caveira derrotou o Príncipe dos Morcegos).
+ */
+export function chapterFor(i: number): Chapter {
+  const id = LEVELS[i]?.id;
+  const variant = hasPact() && getPact() === 'bee' ? CHAPTER_BY_ID[`${id}_bee`] : undefined;
+  return variant ?? CHAPTERS[i];
+}
 
 /** Depois da última fase: a coroa inteira, o portão aberto, e uma escolha que fica com quem joga. */
 export const EPILOGUE: Chapter = {

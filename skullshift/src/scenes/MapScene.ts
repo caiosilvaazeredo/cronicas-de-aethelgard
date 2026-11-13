@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
-import { CHAPTERS } from '../data/lore';
+import { CHAPTERS, chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
-import { completedCount, currentSlot, giftsOf, hasSecret, isFreePlay } from '../game/progress';
+import { completedCount, currentSlot, getPact, giftsOf, hasPact, hasSecret, isFreePlay } from '../game/progress';
 import { LEVELS } from '../game/level';
 import { unlockedBy } from '../game/abilities';
 import { pillButton } from '../ui/devices';
@@ -329,13 +329,16 @@ export class MapScene extends Phaser.Scene {
       }
       if (l.shmup) {
         const moon = this.add.graphics().setDepth(3);
-        if (!l.shmupBoss) {
+        if (l.shmupBoss !== 'imp') {
           moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 40, y - 40, 70);
           moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 40, y - 40, 46);
         }
-        const rider = this.add.sprite(x - 60, y - 30, l.shmupBoss ? 'bee_idle' : 'bat_idle').setScale(0.55).setDepth(6).play(l.shmupBoss ? 'bee_idle' : 'bat_idle');
+        // A montaria é o príncipe do acordo (antes do acordo, um morcego qualquer).
+        const mount = hasPact() ? `prince_${getPact()}_idle` : 'bat_idle';
+        const rider = this.add.sprite(x - 60, y - 30, mount).setScale(0.55).setDepth(6).play(mount);
         this.tweens.add({ targets: rider, x: x + 100, y: y - 10, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-        if (l.shmupBoss) this.add.sprite(x + 90, y - 50, 'imp_idle').setScale(0.7).setFlipX(true).setDepth(6).play('imp_idle');
+        if (l.shmupBoss === 'imp') this.add.sprite(x + 90, y - 50, 'imp_idle').setScale(0.7).setFlipX(true).setDepth(6).play('imp_idle');
+        else if (hasPact()) this.add.sprite(x + 90, y - 50, `king_${getPact() === 'bat' ? 'bee' : 'bat'}_idle`).setScale(0.6).setFlipX(true).setDepth(6).play(`king_${getPact() === 'bat' ? 'bee' : 'bat'}_idle`);
       }
       return;
     }
@@ -608,7 +611,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   private updateInfo(): void {
-    const ch = CHAPTERS[this.current];
+    const ch = chapterFor(this.current);
     this.infoTitle.setText(`FASE ${this.current + 1} · ${ch.title.toUpperCase()}`);
     this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar`);
   }

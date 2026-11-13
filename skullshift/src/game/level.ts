@@ -88,11 +88,12 @@ export interface LevelDef {
   /** Fase de voo com tiro (rolagem automática, montado no morcego). */
   shmup?: boolean;
   /** Voo com chefe no fim (montado no Abelhão). */
-  shmupBoss?: boolean;
+  /** Chefe no fim do voo: o Diabrete Gigante ou o rei do reino inimigo (depende do acordo). */
+  shmupBoss?: 'imp' | 'king';
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
-  boss?: { kind: 'minotaur' | 'spider'; arena: ScreenDef };
+  boss?: { kind: 'minotaur' | 'spider' | 'princes'; arena: ScreenDef };
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
   secret?: boolean;
   /** Fase de chave e porta (quebra-cabeça). */
@@ -580,11 +581,12 @@ export const LEVEL_WINDS: LevelDef = {
 export const LEVEL_FLIGHT: LevelDef = {
   id: 'flight',
   name: 'Voo Noturno',
-  intro: 'Montado no morcego: voe em todas as direções. Os ossos saem sozinhos!',
+  intro: 'Montado no príncipe aliado, pela noite, até o rei do reino inimigo.',
   theme: 'sky',
   tiles: 'tiles_sky',
-  winText: 'O céu da noite ficou limpo!',
+  winText: 'O rei caiu do céu da noite!',
   shmup: true,
+  shmupBoss: 'king',
   screens: [{ segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }],
   storyStart: [0, 3],
   versusStart: [3, 16],
@@ -763,15 +765,37 @@ export const LEVEL_GUN2: LevelDef = {
   versusStart: [3, 16],
 };
 
+/** Ninho dos Príncipes: o Príncipe dos Morcegos (e, na metade da luta, o das Abelhas). */
+export const LEVEL_PRINCES: LevelDef = {
+  id: 'princes',
+  name: 'Ninho dos Príncipes',
+  intro: 'Uma caverna cheia de asas. No fundo, alguém com coroa espera por você.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'A luta dos Príncipes acabou!',
+  screens: [
+    { segments: [[0, 20, 0]], deco: [[2, 'rock2'], [17, 'rock1']], hangers: [8, 14], enemies: [[12, 'bat']], storyItems: [[3, 'wing']], versusItems: [[3, 'wing']] },
+    { segments: [[0, 5, 0], [7, 4, 1], [13, 7, 0]], floats: [[5, 2, 3], [11, 2, 3]], hangers: [4, 16], enemies: [[9, 'bee'], [16, 'bat']], versusItems: [[15, 'web']] },
+    { segments: [[0, 4, 0], [6, 3, 2], [11, 3, 1], [16, 4, 0]], floats: [[4, 2, 3], [9, 2, 4], [14, 2, 3]], hangers: [10], enemies: [[12, 'bat'], [17, 'bee']], storyItems: [[1, 'torch']], versusItems: [[10, 'torch', 1]] },
+    { segments: [[0, 20, 0]], hangers: [5, 10, 15], enemies: [[8, 'bee'], [14, 'bat']], versusItems: [[17, 'wing']] },
+  ],
+  boss: {
+    kind: 'princes',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'rock2'], [18, 'rock2']] },
+  },
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVEL_PLANE: LevelDef = {
   id: 'plane',
   name: 'Duelo no Céu',
-  intro: 'Montado no Abelhão: ondas de inimigos e, no fim, o Diabrete Gigante em pessoa!',
+  intro: 'Montado no príncipe aliado: ondas de inimigos e, no fim, o Diabrete Gigante em pessoa!',
   theme: 'sky',
   tiles: 'tiles_sky',
   winText: 'O Diabrete Gigante caiu do céu!',
   shmup: true,
-  shmupBoss: true,
+  shmupBoss: 'imp',
   screens: [{ segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }],
   storyStart: [0, 3],
   versusStart: [3, 16],
@@ -822,6 +846,7 @@ export const LEVELS: LevelDef[] = [
   LEVEL_VOLCANO,
   LEVEL_CHASE,
   LEVEL_KEY3,
+  LEVEL_PRINCES,
   LEVEL_PLANE,
   LEVEL_3,
   LEVEL_WINDS,

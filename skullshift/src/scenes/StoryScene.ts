@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
-import { CHAPTERS, EPILOGUE, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { EPILOGUE, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
 import { CHARS } from '../game/characters';
 import type { DeviceId } from '../game/controls';
 import { LEVELS } from '../game/level';
@@ -56,7 +56,7 @@ export class StoryScene extends Phaser.Scene {
     this.devices = data.devices ?? ['kb-full'];
     this.level = data.level ?? 0;
     this.epilogue = !!data.epilogue;
-    this.lines = (this.epilogue ? EPILOGUE : CHAPTERS[this.level])?.lines ?? [];
+    this.lines = (this.epilogue ? EPILOGUE : chapterFor(this.level))?.lines ?? [];
     this.index = -1;
     this.slots = { left: {}, right: {} };
     this.prevPad = { a: true, b: true };
@@ -71,7 +71,7 @@ export class StoryScene extends Phaser.Scene {
     shade.fillGradientStyle(0x0b1626, 0x0b1626, 0x0b1626, 0x0b1626, 0, 0, 0.75, 0.75).fillRect(0, H * 0.35, W, H * 0.65);
 
     // Título do capítulo no alto.
-    const ch = this.epilogue ? EPILOGUE : CHAPTERS[this.level];
+    const ch = this.epilogue ? EPILOGUE : chapterFor(this.level);
     this.add
       .text(W / 2, VIEW.portrait ? 120 : 46, `${this.epilogue ? 'EPÍLOGO' : `CAPÍTULO ${this.level + 1}`} · ${ch.title.toUpperCase()}`, {
         fontFamily: FONT,

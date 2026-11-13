@@ -112,3 +112,43 @@ export const SPIDER_QUEEN_PALETTE: Record<number, number> = {
   0xdde678: 0xff2d2d, // olhos acesos
   0xbeb080: 0xc8b0ff, // presas: lilás pálido
 };
+
+/** Príncipe dos Morcegos: azul-meia-noite com detalhes dourados. */
+export const BAT_PRINCE_PALETTE: Record<number, number> = {
+  0x4d4162: 0x1e2a6a,
+  0x71568d: 0x2f4fb8,
+  0x5d657c: 0x2a2f55,
+  0x8f9eae: 0x4a5590,
+  0x464554: 0x1a1d3a,
+  0xca8451: 0xffd36b,
+  0x8d4848: 0xe04848,
+  0xe4ee67: 0xffe066,
+};
+/** Rei dos Morcegos: preto e carmim. */
+export const BAT_KING_PALETTE: Record<number, number> = {
+  0x4d4162: 0x5a1020,
+  0x71568d: 0xa01e30,
+  0x5d657c: 0x2a2a30,
+  0x8f9eae: 0x4a4a52,
+  0x464554: 0x1a1a1e,
+  0xca8451: 0xd8a530,
+  0xe4ee67: 0xff2d2d,
+};
+/** Príncipe das Abelhas: azul-gelo e prata. */
+export const BEE_PRINCE_PALETTE: Record<number, number> = {
+  0xefe054: 0x8fd9ff,
+  0xb28d5a: 0x2f86e0,
+  0x9f866e: 0x1c4f8a,
+  0x6c554b: 0x10223a,
+  0xdad9bb: 0xf4fbff,
+  0xc6b799: 0xbfe9ff,
+};
+/** Rei das Abelhas: magenta e ouro. */
+export const BEE_KING_PALETTE: Record<number, number> = {
+  0xefe054: 0xffd36b,
+  0xb28d5a: 0xb0306a,
+  0x9f866e: 0x7a1e4a,
+  0x6c554b: 0x3a0a24,
+  0xdad9bb: 0xfff1d8,
+  0xc6b799: 0xffb0d0,
+};

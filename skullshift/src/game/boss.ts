@@ -21,7 +21,13 @@ export interface BossHost {
   /** Congela tudo menos o chefe (entrada) ou libera. */
   freeze(on: boolean): void;
   bar(): BossBar | undefined;
-  defeated(): void;
+  defeated(text?: string): void;
+  /** Fala num balão (a luta fica pausada); resolve quando o jogador passa a fala. */
+  say?(anchor: () => { x: number; y: number }, text: string, name: string, color: number): Promise<void>;
+  /** Escolha com botões; resolve com o índice escolhido. */
+  choose?(title: string, options: string[]): Promise<number>;
+  /** Empurra o jogador (rajada de asas). */
+  push?(vx: number): void;
 }
 
 /** Barra de vida do chefe (na interface). */
@@ -30,6 +36,11 @@ export interface BossBar {
   setBossHp(frac: number): void;
   hideBossBar(): void;
   bossWarning(): void;
+  /** Segunda barra (um segundo chefe entrando na luta). */
+  showBossBar2?(name: string, title: string, color: number): void;
+  setBossHp2?(frac: number): void;
+  hideBossBar2?(): void;
+  choose?(title: string, options: string[]): Promise<number>;
 }
 
 interface Hazard {
@@ -66,8 +77,8 @@ export abstract class Boss {
   /** Muda a cada interrupção (morte do jogador, derrota): padrões antigos param sozinhos. */
   protected gen = 0;
   protected fighting = false;
-  private dying = false;
-  private hurtUntil = 0;
+  protected dying = false;
+  protected hurtUntil = 0;
   private lastAttackId = -1;
   private waitingRespawn = false;
   protected onGround = true;
@@ -154,8 +165,18 @@ export abstract class Boss {
     }
     this.play(this.idleAnim);
     await this.wait(250);
+    await this.afterIntro();
     this.host.freeze(false);
     this.fighting = true;
+    void this.loop();
+  }
+
+  /** Depois da entrada, antes de lutar (diálogos de abertura). */
+  protected async afterIntro(): Promise<void> {}
+
+  /** Começa (de novo) o laço de padrões, cancelando o anterior. */
+  protected startLoop(): void {
+    this.gen++;
     void this.loop();
   }
 
@@ -214,6 +235,9 @@ export abstract class Boss {
     if (!p.invulnerable && !p.zipping && this.touches(p)) this.host.killPlayer();
   }
 
+  /** Acompanha tweens de posição enquanto o jogo está parado numa fala. */
+  syncVisual(_time: number): void {}
+
   protected bob(_time: number): number {
     return 0;
   }
@@ -262,7 +286,13 @@ export abstract class Boss {
     return true;
   }
 
-  private hit(time: number): void {
+  /** Antes de levar dano: false bloqueia o golpe (ex.: um evento da luta vai acontecer). */
+  protected beforeDamage(): boolean {
+    return true;
+  }
+
+  protected hit(time: number): void {
+    if (!this.beforeDamage()) return;
     this.hp--;
     sfx('hit');
     this.hurtUntil = time + 420;
@@ -281,7 +311,7 @@ export abstract class Boss {
     s.time.delayedCall(240, () => this.sprite.clearTint());
   }
 
-  private async refill(): Promise<void> {
+  protected async refill(): Promise<void> {
     this.hp = this.maxHp;
     const bar = this.host.bar();
     this.fighting = false;
@@ -369,7 +399,7 @@ export abstract class Boss {
 
   // ---------- derrota (estilo Mega Man) ----------
 
-  private async defeat(): Promise<void> {
+  protected async defeat(): Promise<void> {
     if (this.dying) return;
     this.dying = true;
     this.fighting = false;
@@ -418,7 +448,12 @@ export abstract class Boss {
     await this.wait(1700);
     this.host.freeze(false);
     this.sprite.destroy();
-    this.host.defeated();
+    this.host.defeated(this.defeatText());
+  }
+
+  /** Frase da vitória (cada chefe pode ter a sua). */
+  protected defeatText(): string | undefined {
+    return undefined;
   }
 
   protected onDefeatStart(): void {}

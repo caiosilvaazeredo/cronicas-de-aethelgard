@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
-import { MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
+import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
 import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
@@ -69,6 +69,11 @@ export class BootScene extends Phaser.Scene {
     for (const k of ['idle', 'run', 'attack']) {
       recolorSheet(this, `minotaur_${k}`, `boss_mino_${k}`, 320, 320, MINO_BOSS_PALETTE);
       recolorSheet(this, `spider_${k}`, `boss_spider_${k}`, 192, 192, SPIDER_QUEEN_PALETTE);
+      // Príncipes e reis (morcegos e abelhas), também com paletas feitas à mão.
+      recolorSheet(this, `bat_${k}`, `prince_bat_${k}`, 192, 192, BAT_PRINCE_PALETTE);
+      recolorSheet(this, `bat_${k}`, `king_bat_${k}`, 192, 192, BAT_KING_PALETTE);
+      recolorSheet(this, `bee_${k}`, `prince_bee_${k}`, 192, 192, BEE_PRINCE_PALETTE);
+      recolorSheet(this, `bee_${k}`, `king_bee_${k}`, 192, 192, BEE_KING_PALETTE);
     }
     // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
     for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
@@ -96,6 +101,14 @@ export class BootScene extends Phaser.Scene {
     this.anim('boss_spider_idle', 8, 10, -1);
     this.anim('boss_spider_run', 5, 14, -1);
     this.anim('boss_spider_attack', 8, 16, 0);
+    this.anim('prince_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
+    this.anim('prince_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
+    this.anim('king_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
+    this.anim('king_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
+    this.anim('prince_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
+    this.anim('prince_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
+    this.anim('king_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
+    this.anim('king_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
     makeCrouchAnims(this);
     this.anim('bone', 4, 16, -1);
     this.anim('water_rocks', 16, 8, -1);

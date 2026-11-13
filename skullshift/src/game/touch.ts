@@ -45,10 +45,12 @@ const LABELS: Record<ButtonId, string> = {
 const FLIGHT_LANDSCAPE: Spec[] = [
   ['stick', 190, 540, 110, ''],
   ['attack', 1110, 560, 90, ''],
+  ['pick', 960, 610, 62, ''],
 ];
 const FLIGHT_PORTRAIT: Spec[] = [
   ['stick', 0.27, 0.5, 0.17, ''],
-  ['attack', 0.76, 0.5, 0.14, ''],
+  ['attack', 0.74, 0.36, 0.13, ''],
+  ['pick', 0.87, 0.82, 0.085, ''],
 ];
 
 /** Deitado: posições absolutas no canvas 1280x720. */
@@ -114,6 +116,8 @@ export class TouchPad {
     area?: { top: number; h: number },
     flip = false,
     flight = false,
+    /** Voo com o Príncipe dos Morcegos: botão extra do grito sônico. */
+    special = false,
   ) {
     const specs: Array<[ButtonId, number, number, number]> = [];
     if (flight) {
@@ -121,8 +125,8 @@ export class TouchPad {
       if (VIEW.portrait) {
         const top = area?.top ?? portraitPanelTop();
         const h = area?.h ?? VIEW.h - top;
-        for (const [id, u, v, r] of FLIGHT_PORTRAIT) specs.push([id, u * W, top + v * h, r * W]);
-      } else for (const [id, x, y, r] of FLIGHT_LANDSCAPE) specs.push([id, x, y, r]);
+        for (const [id, u, v, r] of FLIGHT_PORTRAIT) if (special || id !== 'pick') specs.push([id, u * W, top + v * h, r * W]);
+      } else for (const [id, x, y, r] of FLIGHT_LANDSCAPE) if (special || id !== 'pick') specs.push([id, x, y, r]);
     } else if (VIEW.portrait) {
       const top = area?.top ?? portraitPanelTop();
       const h = area?.h ?? VIEW.h - top;
@@ -157,7 +161,7 @@ export class TouchPad {
     const size = [0.82, 1, 1.15][st.touchSize] ?? 1;
     for (const [id, x, y, r0] of specs) {
       const r = r0 * size;
-      const text = flight && id === 'attack' ? 'TIRO' : LABELS[id];
+      const text = flight && id === 'attack' ? 'TIRO' : flight && id === 'pick' ? 'GRITO' : LABELS[id];
       const bg = scene.add
         .circle(x, y, r, 0x10223a, 0.42 * op)
         .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8 * op)

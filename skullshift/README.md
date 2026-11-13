@@ -40,7 +40,7 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 Cada fase tem **5 cenários** (telas; o voo tem 6): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. No versus, a fase é escolhida no menu (◀ ▶); no modo história, no mapa-múndi, que é uma faixa larga que rola acompanhando o esqueleto.
 
-O modo história tem **22 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
+O modo história tem **23 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
 
 | # | Fase | Tipo | O que tem |
 |---|---|---|---|
@@ -54,16 +54,17 @@ O modo história tem **22 fases** em ordem (o número é a posição na lista `L
 | 8 | Forja Vulcânica | Áreas travadas + **chefe** | Minotauro Rubro no fim |
 | 9 | Fuga da Forja | **Perseguição** | Onda gigante de lava, chão que desaba, tirolesas, meteoros |
 | 10 | Mina Rachada | **Chave e porta** | Pedras de ouro que só caem com o martelo |
-| 11 | Duelo no Céu | **Avião + chefe** | Montado no Abelhão; no fim, o Diabrete Gigante (barra de vida, leque de tiros, rajadas miradas, bote, morcegos) |
-| 12 | Santuário das Nuvens | Plataforma | Nuvens encantadas |
-| 13 | Correntes do Céu | Ventos e planar | Colunas de vento; segurar PULAR plana |
-| 14 | Bosque do Lenhador | **Chave e porta** | Machado derruba árvore que vira ponte; ovelha na placa abre o portão |
-| 15 | Voo Noturno | Voo com tiro | Montado no morcego gigante |
-| 16 | Mina de Ouro | **Corrida e tiro** | Tochas, aranhas e morcegos em ondas |
-| 17 | Escadaria da Maré | Combinações | Pulo duplo, pique + pulo duplo |
-| 18 | Torre do Escalador | **Chave e porta** | A chave no alto da torre (picareta) e escada para descer |
-| 19 | Mausoléu do Xamã | **Desafio do mausoléu** | Proteger a urna de 6 ondas de assombrações vindas dos dois lados (3 toques e ela quebra) |
-| 20–22 | Casa das Portas, Biblioteca Assombrada, Casa Sem Luz | Quebra-cabeças | Portas, chave e alavancas, escuridão e velas |
+| 11 | Ninho dos Príncipes | Plataforma + **chefe duplo** | Príncipe dos Morcegos; na metade da luta entra o Príncipe das Abelhas. Diálogos e **o acordo** (escolha que muda as fases de voo) |
+| 12 | Duelo no Céu | **Avião + chefe** | Montado no príncipe aliado; no fim, o Diabrete Gigante (barra de vida, leque de tiros, rajadas miradas, bote, morcegos) |
+| 13 | Santuário das Nuvens | Plataforma | Nuvens encantadas |
+| 14 | Correntes do Céu | Ventos e planar | Colunas de vento; segurar PULAR plana |
+| 15 | Bosque do Lenhador | **Chave e porta** | Machado derruba árvore que vira ponte; ovelha na placa abre o portão |
+| 16 | Voo Noturno | Voo com tiro + **chefe** | Montado no príncipe aliado; no fim, o rei do reino inimigo (Rei das Abelhas ou Rei dos Morcegos) |
+| 17 | Mina de Ouro | **Corrida e tiro** | Tochas, aranhas e morcegos em ondas |
+| 18 | Escadaria da Maré | Combinações | Pulo duplo, pique + pulo duplo |
+| 19 | Torre do Escalador | **Chave e porta** | A chave no alto da torre (picareta) e escada para descer |
+| 20 | Mausoléu do Xamã | **Desafio do mausoléu** | Proteger a urna de 6 ondas de assombrações vindas dos dois lados (3 toques e ela quebra) |
+| 21–23 | Casa das Portas, Biblioteca Assombrada, Casa Sem Luz | Quebra-cabeças | Portas, chave e alavancas, escuridão e velas |
 | ★ | Desenho Perdido (1930) | **Secreta**, corrida e tiro | Em **preto e branco**, com grão de película, vinheta, riscos e tremido de projetor. Aparece no mapa (ilha de filme, ligada à caverna) depois de achar o rolo de filme |
 
 **Fases de chave e porta:** leve a **chave dourada** até a **porta trancada** (com ela na mão não dá pulo duplo nem escalar). Cada uma tem **3 presentes** opcionais (carne, madeira e ouro, dos recursos do Tiny Swords) para os 100%; ficam salvos no save e aparecem sob o medalhão no mapa. Mecânicas: escadas (↑ / ▼), molas, alavancas de cor, pedras de ouro, árvores, ovelhas que andam sozinhas (e podem ser carregadas e arremessadas), placas de pressão e portões.
@@ -90,6 +91,12 @@ Ao entrar na arena, um portão de ferro desce atrás do jogador, a tela pisca **
 
 - **Minotauro Rubro, Senhor da Forja** (paleta trocada à mão: carmim, chifres de ouro, olhos vermelhos): investida até a parede (que derruba pedras do teto avisadas no chão), salto esmagador com ondas de choque pelo chão, marretada tripla avançando, chuva de brasas.
 - **Aranha-Rainha, Mãe do Covil** (paleta de viúva-negra, com coroa): sobe pelo fio e despenca em cima do jogador, cospe bolas de teia que **prendem** (dá para atacar e defender, mas não andar), chama filhotes, anda pelo teto soltando fios de teia como lanças, bote rasteiro.
+- **Príncipe dos Morcegos, Senhor do Ninho** (azul-meia-noite e ouro, com coroa) e **Príncipe das Abelhas, Herdeiro da Colmeia** (azul-gelo e prata): o morcego é muito mais forte, com 5 ataques (rasante mirado, grito sônico com anéis alternando chão e alto, enxame de morcegos, rajada de asas que empurra e solta garras miradas, anel de orbes). Na **metade da vida** dele a luta para, o Príncipe das Abelhas entra (com uma **segunda barra de vida**) e os dois falam. A abelha é mais fraca: só ferroada em mergulho e gotas de mel.
+  - **Diálogos com a luta parada:** os balões aparecem sobre quem fala (morcego, abelha ou a caveira). Atacar/pular/tocar passa a fala.
+  - **O acordo:** perto da derrota, o morcego desce e oferece: *"Poupa minha vida. Derrota o Príncipe das Abelhas e eu serei teu maior aliado."* A abelha pede o contrário. Abre uma janela de escolha (teclado, controle ou toque):
+    - **Aceitar:** o morcego se recolhe e para de atacar; a barra passa a ser a da abelha. Derrotar a abelha encerra a fase e o Príncipe dos Morcegos vira o aliado.
+    - **Recusar:** a abelha foge rindo, o morcego volta furioso e é preciso derrotá-lo; o Príncipe das Abelhas vira o aliado.
+  - A escolha fica salva no save (`pact`). Se o jogador cair, a luta recomeça inteira (e o acordo volta a ser oferecido).
 - **Derrota:** congelamento no golpe final, a barra esvazia, explosões em cadeia pelo corpo piscando em branco, clarão na tela e **orbes de energia em estrela** em dois anéis.
 
 **Poderes especiais:**
@@ -177,9 +184,24 @@ Com um oponente perto, segurar para **trás** faz o personagem andar devagar com
 - **Revivendo:** o xamã chega numa nuvem trazendo o espírito do personagem pendurado numa linha, conjura, o corpo inteiro se forma no chão e ele vai embora flutuando devagar.
 - **Água:** respingo na superfície, ondas, gotas e bolhas, e o corpo afunda recortado pela linha d'água. Também há espuma batendo nos penhascos, ondas correndo, nuvens à deriva, rajadas de vento e folhas voando. Para testar os botões de toque no PC, abra o jogo com `?touch=1` na URL.
 
+### Voo e o acordo dos Príncipes
+
+As duas fases de voo (Duelo no Céu e Voo Noturno) dependem da escolha feita no Ninho dos Príncipes:
+
+| | Aceitou (Príncipe dos Morcegos) | Recusou (Príncipe das Abelhas) |
+|---|---|---|
+| Montaria | Príncipe dos Morcegos | Príncipe das Abelhas |
+| Tiro | **3 ossos em leque**, mais rápido | 1 osso, mais lento |
+| Velocidade | Rápida | Normal |
+| Poderes | **Grito sônico** (PEGAR / DEFENDER / botão GRITO; recarga de 6 s, apaga tiros por perto e machuca quem estiver no anel; um arco em volta mostra a carga) e **escudo** (bolha que segura um golpe e volta em 12 s) | Nenhum |
+| Inimigos | Reino das abelhas | Reino dos morcegos: **mais numerosos** (ondas maiores e mais juntas), **mais resistentes** (+1 de vida) e atiradores em leque de 3, mais rápidos |
+| Chefe do Voo Noturno | **Rei das Abelhas** (magenta e ouro) | **Rei dos Morcegos** (preto e carmim, mais vida, anel sônico extra) |
+
+Os textos dos capítulos de voo também mudam com a escolha. No modo livre, o aliado é o morcego.
+
 ### Controles das fases de voo
 
-Nas fases de voo (Voo Noturno e Duelo no Céu) o tiro **não é automático**: segure ATACAR para atirar. Teclado e controle: direcionais (W/↑ sobe, S/↓ desce) voam em todas as direções. No toque, os botões de sempre dão lugar a um **manche analógico** (arraste a bolinha, 8 direções) e a um botão **TIRO** grande. Com gestos/mouse: arrastar voa, toque rápido atira um osso e segundo dedo (ou botão direito) atira sem parar.
+Nas fases de voo (Voo Noturno e Duelo no Céu) o tiro **não é automático**: segure ATACAR para atirar. Teclado e controle: direcionais (W/↑ sobe, S/↓ desce) voam em todas as direções. No toque, os botões de sempre dão lugar a um **manche analógico** (arraste a bolinha, 8 direções) e a um botão **TIRO** grande (com o Príncipe dos Morcegos, mais um botão **GRITO**). Com gestos/mouse: arrastar voa, toque rápido atira um osso e segundo dedo (ou botão direito) atira sem parar.
 
 ### Mapa no celular em pé
 
@@ -232,6 +254,7 @@ Na tela de escolha de controle, cada jogador escolhe o nome (◀ ▶ na plaquinh
 - `src/game/characters.ts` — dados de cada personagem: quadros, velocidade, golpe ou projétil e item que solta.
 - `src/game/level.ts` — as fases (5 cenários cada) em tiles: plataformas, flutuantes, tema, inimigos, itens, placas, arena de chefe, perseguição, ventos, voo e casas assombradas. A ordem está em `LEVELS`; novas fases entram aqui (e um capítulo em `src/data/lore.ts` e uma posição em `SPOTS` no mapa).
 - `src/game/boss.ts` — chefes (entrada, barra de vida, padrões, perigos e derrota).
+- `src/game/princes.ts` — a luta dos Príncipes (dois chefes, diálogos com a luta parada e a escolha do acordo).
 - `src/game/haunt.ts` — casas assombradas (portas, chave, alavancas, pontes-fantasma, pisos falsos, velas, escuridão).
 - `src/game/shmup.ts` — fase de voo com tiro.
 - `src/game/escape.ts` — fuga (onda de lava, chão que desaba, tirolesas, meteoros).

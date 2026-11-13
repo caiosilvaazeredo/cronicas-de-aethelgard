@@ -6,7 +6,8 @@ import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type Device
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
-import { MAIN_COUNT, completeLevel, deathLimit, findSecret, giftsOf, hasSecret, hasSeen, markGift, markSeen } from '../game/progress';
+import { PrincesBoss } from '../game/princes';
+import { MAIN_COUNT, completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -422,6 +423,7 @@ export class GameScene extends Phaser.Scene {
       if (skip && !this.prevSkip) this.skipLine?.();
       this.prevSkip = skip;
       this.level.update(time, delta);
+      this.boss?.syncVisual(time);
       this.applyCamera();
       return;
     }
@@ -1654,12 +1656,12 @@ export class GameScene extends Phaser.Scene {
       died: () => this.countStoryDeath(1200),
       win: () => this.storyWin(LEVELS[this.levelIndex].winText ?? 'Céu limpo!'),
       popText: (x, y, text, color) => this.popText(x, y, text, color),
-      boss: !!LEVELS[this.levelIndex].shmupBoss,
-      mount: LEVELS[this.levelIndex].shmupBoss ? 'bee' : 'bat',
+      boss: LEVELS[this.levelIndex].shmupBoss,
+      pact: getPact(),
       bar: () => this.ui,
     });
     this.time.delayedCall(400, () => this.shmup?.hint());
-    if (LEVELS[this.levelIndex].shmupBoss) return; // duelo de dia
+    if (LEVELS[this.levelIndex].shmupBoss === 'imp') return; // duelo de dia
     // Noite: céu escurecido e estrelas piscando.
     this.add.rectangle(0, -400, W, H + 800, 0x0b1030, 0.55).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.5);
     const rng = new Phaser.Math.RandomDataGenerator(['night']);
@@ -1772,9 +1774,27 @@ export class GameScene extends Phaser.Scene {
           if (on) this.players[0].body.setVelocityX(0);
         },
         bar: () => this.ui,
-        defeated: () => this.storyWin(def.winText ?? 'Chefe derrotado!'),
+        defeated: (text?: string) => this.storyWin(text ?? def.winText ?? 'Chefe derrotado!'),
+        say: async (anchor: () => { x: number; y: number }, text: string, name: string, color: number) => {
+          if (!this.scene.isActive() || this.ended) return;
+          // Abaixo das barras de vida do chefe.
+          const low = () => {
+            const a = anchor();
+            return { x: a.x, y: Math.max(a.y, this.cameras.main.worldView.y + 250) };
+          };
+          const b = new SpeechBubble(this, low, text, name, color);
+          await this.lineWait(Math.max(2400, text.length * 60));
+          b.close();
+          await this.waitP(140);
+        },
+        choose: (title: string, options: string[]) => this.ui?.choose(title, options) ?? Promise.resolve(0),
+        push: (vx: number) => {
+          const pl = this.players[0];
+          if (pl.alive && pl.body.blocked.down) pl.knockback(Math.sign(vx), Math.abs(vx));
+        },
       };
-      this.boss = def.boss.kind === 'minotaur' ? new MinotaurBoss(host) : new SpiderQueenBoss(host);
+      const k = def.boss.kind;
+      this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
       void this.boss.intro();
     }
     this.boss?.update(time, dt);

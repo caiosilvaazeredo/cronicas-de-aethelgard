@@ -5,6 +5,7 @@ import { LEVELS } from '../game/level';
 import { TouchPad } from '../game/touch';
 import { PLAYER_TINT, pillButton } from '../ui/devices';
 import { sfx } from '../game/settings';
+import { getPact } from '../game/progress';
 import type { GameScene } from './GameScene';
 
 export interface VictoryInfo {
@@ -92,6 +93,9 @@ export class UIScene extends Phaser.Scene {
     for (const k of ['UP', 'W']) kb.on(`keydown-${k}`, () => this.pauseBox && this.selectPause(this.pauseSel - 1));
     for (const k of ['DOWN', 'S']) kb.on(`keydown-${k}`, () => this.pauseBox && this.selectPause(this.pauseSel + 1));
     for (const k of ['ENTER', 'SPACE']) kb.on(`keydown-${k}`, () => this.pauseBox && this.pauseRows[this.pauseSel]?.act());
+    for (const k of ['UP', 'W', 'LEFT', 'A']) kb.on(`keydown-${k}`, () => this.chooseBox && this.selectChoice(this.chooseSel - 1));
+    for (const k of ['DOWN', 'S', 'RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.chooseBox && this.selectChoice(this.chooseSel + 1));
+    for (const k of ['ENTER', 'SPACE', 'J', 'K']) kb.on(`keydown-${k}`, () => this.chooseBox && this.confirmChoice());
     kb.on('keydown-ESC', () => this.togglePause());
     kb.on('keydown-P', () => this.togglePause());
     const g = this.g;
@@ -134,7 +138,7 @@ export class UIScene extends Phaser.Scene {
     const sides = g.mode === 'story' ? (['full'] as const) : (['left', 'right'] as const);
     // Fases de voo: manche e TIRO no lugar dos botões de sempre.
     const flight = g.mode === 'story' && !!LEVELS[g.levelIndex]?.shmup;
-    this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i], undefined, false, flight) : undefined));
+    this.pads = g.devices.map((d, i) => (d === 'touch' ? new TouchPad(this, sides[i], PLAYER_TINT[i], undefined, false, flight, flight && getPact() === 'bat') : undefined));
 
     const menuY = VIEW.portrait ? 120 + PORTRAIT.topPad : 720 - 34;
     this.menuButton = pillButton(this, W / 2, menuY, 'MENU', () => this.togglePause(), 120)
@@ -324,6 +328,20 @@ export class UIScene extends Phaser.Scene {
 
   /** Navegação da pausa pelo teclado e controle (o jogo está parado, então a interface lê). */
   update(): void {
+    if (this.chooseBox && !this.pauseBox) {
+      const cp = this.input.gamepad?.gamepads.find((p) => p && p.connected);
+      if (cp) {
+        const b = (i: number) => !!cp.buttons[i]?.pressed;
+        const ax = cp.axes[0]?.getValue() ?? 0;
+        const ay = cp.axes[1]?.getValue() ?? 0;
+        const st = { u: b(12) || b(14) || ay < -0.5 || ax < -0.5, d: b(13) || b(15) || ay > 0.5 || ax > 0.5, a: b(0) };
+        const pv = this.prevChoosePad;
+        if (st.u && !pv.u) this.selectChoice(this.chooseSel - 1);
+        if (st.d && !pv.d) this.selectChoice(this.chooseSel + 1);
+        if (st.a && !pv.a) this.confirmChoice();
+        this.prevChoosePad = st;
+      }
+    }
     if (!this.pauseBox || this.scene.isActive('settings')) return;
     const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
     if (!pad) return;
@@ -390,6 +408,133 @@ export class UIScene extends Phaser.Scene {
     if (!b) return;
     this.tweens.add({ targets: b, alpha: 0, duration: 600, delay: 900, onComplete: () => b.destroy() });
     this.bossBox = undefined;
+  }
+
+  private bossBox2?: Phaser.GameObjects.Container;
+  private bossCells2: Phaser.GameObjects.Rectangle[] = [];
+
+  /** Segunda barra (um chefe que entra no meio da luta), logo abaixo da primeira. */
+  showBossBar2(name: string, title: string, color: number): void {
+    this.bossBox2?.destroy();
+    this.bossCells2 = [];
+    const P = VIEW.portrait;
+    const n = 14;
+    const cw = P ? 30 : 18;
+    const gap = 4;
+    const w = n * (cw + gap) + 16;
+    const hh = P ? 30 : 18;
+    const g = this.add.graphics();
+    g.fillStyle(0x1d1a2b, 0.92).fillRect(-w / 2 - 4, -8, w + 8, hh + 12);
+    g.fillStyle(0x3a2a44, 1).fillRect(-w / 2, -4, w, hh + 4);
+    const items: Phaser.GameObjects.GameObject[] = [g];
+    for (let i = 0; i < n; i++) {
+      const cell = this.add.rectangle(-w / 2 + 8 + i * (cw + gap), 2, cw, hh - 4, color).setOrigin(0, 0);
+      this.bossCells2.push(cell);
+      items.push(cell);
+    }
+    items.push(
+      this.add
+        .text(w / 2 + 12, hh / 2, `${name}  ·  ${title}`, { fontFamily: FONT, fontSize: P ? '24px' : '16px', color: '#fff7dc', stroke: '#1d1a2b', strokeThickness: 5 })
+        .setOrigin(0, 0.5),
+    );
+    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 10 : 124;
+    this.bossBox2 = this.add.container(W / 2 - (P ? 120 : 110), y, items).setDepth(DEPTH.hud + 3).setAlpha(0);
+    this.tweens.add({ targets: this.bossBox2, alpha: 1, duration: 300 });
+  }
+
+  setBossHp2(frac: number): void {
+    const on = Math.ceil(frac * this.bossCells2.length);
+    this.bossCells2.forEach((c, i) => c.setVisible(i < on));
+  }
+
+  hideBossBar2(): void {
+    const b = this.bossBox2;
+    if (!b) return;
+    this.tweens.add({ targets: b, alpha: 0, duration: 400, onComplete: () => b.destroy() });
+    this.bossBox2 = undefined;
+  }
+
+  private chooseBox?: Phaser.GameObjects.Container;
+  private chooseRows: { bg: Phaser.GameObjects.Graphics; t: Phaser.GameObjects.Text; w: number; h: number; y: number }[] = [];
+  private chooseSel = 0;
+  private chooseAt = 0;
+  private chooseDone?: (i: number) => void;
+  private prevChoosePad = { u: true, d: true, a: true };
+
+  /** Escolha no meio da história (o jogo fica parado esperando): teclado, controle ou toque. */
+  choose(title: string, options: string[]): Promise<number> {
+    this.chooseBox?.destroy();
+    const P = VIEW.portrait;
+    const H = this.scale.height;
+    const pw = P ? 900 : 760;
+    const rh = P ? 120 : 84;
+    const ph = options.length * rh + (P ? 230 : 170);
+    const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.55).setInteractive()];
+    const panel = this.add.graphics();
+    panel.fillStyle(0x1d1a2b, 1).fillRoundedRect(-pw / 2 - 6, -ph / 2 - 6, pw + 12, ph + 12, 26);
+    panel.fillStyle(0x10223a, 0.97).fillRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    panel.lineStyle(4, 0xffe066, 0.9).strokeRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
+    items.push(panel);
+    items.push(
+      this.add
+        .text(0, -ph / 2 + (P ? 64 : 46), title, { fontFamily: FONT, fontSize: P ? '40px' : '30px', color: '#ffe066', stroke: '#1d1a2b', strokeThickness: 8, align: 'center', wordWrap: { width: pw - 60 } })
+        .setOrigin(0.5),
+    );
+    items.push(
+      this.add
+        .text(0, ph / 2 - (P ? 40 : 30), 'Escolha com cuidado: isso muda as fases de voo.', { fontFamily: FONT, fontSize: P ? '24px' : '17px', color: '#bfe9ff' })
+        .setOrigin(0.5),
+    );
+    this.chooseRows = [];
+    options.forEach((label, i) => {
+      const y = -ph / 2 + (P ? 140 : 100) + i * rh + rh / 2;
+      const w = pw - 60;
+      const h = rh - 14;
+      const bg = this.add.graphics();
+      const t = this.add.text(0, y, label, { fontFamily: FONT, fontSize: P ? '32px' : '23px', color: '#fff7dc', align: 'center', wordWrap: { width: w - 30 } }).setOrigin(0.5);
+      const z = this.add
+        .zone(0, y, w, h)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => this.selectChoice(i))
+        .on('pointerdown', () => {
+          this.selectChoice(i);
+          this.confirmChoice();
+        });
+      this.chooseRows.push({ bg, t, w, h, y });
+      items.push(bg, t, z);
+    });
+    const cy = P ? PORTRAIT.hudH + PORTRAIT.worldH / 2 : 360;
+    this.chooseBox = this.add.container(W / 2, cy, items).setDepth(DEPTH.hud + 18).setScale(0.8).setAlpha(0);
+    this.tweens.add({ targets: this.chooseBox, scale: 1, alpha: 1, duration: 220, ease: 'Back.easeOut' });
+    this.chooseAt = this.time.now;
+    this.prevChoosePad = { u: true, d: true, a: true };
+    this.selectChoice(0);
+    sfx('select');
+    return new Promise((r) => (this.chooseDone = r));
+  }
+
+  private selectChoice(i: number): void {
+    if (!this.chooseRows.length) return;
+    const n = Phaser.Math.Wrap(i, 0, this.chooseRows.length);
+    this.chooseSel = n;
+    this.chooseRows.forEach((r, k) => {
+      const on = k === n;
+      r.bg.clear();
+      r.bg.fillStyle(on ? 0xffe066 : 0x2a3a5a, 1).fillRoundedRect(-r.w / 2, r.y - r.h / 2, r.w, r.h, 14);
+      r.t.setColor(on ? '#10223a' : '#fff7dc');
+    });
+  }
+
+  private confirmChoice(): void {
+    // Uma pausa curta evita escolher sem querer com o botão que passou a última fala.
+    if (!this.chooseBox || this.time.now - this.chooseAt < 450) return;
+    const box = this.chooseBox;
+    this.chooseBox = undefined;
+    sfx('select');
+    this.tweens.add({ targets: box, alpha: 0, scale: 0.9, duration: 180, onComplete: () => box.destroy() });
+    const done = this.chooseDone;
+    this.chooseDone = undefined;
+    done?.(this.chooseSel);
   }
 
   private livesBox?: Phaser.GameObjects.Container;

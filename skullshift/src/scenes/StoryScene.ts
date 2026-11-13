@@ -243,7 +243,7 @@ export class StoryScene extends Phaser.Scene {
     if (this.epilogue) {
       // Fim em aberto: a tela some num branco morno, e a escolha fica com quem joga.
       this.cameras.main.fadeOut(1400, 255, 247, 220);
-      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('map', { devices: this.devices }));
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('map', { devices: this.devices, level: this.level }));
       return;
     }
     this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });

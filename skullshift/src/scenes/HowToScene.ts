@@ -354,7 +354,7 @@ export class HowToScene extends Phaser.Scene {
 
   private play(): void {
     // História: mapa de fases (com a visual novel antes de cada uma). Versus: direto para a partida.
-    if (this.mode === 'story') this.scene.start('map', { devices: this.devices });
+    if (this.mode === 'story') this.scene.start('world', { devices: this.devices });
     else this.scene.start('game', { mode: this.mode, devices: this.devices, level: this.level });
   }
 

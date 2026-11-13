@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
-import { CHAPTERS, chapterFor } from '../data/lore';
+import { chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
-import { completedCount, currentSlot, getPact, giftsOf, hasPact, hasSecret, isFreePlay } from '../game/progress';
-import { LEVELS } from '../game/level';
+import { currentSlot, getPact, giftsOf, hasPact, hasSecret, isDone, isFreePlay } from '../game/progress';
+import { LEVELS, type LevelDef } from '../game/level';
+import { AREAS, AREA_GOAL, areaById, areaCleared, areaOfLevel, areaTitle, levelIndex, levelUnlocked, type AreaDef } from '../game/areas';
 import { unlockedBy } from '../game/abilities';
 import { pillButton } from '../ui/devices';
 
@@ -12,26 +13,8 @@ const MH = 720;
 const COLS = 9;
 const INK = 0x1d1a2b;
 
-/**
- * Posição de cada fase no mapa (na ordem de LEVELS). O mapa é uma faixa larga que rola
- * na horizontal acompanhando o esqueleto; fases novas sem posição entram no fim da faixa.
- */
-/** Fases principais (as secretas aparecem à parte, quando o segredo é achado). */
-const MAIN = LEVELS.filter((l) => !l.secret);
-/**
- * Posição de cada fase no mapa: uma faixa que segue para a direita, com o céu mais alto
- * e o casarão embaixo. O mapa rola acompanhando o esqueleto.
- */
-function spot(i: number): [number, number] {
-  const l = MAIN[i];
-  const x = 250 + i * 300;
-  if (l.theme === 'sky') return [x, l.shmup ? 170 : 230];
-  if (l.theme === 'haunted') return [x, 500];
-  return [x, i % 2 ? 430 : 490];
-}
-const PATH: Array<[number, number]> = MAIN.map((_, i) => spot(i));
-const NODE_AT = MAIN.map((_, i) => i);
-const WORLD_W = PATH[PATH.length - 1][0] + 320;
+/** Vaga de fase ainda não construída (a área tem meta de 10 fases). */
+type Slot = LevelDef | null;
 
 /**
  * Seleção de fase do modo história, como um mapa-múndi de plataforma: ilhas da maré,
@@ -40,6 +23,33 @@ const WORLD_W = PATH[PATH.length - 1][0] + 320;
  */
 export class MapScene extends Phaser.Scene {
   private devices: DeviceId[] = ['kb-full'];
+  /** Área deste mapa e as vagas de fase (as fases prontas e as que ainda faltam). */
+  private area!: AreaDef;
+  private MAIN: Slot[] = [];
+  private PATH: Array<[number, number]> = [];
+  private NODE_AT: number[] = [];
+  private WORLD_W = MW;
+  /** Quantas vagas têm fase de verdade. */
+  private built = 0;
+  private justCleared = false;
+
+  /**
+   * Posição de cada fase no mapa: uma faixa que segue para a direita (o céu mais alto, o
+   * casarão embaixo). O mapa rola acompanhando o esqueleto.
+   */
+  private spot(i: number): [number, number] {
+    const l = this.MAIN[i];
+    const x = 250 + i * 300;
+    if (l?.theme === 'sky') return [x, l.shmup ? 170 : 230];
+    if (l?.theme === 'haunted') return [x, 500];
+    return [x, i % 2 ? 430 : 490];
+  }
+
+  /** Índice em LEVELS da fase na vaga i (−1 se a vaga ainda está vazia). */
+  private levelAt(i: number): number {
+    const l = this.MAIN[i];
+    return l ? levelIndex(l.id) : -1;
+  }
   private unlocked = 0;
   private current = 0;
   private walking = false;
@@ -49,18 +59,33 @@ export class MapScene extends Phaser.Scene {
   private infoTitle!: Phaser.GameObjects.Text;
   private nodes: Phaser.GameObjects.Container[] = [];
   private prevPad = { l: false, r: false, a: true, b: true };
-  lastData: { devices?: DeviceId[]; justCompleted?: number } = {};
+  lastData: { devices?: DeviceId[]; justCompleted?: number; area?: string; level?: number } = {};
 
   constructor() {
     super('map');
   }
 
-  init(data: { devices?: DeviceId[]; justCompleted?: number }): void {
+  init(data: { devices?: DeviceId[]; justCompleted?: number; area?: string; level?: number }): void {
     this.lastData = data;
     this.devices = data.devices ?? ['kb-full'];
-    this.unlocked = Math.min(MAIN.length - 1, completedCount());
-    const from = data.justCompleted;
-    this.current = from !== undefined ? Math.min(from, this.unlocked) : this.unlocked;
+    const ref = data.justCompleted ?? data.level;
+    this.area = (data.area ? areaById(data.area) : undefined) ?? (ref !== undefined ? areaOfLevel(ref) : undefined) ?? AREAS[0];
+    const real = this.area.levels.map((id) => LEVELS[levelIndex(id)]).filter(Boolean);
+    this.built = real.length;
+    this.MAIN = [...real, ...Array<Slot>(Math.max(0, AREA_GOAL - real.length)).fill(null)];
+    this.PATH = this.MAIN.map((_, i) => this.spot(i));
+    this.NODE_AT = this.MAIN.map((_, i) => i);
+    this.WORLD_W = this.PATH[this.PATH.length - 1][0] + 320;
+    // Liberadas: em sequência dentro da área (no modo livre, todas as prontas).
+    let u = 0;
+    while (u + 1 < this.built && levelUnlocked(this.area, u + 1)) u++;
+    this.unlocked = u;
+    const pos = (idx?: number) => (idx === undefined ? -1 : this.MAIN.findIndex((l) => l && levelIndex(l.id) === idx));
+    const from = pos(data.justCompleted);
+    const at = pos(data.level);
+    // Recém-concluída a última fase da área: o selo do rei cai e voltamos ao mundo.
+    this.justCleared = from >= 0 && from === this.built - 1 && areaCleared(this.area);
+    this.current = from >= 0 ? Math.min(from, this.unlocked) : at >= 0 ? at : this.unlocked;
     this.walking = false;
     this.popupOpen = false;
     this.closePopup = undefined;
@@ -83,8 +108,8 @@ export class MapScene extends Phaser.Scene {
       const band = Math.max(MH, H - top - 820);
       const zoom = Phaser.Math.Clamp(band / MH, 1, 2.2);
       cam.setViewport(0, top, MW, MH * zoom).setZoom(zoom);
-      cam.setBounds(0, 0, WORLD_W, MH);
-    } else cam.setBounds(0, 0, WORLD_W, MH);
+      cam.setBounds(0, 0, this.WORLD_W, MH);
+    } else cam.setBounds(0, 0, this.WORLD_W, MH);
 
     this.drawSea();
     this.drawIslands();
@@ -93,7 +118,7 @@ export class MapScene extends Phaser.Scene {
 
     this.heroAura = this.add.image(0, 0, 'aura').setTint(0x2f86e0).setScale(0.7).setAlpha(0.8).setDepth(19);
     this.hero = this.add.sprite(0, 0, 'skull_idle').play('skull_idle').setScale(0.75).setDepth(20);
-    this.placeHero(PATH[NODE_AT[this.current]]);
+    this.placeHero(this.PATH[this.NODE_AT[this.current]]);
     cam.startFollow(this.hero, true, 0.1, 0.1);
     cam.centerOn(this.hero.x, MH / 2);
     const worldObjs = [...this.children.list];
@@ -106,7 +131,7 @@ export class MapScene extends Phaser.Scene {
     };
 
     this.add
-      .text(MW / 2, 40, isFreePlay() ? 'MODO LIVRE · TESTES' : `SELECIONAR FASE · SAVE ${currentSlot()}`, { fontFamily: FONT, fontSize: '42px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 })
+      .text(MW / 2, 40, this.headerText(), { fontFamily: FONT, fontSize: '42px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 })
       .setOrigin(0.5)
       .setDepth(30)
       .setScrollFactor(0)
@@ -119,24 +144,43 @@ export class MapScene extends Phaser.Scene {
       this.add.text(52, MH - 64, '', { fontFamily: BODY_FONT, fontSize: '18px', color: '#fff7dc', wordWrap: { width: 720 } }).setDepth(30),
     );
     ui(pillButton(this, MW - 170, MH - 70 + offY, 'ENTRAR  ▶', () => this.enter(), 240, 0xffe066).setDepth(30)).y -= offY;
-    ui(pillButton(this, 110, 40 + offY, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 170).setScale(0.75).setDepth(30)).y -= offY;
+    ui(pillButton(this, 110, 40 + offY, '◀ MUNDO', () => this.toWorld(), 170).setScale(0.75).setDepth(30)).y -= offY;
     this.updateInfo();
 
     const kb = this.input.keyboard!;
     for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.step(-1));
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.step(1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
-    kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
+    kb.on('keydown-ESC', () => this.toWorld());
 
     // Acabou de concluir uma fase: a seguinte se abre e o esqueleto vai até ela.
+    this.afterCompletion();
+  }
+
+  /**
+   * Acabou de concluir uma fase: mostra as habilidades novas, abre a seguinte e o esqueleto
+   * anda até ela. Se era a última da área, o selo do rei cai e voltamos ao mundo.
+   */
+  private afterCompletion(): void {
     const done = this.lastData.justCompleted;
-    if (done !== undefined && this.unlocked > done) {
-      const node = this.nodes[this.unlocked];
-      this.cameras.main.flash(200, 255, 247, 220);
-      this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
-      this.burst(node.x, node.y);
-      this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
+    if (done === undefined) return;
+    const pos = this.MAIN.findIndex((l) => l && levelIndex(l.id) === done);
+    if (this.justCleared) {
+      this.time.delayedCall(400, () =>
+        this.showAbilities(unlockedBy(done), () => {
+          this.popupOpen = true;
+          this.cameras.main.flash(300, 255, 247, 220);
+          this.time.delayedCall(300, () => this.scene.start('world', { devices: this.devices, area: this.area.id, cleared: this.area.id }));
+        }),
+      );
+      return;
     }
+    if (pos < 0 || this.unlocked <= pos) return void this.showAbilities(unlockedBy(done), () => undefined);
+    const node = this.nodes[this.unlocked];
+    this.cameras.main.flash(200, 255, 247, 220);
+    this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
+    this.burst(node.x, node.y);
+    this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
   }
 
   /** Câmera da interface (só em pé): os objetos do mundo não aparecem nela. */
@@ -151,8 +195,8 @@ export class MapScene extends Phaser.Scene {
     const first = this.children.list.length;
     const top = PORTRAIT.topPad;
     this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
-    this.add.text(MW / 2, 175 + top, isFreePlay() ? 'MODO LIVRE · TESTES' : `SELECIONAR FASE · SAVE ${currentSlot()}`, { fontFamily: FONT, fontSize: '52px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
-    pillButton(this, 150, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.1);
+    this.add.text(MW / 2, 175 + top, this.headerText(), { fontFamily: FONT, fontSize: '52px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
+    pillButton(this, 150, 80 + top, '◀ MUNDO', () => this.toWorld(), 200).setScale(1.1);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
     const g = this.add.graphics();
@@ -189,14 +233,8 @@ export class MapScene extends Phaser.Scene {
     for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.step(-1));
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.step(1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
-    kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
-    const done = this.lastData.justCompleted;
-    if (done !== undefined && this.unlocked > done) {
-      const node = this.nodes[this.unlocked];
-      this.tweens.add({ targets: node, scale: { from: 1.6, to: 1 }, duration: 600, ease: 'Back.easeOut' });
-      this.burst(node.x, node.y);
-      this.time.delayedCall(500, () => this.showAbilities(unlockedBy(done), () => this.walkTo(this.unlocked)));
-    }
+    kb.on('keydown-ESC', () => this.toWorld());
+    this.afterCompletion();
   }
 
   update(): void {
@@ -215,25 +253,25 @@ export class MapScene extends Phaser.Scene {
       if (this.closePopup) this.closePopup();
       else this.enter();
     }
-    if (st.b && !this.prevPad.b) this.scene.start('menu', { stage: 'modes' });
+    if (st.b && !this.prevPad.b) this.toWorld();
     this.prevPad = st;
   }
 
   // ---------- desenho ----------
 
   private drawSea(): void {
-    const s = this.add.tileSprite(-MW, -MH * 2, WORLD_W + MW * 2, MH * 5, 'waves').setOrigin(0).setAlpha(0.35).setDepth(0);
+    const s = this.add.tileSprite(-MW, -MH * 2, this.WORLD_W + MW * 2, MH * 5, 'waves').setOrigin(0).setAlpha(0.35).setDepth(0);
     this.tweens.add({ targets: s, tilePositionX: 256, duration: 9000, repeat: -1 });
     const rng = new Phaser.Math.RandomDataGenerator(['map-rocks']);
-    for (let i = 0; i < Math.round(WORLD_W / 70); i++) {
+    for (let i = 0; i < Math.round(this.WORLD_W / 70); i++) {
       this.add
-        .sprite(rng.between(20, WORLD_W - 20), rng.between(90, MH - 140), 'water_rocks')
+        .sprite(rng.between(20, this.WORLD_W - 20), rng.between(90, MH - 140), 'water_rocks')
         .setScale(rng.realInRange(1, 1.5))
         .setDepth(1)
         .play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
     }
-    for (let i = 0; i < Math.round(WORLD_W / 320); i++) {
-      this.add.image(rng.between(0, WORLD_W), rng.between(60, 260), `cloud_0${(i % 8) + 1}`).setAlpha(0.5).setScale(0.6).setDepth(25);
+    for (let i = 0; i < Math.round(this.WORLD_W / 320); i++) {
+      this.add.image(rng.between(0, this.WORLD_W), rng.between(60, 260), `cloud_0${(i % 8) + 1}`).setAlpha(0.5).setScale(0.6).setDepth(25);
     }
   }
 
@@ -267,11 +305,11 @@ export class MapScene extends Phaser.Scene {
   }
 
   private drawIslands(): void {
-    MAIN.forEach((l, i) => this.drawIsland(l, i));
+    this.MAIN.forEach((l, i) => (l ? this.drawIsland(l, i) : this.drawFog(i)));
     // Ilha do casarão: uma só para as casas assombradas seguidas, com o casarão no meio.
-    const haunted = MAIN.map((l, i) => (l.theme === 'haunted' ? i : -1)).filter((i) => i >= 0);
+    const haunted = this.MAIN.map((l, i) => (l?.theme === 'haunted' ? i : -1)).filter((i) => i >= 0);
     if (haunted.length) {
-      const xs = haunted.map((i) => spot(i)[0]);
+      const xs = haunted.map((i) => this.spot(i)[0]);
       const a = Math.min(...xs) - 130;
       const b = Math.max(...xs) + 130;
       this.island(a / 64, 6.5, Math.ceil((b - a) / 64), 3, 'tiles_cave', 0x8a7aa8);
@@ -283,7 +321,7 @@ export class MapScene extends Phaser.Scene {
     }
     // Ilha secreta do desenho perdido (aparece só depois de achar o rolo de filme).
     const sec = LEVELS.findIndex((l) => l.secret);
-    if (sec >= 0 && hasSecret(LEVELS[sec].id)) {
+    if (sec >= 0 && hasSecret(LEVELS[sec].id) && this.area.levels.includes('cave')) {
       const [x, y] = this.secretSpot();
       const g = this.add.graphics().setDepth(4);
       g.fillStyle(0x2a2a2a, 0.9).fillRoundedRect(x - 90, y - 50, 180, 110, 18);
@@ -295,13 +333,13 @@ export class MapScene extends Phaser.Scene {
   }
 
   private secretSpot(): [number, number] {
-    const cave = Math.max(0, MAIN.findIndex((l) => l.id === 'cave'));
-    return [spot(cave)[0] + 150, 170];
+    const cave = Math.max(0, this.MAIN.findIndex((l) => l?.id === 'cave'));
+    return [this.spot(cave)[0] + 150, 170];
   }
 
   /** Ilha de uma fase, conforme o tema e o tipo. */
   private drawIsland(l: (typeof LEVELS)[number], i: number): void {
-    const [x, y] = spot(i);
+    const [x, y] = this.spot(i);
     const tx = (x - 130) / 64;
     const ty = (y - 70) / 64;
     const deco = (key: string, dx: number, dy: number, sc = 1) => this.add.image(x + dx, y + dy, key).setScale(sc).setDepth(6);
@@ -399,32 +437,56 @@ export class MapScene extends Phaser.Scene {
     }
   }
 
+  /** Vaga de fase ainda não construída: ilhota coberta de névoa. */
+  private drawFog(i: number): void {
+    const [x, y] = this.spot(i);
+    const g = this.add.graphics().setDepth(3);
+    g.fillStyle(0x7a8a9a, 0.55).fillEllipse(x, y + 10, 230, 90);
+    g.fillStyle(0xc9d1d8, 0.35).fillEllipse(x - 30, y - 6, 150, 60).fillEllipse(x + 50, y + 4, 120, 50);
+    this.tweens.add({ targets: g, alpha: 0.6, duration: 1800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+  }
+
+  /** Medalhão de vaga vazia: cinza, com "?" (fase em construção). */
+  private drawPlannedNode(x: number, y: number, i: number): void {
+    const g = this.add.graphics();
+    g.fillStyle(INK, 1).fillCircle(0, 0, 26);
+    g.fillStyle(0x5f6872, 1).fillCircle(0, 0, 22);
+    const q = this.add.text(0, 0, '?', { fontFamily: FONT, fontSize: '20px', color: '#c9d1d8' }).setOrigin(0.5);
+    const t = this.add.text(0, 40, 'EM CONSTRUÇÃO', { fontFamily: FONT, fontSize: '13px', color: '#c9d1d8', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0.5);
+    const node = this.add.container(x, y, [g, q, t]).setDepth(10).setAlpha(0.8);
+    this.nodes.push(node);
+    void i;
+  }
+
   /** Trilha de pontinhos (com contorno escuro) ligando as fases. */
   private drawPath(): void {
     const g = this.add.graphics().setDepth(7);
-    const reach = NODE_AT[this.unlocked];
-    for (let i = 0; i < PATH.length - 1; i++) {
-      const [x0, y0] = PATH[i];
-      const [x1, y1] = PATH[i + 1];
+    const reach = this.NODE_AT[this.unlocked];
+    for (let i = 0; i < this.PATH.length - 1; i++) {
+      const [x0, y0] = this.PATH[i];
+      const [x1, y1] = this.PATH[i + 1];
       const len = Math.hypot(x1 - x0, y1 - y0);
       const open = i < reach;
+      const planned = !this.MAIN[i + 1];
       for (let d = 0; d < len; d += 20) {
         const x = Math.round(x0 + ((x1 - x0) * d) / len);
         const y = Math.round(y0 + ((y1 - y0) * d) / len);
-        g.fillStyle(INK, 1).fillRect(x - 6, y - 6, 12, 12);
-        g.fillStyle(open ? 0xe8d9a8 : 0x8a95a3, 1).fillRect(x - 4, y - 4, 8, 8);
+        if (planned && (d / 20) % 2 >= 1) continue;
+        g.fillStyle(INK, planned ? 0.4 : 1).fillRect(x - 6, y - 6, 12, 12);
+        g.fillStyle(open ? 0xe8d9a8 : 0x8a95a3, planned ? 0.5 : 1).fillRect(x - 4, y - 4, 8, 8);
       }
     }
   }
 
   /** Medalhão de cada fase: dourado; concluída com ✓, liberada pulsando, trancada com cadeado. */
   private drawNodes(): void {
-    const done = completedCount();
-    NODE_AT.forEach((pi, i) => {
-      const [x, y] = PATH[pi];
+    this.NODE_AT.forEach((pi, i) => {
+      const [x, y] = this.PATH[pi];
+      const lv = this.MAIN[i];
+      if (!lv) return this.drawPlannedNode(x, y, i);
       const g = this.add.graphics();
       const locked = i > this.unlocked;
-      const cleared = i < done;
+      const cleared = isDone(lv.id);
       g.fillStyle(INK, 1).fillCircle(0, 0, 30);
       g.fillStyle(locked ? 0x8a95a3 : 0xd8a530, 1).fillCircle(0, 0, 26);
       g.fillStyle(locked ? 0x5f6872 : 0xffe066, 1).fillCircle(0, -2, 20);
@@ -440,12 +502,12 @@ export class MapScene extends Phaser.Scene {
       }
       items.push(
         this.add
-          .text(0, 44, CHAPTERS[i].title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: locked ? '#c9d1d8' : '#fff7dc', stroke: '#10223a', strokeThickness: 6 })
+          .text(0, 44, chapterFor(this.levelAt(i)).title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: locked ? '#c9d1d8' : '#fff7dc', stroke: '#10223a', strokeThickness: 6 })
           .setOrigin(0.5),
       );
       // Fases de chave: os 3 presentes (aceso = já pego).
-      if (MAIN[i].puzzle && !locked) {
-        const got = giftsOf(MAIN[i].id);
+      if (lv.puzzle && !locked) {
+        const got = giftsOf(lv.id);
         ['meat', 'wood', 'gold'].forEach((tex, k) => items.push(this.add.image(-22 + k * 22, 66, tex).setScale(k === 2 ? 0.2 : 0.32).setAlpha(got.includes(k) ? 1 : 0.25)));
       }
       const node = this.add.container(x, y, items).setDepth(10).setSize(70, 70);
@@ -461,10 +523,10 @@ export class MapScene extends Phaser.Scene {
     });
     // Nó secreto (em preto e branco), ligado à caverna por uma trilha cinza.
     const sec = LEVELS.findIndex((l) => l.secret);
-    if (sec >= 0 && hasSecret(LEVELS[sec].id)) {
+    if (sec >= 0 && hasSecret(LEVELS[sec].id) && this.area.levels.includes('cave')) {
       const [x, y] = this.secretSpot();
-      const cave = Math.max(0, MAIN.findIndex((l) => l.id === 'cave'));
-      const [cx, cy] = spot(cave);
+      const cave = Math.max(0, this.MAIN.findIndex((l) => l?.id === 'cave'));
+      const [cx, cy] = this.spot(cave);
       const path = this.add.graphics().setDepth(7);
       const len = Math.hypot(x - cx, y - cy);
       for (let d = 30; d < len - 30; d += 20) {
@@ -478,7 +540,7 @@ export class MapScene extends Phaser.Scene {
       g.fillStyle(0x8a8478, 1).fillCircle(0, 0, 26);
       g.fillStyle(0xd8d0c0, 1).fillCircle(0, -2, 20);
       g.fillStyle(0x2a2a2a, 1).fillCircle(0, 0, 14);
-      const t = this.add.text(0, 44, CHAPTERS[sec].title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: '#d8d0c0', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
+      const t = this.add.text(0, 44, chapterFor(sec).title.toUpperCase(), { fontFamily: FONT, fontSize: '16px', color: '#d8d0c0', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
       const q = this.add.text(0, 0, '?', { fontFamily: FONT, fontSize: '20px', color: '#ffffff' }).setOrigin(0.5);
       const node = this.add.container(x, y, [g, q, t]).setDepth(10).setSize(70, 70);
       node.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
@@ -577,11 +639,11 @@ export class MapScene extends Phaser.Scene {
     this.walking = true;
     this.walkTarget = to;
     this.fast = false;
-    const a = NODE_AT[this.current];
-    const b = NODE_AT[to];
+    const a = this.NODE_AT[this.current];
+    const b = this.NODE_AT[to];
     const dir = Math.sign(b - a);
     const pts: Array<[number, number]> = [];
-    for (let i = a + dir; dir > 0 ? i <= b : i >= b; i += dir) pts.push(PATH[i]);
+    for (let i = a + dir; dir > 0 ? i <= b : i >= b; i += dir) pts.push(this.PATH[i]);
     this.hero.play('skull_run');
     const next = (k: number) => {
       if (k >= pts.length) {
@@ -610,10 +672,20 @@ export class MapScene extends Phaser.Scene {
     next(0);
   }
 
+  private headerText(): string {
+    const t = areaTitle(this.area);
+    return `${t.name.toUpperCase()}${isFreePlay() ? ' · LIVRE' : ` · SAVE ${currentSlot()}`}`;
+  }
+
+  private toWorld(): void {
+    if (this.popupOpen) return;
+    this.scene.start('world', { devices: this.devices, area: this.area.id });
+  }
+
   private updateInfo(): void {
-    const ch = chapterFor(this.current);
-    this.infoTitle.setText(`FASE ${this.current + 1} · ${ch.title.toUpperCase()}`);
-    this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar`);
+    const ch = chapterFor(this.levelAt(this.current));
+    this.infoTitle.setText(`FASE ${this.current + 1}/${this.MAIN.length} · ${ch.title.toUpperCase()}`);
+    this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo`);
   }
 
   private enter(): void {
@@ -621,8 +693,10 @@ export class MapScene extends Phaser.Scene {
     // Enter / A durante a caminhada: acelera em vez de entrar.
     if (this.walking) return this.hurry();
     // Modo livre (testes): direto para a fase, sem a visual novel.
-    if (isFreePlay()) this.scene.start('game', { mode: 'story', devices: this.devices, level: this.current });
-    else this.scene.start('vn', { devices: this.devices, level: this.current });
+    const level = this.levelAt(this.current);
+    if (level < 0) return;
+    if (isFreePlay()) this.scene.start('game', { mode: 'story', devices: this.devices, level });
+    else this.scene.start('vn', { devices: this.devices, level });
   }
 }
 

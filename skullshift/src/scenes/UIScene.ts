@@ -272,7 +272,7 @@ export class UIScene extends Phaser.Scene {
         },
       },
       { label: 'REINICIAR FASE', act: () => g.restartMatch() },
-      { label: story ? 'SAIR PARA O MAPA' : 'SAIR PARA O MENU', act: () => (story ? g.scene.start('map', { devices: g.devices }) : g.scene.start('menu', { stage: 'modes' })) },
+      { label: story ? 'SAIR PARA O MAPA' : 'SAIR PARA O MENU', act: () => (story ? g.scene.start('map', { devices: g.devices, level: g.levelIndex }) : g.scene.start('menu', { stage: 'modes' })) },
     ];
     const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.65).setInteractive()];
     const pw = P ? 760 : 520;

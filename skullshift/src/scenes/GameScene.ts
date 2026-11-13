@@ -7,7 +7,8 @@ import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { PrincesBoss } from '../game/princes';
-import { MAIN_COUNT, completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { CENTER } from '../game/areas';
+import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -399,7 +400,8 @@ export class GameScene extends Phaser.Scene {
 
   /** História: volta ao mapa (a próxima fase já foi liberada na vitória). */
   nextLevel(): void {
-    if (this.levelIndex === MAIN_COUNT - 1) this.scene.start('vn', { devices: this.devices, epilogue: true });
+    // A última fase do Santuário (ilha central) leva ao epílogo.
+    if (LEVELS[this.levelIndex].id === CENTER.levels[CENTER.levels.length - 1]) this.scene.start('vn', { devices: this.devices, epilogue: true });
     else this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
   }
 

@@ -11,7 +11,10 @@ import { LEVELS } from './level';
 export type Difficulty = 'normal' | 'hard';
 
 export interface SaveData {
+  /** Quantas fases principais foram concluídas (para a tela de saves). */
   completed: number;
+  /** Fases concluídas (ids). O mundo é dividido em áreas e a ordem é livre entre elas. */
+  done?: string[];
   difficulty: Difficulty;
   seen: string[];
   /** Presentes pegos por fase (id da fase → índices 0..2). */
@@ -74,8 +77,12 @@ export function loadSlot(n: number): SaveData | null {
   if (!raw) return null;
   try {
     const d = JSON.parse(raw) as Partial<SaveData>;
+    const completed = Math.max(0, Math.min(LEVELS.filter((l) => !l.secret).length, Number(d.completed) || 0));
+    // Saves antigos (antes das áreas): as N primeiras fases da lista contam como concluídas.
+    const done = Array.isArray(d.done) ? d.done : LEVELS.filter((l) => !l.secret).slice(0, completed).map((l) => l.id);
     return {
-      completed: Math.max(0, Math.min(LEVELS.filter((l) => !l.secret).length, Number(d.completed) || 0)),
+      completed: done.length,
+      done,
       difficulty: d.difficulty === 'hard' ? 'hard' : 'normal',
       seen: Array.isArray(d.seen) ? d.seen : [],
       gifts: d.gifts && typeof d.gifts === 'object' ? d.gifts : {},
@@ -135,7 +142,12 @@ export function isFreePlay(): boolean {
 // ---------- consultas do jogo ----------
 
 export function completedCount(): number {
-  return current().completed;
+  return current().done?.length ?? 0;
+}
+
+/** A fase (id) já foi concluída neste save? */
+export function isDone(id: string): boolean {
+  return (current().done ?? []).includes(id);
 }
 
 /** Fases principais (as secretas ficam no fim de LEVELS e não contam na sequência). */
@@ -147,7 +159,10 @@ export function completeLevel(index: number): void {
   const d = current();
   const lv = LEVELS[index];
   if (lv?.secret) d.secretDone = [...new Set([...(d.secretDone ?? []), lv.id])];
-  else d.completed = Math.max(d.completed, index + 1);
+  else {
+    d.done = [...new Set([...(d.done ?? []), lv.id])];
+    d.completed = d.done.length;
+  }
   saveSlot(currentSlot(), d);
 }
 

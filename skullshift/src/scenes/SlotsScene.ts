@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { AREAS } from '../game/areas';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { CHAPTERS } from '../data/lore';
 import { SLOT_COUNT, deleteSlot, loadSlot, newSlot, useSlot, type Difficulty } from '../game/progress';
@@ -119,7 +120,8 @@ export class SlotsScene extends Phaser.Scene {
 
     const done = data.completed;
     const total = CHAPTERS.length;
-    const where = done >= total ? 'HISTÓRIA COMPLETA' : `FASE ${done + 1} · ${CHAPTERS[done].title.toUpperCase()}`;
+    const frags = AREAS.filter((a) => a.levels.length > 0 && a.levels.every((id) => (data.done ?? []).includes(id))).length;
+    const where = done >= total ? 'HISTÓRIA COMPLETA' : `${done} FASES · ${frags}/${AREAS.length} FRAGMENTOS`;
     items.push(this.add.image(-120, -70, 'skull_avatar').setScale(0.22));
     items.push(
       this.add.text(-70, -92, where, { fontFamily: FONT, fontSize: '19px', color: '#10223a', wordWrap: { width: 220 } }).setOrigin(0, 0),

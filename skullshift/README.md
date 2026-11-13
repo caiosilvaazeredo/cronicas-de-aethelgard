@@ -40,7 +40,29 @@ Sem a logo, a tela inicial mostra o nome em texto.
 
 Cada fase tem **5 cenários** (telas; o voo tem 6): o central, 2 à direita e 2 à esquerda. A câmera desliza de um cenário para o outro. No versus, a fase é escolhida no menu (◀ ▶); no modo história, no mapa-múndi, que é uma faixa larga que rola acompanhando o esqueleto.
 
-O modo história tem **23 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
+### Mundo em áreas (em construção)
+
+O modo história agora começa num **mapa do mundo**, no estilo das áreas do Super Mario Wonder: uma **ilha central** (o Santuário do Xamã) e **9 áreas** em volta, cada uma com o seu **rei** no fim. Escolher uma área abre o mapa dela, com as suas fases (a meta é **10 fases por área**; as vagas que faltam aparecem como "em construção").
+
+| Área | Rei | Fases atuais |
+|---|---|---|
+| Ilhas da Maré | Rei Tubarão-Arpão | Ilhas da Maré |
+| Pradaria dos Ossos | Rei Gnoll | Oficina da Chave, Pradaria dos Ossos |
+| Lagoa dos Lagartos | Rei Lagarto | (novas) |
+| Caverna das Teias | Aranha-Rainha | Caverna Úmida, Ninho das Teias, Blocos Trocados, Ninho dos Príncipes, Covil da Rainha |
+| Forja Vulcânica | Minotauro Rubro | Forja Vulcânica, Fuga da Forja, Mina Rachada |
+| Bosque dos Gnomos | Rei Gnomo | Bosque do Lenhador, Torre do Escalador |
+| Minas dos Goblins | Rei Goblin da Tocha | Mina de Ouro |
+| Céu de Brasa | Diabrete Gigante | Santuário das Nuvens, Correntes do Céu, Duelo no Céu |
+| Colmeia Real **ou** Reino da Noite | Rei das Abelhas ou Rei dos Morcegos | Voo Noturno |
+| *Santuário do Xamã (centro)* | — | Escadaria da Maré, Mausoléu, Casa das Portas, Biblioteca, Casa Sem Luz (o final) |
+
+- **Liberação:** Ilhas da Maré e depois Pradaria dos Ossos (ensinam o básico). Vencida a Pradaria, as outras áreas abrem em **qualquer ordem**. O reino das asas só aparece depois do **acordo dos Príncipes** (o nome e o rei mudam com a escolha). O Santuário abre quando todas as áreas caem.
+- **Navegação:** setas/direcional escolhem a área mais próxima naquela direção; toque/clique escolhe e, de novo, entra. Em pé, botões grandes ◀ ENTRAR ▶. No mapa da área, ◀ MUNDO (ou Esc / B) volta.
+- **A história oficial:** o Xamã diz que cada rei guarda um **fragmento da Coroa dos Ossos**. Correntes roxas ligam o santuário a cada área; vencer uma área parte a corrente dela ("FRAGMENTO DA COROA n/9") e o céu sobre o santuário fica um pouco mais escuro a cada uma. *(Os reis são, na verdade, os selos da prisão do Xamã — isso só se revela no final, como em Shadow of the Colossus.)*
+- **Progresso:** o save guarda as fases concluídas (`done`); saves antigos são convertidos sozinhos. Habilidades passaram a ser liberadas nas áreas fixas ou na área que as exige (Mãos de Osso: Ilhas da Maré · Cambalhota: Oficina da Chave · Machado: Pradaria · Martelo: Forja · Picareta: Bosque do Lenhador).
+
+A lista abaixo é a ordem interna das fases (`LEVELS`). O modo história tem **23 fases** em ordem (o número é a posição na lista `LEVELS`), mais **1 secreta**:
 
 | # | Fase | Tipo | O que tem |
 |---|---|---|---|
@@ -253,6 +275,8 @@ Na tela de escolha de controle, cada jogador escolhe o nome (◀ ▶ na plaquinh
 - `src/config.ts` — medidas do mundo e constantes de física.
 - `src/game/characters.ts` — dados de cada personagem: quadros, velocidade, golpe ou projétil e item que solta.
 - `src/game/level.ts` — as fases (5 cenários cada) em tiles: plataformas, flutuantes, tema, inimigos, itens, placas, arena de chefe, perseguição, ventos, voo e casas assombradas. A ordem está em `LEVELS`; novas fases entram aqui (e um capítulo em `src/data/lore.ts` e uma posição em `SPOTS` no mapa).
+- `src/game/areas.ts` — as áreas do mundo (fases, rei, posição no mapa e regras de liberação).
+- `src/scenes/WorldScene.ts` — o mapa do mundo (ilha central, áreas, correntes/selos).
 - `src/game/boss.ts` — chefes (entrada, barra de vida, padrões, perigos e derrota).
 - `src/game/princes.ts` — a luta dos Príncipes (dois chefes, diálogos com a luta parada e a escolha do acordo).
 - `src/game/haunt.ts` — casas assombradas (portas, chave, alavancas, pontes-fantasma, pisos falsos, velas, escuridão).

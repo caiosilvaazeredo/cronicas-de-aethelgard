@@ -1,7 +1,11 @@
 import { LEVELS } from './level';
-import { completedCount, isFreePlay } from './progress';
+import { isDone, isFreePlay } from './progress';
 
-/** Habilidades da caveira, liberadas ao terminar certas fases do modo história. */
+/**
+ * Habilidades da caveira, liberadas ao terminar certas fases do modo história. Como as áreas
+ * abrem em qualquer ordem, cada uma é liberada nas áreas fixas (Maré, Pradaria) ou na própria
+ * área que a exige.
+ */
 export type AbilityId = 'carry' | 'flip' | 'hammer' | 'axe' | 'pickaxe';
 
 export interface Ability {
@@ -19,7 +23,7 @@ export const ABILITIES: Ability[] = [
     id: 'carry',
     name: 'Mãos de Osso',
     icon: 'key_item',
-    after: 'cave',
+    after: 'shore',
     how: 'PEGAR levanta chaves, ovelhas e outros objetos sobre a cabeça. PEGAR de novo solta; ATACAR arremessa.',
   },
   {
@@ -40,14 +44,14 @@ export const ABILITIES: Ability[] = [
     id: 'axe',
     name: 'Machado',
     icon: 'tool_axe',
-    after: 'sky',
+    after: 'gun1',
     how: 'ATACAR perto de uma árvore a derruba para o lado em que você olha: ela vira uma ponte.',
   },
   {
     id: 'pickaxe',
     name: 'Picareta',
     icon: 'tool_pickaxe',
-    after: 'stairs',
+    after: 'key4',
     how: 'Encostar numa parede no ar crava a picareta: a caveira sobe sozinha pela parede, como a aranha.',
   },
 ];
@@ -57,8 +61,7 @@ export function hasAbility(id: AbilityId): boolean {
   if (isFreePlay()) return true;
   const a = ABILITIES.find((x) => x.id === id);
   if (!a) return false;
-  const at = LEVELS.findIndex((l) => l.id === a.after);
-  return at >= 0 && completedCount() > at;
+  return isDone(a.after);
 }
 
 /** Habilidades liberadas ao concluir a fase de índice `index`. */

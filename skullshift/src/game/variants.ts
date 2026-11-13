@@ -23,9 +23,11 @@ export type Ability =
   /** Arremessa bombas em arco que explodem ao cair. */
   | 'bomb'
   /** Arremessa redes de pesca que prendem o jogador (como teia). */
-  | 'net';
+  | 'net'
+  /** Osso bumerangue: vai e volta. */
+  | 'boomerang';
 
-export type Accessory = 'bandana' | 'eyepatch' | 'captain' | 'shellhelm' | 'buoy';
+export type Accessory = 'bandana' | 'eyepatch' | 'captain' | 'shellhelm' | 'buoy' | 'horns';
 
 export interface VariantDef {
   id: VariantId;
@@ -39,6 +41,8 @@ export interface VariantDef {
   speedMul?: number;
   ability?: Ability;
   accessories?: Accessory[];
+  /** Cor do monte de quem se enterra (areia, capim...). */
+  mound?: [number, number];
 }
 
 // ---------- paletas (cores originais do Enemy Pack → novas) ----------
@@ -55,6 +59,10 @@ const GOBLIN_PIRATE = { 0xb65555: 0x3a5ad0, 0x688c8a: 0x8a6a4a, 0x9cbeaa: 0xb89a
 const GOBLIN_CAPTAIN = { 0x95d562: 0x7ab84a, 0xb65555: 0x7a1e2a, 0x688c8a: 0x2a2a3a, 0x9cbeaa: 0x4a4a5a, 0x417168: 0x1a1a24 };
 const GOBLIN_BOMBER = { 0xb65555: 0x3a3a3a, 0x688c8a: 0x7a5a3a, 0x9cbeaa: 0xa07a50, 0x417168: 0x4a3020 };
 /** Gnoll: pelo efe054, juba 6d5e51/514744, manchas b492a7, couro af8c58. */
+/** Gnolls da Pradaria: caçador (hiena cinza-escura), espreitador (capim verde), brutamontes (marrom-escuro). */
+const GNOLL_HUNTER = { 0xefe054: 0xa89a7a, 0xaf8c58: 0x6a5a4a, 0xb492a7: 0x3a3030, 0x6d5e51: 0x3a3030, 0x514744: 0x221c1c };
+const GNOLL_STALKER = { 0xefe054: 0x9ac85a, 0xaf8c58: 0x5a8a3a, 0xb492a7: 0x3a6a2a, 0x6d5e51: 0x4a6a2a, 0x514744: 0x2a4a1a };
+const GNOLL_BRUTE = { 0xefe054: 0xc87a3a, 0xaf8c58: 0x8a4a22, 0xb492a7: 0x5a2a1a, 0x6d5e51: 0x3a2018, 0x514744: 0x22140e };
 const GNOLL_WRECK = { 0xefe054: 0xb8c8a0, 0xaf8c58: 0x7a8a6a, 0xb492a7: 0x4a8a9a, 0x6d5e51: 0x4a5a5a, 0x514744: 0x2e3a3a };
 
 export const VARIANTS: VariantDef[] = [
@@ -67,6 +75,9 @@ export const VARIANTS: VariantDef[] = [
   { id: 'goblin_captain', base: 'goblin', name: 'Capitão Goblin', palette: GOBLIN_CAPTAIN, scale: 1.3, hp: 3, speedMul: 0.9, accessories: ['captain', 'eyepatch'] },
   { id: 'goblin_bomber', base: 'goblin', name: 'Goblin Bombardeiro', palette: GOBLIN_BOMBER, ability: 'bomb', accessories: ['bandana'] },
   { id: 'gnoll_wreck', base: 'gnoll', name: 'Gnoll Náufrago', palette: GNOLL_WRECK, ability: 'net', accessories: ['buoy'] },
+  { id: 'gnoll_hunter', base: 'gnoll', name: 'Gnoll Caçador', palette: GNOLL_HUNTER, ability: 'boomerang', speedMul: 1.1 },
+  { id: 'gnoll_stalker', base: 'gnoll', name: 'Gnoll Espreitador', palette: GNOLL_STALKER, ability: 'burrow', mound: [0x5a8a3a, 0x9ac85a] },
+  { id: 'gnoll_brute', base: 'gnoll', name: 'Gnoll Brutamontes', palette: GNOLL_BRUTE, scale: 1.35, hp: 3, speedMul: 0.85, accessories: ['horns'] },
 ];
 
 export const variantOf = (id: string): VariantDef | undefined => VARIANTS.find((v) => v.id === id);
@@ -82,7 +93,7 @@ export function accessoryOffset(base: CharId, a: Accessory, k: number): { dx: nu
   const at: Partial<Record<CharId, Partial<Record<Accessory, [number, number]>>>> = {
     goblin: { bandana: [-4, 60], eyepatch: [10, 47], captain: [-4, 68] },
     shark: { shellhelm: [2, 70] },
-    gnoll: { buoy: [-2, 32] },
+    gnoll: { buoy: [-2, 32], horns: [8, 62] },
   };
   const [dx, dy] = at[base]?.[a] ?? [0, CHARS[base].head];
   return { dx: dx * k, dy: dy * k };
@@ -140,6 +151,19 @@ function makeArt(scene: Phaser.Scene): void {
     }
   buoy.outline(INK);
   buoy.toTexture(scene, 'acc_buoy', 2);
+  // Capacete de chifres (ferro e chifres de osso).
+  const horns = new Px(30, 14);
+  horns.rect(8, 6, 14, 7, 0x6a6a7a);
+  horns.rect(8, 6, 14, 2, 0x9a9aaa);
+  horns.rect(14, 3, 2, 3, 0x6a6a7a);
+  for (let k = 0; k < 6; k++) {
+    horns.set(7 - k, 7 - k, 0xf4ead0);
+    horns.set(6 - k, 7 - k, 0xf4ead0);
+    horns.set(22 + k, 7 - k, 0xf4ead0);
+    horns.set(23 + k, 7 - k, 0xf4ead0);
+  }
+  horns.outline(INK);
+  horns.toTexture(scene, 'acc_horns', 2);
   // Bolha d'água (cuspe do Lagarto da Maré).
   const ball = new Px(10, 10);
   ball.disc(5, 5, 4, 0x3aa8e0);

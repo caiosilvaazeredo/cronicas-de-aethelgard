@@ -24,6 +24,8 @@ export class EnemyAI implements Controller {
     private level: Level,
     /** Habilidade da variante (investida, enterrar...). */
     private ability?: Ability,
+    /** Cores do monte de quem se enterra (escuro, claro). */
+    private moundColor: [number, number] = [0xd8b070, 0xfff1a8],
   ) {
     if (ability === 'burrow') this.self.buried = true;
   }
@@ -44,8 +46,10 @@ export class EnemyAI implements Controller {
       const wob = Math.sin(now / 90) * 2;
       g.clear();
       g.fillStyle(0x1d1a2b, 1).fillEllipse(me.x, me.feet - 4, 64 + wob, 22);
-      g.fillStyle(0xd8b070, 1).fillEllipse(me.x, me.feet - 5, 58 + wob, 17);
-      g.fillStyle(0xfff1a8, 1).fillEllipse(me.x - 8, me.feet - 9, 18, 5);
+      g.fillStyle(this.moundColor[0], 1).fillEllipse(me.x, me.feet - 5, 58 + wob, 17);
+      g.fillStyle(this.moundColor[1], 1).fillEllipse(me.x - 8, me.feet - 9, 18, 5);
+      // No capim, a "moita" tem folhas pontudas.
+      if (this.moundColor[0] !== 0xd8b070) for (let k = -24; k <= 24; k += 8) g.fillStyle(this.moundColor[1], 1).fillTriangle(me.x + k - 4, me.feet - 8, me.x + k + 4, me.feet - 8, me.x + k + wob, me.feet - 24);
       if (dist < 170 && dy < 80) {
         me.buried = false;
         this.surfacedAt = now;

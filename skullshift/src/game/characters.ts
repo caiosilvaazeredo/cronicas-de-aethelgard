@@ -9,7 +9,8 @@ export type VariantId =
   | 'shark_hammer' | 'shark_coral' | 'shark_elite'
   | 'lizard_sand' | 'lizard_tide'
   | 'goblin_pirate' | 'goblin_captain' | 'goblin_bomber'
-  | 'gnoll_wreck';
+  | 'gnoll_wreck'
+  | 'gnoll_hunter' | 'gnoll_stalker' | 'gnoll_brute';
 /** Quem pode aparecer como inimigo numa fase. */
 export type EnemyId = CharId | VariantId;
 export type ItemId =

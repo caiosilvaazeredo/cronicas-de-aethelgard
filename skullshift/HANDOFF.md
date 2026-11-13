@@ -68,16 +68,21 @@ originais (extraídas com PIL do PNG).
 ## Estado atual
 
 - Área 1 **Ilhas da Maré completa**: 10 fases (`shore, crabs, hightide, wreck, deck, undersea,
-  floodgates, masts, reef, sharkking`), 9 variantes, Rei Tubarão-Arpão.
-- Outras áreas ainda com as fases antigas redistribuídas (menos de 10).
+  floodgates, masts, reef, sharkking`), 9 variantes, Rei Tubarão-Arpão (`sharkking.ts`).
+- Mapa do mundo como continente (`WorldScene`, máscara `LAND` + chão por área), construções do Free Pack.
+- Memórias (`MEMORIES` em `lore.ts`, cena `MemoryScene`): uma a cada fragmento (ordem de `sealsBroken()`).
+- Final: fase `finale` (último do centro) → `StoryScene` mostra `REVELATION` + escolha.
+  Enfrentar → `ShamanBoss` (jogador vira `villager`) → epílogo `ENDING_FREE`. Voltar para casa →
+  `ENDING_HOME`. Save guarda `ending`; o mapa do mundo muda conforme o final.
+- Voo: morcego solta ondas sônicas, abelha solta ferrões (`shmup.ts`).
+- Outras áreas ainda com as fases antigas redistribuídas (menos de 10 cada).
 
 ## Próximos passos (em ordem)
 
-1. Importar do Free Pack: Pawn (aldeão), construções (castelos, monastério, torres, casas), pedras, arbustos.
-2. Refazer o mapa do mundo: continente de terra (não tudo água), construções do Free Pack no lugar
-   do casarão desenhado; Céu de Brasa em tons vermelhos.
-3. Voo: o morcego solta ondas sônicas da boca (não ossos); a abelha solta ferrões. Rei das Abelhas sem coroa.
-4. Memórias da caveira (uma por rei) + final com o aldeão e a escolha.
-5. Completar cada área com 10 fases, variantes e rei: Pradaria (Gnoll), Lagoa (Lagarto), Teias
-   (Aranha-Rainha), Forja (Minotauro), Bosque (Gnomo), Minas (Goblin da Tocha), Céu de Brasa (Diabrete),
-   Reino das Asas (Rei das Abelhas / dos Morcegos).
+1. Completar cada área com 10 fases, variantes e rei, nesta ordem: Pradaria (Rei Gnoll),
+   Teias (Aranha-Rainha já existe), Forja (Minotauro já existe), Bosque (Rei Gnomo),
+   Minas (Rei Goblin da Tocha), Lagoa (Rei Lagarto), Céu de Brasa (Diabrete, fases em tons
+   vermelhos), Reino das Asas (reis já existem no voo).
+2. Para cada área: variantes em `variants.ts` (+ `VariantId`), fases em `level.ts` (+ `LEVELS`),
+   ids em `areas.ts`, capítulos em `lore.ts`, enfeite da ilha em `MapScene.drawIsland`, teste no navegador.
+3. README e publicação a cada área concluída.

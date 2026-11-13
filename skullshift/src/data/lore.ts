@@ -468,6 +468,86 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     ],
   },
   finale: { title: 'O Trono do Xamã', blurb: 'A coroa está inteira. Os selos caíram.', lines: [] },
+  road: {
+    title: 'Estrada dos Ossos',
+    blurb: 'A entrada da Pradaria dos Ossos, terra dos Gnolls.',
+    lines: [
+      S('Que cheiro é esse? Capim... e cachorro molhado.'),
+      X('Gnolls. A pradaria é deles. Os caçadores jogam ossos que fazem a curva e voltam.'),
+      S('Ossos voltando. Que ironia.'),
+      X('Aqui tudo volta, Ossian. Menos quem segue em frente.'),
+    ],
+  },
+  stampede: {
+    title: 'Estouro da Manada',
+    blurb: 'A manada corre em disparada pelo chão baixo.',
+    lines: [
+      S('O chão está tremendo!'),
+      X('A manada dos Gnolls. Quando ela vier, sobe em qualquer coisa alta.'),
+      S('E se eu ficar embaixo?'),
+      X('Aí eu te busco de novo. Mas prefiro que não.'),
+    ],
+  },
+  boneyard: {
+    title: 'Cemitério de Ossos',
+    blurb: 'Ladeiras de ossos antigos. Rochas rolam lá de cima.',
+    lines: [
+      S('Quanto osso. São todos de gnoll?'),
+      X('Não todos. Alguns são de viajantes que vieram buscar uma coroa antes de ti.'),
+      S('...Antes de mim? Quantos?'),
+      X('Cuidado com as rochas. Elas rolam sem avisar.'),
+    ],
+  },
+  farm: {
+    title: 'Fazenda dos Gnolls',
+    blurb: 'Ovelhas, placas e portões. A chave está no alto do celeiro.',
+    lines: [
+      S('Ovelhas! Eu... já cuidei de ovelhas. Acho.'),
+      X('Põe as ovelhas nas placas. Os portões abrem com peso.'),
+      S('Por que eu lembro de ovelhas, Hex?'),
+      X('Todo mundo lembra de ovelhas. Pega a chave.'),
+    ],
+  },
+  tallgrass: {
+    title: 'Capim Alto',
+    blurb: 'Moitas que tremem. Gnolls escondidos esperando.',
+    lines: [
+      S('Aquela moita mexeu.'),
+      X('Espreitadores. Se escondem no capim e pulam em quem passa perto.'),
+      S('Dá para ver o tremido, pelo menos.'),
+      X('Olhos atentos, Ossian. Neste mundo, quase nada é o que parece.'),
+    ],
+  },
+  caravan: {
+    title: 'Caravana dos Gnolls',
+    blurb: 'A caravana não para de mandar caçadores.',
+    lines: [
+      S('Uma caravana inteira vindo na minha direção.'),
+      X('Segura ATACAR e não para de atirar.'),
+      S('Eles levam o quê nessas carroças?'),
+      X('Ossos. Para o Rei. Ele coleciona.'),
+    ],
+  },
+  windmill: {
+    title: 'Moinhos do Vento',
+    blurb: 'Vãos largos cruzados nas correntes de vento.',
+    lines: [
+      S('Os vãos estão enormes. Não dá para pular isso.'),
+      X('Entra no vento. Ele te levanta. Depois segura o pulo e plana.'),
+      S('Daqui de cima dá para ver uma ponte, lá longe, depois do mar.'),
+      X('Não tem ponte nenhuma. É miragem do vento.'),
+    ],
+  },
+  gnollking: {
+    title: 'Covil do Rei Gnoll',
+    blurb: 'O Rei Gnoll guarda o segundo fragmento.',
+    lines: [
+      S('É ele. Maior do que eu pensava. E com manchas roxas...'),
+      X('O osso dele vai e volta. Baixo, pula; alto, agacha. Quando ele saltar, sai de baixo.'),
+      S('Por que ele tem as mesmas cores que você, Hex?'),
+      X('Coincidência. Derruba ele, Ossian. O fragmento espera.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

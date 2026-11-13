@@ -8,8 +8,10 @@ import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { PrincesBoss } from '../game/princes';
 import { SeaSystem } from '../game/sea';
+import { FieldSystem } from '../game/field';
 import { SharkKingBoss } from '../game/sharkking';
 import { ShamanBoss } from '../game/shamanboss';
+import { GnollKingBoss } from '../game/gnollking';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
 import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
@@ -47,6 +49,8 @@ interface Projectile {
   sprite: Phaser.GameObjects.Sprite;
   /** Bomba explode ao cair; rede prende o jogador em vez de derrubar. */
   effect?: 'bomb' | 'net';
+  /** Osso bumerangue (Gnoll Caçador): depois de um tempo volta para quem jogou. */
+  boomerang?: { t: number; back: boolean };
   /** Item em que o projétil vira ao cair no chão (osso, arpão). */
   kind?: ItemId;
   gravity: number;
@@ -104,6 +108,7 @@ export class GameScene extends Phaser.Scene {
   /** Fase de chave e porta. */
   private puzzle?: PuzzleSystem;
   sea?: SeaSystem;
+  private field?: FieldSystem;
   /** Desafio do mausoléu. */
   private mausoleum?: MausoleumSystem;
   /** Corrida e tiro: próximo disparo e próxima onda de inimigos. */
@@ -166,6 +171,7 @@ export class GameScene extends Phaser.Scene {
     this.escape = undefined;
     this.puzzle = undefined;
     this.sea = undefined;
+    this.field = undefined;
     this.mausoleum = undefined;
     this.nextGunShot = 0;
     this.nextGunSpawn = 0;
@@ -210,7 +216,7 @@ export class GameScene extends Phaser.Scene {
           this.physics.add.collider(f.sprite, this.level.ground);
           // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
           if (def.haunt) f.sprite.setTint(0xc8b8ff);
-          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability), acc: this.setupVariant(f) });
+          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
@@ -241,6 +247,18 @@ export class GameScene extends Phaser.Scene {
             killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
           },
           def.puzzle,
+        );
+      }
+      if (def.field) {
+        this.field = new FieldSystem(
+          {
+            scene: this,
+            level: this.level,
+            player: () => this.players[0],
+            killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
+            popText: (x, y, text, color) => this.popText(x, y, text, color),
+          },
+          def.field,
         );
       }
       if (def.sea) {
@@ -515,6 +533,7 @@ export class GameScene extends Phaser.Scene {
     this.escape?.update(time, dt);
     this.puzzle?.update(time, dt);
     this.sea?.update(time, dt);
+    this.field?.update(time, dt);
     this.mausoleum?.update(time, dt);
     this.updateGun(time);
     this.updateWinds(dt);
@@ -744,7 +763,20 @@ export class GameScene extends Phaser.Scene {
       const dist = t ? Math.min(520, Math.abs(t.x - f.x)) : 300;
       vx = f.facing * Math.max(120, dist * 0.95);
     }
-    this.projectiles.push({ sprite: s, glow, kind, effect, gravity: arc.g, owner: f, vx, vy: arc.vy, life: 3, bounced: false });
+    const boomerang = variantOf(f.def.id)?.ability === 'boomerang';
+    this.projectiles.push({
+      sprite: s,
+      glow,
+      kind: boomerang ? undefined : kind,
+      effect,
+      gravity: boomerang ? 40 : arc.g,
+      owner: f,
+      vx,
+      vy: boomerang ? -30 : arc.vy,
+      life: 3,
+      bounced: false,
+      boomerang: boomerang ? { t: 0, back: false } : undefined,
+    });
     // Tubarão de Coral: mais dois arpões em leque.
     if (variantOf(f.def.id)?.ability === 'triple') {
       for (const dvy of [-170, 120]) {
@@ -757,6 +789,16 @@ export class GameScene extends Phaser.Scene {
   private updateProjectiles(dt: number): void {
     for (const p of this.projectiles) {
       p.life -= dt;
+      if (p.boomerang && !p.bounced) {
+        p.boomerang.t += dt;
+        // Freia, dá meia-volta e acelera de volta.
+        if (!p.boomerang.back && p.boomerang.t > 0.45) p.vx *= Math.pow(0.02, dt);
+        if (!p.boomerang.back && p.boomerang.t > 0.75) {
+          p.boomerang.back = true;
+          p.vx = -Math.sign(p.vx || 1) * 560;
+          p.vy = -20;
+        }
+      }
       p.sprite.x += p.vx * dt;
       p.vy += (p.bounced ? 1400 : p.gravity) * dt;
       p.sprite.y += p.vy * dt;
@@ -1894,6 +1936,7 @@ export class GameScene extends Phaser.Scene {
           },
         });
       } else if (k === 'shaman') this.boss = new ShamanBoss(host);
+      else if (k === 'gnollking') this.boss = new GnollKingBoss(host);
       else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
       void this.boss.intro();
     }
@@ -1985,7 +2028,7 @@ export class GameScene extends Phaser.Scene {
     f.facing = -1;
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
-    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability), acc: this.setupVariant(f) });
+    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
     this.smokeBurst(x, feet, 0x8a6ad0, 0.7);
     return f;
   }

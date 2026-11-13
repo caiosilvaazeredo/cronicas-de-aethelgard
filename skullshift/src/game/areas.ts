@@ -49,7 +49,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei Gnoll',
     kingAnim: 'gnoll_idle',
     color: 0xd8a530,
-    levels: ['key1', 'gun1'],
+    levels: ['road', 'key1', 'stampede', 'gun1', 'boneyard', 'farm', 'tallgrass', 'caravan', 'windmill', 'gnollking'],
     pos: [170, 300],
     unlock: 'after-mare',
   },

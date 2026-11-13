@@ -3,6 +3,7 @@ import { BODY_FONT, DEATH_Y, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from
 import type { CharId, EnemyId, ItemId } from './characters';
 import type { PuzzleDef } from './puzzle';
 import type { SeaDef } from './sea';
+import type { FieldDef } from './field';
 
 /**
  * Plataforma: início e comprimento em tiles de 64px (locais à tela, 0..19) e altura h
@@ -11,7 +12,7 @@ import type { SeaDef } from './sea';
  */
 export type Segment = [start: number, length: number, h?: number];
 
-export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold';
+export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold' | 'bush' | 'stone' | 'house' | 'hut' | 'tower';
 export type Theme = 'shore' | 'cave' | 'volcano' | 'sky' | 'haunted';
 
 /** A fase como é jogada no modo escolhido (na história, o último cenário pode virar arena de chefe). */
@@ -94,13 +95,15 @@ export interface LevelDef {
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
-  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking' | 'shaman'; arena: ScreenDef };
+  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking' | 'shaman' | 'gnollking'; arena: ScreenDef };
   /** Luta final: a caveira, de volta ao corpo, joga como o aldeão. */
   finale?: boolean;
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
   secret?: boolean;
   /** Fase de chave e porta (quebra-cabeça). */
   puzzle?: PuzzleDef;
+  /** Pradaria: estouro de manada e rochas rolando. */
+  field?: FieldDef;
   /** Elementos do mar (maré, canhões, caixotes, águas-vivas...). */
   sea?: SeaDef;
   /** Fase debaixo d'água: a caveira vira Tubarão e nada livre. */
@@ -606,7 +609,7 @@ export const LEVEL_KEY1: LevelDef = {
   name: 'Oficina da Chave',
   intro: 'PEGAR levanta a chave dourada. Leve até a porta trancada. Há 3 presentes escondidos.',
   theme: 'shore',
-  tiles: 'tilemap',
+  tiles: 'tiles_prairie',
   winText: 'A chave abriu a porta!',
   screens: [
     { segments: [[0, 20, 0]], floats: [[7, 4, 3]], sign: [3, 'PEGAR levanta a chave.\nLeve até a PORTA.\n↑ sobe a escada.'] },
@@ -739,7 +742,7 @@ export const LEVEL_GUN1: LevelDef = {
   name: 'Pradaria dos Ossos',
   intro: 'Corrida e tiro! Segure ATACAR para disparar ossos. Os inimigos não param de chegar.',
   theme: 'shore',
-  tiles: 'tilemap',
+  tiles: 'tiles_prairie',
   winText: 'Você atravessou a pradaria atirando!',
   gun: { spawns: ['gnoll', 'goblin', 'lizard'], every: 2100 },
   screens: [
@@ -1234,6 +1237,205 @@ export const LEVEL_FINALE: LevelDef = {
   versusStart: [3, 16],
 };
 
+
+// ---------- Área 2: Pradaria dos Ossos ----------
+
+/** Estrada dos Ossos: a entrada da pradaria, terra dos Gnolls. */
+export const LEVEL_ROAD: LevelDef = {
+  id: 'road',
+  name: 'Estrada dos Ossos',
+  intro: 'A pradaria dos Gnolls. Os caçadores jogam ossos que voltam como bumerangue!',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'Você chegou à pradaria!',
+  field: { boulders: [[2, 15, 1, -1, 4200]] },
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], deco: [[1, 'house'], [6, 'bush'], [17, 'tree']], enemies: [[15, 'gnoll']], sign: [3, 'Pradaria dos Ossos:\nterra dos Gnolls.'] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], deco: [[13, 'bush'], [18, 'stone']], enemies: [[8, 'gnoll_hunter'], [16, 'goblin']], storyItems: [[2, 'bone']] },
+    { segments: [[0, 8, 0], [10, 4, 1], [16, 4, 0]], floats: [[8, 2, 2]], deco: [[3, 'bones'], [18, 'bush']], enemies: [[12, 'gnoll']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 2], [13, 2, 2]], deco: [[9, 'stone']], enemies: [[9, 'gnoll_hunter'], [17, 'gnoll']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'house'], [12, 'bush'], [18, 'tree']], enemies: [[10, 'gnoll_brute']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Estouro da Manada: bois em disparada pelo chão baixo; quem está no alto escapa. */
+export const LEVEL_STAMPEDE: LevelDef = {
+  id: 'stampede',
+  name: 'Estouro da Manada',
+  intro: 'A manada vem em disparada pelo chão! Quando ouvir o aviso, suba no alto.',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'A manada passou, e você também!',
+  field: { stampede: { every: 7500, count: 6, from: 'left' } },
+  screens: [
+    { segments: [[0, 6, 0], [6, 2, 2], [8, 6, 0], [14, 2, 1], [16, 4, 0]], floats: [[11, 2, 2]], deco: [[2, 'bush']], enemies: [[18, 'gnoll']], sign: [3, 'Estouro da manada:\nsuba no alto!'] },
+    { segments: [[0, 4, 0], [4, 2, 2], [6, 6, 0], [12, 3, 1], [15, 5, 0]], floats: [[8, 2, 2], [17, 2, 2]], enemies: [[10, 'gnoll_hunter']] },
+    { segments: [[0, 5, 0], [5, 2, 1], [7, 5, 0], [12, 2, 2], [14, 6, 0]], floats: [[9, 2, 2], [16, 3, 2]], deco: [[18, 'bones']], enemies: [[9, 'goblin'], [18, 'gnoll']] },
+    { segments: [[0, 6, 0], [8, 3, 1], [11, 5, 0], [16, 4, 0]], floats: [[4, 2, 2], [13, 2, 2]], enemies: [[12, 'gnoll_hunter']] },
+    { segments: [[0, 5, 0], [5, 2, 2], [7, 8, 0], [15, 5, 1]], floats: [[10, 2, 2]], deco: [[18, 'house']], enemies: [[9, 'gnoll_brute']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Cemitério de Ossos: ladeiras e rochas rolando. */
+export const LEVEL_BONEYARD: LevelDef = {
+  id: 'boneyard',
+  name: 'Cemitério de Ossos',
+  intro: 'Rochas rolam ladeira abaixo. Pule por cima ou quebre com um golpe!',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'Você atravessou o cemitério!',
+  field: {
+    boulders: [
+      [0, 18, 3, -1, 3800],
+      [1, 3, 3, 1, 3200],
+      [2, 18, 3, -1, 3000],
+      [3, 18, 1, -1, 2800],
+      [4, 19, 0, -1, 3000],
+    ],
+  },
+  screens: [
+    { segments: [[0, 8, 0], [8, 2, 1], [10, 2, 2], [12, 8, 3]], deco: [[2, 'bones'], [5, 'skull_spike']], enemies: [[15, 'gnoll_hunter']] },
+    { segments: [[0, 6, 3], [6, 2, 2], [8, 2, 1], [10, 10, 0]], deco: [[13, 'skull_spike'], [17, 'bones']], enemies: [[14, 'gnoll_brute']] },
+    { segments: [[0, 5, 0], [5, 3, 1], [8, 3, 2], [11, 3, 3], [14, 6, 3]], deco: [[2, 'dead_tree']], enemies: [[16, 'gnoll']] },
+    { segments: [[0, 4, 3], [6, 4, 2], [12, 8, 1]], deco: [[15, 'bones']], enemies: [[8, 'gnoll_hunter']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'skull_spike'], [9, 'bones'], [17, 'skull_spike']], enemies: [[8, 'gnoll_brute'], [14, 'gnoll_hunter']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Fazenda dos Gnolls: ovelhas nas placas abrem os portões; a chave está no celeiro. */
+export const LEVEL_FARM: LevelDef = {
+  id: 'farm',
+  name: 'Fazenda dos Gnolls',
+  intro: 'Ponha as ovelhas nas placas para abrir os portões e leve a chave até a porta.',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'A porta da fazenda abriu!',
+  puzzle: {
+    key: [1, 8, 2],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 14, 3],
+      [1, 18, 0],
+      [2, 6, 4],
+    ],
+    ladders: [[1, 5, 0, 2]],
+    springs: [[2, 6, 0]],
+    sheep: [
+      [0, 4, 0],
+      [1, 11, 0],
+    ],
+    plates: [
+      [0, 8, 0, 'g1'],
+      [1, 13, 0, 'g2'],
+    ],
+    gates: [
+      [0, 11, 0, 4, 'g1'],
+      [1, 16, 0, 4, 'g2'],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[13, 3, 3]], deco: [[1, 'house'], [18, 'bush']], sign: [2, 'Ovelha na placa:\no portão abre.'] },
+    { segments: [[0, 6, 0], [6, 4, 2], [10, 10, 0]], deco: [[2, 'house']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 4]], deco: [[12, 'house'], [2, 'bush']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Capim Alto: Gnolls Espreitadores escondidos no capim. */
+export const LEVEL_TALLGRASS: LevelDef = {
+  id: 'tallgrass',
+  name: 'Capim Alto',
+  intro: 'Moitas que tremem não são vento: são Gnolls esperando você chegar perto.',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'Nenhum Gnoll te pegou de surpresa!',
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[9, 3, 2]], deco: [[3, 'bush'], [11, 'bush'], [17, 'bush']], enemies: [[7, 'gnoll_stalker'], [14, 'gnoll_stalker']], sign: [2, 'No capim alto,\nalgo se mexe...'] },
+    { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 0]], deco: [[2, 'bush'], [16, 'bush']], enemies: [[5, 'gnoll_stalker'], [11, 'gnoll_hunter'], [17, 'gnoll_stalker']] },
+    { segments: [[0, 5, 0], [5, 3, 2], [8, 12, 0]], floats: [[14, 2, 3]], deco: [[12, 'bush']], enemies: [[10, 'gnoll_stalker'], [13, 'gnoll_stalker'], [17, 'gnoll']] },
+    { segments: [[0, 6, 0], [8, 6, 0], [16, 4, 1]], deco: [[1, 'bush'], [9, 'stone']], enemies: [[3, 'gnoll_stalker'], [10, 'gnoll_brute'], [12, 'gnoll_stalker']] },
+    { segments: [[0, 20, 0]], deco: [[2, 'house'], [8, 'bush'], [15, 'bush']], enemies: [[6, 'gnoll_stalker'], [9, 'gnoll_stalker'], [12, 'gnoll_hunter'], [16, 'gnoll_stalker']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Caravana dos Gnolls: corrida e tiro contra a caravana. */
+export const LEVEL_CARAVAN: LevelDef = {
+  id: 'caravan',
+  name: 'Caravana dos Gnolls',
+  intro: 'Corrida e tiro! A caravana dos Gnolls não para de mandar caçadores.',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'A caravana debandou!',
+  gun: { spawns: ['gnoll_hunter', 'gnoll', 'goblin'] as CharId[], every: 1900 },
+  field: { boulders: [[2, 19, 0, -1, 3500]] },
+  screens: [
+    { segments: [[0, 10, 0], [12, 8, 0]], floats: [[10, 2, 2]], deco: [[3, 'house']], enemies: [[16, 'gnoll']] },
+    { segments: [[0, 5, 0], [5, 4, 1], [11, 9, 0]], deco: [[14, 'bush']], enemies: [[7, 'gnoll_hunter'], [15, 'gnoll']] },
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3], [13, 3, 3]], deco: [[2, 'stone']], enemies: [[10, 'gnoll_brute']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[17, 'house']], enemies: [[9, 'gnoll_hunter'], [17, 'goblin']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'bones'], [18, 'tower']], enemies: [[8, 'gnoll'], [12, 'gnoll_hunter'], [16, 'gnoll_brute']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Moinhos do Vento: vãos largos cruzados nas correntes de vento, planando. */
+export const LEVEL_WINDMILL: LevelDef = {
+  id: 'windmill',
+  name: 'Moinhos do Vento',
+  intro: 'O vento da pradaria levanta quem entra nele. Segure PULAR no ar para planar.',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'O vento te levou até o fim da pradaria!',
+  winds: [
+    [0, 8, 3],
+    [1, 5, 3],
+    [2, 6, 2],
+    [2, 13, 2],
+    [3, 5, 3],
+    [3, 10, 2],
+  ],
+  screens: [
+    { segments: [[0, 7, 0], [13, 7, 1]], floats: [[10, 2, 4]], deco: [[2, 'tower']], enemies: [[16, 'gnoll_hunter']], sign: [3, 'Entre no vento para subir.\nSegure PULAR para planar.'] },
+    { segments: [[0, 4, 1], [12, 8, 0]], floats: [[8, 3, 4]], enemies: [[16, 'gnoll']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], enemies: [[10, 'gnoll_hunter'], [18, 'goblin']] },
+    { segments: [[0, 4, 0], [14, 6, 1]], floats: [[8, 2, 5]], enemies: [[17, 'gnoll_brute']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'house'], [12, 'tower']], enemies: [[9, 'gnoll'], [13, 'gnoll_hunter']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Covil do Rei Gnoll. */
+export const LEVEL_GNOLLKING: LevelDef = {
+  id: 'gnollking',
+  name: 'Covil do Rei Gnoll',
+  intro: 'O Rei Gnoll guarda o segundo fragmento. Ele salta, uiva e joga um osso do tamanho de um tronco!',
+  theme: 'shore',
+  tiles: 'tiles_prairie',
+  winText: 'O Rei Gnoll caiu! Fragmento da coroa recuperado!',
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[2, 'bones'], [16, 'skull_spike']], enemies: [[14, 'gnoll_hunter'], [18, 'gnoll']] },
+    { segments: [[0, 6, 0], [8, 6, 1], [16, 4, 0]], deco: [[3, 'bush']], enemies: [[10, 'gnoll_brute']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'gnollking',
+    arena: { segments: [[0, 20, 0]], floats: [[3, 3, 3], [14, 3, 3]], deco: [[1, 'skull_spike'], [9, 'bones'], [18, 'skull_spike']] },
+  },
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -1269,6 +1471,15 @@ export const LEVELS: LevelDef[] = [
   LEVEL_MASTS,
   LEVEL_REEF,
   LEVEL_SHARKKING,
+  // Área 2 (Pradaria dos Ossos).
+  LEVEL_ROAD,
+  LEVEL_STAMPEDE,
+  LEVEL_BONEYARD,
+  LEVEL_FARM,
+  LEVEL_TALLGRASS,
+  LEVEL_CARAVAN,
+  LEVEL_WINDMILL,
+  LEVEL_GNOLLKING,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];
@@ -2074,6 +2285,22 @@ export class Level {
         // Pedra de ouro (recursos do Tiny Swords): decoração da mina.
         s.add.image(x, base + 30, 'gold_stone_big').setOrigin(0.5, 1).setScale(0.7).setDepth(DEPTH.deco);
         break;
+      case 'bush':
+        // Arbustos animados do Free Pack.
+        s.add.sprite(x, base + 44, `bush${1 + (seed % 4)}`).setOrigin(0.5, 1).setScale(0.75).setDepth(DEPTH.deco).setTint(tint).play({ key: `bush${1 + (seed % 4)}`, startFrame: seed % 8 });
+        break;
+      case 'stone':
+        s.add.image(x, base + 14, `stone${1 + (seed % 4)}`).setOrigin(0.5, 1).setScale(0.9).setDepth(DEPTH.deco).setTint(tint);
+        break;
+      case 'house':
+      case 'hut':
+      case 'tower': {
+        // Construções do Free Pack ao fundo (amarelas na Pradaria, azuis no resto).
+        const color = this.def.tiles === 'tiles_prairie' ? 'yellow' : kind === 'tower' ? 'black' : 'blue';
+        const key = kind === 'tower' ? `bld_${color}_tower` : `bld_${color}_house${1 + (seed % 3)}`;
+        s.add.image(x, base + 20, key).setOrigin(0.5, 1).setScale(0.85).setDepth(DEPTH.deco - 0.2).setTint(tint);
+        break;
+      }
       default:
         s.add.image(x, base + 8, kind).setOrigin(0.5, 1).setDepth(DEPTH.deco).setTint(tint);
     }

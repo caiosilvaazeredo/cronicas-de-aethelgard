@@ -382,7 +382,7 @@ export class MapScene extends Phaser.Scene {
       }
       return;
     }
-    const key = l.tiles === 'tiles_sand' || l.tiles === 'tiles_ship' ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
+    const key = l.tiles === 'tiles_sand' || l.tiles === 'tiles_ship' || l.tiles === 'tiles_prairie' ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
     const tint = l.theme === 'volcano' ? 0xd28e78 : l.id === 'nest' ? 0x8a9aa8 : l.id === 'queen' ? 0x7a7088 : 0xffffff;
     this.island(tx, ty, 4, 3, key, tint);
     if (l.id === 'shore') {
@@ -431,6 +431,22 @@ export class MapScene extends Phaser.Scene {
       deco('door_exit', 60, -10, 0.55);
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
+    }
+    // Pradaria dos Ossos.
+    if (l.id === 'road' || l.id === 'farm') this.add.image(x - 50, y + 4, 'bld_yellow_house1').setOrigin(0.5, 1).setScale(0.45).setDepth(6);
+    if (l.id === 'stampede' || l.id === 'farm') {
+      const sh = this.add.sprite(x + 30, y + 6, 'sheep_move').setOrigin(0.5, 0.85).setScale(0.5).setDepth(6).play('sheep_move');
+      if (l.id === 'stampede') sh.setTint(0xa0704a);
+    }
+    if (l.id === 'boneyard') {
+      deco('skull_spike', -40, -20, 0.5);
+      deco('bones', 40, -6, 0.6);
+    }
+    if (l.id === 'tallgrass') for (const dx of [-50, 10, 60]) this.add.sprite(x + dx, y + 10, 'bush1').setOrigin(0.5, 0.75).setScale(0.4).setDepth(6).play({ key: 'bush1', startFrame: (dx + 60) % 8 });
+    if (l.id === 'gnollking') {
+      this.add.sprite(x, y - 10, 'king_gnoll_idle').setScale(0.55).setFlipX(true).setDepth(6).play('king_gnoll_idle');
+      const crown = deco('queen_crown', 0, -70, 0.6);
+      this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     // Ilhas da Maré.
     if (l.id === 'crabs') {

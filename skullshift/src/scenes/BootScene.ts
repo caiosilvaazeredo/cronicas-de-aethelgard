@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { makeCrouchAnims } from '../game/crouch';
-import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet, swimSheet } from '../game/sheets';
+import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet, swimSheet, makeShamanOrb } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
 import { makeVariants } from '../game/variants';
 import { makeSeaArt, makeSeaTiles } from '../game/sea';
@@ -170,6 +170,7 @@ export class BootScene extends Phaser.Scene {
     makeLavaWave(this);
     makePuzzleArt(this);
     makeVariants(this);
+    makeShamanOrb(this);
     // Tubarões (e variantes) ganham folhas de nado: corpo deitado e ondulando, sem a sombra do chão.
     for (const id of Object.keys(CHARS) as CharId[]) {
       if (!id.startsWith('shark')) continue;

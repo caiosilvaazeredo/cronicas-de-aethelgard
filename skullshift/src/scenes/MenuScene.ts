@@ -3,6 +3,7 @@ import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { CHARS, type CharId } from '../game/characters';
+import { SHAMAN_ORB_OFFSET } from '../game/sheets';
 import { LEVELS } from '../game/level';
 import { setFreePlay } from '../game/progress';
 import { sfx } from '../game/settings';
@@ -149,9 +150,19 @@ export class MenuScene extends Phaser.Scene {
       let k = 0;
       const cast = () => {
         const w = walkers[k++ % walkers.length];
-        sh.setFlipX(w.spr.x < rig.x).play('shaman_attack').once('animationcomplete', () => sh.play('shaman_idle'));
         const next = Phaser.Utils.Array.GetRandom(FORMS.filter((f) => f !== w.id));
-        this.time.delayedCall(260, () => this.zap(rig, w, next, feet));
+        // Ele ergue a mão (animação de ataque); quando a chama sobe, ela sai da mão de verdade:
+        // o Xamã fica com a mão vazia e a própria chama voa até o morador.
+        sh.setFlipX(w.spr.x < rig.x).play('shaman_attack');
+        let thrown = false;
+        const onFrame = (_a: unknown, f: Phaser.Animations.AnimationFrame) => {
+          if (thrown || f.index < 5) return;
+          thrown = true;
+          sh.off('animationupdate', onFrame);
+          sh.play('shaman_idle_noorb');
+          this.zap(rig, sh, w, next, feet);
+        };
+        sh.on('animationupdate', onFrame);
       };
       this.time.delayedCall(1500, cast);
       this.time.addEvent({ delay: 4200, startAt: 1500, loop: true, callback: cast });
@@ -384,13 +395,13 @@ export class MenuScene extends Phaser.Scene {
   }
 
   /** O raio do Xamã: desce em zigue-zague até o alvo, gira em volta dele e o transforma. */
-  private zap(rig: Phaser.GameObjects.Container, w: { spr: Phaser.GameObjects.Sprite; id: CharId; pause: number }, next: CharId, feet: number): void {
+  private zap(rig: Phaser.GameObjects.Container, sh: Phaser.GameObjects.Sprite, w: { spr: Phaser.GameObjects.Sprite; id: CharId; pause: number }, next: CharId, feet: number): void {
     const PURPLE = 0xb46bff;
-    // Na frente de tudo (até do logo), para a bola ser vista o caminho todo.
     const g = this.add.graphics().setDepth(12);
-    // Sai da bolinha roxa que ele segura na mão (do lado para onde está virado).
-    const left = w.spr.x < rig.x;
-    const from = { x: rig.x + (left ? -32 : 32) * rig.scale, y: rig.y - 36 * rig.scale };
+    // A chama recortada do próprio sprite do Xamã, saindo exatamente de onde estava na mão.
+    const side = sh.flipX ? -1 : 1;
+    const from = { x: rig.x + side * SHAMAN_ORB_OFFSET.x * rig.scale, y: rig.y + SHAMAN_ORB_OFFSET.y * rig.scale };
+    const orb = this.add.sprite(from.x, from.y, 'shaman_orb').setScale(rig.scale).setFlipX(sh.flipX).setDepth(12).play('shaman_orb');
     const t0 = this.time.now;
     const TRAVEL = 900;
     const SPIN = 700;
@@ -401,23 +412,21 @@ export class MenuScene extends Phaser.Scene {
       const to = { x: w.spr.x, y: feet - 40 };
       g.clear();
       if (t < TRAVEL) {
-        // A bola roxa sai da mão do Xamã e voa em arco até o alvo, deixando um rastro de faíscas.
+        // A chama voa em arco (começa devagar, acelera, chega suave) e cresce um pouco no caminho,
+        // deixando um rastro de cópias dela mesma que somem.
         const u = t / TRAVEL;
-        const e = u * u * (3 - 2 * u); // começa devagar, acelera e chega suave
+        const e = u * u * (3 - 2 * u);
         const bx = from.x + (to.x - from.x) * e;
         const by = from.y + (to.y - from.y) * e - Math.sin(e * Math.PI) * 90;
-        const pulse = 1 + Math.sin(t / 45) * 0.15;
-        g.fillStyle(0x7a3ad0, 0.3).fillCircle(bx, by, 30 * pulse);
-        g.fillStyle(PURPLE, 0.9).fillCircle(bx, by, 18 * pulse);
-        g.fillStyle(0xf6ecff, 1).fillCircle(bx - 4, by - 4, 8);
-        if (Math.random() < 0.8) {
-          const sp = this.add.image(bx, by, 'spark').setTint(Math.random() < 0.5 ? PURPLE : 0xe8d4ff).setScale(0.45).setDepth(11.9);
-          this.tweens.add({ targets: sp, x: bx + Phaser.Math.Between(-14, 14), y: by + Phaser.Math.Between(-6, 18), scale: 0.05, alpha: 0, duration: 420, onComplete: () => sp.destroy() });
+        orb.setPosition(bx, by).setScale(rig.scale * (1 + Math.sin(u * Math.PI) * 0.6)).setAngle(Math.sin(t / 90) * 12);
+        if (Math.random() < 0.6) {
+          const ghost = this.add.image(bx, by, 'shaman_orb', orb.frame.name).setScale(orb.scale).setFlipX(orb.flipX).setAlpha(0.5).setDepth(11.9);
+          this.tweens.add({ targets: ghost, alpha: 0, scale: orb.scale * 0.6, y: by + 6, duration: 320, onComplete: () => ghost.destroy() });
         }
-      } else if (t < TRAVEL + 140) {
-        // Impacto: a bola se abre num anel em volta do alvo.
-        const k = (t - TRAVEL) / 140;
-        g.lineStyle(5, PURPLE, 1 - k).strokeCircle(to.x, to.y, 16 + k * 40);
+      } else if (orb.active) {
+        // Chegou: a chama entra no morador (encolhe sobre ele) e começa a transformação.
+        this.tweens.add({ targets: orb, x: to.x, y: to.y, scale: 0, alpha: 0, duration: 160, onComplete: () => orb.destroy() });
+        orb.setActive(false);
       }
       if (t >= TRAVEL) {
         // Raios girando em volta do alvo, cada vez mais rápido.
@@ -448,6 +457,10 @@ export class MenuScene extends Phaser.Scene {
         g.destroy();
         w.spr.clearTint();
         this.setForm(w as { spr: Phaser.GameObjects.Sprite; id: CharId }, next, feet);
+        // A chama renasce na mão do Xamã.
+        sh.play('shaman_idle');
+        const spark = this.add.image(from.x, from.y, 'spark').setTint(0xe8d4ff).setScale(0.2).setDepth(12);
+        this.tweens.add({ targets: spark, scale: 0.9, alpha: 0, duration: 380, onComplete: () => spark.destroy() });
         w.spr.play(`${next}_idle`);
         this.cameras.main.flash(80, 190, 140, 255);
         for (let i = 0; i < 10; i++) {

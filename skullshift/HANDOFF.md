@@ -122,7 +122,7 @@ originais (extraídas com PIL do PNG).
 - **Área bônus**: `LEVEL_HOLLOW` ('hollowtree', secret) — Árvore Oca, no mapa da Maré depois da Maré Alta.
   ATENÇÃO: código antigo usa `LEVELS.findIndex(l => l.secret)` para a fase 'retro'; ela tem de continuar
   sendo a primeira secreta da lista.
-- **Tela inicial**: vila só de casinhas; o Xamã escolhe um morador e o transforma de longe (`MenuScene.zap`:
+- **Tela inicial**: vila só de casinhas; o Xamã escolhe um morador e o transforma de longe. A chama da mão dele foi recortada do próprio sprite (`sheets.makeShamanOrb`: folha `shaman_orb` + `shaman_idle_noorb` com a mão vazia); na animação de ataque ela sai da mão e voa até o alvo (`MenuScene.zap`:
   raio roxo, giro de raios, mesmo sprite troca de forma).
 - **História dentro das fases** (`data/beats.ts`): `BEATS[idDaFase] = [[cenário, 's'|'x'|'f', texto], ...]`.
   's' caveira (balão), 'x' Xamã de longe (balão no alto), 'f' lampejo de memória (tela sépia, vulto do aldeão,

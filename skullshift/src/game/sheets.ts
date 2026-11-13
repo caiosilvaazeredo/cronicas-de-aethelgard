@@ -225,3 +225,56 @@ export function swimSheet(scene: Phaser.Scene, src: string, dst: string, frame: 
   }
   addSheet(scene, dst, out, frame, frame);
 }
+
+/** Cores da chama roxa que o Xamã segura (branco, rosa e lilás), tiradas do sprite original. */
+const FLAME = new Set([0xffffff, 0xfdb2fc, 0xa479cd]);
+/** Região da chama dentro do quadro de 192 px (acima da mão esquerda, sem pegar o rosto). */
+const FLAME_BOX = { x: 28, y: 34, w: 44, h: 56 };
+
+/**
+ * A chama da mão do Xamã vira uma folha própria ('shaman_orb', recortada quadro a quadro de
+ * 'shaman_idle') e o Xamã ganha uma versão com a mão vazia ('shaman_idle_noorb'): assim a chama
+ * de verdade pode sair da mão dele e voar até alguém, e depois "renascer" na mão.
+ */
+export function makeShamanOrb(scene: Phaser.Scene): void {
+  if (scene.textures.exists('shaman_orb')) return;
+  const src = toCanvas(scene, 'shaman_idle');
+  const n = Math.floor(src.width / 192);
+  const orb = document.createElement('canvas');
+  orb.width = FLAME_BOX.w * n;
+  orb.height = FLAME_BOX.h;
+  const empty = document.createElement('canvas');
+  empty.width = src.width;
+  empty.height = src.height;
+  const ectx = empty.getContext('2d')!;
+  ectx.drawImage(src, 0, 0);
+  const all = ectx.getImageData(0, 0, src.width, src.height);
+  const octx = orb.getContext('2d')!;
+  const out = octx.createImageData(orb.width, orb.height);
+  for (let i = 0; i < n; i++) {
+    for (let y = 0; y < FLAME_BOX.h; y++)
+      for (let x = 0; x < FLAME_BOX.w; x++) {
+        const sx = i * 192 + FLAME_BOX.x + x;
+        const sy = FLAME_BOX.y + y;
+        const k = (sy * src.width + sx) * 4;
+        const d = all.data;
+        if (d[k + 3] === 0 || !FLAME.has(hex(d[k], d[k + 1], d[k + 2]))) continue;
+        // copia o pixel para a folha da chama e apaga da folha do Xamã (mão vazia)
+        const o = (y * orb.width + i * FLAME_BOX.w + x) * 4;
+        out.data[o] = d[k];
+        out.data[o + 1] = d[k + 1];
+        out.data[o + 2] = d[k + 2];
+        out.data[o + 3] = d[k + 3];
+        d[k + 3] = 0;
+      }
+  }
+  octx.putImageData(out, 0, 0);
+  ectx.putImageData(all, 0, 0);
+  addSheet(scene, 'shaman_orb', orb, FLAME_BOX.w, FLAME_BOX.h);
+  addSheet(scene, 'shaman_idle_noorb', empty, 192, 192);
+  scene.anims.create({ key: 'shaman_orb', frames: scene.anims.generateFrameNumbers('shaman_orb', { start: 0, end: n - 1 }), frameRate: 10, repeat: -1 });
+  scene.anims.create({ key: 'shaman_idle_noorb', frames: scene.anims.generateFrameNumbers('shaman_idle_noorb', { start: 0, end: n - 1 }), frameRate: 10, repeat: -1 });
+}
+
+/** Centro da chama dentro do quadro (relativo ao centro do quadro de 192 px). */
+export const SHAMAN_ORB_OFFSET = { x: FLAME_BOX.x + FLAME_BOX.w / 2 - 96, y: FLAME_BOX.y + FLAME_BOX.h / 2 - 96 };

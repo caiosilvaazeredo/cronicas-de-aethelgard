@@ -104,7 +104,7 @@ export class PrincesBoss extends Boss {
     this.pause();
     const s = this.scene;
     this.bee.setVisible(true).setPosition(this.host.x1 + 100, this.host.ceiling + 60).setFlipX(true);
-    this.beeCrown.setVisible(true);
+    // A abelha não usa coroa (só o príncipe dos morcegos).
     s.cameras.main.shake(300, 0.005);
     await new Promise<void>((r) => s.tweens.add({ targets: this.bee, x: this.host.x1 - 180, y: this.host.floor - 160, duration: 900, ease: 'Sine.easeOut', onComplete: () => r() }));
     this.host.bar()?.showBossBar2?.(BEE.name, 'Herdeiro da Colmeia', BEE.color);

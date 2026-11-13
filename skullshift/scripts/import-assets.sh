@@ -101,3 +101,21 @@ if [ -n "${4:-}" ]; then
   cp "$(find "$TMP/font2" -iname '*.ttf' | head -1)" "$ROOT/public/fonts/matcha-style.ttf"
   echo "Fonte das instruções copiada"
 fi
+
+# Aldeão (Pawn do Free Pack): a forma final da caveira.
+P="$F/Units/Blue Units/Pawn"
+cp "$P/Pawn_Idle.png" "$A/chars/villager_idle.png"
+cp "$P/Pawn_Run.png" "$A/chars/villager_run.png"
+cp "$P/Pawn_Interact Knife.png" "$A/chars/villager_attack.png"
+# Construções (mapa do mundo e cenários), pedras, arbustos e o tileset outonal.
+mkdir -p "$A/bld"
+for c in Blue Red Yellow Purple Black; do
+  for n in Castle Monastery Tower House1 House2 House3 Barracks Archery; do
+    cp "$F/Buildings/$c Buildings/$n.png" "$A/bld/$(echo "$c" | tr A-Z a-z)_$(echo "$n" | tr A-Z a-z).png"
+  done
+done
+for i in 1 2 3 4; do
+  cp "$F/Terrain/Decorations/Rocks/Rock$i.png" "$A/terrain/stone$i.png"
+  cp "$F/Terrain/Decorations/Bushes/Bushe$i.png" "$A/terrain/bush$i.png"
+done
+cp "$F/Terrain/Tileset/Tilemap_color2.png" "$A/terrain/tiles_meadow.png"

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { DEPTH, FONT } from '../config';
 import type { Intent } from './controls';
 import { sfx } from './settings';
+import { Px } from '../ui/pixelart';
 import type { BossBar } from './boss';
 
 /** O que a cena do jogo oferece à fase de voo. */
@@ -31,6 +32,28 @@ export interface ShmupHost {
   bar?: () => BossBar | undefined;
 }
 
+/** Onda sônica (morcego) e ferrão (abelha), em pixel art. */
+function makeFlightArt(scene: Phaser.Scene): void {
+  if (scene.textures.exists('sonic_wave')) return;
+  const ink = 0x1d1a2b;
+  const w = new Px(9, 22);
+  for (let y = 0; y < 22; y++) {
+    const x = Math.round(1 + 5 * Math.sin((Math.PI * y) / 21));
+    w.set(x, y, 0xbfe9ff);
+    w.set(x + 1, y, 0xffffff);
+    if (y > 3 && y < 18) w.set(x - 1, y, 0x7fb8ff);
+  }
+  w.outline(ink);
+  w.toTexture(scene, 'sonic_wave', 2);
+  const st = new Px(14, 5);
+  st.rect(0, 1, 9, 3, 0xffe066);
+  st.rect(2, 1, 2, 3, 0x2a2a3a);
+  st.rect(9, 2, 5, 1, 0xe8f0f8);
+  st.rect(9, 1, 3, 3, 0xd8e0e8);
+  st.outline(ink);
+  st.toTexture(scene, 'stinger', 2);
+}
+
 /** Poderes de cada montaria. */
 const MOUNT = {
   bat: { key: 'prince_bat_idle', scale: 1.2, speed: 390, rate: 190, spread: true, screech: true, shield: true },
@@ -54,7 +77,7 @@ interface BossDef {
 
 const BOSSES: Record<'imp' | 'bee' | 'bat', BossDef> = {
   imp: { key: 'imp_idle', scale: 3, hp: 40, name: 'DIABRETE GIGANTE', title: 'Senhor dos Céus', color: 0xe05a2a, shot: 0xff7a1a, patterns: 4, crown: false },
-  bee: { key: 'king_bee_idle', scale: 2.1, hp: 90, name: 'REI DAS ABELHAS', title: 'Soberano da Colmeia', color: 0xb0306a, shot: 0xffd36b, patterns: 4, crown: true },
+  bee: { key: 'king_bee_idle', scale: 2.1, hp: 90, name: 'REI DAS ABELHAS', title: 'Soberano da Colmeia', color: 0xb0306a, shot: 0xffd36b, patterns: 4, crown: false },
   bat: { key: 'king_bat_idle', scale: 2.3, hp: 60, name: 'REI DOS MORCEGOS', title: 'Senhor da Noite Eterna', color: 0xa01e30, shot: 0xff4a5a, patterns: 5, crown: true },
 };
 
@@ -410,10 +433,26 @@ export class ShmupSystem {
 
   private fire(): void {
     const s = this.host.scene;
-    // Com o Príncipe dos Morcegos: três ossos em leque. Com a abelha: um só.
-    for (const vy of this.mount.spread ? [-140, 0, 140] : [0]) {
-      const o = s.add.sprite(this.x + 50, this.y - 40, 'bone').setScale(0.8).setDepth(DEPTH.projectiles).play('bone');
-      this.shots.push({ obj: o, vx: 900, vy, r: 14, enemy: false });
+    makeFlightArt(s);
+    // A montaria ataca de verdade: o morcego abre a boca e solta ondas sônicas (três em leque);
+    // a abelha dobra o ferrão para a frente e dispara um ferrão.
+    const atk = this.mount.key.replace('_idle', '_attack');
+    if (this.bat.anims.currentAnim?.key !== atk) {
+      this.bat.play(atk);
+      this.bat.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => this.bat.play(this.mount.key));
+    }
+    const k = this.mount.scale;
+    if (this.mount.spread) {
+      const mx = this.x + 42 * k;
+      const my = this.y - 12 * k;
+      for (const vy of [-140, 0, 140]) {
+        const o = s.add.image(mx, my, 'sonic_wave').setScale(0.6).setDepth(DEPTH.projectiles).setAngle(Math.atan2(vy, 900) * (180 / Math.PI));
+        s.tweens.add({ targets: o, scale: 1.3, duration: 500 });
+        this.shots.push({ obj: o, vx: 900, vy, r: 16, enemy: false });
+      }
+    } else {
+      const o = s.add.image(this.x + 26 * k, this.y + 30 * k, 'stinger').setDepth(DEPTH.projectiles);
+      this.shots.push({ obj: o, vx: 820, vy: -20, r: 12, enemy: false });
     }
   }
 

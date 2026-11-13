@@ -27,8 +27,16 @@ export class BootScene extends Phaser.Scene {
       this.load.spritesheet(`${id}_run`, `chars/${id}_run.png`, fs);
       if (d.attackSheets) for (const p of d.attackSheets) this.load.spritesheet(p.key, `chars/${p.key}.png`, fs);
       else this.load.spritesheet(`${id}_attack`, `chars/${id}_attack.png`, fs);
-      this.load.image(`${id}_avatar`, `chars/${id}_avatar.png`);
+      if (id !== 'villager') this.load.image(`${id}_avatar`, `chars/${id}_avatar.png`);
     }
+    // Free Pack: construções (mapa do mundo e cenários), pedras e arbustos animados.
+    for (const c of ['blue', 'red', 'yellow', 'purple', 'black'])
+      for (const n of ['castle', 'monastery', 'tower', 'house1', 'house2', 'house3', 'barracks', 'archery']) this.load.image(`bld_${c}_${n}`, `bld/${c}_${n}.png`);
+    for (let i = 1; i <= 4; i++) {
+      this.load.image(`stone${i}`, `terrain/stone${i}.png`);
+      this.load.spritesheet(`bush${i}`, `terrain/bush${i}.png`, { frameWidth: 128, frameHeight: 128 });
+    }
+    this.load.spritesheet('tiles_meadow', 'terrain/tiles_meadow.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('skull_guard', 'chars/skull_guard.png', { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('bone', 'chars/bone.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('harpoon', 'chars/harpoon.png');
@@ -140,6 +148,8 @@ export class BootScene extends Phaser.Scene {
     makeLavaWave(this);
     makePuzzleArt(this);
     makeVariants(this);
+    for (let i = 1; i <= 4; i++) this.anim(`bush${i}`, 8, 8, -1);
+    this.makeVillagerAvatar();
     makeSeaTiles(this);
     makeSeaArt(this);
     makeKingShark(this);
@@ -153,6 +163,18 @@ export class BootScene extends Phaser.Scene {
     this.makeWindAndWaves();
 
     this.scene.start('menu');
+  }
+
+  /** Retrato do aldeão (o pacote não tem): o rosto recortado do primeiro quadro, ampliado. */
+  private makeVillagerAvatar(): void {
+    const src = this.textures.get('villager_idle').getSourceImage() as HTMLImageElement;
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 256;
+    const ctx = c.getContext('2d')!;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(src, 62, 56, 68, 68, 0, 0, 256, 256);
+    this.textures.addCanvas('villager_avatar', c);
   }
 
   private anim(key: string, n: number, fps: number, repeat: number): void {

@@ -123,7 +123,7 @@ export class WorldScene extends Phaser.Scene {
     const fix = <T extends Phaser.GameObjects.Components.ScrollFactor>(o: T): T => o.setScrollFactor(0);
     fix(
       this.add
-        .text(MW / 2, 36, this.header(), { fontFamily: FONT, fontSize: '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 })
+        .text(MW / 2, 30, this.header(), { fontFamily: FONT, fontSize: '28px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 })
         .setOrigin(0.5)
         .setDepth(30),
     );
@@ -251,37 +251,101 @@ export class WorldScene extends Phaser.Scene {
     return [a.pos[0] - (a === CENTER ? 70 : 50), a.pos[1] - 6];
   }
 
+  /**
+   * O continente: uma máscara de terra (20×11 células de 64px) montada com o tileset do jogo
+   * (bordas escolhidas pelos vizinhos, espuma na beira). Cada célula pega o chão da área mais
+   * perto (areia na Maré, rocha roxa nas Teias, rocha vulcânica na Forja, e assim por diante).
+   */
+  private static readonly LAND = [
+    '....................',
+    '....................',
+    '...#######...####...',
+    '..##########.#####..',
+    '.##################.',
+    '.##################.',
+    '.##################.',
+    '..################..',
+    '..#######..#######..',
+    '...#####....#####...',
+    '....................',
+  ];
+
+  private isLand(c: number, r: number): boolean {
+    return WorldScene.LAND[r]?.[c] === '#';
+  }
+
+  /** Chão de cada área no mapa do mundo (tileset e tom). */
+  private static readonly GROUND: Record<string, [string, number]> = {
+    mare: ['tiles_sand', 0xffffff],
+    pradaria: ['tilemap', 0xf0e0a0],
+    lagoa: ['tilemap', 0xb0e8a8],
+    teias: ['tiles_cave', 0xc8b8e0],
+    forja: ['tiles_volcano', 0xe8a890],
+    bosque: ['tilemap', 0x8fcf80],
+    minas: ['tiles_cave', 0xf0d8a0],
+    centro: ['tilemap', 0xd8c8f0],
+  };
+
   private drawSea(): void {
     const s = this.add.tileSprite(-MW, -MH, MW * 3, MH * 3, 'waves').setOrigin(0).setAlpha(0.35).setDepth(0);
     this.tweens.add({ targets: s, tilePositionX: 256, duration: 9000, repeat: -1 });
     const rng = new Phaser.Math.RandomDataGenerator(['world-rocks']);
-    for (let i = 0; i < 14; i++) {
-      this.add.sprite(rng.between(20, MW - 20), rng.between(40, MH - 40), 'water_rocks').setScale(1.2).setDepth(1).play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
+    // Pedrinhas só na água (fora do continente).
+    for (let i = 0; i < 40; i++) {
+      const c = rng.between(0, 19);
+      const r = rng.between(0, 10);
+      if (this.isLand(c, r) || this.isLand(c, r + 1) || this.isLand(c, r - 1)) continue;
+      this.add.sprite(c * 64 + 32, r * 64 + 32, 'water_rocks').setScale(1.1).setDepth(1).play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
     }
-    for (let i = 0; i < 6; i++) this.add.image(rng.between(0, MW), rng.between(30, MH - 60), `cloud_0${(i % 8) + 1}`).setAlpha(0.45).setScale(0.55).setDepth(25);
+    this.drawLand();
   }
 
-  /** Ilha de tiles (nove-fatias) com espuma em volta, centrada em (cx, cy). */
-  private island(cx: number, cy: number, w: number, h: number, key: string, tint = 0xffffff): void {
-    const x0 = cx - (w * 64) / 2;
-    const y0 = cy - (h * 64) / 2;
-    for (let j = 0; j < h; j++)
-      for (let i = 0; i < w; i++) this.add.sprite(x0 + i * 64 + 32, y0 + j * 64 + 32, 'water_foam').setDepth(2).play({ key: 'water_foam', startFrame: (i + j) % 16 });
-    for (let j = 0; j < h; j++)
-      for (let i = 0; i < w; i++) {
-        const col = i === 0 ? 0 : i === w - 1 ? 2 : 1;
-        const row = j === 0 ? 0 : j === h - 1 ? 2 : 1;
-        this.add.image(x0 + i * 64, y0 + j * 64, key, row * COLS + col).setOrigin(0).setDepth(3).setTint(tint);
+  private drawLand(): void {
+    const land = ALL_AREAS.filter((a) => WorldScene.GROUND[a.id]);
+    for (let r = 0; r < WorldScene.LAND.length; r++)
+      for (let c = 0; c < 20; c++) {
+        if (!this.isLand(c, r)) continue;
+        const up = !this.isLand(c, r - 1);
+        const down = !this.isLand(c, r + 1);
+        const left = !this.isLand(c - 1, r);
+        const right = !this.isLand(c + 1, r);
+        const x = c * 64;
+        const y = r * 64;
+        if (up || down || left || right) this.add.sprite(x + 32, y + 32, 'water_foam').setDepth(2).play({ key: 'water_foam', startFrame: (c + r) % 16 });
+        // Área mais perto desta célula decide o chão.
+        let best = land[0];
+        let bd = Infinity;
+        for (const a of land) {
+          const d = Phaser.Math.Distance.Between(x + 32, y + 32, a.pos[0], a.pos[1]);
+          if (d < bd) {
+            bd = d;
+            best = a;
+          }
+        }
+        const [key, tint] = WorldScene.GROUND[best.id];
+        const row = up ? 0 : down ? 2 : 1;
+        const col = left ? 0 : right ? 2 : 1;
+        this.add.image(x, y, key, row * COLS + col).setOrigin(0).setDepth(3).setTint(tint);
       }
   }
 
-  /** Nuvem flutuante (áreas do céu). */
-  private cloudIsland(cx: number, cy: number, tint: number): Phaser.GameObjects.Graphics {
+  /** Planalto de 3 tiles (penhasco do tileset), centrado em x, com o topo em y. */
+  private plateau(x: number, y: number, w: number, key: string, tint: number): void {
+    for (let i = 0; i < w; i++) {
+      const col = i === 0 ? 5 : i === w - 1 ? 7 : 6;
+      const px = x - (w * 64) / 2 + i * 64;
+      this.add.image(px, y, key, 3 * COLS + col).setOrigin(0).setDepth(4).setTint(tint);
+      this.add.image(px, y + 64, key, 5 * COLS + col).setOrigin(0).setDepth(4).setTint(tint);
+    }
+  }
+
+  /** Nuvem flutuante (áreas do céu), com o tom pedido. */
+  private cloudIsland(cx: number, cy: number, rim: number, top: number): Phaser.GameObjects.Graphics {
     const c = this.add.graphics().setDepth(4);
     c.fillStyle(INK, 1).fillRoundedRect(cx - 104, cy - 30, 208, 70, 26);
-    c.fillStyle(tint, 1).fillRoundedRect(cx - 100, cy - 26, 200, 62, 24);
-    c.fillStyle(0xffffff, 1).fillRoundedRect(cx - 96, cy - 30, 192, 54, 22);
-    for (let k = cx - 80; k <= cx + 80; k += 24) c.fillStyle(0xffffff, 1).fillCircle(k, cy - 30, 13);
+    c.fillStyle(rim, 1).fillRoundedRect(cx - 100, cy - 26, 200, 62, 24);
+    c.fillStyle(top, 1).fillRoundedRect(cx - 96, cy - 30, 192, 54, 22);
+    for (let k = cx - 80; k <= cx + 80; k += 24) c.fillStyle(top, 1).fillCircle(k, cy - 30, 13);
     this.tweens.add({ targets: c, y: -5, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     return c;
   }
@@ -289,65 +353,91 @@ export class WorldScene extends Phaser.Scene {
   private drawArea(a: AreaDef, i: number): void {
     const [x, y] = a.pos;
     const open = areaUnlocked(a);
-    const deco = (key: string, dx: number, dy: number, sc = 1) => this.add.image(x + dx, y + dy, key).setScale(sc).setDepth(6);
+    const deco = (key: string, dx: number, dy: number, sc = 1) => this.add.image(x + dx, y + dy, key).setOrigin(0.5, 1).setScale(sc).setDepth(6 + (y + dy) / 1000);
+    const bush = (dx: number, dy: number, k = 1) => this.add.sprite(x + dx, y + dy, `bush${k}`).setOrigin(0.5, 0.75).setScale(0.45).setDepth(6 + (y + dy) / 1000).play({ key: `bush${k}`, startFrame: (dx + 99) % 8 });
+    const tree = (dx: number, dy: number, sc = 0.42) => this.add.sprite(x + dx, y + dy, 'tree').setOrigin(0.5, 1).setScale(sc).setDepth(6 + (y + dy) / 1000).play({ key: 'tree', startFrame: Math.abs(dx) % 4 });
     switch (a.id) {
       case 'mare':
-        this.island(x, y, 3, 2, 'tilemap');
-        this.add.sprite(x - 60, y - 6, 'tree').setOrigin(0.5, 1).setScale(0.45).setDepth(6).play('tree');
-        deco('skull_spike', 64, 20, 0.5);
+        deco('bld_blue_house1', -30, 4, 0.5);
+        tree(-80, 10);
+        deco('skull_spike', 70, 22, 0.5);
+        deco('stone2', 40, 30, 0.7);
         break;
       case 'pradaria':
-        this.island(x, y, 3, 2, 'tilemap', 0xffe3a0);
-        deco('bones', -50, 16, 0.7);
-        deco('bones', 60, 10, 0.6);
+        deco('bld_yellow_house2', -40, 0, 0.5);
+        deco('bld_yellow_house3', 10, 14, 0.42);
+        deco('bones', 70, 30, 0.6);
+        bush(-80, 30, 2);
         break;
       case 'lagoa': {
-        this.island(x, y, 3, 2, 'tilemap', 0x9ad08a);
         const g = this.add.graphics().setDepth(5);
-        g.fillStyle(INK, 1).fillEllipse(x + 20, y + 10, 104, 46);
-        g.fillStyle(0x3f9a7a, 1).fillEllipse(x + 20, y + 10, 96, 38);
-        g.fillStyle(0x7fd8b0, 0.6).fillEllipse(x + 10, y + 4, 40, 10);
+        g.fillStyle(INK, 1).fillEllipse(x + 6, y + 8, 168, 72);
+        g.fillStyle(0x2f9ad8, 1).fillEllipse(x + 6, y + 8, 160, 64);
+        g.fillStyle(0x39b5fd, 1).fillEllipse(x + 6, y + 4, 150, 52);
+        g.fillStyle(0x8fd9ff, 0.8).fillEllipse(x - 20, y - 4, 50, 8).fillEllipse(x + 40, y + 14, 34, 6);
+        this.add.sprite(x + 30, y + 8, 'water_rocks').setScale(0.8).setDepth(5.5).play('water_rocks');
+        bush(-90, 4, 3);
+        bush(96, 10, 4);
         break;
       }
       case 'teias': {
-        this.island(x, y, 3, 2, 'tiles_cave', 0x8a7aa8);
+        this.plateau(x + 10, y - 66, 3, 'tiles_cave', 0xc8b8e0);
         const cave = this.add.graphics().setDepth(5);
-        cave.fillStyle(INK, 1).fillEllipse(x + 10, y - 6, 74, 58);
-        cave.fillStyle(0x08141a, 1).fillEllipse(x + 10, y - 2, 60, 46);
-        deco('web_px', -60, -16, 0.5);
+        cave.fillStyle(INK, 1).fillEllipse(x + 10, y + 26, 70, 54);
+        cave.fillStyle(0x08141a, 1).fillEllipse(x + 10, y + 30, 58, 44);
+        this.add.image(x - 54, y - 40, 'web_px').setScale(0.5).setDepth(6);
+        deco('stone4', 84, 34, 0.7);
         break;
       }
       case 'forja':
-        this.island(x, y, 3, 2, 'tiles_volcano', 0xd28e78);
-        this.add.image(x + 10, y + 20, 'map_volcano').setOrigin(0.5, 1).setScale(0.8).setDepth(5);
+        this.add.image(x + 10, y + 30, 'map_volcano').setOrigin(0.5, 1).setScale(0.8).setDepth(5);
         this.add
-          .particles(x + 10, y - 96, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.9, end: 0 }, frequency: 800 })
+          .particles(x + 10, y - 86, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.9, end: 0 }, frequency: 800 })
           .setDepth(6);
+        deco('stone3', -80, 30, 0.7);
         break;
       case 'bosque':
-        this.island(x, y, 3, 2, 'tilemap', 0x6fbf6a);
-        for (const dx of [-62, 0, 58]) this.add.sprite(x + dx, y + 12 - Math.abs(dx) / 6, 'tree').setOrigin(0.5, 1).setScale(0.38).setDepth(6).play({ key: 'tree', startFrame: (dx + 62) % 4 });
+        tree(-80, 6);
+        tree(-30, -14, 0.38);
+        tree(80, 0);
+        deco('bld_blue_house3', 24, 24, 0.45);
+        bush(-60, 34, 1);
         break;
-      case 'minas':
-        this.island(x, y, 3, 2, 'tiles_cave', 0xd8b070);
-        deco('gold_stone_big', -48, -4, 0.45);
-        this.add.sprite(x + 50, y - 10, 'torch_item_anim', 0).setDepth(6).play('torch_flame');
+      case 'minas': {
+        this.plateau(x - 10, y - 66, 3, 'tiles_cave', 0xf0d8a0);
+        const cave = this.add.graphics().setDepth(5);
+        cave.fillStyle(INK, 1).fillEllipse(x - 10, y + 26, 66, 52);
+        cave.fillStyle(0x1a1208, 1).fillEllipse(x - 10, y + 30, 54, 42);
+        deco('gold_stone_big', 70, 34, 0.42);
+        deco('bld_black_tower', -92, 30, 0.4);
+        this.add.sprite(x + 30, y + 10, 'torch_item_anim', 0).setDepth(6.5).play('torch_flame');
         break;
-      case 'ceu':
-        this.cloudIsland(x, y, 0xb9a6ee);
+      }
+      case 'ceu': {
+        // Céu de Brasa: brilho vermelho, nuvem em brasa e um castelo vermelho em cima.
+        const glow = this.add.graphics().setDepth(3.5);
+        for (let k = 0; k < 4; k++) glow.fillStyle(0xff4a2a, 0.08).fillCircle(x, y - 10, 150 - k * 28);
+        this.cloudIsland(x, y, 0xd84a3a, 0xffb090);
+        deco('bld_red_castle', 0, 0, 0.34);
+        this.add
+          .particles(x, y + 20, 'spark', { x: { min: -100, max: 100 }, speedY: { min: -40, max: -20 }, lifespan: 1600, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff7a1a, 0xff4a2a], frequency: 160 })
+          .setDepth(5);
         break;
+      }
       case 'reino': {
         const t = areaTitle(a);
-        this.cloudIsland(x, y, t.color);
         const moon = this.add.graphics().setDepth(3);
-        moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 70, y - 40, 44);
-        moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 70, y - 40, 28);
+        moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 92, y - 26, 40);
+        moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 92, y - 26, 24);
+        this.cloudIsland(x, y, t.color, 0xe8e0f8);
+        deco(t.kingAnim.includes('bee') ? 'bld_yellow_castle' : 'bld_black_castle', 0, 0, 0.34);
         break;
       }
       case 'centro':
-        this.island(x, y, 4, 3, 'tilemap', 0xb8a0e0);
-        this.add.image(x + 40, y - 10, 'map_mansion').setOrigin(0.5, 1).setScale(0.75).setDepth(5);
-        this.add.sprite(x - 40, y + 30, 'shaman_idle').setScale(0.6).setDepth(7).play('shaman_idle');
+        deco('bld_purple_monastery', 10, 20, 0.6);
+        deco('bld_purple_tower', -90, 34, 0.45);
+        deco('bld_purple_tower', 110, 34, 0.45);
+        this.add.sprite(x - 60, y + 30, 'shaman_idle').setScale(0.6).setDepth(7).play('shaman_idle');
         break;
     }
     // Rei da área (silhueta enquanto trancada).
@@ -367,7 +457,7 @@ export class WorldScene extends Phaser.Scene {
     // Plaquinha com o nome.
     const t = areaTitle(a);
     const label = open ? t.name.toUpperCase() : '???';
-    const txt = this.add.text(x, y + (a === CENTER ? 112 : 74), label, { fontFamily: FONT, fontSize: '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
+    const txt = this.add.text(x, y + (a === CENTER ? 76 : 66), label, { fontFamily: FONT, fontSize: '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
     const plate = this.add.graphics().setDepth(11);
     plate.fillStyle(INK, 1).fillRoundedRect(txt.x - txt.width / 2 - 12, txt.y - 15, txt.width + 24, 30, 10);
     plate.fillStyle(open ? t.color : 0x5f6872, 1).fillRoundedRect(txt.x - txt.width / 2 - 9, txt.y - 12, txt.width + 18, 24, 8);

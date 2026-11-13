@@ -39,7 +39,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'shark_idle',
     color: 0x2f86e0,
     levels: ['shore', 'crabs', 'hightide', 'wreck', 'deck', 'undersea', 'floodgates', 'masts', 'reef', 'sharkking'],
-    pos: [200, 490],
+    pos: [210, 490],
     unlock: 'start',
   },
   {
@@ -50,7 +50,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'gnoll_idle',
     color: 0xd8a530,
     levels: ['key1', 'gun1'],
-    pos: [150, 290],
+    pos: [170, 300],
     unlock: 'after-mare',
   },
   {
@@ -61,7 +61,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'lizard_idle',
     color: 0x58b947,
     levels: [],
-    pos: [390, 150],
+    pos: [430, 205],
     unlock: 'after-pradaria',
   },
   {
@@ -72,7 +72,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'spider_idle',
     color: 0x8a6ad0,
     levels: ['cave', 'nest', 'key2', 'princes', 'queen'],
-    pos: [460, 520],
+    pos: [470, 505],
     unlock: 'after-pradaria',
   },
   {
@@ -83,7 +83,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'minotaur_idle',
     color: 0xe0542e,
     levels: ['volcano', 'chase', 'key3'],
-    pos: [820, 520],
+    pos: [860, 505],
     unlock: 'after-pradaria',
   },
   {
@@ -94,7 +94,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'sgnome_idle',
     color: 0x3f9a5a,
     levels: ['key4', 'key5'],
-    pos: [1080, 480],
+    pos: [1085, 455],
     unlock: 'after-pradaria',
   },
   {
@@ -105,7 +105,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'torchgob_idle',
     color: 0xc8823a,
     levels: ['gun2'],
-    pos: [1130, 280],
+    pos: [1100, 255],
     unlock: 'after-pradaria',
   },
   {
@@ -114,9 +114,9 @@ export const AREAS: AreaDef[] = [
     blurb: 'Ilhas de nuvem e ventos fortes. O Diabrete Gigante quer o céu só para ele.',
     king: 'Diabrete Gigante',
     kingAnim: 'imp_idle',
-    color: 0xb27cff,
+    color: 0xd84a3a,
     levels: ['sky', 'winds', 'plane'],
-    pos: [890, 150],
+    pos: [900, 128],
     unlock: 'after-pradaria',
   },
   {
@@ -127,7 +127,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'bat_idle',
     color: 0x2f4fb8,
     levels: ['flight'],
-    pos: [640, 105],
+    pos: [640, 118],
     unlock: 'pact',
   },
 ];
@@ -141,7 +141,7 @@ export const CENTER: AreaDef = {
   kingAnim: 'shaman_idle',
   color: 0x9b6bf0,
   levels: ['stairs', 'mausoleum', 'doors', 'library', 'dark'],
-  pos: [640, 320],
+  pos: [640, 345],
   unlock: 'all',
 };
 

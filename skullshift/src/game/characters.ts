@@ -2,7 +2,8 @@ export type CharId =
   | 'skull' | 'lizard' | 'gnoll' | 'shark' | 'goblin' // fase 1
   | 'spider' | 'bat' | 'torchgob' // fase 2 (caverna)
   | 'imp' | 'minotaur' // fase 3 (vulcão)
-  | 'bee' | 'sgnome'; // fase 4 (céu)
+  | 'bee' | 'sgnome' // fase 4 (céu)
+  | 'villager'; // final: a forma humana da caveira (aldeão do Free Pack)
 /** Variantes de inimigos (src/game/variants.ts): paleta, tamanho, acessórios e habilidade. */
 export type VariantId =
   | 'shark_hammer' | 'shark_coral' | 'shark_elite'
@@ -90,6 +91,18 @@ export const CHARS: Record<CharId, CharDef> = {
     guard: { n: 7, fps: 10 },
     speed: 240,
     melee: { from: 2, to: 4, reach: 80, back: 0 },
+  },
+  villager: {
+    id: 'villager',
+    head: 74,
+    name: 'Aldeão',
+    frame: 192,
+    feetY: 134,
+    idle: { n: 8, fps: 10 },
+    run: { n: 6, fps: 12 },
+    attack: { n: 4, fps: 12 },
+    speed: 245,
+    melee: { from: 1, to: 2, reach: 78, back: 10 },
   },
   lizard: {
     id: 'lizard',

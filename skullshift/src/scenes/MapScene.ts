@@ -314,7 +314,9 @@ export class MapScene extends Phaser.Scene {
       const b = Math.max(...xs) + 130;
       this.island(a / 64, 6.5, Math.ceil((b - a) / 64), 3, 'tiles_cave', 0x8a7aa8);
       const mid = (a + b) / 2;
-      this.add.image(mid, 448, 'map_mansion').setOrigin(0.5, 1).setDepth(5);
+      this.add.image(mid, 452, 'bld_purple_monastery').setOrigin(0.5, 1).setScale(0.62).setDepth(5);
+      this.add.image(mid - 120, 456, 'bld_purple_tower').setOrigin(0.5, 1).setScale(0.48).setDepth(5);
+      this.add.image(mid + 120, 456, 'bld_purple_tower').setOrigin(0.5, 1).setScale(0.48).setDepth(5);
       this.add
         .particles(mid, 470, 'vsmoke_0', { x: { min: -(b - a) / 2, max: (b - a) / 2 }, speedX: { min: 4, max: 12 }, speedY: { min: -8, max: -3 }, lifespan: 4000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.35, end: 0 }, tint: 0x8a6ad0, frequency: 500 })
         .setDepth(6);

@@ -17,8 +17,13 @@ export type VariantId =
   | 'torchgob_blue' | 'torchgob_miner' | 'torchgob_chief'
   | 'lizard_poison' | 'lizard_croc'
   | 'bee_ember' | 'bee_storm';
+/**
+ * Reino das Asas: inimigos que dependem do acordo dos Príncipes ('wing' vira abelha ou morcego,
+ * 'wing_fast' a variante rápida, 'wing_elite' a elite do reino inimigo).
+ */
+export type WingId = 'wing' | 'wing_fast' | 'wing_elite';
 /** Quem pode aparecer como inimigo numa fase. */
-export type EnemyId = CharId | VariantId;
+export type EnemyId = CharId | VariantId | WingId;
 export type ItemId =
   | 'bone' | 'harpoon' | 'spear' | 'crest'
   | 'web' | 'wing' | 'torch'

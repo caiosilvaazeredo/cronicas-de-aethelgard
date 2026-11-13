@@ -126,7 +126,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei das Asas',
     kingAnim: 'bat_idle',
     color: 0x2f4fb8,
-    levels: ['flight'],
+    levels: ['wingsgate', 'skyroute', 'wingcastle', 'stormflight', 'wingkey', 'wingwinds', 'duskflight', 'winggun', 'wingguard', 'flight'],
     pos: [640, 118],
     unlock: 'pact',
   },

@@ -209,8 +209,9 @@ export class GameScene extends Phaser.Scene {
       this.addPlayer(new Fighter(this, x, ground(x), 'skull', 0, playerName(0), PLAYER_TINT[0], 'P1'), this.devices[0]);
       this.checkpointX = x;
       def.screens.forEach((s, si) => {
-        for (const [t, char] of s.enemies ?? []) {
+        for (const [t, rawChar] of s.enemies ?? []) {
           const ex = this.level.tileX(si, t);
+          const char = this.resolveWing(rawChar);
           const f = new Fighter(this, ex, ground(ex), char as CharId, 1, 'enemy');
           this.setupSwim(f);
           f.facing = -1;
@@ -1782,10 +1783,12 @@ export class GameScene extends Phaser.Scene {
       popText: (x, y, text, color) => this.popText(x, y, text, color),
       boss: LEVELS[this.levelIndex].shmupBoss,
       pact: getPact(),
+      seed: LEVELS[this.levelIndex].shmupSeed,
+      density: LEVELS[this.levelIndex].shmupDensity,
       bar: () => this.ui,
     });
     this.time.delayedCall(400, () => this.shmup?.hint());
-    if (LEVELS[this.levelIndex].shmupBoss === 'imp') return; // duelo de dia
+    if (LEVELS[this.levelIndex].shmupBoss === 'imp' || LEVELS[this.levelIndex].shmupDay) return; // voo de dia
     // Noite: céu escurecido e estrelas piscando.
     this.add.rectangle(0, -400, W, H + 800, 0x0b1030, 0.55).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.clouds + 0.5);
     const rng = new Phaser.Math.RandomDataGenerator(['night']);
@@ -1980,6 +1983,15 @@ export class GameScene extends Phaser.Scene {
     this.ui?.hud?.setChar(0, 'villager');
   }
 
+  /** Reino das Asas: os inimigos são do reino inimigo do aliado (abelhas ou morcegos). */
+  private resolveWing(char: EnemyId): EnemyId {
+    if (char !== 'wing' && char !== 'wing_fast' && char !== 'wing_elite') return char;
+    const bees = getPact() === 'bat';
+    if (char === 'wing') return bees ? 'bee' : 'bat';
+    if (char === 'wing_fast') return bees ? 'bee_ember' : 'bat_vampire';
+    return bees ? 'bee_storm' : 'bat_vampire';
+  }
+
   /** Caverna Submarina: vira Tubarão (com fumaça) e passa a nadar livre. */
   private becomeShark(p: Fighter): void {
     if (!p.alive) return;
@@ -2030,6 +2042,7 @@ export class GameScene extends Phaser.Scene {
 
   /** Inimigo criado no meio da fase (filhotes da Aranha-Rainha). */
   private spawnEnemy(char: EnemyId, x: number, feet: number): Fighter {
+    char = this.resolveWing(char);
     const f = new Fighter(this, x, feet, char as CharId, 1, 'enemy');
     f.facing = -1;
     f.onProjectile = (ff) => this.spawnProjectile(ff);

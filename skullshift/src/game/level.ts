@@ -115,8 +115,12 @@ export interface LevelDef {
   swamp?: boolean;
   /** Céu de Brasa: céu e nuvens em tons de vermelho, com brasas subindo. */
   ember?: boolean;
+  /** Voo: semente e densidade das ondas (1 = normal) e voo de dia (sem a noite). */
+  shmupSeed?: string;
+  shmupDensity?: number;
+  shmupDay?: boolean;
   /** Corrida e tiro: segurar ATACAR atira ossos; inimigos chegam em ondas. */
-  gun?: { spawns: CharId[]; every: number };
+  gun?: { spawns: EnemyId[]; every: number };
   /** Desafio do mausoléu: proteger a urna das assombrações. */
   mausoleum?: { waves: number };
   /** Filtro de desenho antigo (anos 1930): preto e branco, grão e vinheta. */
@@ -2657,6 +2661,163 @@ export const LEVEL_SKYKEY: LevelDef = {
   ],
 };
 
+
+// ---------- Área 9: Reino das Asas (o reino inimigo do aliado do acordo) ----------
+
+const WINGS = { theme: 'sky' as const, tiles: 'tiles_sky', storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+const FLY = [{ segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }, { segments: [] }] as ScreenDef[];
+
+export const LEVEL_WINGSGATE: LevelDef = {
+  ...WINGS,
+  id: 'wingsgate',
+  name: 'Portal das Asas',
+  intro: 'A entrada do reino inimigo do seu aliado. Os guardas voam e mergulham.',
+  winText: 'Você passou pelo portal das asas!',
+  screens: [
+    { segments: [[0, 9, 0], [11, 9, 0]], floats: [[9, 2, 2]], enemies: [[15, 'wing']], sign: [3, 'O reino inimigo\ndo seu aliado.'] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'wing'], [16, 'wing_fast']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 2], [13, 2, 2]], enemies: [[12, 'wing']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[10, 'wing_fast'], [17, 'wing']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[10, 'wing_elite']] },
+  ],
+};
+
+export const LEVEL_SKYROUTE: LevelDef = {
+  ...WINGS,
+  id: 'skyroute',
+  name: 'Rota do Vento',
+  intro: 'Voo de dia, montado no seu aliado, cruzando o céu do reino inimigo.',
+  winText: 'A rota do vento ficou para trás!',
+  shmup: true,
+  shmupDay: true,
+  shmupSeed: 'rota-do-vento',
+  shmupDensity: 0.9,
+  screens: FLY,
+};
+
+export const LEVEL_WINGCASTLE: LevelDef = {
+  ...WINGS,
+  id: 'wingcastle',
+  name: 'Castelo das Asas',
+  intro: 'O castelo do reino. Cada área só abre quando todos os guardas caírem.',
+  winText: 'O castelo das asas caiu!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[2, 'tower'], [15, 'tower']], enemies: [[9, 'wing'], [16, 'wing']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'tower']], enemies: [[10, 'wing_fast'], [16, 'wing']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'tower'], [15, 'tower']], enemies: [[11, 'wing_elite']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'tower']], enemies: [[9, 'wing'], [12, 'wing_fast'], [17, 'wing']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'wing_elite'], [13, 'wing_fast'], [16, 'wing']] },
+  ],
+};
+
+export const LEVEL_STORMFLIGHT: LevelDef = {
+  ...WINGS,
+  id: 'stormflight',
+  name: 'Voo na Tempestade',
+  intro: 'Um voo noturno no meio da tempestade. As ondas de inimigos vêm mais juntas.',
+  winText: 'Você atravessou a tempestade!',
+  shmup: true,
+  shmupSeed: 'voo-na-tempestade',
+  shmupDensity: 1.25,
+  screens: FLY,
+};
+
+export const LEVEL_WINGKEY: LevelDef = {
+  ...WINGS,
+  id: 'wingkey',
+  name: 'Câmara Real',
+  intro: 'A câmara real. Leve a chave pelas molas e escadas até a porta.',
+  winText: 'A câmara real se abriu!',
+  puzzle: {
+    key: [1, 8, 3],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 15, 3],
+      [1, 2, 0],
+      [2, 6, 4],
+    ],
+    ladders: [[1, 5, 0, 3]],
+    springs: [
+      [0, 12, 0],
+      [2, 6, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[14, 3, 3]], deco: [[2, 'tower']] },
+    { segments: [[0, 6, 0], [6, 4, 3], [10, 10, 0]] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 4]], deco: [[12, 'tower']] },
+  ],
+};
+
+export const LEVEL_WINGWINDS: LevelDef = {
+  ...WINGS,
+  id: 'wingwinds',
+  name: 'Correntes Reais',
+  intro: 'Correntes de vento entre as torres do reino, e guardas mergulhando.',
+  winText: 'O vento te levou até as torres!',
+  winds: [
+    [0, 8, 3],
+    [1, 5, 3],
+    [2, 6, 2],
+    [2, 13, 2],
+    [3, 5, 3],
+    [3, 10, 2],
+  ],
+  screens: [
+    { segments: [[0, 7, 0], [13, 7, 1]], floats: [[10, 2, 4]], enemies: [[17, 'wing']] },
+    { segments: [[0, 4, 1], [12, 8, 0]], floats: [[8, 3, 4]], enemies: [[16, 'wing_fast']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], enemies: [[18, 'wing']] },
+    { segments: [[0, 4, 0], [14, 6, 1]], floats: [[8, 2, 5]], enemies: [[17, 'wing_elite']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'tower'], [14, 'tower']], enemies: [[10, 'wing'], [16, 'wing_fast']] },
+  ],
+};
+
+export const LEVEL_DUSKFLIGHT: LevelDef = {
+  ...WINGS,
+  id: 'duskflight',
+  name: 'Voo ao Entardecer',
+  intro: 'O último voo de dia antes da noite do rei. Muitos inimigos, e mais fortes.',
+  winText: 'O sol se pôs atrás de você!',
+  shmup: true,
+  shmupDay: true,
+  shmupSeed: 'voo-ao-entardecer',
+  shmupDensity: 1.4,
+  screens: FLY,
+};
+
+export const LEVEL_WINGGUN: LevelDef = {
+  ...WINGS,
+  id: 'winggun',
+  name: 'Tiro Real',
+  intro: 'Corrida e tiro nas muralhas do reino! Os guardas não param de chegar.',
+  winText: 'As muralhas foram limpas a tiros!',
+  gun: { spawns: ['wing', 'wing_fast', 'wing'], every: 1800 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], deco: [[2, 'tower']], enemies: [[14, 'wing']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'wing_fast'], [16, 'wing']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'wing_elite']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], enemies: [[5, 'wing'], [16, 'wing_fast']] },
+    { segments: [[0, 20, 0]], deco: [[16, 'tower']], enemies: [[8, 'wing_fast'], [12, 'wing'], [16, 'wing_elite']] },
+  ],
+};
+
+export const LEVEL_WINGGUARD: LevelDef = {
+  ...WINGS,
+  id: 'wingguard',
+  name: 'Guarda Real',
+  intro: 'A guarda real defende a última ponte antes do voo até o rei.',
+  winText: 'A guarda real caiu. O rei espera no céu da noite!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], deco: [[3, 'tower'], [16, 'tower']], enemies: [[10, 'wing_elite'], [15, 'wing']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'wing_fast'], [16, 'wing_elite']] },
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3], [12, 3, 3]], enemies: [[9, 'wing_elite'], [15, 'wing_fast']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], enemies: [[9, 'wing'], [12, 'wing_elite'], [17, 'wing_fast']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'wing_elite'], [12, 'wing_elite'], [16, 'wing_fast']] },
+  ],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -2753,6 +2914,16 @@ export const LEVELS: LevelDef[] = [
   LEVEL_CLOUDCASTLE,
   LEVEL_EMBERBEES,
   LEVEL_SKYKEY,
+  // Área 9 (Reino das Asas).
+  LEVEL_WINGSGATE,
+  LEVEL_SKYROUTE,
+  LEVEL_WINGCASTLE,
+  LEVEL_STORMFLIGHT,
+  LEVEL_WINGKEY,
+  LEVEL_WINGWINDS,
+  LEVEL_DUSKFLIGHT,
+  LEVEL_WINGGUN,
+  LEVEL_WINGGUARD,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];

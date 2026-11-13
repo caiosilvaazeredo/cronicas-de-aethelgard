@@ -978,6 +978,82 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('...E prisões. Vai, Ossian.'),
     ],
   },
+  wingsgate: {
+    title: 'Portal das Asas',
+    blurb: 'A entrada do reino inimigo do teu aliado.',
+    lines: [
+      S('O reino inimigo do meu aliado. Cheio de asas zumbindo.'),
+      X('Escolheste um lado no ninho dos Príncipes. Agora o outro lado inteiro te quer longe.'),
+      S('Meu aliado diz que o rei deles é o último guardião.'),
+      X('O último fragmento. Depois dele, a coroa está inteira.'),
+    ],
+  },
+  skyroute: {
+    title: 'Rota do Vento',
+    blurb: 'Um voo de dia pelo céu do reino.',
+    lines: [
+      S('Voar de novo! Meu aliado conhece o caminho.'),
+      X('Segura o tiro e desvia de tudo. A rota é longa.'),
+    ],
+  },
+  wingcastle: {
+    title: 'Castelo das Asas',
+    blurb: 'O castelo do reino. Nada passa sem lutar.',
+    lines: [
+      S('Torres por todo lado. E guardas em cada uma.'),
+      X('Cada área só abre quando todos caírem.'),
+    ],
+  },
+  stormflight: {
+    title: 'Voo na Tempestade',
+    blurb: 'Um voo noturno no meio da tempestade.',
+    lines: [
+      S('Raios, chuva e inimigos. Tudo de uma vez.'),
+      X('A tempestade é velha. Ela nunca parou desde que eu... desde que o reino existe.'),
+    ],
+  },
+  wingkey: {
+    title: 'Câmara Real',
+    blurb: 'A câmara real, trancada.',
+    lines: [
+      S('Uma câmara trancada no alto da torre.'),
+      X('Molas e escadas. Leva a chave até a porta, sem pressa.'),
+    ],
+  },
+  wingwinds: {
+    title: 'Correntes Reais',
+    blurb: 'Correntes de vento entre as torres.',
+    lines: [
+      S('O vento sopra entre as torres. Dá para planar até o outro lado.'),
+      X('Entra no vento, segura o pulo. E cuidado com quem mergulha.'),
+    ],
+  },
+  duskflight: {
+    title: 'Voo ao Entardecer',
+    blurb: 'O último voo de dia antes da noite do rei.',
+    lines: [
+      S('O sol está se pondo. Eu lembro de um pôr do sol num rio... com lanternas.'),
+      X('Não há rio aqui. Voa, Ossian. A noite do rei está chegando.'),
+    ],
+  },
+  winggun: {
+    title: 'Tiro Real',
+    blurb: 'Corrida e tiro nas muralhas do reino.',
+    lines: [
+      S('As muralhas estão cheias de guardas.'),
+      X('Segura ATACAR e atravessa.'),
+    ],
+  },
+  wingguard: {
+    title: 'Guarda Real',
+    blurb: 'A guarda real defende a última ponte.',
+    lines: [
+      S('A guarda real. Depois dela, o rei.'),
+      X('O último rei, Ossian. O último... fragmento.'),
+      S('Hex, você está tremendo.'),
+      X('É o vento. Só o vento.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

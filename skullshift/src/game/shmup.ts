@@ -30,6 +30,9 @@ export interface ShmupHost {
    */
   pact: 'bat' | 'bee';
   bar?: () => BossBar | undefined;
+  /** Roteiro das ondas (cada fase de voo tem o seu) e densidade (1 = normal). */
+  seed?: string;
+  density?: number;
 }
 
 /** Onda sônica (morcego) e ferrão (abelha), em pixel art. */
@@ -158,7 +161,8 @@ export class ShmupSystem {
 
   /** Roteiro das ondas ao longo da fase (fica mais apertado no fim). */
   private planWaves(): void {
-    const rng = new Phaser.Math.RandomDataGenerator(['skullshift-night-flight']);
+    const rng = new Phaser.Math.RandomDataGenerator([this.host.seed ?? 'skullshift-night-flight']);
+    const dens = this.host.density ?? 1;
     const end = this.host.width - 900;
     let at = 900;
     let k = 0;
@@ -172,7 +176,7 @@ export class ShmupSystem {
       else if (kind === 2) this.waves.push({ at, spawn: () => (this.pair('bee'), this.hard && this.spawn('bee', this.right + 60, (this.host.top + this.host.bottom) / 2, 600)) });
       else if (kind === 3) this.waves.push({ at, spawn: () => this.line('imp', 2 + more + Math.round(level * 2), y0) });
       else this.waves.push({ at, spawn: () => (this.pair('bee'), this.line('bat', 3 + more, y0)) });
-      at += (rng.between(380, 520) - level * 120) * (this.hard ? 0.72 : 1);
+      at += ((rng.between(380, 520) - level * 120) * (this.hard ? 0.72 : 1)) / dens;
       k++;
     }
   }

@@ -113,6 +113,8 @@ export interface LevelDef {
   underseaAs?: 'shark' | 'lizard';
   /** Água do pântano (verde-escura) em vez do mar azul. */
   swamp?: boolean;
+  /** Céu de Brasa: céu e nuvens em tons de vermelho, com brasas subindo. */
+  ember?: boolean;
   /** Corrida e tiro: segurar ATACAR atira ossos; inimigos chegam em ondas. */
   gun?: { spawns: CharId[]; every: number };
   /** Desafio do mausoléu: proteger a urna das assombrações. */
@@ -246,7 +248,8 @@ export const LEVEL_3: LevelDef = {
   name: 'Santuário das Nuvens',
   intro: 'Só as nuvens encantadas pelo Xamã, as que brilham, aguentam o seu peso.',
   theme: 'sky',
-  tiles: 'tiles_sky',
+  ember: true,
+  tiles: 'tiles_volcano',
   screens: [
     { ...mirror(SKY_R2), enemies: [[16, 'sgnome']], storyItems: [[3, 'acorn']] },
     { ...mirror(SKY_R1), enemies: [[11, 'bee'], [17, 'sgnome']], storyItems: [[2, 'honey']] },
@@ -570,7 +573,8 @@ export const LEVEL_WINDS: LevelDef = {
   name: 'Correntes do Céu',
   intro: 'Entre nas correntes de vento para subir. Segure PULAR no ar para planar.',
   theme: 'sky',
-  tiles: 'tiles_sky',
+  ember: true,
+  tiles: 'tiles_volcano',
   winText: 'O vento te levou até o outro lado!',
   winds: [
     [0, 8, 3],
@@ -807,6 +811,7 @@ export const LEVEL_PLANE: LevelDef = {
   name: 'Duelo no Céu',
   intro: 'Montado no príncipe aliado: ondas de inimigos e, no fim, o Diabrete Gigante em pessoa!',
   theme: 'sky',
+  ember: true,
   tiles: 'tiles_sky',
   winText: 'O Diabrete Gigante caiu do céu!',
   shmup: true,
@@ -2461,6 +2466,197 @@ export const LEVEL_LIZARDKING: LevelDef = {
   },
 };
 
+
+// ---------- Área 8: Céu de Brasa ----------
+
+const EMBER = { theme: 'sky' as const, tiles: 'tiles_volcano', ember: true, storyStart: [0, 2] as [number, number], versusStart: [3, 16] as [number, number] };
+
+export const LEVEL_EMBERCLOUDS: LevelDef = {
+  ...EMBER,
+  id: 'emberclouds',
+  name: 'Nuvens de Brasa',
+  intro: 'Nuvens em brasa se desfazem logo depois de pisadas. E cair daqui é cair no vazio.',
+  winText: 'Você atravessou as nuvens de brasa!',
+  sea: {
+    plankTex: 'cloud_plank',
+    planks: [
+      [0, 6, 2, 0],
+      [0, 8, 3, 1],
+      [1, 4, 3, 1],
+      [1, 7, 2, 2],
+      [1, 9, 3, 1],
+      [1, 12, 2, 0],
+      [2, 5, 2, 1],
+      [2, 7, 2, 1],
+      [2, 12, 2, 1],
+      [2, 14, 2, 0],
+      [3, 3, 3, 0],
+      [3, 6, 2, 1],
+      [3, 8, 3, 2],
+      [3, 11, 3, 1],
+      [3, 14, 3, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [11, 9, 0]], enemies: [[16, 'imp']], sign: [2, 'Nuvens de brasa\nse desfazem: corra!'] },
+    { segments: [[0, 4, 1], [14, 6, 0]], enemies: [[17, 'bee_ember']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], enemies: [[10, 'imp']] },
+    { segments: [[0, 3, 0], [17, 3, 0]], floats: [[9, 2, 4]], enemies: [[18, 'bee_ember']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'imp'], [14, 'bee_storm']] },
+  ],
+};
+
+export const LEVEL_METEOR: LevelDef = {
+  ...EMBER,
+  id: 'meteor',
+  name: 'Chuva de Meteoros',
+  intro: 'Meteoros em brasa caem do céu. Fagulhas avisam onde eles vão cair.',
+  winText: 'Nenhum meteoro te acertou!',
+  field: {
+    fallTex: 'meteor',
+    rockfall: [
+      [0, 7, 2600],
+      [0, 13, 2600, 1300],
+      [1, 5, 2400],
+      [1, 10, 2400, 800],
+      [1, 15, 2400, 1600],
+      [2, 8, 2200],
+      [2, 12, 2200, 1100],
+      [3, 4, 2000],
+      [3, 9, 2000, 700],
+      [3, 14, 2000, 1400],
+      [4, 6, 2200],
+      [4, 11, 2200, 1100],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[9, 3, 3]], enemies: [[16, 'imp']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[17, 'bee_ember']] },
+    { segments: [[0, 4, 0], [6, 8, 0], [16, 4, 0]], floats: [[4, 2, 2], [14, 2, 2]], enemies: [[11, 'imp']] },
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3], [12, 3, 3]], enemies: [[17, 'bee_storm']] },
+    { segments: [[0, 20, 0]], enemies: [[9, 'imp'], [15, 'bee_ember']] },
+  ],
+};
+
+export const LEVEL_EMBERGUN: LevelDef = {
+  ...EMBER,
+  id: 'embergun',
+  name: 'Tiro no Céu de Brasa',
+  intro: 'Corrida e tiro nas ilhas do céu! Diabretes e abelhas de brasa sem parar.',
+  winText: 'O céu foi limpo a tiros!',
+  gun: { spawns: ['imp', 'bee_ember', 'bee'] as CharId[], every: 1900 },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[7, 3, 3]], enemies: [[14, 'imp']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'bee_ember'], [16, 'imp']] },
+    { segments: [[0, 4, 1], [6, 8, 0], [16, 4, 0]], floats: [[14, 2, 2]], enemies: [[11, 'bee_storm']] },
+    { segments: [[0, 7, 0], [9, 3, 2], [14, 6, 0]], enemies: [[5, 'imp'], [16, 'bee_ember']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'bee_ember'], [12, 'imp'], [16, 'bee_storm']] },
+  ],
+};
+
+export const LEVEL_FIREWINDS: LevelDef = {
+  ...EMBER,
+  id: 'firewinds',
+  name: 'Ventos de Fogo',
+  intro: 'Correntes de vento quente entre as ilhas, e jatos de fogo saindo das pedras.',
+  winText: 'O vento quente te levou até o fim!',
+  winds: [
+    [0, 8, 3],
+    [1, 5, 3],
+    [2, 6, 2],
+    [2, 13, 2],
+    [3, 5, 3],
+    [3, 10, 2],
+  ],
+  field: {
+    geysers: [
+      [0, 15, 1, 2800],
+      [2, 10, 2, 2600],
+      [4, 8, 0, 2400],
+      [4, 13, 0, 2400, 1200],
+    ],
+  },
+  screens: [
+    { segments: [[0, 7, 0], [13, 7, 1]], floats: [[10, 2, 4]], enemies: [[18, 'imp']], sign: [3, 'Entre no vento para subir.\nSegure PULAR para planar.'] },
+    { segments: [[0, 4, 1], [12, 8, 0]], floats: [[8, 3, 4]], enemies: [[16, 'bee_ember']] },
+    { segments: [[0, 5, 0], [9, 3, 2], [16, 4, 0]], enemies: [[18, 'imp']] },
+    { segments: [[0, 4, 0], [14, 6, 1]], floats: [[8, 2, 5]], enemies: [[17, 'bee_storm']] },
+    { segments: [[0, 20, 0]], enemies: [[10, 'imp'], [16, 'bee_ember']] },
+  ],
+};
+
+export const LEVEL_CLOUDCASTLE: LevelDef = {
+  ...EMBER,
+  id: 'cloudcastle',
+  name: 'Castelo nas Nuvens',
+  intro: 'O castelo dos diabretes. Cada área só abre quando todos os guardas caírem.',
+  winText: 'O castelo nas nuvens caiu!',
+  clearToAdvance: true,
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[6, 3, 3]], deco: [[2, 'tower'], [15, 'tower']], enemies: [[9, 'imp'], [16, 'bee_ember']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'tower']], enemies: [[10, 'imp'], [16, 'imp']] },
+    { segments: [[0, 20, 0]], deco: [[6, 'tower'], [15, 'tower']], enemies: [[11, 'bee_storm']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'tower']], enemies: [[9, 'imp'], [12, 'bee_ember'], [17, 'imp']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'bee_storm'], [13, 'imp'], [16, 'bee_ember']] },
+  ],
+};
+
+export const LEVEL_EMBERBEES: LevelDef = {
+  ...EMBER,
+  id: 'emberbees',
+  name: 'Enxame de Brasa',
+  intro: 'Um enxame de abelhas de brasa, e canhões do castelo varrendo as ilhas.',
+  winText: 'Você atravessou o enxame!',
+  sea: {
+    cannons: [
+      [0, 19, 0, -1, 2600],
+      [2, 19, 0, -1, 2400],
+      [4, 19, 0, -1, 2200],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[8, 3, 3]], enemies: [[10, 'bee_ember'], [15, 'bee_ember']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[9, 'bee_ember'], [16, 'bee_storm']] },
+    { segments: [[0, 4, 0], [6, 8, 0], [16, 4, 0]], floats: [[4, 2, 2], [14, 2, 2]], enemies: [[10, 'bee_ember'], [17, 'bee']] },
+    { segments: [[0, 20, 0]], floats: [[5, 3, 3], [12, 3, 3]], enemies: [[9, 'bee_storm'], [16, 'bee_ember']] },
+    { segments: [[0, 20, 0]], enemies: [[8, 'bee_ember'], [12, 'bee_storm'], [16, 'bee_ember']] },
+  ],
+};
+
+export const LEVEL_SKYKEY: LevelDef = {
+  ...EMBER,
+  id: 'skykey',
+  name: 'Cofre das Nuvens',
+  intro: 'O cofre dos diabretes. Leve a chave pelas ilhas, usando as molas e a alavanca de cor.',
+  winText: 'O cofre das nuvens abriu!',
+  puzzle: {
+    key: [1, 8, 3],
+    door: [2, 17, 0],
+    gifts: [
+      [0, 15, 3],
+      [1, 2, 0],
+      [2, 13, 3],
+    ],
+    ladders: [[1, 5, 0, 3]],
+    springs: [
+      [0, 12, 0],
+      [2, 4, 0],
+    ],
+    switches: [[2, 6, 0]],
+    blocks: [
+      [2, 10, 0, 'red'],
+      [2, 10, 1, 'red'],
+      [2, 10, 2, 'red'],
+      [2, 10, 3, 'red'],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 0]], floats: [[14, 3, 3]] },
+    { segments: [[0, 6, 0], [6, 4, 3], [10, 10, 0]] },
+    { segments: [[0, 20, 0]], floats: [[12, 3, 3]] },
+  ],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -2549,6 +2745,14 @@ export const LEVELS: LevelDef[] = [
   LEVEL_MANGROVE,
   LEVEL_LIZARDVILLAGE,
   LEVEL_LIZARDKING,
+  // Área 8 (Céu de Brasa).
+  LEVEL_EMBERCLOUDS,
+  LEVEL_METEOR,
+  LEVEL_EMBERGUN,
+  LEVEL_FIREWINDS,
+  LEVEL_CLOUDCASTLE,
+  LEVEL_EMBERBEES,
+  LEVEL_SKYKEY,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];
@@ -2828,8 +3032,29 @@ export class Level {
 
   private skyBackground(high: boolean): void {
     const s = this.scene;
-    s.add.rectangle(0, -500, W, 500, high ? 0x7fd3ff : 0x59e3b5).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
-    s.add.image(0, 0, high ? 'sky_high' : 'sky').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    const ember = !!this.def.ember;
+    s.add.rectangle(0, -500, W, 500, ember ? 0xc8503a : high ? 0x7fd3ff : 0x59e3b5).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    const bg = s.add.image(0, 0, high ? 'sky_high' : 'sky').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.sky);
+    if (ember) {
+      // Céu de Brasa: o céu inteiro em brasa, com fagulhas subindo.
+      bg.setTint(0xff9a7a, 0xff9a7a, 0xffc08a, 0xffc08a);
+      // Degradê de brasa por cima do céu: vermelho no alto, laranja perto das nuvens.
+      s.add.graphics().setScrollFactor(0, 1).setDepth(DEPTH.sky + 0.1).fillGradientStyle(0xb8281a, 0xb8281a, 0xff8a3a, 0xff8a3a, 0.62, 0.62, 0.45, 0.45).fillRect(0, -500, W, 1300);
+      s.add
+        .particles(0, 0, 'spark', {
+          x: { min: 0, max: W },
+          y: { min: 500, max: 720 },
+          speedY: { min: -80, max: -40 },
+          speedX: { min: -10, max: 20 },
+          lifespan: 5000,
+          scale: { start: 0.3, end: 0 },
+          tint: [0xffe066, 0xff7a1a, 0xff4a2a],
+          alpha: { start: 0.9, end: 0 },
+          frequency: 140,
+        })
+        .setScrollFactor(0, 1)
+        .setDepth(DEPTH.clouds + 0.2);
+    }
 
     const rng = new Phaser.Math.RandomDataGenerator(['skullshift-clouds']);
     const span = W + (this.width - W) * 0.25 + 600;
@@ -2843,6 +3068,7 @@ export class Level {
         .setDepth(DEPTH.clouds)
         .setAlpha(high ? 0.9 : 1)
         .setScale(high ? rng.realInRange(0.6, 1.1) : 1);
+      if (ember) img.setTint(0xffb090);
       this.clouds.push({ img, speed: rng.realInRange(8, 22) });
     }
 
@@ -3040,6 +3266,7 @@ export class Level {
           .setAlpha(alpha)
           .setScrollFactor(sf, 1)
           .setDepth(depth);
+        if (this.def.ember) img.setTint(0xff9a6a);
         this.clouds.push({ img, speed: sf === 1 ? 0 : 6 });
       }
     }
@@ -3269,27 +3496,30 @@ export class Level {
    */
   private enchantedCloud(start: number, n: number, top: number, bottom: number): void {
     const s = this.scene;
+    // No Céu de Brasa, as nuvens encantadas ficam em tons de brasa.
+    const EMBER: Record<number, number> = { 0xb27cff: 0xff5a2a, 0xb9a6ee: 0xe8907a, 0xf4eeff: 0xffe8d8, 0xd7c8ff: 0xffc8b0, 0x9b6bf0: 0xd84a3a, 0xa86bff: 0xd84a2a, 0xe3c8ff: 0xffd0a0 };
+    const c = (col: number) => (this.def.ember ? (EMBER[col] ?? col) : col);
     const x0 = start * TILE;
     const w = n * TILE;
     const g = s.add.graphics().setDepth(DEPTH.terrain);
     const hgt = bottom - top;
-    g.fillStyle(0xb27cff, 0.22).fillRoundedRect(x0 - 8, top - 18, w + 16, hgt + 30, 26);
-    g.fillStyle(0xb9a6ee, 1).fillRoundedRect(x0, top - 6, w, hgt + 6, 20);
-    g.fillStyle(0xf4eeff, 1).fillRoundedRect(x0 + 3, top - 10, w - 6, hgt - 4, 18);
+    g.fillStyle(c(0xb27cff), 0.22).fillRoundedRect(x0 - 8, top - 18, w + 16, hgt + 30, 26);
+    g.fillStyle(c(0xb9a6ee), 1).fillRoundedRect(x0, top - 6, w, hgt + 6, 20);
+    g.fillStyle(c(0xf4eeff), 1).fillRoundedRect(x0 + 3, top - 10, w - 6, hgt - 4, 18);
     // Bordas fofas em cima e embaixo.
     for (let x = x0 + 16; x <= x0 + w - 16; x += 24) {
       g.fillStyle(0xffffff, 1).fillCircle(x, top - 6, 13 + ((x / 24) % 2) * 3);
-      g.fillStyle(0xd7c8ff, 1).fillCircle(x + 6, bottom - 4, 12);
+      g.fillStyle(c(0xd7c8ff), 1).fillCircle(x + 6, bottom - 4, 12);
     }
-    g.lineStyle(3, 0x9b6bf0, 0.9).strokeRoundedRect(x0, top - 14, w, hgt + 10, 20);
+    g.lineStyle(3, c(0x9b6bf0), 0.9).strokeRoundedRect(x0, top - 14, w, hgt + 10, 20);
     g.lineStyle(2, 0xffffff, 0.9).lineBetween(x0 + 14, top - 2, x0 + w - 14, top - 2);
     // Runas do Xamã no meio da nuvem, pulsando.
     const runes = s.add.graphics().setDepth(DEPTH.terrain + 0.1);
     const ry = top + Math.min(hgt * 0.45, 40);
     for (let x = x0 + 28; x <= x0 + w - 24; x += 48) {
-      runes.lineStyle(2.5, 0xa86bff, 1);
+      runes.lineStyle(2.5, c(0xa86bff), 1);
       runes.strokeTriangle(x - 7, ry + 6, x + 7, ry + 6, x, ry - 8);
-      runes.fillStyle(0xe3c8ff, 1).fillCircle(x, ry + 1, 2.5);
+      runes.fillStyle(c(0xe3c8ff), 1).fillCircle(x, ry + 1, 2.5);
     }
     s.tweens.add({ targets: runes, alpha: { from: 1, to: 0.35 }, duration: 900 + start * 13, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     // Faíscas mágicas subindo do topo.

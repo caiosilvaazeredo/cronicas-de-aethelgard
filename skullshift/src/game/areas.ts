@@ -115,7 +115,7 @@ export const AREAS: AreaDef[] = [
     king: 'Diabrete Gigante',
     kingAnim: 'imp_idle',
     color: 0xd84a3a,
-    levels: ['sky', 'winds', 'plane'],
+    levels: ['sky', 'emberclouds', 'winds', 'meteor', 'embergun', 'firewinds', 'cloudcastle', 'emberbees', 'skykey', 'plane'],
     pos: [900, 128],
     unlock: 'after-pradaria',
   },

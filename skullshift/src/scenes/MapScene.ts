@@ -351,11 +351,12 @@ export class MapScene extends Phaser.Scene {
     }
     if (l.theme === 'sky') {
       const c = this.add.graphics().setDepth(4);
-      const tint = l.id === 'sky' ? 0xb9a6ee : 0xf4f8ff;
-      c.fillStyle(0xb27cff, l.id === 'sky' ? 0.22 : 0).fillRoundedRect(x - 130, y - 40, 260, 92, 30);
+      const tint = l.ember ? 0xff9a7a : l.id === 'sky' ? 0xb9a6ee : 0xf4f8ff;
+      c.fillStyle(l.ember ? 0xff5a2a : 0xb27cff, l.id === 'sky' || l.ember ? 0.22 : 0).fillRoundedRect(x - 130, y - 40, 260, 92, 30);
       c.fillStyle(tint, 1).fillRoundedRect(x - 120, y - 20, 240, 62, 24);
-      c.fillStyle(0xffffff, 1).fillRoundedRect(x - 116, y - 26, 232, 58, 22);
-      for (let k = x - 102; k <= x + 102; k += 24) c.fillStyle(0xffffff, 1).fillCircle(k, y - 24, 13);
+      const top = l.ember ? 0xffd0b0 : 0xffffff;
+      c.fillStyle(top, 1).fillRoundedRect(x - 116, y - 26, 232, 58, 22);
+      for (let k = x - 102; k <= x + 102; k += 24) c.fillStyle(top, 1).fillCircle(k, y - 24, 13);
       this.tweens.add({ targets: c, y: -6, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       if (l.id === 'sky') {
         const t = this.add.graphics().setDepth(5);

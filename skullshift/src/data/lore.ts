@@ -916,6 +916,68 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
       X('Velhas desavenças. Derruba ele e acabou.'),
     ],
   },
+  emberclouds: {
+    title: 'Nuvens de Brasa',
+    blurb: 'Nuvens em brasa que se desfazem ao pisar.',
+    lines: [
+      S('O céu está vermelho. Como uma brasa.'),
+      X('É o céu do Diabrete. Ele queimou as nuvens para ficar com o céu só para ele.'),
+      S('E as nuvens aguentam meu peso?'),
+      X('Por um instante. Não para em cima delas.'),
+    ],
+  },
+  meteor: {
+    title: 'Chuva de Meteoros',
+    blurb: 'Meteoros em brasa caindo do céu.',
+    lines: [
+      S('Está chovendo pedra pegando fogo!'),
+      X('As fagulhas avisam onde cai. Fica longe delas.'),
+    ],
+  },
+  embergun: {
+    title: 'Tiro no Céu de Brasa',
+    blurb: 'Diabretes e abelhas de brasa sem parar.',
+    lines: [
+      S('Abelhas vermelhas e diabretes por todo lado!'),
+      X('Segura ATACAR. O céu não perdoa quem hesita.'),
+    ],
+  },
+  firewinds: {
+    title: 'Ventos de Fogo',
+    blurb: 'Correntes de vento quente entre as ilhas.',
+    lines: [
+      S('O vento aqui é quente. E sai fogo das pedras.'),
+      X('Entra no vento, plana, e não pousa em cima dos jatos.'),
+    ],
+  },
+  cloudcastle: {
+    title: 'Castelo nas Nuvens',
+    blurb: 'O castelo dos diabretes.',
+    lines: [
+      S('Um castelo flutuando. Vermelho, como o céu.'),
+      X('O castelo dos diabretes. Nada passa sem lutar.'),
+      S('Quantos castelos você já viu cair, Hex?'),
+      X('Muitos. E todos se levantaram de novo. Menos um.'),
+    ],
+  },
+  emberbees: {
+    title: 'Enxame de Brasa',
+    blurb: 'Abelhas de brasa e canhões do castelo.',
+    lines: [
+      S('Um enxame inteiro! E canhões!'),
+      X('As abelhas de brasa mergulham. As da tempestade aguentam três golpes.'),
+    ],
+  },
+  skykey: {
+    title: 'Cofre das Nuvens',
+    blurb: 'O cofre dos diabretes.',
+    lines: [
+      S('Um cofre no meio do céu. Com uma parede de blocos vermelhos.'),
+      X('Solta a chave, troca a cor, pega de novo. Já sabes.'),
+      S('Você sempre sabe como abrir tudo, Hex. Cofres, portas...'),
+      X('...E prisões. Vai, Ossian.'),
+    ],
+  },
   retro: {
     title: 'Desenho Perdido (1930)',
     blurb: 'Um rolo de filme antigo. Tudo em preto e branco, com chiado de projetor.',

@@ -23,6 +23,8 @@ export interface FieldDef {
   mushrooms?: Array<[screen: number, tile: number, h: number]>;
   /** Desabamento: pedras caem do teto em pontos marcados, a cada `every` ms. */
   rockfall?: Array<[screen: number, tile: number, every: number, offset?: number]>;
+  /** Arte do que cai (ex.: 'meteor' no Céu de Brasa). */
+  fallTex?: string;
 }
 
 /** Arte do bosque e da mina (pixel art em código). */
@@ -58,6 +60,23 @@ export function makeFieldArt(scene: Phaser.Scene): void {
   lf.disc(20, 5, 3, 0xc89a5a);
   lf.outline(INK);
   lf.toTexture(scene, 'log_float', 3);
+  // Meteoro (rocha em brasa com rastro).
+  const met = new Px(16, 16);
+  met.disc(9, 9, 6, 0x4a2a2a);
+  met.disc(9, 9, 4, 0xd84a2a);
+  met.disc(8, 8, 2, 0xffe066);
+  for (let k = 0; k < 4; k++) met.set(2 + k, 2 + k, k % 2 ? 0xff7a1a : 0xffe066);
+  met.outline(INK);
+  met.toTexture(scene, 'meteor', 3);
+  // Nuvem de brasa (se desfaz ao pisar).
+  const cp = new Px(21, 7);
+  for (let x = 0; x < 21; x++) {
+    const h = 3 + Math.round(Math.sin((x / 20) * Math.PI) * 3);
+    cp.rect(x, 7 - h, 1, h, 0xffd0b0);
+  }
+  cp.rect(0, 5, 21, 2, 0xe89070);
+  cp.outline(INK);
+  cp.toTexture(scene, 'cloud_plank', 3);
   // Vitória-régia (afunda ao pisar, na lagoa).
   const lily = new Px(21, 6);
   for (let x = 0; x < 21; x++) {
@@ -206,7 +225,7 @@ export class FieldSystem {
       if (time > f.next) {
         f.next = time + f.every;
         f.warned = false;
-        this.rocks.push({ img: s.add.image(f.x, -30, 'stone2').setScale(1.1).setDepth(DEPTH.fighters - 0.1), vy: 200 });
+        this.rocks.push({ img: s.add.image(f.x, -30, this.def.fallTex ?? 'stone2').setScale(this.def.fallTex ? 1.6 : 1.1).setDepth(DEPTH.fighters - 0.1), vy: 200 });
       }
     }
     for (const r of this.rocks) {

@@ -82,7 +82,7 @@ export class EnemyAI implements Controller {
       me.faceTarget = t.x;
       if (this.burrow(it, dist, dy)) return it;
     }
-    if (dist > AGGRO || dy > 140) {
+    if (dist > AGGRO || (dy > 140 && !me.freeSwim)) {
       this.aggro = false;
       me.faceTarget = null;
       if (me.facing !== -1 && dist > AGGRO) me.facing = dx < 0 ? -1 : 1;
@@ -110,7 +110,13 @@ export class EnemyAI implements Controller {
     }
 
     // Só anda onde há chão na mesma altura (não despenca de degraus nem cai em buracos).
+    // Debaixo d'água: segue o jogador também na altura.
+    if (me.freeSwim) {
+      it.up = t.feet < me.feet - 24;
+      it.crouch = t.feet > me.feet + 24;
+    }
     const safe = (step: number) => {
+      if (me.freeSwim) return true;
       const g = this.level.groundY(me.x + step * 28);
       return g !== null && Math.abs(g - me.feet) < 12;
     };

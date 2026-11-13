@@ -38,7 +38,7 @@ export const AREAS: AreaDef[] = [
     king: 'Rei Tubarão-Arpão',
     kingAnim: 'shark_idle',
     color: 0x2f86e0,
-    levels: ['shore'],
+    levels: ['shore', 'crabs', 'hightide', 'wreck', 'deck', 'undersea', 'floodgates', 'masts', 'reef', 'sharkking'],
     pos: [200, 490],
     unlock: 'start',
   },

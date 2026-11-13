@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { BODY_FONT, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
+import { BODY_FONT, DEATH_Y, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
 import type { CharId, EnemyId, ItemId } from './characters';
 import type { PuzzleDef } from './puzzle';
+import type { SeaDef } from './sea';
 
 /**
  * Plataforma: início e comprimento em tiles de 64px (locais à tela, 0..19) e altura h
@@ -93,11 +94,15 @@ export interface LevelDef {
   /** Modo história: cada cenário só libera depois de derrotar todos os inimigos dele. */
   clearToAdvance?: boolean;
   /** Modo história: o último cenário vira a arena do chefe. */
-  boss?: { kind: 'minotaur' | 'spider' | 'princes'; arena: ScreenDef };
+  boss?: { kind: 'minotaur' | 'spider' | 'princes' | 'sharkking'; arena: ScreenDef };
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
   secret?: boolean;
   /** Fase de chave e porta (quebra-cabeça). */
   puzzle?: PuzzleDef;
+  /** Elementos do mar (maré, canhões, caixotes, águas-vivas...). */
+  sea?: SeaDef;
+  /** Fase debaixo d'água: a caveira vira Tubarão e nada livre. */
+  undersea?: boolean;
   /** Corrida e tiro: segurar ATACAR atira ossos; inimigos chegam em ondas. */
   gun?: { spawns: CharId[]; every: number };
   /** Desafio do mausoléu: proteger a urna das assombrações. */
@@ -835,6 +840,377 @@ export const LEVEL_RETRO: LevelDef = {
   versusStart: [3, 16],
 };
 
+
+// ---------- Área 1: Ilhas da Maré ----------
+
+/** Praia dos Caranguejos: um caranguejo leva a chave nas costas. Um golpe o vira e ela cai. */
+export const LEVEL_CRABS: LevelDef = {
+  id: 'crabs',
+  name: 'Praia dos Caranguejos',
+  intro: 'Um caranguejo fugiu com a chave! Acerte-o para a chave cair e leve-a até a porta.',
+  theme: 'shore',
+  tiles: 'tiles_sand',
+  winText: 'A porta da praia abriu!',
+  puzzle: {
+    key: [1, 10, 0],
+    keyOnCrab: true,
+    crabs: [
+      [1, 10, 0, 8],
+      [0, 15, 0, 5],
+      [2, 8, 1, 3],
+    ],
+    door: [2, 18, 2],
+    gifts: [
+      [0, 6, 2],
+      [1, 15, 3],
+      [2, 14, 3],
+    ],
+    springs: [[1, 12, 0]],
+  },
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], floats: [[5, 3, 2]], deco: [[1, 'tree'], [18, 'rock1']] },
+    { segments: [[0, 20, 0]], floats: [[3, 3, 2], [14, 3, 3]], deco: [[1, 'rock2'], [19, 'tree']], sign: [2, 'Acerte o caranguejo: a chave cai!'] },
+    { segments: [[0, 6, 0], [6, 4, 1], [10, 4, 2], [16, 4, 2]], floats: [[14, 2, 3]], deco: [[2, 'skull_spike']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Maré Alta: a maré sobe e desce sozinha; o chão baixo fica debaixo d'água. */
+export const LEVEL_HIGHTIDE: LevelDef = {
+  id: 'hightide',
+  name: 'Maré Alta',
+  intro: 'A maré sobe e desce sozinha. Quando ela vier, fique no alto!',
+  theme: 'shore',
+  tiles: 'tiles_sand',
+  winText: 'Você venceu a maré!',
+  sea: {
+    tide: { high: 80, hold: 4500, move: 2200 },
+    crates: [
+      [1, 9, 2],
+      [3, 4, 2],
+      [3, 9, 2],
+      [3, 14, 2],
+    ],
+  },
+  screens: [
+    {
+      segments: [[0, 7, 0], [7, 3, 1], [10, 5, 0], [15, 2, 2], [17, 3, 0]],
+      floats: [[12, 2, 2]],
+      deco: [[1, 'tree'], [16, 'rock1']],
+      enemies: [[12, 'lizard_sand'], [18, 'goblin_pirate']],
+      sign: [3, 'A maré sobe! Fique no alto quando ela vier.'],
+    },
+    { segments: [[0, 3, 1], [3, 6, 0], [11, 4, 0], [15, 5, 1]], floats: [[6, 2, 2]], deco: [[17, 'tree']], enemies: [[5, 'lizard_tide'], [13, 'gnoll']] },
+    {
+      segments: [[0, 5, 0], [5, 2, 2], [7, 6, 0], [13, 2, 2], [15, 5, 0]],
+      floats: [[9, 3, 3]],
+      deco: [[3, 'rock2']],
+      enemies: [[10, 'lizard_sand'], [17, 'goblin_pirate']],
+      storyItems: [[10, 'harpoon', 3]],
+    },
+    { segments: [[0, 4, 0], [6, 3, 1], [11, 3, 1], [16, 4, 0]], enemies: [[7, 'lizard_tide'], [12, 'goblin_pirate']] },
+    { segments: [[0, 6, 0], [6, 3, 2], [9, 6, 0], [15, 5, 1]], floats: [[11, 3, 3]], deco: [[18, 'tree']], enemies: [[11, 'gnoll'], [17, 'lizard_sand'], [13, 'goblin_pirate']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Destroços do Naufrágio: tábuas soltas que afundam ao pisar e restos de um navio. */
+export const LEVEL_WRECK: LevelDef = {
+  id: 'wreck',
+  name: 'Destroços do Naufrágio',
+  intro: 'Tábuas soltas afundam logo depois de pisadas. Não pare em cima delas!',
+  theme: 'shore',
+  tiles: 'tiles_ship',
+  winText: 'Você atravessou o naufrágio!',
+  sea: {
+    planks: [
+      [0, 6, 3, 0],
+      [1, 3, 2, 0],
+      [1, 5, 2, 0],
+      [1, 10, 2, 1],
+      [1, 12, 2, 1],
+      [2, 4, 2, 1],
+      [2, 6, 2, 1],
+      [2, 12, 2, 1],
+      [2, 14, 2, 0],
+      [3, 5, 2, 1],
+      [3, 7, 2, 1],
+      [3, 11, 3, 0],
+      [4, 4, 3, 0],
+      [4, 11, 3, 1],
+    ],
+    hulls: [
+      [1, 7, 3, 1],
+      [2, 8, 4, 2],
+      [4, 7, 4, 1],
+    ],
+    masts: [[2, 10, 2, 3]],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [9, 3, 1], [15, 5, 0]], deco: [[2, 'dead_tree'], [17, 'bones']], enemies: [[17, 'gnoll_wreck']] },
+    { segments: [[0, 3, 0], [7, 3, 1], [14, 6, 0]], enemies: [[8, 'shark_coral'], [17, 'gnoll_wreck']] },
+    { segments: [[0, 4, 0], [8, 4, 2], [16, 4, 0]], enemies: [[10, 'gnoll_wreck'], [18, 'shark']], storyItems: [[2, 'harpoon']] },
+    { segments: [[0, 5, 1], [9, 2, 0], [14, 6, 0]], enemies: [[10, 'shark_coral'], [16, 'goblin_pirate']] },
+    { segments: [[0, 4, 0], [7, 4, 1], [14, 6, 0]], deco: [[18, 'skull_spike']], enemies: [[9, 'gnoll_wreck'], [17, 'shark_hammer']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Navio Pirata: Convés. Canhões, goblins piratas e bombardeiros; o capitão no tombadilho. */
+export const LEVEL_DECK: LevelDef = {
+  id: 'deck',
+  name: 'Navio Pirata: Convés',
+  intro: 'Suba a bordo! Canhões disparam pelo convés: pule as balas ou defenda.',
+  theme: 'shore',
+  tiles: 'tiles_ship',
+  winText: 'O convés é seu!',
+  sea: {
+    hulls: [
+      [0, 8, 12, 1],
+      [1, 0, 20, 1],
+      [2, 0, 8, 1],
+      [2, 8, 4, 2],
+      [2, 12, 8, 1],
+      [3, 0, 6, 1],
+      [3, 9, 11, 1],
+      [4, 0, 5, 1],
+      [4, 5, 3, 2],
+      [4, 8, 12, 3],
+    ],
+    masts: [
+      [0, 14, 1, 6],
+      [1, 6, 1, 6],
+      [1, 13, 1, 6],
+      [2, 4, 1, 6],
+      [3, 14, 1, 6],
+    ],
+    cannons: [
+      [0, 18, 1, -1, 2600],
+      [1, 10, 1, -1, 2400],
+      [1, 19, 1, -1, 2400, 1200],
+      [2, 11, 2, -1, 2200],
+      [3, 18, 1, -1, 2000],
+      [4, 19, 3, -1, 2600],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [8, 12, 1]], floats: [[6, 2, 1]], deco: [[2, 'tree']], enemies: [[12, 'goblin_pirate']], sign: [3, 'Balas de canhão: pule ou defenda!'] },
+    { segments: [[0, 20, 1]], floats: [[5, 3, 3], [12, 3, 3]], enemies: [[8, 'goblin_bomber'], [15, 'goblin_pirate']] },
+    { segments: [[0, 8, 1], [8, 4, 2], [12, 8, 1]], floats: [[16, 3, 3]], enemies: [[5, 'goblin_pirate'], [10, 'goblin_bomber'], [17, 'goblin_pirate']] },
+    { segments: [[0, 6, 1], [9, 11, 1]], floats: [[7, 1, 2]], enemies: [[12, 'goblin_bomber'], [16, 'goblin_pirate']] },
+    { segments: [[0, 5, 1], [5, 3, 2], [8, 12, 3]], enemies: [[13, 'goblin_captain'], [17, 'goblin_bomber']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Caverna Submarina: tudo debaixo d'água. A caveira vira Tubarão e nada livre. */
+export const LEVEL_UNDERSEA: LevelDef = {
+  id: 'undersea',
+  name: 'Caverna Submarina',
+  intro: 'Debaixo d\'água a caveira vira Tubarão! ↑ (ou PULAR) sobe, ▼ desce. Cuidado com as águas-vivas.',
+  theme: 'cave',
+  tiles: 'tiles_cave',
+  winText: 'Você atravessou a caverna submarina!',
+  undersea: true,
+  sea: {
+    jellies: [
+      [0, 12, 4, 1],
+      [1, 9, 4, 1],
+      [1, 11, 3, 0],
+      [2, 8, 3, 0],
+      [2, 10, 4, 2],
+      [2, 16, 4, 1],
+      [3, 9, 4, 1],
+      [3, 11, 3, 0],
+      [3, 18, 4, 2],
+      [4, 5, 4, 1],
+      [4, 13, 4, 0],
+      [4, 15, 4, 1],
+    ],
+    corals: [
+      [0, 10, 0],
+      [0, 14, 0],
+      [1, 8, 0],
+      [1, 12, 0],
+      [2, 7, 0],
+      [2, 15, 0],
+      [2, 18, 0],
+      [3, 2, 0],
+      [3, 15, 2],
+      [4, 12, 0],
+      [4, 17, 0],
+    ],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [6, 2, 3], [8, 12, 0]], deco: [[2, 'rock2']], enemies: [[16, 'shark_coral']], sign: [2, '↑ ou PULAR sobe · ▼ desce'] },
+    { segments: [[0, 4, 0], [4, 2, 4], [6, 8, 0], [14, 2, 3], [16, 4, 0]], enemies: [[18, 'shark_hammer']] },
+    { segments: [[0, 3, 0], [3, 3, 3], [6, 6, 0], [12, 2, 4], [14, 6, 0]], enemies: [[9, 'shark_coral'], [17, 'lizard_tide']] },
+    { segments: [[0, 5, 0], [5, 2, 4], [7, 6, 0], [13, 3, 2], [16, 4, 0]], enemies: [[10, 'shark_hammer'], [17, 'shark_coral']] },
+    { segments: [[0, 8, 0], [8, 2, 4], [10, 10, 0]], deco: [[18, 'rock1']], enemies: [[14, 'shark_elite']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Comportas do Farol: alavancas abrem e fecham as comportas (maré alta ou baixa). */
+export const LEVEL_FLOODGATES: LevelDef = {
+  id: 'floodgates',
+  name: 'Comportas do Farol',
+  intro: 'Golpeie as alavancas: maré alta faz os caixotes subirem; maré baixa abre os caminhos de baixo.',
+  theme: 'shore',
+  tiles: 'tiles_sand',
+  winText: 'O farol iluminou o caminho!',
+  sea: {
+    tide: { high: 200, hold: 0, move: 2500 },
+    levers: [
+      [0, 4, 0],
+      [1, 2, 1],
+      [2, 2, 4],
+      [3, 1, 2],
+    ],
+    crates: [
+      [0, 8, 2],
+      [0, 10, 2],
+      [1, 3, 2],
+      [1, 5, 2],
+      [3, 4, 3],
+    ],
+    lighthouse: [0, 16, 0],
+  },
+  screens: [
+    { segments: [[0, 6, 0], [6, 2, 1], [12, 8, 0]], deco: [[1, 'tree']], sign: [2, 'Alavanca: maré alta / maré baixa'] },
+    { segments: [[0, 3, 0], [7, 13, 4]], floats: [[1, 2, 1]], enemies: [[14, 'goblin_pirate']] },
+    { segments: [[0, 4, 4], [4, 10, 0], [14, 6, 2]], floats: [[7, 2, 2]], enemies: [[10, 'lizard_tide']] },
+    { segments: [[0, 4, 2], [7, 13, 4]], deco: [[18, 'tree']], enemies: [[15, 'gnoll_wreck']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Navio Pirata: Mastros. O convés está quebrado: o caminho é pelas vergas e cestos de gávea. */
+export const LEVEL_MASTS: LevelDef = {
+  id: 'masts',
+  name: 'Navio Pirata: Mastros',
+  intro: 'O convés afundou no meio. Atravesse pelas vergas e pelos cestos de gávea, lá no alto!',
+  theme: 'shore',
+  tiles: 'tiles_ship',
+  winText: 'Você dominou os mastros!',
+  sea: {
+    hulls: [
+      [0, 0, 20, 1],
+      [1, 0, 4, 1],
+      [1, 16, 4, 1],
+      [2, 0, 7, 1],
+      [2, 11, 9, 1],
+      [3, 0, 3, 1],
+      [3, 17, 3, 1],
+      [4, 0, 6, 1],
+      [4, 6, 14, 2],
+    ],
+    masts: [
+      [0, 7, 1, 6],
+      [0, 16, 1, 6],
+      [1, 9, 1, 6],
+      [2, 13, 1, 6],
+      [3, 9, 1, 6],
+      [4, 10, 2, 5],
+    ],
+    cannons: [
+      [0, 19, 1, -1, 2200],
+      [2, 18, 1, -1, 1800],
+      [4, 19, 2, -1, 2000],
+    ],
+  },
+  screens: [
+    { segments: [[0, 20, 1]], floats: [[6, 3, 3], [11, 3, 4], [15, 3, 5]], enemies: [[9, 'goblin_pirate'], [14, 'goblin_bomber']] },
+    { segments: [[0, 4, 1], [16, 4, 1]], floats: [[3, 3, 3], [7, 3, 4], [11, 3, 4], [14, 3, 3]], enemies: [[18, 'goblin_bomber']] },
+    { segments: [[0, 7, 1], [11, 9, 1]], floats: [[6, 2, 3], [9, 2, 4], [12, 3, 5], [16, 3, 3]], enemies: [[3, 'goblin_pirate'], [15, 'goblin_bomber']] },
+    { segments: [[0, 3, 1], [17, 3, 1]], floats: [[2, 3, 3], [5, 2, 4], [8, 3, 5], [12, 2, 4], [14, 3, 3]], enemies: [[18, 'goblin_pirate']] },
+    { segments: [[0, 6, 1], [6, 14, 2]], enemies: [[9, 'goblin_captain'], [14, 'goblin_bomber'], [17, 'goblin_pirate']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Recife de Coral: corais de fogo, águas-vivas, maré e tubarões de todo tipo. */
+export const LEVEL_REEF: LevelDef = {
+  id: 'reef',
+  name: 'Recife de Coral',
+  intro: 'Corais de fogo queimam, águas-vivas boiam e a maré não para. O último passo antes do Rei.',
+  theme: 'shore',
+  tiles: 'tiles_sand',
+  winText: 'O recife ficou para trás. O Rei espera!',
+  sea: {
+    tide: { high: 70, hold: 5000, move: 2000 },
+    crates: [
+      [0, 8, 2],
+      [0, 14, 2],
+      [1, 15, 2],
+      [3, 5, 2],
+      [3, 9, 2],
+      [3, 13, 2],
+    ],
+    corals: [
+      [0, 11, 0],
+      [0, 13, 0],
+      [1, 7, 0],
+      [1, 9, 0],
+      [2, 6, 0],
+      [2, 17, 0],
+      [3, 2, 0],
+      [3, 17, 1],
+      [4, 8, 0],
+      [4, 10, 0],
+    ],
+    jellies: [
+      [1, 15, 3, 1],
+      [2, 10, 4, 2],
+      [2, 14, 4, 1],
+      [3, 10, 3, 1],
+      [4, 13, 3, 1],
+    ],
+  },
+  screens: [
+    { segments: [[0, 5, 0], [5, 3, 1], [10, 4, 0], [16, 4, 1]], deco: [[1, 'tree']], enemies: [[17, 'shark_coral']] },
+    { segments: [[0, 4, 1], [6, 5, 0], [13, 2, 2], [17, 3, 1]], enemies: [[8, 'lizard_tide'], [18, 'shark_hammer']] },
+    { segments: [[0, 3, 1], [5, 4, 0], [11, 3, 2], [16, 4, 0]], floats: [[8, 3, 3]], enemies: [[12, 'shark_coral'], [18, 'lizard_sand']] },
+    { segments: [[0, 5, 0], [7, 2, 1], [11, 2, 2], [15, 5, 1]], enemies: [[3, 'lizard_tide'], [18, 'shark_elite']] },
+    { segments: [[0, 4, 1], [6, 6, 0], [14, 6, 1]], floats: [[8, 3, 2]], deco: [[18, 'skull_spike']], enemies: [[11, 'shark_hammer'], [17, 'goblin_captain']] },
+  ],
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
+/** Arena do Rei Tubarão: o chefe manda na maré. */
+export const LEVEL_SHARKKING: LevelDef = {
+  id: 'sharkking',
+  name: 'Arena do Rei Tubarão',
+  intro: 'O Rei Tubarão-Arpão manda na maré. Na maré baixa ele encalha: é a sua chance!',
+  theme: 'shore',
+  tiles: 'tiles_sand',
+  winText: 'O Rei Tubarão-Arpão caiu! Fragmento da coroa recuperado!',
+  sea: {
+    tide: { high: 92, hold: 0, move: 1400, manual: true },
+    crates: [[0, 8, 2]],
+    corals: [[1, 10, 1]],
+  },
+  screens: [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[2, 'tree']], enemies: [[14, 'shark_coral'], [18, 'goblin_pirate']] },
+    { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], enemies: [[9, 'gnoll_wreck'], [17, 'shark_hammer']] },
+    { segments: [[0, 20, 0]] },
+  ],
+  boss: {
+    kind: 'sharkking',
+    arena: { segments: [[0, 4, 2], [4, 12, 0], [16, 4, 2]], floats: [[8, 4, 4]], deco: [[1, 'skull_spike'], [18, 'skull_spike']] },
+  },
+  storyStart: [0, 2],
+  versusStart: [3, 16],
+};
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -859,6 +1235,16 @@ export const LEVELS: LevelDef[] = [
   LEVEL_DOORS,
   LEVEL_LIBRARY,
   LEVEL_DARK,
+  // Área 1 (Ilhas da Maré).
+  LEVEL_CRABS,
+  LEVEL_HIGHTIDE,
+  LEVEL_WRECK,
+  LEVEL_DECK,
+  LEVEL_UNDERSEA,
+  LEVEL_FLOODGATES,
+  LEVEL_MASTS,
+  LEVEL_REEF,
+  LEVEL_SHARKKING,
   // Secretas (sempre no fim).
   LEVEL_RETRO,
 ];
@@ -872,6 +1258,7 @@ export class Level {
   readonly floats: Segment[];
   private clouds: Array<{ img: Phaser.GameObjects.Image; speed: number }> = [];
   private waves: Phaser.GameObjects.TileSprite[] = [];
+  private crest?: Phaser.GameObjects.TileSprite;
   private lavaBody?: Phaser.GameObjects.TileSprite;
   private lavaTop: Phaser.GameObjects.TileSprite[] = [];
   private cloudSpan = 0;
@@ -885,6 +1272,19 @@ export class Level {
   /** Colunas (tiles globais) à esquerda disto já caíram; até shakingBefore estão tremendo. */
   collapsedBefore = 0;
   shakingBefore = 0;
+  /** Maré: quanto a água subiu (px). Tudo o que é água acompanha. */
+  tide = 0;
+  /** Camadas de água e a altura de cada uma com a maré em zero. */
+  private waterLayers: Array<{ o: Phaser.GameObjects.Components.Transform; y: number }> = [];
+
+  /** Superfície da água agora (com a maré). */
+  get waterY(): number {
+    return WATER_Y - this.tide;
+  }
+  /** Pés abaixo disto = caiu na água. */
+  get deathY(): number {
+    return DEATH_Y - this.tide;
+  }
 
   constructor(private scene: Phaser.Scene, def: LevelDef) {
     this.def = def;
@@ -964,6 +1364,8 @@ export class Level {
   /** Movimento contínuo do cenário: nuvens com o vento e ondas na água. */
   update(time: number, delta: number): void {
     const dt = delta / 1000;
+    const t = Math.round(this.tide);
+    for (const l of this.waterLayers) l.o.y = l.y - t;
     for (const c of this.clouds) {
       c.img.x += c.speed * dt;
       if (c.img.x > this.cloudSpan) c.img.x = -600;
@@ -975,6 +1377,7 @@ export class Level {
       a.tilePositionY = Math.sin(time / 900) * 3;
       b.tilePositionX = (camX * 0.8 - time * 0.015) / 1.6;
       b.tilePositionY = Math.cos(time / 1100) * 3;
+      if (this.crest) this.crest.tilePositionX = camX * 1.1 + time * 0.03;
     }
     if (this.lavaBody) {
       const camX = this.scene.cameras.main.scrollX;
@@ -983,9 +1386,9 @@ export class Level {
       this.lavaBody.tilePositionY = Math.round(Math.sin(time / 1400) * 4 + time * 0.004);
       const [a, b] = this.lavaTop;
       a.tilePositionX = Math.round((camX * 0.9 - time * 0.03) / 2) * 2;
-      a.y = WATER_Y - 10 + Math.round(Math.sin(time / 520) * 2) * 2;
+      a.y = this.waterY - 10 + Math.round(Math.sin(time / 520) * 2) * 2;
       b.tilePositionX = Math.round((camX + time * 0.045) / 2) * 2;
-      b.y = WATER_Y - 6 + Math.round(Math.cos(time / 610)) * 2;
+      b.y = this.waterY - 6 + Math.round(Math.cos(time / 610)) * 2;
     }
   }
 
@@ -1234,6 +1637,8 @@ export class Level {
     const dark = theme === 'cave';
     const lava = theme === 'volcano';
     const body = lava ? 0xe8501f : dark ? 0x1d5d6b : 0x39b5fd;
+    // Tudo o que é criado aqui com rolagem só no Y é "água" e sobe/desce com a maré.
+    const before = new Set(s.children.list);
     const edge = lava ? 0xffd36b : dark ? 0x5fa9b5 : 0x8fd9ff;
     s.add.rectangle(0, WATER_Y, W, H - WATER_Y + 200, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water);
     if (lava) s.add.rectangle(0, WATER_Y + 40, W, H, 0xb8321a).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water).setAlpha(0.6);
@@ -1260,6 +1665,7 @@ export class Level {
         s.add.tileSprite(0, WATER_Y - 6, W, 32, 'lava_top').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.water),
       ];
       this.waves = [];
+      this.trackWater(before);
       s.time.addEvent({
         delay: 140,
         loop: true,
@@ -1275,6 +1681,14 @@ export class Level {
       });
       return;
     }
+    // Fases com maré: crista de ondas na frente do cenário (a água subindo fica bem visível).
+    if (this.def.sea?.tide) {
+      const crest = s.add.tileSprite(0, WATER_Y - 6, W, 22, 'waves').setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.55).setAlpha(0.75);
+      s.add.rectangle(0, WATER_Y - 2, W, 4, 0xe8f8ff).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.56).setAlpha(0.85);
+      s.add.rectangle(0, WATER_Y + 2, W, H, body).setOrigin(0).setScrollFactor(0, 1).setDepth(DEPTH.fighters + 0.54).setAlpha(0.32);
+      this.crest = crest;
+    }
+    this.trackWater(before);
     const rr = new Phaser.Math.RandomDataGenerator(['skullshift-rocks']);
     for (let x = 300; x < this.width; x += rr.between(300, 560)) {
       s.add
@@ -1283,6 +1697,15 @@ export class Level {
         .setScale(rr.realInRange(1.1, 1.5))
         .setTint(dark ? 0x8fb4bd : 0xffffff)
         .play({ key: 'water_rocks', startFrame: rr.between(0, 15) });
+    }
+  }
+
+  /** Guarda as camadas de água criadas desde `before` (para a maré mover). */
+  private trackWater(before: Set<Phaser.GameObjects.GameObject>): void {
+    for (const o of this.scene.children.list) {
+      if (before.has(o) || !o.active) continue;
+      const t = o as unknown as Phaser.GameObjects.Components.Transform;
+      if (typeof t.y === 'number' && !this.waterLayers.some((l) => l.o === t)) this.waterLayers.push({ o: t, y: t.y });
     }
   }
 

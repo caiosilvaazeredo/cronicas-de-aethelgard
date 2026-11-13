@@ -380,7 +380,7 @@ export class MapScene extends Phaser.Scene {
       }
       return;
     }
-    const key = l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
+    const key = l.tiles === 'tiles_sand' || l.tiles === 'tiles_ship' ? l.tiles : l.theme === 'cave' ? 'tiles_cave' : l.theme === 'volcano' ? 'tiles_volcano' : 'tilemap';
     const tint = l.theme === 'volcano' ? 0xd28e78 : l.id === 'nest' ? 0x8a9aa8 : l.id === 'queen' ? 0x7a7088 : 0xffffff;
     this.island(tx, ty, 4, 3, key, tint);
     if (l.id === 'shore') {
@@ -429,6 +429,54 @@ export class MapScene extends Phaser.Scene {
       deco('door_exit', 60, -10, 0.55);
       const k = deco('key_item', -50, -40, 1);
       this.tweens.add({ targets: k, angle: { from: -15, to: 15 }, duration: 800, yoyo: true, repeat: -1 });
+    }
+    // Ilhas da Maré.
+    if (l.id === 'crabs') {
+      const c = this.add.sprite(x - 40, y - 10, 'crab').setOrigin(0.5, 1).setScale(0.8).setDepth(6).play('crab');
+      this.tweens.add({ targets: c, x: x + 40, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      deco('key_item', -40, -44, 0.8);
+    }
+    if (l.id === 'hightide' || l.id === 'reef' || l.id === 'floodgates') {
+      const w = this.add.graphics().setDepth(5);
+      w.fillStyle(0x39b5fd, 0.85).fillRect(x - 120, y + 18, 240, 26);
+      w.fillStyle(0x8fd9ff, 1).fillRect(x - 120, y + 18, 240, 4);
+      this.tweens.add({ targets: w, y: -22, duration: 1800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      deco('crate', 50, -6, 0.6);
+    }
+    if (l.id === 'reef') {
+      deco('coral', -50, -6, 0.8);
+      deco('coral', 70, -10, 0.6);
+    }
+    if (l.id === 'floodgates') {
+      const lh = this.add.graphics().setDepth(6);
+      for (let k = 0; k < 6; k++) {
+        lh.fillStyle(INK, 1).fillRect(x - 64, y - 30 - k * 14, 30, 14);
+        lh.fillStyle(k % 2 ? 0xd42a3c : 0xf4ead0, 1).fillRect(x - 62, y - 30 - k * 14, 26, 14);
+      }
+      lh.fillStyle(0xfff1a8, 1).fillRect(x - 60, y - 124, 22, 14);
+      lh.fillStyle(0xd42a3c, 1).fillTriangle(x - 68, y - 124, x - 30, y - 124, x - 49, y - 144);
+    }
+    if (l.tiles === 'tiles_ship') {
+      const m = this.add.graphics().setDepth(6);
+      m.fillStyle(INK, 1).fillRect(x - 5, y - 130, 10, 120);
+      m.fillStyle(0x8a5a2a, 1).fillRect(x - 3, y - 130, 6, 120);
+      m.fillStyle(INK, 1).fillRect(x - 46, y - 116, 92, 66);
+      m.fillStyle(0xf4ead0, 1).fillRect(x - 43, y - 113, 86, 60);
+      m.fillStyle(0x2a2a3a, 1).fillCircle(x, y - 84, 12);
+      m.fillStyle(0xf4ead0, 1).fillCircle(x, y - 86, 6);
+      if (l.id === 'wreck') m.setAngle(-14);
+      if (l.sea?.cannons) deco('cannon', 70, -10, 0.55);
+    }
+    if (l.undersea) {
+      this.add
+        .particles(x, y + 10, 'spark', { x: { min: -60, max: 60 }, speedY: { min: -50, max: -30 }, lifespan: 1800, scale: { start: 0.25, end: 0.1 }, alpha: { start: 0.9, end: 0 }, tint: 0xbfe9ff, frequency: 260 })
+        .setDepth(6);
+      this.add.sprite(x - 50, y - 30, 'shark_idle').setScale(0.45).setDepth(6).play('shark_idle');
+    }
+    if (l.id === 'sharkking') {
+      this.add.sprite(x, y - 16, 'king_shark_idle').setScale(0.55).setFlipX(true).setDepth(6).play('king_shark_idle');
+      const crown = deco('queen_crown', 0, -78, 0.7);
+      this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     if (l.gun) {
       deco('bone', -60, -30, 0.9);

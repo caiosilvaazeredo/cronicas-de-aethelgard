@@ -3,6 +3,7 @@ import { BODY_FONT, DEPTH, FLOOR_Y, TILE } from '../config';
 import type { Fighter } from './Fighter';
 import type { Level } from './level';
 import { sfx } from './settings';
+import { Px } from '../ui/pixelart';
 
 type At = [screen: number, tile: number, h: number];
 
@@ -29,6 +30,56 @@ export interface PuzzleDef {
   plates?: Array<[screen: number, tile: number, h: number, gate: string]>;
   /** Portões: cenário, tile, altura do chão, altura do portão em tiles, id. */
   gates?: Array<[screen: number, tile: number, h: number, height: number, id: string]>;
+  /** Caranguejos: andam de lado num trecho de `range` tiles; encostar belisca (derruba). */
+  crabs?: Array<[screen: number, tile: number, h: number, range: number]>;
+  /** O primeiro caranguejo começa carregando a chave: um golpe o vira e ela cai. */
+  keyOnCrab?: boolean;
+}
+
+interface Crab {
+  sprite: Phaser.GameObjects.Sprite;
+  x0: number;
+  x1: number;
+  floor: number;
+  dir: number;
+  carrying: boolean;
+  stunUntil: number;
+  hitBy: number;
+}
+
+/** Caranguejo em pixel art (2 quadros de passinho). */
+function makeCrabArt(scene: Phaser.Scene): void {
+  if (scene.textures.exists('crab')) return;
+  const INK_C = 0x1d1a2b;
+  const frame = (k: number) => {
+    const c = new Px(26, 16);
+    c.rect(6, 6, 14, 6, 0xd84a2a);
+    c.rect(7, 5, 12, 1, 0xd84a2a);
+    c.rect(8, 6, 10, 2, 0xff8a5a);
+    for (const ex of [10, 15]) {
+      c.rect(ex, 2, 1, 4, 0xd84a2a);
+      c.rect(ex - 1, 1, 3, 2, 0xffffff);
+      c.set(ex, 1, INK_C);
+    }
+    // Garras.
+    c.rect(1, 4 - k, 4, 4, 0xe85a3a);
+    c.rect(21, 4 - k, 4, 4, 0xe85a3a);
+    c.set(1, 4 - k, 0xffb090);
+    c.set(24, 4 - k, 0xffb090);
+    c.rect(4, 8, 3, 1, 0xd84a2a);
+    c.rect(19, 8, 3, 1, 0xd84a2a);
+    // Perninhas.
+    for (const [lx, side] of [[7, -1], [10, -1], [16, 1], [19, 1]]) c.rect(lx + (k ? side : 0), 12, 1, 3, 0xb83a1a);
+    c.outline(INK_C);
+    return c;
+  };
+  const cv = document.createElement('canvas');
+  cv.width = 26 * 3 * 2;
+  cv.height = 16 * 3;
+  const ctx = cv.getContext('2d')!;
+  [frame(0), frame(1)].forEach((f, i) => f.draw(ctx, i * 78, 0, 3));
+  scene.textures.addSpriteSheet('crab', cv as unknown as HTMLImageElement, { frameWidth: 78, frameHeight: 48 });
+  scene.anims.create({ key: 'crab', frames: scene.anims.generateFrameNumbers('crab', { start: 0, end: 1 }), frameRate: 8, repeat: -1 });
 }
 
 export interface PuzzleHost {
@@ -41,6 +92,8 @@ export interface PuzzleHost {
   gift(i: number): void;
   win(gifts: number): void;
   popText(x: number, y: number, text: string, color: string): void;
+  /** Beliscão do caranguejo. */
+  killPlayer?(): void;
 }
 
 const topOf = (h: number) => FLOOR_Y - h * TILE;
@@ -84,6 +137,7 @@ export class PuzzleSystem {
   private won = false;
   private got = 0;
   private wasAlive = true;
+  private crabs: Crab[] = [];
 
   constructor(
     private host: PuzzleHost,
@@ -156,6 +210,14 @@ export class PuzzleSystem {
     const [ks, kt, kh] = def.key;
     this.keyHome = [X(ks, kt), topOf(kh) - 30];
     this.key = this.carryable(this.keyHome[0], this.keyHome[1], 'key_item', 1.3, 40, 22);
+    // Caranguejos (o primeiro pode começar com a chave nas costas).
+    makeCrabArt(s);
+    for (const [sc, t, h, range] of def.crabs ?? []) {
+      const x = X(sc, t);
+      const sprite = s.add.sprite(x, topOf(h), 'crab').setOrigin(0.5, 1).setDepth(DEPTH.items + 0.4).play('crab');
+      this.crabs.push({ sprite, x0: x - (range * TILE) / 2, x1: x + (range * TILE) / 2, floor: topOf(h), dir: 1, carrying: false, stunUntil: 0, hitBy: -1 });
+    }
+    if (def.keyOnCrab && this.crabs[0]) this.crabTakes(this.crabs[0]);
     // Ovelhas.
     for (const [sc, t, h] of def.sheep ?? []) {
       const sh = this.carryable(X(sc, t), topOf(h) - 40, 'sheep_idle', 0.95, 56, 44);
@@ -236,6 +298,7 @@ export class PuzzleSystem {
     this.updatePlates();
     this.updateTrees(p, attackEdge);
     this.updateSheep(dt);
+    this.updateCrabs(time, dt, p);
     this.updateGifts(p);
     this.updateDoor(p);
   }
@@ -300,7 +363,7 @@ export class PuzzleSystem {
       return;
     }
     if (!p.intent.pick || !p.alive || p.zipping) return;
-    const candidates = [this.key, ...this.sheep];
+    const candidates = [...(this.crabs.some((c) => c.carrying) ? [] : [this.key]), ...this.sheep];
     const near = candidates.find((o) => Math.abs(o.x - p.x) < 52 && Math.abs(o.y - (p.feet - 30)) < 70);
     if (!near) return;
     if (!p.abilities.has('carry')) {
@@ -339,6 +402,12 @@ export class PuzzleSystem {
 
   private resetKey(): void {
     if (this.held === this.key) this.dropHeld(false);
+    // Fase do caranguejo: a chave volta para as costas dele.
+    if (this.def.keyOnCrab && this.crabs[0]) {
+      for (const c of this.crabs) c.carrying = false;
+      this.crabTakes(this.crabs[0]);
+      return;
+    }
     const body = this.key.body as Phaser.Physics.Arcade.Body;
     body.enable = true;
     body.reset(this.keyHome[0], this.keyHome[1]);
@@ -467,6 +536,60 @@ export class PuzzleSystem {
         b.reset(this.keyHome[0], this.keyHome[1] - 40);
       }
       void dt;
+    }
+  }
+
+  // ---------- caranguejos ----------
+
+  private crabTakes(c: Crab): void {
+    c.carrying = true;
+    (this.key.body as Phaser.Physics.Arcade.Body).enable = false;
+  }
+
+  private updateCrabs(time: number, dt: number, p: Fighter): void {
+    const hb = p.alive ? p.activeHitBox() : null;
+    for (const c of this.crabs) {
+      const sp = c.sprite;
+      const stunned = time < c.stunUntil;
+      if (!stunned) {
+        if (sp.flipY) {
+          sp.setFlipY(false).play('crab');
+        }
+        sp.x += c.dir * (c.carrying ? 70 : 95) * dt;
+        if (sp.x > c.x1) c.dir = -1;
+        if (sp.x < c.x0) c.dir = 1;
+      }
+      // Leva a chave nas costas.
+      if (c.carrying) this.key.setPosition(sp.x, c.floor - 52 + Math.sin(time / 90) * 2).setAngle(Math.sin(time / 200) * 8);
+      // Um golpe vira o caranguejo de barriga para cima: a chave cai.
+      if (hb && p.attackId !== c.hitBy && !stunned) {
+        const box = { x1: sp.x - 34, x2: sp.x + 34, y1: c.floor - 44, y2: c.floor };
+        if (hb.x1 < box.x2 && hb.x2 > box.x1 && hb.y1 < box.y2 && hb.y2 > box.y1) {
+          c.hitBy = p.attackId;
+          c.stunUntil = time + 2600;
+          sp.setFlipY(true).anims.stop();
+          sfx('hit');
+          if (c.carrying) {
+            c.carrying = false;
+            const body = this.key.body as Phaser.Physics.Arcade.Body;
+            body.enable = true;
+            body.reset(sp.x, c.floor - 70);
+            body.setVelocity(p.facing * 160, -320);
+            this.key.setAngle(0);
+            this.host.popText(sp.x, c.floor - 110, 'A CHAVE CAIU!', '#ffe066');
+          }
+          continue;
+        }
+      }
+      if (stunned) continue;
+      // Encostou na chave largada no chão: pega de volta.
+      const kb = this.key.body as Phaser.Physics.Arcade.Body;
+      if (!c.carrying && this.held !== this.key && kb.enable && kb.blocked.down && Math.abs(this.key.x - sp.x) < 30 && Math.abs(kb.bottom - c.floor) < 20) {
+        this.crabTakes(c);
+        this.host.popText(sp.x, c.floor - 110, 'O CARANGUEJO PEGOU A CHAVE!', '#ff9a8a');
+      }
+      // Beliscão.
+      if (p.alive && !p.invulnerable && !p.zipping && Math.abs(p.x - sp.x) < 34 && p.feet > c.floor - 40 && p.feet <= c.floor + 6) this.host.killPlayer?.();
     }
   }
 

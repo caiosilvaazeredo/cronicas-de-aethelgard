@@ -3,6 +3,8 @@ import { makeCrouchAnims } from '../game/crouch';
 import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
 import { makeVariants } from '../game/variants';
+import { makeSeaArt, makeSeaTiles } from '../game/sea';
+import { makeKingShark } from '../game/sharkking';
 import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
 import { H, W } from '../config';
 import { CHARS, type CharId } from '../game/characters';
@@ -138,6 +140,9 @@ export class BootScene extends Phaser.Scene {
     makeLavaWave(this);
     makePuzzleArt(this);
     makeVariants(this);
+    makeSeaTiles(this);
+    makeSeaArt(this);
+    makeKingShark(this);
     makeHauntArt(this);
     makeHauntBackdrop(this, 'haunt_bg', W, H);
     makeMapMansion(this, 'map_mansion');

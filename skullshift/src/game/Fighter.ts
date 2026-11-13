@@ -99,6 +99,8 @@ export class Fighter {
   abilities = new Set<string>();
   /** Golpes extras que aguenta antes de cair (inimigos elite). */
   armor = 0;
+  /** Nado livre debaixo d'água (Caverna Submarina): sobe e desce à vontade, sem afogar. */
+  freeSwim = false;
   /** Enterrado na areia (Lagarto de Areia): invisível e intocável. */
   buried = false;
   /** Carregando um objeto sobre a cabeça (chave, ovelha): não ataca nem dá pulo duplo. */
@@ -433,7 +435,7 @@ export class Fighter {
     }
 
     if ((d.climb || this.abilities.has('pickaxe')) && this.state !== 'stun' && !this.carrying) this.updateClimb(dt, grounded);
-    if (d.swim) this.updateSwim(dt, now);
+    if (d.swim || this.freeSwim) this.updateSwim(dt, now);
 
     if (this.knockT > 0) {
       this.knockT -= dt;
@@ -499,6 +501,32 @@ export class Fighter {
    * para a linha de flutuação), nada com aceleração macia, mergulha segurando ▼ e salta
    * para fora com PULAR. O corpo balança e inclina conforme nada.
    */
+  /** Nado livre: ↑/PULAR sobe, ▼ desce, solto fica parado; o corpo inclina para onde vai. */
+  private updateFreeSwim(dt: number, now: number, wy: number): void {
+    const b = this.body;
+    const it = this.intent;
+    const vy = ((it.crouch ? 1 : 0) - (it.up || it.jumpHeld ? 1 : 0)) * this.def.speed * 0.8;
+    // Não sai pela superfície (fica com a barbatana de fora, no máximo).
+    const minFeet = wy + 50;
+    const target = this.feet <= minFeet && vy < 0 ? 0 : vy + Math.sin(now / 400) * 10;
+    b.setVelocityY(Phaser.Math.Linear(b.velocity.y, target, Math.min(1, dt * 5)));
+    if (this.feet < minFeet) b.setVelocityY(Math.max(b.velocity.y, 40));
+    if (this.state !== 'attack' && this.state !== 'stun') {
+      const want = it.move * this.def.speed * 0.95;
+      b.setVelocityX(Phaser.Math.Linear(b.velocity.x, want, Math.min(1, dt * 5)));
+      if (it.move !== 0) this.facing = it.move > 0 ? 1 : -1;
+      const anim = `${this.def.id}_run`;
+      if (this.sprite.anims.currentAnim?.key !== anim) this.sprite.play(anim);
+      this.sprite.anims.timeScale = 0.5 + Math.min(1, Math.abs(b.velocity.x) / this.def.speed) * 0.6;
+    }
+    const pitch = (b.velocity.y / (this.def.speed * 0.8)) * 25 * this.facing;
+    this.sprite.setAngle(Phaser.Math.Linear(this.sprite.angle, pitch, Math.min(1, dt * 6)));
+    if (now - this.lastWake > 420) {
+      this.lastWake = now;
+      this.onSwimFx?.(this, 'bubble');
+    }
+  }
+
   private updateSwim(dt: number, now: number): void {
     const b = this.body;
     const wy = this.waterY;
@@ -520,6 +548,7 @@ export class Fighter {
       this.onSwimFx?.(this, 'enter');
     }
     const it = this.intent;
+    if (this.freeSwim) return this.updateFreeSwim(dt, now, wy);
     const diving = it.crouch;
     const floatFeet = wy + 34; // cabeça e ombros para fora
     const target = diving ? wy + 140 : floatFeet;

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DEATH_Y, DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
+import { DEPTH, FLOOR_Y, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
@@ -7,6 +7,8 @@ import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
 import { MinotaurBoss, SpiderQueenBoss, type Boss } from '../game/boss';
 import { PrincesBoss } from '../game/princes';
+import { SeaSystem } from '../game/sea';
+import { SharkKingBoss } from '../game/sharkking';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER } from '../game/areas';
 import { completeLevel, deathLimit, findSecret, getPact, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
@@ -56,6 +58,8 @@ interface Projectile {
 }
 
 const ITEM_RESPAWN = 8000;
+/** Caverna Submarina: quanto a água sobe (a superfície fica lá no alto). */
+const UNDERSEA_TIDE = 400;
 /** Aranha pendurada: altura dos pés enquanto está na teia. */
 /** Impulso do tubarão saindo da água (bem mais alto que um pulo). */
 const SHARK_LEAP_V = 1050;
@@ -89,6 +93,8 @@ export class GameScene extends Phaser.Scene {
   private boss?: Boss;
   private bossStarted = false;
   private rootedUntil = 0;
+  /** Máscara "acima da água" (sobe junto com a maré). */
+  private waterMaskG?: Phaser.GameObjects.Graphics;
   private rootWeb?: Phaser.GameObjects.Image;
   /** Fase de voo com tiro. */
   private shmup?: ShmupSystem;
@@ -96,6 +102,7 @@ export class GameScene extends Phaser.Scene {
   private escape?: EscapeSystem;
   /** Fase de chave e porta. */
   private puzzle?: PuzzleSystem;
+  sea?: SeaSystem;
   /** Desafio do mausoléu. */
   private mausoleum?: MausoleumSystem;
   /** Corrida e tiro: próximo disparo e próxima onda de inimigos. */
@@ -157,6 +164,7 @@ export class GameScene extends Phaser.Scene {
     this.shmup = undefined;
     this.escape = undefined;
     this.puzzle = undefined;
+    this.sea = undefined;
     this.mausoleum = undefined;
     this.nextGunShot = 0;
     this.nextGunSpawn = 0;
@@ -181,6 +189,7 @@ export class GameScene extends Phaser.Scene {
     this.input.addPointer(4); // multitoque
     const ground = (x: number) => this.level.groundY(x) ?? FLOOR_Y;
     const mg = this.make.graphics({}, false);
+    this.waterMaskG = mg;
     mg.fillStyle(0xffffff).fillRect(-W, -2000, this.level.width + 2 * W, 2000 + WATER_Y + 3);
     this.aboveWater = mg.createGeometryMask();
 
@@ -204,6 +213,12 @@ export class GameScene extends Phaser.Scene {
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
+      // Caverna Submarina: tudo debaixo d'água e a caveira vira Tubarão (nada livre).
+      if (def.undersea) {
+        this.level.tide = UNDERSEA_TIDE;
+        for (const e of this.enemies) e.f.freeSwim = true;
+        this.time.delayedCall(10, () => this.becomeShark(this.players[0]));
+      }
       // Habilidades liberadas no save (no modo livre, todas).
       const p0 = this.players[0];
       for (const a of ABILITIES) if (hasAbility(a.id)) p0.abilities.add(a.id);
@@ -220,8 +235,21 @@ export class GameScene extends Phaser.Scene {
             gift: (i) => markGift(levelId, i),
             win: (n) => this.storyWin(`${def.winText ?? 'Porta aberta!'}   ·   Presentes: ${n}/3`),
             popText: (x, y, text, color) => this.popText(x, y, text, color),
+            killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
           },
           def.puzzle,
+        );
+      }
+      if (def.sea) {
+        this.sea = new SeaSystem(
+          {
+            scene: this,
+            level: this.level,
+            player: () => this.players[0],
+            killPlayer: () => this.killFighter(this.players[0], null, 'hit'),
+            popText: (x, y, text, color) => this.popText(x, y, text, color),
+          },
+          def.sea,
         );
       }
       if (def.mausoleum) {
@@ -461,15 +489,18 @@ export class GameScene extends Phaser.Scene {
     this.applyCamera();
 
     this.updateSpiderSense();
+    if (this.waterMaskG) this.waterMaskG.y = -Math.round(this.level.tide);
     for (const f of this.fighters) {
       if (!f.alive || f.zipping) continue;
+      if (f.waterY !== undefined) f.waterY = this.level.waterY;
+      if (f.freeSwim) continue; // debaixo d'água: nada livre
       if (f.def.swim && f.waterY !== undefined) continue; // o lagarto nada
       if (baseOf(f.def) === 'shark' && this.level.hasWater && !this.level.isLava) {
         // O tubarão nunca se afoga: ao cair (descendo) na água, afunda e é lançado para cima.
-        if (f.feet > WATER_Y + 4 && f.body.velocity.y >= 0) this.sharkLeap(f);
+        if (f.feet > this.level.waterY + 4 && f.body.velocity.y >= 0) this.sharkLeap(f);
         continue;
       }
-      if (this.level.hasWater && f.feet > DEATH_Y) this.killFighter(f, null, 'water');
+      if (this.level.hasWater && f.feet > this.level.deathY) this.killFighter(f, null, 'water');
       else if (!this.level.hasWater && f.feet > SKY_FALL_Y) this.killFighter(f, null, 'fall');
     }
 
@@ -480,6 +511,7 @@ export class GameScene extends Phaser.Scene {
     this.updateBossArena(time, dt);
     this.escape?.update(time, dt);
     this.puzzle?.update(time, dt);
+    this.sea?.update(time, dt);
     this.mausoleum?.update(time, dt);
     this.updateGun(time);
     this.updateWinds(dt);
@@ -741,8 +773,8 @@ export class GameScene extends Phaser.Scene {
         p.life = 0;
         continue;
       }
-      if (this.level.hasWater && p.sprite.y > WATER_Y + 4) {
-        const sp = this.add.sprite(p.sprite.x, WATER_Y + 2, 'splash').setScale(0.5).setDepth(DEPTH.fx).play('splash');
+      if (this.level.hasWater && !LEVELS[this.levelIndex].undersea && p.sprite.y > this.level.waterY + 4) {
+        const sp = this.add.sprite(p.sprite.x, this.level.waterY + 2, 'splash').setScale(0.5).setDepth(DEPTH.fx).play('splash');
         sp.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => sp.destroy());
         p.life = 0;
         continue;
@@ -856,15 +888,15 @@ export class GameScene extends Phaser.Scene {
   private lavaBurn(x: number, victim: Fighter): void {
     victim.sprite.setMask(this.aboveWater);
     victim.sprite.setTint(0xff6a1a);
-    const s = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(1.3).setTint(0xffa040).setDepth(DEPTH.fx).play('splash');
+    const s = this.add.sprite(x, this.level.waterY + 2, 'splash').setScale(1.3).setTint(0xffa040).setDepth(DEPTH.fx).play('splash');
     s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
-    this.smokeBurst(x, WATER_Y - 4, 0xff6a1a, 1);
+    this.smokeBurst(x, this.level.waterY - 4, 0xff6a1a, 1);
     for (let i = 0; i < 10; i++) {
-      const e = this.add.image(x, WATER_Y, 'spark').setTint(Phaser.Math.RND.pick([0xffe066, 0xff9f1c, 0xff5a1a])).setScale(0.35).setDepth(DEPTH.fx);
+      const e = this.add.image(x, this.level.waterY, 'spark').setTint(Phaser.Math.RND.pick([0xffe066, 0xff9f1c, 0xff5a1a])).setScale(0.35).setDepth(DEPTH.fx);
       this.tweens.add({
         targets: e,
         x: x + Phaser.Math.Between(-40, 40),
-        y: WATER_Y - Phaser.Math.Between(40, 110),
+        y: this.level.waterY - Phaser.Math.Between(40, 110),
         alpha: 0,
         duration: Phaser.Math.Between(500, 900),
         onComplete: () => e.destroy(),
@@ -876,19 +908,19 @@ export class GameScene extends Phaser.Scene {
   /** Queda na água: respingo na superfície, ondas, bolhas e o corpo afundando (recortado). */
   private waterSplash(x: number, victim: Fighter): void {
     victim.sprite.setMask(this.aboveWater);
-    const s = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(1.35).setDepth(DEPTH.fx).play('splash');
+    const s = this.add.sprite(x, this.level.waterY + 2, 'splash').setScale(1.35).setDepth(DEPTH.fx).play('splash');
     s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
     for (let i = 0; i < 3; i++) {
-      const ring = this.add.ellipse(x, WATER_Y + 8, 60, 14).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.waterRocks).setScale(0.3);
+      const ring = this.add.ellipse(x, this.level.waterY + 8, 60, 14).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.waterRocks).setScale(0.3);
       this.tweens.add({ targets: ring, scale: 2 + i * 0.6, alpha: 0, delay: i * 180, duration: 900, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
     }
     // Gotas para cima.
     for (let i = 0; i < 8; i++) {
-      const d = this.add.circle(x, WATER_Y, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
+      const d = this.add.circle(x, this.level.waterY, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
       this.tweens.add({
         targets: d,
         x: x + Phaser.Math.Between(-50, 50),
-        y: WATER_Y - Phaser.Math.Between(30, 80),
+        y: this.level.waterY - Phaser.Math.Between(30, 80),
         duration: 300,
         ease: 'Quad.easeOut',
         yoyo: true,
@@ -897,10 +929,10 @@ export class GameScene extends Phaser.Scene {
     }
     // Bolhas subindo enquanto ele afunda.
     for (let i = 0; i < 6; i++) {
-      const b = this.add.circle(x + Phaser.Math.Between(-12, 12), WATER_Y + 70, Phaser.Math.Between(3, 6)).setStrokeStyle(2, 0xffffff, 0.8).setDepth(DEPTH.waterRocks);
+      const b = this.add.circle(x + Phaser.Math.Between(-12, 12), this.level.waterY + 70, Phaser.Math.Between(3, 6)).setStrokeStyle(2, 0xffffff, 0.8).setDepth(DEPTH.waterRocks);
       this.tweens.add({
         targets: b,
-        y: WATER_Y + 6,
+        y: this.level.waterY + 6,
         x: b.x + Phaser.Math.Between(-10, 10),
         delay: 200 + i * 130,
         duration: 600,
@@ -977,6 +1009,7 @@ export class GameScene extends Phaser.Scene {
               ghost.setVisible(false);
               glow.setVisible(false);
               p.respawn(rig.x, this.level.groundY(rig.x) ?? floor);
+              if (LEVELS[this.levelIndex].undersea && this.mode === 'story') this.becomeShark(p);
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
@@ -1008,24 +1041,24 @@ export class GameScene extends Phaser.Scene {
 
   /** Água em que dá para nadar (não vale para a lava nem para o céu). */
   private setupSwim(f: Fighter): void {
-    f.waterY = this.level.hasWater && !this.level.isLava ? WATER_Y : undefined;
+    f.waterY = this.level.hasWater && !this.level.isLava ? this.level.waterY : undefined;
     f.onSwimFx = (ff, kind) => this.swimFx(ff, kind);
   }
 
   private swimFx(f: Fighter, kind: 'enter' | 'exit' | 'wake' | 'bubble'): void {
     const x = f.x;
     const ring = (rx: number, delay: number, size: number) => {
-      const r = this.add.ellipse(rx, WATER_Y + 8, 46, 12).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.fighters + 0.6).setScale(0.3);
+      const r = this.add.ellipse(rx, this.level.waterY + 8, 46, 12).setStrokeStyle(3, 0xd8f4ff, 0.9).setDepth(DEPTH.fighters + 0.6).setScale(0.3);
       this.tweens.add({ targets: r, scale: size, alpha: 0, delay, duration: 700, ease: 'Quad.easeOut', onComplete: () => r.destroy() });
     };
     if (kind === 'enter' || kind === 'exit') {
-      const sp = this.add.sprite(x, WATER_Y + 2, 'splash').setScale(kind === 'enter' ? 0.9 : 0.6).setDepth(DEPTH.fighters + 0.6).play('splash');
+      const sp = this.add.sprite(x, this.level.waterY + 2, 'splash').setScale(kind === 'enter' ? 0.9 : 0.6).setDepth(DEPTH.fighters + 0.6).play('splash');
       sp.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => sp.destroy());
       ring(x, 0, 2);
       ring(x, 120, 2.6);
       for (let i = 0; i < 6; i++) {
-        const d = this.add.circle(x, WATER_Y, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
-        this.tweens.add({ targets: d, x: x + Phaser.Math.Between(-36, 36), y: WATER_Y - Phaser.Math.Between(20, 55), duration: 260, yoyo: true, ease: 'Quad.easeOut', onComplete: () => d.destroy() });
+        const d = this.add.circle(x, this.level.waterY, Phaser.Math.Between(2, 4), 0xd8f4ff).setDepth(DEPTH.fx);
+        this.tweens.add({ targets: d, x: x + Phaser.Math.Between(-36, 36), y: this.level.waterY - Phaser.Math.Between(20, 55), duration: 260, yoyo: true, ease: 'Quad.easeOut', onComplete: () => d.destroy() });
       }
       return;
     }
@@ -1034,8 +1067,8 @@ export class GameScene extends Phaser.Scene {
       ring(x - f.facing * 18, 0, 1.6);
       const v = this.add.graphics().setDepth(DEPTH.fighters + 0.6);
       v.lineStyle(2, 0xe8f8ff, 0.9);
-      v.lineBetween(x - f.facing * 10, WATER_Y + 10, x - f.facing * 40, WATER_Y + 4);
-      v.lineBetween(x - f.facing * 10, WATER_Y + 12, x - f.facing * 40, WATER_Y + 20);
+      v.lineBetween(x - f.facing * 10, this.level.waterY + 10, x - f.facing * 40, this.level.waterY + 4);
+      v.lineBetween(x - f.facing * 10, this.level.waterY + 12, x - f.facing * 40, this.level.waterY + 20);
       this.tweens.add({ targets: v, alpha: 0, duration: 450, onComplete: () => v.destroy() });
       return;
     }
@@ -1047,7 +1080,7 @@ export class GameScene extends Phaser.Scene {
         .setDepth(DEPTH.fighters + 0.6);
       this.tweens.add({
         targets: b,
-        y: WATER_Y + 6,
+        y: this.level.waterY + 6,
         x: b.x + Phaser.Math.Between(-8, 8),
         duration: Phaser.Math.Between(500, 800),
         ease: 'Sine.easeOut',
@@ -1278,7 +1311,7 @@ export class GameScene extends Phaser.Scene {
     const vx = f.body.velocity.x;
     f.body.setVelocity(0, 0);
     f.body.moves = false;
-    this.fx('splash', f.x, WATER_Y - 40, 0.9);
+    this.fx('splash', f.x, this.level.waterY - 40, 0.9);
     const dir = f.facing;
     const y0 = f.sprite.y;
     // 1) Mergulho: desce inclinando o focinho alguns graus para baixo, soltando bolhas.
@@ -1296,7 +1329,7 @@ export class GameScene extends Phaser.Scene {
       bubbles.stop();
       this.time.delayedCall(600, () => bubbles.destroy());
       if (!f.alive) return;
-      this.fx('splash', f.x, WATER_Y - 40, 1.2);
+      this.fx('splash', f.x, this.level.waterY - 40, 1.2);
       f.body.moves = true;
       f.body.reset(f.sprite.x, f.sprite.y);
       f.body.setVelocity(vx * 0.5, -SHARK_LEAP_V);
@@ -1836,7 +1869,26 @@ export class GameScene extends Phaser.Scene {
         },
       };
       const k = def.boss.kind;
-      this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
+      if (k === 'sharkking') {
+        // Arena da maré: bacia de areia no meio (tiles 4 a 15), plataformas altas nos lados.
+        this.boss = new SharkKingBoss(host, {
+          basin: [a + 4 * TILE + 20, a + 16 * TILE - 20],
+          sideFeet: FLOOR_Y - 2 * TILE,
+          high: 92,
+          setTide: (px) => this.sea?.setTide(px),
+          waterY: () => this.level.waterY,
+          addLedge: (x, top, w) => {
+            const zone = this.add.zone(x, top + 8, w, 16);
+            this.physics.add.existing(zone, true);
+            const body = zone.body as Phaser.Physics.Arcade.StaticBody;
+            body.checkCollision.down = false;
+            body.checkCollision.left = false;
+            body.checkCollision.right = false;
+            this.level.ground.add(zone);
+            return () => zone.active && zone.destroy();
+          },
+        });
+      } else this.boss = k === 'minotaur' ? new MinotaurBoss(host) : k === 'spider' ? new SpiderQueenBoss(host) : new PrincesBoss(host, (pact) => setPact(pact));
       void this.boss.intro();
     }
     this.boss?.update(time, dt);
@@ -1858,6 +1910,16 @@ export class GameScene extends Phaser.Scene {
     const p = this.players[0];
     this.rootWeb = this.add.image(p.x, p.feet - 40, tex).setScale(tex === 'web_ball' ? 2.2 : 1.6).setAlpha(0.85).setDepth(DEPTH.fighters + 0.5);
     this.popText(p.x, p.feet - 150, text, '#ffffff');
+  }
+
+  /** Caverna Submarina: vira Tubarão (com fumaça) e passa a nadar livre. */
+  private becomeShark(p: Fighter): void {
+    if (!p.alive) return;
+    p.applyChar('shark', p.feet);
+    p.freeSwim = true;
+    p.waterY = this.level.waterY;
+    this.smokeBurst(p.x, p.feet, PLAYER_TINT[0], 0.8);
+    this.ui?.hud?.setChar(0, 'shark');
   }
 
   /** Variante: vida extra (elite) e acessórios desenhados que acompanham a cabeça. */

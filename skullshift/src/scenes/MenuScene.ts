@@ -386,10 +386,13 @@ export class MenuScene extends Phaser.Scene {
   /** O raio do Xamã: desce em zigue-zague até o alvo, gira em volta dele e o transforma. */
   private zap(rig: Phaser.GameObjects.Container, w: { spr: Phaser.GameObjects.Sprite; id: CharId; pause: number }, next: CharId, feet: number): void {
     const PURPLE = 0xb46bff;
-    const g = this.add.graphics().setDepth(6);
-    const from = { x: rig.x - 26 * rig.scale, y: rig.y - 30 * rig.scale };
+    // Na frente de tudo (até do logo), para a bola ser vista o caminho todo.
+    const g = this.add.graphics().setDepth(12);
+    // Sai da bolinha roxa que ele segura na mão (do lado para onde está virado).
+    const left = w.spr.x < rig.x;
+    const from = { x: rig.x + (left ? -32 : 32) * rig.scale, y: rig.y - 36 * rig.scale };
     const t0 = this.time.now;
-    const TRAVEL = 650;
+    const TRAVEL = 900;
     const SPIN = 700;
     w.pause = TRAVEL + SPIN + 300;
     const tick = () => {
@@ -397,24 +400,24 @@ export class MenuScene extends Phaser.Scene {
       const t = this.time.now - t0;
       const to = { x: w.spr.x, y: feet - 40 };
       g.clear();
-      if (t < TRAVEL + 120) {
-        // Raio: da mão do Xamã até a ponta que avança, tremendo.
-        const u = Math.min(1, t / TRAVEL);
-        const tip = { x: from.x + (to.x - from.x) * u, y: from.y + (to.y - from.y) * u };
-        const seg = 9;
-        let px = from.x;
-        let py = from.y;
-        for (let i = 1; i <= seg; i++) {
-          const v = i / seg;
-          const x = from.x + (tip.x - from.x) * v + (i < seg ? Phaser.Math.Between(-12, 12) : 0);
-          const y = from.y + (tip.y - from.y) * v + (i < seg ? Phaser.Math.Between(-8, 8) : 0);
-          g.lineStyle(10, 0x7a3ad0, 0.45).lineBetween(px, py, x, y);
-          g.lineStyle(5, PURPLE, 0.9).lineBetween(px, py, x, y);
-          g.lineStyle(2, 0xf6ecff, 1).lineBetween(px, py, x, y);
-          px = x;
-          py = y;
+      if (t < TRAVEL) {
+        // A bola roxa sai da mão do Xamã e voa em arco até o alvo, deixando um rastro de faíscas.
+        const u = t / TRAVEL;
+        const e = u * u * (3 - 2 * u); // começa devagar, acelera e chega suave
+        const bx = from.x + (to.x - from.x) * e;
+        const by = from.y + (to.y - from.y) * e - Math.sin(e * Math.PI) * 90;
+        const pulse = 1 + Math.sin(t / 45) * 0.15;
+        g.fillStyle(0x7a3ad0, 0.3).fillCircle(bx, by, 30 * pulse);
+        g.fillStyle(PURPLE, 0.9).fillCircle(bx, by, 18 * pulse);
+        g.fillStyle(0xf6ecff, 1).fillCircle(bx - 4, by - 4, 8);
+        if (Math.random() < 0.8) {
+          const sp = this.add.image(bx, by, 'spark').setTint(Math.random() < 0.5 ? PURPLE : 0xe8d4ff).setScale(0.45).setDepth(11.9);
+          this.tweens.add({ targets: sp, x: bx + Phaser.Math.Between(-14, 14), y: by + Phaser.Math.Between(-6, 18), scale: 0.05, alpha: 0, duration: 420, onComplete: () => sp.destroy() });
         }
-        g.fillStyle(0xf0e2ff, 0.9).fillCircle(tip.x, tip.y, 6);
+      } else if (t < TRAVEL + 140) {
+        // Impacto: a bola se abre num anel em volta do alvo.
+        const k = (t - TRAVEL) / 140;
+        g.lineStyle(5, PURPLE, 1 - k).strokeCircle(to.x, to.y, 16 + k * 40);
       }
       if (t >= TRAVEL) {
         // Raios girando em volta do alvo, cada vez mais rápido.

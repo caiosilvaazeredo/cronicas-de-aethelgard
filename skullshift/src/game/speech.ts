@@ -54,6 +54,8 @@ export class SpeechBubble {
     };
     this.follow();
     scene.events.on('update', this.follow);
+    // Se a cena sair ou reiniciar com o balão aberto, ele para de seguir quem já não existe.
+    scene.events.once('shutdown', () => scene.events.off('update', this.follow));
   }
 
   close(): void {

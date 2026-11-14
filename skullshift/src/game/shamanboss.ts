@@ -5,6 +5,7 @@ import type { CharId } from './characters';
 import type { Fighter } from './Fighter';
 import { sfx } from './settings';
 import { FINALE_WORLDS } from './finale';
+import { getDifficulty } from './progress';
 import { makeFlightArt } from './shmup';
 
 /** Ecos dos reis derrotados que o Xamã chama de volta (variantes e inimigos de cada área). */
@@ -26,7 +27,8 @@ export class ShamanBoss extends Boss {
 
   constructor(host: BossHost, world = 0) {
     const w = FINALE_WORLDS[world];
-    super(host, 6, 'shaman_idle', 2.2, 133, 192, 120, 170, 'XAMÃ HEX', `Barra ${world + 1}/${FINALE_WORLDS.length} · ${w.name}`, w.color);
+    // Golpes por barra conforme a dificuldade (Fácil 4, Padrão 6, Difícil 8).
+    super(host, getDifficulty() === 'easy' ? 4 : getDifficulty() === 'hard' ? 8 : 6, 'shaman_idle', 2.2, 133, 192, 120, 170, 'XAMÃ HEX', `Barra ${world + 1}/${FINALE_WORLDS.length} · ${w.name}`, w.color);
     this.world = world;
     this.hoverY = host.floor - 40;
     this.feet = this.hoverY;
@@ -111,6 +113,7 @@ export class ShamanBoss extends Boss {
         }
       };
       s.events.on('update', tick);
+      s.events.once('shutdown', () => s.events.off('update', tick));
     });
     s.cameras.main.flash(300, 190, 140, 255);
     this.host.teleport();

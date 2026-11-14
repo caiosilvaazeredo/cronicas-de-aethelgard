@@ -520,7 +520,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   restartMatch(): void {
-    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex, loadouts: this.loadouts });
+    // Na luta final, recomeça no mundo em que estava (não volta ao primeiro).
+    this.scene.restart({ mode: this.mode, devices: this.devices, level: this.levelIndex, loadouts: this.loadouts, finalePhase: this.finalePhase });
   }
 
   update(time: number, delta: number): void {
@@ -2699,7 +2700,8 @@ export class GameScene extends Phaser.Scene {
     for (const f of this.fighters) if (f.alive) this.tweens.add({ targets: f.sprite, angle: 720, scale: 0.1, alpha: 0, duration: 700, ease: 'Quad.easeIn' });
     cam.fadeOut(700, 60, 20, 90);
     cam.once('camerafadeoutcomplete', () =>
-      this.scene.restart({ mode: 'story', devices: this.devices, level: this.levelIndex, finalePhase: this.finalePhase + 1, deaths: this.deaths, loadouts: this.loadouts }),
+      // Cada mundo começa com as vidas cheias (justo numa luta de nove barras).
+      this.scene.restart({ mode: 'story', devices: this.devices, level: this.levelIndex, finalePhase: this.finalePhase + 1, deaths: 0, loadouts: this.loadouts }),
     );
   }
 

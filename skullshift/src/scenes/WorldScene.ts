@@ -92,6 +92,7 @@ export class WorldScene extends Phaser.Scene {
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
     kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
     kb.on('keydown-B', () => this.shop());
+    kb.on('keydown-L', () => this.journal());
     this.select(this.sel, true);
 
     if (this.lastData.cleared) this.sealBreak(this.lastData.cleared);
@@ -141,6 +142,7 @@ export class WorldScene extends Phaser.Scene {
     fix(pillButton(this, 100, 36, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 170).setScale(0.75).setDepth(30));
     // Empório da Orelha-Preta: loja de aprimoramentos (tecla B).
     fix(pillButton(this, MW - 170, 36, `EMPÓRIO · ${getCoins()} ouro`, () => this.shop(), 400, 0xffd84a).setScale(0.75).setDepth(30));
+    fix(pillButton(this, MW - 170, 84, 'DIÁRIO', () => this.journal(), 200, 0xd9b478).setScale(0.75).setDepth(30));
   }
 
   /** Em pé: título e MENU em cima, painel e botões grandes embaixo (câmera própria). */
@@ -155,6 +157,7 @@ export class WorldScene extends Phaser.Scene {
     this.add.text(MW / 2, 175 + top, this.header(), { fontFamily: FONT, fontSize: '46px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
     pillButton(this, 150, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.1);
     pillButton(this, MW - 250, 80 + top, `EMPÓRIO · ${getCoins()}`, () => this.shop(), 400, 0xffd84a).setScale(1.1);
+    pillButton(this, MW / 2 + 40, 80 + top, 'DIÁRIO', () => this.journal(), 220, 0xd9b478).setScale(1.1);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
     const g = this.add.graphics();
@@ -188,6 +191,10 @@ export class WorldScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true })
       .setDepth(16)
       .on('pointerdown', () => !this.busy && this.shop());
+  }
+
+  private journal(): void {
+    this.scene.start('journal', { devices: this.devices, area: ALL_AREAS[this.sel].id });
   }
 
   private shop(): void {

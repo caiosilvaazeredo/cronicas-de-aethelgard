@@ -117,6 +117,8 @@ originais (extraídas com PIL do PNG).
   Reis aliados em tamanho de chefe (`FinaleWorld.size`: um boneco maior copia o desenho; o corpo real fica
   invisível) e com golpe especial a cada 7 s (salto que cai sobre o Xamã: `FinaleWorld.special`). Chegam
   depois da fala de entrada (`BossHost.onFightStart`).
+- **Diário de Ossian** (`JournalScene`, botão DIÁRIO ou tecla L no mapa do mundo): rever memórias vistas
+  (`memory-N` em `seen`), progresso por mundo (fases, presentes, bônus, rei) e ouro/habilidades/aprimoramentos.
 - **Empório no mapa**: casinha amarela com a ovelha entre a Maré e a Pradaria (`WorldScene.drawShop`).
   Cada mundo tem um 5º padrão do Xamã (`ShamanBoss.worldPower`): chuva marcada (água, veneno, teia, bolotas,
   pedras, meteoros na diagonal), toras rolando, gêiseres de fogo ou rajadas em duas alturas (ondas/ferrões).

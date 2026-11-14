@@ -4,6 +4,7 @@ import { PreloadScene } from './scenes/PreloadScene';
 import { LoadingScene } from './scenes/LoadingScene';
 import { ShopScene } from './scenes/ShopScene';
 import { LoadoutScene } from './scenes/LoadoutScene';
+import { JournalScene } from './scenes/JournalScene';
 import { BootScene } from './scenes/BootScene';
 import { ControlsScene } from './scenes/ControlsScene';
 import { GameScene } from './scenes/GameScene';
@@ -51,7 +52,7 @@ function boot(): void {
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
     input: { gamepad: true, activePointers: 5 },
-    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene],
+    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene, JournalScene],
   });
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
   game.events.once('ready', () => applySettings());

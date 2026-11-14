@@ -2501,6 +2501,8 @@ export class GameScene extends Phaser.Scene {
         bar: () => this.ui,
         allies: () => this.allies,
         teleport: () => this.finaleTeleport(),
+        // O rei chega depois da entrada e da fala do Xamã (sem cobrir os avisos).
+        onFightStart: () => this.spawnFinaleAlly(),
         defeated: (text?: string) => this.storyWin(text ?? def.winText ?? 'Chefe derrotado!'),
         say: async (anchor: () => { x: number; y: number }, text: string, name: string, color: number) => {
           if (!this.scene.isActive() || this.ended) return;
@@ -2542,8 +2544,6 @@ export class GameScene extends Phaser.Scene {
         });
       } else if (k === 'shaman') {
         this.boss = new ShamanBoss(host, this.finalePhase);
-        // O rei chega depois do alerta e da barra encher (sem cobrir os avisos da entrada).
-        this.time.delayedCall(3600, () => this.spawnFinaleAlly());
       }
       else if (k === 'gnollking') this.boss = new GnollKingBoss(host);
       else if (k === 'gnomeking') this.boss = new GnomeKingBoss(host);
@@ -2623,7 +2623,61 @@ export class GameScene extends Phaser.Scene {
     this.enemies.push({ f, ai: new EnemyAI(f, () => anchor, this.level) });
     this.allies.push(f);
     this.smokeBurst(x, FLOOR_Y, w.color, 1.2);
+    // Tamanho de chefe: um "boneco" maior copia o desenho do rei quadro a quadro; o corpo de
+    // verdade (colisão e golpes) continua o mesmo, só invisível.
+    const big = this.add.sprite(f.x, f.feet, f.sprite.texture.key).setDepth(DEPTH.fighters - 0.1);
+    f.sprite.setAlpha(0);
+    const glow = this.add.image(f.x, f.feet - 60, 'aura').setTint(w.color).setBlendMode(Phaser.BlendModes.ADD).setAlpha(0.35).setDepth(DEPTH.fighters - 0.2);
+    const sync = () => {
+      if (!big.active) return;
+      if (!f.sprite.active) {
+        big.destroy();
+        glow.destroy();
+        return;
+      }
+      f.sprite.setAlpha(0);
+      const d = f.def;
+      big
+        .setTexture(f.sprite.texture.key, f.sprite.frame.name)
+        .setOrigin(0.5, d.feetY / d.frame)
+        .setPosition(f.x, f.feet)
+        .setFlipX(f.sprite.flipX)
+        .setAngle(f.sprite.angle)
+        .setScale(w.size);
+      glow.setPosition(f.x, f.feet - d.head * 0.6).setScale(w.size * 1.2, w.size * 1.4);
+    };
+    this.events.on('update', sync);
+    this.events.once('shutdown', () => this.events.off('update', sync));
+    // Golpe especial do rei, de tempos em tempos: salta sobre o Xamã e cai com tudo.
+    const special = () => {
+      const bo = this.boss;
+      if (!bo || this.ended || !f.alive || this.cutscene || !this.bossFighting()) return;
+      const dir = Math.sign(bo.x - f.x) || 1;
+      f.facing = dir as 1 | -1;
+      f.body.setVelocity(dir * Math.min(520, Math.abs(bo.x - f.x) * 1.4), -620);
+      big.setTintFill(0xffffff);
+      this.time.delayedCall(100, () => big.active && big.clearTint());
+      const tag = this.add.text(f.x, f.feet - 150, `${w.special}!`, { fontFamily: FONT, fontSize: '24px', color: '#ffe066', stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5).setDepth(DEPTH.fx + 2);
+      this.tweens.add({ targets: tag, y: tag.y - 40, alpha: 0, duration: 1100, onComplete: () => tag.destroy() });
+      this.time.delayedCall(820, () => {
+        if (!this.boss || !f.alive) return;
+        const ring = this.add.ellipse(f.x, f.feet - 4, 60, 16).setStrokeStyle(6, w.color).setDepth(DEPTH.fx);
+        this.tweens.add({ targets: ring, scaleX: 5, scaleY: 3, alpha: 0, duration: 450, onComplete: () => ring.destroy() });
+        this.cameras.main.shake(160, 0.008);
+        this.fx('dust', f.x, f.feet - 16, 1.8);
+        if (Math.abs(this.boss.x - f.x) < 170) {
+          const hb = this.boss.hurtBox;
+          this.boss.tryProjectile(new Phaser.Geom.Rectangle(hb.x + 2, hb.y + 2, 4, 4));
+        }
+      });
+    };
+    this.time.addEvent({ delay: 7000, startAt: 2000, loop: true, callback: special });
     this.ui?.banner(`${w.kingName().toUpperCase()} LUTA AO SEU LADO!`, 1800, 'o selo dele foi quebrado: agora ele está livre');
+  }
+
+  /** O chefe está lutando agora (não na entrada nem numa fala)? */
+  private bossFighting(): boolean {
+    return !!this.boss && !(this.boss as unknown as { dying: boolean }).dying && (this.boss as unknown as { fighting: boolean }).fighting;
   }
 
   /** Barra do mundo caiu: todos são puxados para o próximo mundo. */

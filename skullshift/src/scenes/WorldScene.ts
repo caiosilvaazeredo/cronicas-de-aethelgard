@@ -66,6 +66,7 @@ export class WorldScene extends Phaser.Scene {
     this.drawSea();
     this.drawChains();
     ALL_AREAS.forEach((a, i) => this.drawArea(a, i));
+    this.drawShop();
     this.drawGloom();
 
     this.ring = this.add.graphics().setDepth(18);
@@ -167,6 +168,26 @@ export class WorldScene extends Phaser.Scene {
     pillButton(this, MW - 190, by, '▶', () => this.cycle(1), 200, 0xbfe9ff).setScale(1.6);
     this.add.text(MW / 2, by + 130, 'Toque numa área para escolher · toque de novo para entrar', { fontFamily: BODY_FONT, fontSize: '26px', color: '#bfd0e0' }).setOrigin(0.5);
     this.cameras.main.ignore(this.children.list.slice(first));
+  }
+
+  /** O Empório da Orelha-Preta no mapa: casinha amarela entre a Maré e a Pradaria, com a dona na porta. */
+  private drawShop(): void {
+    const [x, y] = [360, 392];
+    this.add.ellipse(x, y + 2, 90, 16, 0x10223a, 0.25).setDepth(5.9);
+    this.add.image(x, y + 4, 'bld_yellow_house2').setOrigin(0.5, 178 / 192).setScale(0.5).setDepth(6 + y / 1000);
+    const sheep = this.add.sprite(x + 40, y + 6, 'sheep_idle').setScale(0.42).setOrigin(0.5, 0.8).setFlipX(true).setDepth(6.5).play('sheep_idle');
+    this.tweens.add({ targets: sheep, y: y + 2, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const txt = this.add.text(x, y + 26, 'EMPÓRIO', { fontFamily: FONT, fontSize: '14px', color: '#3a2412' }).setOrigin(0.5).setDepth(12);
+    const plate = this.add.graphics().setDepth(11);
+    plate.fillStyle(INK, 1).fillRoundedRect(txt.x - txt.width / 2 - 10, txt.y - 12, txt.width + 20, 24, 6);
+    plate.fillStyle(0xdcb06e, 1).fillRoundedRect(txt.x - txt.width / 2 - 7, txt.y - 9, txt.width + 14, 18, 5);
+    const coin = this.add.image(x + 30, y - 58, 'gold').setScale(0.35).setDepth(12);
+    this.tweens.add({ targets: coin, y: y - 64, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.add
+      .zone(x, y - 20, 100, 100)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(16)
+      .on('pointerdown', () => !this.busy && this.shop());
   }
 
   private shop(): void {

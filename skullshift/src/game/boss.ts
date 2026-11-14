@@ -32,6 +32,8 @@ export interface BossHost {
   allies?(): Fighter[];
   /** Luta final: leva todo mundo para o próximo mundo. */
   teleport?(): void;
+  /** A luta começou de fato (depois da entrada e das falas). */
+  onFightStart?(): void;
 }
 
 /** Barra de vida do chefe (na interface). */

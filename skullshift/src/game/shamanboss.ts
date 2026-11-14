@@ -60,6 +60,7 @@ export class ShamanBoss extends Boss {
         ? 'Nove selos, nove mundos. Vou arrastar-te por todos eles, Ossian. E em cada um serás um dos MEUS.'
         : `${w.name}. ${w.kingName()} voltou para te ajudar? Que comovente.`;
     await this.host.say?.(() => ({ x: this.x, y: this.feet - 200 }), text, 'Xamã Hex', 0x9b6bf0);
+    this.host.onFightStart?.();
   }
 
   /** Barra do mundo derrubada: fala, ergue o cajado, abre um vórtice e leva todos para o próximo. */

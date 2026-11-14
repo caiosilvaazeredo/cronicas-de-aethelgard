@@ -114,6 +114,10 @@ originais (extraídas com PIL do PNG).
   dos aliados acertam o chefe via `BossHost.allies`). Barra derrubada: `ShamanBoss.defeat` fala a linha do
   mundo, abre um vórtice e chama `host.teleport` → `GameScene.finaleTeleport` reinicia a cena com
   `finalePhase + 1` (mortes continuam contando). No 9º mundo a derrota é a normal (epílogo livre).
+  Reis aliados em tamanho de chefe (`FinaleWorld.size`: um boneco maior copia o desenho; o corpo real fica
+  invisível) e com golpe especial a cada 7 s (salto que cai sobre o Xamã: `FinaleWorld.special`). Chegam
+  depois da fala de entrada (`BossHost.onFightStart`).
+- **Empório no mapa**: casinha amarela com a ovelha entre a Maré e a Pradaria (`WorldScene.drawShop`).
   Cada mundo tem um 5º padrão do Xamã (`ShamanBoss.worldPower`): chuva marcada (água, veneno, teia, bolotas,
   pedras, meteoros na diagonal), toras rolando, gêiseres de fogo ou rajadas em duas alturas (ondas/ferrões).
 - **Poderes por jogador** (`GameScene.perks`, `hasPerk`, `applyPerks`): na história vêm do save (habilidades

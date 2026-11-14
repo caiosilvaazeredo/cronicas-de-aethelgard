@@ -8,3 +8,4 @@ public/fonts/
 scripts/bots/rel_*.json
 scripts/bots/log_*.txt
 scripts/bots/done*.txt
+marketing/trailer/*_1080p60.mp4

@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:AM;src:url(file:///home/user/cronicas-de-aethelgard/skullshift/public/fonts/anak-manja-pt.ttf)}
+@font-face{font-family:MS;src:url(file:///home/user/cronicas-de-aethelgard/skullshift/public/fonts/matcha-style.ttf)}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent}
+#root{position:absolute;inset:0;overflow:hidden}
+.bg{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(14px) saturate(1.1);image-rendering:auto}
+.tint{position:absolute;inset:0}
+.stripes{position:absolute;inset:-400px;background:repeating-linear-gradient(-35deg,rgba(255,255,255,.07) 0 60px,transparent 60px 120px)}
+.t{position:absolute;left:0;right:0;text-align:center;font-family:AM;color:#fff7dc;-webkit-text-stroke:18px #10223a;paint-order:stroke fill;line-height:.95;white-space:nowrap;text-shadow:0 14px 0 #10223a}
+.sub{position:absolute;left:0;right:0;text-align:center;font-family:MS;color:#ffe066;font-size:64px;-webkit-text-stroke:10px #10223a;paint-order:stroke fill}
+.badge{position:absolute;border-radius:50%;border:16px solid #10223a;box-shadow:0 16px 0 #10223a;overflow:hidden}
+.badge img{position:absolute;image-rendering:pixelated}
+.name{position:absolute;white-space:nowrap;font-family:AM;color:#fff7dc;-webkit-text-stroke:14px #10223a;paint-order:stroke fill;line-height:1;text-shadow:0 10px 0 #10223a}
+.tag{position:absolute;font-family:AM;font-size:44px;color:#10223a;background:#ffe066;padding:10px 28px;border:8px solid #10223a;border-radius:14px}
+.vs{position:absolute;font-family:AM;font-size:200px;color:#ffe066;-webkit-text-stroke:16px #10223a;paint-order:stroke fill}
+.flash{position:absolute;inset:0;background:#fff}
+</style></head><body><div id="root"></div><script>
+const A='file:///home/user/cronicas-de-aethelgard/skullshift/public/assets/chars/', RES='file:///home/user/cronicas-de-aethelgard/skullshift/public/assets/res/';
+const T={
+ story:{pt:['MODO HISTÓRIA','9 mundos. Um nome esquecido.','OSSIAN','A CAVEIRA'],en:['STORY MODE','9 worlds. One forgotten name.','OSSIAN','THE SKULL'],bg:'world',c:'#2f86e0',av:[['skull_avatar.png',256,0]]},
+ shift:{pt:['TRANSFORME-SE','11 criaturas. Um osso.','VIRE O INIMIGO','PEGUE O ITEM DELE'],en:['SHAPESHIFT','11 creatures. One bone.','BECOME THE ENEMY','GRAB THEIR ITEM'],bg:'shift',c:'#8a4fd8',av:[['gnoll_avatar.png',256,0]]},
+ parry:{pt:['CONTRA!','Toque para trás na hora certa.','DEFESA','MEIA-LUA E CONTRA-GOLPE'],en:['PARRY!','Tap back at the right moment.','GUARD','HALF-MOON AND COUNTER'],bg:'parry',c:'#d8a530',av:[['skull_avatar.png',256,0]]},
+ boss:{pt:['CHEFES','Cada mundo tem um rei.','MINOTAURO','E MAIS OITO REIS'],en:['BOSSES','Every world has a king.','MINOTAUR','AND EIGHT MORE KINGS'],bg:'boss',c:'#e0542e',av:[['minotaur_avatar.png',256,0]]},
+ flight:{pt:['VOO','Escolha seu acordo.','MORCEGO OU ABELHA','CADA MONTARIA, UM PODER'],en:['FLIGHT','Choose your pact.','BAT OR BEE','EACH MOUNT, ITS OWN POWER'],bg:'flight',c:'#d84a3a',av:[['bat_avatar.png',256,0],['bee_avatar.png',256,0]]},
+ versus:{pt:['VERSUS 1X1','Itens. Eventos. Ajudantes.','PLAYER 1','PLAYER 2'],en:['VERSUS 1V1','Items. Events. Assists.','PLAYER 1','PLAYER 2'],bg:'versus',c:'#2f86e0',av:[['skull_avatar.png',256,0],['skull_avatar.png',256,0]],vs:1},
+ shop:{pt:['EMPÓRIO','Ouro compra teimosia.','A OVELHA','DA ORELHA-PRETA'],en:['EMPORIUM','Gold buys stubbornness.','THE SHEEP','WITH THE BLACK EAR'],bg:'shop',c:'#c8823a',av:[[RES+'sheep_idle.png',128,0,1,1.7,-8]]},
+ finale:{pt:['O XAMÃ ESPERA','Nove mundos. Nove barras de vida.','XAMÃ HEX','ELE NUNCA SAIU DA ILHA'],en:['THE SHAMAN AWAITS','Nine worlds. Nine health bars.','SHAMAN HEX','HE NEVER LEFT THE ISLAND'],bg:'finale',c:'#5a2a9a',av:[['shaman_idle.png',192,0,0,2.1,-6]]},
+};
+const ease=(x)=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3);
+const back=(x)=>{x=Math.min(1,Math.max(0,x));const c=2.2;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const root=document.getElementById('root');
+function base(d,t,dark){return '<div class="bg" style="background-image:url(bg/'+d.bg+'.jpg);transform:scale('+(1.05+t*0.03)+')"></div><div class="tint" style="background:linear-gradient(160deg,'+d.c+'e6,#10223aee)"></div><div class="stripes" style="transform:translateX('+(t*60)+'px)"></div>';}
+function avatar(a,x,y,size,color){const [src,fw,fi,abs,zoom,dy]=a;const url=(abs?src:A+src);const k=size/fw*(zoom||1);
+ return '<div class="badge" style="left:'+(x-size/2)+'px;top:'+(y-size/2)+'px;width:'+size+'px;height:'+size+'px;background:'+color+'"><img src="'+url+'" style="height:'+(fw*k)+'px;left:'+((size-fw*k)/2-fi*fw*k-16)+'px;top:'+((size-fw*k)/2-16+(dy||0)*k)+'px"></div>';}
+window.render=(id,kind,lang,t)=>{ // t em segundos
+ const d=T[id]; let h='';
+ if(kind==='title'){const L=d[lang]; const fs=Math.min(300,1780/(L[0].length*0.78)); const s=0.2+0.8*back(t/0.28); const sh=t<0.35?Math.sin(t*90)*10*(1-t/0.35):0;
+  h=base(d,t)+'<div class="t" style="top:'+(430-fs/2)+'px;font-size:'+fs+'px;transform:translate('+sh+'px,0) scale('+s+')">'+L[0]+'</div><div class="sub" style="top:'+(470+fs/2+30)+'px;opacity:'+ease((t-0.35)/0.25)+';transform:translateY('+(30*(1-ease((t-0.35)/0.25)))+'px)">'+L[1]+'</div>'+(t<0.12?'<div class="flash" style="opacity:'+(1-t/0.12)+'"></div>':'');}
+ if(kind==='avatar'){const L=d[lang]; const e=back(t/0.35), e2=ease((t-0.12)/0.3); const two=d.av.length>1;
+  h=base(d,t+2);
+  if(two){h+=avatar(d.av[0],520-900*(1-e),500,520,d.vs?'#2f6fd0':'#3a4fb0')+avatar(d.av[1],1400+900*(1-e),500,520,d.vs?'#d03a3a':'#e0a020');
+   if(d.vs){h+='<div class="vs" style="left:835px;top:380px;transform:scale('+back((t-0.2)/0.3)+')">VS</div>';h+='<div class="name" style="left:0;width:1040px;text-align:center;top:820px;font-size:110px;color:#7ab4ff;opacity:'+e2+'">'+L[2]+'</div><div class="name" style="left:880px;width:1040px;text-align:center;top:820px;font-size:110px;color:#ff8a7a;opacity:'+e2+'">'+L[3]+'</div>';}
+   else h+='<div class="name" style="left:0;right:0;text-align:center;top:800px;font-size:120px;opacity:'+e2+'">'+L[2]+'</div><div class="sub" style="top:935px;opacity:'+e2+'">'+L[3]+'</div>';}
+  else{h+=avatar(d.av[0],540-1000*(1-e),540,680,d.c);
+   const fs=Math.min(170,900/(L[2].length*0.72)); h+='<div class="name" style="left:'+(960+500*(1-e2))+'px;top:'+(500-fs)+'px;font-size:'+fs+'px;opacity:'+e2+'">'+L[2]+'</div><div class="sub" style="left:'+(960+500*(1-e2))+'px;right:auto;text-align:left;top:545px;opacity:'+e2+';font-size:58px">'+L[3]+'</div>';}
+  h+='<div class="tag" style="left:60px;top:50px;opacity:'+e2+'">'+L[0]+'</div>';}
+ if(kind==='chip'){const L=d[lang]; h='<div class="tag" style="left:40px;top:36px;font-size:30px;padding:6px 18px;border-width:6px">'+L[0]+'</div>';}
+ if(kind==='logo'||kind==='end'){const s=0.3+0.7*back(t/0.4); const soon=lang==='pt'?'EM BREVE':'COMING SOON'; const e3=ease((t-0.9)/0.4);
+  h='<div class="bg" style="background-image:url(bg/menu.jpg);transform:scale('+(1.05+t*0.02)+')"></div><div class="tint" style="background:linear-gradient(160deg,#3a1a6ae6,#10223af2)"></div><div class="stripes" style="transform:translateX('+(t*60)+'px)"></div>'
+   +'<div class="t" style="top:'+(kind==='end'?300:390)+'px;font-size:220px;transform:scale('+s+')">SKULL<span style="color:#b98cff">SHIFT</span></div>'
+   +(kind==='end'?'<div class="sub" style="top:690px;font-size:120px;font-family:AM;color:#ffe066;opacity:'+e3+';transform:scale('+(0.6+0.4*back((t-0.9)/0.4))+')">'+soon+'</div>':'')
+   +(t<0.12?'<div class="flash" style="opacity:'+(1-t/0.12)+'"></div>':'');}
+ root.innerHTML=h; };
+</script></body></html>

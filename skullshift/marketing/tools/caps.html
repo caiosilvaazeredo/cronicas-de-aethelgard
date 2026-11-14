@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:AM;src:url(file:///home/user/cronicas-de-aethelgard/skullshift/public/fonts/anak-manja-pt.ttf)}
+html,body{margin:0;background:transparent;overflow:hidden}
+#root{position:relative;overflow:hidden}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center 62%;image-rendering:pixelated}
+.grad{position:absolute;inset:0}
+.logo{position:absolute;font-family:AM;color:#fff7dc;paint-order:stroke fill;white-space:nowrap;line-height:.92;text-align:center}
+.logo span{color:#b98cff}
+.av{position:absolute;image-rendering:pixelated;filter:drop-shadow(0 .5vmin 0 #10223a)}
+</style></head><body><div id="root"></div><script>
+const A='file:///home/user/cronicas-de-aethelgard/skullshift/public/assets/chars/';
+const root=document.getElementById('root');
+// avatares: [arquivo, cx, cy, tamanho (fração da altura), rotação]
+const CAST=(cx,cy,s,spread)=>[['shark',-2.05,.12,.62,-10],['gnoll',-1.1,.02,.74,-6],['minotaur',1.1,.02,.74,6],['bat',2.05,.12,.62,10],['skull',0,0,1,0]].map(([n,dx,dy,k,r])=>[n,cx+dx*spread*s,cy+dy*s,s*k,r]);
+const K={
+ header:{w:920,h:430,bg:'bg/cap_a.png',logo:[460,312,128],cast:CAST(.5,.36,.5,.5*430/920)},
+ small:{w:462,h:174,bg:'bg/cap_a.png',logo:[300,92,74,1],cast:[['skull',.17,.5,.9,-6]],dark:.55},
+ main:{w:1232,h:706,bg:'bg/cap_a.png',logo:[616,520,172],cast:CAST(.5,.36,.52,.52*706/1232)},
+ vertical:{w:748,h:896,bg:'bg/cap_b.png',logo:[374,640,190,1],cast:CAST(.5,.3,.25,.72)},
+ library:{w:600,h:900,bg:'bg/cap_b.png',logo:[300,650,152,1],cast:CAST(.5,.3,.2,.9)},
+ hero:{w:3840,h:1240,bg:'bg/cap_c.png',cast:CAST(.5,.5,.55,.55*1240/3840*1.25),dark:.25},
+ logo:{w:1280,h:720,logo:[640,360,250],transparent:1},
+ pagebg:{w:1438,h:810,bg:'bg/cap_c.png',dark:.6},
+};
+window.sizes=Object.fromEntries(Object.entries(K).map(([k,v])=>[k,[v.w,v.h]]));
+window.render=(kind)=>{const c=K[kind]; root.style.width=c.w+'px'; root.style.height=c.h+'px'; let h='';
+ if(c.bg){h+='<div class="bg" style="background-image:url('+c.bg+')"></div><div class="grad" style="background:linear-gradient(180deg,rgba(58,26,106,'+(c.dark??.15)+') 0%,rgba(58,26,106,'+((c.dark??.15)+.2)+') 45%,rgba(16,34,58,.92) 100%)"></div>';}
+ for(const [n,x,y,s,r] of (c.cast||[])){const px=s*c.h; h+='<img class="av" src="'+A+n+'_avatar.png" style="width:'+px+'px;left:'+(x*c.w-px/2)+'px;top:'+(y*c.h-px/2)+'px;transform:rotate('+r+'deg)">';}
+ if(c.logo){const [x,y,fs,two]=c.logo; const st=Math.max(6,fs*.085); h+='<div class="logo" style="left:0;width:'+c.w+'px;top:'+(y-(two?fs:fs/2))+'px;font-size:'+fs+'px;-webkit-text-stroke:'+st+'px #10223a;text-shadow:0 '+(fs*.06)+'px 0 #10223a'+(x!==c.w/2?';width:auto;left:'+(x-fs*1.75)+'px':'')+'">SKULL'+(two?'<br>':'')+'<span>SHIFT</span></div>';}
+ root.innerHTML=h; };
+</script></body></html>

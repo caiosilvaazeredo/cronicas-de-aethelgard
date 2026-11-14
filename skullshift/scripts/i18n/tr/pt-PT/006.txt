@@ -1,0 +1,86 @@
+932	Alguém que pensava voltar. Ninguém volta. Apanha tudo.
+935	Alguém lá dentro chamava para o jantar. Chamava... por mim?
+938	Lembro-me do cheiro a madeira cortada. Os ossos não sentem cheiros.
+940	Eu tratava de ovelhas. E de uma irmã mais nova, que tinha medo do escuro.
+943	A aldeia chamava-se Vila da Ponte. Uma ponte velha cruzava o rio.
+947	A luz quente que vejo quando caio... parece-se com elas.
+950	A minha irmã ficou do outro lado. Eu fui buscá-la.
+952	Estava alguém na ponte. De roxo. Ele estendeu-me a mão.
+953	Não me lembro se ele me segurou... ou se me empurrou.
+957	O meu nome
+958	O meu nome... o meu nome não é Ossian. Foi ele quem me deu esse nome.
+959	Falta pouco para eu me lembrar de tudo.
+960	A coroa está inteira, Hex. E agora? Onde está o Portão da Maré?
+964	E eu cumpro o que prometo. Põe a coroa. Ela devolve-te o que a ponte levou.
+965	...As minhas mãos. O meu rosto. Eu sou... eu de novo. Lembro-me de tudo.
+966	Foste tu na ponte. Estendeste-me a mão e deixaste-me cair.
+969	Este mundo fica comigo, é claro. Ninguém vai sentir a falta dele.
+971	Então tenta derrubar-me. Se conseguires, os selos voltam... e tu voltas a ser osso. Para sempre.
+975	A minha irmã tem a vila inteira. Este mundo só me tinha a mim.
+976	Os selos estão a voltar. Eu volto para a prisão. E tu...
+978	E da próxima vez que eu cair, ninguém me vai puxar de volta.
+979	Vou atravessar a luz quando for a hora. À minha maneira.
+981	Voltaste para casa.
+983	Sábia escolha. O rio leva-te. Não olhes para trás.
+984	...As ilhas estão a ficar roxas. Os reis, as criaturas. Tudo.
+985	Já não é problema teu. Vai. A tua irmã está à espera na ponte.
+987	Mas às vezes, quando olho para o rio, vejo nuvens roxas. E alguém a sorrir lá dentro.
+990	A coroa está inteira. O portão abriu... e do outro lado há um rio. E lanternas.
+991	Põe a coroa, Ossian. Com ela, mais ninguém te derruba. Fica. Reina sobre a maré comigo.
+992	A luz está a chamar-me de novo. Pelo meu nome. O verdadeiro.
+994	Tu nunca me salvaste, pois não? Sempre que eu caía, eu estava a ir-me embora. E tu trazias-me de volta.
+995	...Eu também já estive desse lado da luz. Há tanto tempo que me esqueci do meu nome.
+1001	Eu seguro-te.
+1005	Hex?! De onde é que saíste? E porque é que eu tenho... isto?
+1006	O dom que te emprestei. A tua alma está solta dos ossos, por isso cabe em qualquer forma.
+1009	Detalhes. Apanha o objeto de uma criatura e serás ela. Se caíres, voltas a ser osso, e eu vou buscar-te. Vai!
+1011	Ótimo, agora tenho pulgas. Nem sabia que os ossos apanhavam pulgas.
+1013	Baixinho, verde e com uma lança. Sinto-me... perfeitamente normal.
+1017	Tornei-me no Diabrete. Se me encontrar, prometo dar-me um soco.
+1018	Chifres, músculos, cheiro a estábulo. Duas de três não é mau.
+1019	A zumbir e com ferrão. Se eu tivesse dignidade, tinha acabado agora.
+1020	Um gnomo de fisga. Ainda assim, mais alto do que eu esperava.
+1024	Toca para TRÁS mesmo na hora do golpe: CONTRA! Quebra a defesa de quem bate e devolve projéteis.
+1026	Agacha-te e carrega em APANHAR em cima de um item para o guardar na caixa de reserva, sem te transformares.
+1027	A caixa de reserva (no alto do ecrã) guarda um item. Carrega em R, SELECT ou toca na caixa e ele cai do céu.
+1028	Já transformado e apanhaste outro item? A forma antiga vai para a caixa de reserva, se ela estiver vazia.
+1029	Ao renascer, o item da reserva cai sozinho perto de ti. Fica debaixo dele!
+1030	Toca duas vezes numa direção e segura para correr. Algumas plataformas só se alcançam em corrida.
+1031	Salto duplo: carrega em SALTAR de novo no ar. O segundo salto é um pouco mais baixo.
+1032	Morcegos e abelhas voam: segura SALTAR no ar. As aranhas agarram-se às paredes.
+1033	Os tubarões nadam livres. Na água, ▼ mergulha e SALTAR salta para fora.
+1034	Um item atirado ao chão pisca antes de desaparecer. Apanha-o logo ou perdes a oportunidade.
+1035	Cada nível de chave esconde 3 presentes. Explora antes de abrir a porta.
+1036	A maré sobe e desce. Os caixotes boiam: usa-os como plataforma na maré alta.
+1037	Um géiser a borbulhar avisa antes de explodir. Espera que o fogo passe.
+1038	As elites são maiores e usam armadura: um só golpe não basta.
+1039	Os chefes avisam antes de cada ataque. Observa o padrão antes de avançar.
+1040	Na pausa (ESC ou P) dá para mudar o volume da música, o tremor do ecrã e as cores para daltonismo.
+1041	Na escuridão, fica perto das tochas: a luz delas mostra o caminho e os inimigos.
+1042	As folhas de nenúfar afundam devagar. Não pares em cima delas.
+1043	As pontes de teia rompem-se se ficares parado. Atravessa a correr.
+1044	No versus, quem derruba o outro ganha a vez e corre para o lado dele. Chega ao fim para vencer.
+1045	Inimigos derrotados, presentes e níveis vencidos dão ouro. Gasta-o no Empório da Orelha-Preta, no mapa do mundo (tecla B).
+1046	Osso Teimoso, do Empório: transformado, o golpe fatal só desfaz a forma. Voltas a ser a caveira e continuas de pé.
+1049	Toda a música do jogo é composta pelo próprio código, nota a nota, sem um único ficheiro de áudio.
+1050	A caveira consegue transformar-se em 11 criaturas diferentes. Cada uma tem um comentário sarcástico da primeira vez.
+1052	O Minotauro Rubro martela a mesma bigorna há tanto tempo que a lava em redor arrefeceu em obsidiana.
+1056	Os Príncipes morcego e abelha lutam desde que nasceram no mesmo ninho.
+1064	Sempre que um rei cai, alguém jura ouvir uma corrente a rebentar ao longe.
+1066	Há quem diga que a caveira já teve rosto. E casa. E alguém à espera dela.
+1068	Os caranguejos carregam chaves. Acerta num e a chave cai.
+1070	Debandada da manada: sobe para o alto e espera que passe.
+1072	Os lagartos venenosos cospem em arco. Aproxima-te pelo alto.
+1073	As aranhas penduradas descem quando passas por baixo. Passa a correr.
+1074	A lava sobe em ondas. Fica de olho na crista brilhante.
+1076	Nas minas o teto desaba: o pó a cair avisa onde a pedra vai cair.
+1077	As correntes de vento levam-te para cima. Larga no alto e plana até à próxima ilha.
+1084	APANHAR levanta chaves, ovelhas e outros objetos sobre a cabeça. APANHAR de novo larga; ATACAR arremessa.
+1085	Cambalhota e Pino
+1086	Agachado, carrega em SALTAR: salto de pino (bem mais alto). A correr, vira-te para o outro lado e salta: cambalhota para trás (também mais alta).
+1088	No ar, segura ▼ e carrega em ATACAR: martelada no chão. Parte pedras de ouro rachadas e atordoa quem estiver perto.
+1090	ATACAR perto de uma árvore derruba-a para o lado para onde olhas: ela torna-se uma ponte.
+1092	Encostar a uma parede no ar crava a picareta: a caveira sobe sozinha pela parede, como a aranha.
+1094	Termina o primeiro nível.
+1096	Derrota o primeiro rei.
+1098	Derrota cinco reis.

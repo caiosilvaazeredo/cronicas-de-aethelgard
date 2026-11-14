@@ -19,6 +19,8 @@ import { StoryScene } from './scenes/StoryScene';
 import { SlotsScene } from './scenes/SlotsScene';
 import { SettingsScene } from './scenes/SettingsScene';
 import { applySettings } from './game/settings';
+import { LanguageScene } from './scenes/LanguageScene';
+import { hookText, initI18n, langInfo } from './i18n';
 
 Object.assign(VIEW, computeView());
 
@@ -35,10 +37,13 @@ async function loadFace(family: string, url: string): Promise<void> {
   }
 }
 async function loadFont(): Promise<void> {
-  await Promise.all([
-    loadFace('Anak Manja PT', './fonts/anak-manja-pt.ttf'),
-    loadFace('Matcha Style', './fonts/matcha-style.ttf'),
-  ]);
+  // Cada idioma pode trocar as fontes (mesmo nome de família, arquivo com o alfabeto dele).
+  // '' = nenhuma: o navegador usa a fonte do aparelho (japonês, chinês, coreano).
+  const l = langInfo();
+  const jobs: Array<Promise<void>> = [];
+  if (l.display !== '') jobs.push(loadFace('Anak Manja PT', `./fonts/${l.display ?? 'anak-manja-pt.ttf'}`));
+  if (l.body !== '') jobs.push(loadFace('Matcha Style', `./fonts/${l.body ?? 'matcha-style.ttf'}`));
+  await Promise.all(jobs);
 }
 let game: Phaser.Game;
 
@@ -53,12 +58,17 @@ function boot(): void {
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
     input: { gamepad: true, activePointers: 5 },
-    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene, JournalScene, CreditsScene],
+    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene, JournalScene, CreditsScene, LanguageScene],
   });
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
   game.events.once('ready', () => applySettings());
 }
-loadFont().finally(boot);
+initI18n()
+  .then(() => {
+    hookText();
+    return loadFont();
+  })
+  .finally(boot);
 
 /**
  * Celular girou (ou a janela mudou de formato): troca o tamanho do canvas e reorganiza.
@@ -76,7 +86,7 @@ function onResize(): void {
     for (const s of game.scene.getScenes(true)) {
       const key = s.scene.key;
       if (key === 'game') (s as GameScene).relayout();
-      else if (key === 'menu' || key === 'slots' || key === 'settings' || key === 'controls' || key === 'howto' || key === 'map' || key === 'world' || key === 'memory' || key === 'vn') {
+      else if (key === 'menu' || key === 'slots' || key === 'settings' || key === 'controls' || key === 'howto' || key === 'map' || key === 'world' || key === 'memory' || key === 'vn' || key === 'language') {
         s.scene.restart((s as unknown as { lastData?: object }).lastData);
       }
     }

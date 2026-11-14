@@ -1,0 +1,19 @@
+1881	big candles
+1882	big candle
+1883	BIG TORCH
+1884	BIG CANDLE
+1885	Door open!
+1886	\n▼+{0} store
+1887	king ✓
+1888	king —
+1889	none (see the Emporium)
+1890	IDIOMA · LANGUAGE
+1891	BONUS AREA
+1892	LEVEL {0}
+1893	PLAYER 1
+1894	PLAYER 2
+1895	 · FREE PLAY
+1896	 · SAVE {0}
+1897	FREE PLAY
+1898	{0}/{1} levels
+1899	{0} gold

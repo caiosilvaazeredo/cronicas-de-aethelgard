@@ -1,0 +1,67 @@
+293	Passaram para onde, Hex? Nunca ninguém voltou para casa, pois não?
+294	Casa é onde alguém te espera. Eu espero-te de cada vez que cais. Pensa nisso.
+295	Quando eu apanhar o último fragmento, o portão abre. Tu juraste.
+301	As nuvens acabaram. Só há vento entre uma ilha e outra.
+302	Correntes do Céu. Entra no vento e ele leva-te para cima. Segura o salto e plana.
+304	Ele não para. Sopra desde que eu cheguei aqui. Já lá vai tempo.
+306	Mais do que tu te lembras de ter vivido.
+313	Tens-me ajudado demasiado ultimamente, Hex.
+315	Queres mesmo?
+319	E eu com um ossinho de cada vez.
+322	Ilhas soltas a subir até ao Portão da Maré. Só passa quem corre e salta de novo no ar.
+323	A coroa está inteira nas tuas mãos. Falta só subir a Escadaria da Maré até ao Portão.
+324	Escadaria? São ilhas soltas, com mar por baixo e vãos enormes entre elas.
+325	Ninguém chega ao portão a andar. Tens de correr, saltar e saltar de novo no ar. Tudo de uma vez.
+326	Falas como quem já viu muitos tentarem.
+327	Muitos. Os vãos ficaram mais largos com cada um que caiu.
+328	E tu foste buscá-los a todos na tua nuvem.
+329	...Ia buscá-los. Até ao dia em que pararam de cair.
+331	Chegaram ao portão. Vai, Ossian. Desta vez eu fico daqui, a olhar.
+333	O portão não dava para casa. Dava para uma casa. Portas por toda a parte, e quase todas mentem.
+334	Atravessei o portão e... é uma casa? Corredores, portas por todo o lado.
+335	A Casa do Barqueiro. A minha velha casa. Ela gosta de brincar com quem entra.
+336	A tua casa? Nunca disseste que tinhas uma casa.
+339	Devolvem-te ao começo. E cuidado com a lua vermelha. Ela também mente.
+341	Inquilinos. Ossos que se recusaram a seguir a lua. Não pares para conversar.
+348	Este livro tem uma página marcada: "O barqueiro que não largou o remo". És tu?
+349	...Larga esse livro, Ossian. Apanha a chave.
+352	Não vejo nada. Hex? Hex!
+353	Estou aqui. Estou sempre. Encosta-te às velas: o caminho aparece com a luz.
+354	Metade deste chão é falso. Racha e cai quando eu o piso.
+357	...É. Desta vez não te vou buscar se caíres. Nem se não caíres.
+362	As tuas mãos de osso agora seguram coisas. Apanha a chave e leva-a até à porta.
+364	Lembranças de quem passou antes. Apanha, se quiseres. Mais ninguém as vem buscar.
+366	Uma pradaria cheia de saqueadores. Segura ATACAR: os ossos saem em rajada.
+368	Então não pares de atirar. Segura o golpe e os teus ossos voam sozinhos.
+370	Desde sempre. Tu só não tinhas motivo para te lembrares.
+372	Blocos vermelhos e azuis que aparecem e somem com uma alavanca.
+375	Agachado, salto mais alto agora. Pino.
+377	Estás sempre a falar desse "corpo vivo".
+378	É só uma maneira de falar, Ossian.
+381	Apanhei um martelo de ferreiro na fuga. Ainda está quente.
+382	No ar, desce com tudo: a martelada no chão parte as pedras de ouro.
+383	Ouro a tapar a passagem. Que desperdício.
+388	Dois reinos que se odeiam. Os príncipes lutam por este ninho há séculos.
+389	E eu vou ter de passar no meio dessa briga.
+391	Desde quando confias em quem fala?
+396	Comeu as brasas da forja. Agora quer o céu. O teu novo aliado leva-te até ele.
+397	O morcego solta três ossos de uma vez e ainda grita. Isso não é batota?
+399	Tu não vens?
+402	Comeu as brasas da forja. Agora quer o céu. Monta no Príncipe das Abelhas e derruba-o.
+403	Ele só solta um ossinho de cada vez, Hex.
+405	Pareces... satisfeito.
+409	Um machado? No Santuário só havia nuvens.
+412	Põe-na na placa. O portão abre com peso. Como quase tudo nesta terra.
+414	Tu não pesas nada, Ossian. Por isso a placa não sente os teus passos.
+417	Mais tiros. Mais ossos. Mais coisas a vir da escuridão.
+423	A chave está lá em cima. Não há escada.
+424	Tens a picareta agora. Salta para a parede e sobe.
+428	Uma urna no centro do mausoléu e assombrações a vir dos dois lados.
+429	Uma urna. Com o teu nome nela, Hex.
+430	Não deixes que as assombrações lhe toquem. Três toques e ela parte-se.
+431	O que há lá dentro?
+433	...Nunca tinhas dito "por favor" antes.
+436	Hex, aquele caranguejo está a carregar uma chave nas costas!
+437	Os caranguejos guardam tudo o que brilha. Acerta-lhe: a chave cai.
+438	E se ele a apanhar de volta?
+439	Então acerta-lhe outra vez. Ninguém aqui larga o que é seu sem briga.

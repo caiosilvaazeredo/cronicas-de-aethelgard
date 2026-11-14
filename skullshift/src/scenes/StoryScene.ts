@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { noTr, tr } from '../i18n';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { ENDING_FREE, ENDING_HOME, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
@@ -208,7 +209,7 @@ export class StoryScene extends Phaser.Scene {
     this.namePlate.fillStyle(0xfff7dc, 1).fillRect(px - 2, py - ph / 2 - 2, pw + 4, ph + 4);
     this.namePlate.fillStyle(nameColor(line.who), 1).fillRect(px, py - ph / 2, pw, ph);
     // Texto letra a letra.
-    this.full = line.text;
+    this.full = tr(line.text);
     this.text.setText('');
     this.arrow.setVisible(false);
     let n = 0;
@@ -222,6 +223,7 @@ export class StoryScene extends Phaser.Scene {
       repeat: this.full.length - 1,
       callback: () => {
         n++;
+        noTr(this.text);
         this.text.setText(this.full.slice(0, n));
         if (n >= this.full.length) {
           this.typing = undefined;

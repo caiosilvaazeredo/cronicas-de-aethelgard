@@ -1,0 +1,190 @@
+1290	The key is at the top of the tower. Pickaxe: touch the wall in midair and climb.
+1291	From the top of the tower to the door!
+1292	PICKAXE: jump at the\nwall and the skull\nclimbs on its own.
+1293	Run and gun! Hold ATTACK to fire bones. The enemies just keep coming.
+1294	You crossed the prairie shooting!
+1295	Run and gun in the mine! Hold ATTACK: torches, spiders and bats come in waves.
+1296	The mine was cleared by gunfire!
+1297	A cave full of wings. At the bottom, someone with a crown is waiting for you.
+1298	The Princes' fight is over!
+1299	Riding the allied prince: waves of enemies and, at the end, the Giant Imp himself!
+1300	The Giant Imp fell from the sky!
+1301	Protect the urn! Ghosts come from both sides. If they touch the urn 3 times, you start over.
+1302	The urn is safe!
+1303	A huge tree, hollow inside. Take the key to the door way up top. The 3 presents are worth gold.
+1304	The tree was hiding a treasure!
+1305	Bonus area!\nPresents are worth gold.
+1306	Bonus area!\nThe key is at the end.
+1307	Bonus area!\nClimb up to the key.
+1308	An empty pen in the middle of the grass. Someone left presents for the sheep that never came back.
+1309	The pen was hiding gold!
+1310	A lizard's hut half sunk in the swamp. Inside, still dry, a chest.
+1311	The hut was hiding gold!
+1312	Cocoons hanging up to the ceiling. Not all of them hold spiders: some hold treasure.
+1313	The cocoons were hiding gold!
+1314	A vault carved into the volcano's black glass. The Minotaur kept what he didn't want to see.
+1315	The vault was hiding gold!
+1316	A mushroom ring the gnomes swear is enchanted. Jump on the big ones.
+1317	The ring was hiding gold!
+1318	A pocket of gold no goblin has found. Yet.
+1319	The pocket was yours!
+1320	A huge nest in the middle of the embers. Whoever left it there flew far away.
+1321	The nest was hiding gold!
+1322	A forgotten tower of the kingdom of wings, full of feathers and coins.
+1323	The tower was hiding gold!
+1324	An old film reel... The skull stepped into a 1930 cartoon! Hold ATTACK to shoot.
+1325	THE END. (The lost cartoon was saved.)
+1326	A crab ran off with the key! Hit it to make the key drop and take it to the door.
+1327	The beach door opened!
+1328	Hit the crab: the key drops!
+1329	The tide rises and falls on its own. When it comes, stay up high!
+1330	You beat the tide!
+1331	The tide is rising! Stay up high when it comes.
+1332	Loose planks sink right after you step on them. Don't stop on them!
+1333	You crossed the shipwreck!
+1334	Climb aboard! Cannons fire across the deck: jump the cannonballs or block.
+1335	The deck is yours!
+1336	Cannonballs: jump or block!
+1337	Underwater the skull becomes a Shark! ↑ (or JUMP) goes up, ▼ goes down. Watch out for the jellyfish.
+1338	You crossed the undersea cavern!
+1339	↑ or JUMP goes up · ▼ goes down
+1340	Hit the levers: high tide makes the crates rise; low tide opens the lower paths.
+1341	The lighthouse lit the way!
+1342	Lever: high tide / low tide
+1343	The deck sank in the middle. Cross over the yards and the crow's nests, up high!
+1344	You mastered the masts!
+1345	Fire coral burns, jellyfish drift and the tide never stops. The last step before the King.
+1346	The reef is behind you. The King awaits!
+1347	The Harpoon Shark King commands the tide. At low tide he gets stranded: that's your chance!
+1348	The Harpoon Shark King has fallen! Crown fragment recovered!
+1349	Shaman's Throne
+1350	The crown gave your body back. Now, the Shaman.
+1351	The Shaman has fallen. The seals have returned.
+1352	The Gnolls' prairie. The hunters throw bones that come back like boomerangs!
+1353	You reached the prairie!
+1354	Bone Prairie:\nland of the Gnolls.
+1355	The herd comes stampeding across the ground! When you hear the warning, climb up high.
+1356	The herd passed, and so did you!
+1357	Stampede:\nclimb up high!
+1358	Rocks roll downhill. Jump over them or break them with a blow!
+1359	You crossed the graveyard!
+1360	Put the sheep on the plates to open the gates and take the key to the door.
+1361	The farm door opened!
+1362	Sheep on the plate:\nthe gate opens.
+1363	Trembling bushes aren't the wind: they're Gnolls waiting for you to come close.
+1364	No Gnoll caught you by surprise!
+1365	In the tall grass,\nsomething moves...
+1366	Run and gun! The Gnoll caravan never stops sending hunters.
+1367	The caravan scattered!
+1368	The prairie wind lifts whoever steps into it. Hold JUMP in the air to glide.
+1369	The wind carried you to the end of the prairie!
+1370	Step into the wind to rise.\nHold JUMP to glide.
+1371	The Gnoll King guards the second fragment. He leaps, howls and throws a bone the size of a log!
+1372	The Gnoll King has fallen! Crown fragment recovered!
+1373	The bridges are threads of web: they snap right after you step on them. Don't stop!
+1374	You crossed the web bridges!
+1375	Web bridges:\ndon't stop on them!
+1376	Pitch black. Touch the torches to light them; the 3 big ones open the exit.
+1377	The torches revealed the exit!
+1378	IT'S DARK...\nTouch the torches\nto light them.
+1379	The exit only opens with\nthe 3 BIG TORCHES lit.
+1380	Hanging cocoons go up and down on their threads. Touch them and you become food!
+1381	You made it through the cocoon hall!
+1382	Swinging cocoons:\ndon't touch!
+1383	Run and gun! Jumping spiders and vampire bats come in waves.
+1384	The cave was cleared by gunfire!
+1385	The key is at the top of the nest. To get past the wall, switch the color of the blocks.
+1386	The egg chamber opened!
+1387	The key is in the nest,\nup top.
+1388	Drop the key (GRAB),\nhit the lever\nand pick it up again.
+1389	The mountain of fire. Geysers bubble before releasing their pillar of fire: wait for it to pass!
+1390	You passed the forge gates!
+1391	Bubbling geyser:\nwait for the fire to pass!
+1392	The lava rises and falls like a tide. When it comes, stay up high or on top of the basalt!
+1393	You beat the lava tide!
+1394	The lava rises and falls.\nStay up high!
+1395	The geysers fire in sequence. Watch the rhythm and pass between the pillars of fire.
+1396	Not even singed!
+1397	Run and gun! Imps, lava minotaurs and magma lizards come nonstop.
+1398	The forge was cleared by gunfire!
+1399	Obsidian slabs sink into the lava right after you step on them. And the forge cannons never stop.
+1400	You crossed the obsidian bridge!
+1401	Gold rocks block the workshop. Use the HAMMER (in midair, ▼ + ATTACK) and take the key to the door.
+1402	The workshop door opened!
+1403	In midair: ▼ + ATTACK\nbreaks the rocks.
+1404	The heart of the mountain. Each area only opens when all of its enemies fall.
+1405	The way to the Minotaur is open!
+1406	The gnomes' forest. They shoot acorns with slingshots and roll logs downhill.
+1407	You entered the forest!
+1408	Gnome Woods.\nWatch out for the acorns!
+1409	Walls too tall to jump? Land on the mushrooms: they launch you way up high!
+1410	What jumps!
+1411	Land on the mushroom:\nit launches you up high!
+1412	The ground vanishes into the river. The way is over the top, from treetop to treetop.
+1413	You crossed over the treetops!
+1414	Logs float on the river: you can step on them. Loose planks sink.
+1415	You crossed the log river!
+1416	Run and gun! Slingshot gnomes everywhere.
+1417	The forest was cleared by gunfire!
+1418	Trembling little mounds of moss hide gnomes. And the logs never stop rolling.
+1419	No gnome caught you!
+1420	Moss that trembles\nisn't moss...
+1421	The gnome village. Each area only opens when all the villagers fall.
+1422	The village surrendered!
+1423	The Gnome King guards the fragment at the foot of the oldest tree in the forest.
+1424	The Gnome King has fallen! Crown fragment recovered!
+1425	The goblin mines. Torches, gold and loose rocks in the ceiling: watch for falling dust!
+1426	You entered the mines!
+1427	Dust falling from the ceiling:\nhere comes a rock!
+1428	The gallery ceiling is collapsing! The dust warns where the rock will fall.
+1429	You escaped the cave-in!
+1430	The gallery torches have gone out. Light them; the 3 big ones open the exit.
+1431	The gallery lit up!
+1432	Gold rocks seal the galleries. Hammer them and take the key to the door.
+1433	The gold vein opened!
+1434	Miner goblins throw bombs in an arc. And rocks roll along the rails.
+1435	No explosion caught you!
+1436	The water in the mine rises and falls. Stay up high, or on top of the crates.
+1437	You crossed the flooded mine!
+1438	The fire down here is blue and it chases you. And the geysers never stop.
+1439	You crossed the blue fire!
+1440	The King's treasure. Each area only opens when all the guards fall.
+1441	The way to the Goblin King is open!
+1442	The Torch Goblin King counts every nugget. And keeps the fragment in the middle of the gold.
+1443	The Goblin King has fallen! Crown fragment recovered!
+1444	The lizards' lagoon. Still water, moss and lizards that spit poison.
+1445	You reached the lagoon!
+1446	Lizard Lagoon.\nWatch out for the poison!
+1447	Giant leaves float on the lagoon. They sink right after you step on them!
+1448	You crossed the lily pads!
+1449	Leaves sink:\ndon't stop on them!
+1450	The swamp water rises and falls. Stay up high or on top of the logs.
+1451	The flood has passed!
+1452	Poison thorns on the ground and purple lizards spitting poison from every side.
+1453	You left the marsh in one piece!
+1454	The key to the fisherman's house vanished with a marsh crab. Hit it and take the key!
+1455	The fisherman's door opened!
+1456	The marsh crab\ntook the key!
+1457	At the bottom of the lagoon, the skull becomes a Lizard and swims freely. ↑ (or JUMP) goes up, ▼ goes down.
+1458	You crossed the bottom of the lagoon!
+1459	Run and gun! Lizards and castaways come out of the marsh nonstop.
+1460	The marsh was cleared by gunfire!
+1461	Roots and branches over the water. Logs roll along the fallen trunks.
+1462	You crossed the mangrove!
+1463	The lizards' village. Each area only opens when all the villagers fall.
+1464	The way to the Lizard King is open!
+1465	The Lizard King never sleeps. He spits poison, lashes his tongue and leaps, splashing puddles.
+1466	The Lizard King has fallen! Crown fragment recovered!
+1467	Glowing clouds crumble right after you step on them. And falling from here means falling into the void.
+1468	You crossed the ember clouds!
+1469	Ember clouds\ncrumble: run!
+1470	Burning meteors fall from the sky. Sparks warn where they will land.
+1471	No meteor hit you!
+1472	Run and gun on the sky islands! Imps and ember bees, nonstop.
+1473	The sky was cleared by gunfire!
+1474	Currents of hot wind between the islands, and jets of fire shooting out of the rocks.
+1475	The hot wind carried you to the end!
+1476	The imps' castle. Each area only opens when all the guards fall.
+1477	The castle in the clouds has fallen!
+1478	A swarm of ember bees, and castle cannons sweeping the islands.
+1479	You crossed the swarm!

@@ -1,0 +1,69 @@
+592	Conheces bem esta montanha.
+596	Minotauros vermelhos! Correm como touros bravos!
+597	Então atira antes que cheguem. Segura ATACAR.
+598	Quem treinou tantos touros de lava?
+599	O Minotauro não treina: forja. Cada soldado sai da bigorna já a saber quem proteger.
+604	Lajes pretas a boiar na lava. E canhões!
+605	A obsidiana afunda depois de a pisares. Não pares.
+606	Quem pôs canhões numa forja?
+607	O Minotauro não gosta de visitas. Nenhum rei gosta.
+610	Uma oficina. Bigornas, ferramentas... eu sei usar estas coisas.
+611	Sabes? Interessante. Usa o martelo nas pedras e apanha a chave.
+612	Eu tinha calos nas mãos de tanto trabalhar. Eu lembro-me.
+616	Os caminhos fecham-se com fogo até eu derrubar toda a gente.
+618	Dá para sentir a montanha a bater debaixo do pé.
+621	O bosque dos gnomos de fisga.
+622	Árvores enormes. E alguém a atirar-me bolotas à cabeça.
+624	Este cheiro de madeira... eu conheço.
+628	As paredes são altas demais para saltar.
+629	Cai em cima dos cogumelos vermelhos. Eles atiram-te lá para o alto.
+633	O chão some-se no rio. O caminho é por cima.
+635	Então vai por cima, de copa em copa. Não olhes para baixo.
+639	Troncos a boiar no rio: dá para pisá-los.
+640	Troncos a boiar. Alguém cortou estas árvores.
+641	Os gnomos atiram os troncos ao rio para os levar até à vila. Pisa-os.
+642	Eu cortava lenha. Atrás de uma casa azul. Tenho a certeza.
+645	Gnomos de fisga por toda a parte.
+648	Porque é que defendem tanto um bosque?
+652	Aquele musgo tremeu. Tal como o capim da pradaria.
+655	...Cuidado com os troncos.
+658	Uma vila a sério. Casas, chaminés, estendais...
+661	Tu moravas onde eu te encontrei: na praia.
+665	Ele atira bolotas em arco, rola troncos gigantes e sacode a árvore.
+666	Roxo, de novo. Todos os reis usam o teu roxo, Hex.
+670	Tanto ouro! E tantas tochas acesas.
+671	Os goblins cavam há séculos. O teto é velho: quando cair pó, sai de baixo.
+672	Cavam para quê? O ouro aqui não compra nada. Tu mesmo o disseste.
+675	O teto da galeria está a desabar.
+676	O teto inteiro está a cair!
+677	O pó avisa onde a pedra cai. Corre entre elas.
+679	Desde que alguém mandou esconder o fragmento bem fundo. Há muito, muito tempo.
+681	As tochas apagaram-se.
+684	A minha irmã tinha medo do escuro. Eu deixava-lhe uma vela acesa.
+689	No ar, desce com tudo. E leva a chave até à porta.
+690	Tanto ouro e ninguém o leva embora.
+692	Tu disseste que o Portão da Maré leva para fora.
+695	Goblins mineiros atiram bombas.
+696	Eles estão a atirar bombas!
+697	Mineiros. Rebentam a rocha e quem estiver perto. Desvia-te do arco.
+698	Se eu rebentar junto, vais buscar-me?
+702	Maré dentro de uma mina? Isto não faz sentido.
+708	Fogo azul! E os goblins que o levam correm como doidos.
+709	É o fogo do fundo da terra. Mais quente que o vermelho. Não o deixes tocar-te.
+710	Porque é que este fogo é azul?
+714	Montanhas de ouro. E guardas em todos os cantos.
+716	Se o rei tem tudo isto, porque é que ainda quer o fragmento?
+721	Ele bate com a tocha no chão e solta ondas de fogo: salta. E corre de um lado ao outro.
+726	Que água verde. E este cheiro a folha podre.
+728	Nunca? Nem uma sesta?
+738	A água sobe aqui também. Até no pântano há maré?
+741	Sobe para os troncos, Ossian.
+743	Espinhos e lagartos roxos a cuspir veneno.
+744	Lagartos roxos. Roxos como tu, Hex.
+746	Tens a certeza?
+747	Desvia-te dos espinhos.
+750	Uma casinha de pescador. Igual às da minha... das que eu vi.
+752	Um lagarto a pescar. Parece em paz.
+753	Paz de quem não sabe o que vigia. Não o acordes para isso; passa só.
+757	Lá em baixo, eu dou-te a forma de um lagarto. Os lagartos nadam.
+758	Já não precisas de item nenhum para me transformar, pois não?

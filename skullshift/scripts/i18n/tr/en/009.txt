@@ -1,0 +1,195 @@
+1480	The imps' vault. Carry the key across the islands, using the springs and the color lever.
+1481	The cloud vault opened!
+1482	The entrance to the kingdom of your ally's enemy. The guards fly and dive.
+1483	You passed the gate of wings!
+1484	The kingdom of your\nally's enemy.
+1485	A daytime flight, riding your ally, across the enemy kingdom's sky.
+1486	The wind route is behind you!
+1487	The kingdom's castle. Each area only opens when all the guards fall.
+1488	The castle of wings has fallen!
+1489	A night flight through the middle of the storm. The waves of enemies come closer together.
+1490	You crossed the storm!
+1491	The royal chamber. Carry the key over the springs and ladders to the door.
+1492	The royal chamber opened!
+1493	Wind currents between the kingdom's towers, and diving guards.
+1494	The wind carried you to the towers!
+1495	The last daytime flight before the king's night. Many enemies, and stronger.
+1496	The sun set behind you!
+1497	Run and gun on the kingdom's walls! The guards just keep coming.
+1498	The walls were cleared by gunfire!
+1499	The royal guard defends the last bridge before the flight to the king.
+1500	The royal guard has fallen. The king awaits in the night sky!
+1501	SHAMAN'S URN
+1502	Wave 0 of {0}
+1503	THE URN SURVIVED!
+1504	WAVE {0}
+1505	Wave {0} of {1}
+1506	BOO!
+1507	Player {0}
+1508	Your name
+1509	CANCEL
+1510	BAT PRINCE
+1511	BEE PRINCE
+1512	OSSIAN
+1513	Lord of the Nest
+1514	A bag of bones in my nest? What a bland little snack.
+1515	I'm just passing through. Let me by and nobody gets hurt.
+1516	Nobody gets past the Bat Prince!
+1517	Heir of the Hive
+1518	Cousin! I knew you couldn't handle a skeleton on your own.
+1519	Stay out of this, drone!
+1520	And miss the fun? Two princes against one little bone!
+1521	Great. Now there are two.
+1522	Wait! Wait... enough.
+1523	Spare my life, skull. Defeat the Bee Prince and I'll be your greatest ally: I'll fly with you to the Bee King.
+1524	Don't listen to that treacherous bat! Finish him and I will fly with you to the Bat King!
+1525	Hex always says every pact has a price...
+1526	THE BAT PRINCE'S PACT
+1527	ACCEPT: spare the bat and defeat the bee
+1528	REFUSE: defeat the bat
+1529	Wise choice. From today on, my wings are yours.
+1530	TRAITORS! I'll sting you both!
+1531	No pact with someone who tried to eat me.
+1532	Hahaha! I like you, little bone. I'll be waiting outside.
+1533	Then we fall together!
+1534	The Bee Prince now flies with you!
+1535	Hah! Nice work, ally. The Bee King will hear about us.
+1536	The Bat Prince is now your ally!
+1537	You can't carry things yet!
+1538	Needs the AXE
+1539	BRIDGE!
+1540	THE KEY DROPPED!
+1541	THE CRAB TOOK THE KEY!
+1542	PRESENT {0}/3
+1543	Bring the golden KEY
+1544	THE TIDE IS ABOUT TO RISE!
+1545	FLOODGATES OPEN: HIGH TIDE!
+1546	FLOODGATES CLOSED: LOW TIDE
+1548	SHAMAN HEX
+1549	Bar {0}/{1} · {2}
+1550	Nine seals, nine worlds. I will drag you through every one of them, Ossian. And in each you will be one of MINE.
+1551	{0}. {1} came back to help you? How touching.
+1552	The seals have returned. The world is free.
+1553	HARPOON SHARK KING
+1554	Lord of the Tide
+1555	LOW TIDE: ATTACK NOW!
+1556	THE TIDE IS RISING! CLIMB!
+1557	GIANT IMP
+1558	Lord of the Skies
+1559	BEE KING
+1560	Sovereign of the Hive
+1561	BAT KING
+1562	Lord of the Eternal Night
+1563	CLEAR SKY!
+1564	SHIELD!
+1565	SCREECH READY!
+1566	↑ ↓ ← →  fly  ·  hold ATTACK (SHOT) to shoot  ·  GRAB / GUARD (SCREECH): sonic screech
+1567	↑ ↓ ← →  fly  ·  hold ATTACK (or SHOT) to shoot
+1568	JUMP
+1569	ATK
+1570	SHOT
+1571	SCREECH
+1572	Stubborn Bone
+1573	While transformed, the blow that would kill you only undoes the transformation: you turn back into the skull and stay standing.
+1574	Baa. (The skin falls, the bone stays.)
+1575	Deflecting Sword
+1576	The sword swing deflects ANY projectile that touches it: bones, harpoons, acorns, fire... and sends it back to whoever fired it.
+1577	Baa. (Hit what flies.)
+1578	Extra Candle
+1579	One more life in each level before it restarts.
+1580	Baa. (Don't let it go out.)
+1581	Bone Reflex
+1582	The PARRY window (tapping back as the blow lands) gets much wider.
+1583	Baa. (Backwards, quickly.)
+1584	Cloud Cloak
+1585	When you respawn, you stay untouchable for twice as long.
+1586	Baa. (Made from his cloud. Don't tell.)
+1587	Bone Magnet
+1588	The reserve box item falls straight down and twice as fast, right onto you.
+1589	Baa. (What's yours comes back.)
+1590	Gold Tooth
+1591	Defeated enemies give double gold.
+1592	Baa. (Good deal. For me.)
+1593	Hammerhead Shark
+1594	Coral Shark
+1595	Armored Shark
+1596	Sand Lizard
+1597	Tide Lizard
+1598	Pirate Goblin
+1599	Goblin Captain
+1600	Bomber Goblin
+1601	Castaway Gnoll
+1602	Jumping Spider
+1603	Weaver Spider
+1604	Black Widow
+1605	Vampire Bat
+1606	Lava Minotaur
+1607	Obsidian Minotaur
+1608	Magma Lizard
+1609	Red Hat Gnome
+1610	Moss Gnome
+1611	Elder Gnome
+1612	Blue Fire Goblin
+1613	Miner Goblin
+1614	Goblin Chief
+1615	Poison Lizard
+1616	Crocodile Lizard
+1617	Ember Bee
+1618	Storm Bee
+1619	Hunter Gnoll
+1620	Stalker Gnoll
+1621	Brute Gnoll
+1624	LOADING 0%
+1625	LOADING {0}%
+1626	CHOOSE YOUR CONTROLS
+1627	Controller not showing? Connect it and press any button on it.  ·  Name: ◀ ▶ or ✎ (N / M keys)
+1628	◀  BACK
+1629	CONFIRM  ▶
+1630	NEW
+1631	STANDARD
+1632	Touch
+1633	Gestures/Mouse
+1634	PLAYER {0} NAME
+1635	Idea, direction and testing
+1636	the Skullshift team
+1637	Code, writing and soundtrack
+1638	made with Claude Code (Anthropic)
+1639	Art
+1640	Tiny Swords, by Pixel Frog\nFree Pack and Enemy Pack
+1641	Fonts
+1642	Anak Manja, by Khurasan Studio\nMatcha Style
+1643	Engine
+1645	Instruments
+1646	flute, guitar and harp from the FluidR3_GM soundfont (Frank Wen)\nconverted by midi-js-soundfonts (Benjamin Gleitzman)\nplayed with the smplr library
+1647	Inspirations
+1649	Cast
+1650	Ossian, the skull · Shaman Hex\nHarpoon Shark King · Gnoll King · Lizard King · Spider Queen\nCrimson Minotaur · Gnome King · Torch Goblin King\nGiant Imp · King of Wings · the Princes\nand the sheep with the black ear
+1651	The seals have returned. The world is free.\nAnd Ossian stayed, standing guard.
+1652	Ossian went back home.\nAnd the world now belongs to Hex.
+1653	The story is still waiting for you.
+1654	THANKS FOR PLAYING!
+1655	any key or tap to skip
+1656	{0}   ·   Presents: {1}/3
+1657	THE URN BROKE
+1658	VERSUS · {0}
+1659	BROKEN!
+1660	{0} (from afar)
+1661	· MEMORY ·
+1662	HELPER
+1663	{0}'S HELPER
+1664	GALE!
+1665	the wind pushes to the right ➜
+1666	⬅ the wind pushes to the left
+1667	BONE RAIN!
+1668	watch the shadows on the ground
+1669	ITEM RAIN!
+1670	run to grab them first
+1671	LOW GRAVITY!
+1672	sky-high jumps
+1673	HELPERS!
+1674	grab the purple orb: a creature fights alongside you
+1675	DEFLECTED!
+1676	CAUGHT IN THE WEB!
+1677	CAUGHT IN THE NET!
+1678	STUBBORN BONE!
+1679	STUCK!

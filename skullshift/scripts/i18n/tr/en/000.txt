@@ -1,0 +1,140 @@
+0	Sand between my bones. Must feel awful. Good thing I can't feel a thing.
+1	Salt on the wind... I knew this smell. From a window. In the morning.
+2	That's it, Ossian. One step at a time. I am watching over you.
+3	A crab with a key on its back. This world has a strange sense of humor.
+4	Everything here guards something, Ossian. Learn to see who carries what.
+5	The water rises, the water falls. And me in the middle, unable to swim.
+6	Someone taught me to float. Big hands under my back. "Trust me."
+7	The tide obeys the patient. Like everything else.
+8	A whole ship, stuck here. Where was it headed, Hex?
+9	Nowhere. Nobody leaves these islands by ship. Or any other way.
+10	...Was that supposed to be comforting?
+11	Cannons. Someone was very afraid of what came from the sea.
+12	Or of what came from the middle island. But that's old history. Move on.
+13	I'm a shark. Today I'm a shark. That's fine.
+14	Dark water over my head. Cold. I've been down here before... without gills.
+15	Don't think about it. Swim, Ossian. Just swim.
+16	Who built a lighthouse like this? Sharks don't have hands.
+17	Old folk. They liked warning others to stay away. I thought it was overkill.
+18	From up here you can see the middle island. The sky is darker over there.
+19	It's only the weather turning. Look ahead, not over there.
+20	Coral cuts, jellyfish burn. The whole sea wants me gone.
+21	A blue house. You could hear the sea from the bed. I counted waves until I fell asleep.
+22	The Harpoon Shark is close. Save your strength.
+23	So that's him. Bigger than I imagined. And I imagined big.
+24	Don't listen to a word he says. Kings lie to keep what belongs to others.
+25	Grass up to my knees. If I had real knees, it would tickle.
+26	A small bell, ringing far away. It was time to gather... gather what?
+27	Gnolls hunt in packs. Don't let them surround you.
+28	Golden key, locked door. Someone here likes riddles.
+29	Doors exist to keep things in, Ossian. Or out. Depends on who holds the key.
+30	The ground is shaking. That's never a good sign.
+31	Sheep. I used to count real sheep. One always ran off, the one with the black ear.
+32	Climb up high and let the herd pass. Hurry only serves the living.
+33	They just keep coming! Who taught gnolls to queue?
+34	Their king. A pack is only dangerous when it has someone to obey.
+35	Bones everywhere. Cousins? Coworkers? I don't know how to say hello.
+36	They belong to those who came before. Don't touch them.
+37	Before whom, Hex? ...Hex?
+38	A farm. Fence, gate, a sheep on the pressure plate. Almost normal.
+39	The smell of bread. A wooden table. Someone set an extra plate, for me.
+40	You're quiet, Ossian. What did you see?
+41	The grass moved. Grass shouldn't move on its own.
+42	The hunters wait. It's what I respect most about them: they know how to wait.
+43	Wagons abandoned in the middle of the road. They ran from something.
+44	From hard times. They passed. Almost everything passes.
+45	A mill that grinds bone. I'll pretend I didn't read the sign.
+46	A little girl running after me. "Wait! Don't leave me in the dark!"
+47	The Gnoll King is past the hill. Are you ready?
+48	He wears a crown of bones. A real one. Whole.
+49	An imitation. The true one is in pieces, and he holds one of them. Bring him down.
+50	Green water, warm and still. Everything I didn't want to step in.
+51	The swamp keeps secrets well. They sink slowly, but they sink.
+52	Leaves that sink when you stop. The swamp doesn't like the indecisive.
+53	Flat little stones skipping on a river. Three, four skips. Someone clapped.
+54	There's a tide even here? I thought that was an island thing.
+55	Everything in this realm rises and falls around the same center, Ossian. You'll understand yet.
+56	Poison. On a skeleton. Let's see who ruins whom.
+57	Don't joke. You may fall as many times as you like; I'm the one who tires of fetching you.
+58	Net, hook, leaky boat. A fisherman lizard. I can relate.
+59	A fishing rod bigger than me. An old man laughing: "No fish, only twigs!"
+60	...Did you just smile? Skulls shouldn't be able to do that.
+61	At the bottom again. At least this time I have shark teeth.
+62	Don't look at the surface. The light up there deceives.
+63	Crocodiles in single file. Polite, at least.
+64	The Lizard King already knows you're coming. He never sleeps: he keeps watch.
+65	Roots everywhere. It looks like a cage made of tree.
+66	Cage is a strong word. Shelter. Let's call it a shelter.
+67	You choose your words very carefully, Hex.
+68	A whole village on the water. With clotheslines, with stoves. They live here.
+69	An old wooden bridge. Boards that creaked. I knew which ones not to step on.
+70	Don't get attached to the scenery. It's their king we need.
+71	His eyes are open. Both of them. Unblinking.
+72	He hasn't closed them in a long time. Do him that favor.
+73	Dark, damp, full of webs. The perfect place for someone with no skin.
+74	Speak softly in here. The walls keep names.
+75	There's something written on the stone. Scratched over. Many times.
+76	Spider scribbles. Don't waste time reading.
+77	Do spiders write "Ossian", Hex?
+78	A bridge that snaps if I stop. I used to like bridges more.
+79	Rain on a bridge. A wet board. My foot slipping. No, wait, not yet...
+80	Run, Ossian! Don't just stand there looking down!
+81	Another key, another door. Who locks up a cave this much?
+82	Someone afraid of what's at the bottom. Or of what's outside. Same thing.
+83	I can't see a thing. Just the torches. And some eyes, far away.
+84	A tiny hand squeezing mine. "Stay with me until I fall asleep. You promised."
+85	Stay close to the light. But not that warm light you see when you fall. Never that one.
+86	Hanging cocoons. The size of a person.
+87	The Queen keeps what she catches. In that, I admit, she and I are alike.
+88	They keep dropping from the ceiling! How many legs fit in one cave?
+89	More than you can count. Shoot and don't look up.
+90	Two princes. One with leather wings, one with glass wings. And fighting.
+91	Let them fight. Whoever picks a side gains a friend. And an enemy.
+92	Eggs. Hundreds. I'm walking on the tiptoes I don't have.
+93	A basket of eggs on my arm. One broke on the way. They laughed at me all week.
+94	The Queen is right there. She will talk. They always talk.
+95	She looked at me with all her eyes. And she seemed... sorry for me?
+96	It's a spider's trick. Cut the threads before she wraps you in words.
+97	Heat. I should be sweating. Instead, I just crackle.
+98	An axe going up and down. Firewood splitting. A callus on the hand. My hand.
+99	I'm not going in there with you. Fire and I don't get along.
+100	The lava is coming after me! This isn't a level, it's an eviction!
+101	Run! If you fall in there, it'll take me a while to find you!
+102	A mine inside the volcano. Someone dug all the way here just to lock a door.
+103	They dug deep, yes. They thought the deeper, the safer. They were wrong.
+104	Stone floating on fire. My favorite means of transport, now.
+105	The mountain breathes. It rises when she fills her chest, falls when she lets go.
+106	One, two, FIRE. One, two, FIRE. I've got the rhythm.
+107	A fireplace. Chestnuts popping. Someone telling ferryman stories.
+108	Ferrymen? ...What stories, Ossian? What did you remember?
+109	Lava bulls stampeding. Today the forge decided to hate me in single file.
+110	The Minotaur forges his own soldiers. Hardworking. Stubborn.
+111	Black glass. I can see my reflection. I look better from afar.
+112	A face in a basin of water. Brown eyes. It was mine. I had a face.
+113	Don't stare at reflections. They show what once was.
+114	Hammer blows. From afar they sound like a beating heart.
+115	He's been hammering the same thing since I... since forever. A chain. I mean, a crown.
+116	A river of magma. No bridge, no boat. Only my courage. We're doomed.
+117	The heart of the mountain is near. I can feel it from here. It burns.
+118	He stopped hammering. He's looking at me.
+119	Don't let him finish his sentence. What he forges is not for you.
+120	Old tree, cool shade. First place in this world that doesn't want to kill me.
+121	Sawdust in my hair. I had hair. And someone blew it away.
+122	Watch out for the acorns. Gnomes shoot first and grumble later.
+123	A gate that only opens with weight on top. I'll need help... or a sheep.
+124	Gnomes build to last. Nothing they close opens on its own.
+125	A mushroom that throws you into the air. Finally, a plant on my side.
+126	Don't eat any. ...Figure of speech, I know you don't eat.
+127	From the treetops you can see everything. Except the way out of this realm.
+128	I used to climb trees to see the river. From up there the bridge looked like a toy.
+129	There is no way out to see, Ossian. Not yet. That's why we gather the crown.
+130	Colored blocks, levers, a gate. The gnomes must get very bored.
+131	Whoever guards the same thing for centuries invents pastimes.
+132	Logs floating down the river. Jumping from one to the next. What could go wrong?
+133	A wide river of dark water. Paper lanterns drifting slowly down. Dozens.
+134	Don't look at the water so much. Look at the logs.
+135	Acorn rain! Did I say this forest didn't want to kill me?
+136	The gnomes protect their king. Strange folk: they fight for someone who only gives them orders.
+137	The moss winked at me. Moss doesn't wink.
+138	Everything here keeps watch. That is what this forest was planted for.
+139	Little houses in the roots, smoke in the chimneys. There's even a bell.

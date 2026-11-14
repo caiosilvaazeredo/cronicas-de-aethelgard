@@ -1,0 +1,150 @@
+290	Welcome to my sanctuary. Step only on the clouds that glow; the others won't hold anyone.
+291	This place... there's a row of broken crowns on the altar. And a row of unlit lanterns.
+292	Keepsakes of those who passed through here.
+293	Passed through to where, Hex? Nobody ever went home, did they?
+294	Home is where someone waits for you. I wait for you every time you fall. Think about that.
+295	When I take the last fragment, the gate opens. You swore.
+296	I swore it would open. I didn't swear which way.
+297	...What?
+298	Nothing. An old man's rambling. Go, Ossian. Finish what you started.
+299	Sky Currents
+300	Huge gaps between the clouds. Only the wind carries you from one island to the next.
+301	The clouds have run out. There's only wind between one island and the next.
+302	Sky Currents. Step into the wind and it carries you up. Hold jump and glide.
+303	And if the wind stops?
+304	It doesn't stop. It has blown since I arrived here. A long time ago.
+305	How long?
+306	Longer than you remember living.
+307	Night Flight
+308	With the Bat Prince, through the night, to the Bee King.
+309	The prince says the Bee King guards the way to the Tide Stairway.
+310	He does. And he won't enjoy seeing his nephew defeated.
+311	I didn't betray anyone. I picked a side.
+312	Here, picking a side is the same thing. Fly, Ossian. The night belongs to the bat.
+313	You've been helping me a lot lately, Hex.
+314	...We're near the end. I want you to get there.
+315	Do you really?
+316	With the Bee Prince, through the night, to the Bat King.
+317	The bee said the Bat King wants revenge for his son.
+318	And the night is his. Every shadow is a bat. There will be many, and stronger.
+319	And me with one little bone at a time.
+320	You wanted to bring down the prince. Now bring down the father.
+321	Tide Stairway
+322	Loose islands climbing to the Tide Gate. Only those who sprint and jump again in midair get through.
+323	The crown is whole in your hands. All that's left is to climb the Tide Stairway to the Gate.
+324	Stairway? These are loose islands, with sea below and huge gaps between them.
+325	Nobody reaches the gate by walking. You must run, jump, and jump again in midair. All at once.
+326	You talk like someone who has watched many try.
+327	Many. The gaps grew wider with each one who fell.
+328	And you fetched them all on your cloud.
+329	...I used to. Until the day they stopped falling.
+330	What happened to them, Hex?
+331	They reached the gate. Go, Ossian. This time I'll stay here, watching.
+332	House of Doors
+333	The gate didn't lead home. It led to a house. Doors everywhere, and almost all of them lie.
+334	I crossed the gate and... it's a house? Hallways, doors everywhere.
+335	The Ferryman's House. My old house. It likes to toy with those who enter.
+336	Your house? You never said you had a house.
+337	You never asked. Follow the moon painted on the doors: it always points the way out.
+338	And the other doors?
+339	They send you back to the start. And beware the red moon. It lies too.
+340	Who are these see-through skeletons?
+341	Tenants. Bones that refused to follow the moon. Don't stop to chat.
+342	Haunted Library
+343	Shelves up to the ceiling, bridges that exist only for a moment, and a locked door.
+344	A library. Every book has the same title on its spine: "Ossian".
+345	Coincidence. It's a common name around here.
+346	The exit door is locked.
+347	The key is on top of the shelves. The levers wake the ghost bridges, but only for a moment.
+348	This book has a marked page: "The ferryman who would not let go of the oar". Is that you?
+349	...Put that book down, Ossian. Grab the key.
+350	Lightless House
+351	Near-total darkness. Candles to light and cracked floors that won't hold anyone.
+352	I can't see a thing. Hex? Hex!
+353	I'm here. I always am. Touch the candles: the path appears with the light.
+354	Half this floor is fake. It cracks and falls when I step on it.
+355	Like this house's promises. Don't stop on them. And light the three big candles: the last door only opens with them.
+356	Down at the back... is that the lantern light? The one from the fair, over the river?
+357	...It is. This time I won't fetch you if you fall. Nor if you don't.
+358	Key Workshop
+359	An abandoned workshop on the beach. The door only opens with the golden key.
+360	A locked door in the middle of the beach? Who locks a door with no wall?
+361	Someone who wanted only one kind of traveler to pass. Those who carry what is theirs.
+362	Your bone hands can hold things now. Grab the key and take it to the door.
+363	And these colorful presents scattered around?
+364	Keepsakes of those who passed before. Take them, if you like. No one else is coming for them.
+365	Bone Prairie
+366	A prairie full of raiders. Hold ATTACK: the bones fly out in a burst.
+367	They just keep coming, Hex!
+368	Then don't stop shooting. Hold the strike and your bones will fly on their own.
+369	Since when do I shoot bones?
+370	Since always. You just had no reason to remember.
+371	Switch Blocks
+372	Red and blue blocks that appear and vanish with a lever.
+373	The blocks vanish when I hit the lever. Red, blue, red...
+374	Only one color exists at a time. Choose well which world you leave standing.
+375	Crouched, I jump higher now. A handstand.
+376	Somersaults too. A light body does tricks a living body wouldn't.
+377	You always talk about this "living body".
+378	It's just a figure of speech, Ossian.
+379	Cracked Mine
+380	Gold rocks block the mine. A hammer will fix that.
+381	I grabbed a blacksmith's hammer on the way out. It's still warm.
+382	In midair, slam down: the hammer blow on the ground breaks the gold rocks.
+383	Gold blocking the passage. What a waste.
+384	Gold buys nothing here. Not even a way out.
+385	Princes' Nest
+386	Two princes, one nest, and a pact that changes the sky.
+387	Hex, this cave is full of wings. Bats AND bees?
+388	Two kingdoms that hate each other. The princes have fought over this nest for centuries.
+389	And I'll have to walk right through that fight.
+390	The princes talk, Ossian. A rare thing around here. Listen to what they offer.
+391	Since when do you trust those who talk?
+392	I don't. But a prince who owes you his life... flies very well.
+393	Sky Duel
+394	Riding the Bat Prince, against the Giant Imp.
+395	The Imp grew? He's the size of a cloud!
+396	He ate the embers of the forge. Now he wants the sky. Your new ally will take you to him.
+397	The bat fires three bones at once and screams on top of it. Isn't that cheating?
+398	He's a prince. The scream wipes out nearby shots, and his wings can take a hit.
+399	Aren't you coming?
+400	I see better from down here. Shoot until his bar is empty.
+401	Riding the Bee Prince, against the Giant Imp.
+402	He ate the embers of the forge. Now he wants the sky. Mount the Bee Prince and bring him down.
+403	It only fires one little bone at a time, Hex.
+404	You chose to bring down the bat. Now his whole kingdom wants your head. Dodge a lot and never stop shooting.
+405	You seem... pleased.
+406	A weak ally needs me more. That's all.
+407	Lumberjack's Woods
+408	A forest with a chasm, a gate, and a stubborn sheep.
+409	An axe? The Sanctuary only had clouds.
+410	I found it lying around. Fell the tree in the right direction and it becomes a bridge.
+411	And the sheep?
+412	Put it on the plate. The gate opens with weight. Like almost everything in this land.
+413	Almost everything?
+414	You weigh nothing, Ossian. That's why the plate can't feel your steps.
+415	Gold Mine
+416	A dark mine full of goblins, spiders and bats.
+417	More shots. More bones. More things coming out of the dark.
+418	The mine guards gold and guards fear. Shoot both.
+419	Hex, whose gold is this?
+420	It belongs to those who stayed. Those who cross take nothing with them.
+421	Climber's Tower
+422	The key is at the top of a stone tower.
+423	The key is up there. There's no ladder.
+424	You have the pickaxe now. Jump at the wall and climb.
+425	But with the key in my hand I can't climb.
+426	Then go down the other side. Not every climb needs a way back.
+427	Shaman's Mausoleum
+428	An urn at the center of the mausoleum and ghosts coming from both sides.
+429	An urn. With your name on it, Hex.
+430	Don't let the ghosts touch it. Three touches and it breaks.
+431	What's inside?
+432	What was left of a ferryman. Protect it, Ossian. Please.
+433	...You've never said "please" before.
+434	Crab Beach
+435	A crab ran off with the key to the beach.
+436	Hex, that crab is carrying a key on its back!
+437	Crabs keep everything that shines. Hit it: the key drops.
+438	And if it grabs it back?
+439	Then hit it again. Nobody here lets go of what's theirs without a fight.

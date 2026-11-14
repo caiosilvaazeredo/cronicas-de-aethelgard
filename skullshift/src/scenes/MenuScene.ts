@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { langInfo } from '../i18n';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
@@ -203,6 +204,8 @@ export class MenuScene extends Phaser.Scene {
       const play = pillButton(this, W / 2, P ? (gy + 140 + HH) / 2 - 60 : 618, 'JOGAR', () => this.toModes(), 300, 0xffe066).setScale(P ? 2 : 1.3);
       // Engrenagem: configurações direto da tela inicial.
       pillButton(this, P ? W - 170 : W - 120, P ? 120 : 50, '⚙ AJUSTES', () => this.scene.start('settings', { from: 'menu' }), 190).setScale(P ? 1.4 : 0.85);
+      // Idioma: o botão mostra o nome da língua atual (sem bandeira).
+      pillButton(this, P ? W / 2 : 172, P ? 200 : 104, langInfo().name, () => this.scene.start('language'), 330).setScale(P ? 1.2 : 0.85);
       pillButton(this, P ? 170 : 120, P ? 120 : 50, 'CRÉDITOS', () => this.scene.start('credits', { next: 'menu', data: {} }), 190).setScale(P ? 1.4 : 0.85);
       this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.add

@@ -1,0 +1,170 @@
+590	One, two, three... they fire in sequence.
+591	Like a heart. Learn the rhythm and pass between the beats.
+592	You know this mountain well.
+593	I know every prison well. I mean... every place.
+594	Forge Shootout
+595	Imps and lava minotaurs, nonstop.
+596	Red minotaurs! They charge like raging bulls!
+597	Then shoot before they get here. Hold ATTACK.
+598	Who trained so many lava bulls?
+599	The Minotaur doesn't train: he forges. Each soldier leaves the anvil already knowing whom to protect.
+600	Protect from me?
+601	From you. From me. Deep down, from the same thing.
+602	Obsidian Bridge
+603	Slabs of black stone that sink into the lava.
+604	Black slabs floating on lava. And cannons!
+605	Obsidian sinks after you step on it. Don't stop.
+606	Who put cannons in a forge?
+607	The Minotaur doesn't like visitors. No king does.
+608	Blacksmith's Anvil
+609	The blacksmith's workshop, locked behind gold rocks.
+610	A workshop. Anvils, tools... I know how to use these things.
+611	You do? Interesting. Use the hammer on the rocks and grab the key.
+612	I had calluses on my hands from so much work. I remember.
+613	Bones don't have calluses, Ossian.
+614	Heart of Magma
+615	The heart of the mountain. Nothing passes without a fight.
+616	The paths seal with fire until I bring everyone down.
+617	The Minotaur lets no one pass without a fight. After this, it's him.
+618	I can feel the mountain beating under my feet.
+619	It's the fragment. They pulse when someone gets close. As if they were afraid.
+620	Forest Entrance
+621	The forest of the slingshot gnomes.
+622	Huge trees. And someone shooting acorns at my head.
+623	Gnomes. Small, stubborn and with good aim.
+624	That smell of wood... I know it.
+625	Every forest smells the same, Ossian.
+626	Bouncy Mushrooms
+627	Mushrooms that launch whoever lands on them.
+628	The walls are too tall to jump.
+629	Land on the red mushrooms. They'll throw you way up high.
+630	And if I eat one?
+631	You have no stomach, Ossian.
+632	Treetops
+633	The ground vanishes into the river. The way is over the top.
+634	The river swallowed the path.
+635	Then go over the top, from treetop to treetop. Don't look down.
+636	From up there I can see blue rooftops, far, far away...
+637	It's just the sky reflected on the water.
+638	Log River
+639	Logs floating on the river: you can step on them.
+640	Floating logs. Someone cut down these trees.
+641	The gnomes throw the logs in the river to carry them to the village. Step on them.
+642	I used to chop firewood. Behind a blue house. I'm sure of it.
+643	Cross the river, Ossian.
+644	Forest Shootout
+645	Slingshot gnomes everywhere.
+646	A rain of acorns!
+647	Answer with bones. Hold ATTACK.
+648	Why do they defend a forest so fiercely?
+649	Because they were planted here for that. A gnome doesn't ask; a gnome guards.
+650	Treacherous Moss
+651	Mounds of moss that hide gnomes.
+652	That moss shook. Just like the grass on the prairie.
+653	Moss gnomes. They learned from the Gnolls.
+654	Or someone taught them both.
+655	...Watch out for the logs.
+656	Gnome Village
+657	The gnome village. No one passes without a fight.
+658	A real village. Houses, chimneys, clotheslines...
+659	The villagers defend the King. Each area only opens when everyone falls.
+660	I lived in a village like this, didn't I?
+661	You lived where I found you: on the beach.
+662	Gnome King's Tree
+663	The Gnome King guards the fragment at the foot of the oldest tree.
+664	A gnome the size of a house. With a purple hat.
+665	He lobs acorns in an arc, rolls giant logs and shakes the tree.
+666	Purple, again. Every king wears your purple, Hex.
+667	It's the color of royalty. That's all. Go.
+668	Mine Mouth
+669	The goblin mines, full of torches and gold.
+670	So much gold! And so many lit torches.
+671	The goblins have dug for centuries. The ceiling is old: when dust falls, get out from under.
+672	Dig for what? Gold buys nothing here. You said so yourself.
+673	The Goblin King doesn't know that. Nor does he need to.
+674	Cave-in
+675	The gallery ceiling is collapsing.
+676	The whole ceiling is coming down!
+677	The dust warns where the rock will fall. Run between them.
+678	These beams are rotten. How long have they been digging here?
+679	Since someone ordered the fragment hidden very deep. A long, long time ago.
+680	Dark Gallery
+681	The torches have gone out.
+682	Dark again. Someone put out the torches on purpose.
+683	Light the torches. The three big ones open the exit.
+684	My sister was afraid of the dark. I used to leave a candle lit for her.
+685	...Your sister. Hm. Light the torches, Ossian.
+686	Gold Vein
+687	Gold rocks seal the galleries.
+688	Gold rocks again. Hammer time!
+689	In midair, slam down. And take the key to the door.
+690	So much gold and nobody takes it away.
+691	Take it where? There is no market outside this realm. There is no outside.
+692	You said the Tide Gate leads outside.
+693	I did. And it does. For you.
+694	Dynamite
+695	Miner goblins throw bombs.
+696	They're throwing bombs!
+697	Miners. They blow up the rock and whoever is nearby. Dodge the arc.
+698	If I blow up with it, will you fetch me?
+699	Always. In pieces, if need be. I don't lose any of mine.
+700	Flooded Mine
+701	The water in the mine rises and falls.
+702	A tide inside a mine? That makes no sense.
+703	The water rises from below. It falls again. Like everything here.
+704	Like everything here... it comes back.
+705	Stay up high, Ossian.
+706	Blue Fire
+707	The fire of the depths is blue.
+708	Blue fire! And the goblins carrying it run like mad.
+709	It's the fire from deep in the earth. Hotter than the red. Don't let it touch you.
+710	Why is this fire blue?
+711	It's fire that gives no warmth. The goblins use it to see without being seen. I like neither.
+712	Goblin Treasury
+713	The King's treasure. Guarded by everyone.
+714	Mountains of gold. And guards in every corner.
+715	Each area only opens when everyone falls. Then, the King.
+716	If the king has all this, why does he still want the fragment?
+717	He doesn't WANT the fragment, Ossian. He... forget it. Kings are greedy, that's all.
+718	Goblin King's Throne
+719	The Torch Goblin King guards the fragment in the middle of the gold.
+720	The Goblin King. Black hood and red torch.
+721	He slams the torch on the ground and sends out waves of fire: jump. And he runs from side to side.
+722	Hex, when the last king falls, what happens to this world?
+723	Nothing you will see, Ossian. You'll be home.
+724	Swamp's Edge
+725	Still water, moss and lizards.
+726	Such green water. And that smell of rotting leaves.
+727	The lizards' lagoon. The Lizard King lives in the middle of it and never sleeps.
+728	Never? Not even a nap?
+729	Whoever guards a seal... I mean, a fragment... cannot sleep.
+730	Lily Pads
+731	Giant leaves that sink when stepped on.
+732	Leaves the size of a table!
+733	They hold a skeleton for a moment. Only a moment.
+734	These flowers only open when I pass.
+735	They sense movement. Little has walked upright here for a long time.
+736	Swamp Flood
+737	The swamp water rises and falls.
+738	The water rises here too. Even the swamp has a tide?
+739	All water in this world obeys the same rhythm.
+740	Whose rhythm?
+741	Climb onto the logs, Ossian.
+742	Poison Marsh
+743	Thorns and purple lizards spitting poison.
+744	Purple lizards. Purple like you, Hex.
+745	Their poison is purple. I have no poison.
+746	Are you sure?
+747	Dodge the thorns.
+748	Fisherman's House
+749	A marsh crab took the key.
+750	A little fisherman's house. Just like the ones in my... the ones I've seen.
+751	A crab took the key. You know what to do.
+752	A lizard fishing. He looks at peace.
+753	The peace of one who doesn't know what he guards. Don't wake him to it; just pass.
+754	Bottom of the Lagoon
+755	At the bottom of the lagoon, only a lizard gets through.
+756	The path sinks into the lagoon.
+757	Down there, I'll give you the shape of a lizard. Lizards swim.
+758	You don't need any item to transform me anymore, do you?
+759	The more seals fall... I mean, the more fragments you gather, the more I can do.

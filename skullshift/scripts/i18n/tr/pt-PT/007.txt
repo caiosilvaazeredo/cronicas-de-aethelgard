@@ -1,0 +1,68 @@
+1100	Derrota os nove reis.
+1102	Escolhe um lado na luta dos Príncipes.
+1104	Faz o acordo com o Príncipe Morcego.
+1106	Faz o acordo com a Princesa Abelha.
+1108	Vence o Xamã no Trono.
+1110	Aceita a ajuda do Xamã.
+1112	Recupera três memórias.
+1113	O Meu Nome
+1114	Recupera todas as memórias.
+1116	Encontra um presente.
+1118	Encontra todos os presentes dos níveis de chave.
+1120	Vence uma área bónus.
+1122	Vence todas as áreas bónus.
+1124	Junta 100 de ouro de uma vez.
+1126	Compra um melhoramento no Empório.
+1128	Compra todos os melhoramentos.
+1130	Derrota 50 inimigos.
+1132	Derrota 250 inimigos.
+1134	Faz um contra-golpe.
+1136	Faz 25 contra-golpes.
+1138	Transforma-te 30 vezes.
+1140	Termina o Desenho Perdido.
+1188	Gnomo da Fisga
+1195	Comando 1
+1197	Comando 2
+1198	Toque no ecrã
+1200	Gestos ou rato
+1202	APANHA
+1203	SEGURA
+1206	A ONDA ESTÁ A CRESCER!
+1207	TIROLESA!
+1208	DEBANDADA DA MANADA! SOBE!
+1210	A maré foi a primeira a esquecer o teu nome, Ossian. Vamos ver se a pradaria se lembra.
+1212	Ossos e capim. Foi daqui que tirei o teu corpo, sabias? Não. Ninguém se lembra.
+1231	TRANCADA · encontra a chave
+1234	A porta abriu-se!
+1237	A SAÍDA ABRIU-SE!
+1245	Olha para cima: as aranhas esperam nas teias do teto.
+1246	Só as nuvens encantadas pelo Xamã, as que brilham, aguentam o teu peso.
+1249	SALTO DUPLO!\nsalta e, no ar,\nsalta de novo
+1250	CORRE!\n2× na direção e segura\n+ salto duplo
+1251	O Portão da Maré está diante de ti!
+1252	Até ao Portão da Maré, só passa quem combina corrida, salto duplo e coragem.
+1253	A casa engana. Segue a lua, e desconfia dela também.
+1254	Encontraste a saída do labirinto de portas!
+1255	A CASA ENGANA.\nSegue sempre a LUA.\n(APANHAR: entrar)
+1258	A saída está trancada. Algures entre as estantes, uma chave espera.
+1260	A SAÍDA ESTÁ TRANCADA.\nEncontra a CHAVE.
+1261	GOLPEIA A ALAVANCA.\nA ponte desaparece depressa!
+1262	Não dá para ver nada. Acende as velas, e não pares em pisos rachados.
+1264	ESTÁ ESCURO...\nEncosta-te às velas\npara as acender.
+1266	O teto está cheio de aranhas. Olha para cima, e não pares de andar.
+1269	Uma onda gigante de lava vem atrás! O chão desaba à frente dela: corre, salta, usa a tirolesa.
+1270	Escapaste da onda de lava!
+1271	Entra nas correntes de vento para subir. Segura SALTAR no ar para planar.
+1272	O vento levou-te até ao outro lado!
+1273	VENTO! Entra na corrente\ne segura SALTAR\npara planar.
+1276	APANHAR levanta a chave dourada. Leva-a até à porta trancada. Há 3 presentes escondidos.
+1278	APANHAR levanta a chave.\nLeva-a até à PORTA.\n↑ sobe a escada.
+1279	Com a chave não dá\npara salto duplo:\nusa a MOLA.
+1280	Golpeia a alavanca para trocar os blocos: só a cor ativa é sólida.
+1282	Agachado + SALTAR:\npino\n(salto mais alto).
+1283	Pedras de ouro bloqueiam a passagem. Martelo: no ar, segura ▼ e carrega em ATACAR.
+1284	Pedras partidas, porta aberta!
+1285	MARTELO: no ar,\n▼ + ATACAR\nparte as pedras.
+1286	Derruba a árvore para fazer uma ponte. Uma ovelha numa placa abre o portão.
+1288	MACHADO: ATACAR\nna árvore derruba-a\ne ela torna-se ponte.
+1289	Leva a OVELHA\naté à placa.

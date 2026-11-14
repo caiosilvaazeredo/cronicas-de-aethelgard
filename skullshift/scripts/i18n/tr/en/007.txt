@@ -1,0 +1,190 @@
+1100	Defeat the nine kings.
+1101	Pact Sealed
+1102	Pick a side in the Princes' fight.
+1103	Leather Wings
+1104	Make the pact with the Bat Prince.
+1105	Glass Wings
+1106	Make the pact with the Bee Princess.
+1107	The Free World
+1108	Defeat the Shaman on the Throne.
+1109	Back Home
+1110	Accept the Shaman's help.
+1111	Shards of Memory
+1112	Recover three memories.
+1113	My Name
+1114	Recover all the memories.
+1115	Present!
+1116	Find a present.
+1117	Collector
+1118	Find every present in the key levels.
+1119	Off the Path
+1120	Clear a bonus area.
+1121	Explorer
+1122	Clear all the bonus areas.
+1123	Heavy Pocket
+1124	Hold 100 gold at once.
+1125	Customer
+1126	Buy an upgrade at the Emporium.
+1127	Favorite Client
+1128	Buy every upgrade.
+1129	Bones of the Trade
+1130	Defeat 50 enemies.
+1131	Island Legend
+1132	Defeat 250 enemies.
+1133	PARRY!
+1134	Land a parry.
+1135	Master of the Backstep
+1136	Land 25 parries.
+1137	A Thousand Shapes
+1138	Transform 30 times.
+1139	Film Buff
+1140	Finish the Lost Cartoon.
+1141	ACHIEVEMENT · {0}
+1142	The beach where the skull awakens. The Harpoon Shark guards the first fragment.
+1143	Harpoon Shark King
+1144	Fields of grass and ancient bones. The Gnolls hunt in packs.
+1145	Gnoll King
+1146	Lizard Lagoon
+1147	A warm swamp of green water. In the middle of it, the Lizard King never sleeps.
+1148	Lizard King
+1149	Web Cavern
+1150	Tunnels covered in web. At the bottom, the Spider Queen and the Princes' nest.
+1151	Spider Queen
+1152	The mountain of fire where the Crimson Minotaur hammers the lava.
+1153	Crimson Minotaur
+1154	Gnome Woods
+1155	Old trees, mushrooms and gates that only open with weight. The Gnome King doesn't like visitors.
+1156	Gnome King
+1157	Goblin Mines
+1158	Tunnels of gold lit by torches. The Goblin King counts every nugget.
+1159	Torch Goblin King
+1160	Ember Sky
+1161	Cloud islands and strong winds. The Giant Imp wants the sky all to himself.
+1162	Giant Imp
+1163	Kingdom of Wings
+1164	The kingdom of your ally's enemy. It only opens after the pact with the Princes.
+1165	King of Wings
+1166	Shaman's Sanctuary
+1167	Hex's island, in the middle of everything. The Tide Gate awaits the whole crown.
+1168	Royal Hive
+1169	Bee King
+1170	Kingdom of Night
+1171	Bat King
+1172	CRIMSON MINOTAUR
+1173	Lord of the Forge
+1174	SPIDER QUEEN
+1175	Mother of the Lair
+1176	Skeleton
+1177	Villager
+1178	Lizard
+1179	Gnoll
+1180	Harpoon Shark
+1181	Spear Goblin
+1182	Spider
+1183	Giant Bat
+1184	Torch Goblin
+1185	Bumblebee
+1186	Imp
+1187	Minotaur
+1188	Slingshot Gnome
+1189	Keyboard
+1190	WASD or arrows
+1191	Keyboard · Preset 1
+1192	Left side: WASD + F
+1193	Keyboard · Preset 2
+1194	Right side: arrows + Enter
+1195	Controller 1
+1196	Xbox, PlayStation or similar
+1197	Controller 2
+1198	Touchscreen
+1199	Virtual buttons
+1200	Gestures or mouse
+1201	Drag, swipe and tap
+1202	GRAB
+1203	HOLD
+1204	GRD
+1205	2 FINGERS
+1206	THE WAVE IS GROWING!
+1207	ZIPLINE!
+1208	STAMPEDE! CLIMB UP!
+1209	ROYAL HARPOON
+1210	The tide was the first to forget your name, Ossian. Let's see if the prairie remembers.
+1211	HOWL OF THE PACK
+1212	Bones and grass. This is where I took your body from, did you know? No. Nobody remembers.
+1213	SWAMP LUNGE
+1214	The lizard never closed his eyes because he was watching me. You closed them for me.
+1215	QUEEN'S WEB
+1216	The names scratched on the stone... they were all Ossian. You are only the latest.
+1217	CRIMSON HAMMER
+1218	He forged my chain. Now he forges your end. The irony of the anvil.
+1219	GIANT ACORN
+1220	The forest was planted around my prison. Every tree, a guard. None remain.
+1221	KING'S TORCH
+1222	Gold, gold, gold. They counted nuggets while I counted the days. One more world.
+1223	GIANT EMBER
+1224	The sky burns because I breathe. Up there, only the last kingdom remains.
+1225	ROYAL SWOOP
+1226	No... all nine together? That wasn't on the ferry. That was NOT on the ferry!
+1227	Shaman's Throne · {0}
+1228	GNOLL KING
+1229	Lord of the Prairie
+1230	{0}: enter
+1231	LOCKED · find the key
+1232	CLOSED · {0} {1} left
+1233	HEEHEEHEE! WRONG DOOR
+1234	The door opened!
+1235	KEY!
+1236	BRIDGE! {0}s
+1237	THE EXIT IS OPEN!
+1238	GNOME KING
+1239	Guardian of the Woods
+1240	TORCH GOBLIN KING
+1241	Lord of the Mines
+1242	LIZARD KING
+1243	Lord of the Lagoon
+1244	Tap BACK as the blow\nlands: PARRY!
+1245	Look up: spiders wait in the ceiling webs.
+1246	Only the clouds enchanted by the Shaman, the ones that glow, can hold your weight.
+1247	The Imp's home. Each area only opens when all of its enemies fall.
+1248	The Crimson Minotaur has fallen! Fragment recovered!
+1249	DOUBLE JUMP!\njump and, in midair,\njump again
+1250	SPRINT!\ntap a direction 2× and hold\n+ double jump
+1251	The Tide Gate stands before you!
+1252	Only those who combine sprinting, double jumps and courage reach the Tide Gate.
+1253	The house deceives. Follow the moon, and doubt it too.
+1254	You found the way out of the door maze!
+1255	THE HOUSE DECEIVES.\nAlways follow the MOON.\n(GRAB: enter)
+1256	Not every moon\ntells the truth.
+1257	THE EXIT!
+1258	The exit is locked. Somewhere among the shelves, a key is waiting.
+1259	The key turned in the lock!
+1260	THE EXIT IS LOCKED.\nFind the KEY.
+1261	HIT THE LEVER.\nThe bridge vanishes fast!
+1262	You can't see a thing. Light the candles, and don't stop on cracked floors.
+1263	The lit candles revealed the path!
+1264	IT'S DARK...\nTouch the candles\nto light them.
+1265	The door only opens with\nthe 3 BIG CANDLES lit.
+1266	The ceiling is full of spiders. Look up, and keep moving.
+1267	At the bottom of the lair, the Queen guards the fragment among the eggs.
+1268	The Spider Queen has fallen! Fragment recovered!
+1269	A giant wave of lava is right behind you! The ground collapses ahead of it: run, jump, use the zipline.
+1270	You escaped the lava wave!
+1271	Step into the wind currents to rise. Hold JUMP in the air to glide.
+1272	The wind carried you to the other side!
+1273	WIND! Step into the current\nand hold JUMP\nto glide.
+1274	Riding the allied prince, through the night, to the king of the enemy kingdom.
+1275	The king fell from the night sky!
+1276	GRAB lifts the golden key. Take it to the locked door. There are 3 hidden presents.
+1277	The key opened the door!
+1278	GRAB lifts the key.\nTake it to the DOOR.\n↑ climbs the ladder.
+1279	With the key you can't\ndouble jump:\nuse the SPRING.
+1280	Hit the lever to switch the blocks: only the active color is solid.
+1281	Blocks in place, door open!
+1282	Crouch + JUMP:\nhandstand\n(higher leap).
+1283	Gold rocks block the passage. Hammer: in midair, hold ▼ and press ATTACK.
+1284	Rocks broken, door open!
+1285	HAMMER: in midair,\n▼ + ATTACK\nbreaks the rocks.
+1286	Fell the tree to make a bridge. A sheep on a plate opens the gate.
+1287	The forest cleared the way!
+1288	AXE: ATTACK\nthe tree to fell it\nand make a bridge.
+1289	Carry the SHEEP\nto the plate.

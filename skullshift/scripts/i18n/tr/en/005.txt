@@ -1,0 +1,170 @@
+760	Marsh Shootout
+761	Lizards and castaways, nonstop.
+762	They're coming out of the water from every side!
+763	Hold ATTACK and push forward.
+764	They attack without anger. It feels like duty.
+765	It is duty. The oldest one they have.
+766	Mangrove
+767	Roots, branches and fallen trunks over the water.
+768	Roots everywhere. It looks like a drowned forest.
+769	It was a forest. The water rose one day and never went down again.
+770	Who made the water rise?
+771	The logs are rolling. Stay sharp.
+772	Lizard Village
+773	The lizards' village. No one passes without a fight.
+774	A village of lizards. They have homes, Hex. Family.
+775	And they defend the King. Each area only opens when everyone falls.
+776	I don't like fighting those who have family.
+777	They aren't real, Ossian. Nothing here is. Only you.
+778	Lizard King's Throne
+779	The Lizard King never sleeps.
+780	The Lizard King. He's looking at me... and at you, Hex.
+781	He spits poison and lashes his tongue: low, jump; high, crouch. And he leaps, splashing puddles.
+782	Why does he look at you with such hatred?
+783	Old quarrels. Bring him down and it's over.
+784	Ember Clouds
+785	Glowing clouds that crumble when stepped on.
+786	The sky is red. Like an ember.
+787	It's the Imp's sky. He burned the clouds to keep the sky all to himself.
+788	And the clouds can hold my weight?
+789	For a moment. Don't stop on them.
+790	Meteor Shower
+791	Burning meteors falling from the sky.
+792	It's raining rocks on fire!
+793	The sparks warn where they land. Stay away from them.
+794	The whole sky is falling on me!
+795	Only the loose pieces. What matters in the sky is still locked in place. For now.
+796	Ember Sky Shootout
+797	Imps and ember bees, nonstop.
+798	Red bees and imps everywhere!
+799	Hold ATTACK. The sky doesn't forgive those who hesitate.
+800	Small imps, giant imp. Where are the medium-sized ones?
+801	They turn giant or they turn to ash. Up here there is no in-between.
+802	Fire Winds
+803	Currents of hot wind between the islands.
+804	The wind here is hot. And fire shoots out of the rocks.
+805	Step into the wind, glide, and don't land on the jets.
+806	Are you all right in all this heat?
+807	I keep away from it. Fire reminds me too much of the lanterns.
+808	What lanterns?
+809	...Figure of speech. Ride the wind up, go on.
+810	Castle in the Clouds
+811	The imps' castle.
+812	A floating castle. Red, like the sky.
+813	The imps' castle. Nothing passes without a fight.
+814	How many castles have you seen fall, Hex?
+815	Many. And all of them rose again. Except one.
+816	Ember Swarm
+817	Ember bees and castle cannons.
+818	An entire swarm! And cannons!
+819	The ember bees dive. The storm ones take three hits.
+820	They're lost here, Hex.
+821	As you were on the beach. The difference is that you have me.
+822	Cloud Vault
+823	The imps' vault.
+824	A vault in the middle of the sky. With a wall of red blocks.
+825	Drop the key, switch the color, pick it up again. You know the drill.
+826	You always know how to open everything, Hex. Vaults, doors...
+827	...And prisons. Go, Ossian.
+828	Gate of Wings
+829	The entrance to the kingdom of your ally's enemy.
+830	My ally's enemy kingdom. Full of buzzing wings.
+831	You picked a side in the Princes' nest. Now the entire other side wants you gone.
+832	My ally says their king is the last guardian.
+833	The last fragment. After him, the crown is whole.
+834	Wind Route
+835	A daytime flight across the kingdom's sky.
+836	Flying again! My ally knows the way.
+837	Hold fire and dodge everything. The route is long.
+838	From up here the realm looks like a wheel. Everything turning around your island.
+839	Lovely image. I had never noticed.
+840	Liar.
+841	...A little.
+842	Castle of Wings
+843	The kingdom's castle. Nothing passes without a fight.
+844	Towers everywhere. And guards in each one.
+845	Each area only opens when everyone falls.
+846	There's a throne for each of the kings, painted on the wall. Nine.
+847	Old art. From the time when they used to gather.
+848	What for?
+849	To decide what to do with me. I mean: with the realm.
+850	Storm Flight
+851	A night flight through the middle of the storm.
+852	Lightning, rain and enemies. All at once.
+853	The storm is old. It has never stopped since I... since the realm has existed.
+854	I don't like rain. I don't know why.
+855	Nobody does. Cross quickly and don't think about it.
+856	Royal Chamber
+857	The royal chamber, locked.
+858	A locked chamber at the top of the tower.
+859	Springs and ladders. Take the key to the door, no rush.
+860	Another key. I've opened so many doors for you, Hex.
+861	For us. And this is almost the last.
+862	Royal Currents
+863	Wind currents between the towers.
+864	The wind blows between the towers. I can glide to the other side.
+865	Step into the wind, hold jump. And beware of the divers.
+866	The wind here has a voice. It sounds like someone calling.
+867	It's only wind. If you hear a name, don't answer.
+868	Dusk Flight
+869	The last daytime flight before the king's night.
+870	The sun is setting. I remember a sunset on a river... with lanterns.
+871	There is no river here. Fly, Ossian. The king's night is coming.
+872	The sky over the middle island is black now.
+873	A sign that we're close. Big things cast shadows.
+874	Royal Shootout
+875	Run and gun on the kingdom's walls.
+876	The walls are full of guards.
+877	Hold ATTACK and get across.
+878	They shout something before attacking. It sounds like "don't let go".
+879	They shout "don't pass". You misheard.
+880	Royal Guard
+881	The royal guard defends the last bridge.
+882	The royal guard. After them, the king.
+883	The last king, Ossian. The last... fragment.
+884	Hex, you're shaking.
+885	It's the wind. Only the wind.
+886	Lost Cartoon (1930)
+887	An old film reel. Everything in black and white, with projector hiss.
+888	Hex? Why is everything gray? And that hiss?
+889	You found a film reel. This is a very, very old memory.
+890	Whose memory?
+891	Mine. From before the boat. From when I too laughed at cartoons like this.
+892	You were... alive too?
+893	Shoot, Ossian. The film is running out.
+894	Forgotten Pen
+895	An empty pen in the grass.
+896	A sheep pen. Without a single sheep.
+897	They ran off long ago. But they left presents. Take them.
+898	One of them had a black ear...
+899	They all have ears, Ossian. Move.
+900	Sunken Hut
+901	A half-sunken hut.
+902	A hut sinking into the swamp. Is anyone there?
+903	No one. Only what was left behind. Take whatever shines.
+904	Cocoons up to the ceiling.
+905	Cocoons everywhere. What if one of them moves?
+906	The ones that move aren't the ones that hold gold. Choose well.
+907	Obsidian Vault
+908	A vault in the black glass.
+909	A vault inside the volcano. Who locks gold in fire?
+910	Someone who wants to forget they have it. The Minotaur was like that.
+911	Mushroom Ring
+912	An enchanted ring.
+913	The gnomes say this ring is enchanted.
+914	The gnomes say a lot of things. Jump on the big ones and don't step on the small ones.
+915	Gold Pocket
+916	Gold no goblin ever found.
+917	Gold! And not a goblin in sight.
+918	Yet. Grab it fast.
+919	Nest in the Clouds
+920	A huge nest in the embers.
+921	A nest the size of a house. What bird makes that?
+922	One that has already left. Almost everything here has already left.
+923	Feather Spire
+924	A forgotten tower.
+925	Feathers and coins. The kingdom's guards were vain.
+926	They were loyal. Same thing. Take the coins.
+927	Hollow Tree
+928	A giant tree that wasn't there before. Inside it, a treasure.
+929	Hex, this tree wasn't here when I came through.

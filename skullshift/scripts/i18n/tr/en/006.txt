@@ -1,0 +1,170 @@
+930	Old trees appear to those who have walked far enough. This one holds gold.
+931	And who kept gold inside a tree?
+932	Someone who meant to come back. Nobody comes back. Take it all.
+933	A blue house
+934	When the fragment shone, I saw a house. Blue, near the sea.
+935	Someone inside was calling for dinner. Calling... me?
+936	Real hands
+937	I had hands. Real hands, with calluses from splitting firewood.
+938	I remember the smell of cut wood. Bones can't smell.
+939	The sheep
+940	I tended sheep. And a little sister, who was afraid of the dark.
+941	I promised I would always be back before dark.
+942	Bridge Village
+943	The hamlet was called Bridge Village. An old bridge crossed the river.
+944	Hex never spoke of rivers. Only of tides.
+945	The Lantern Fair
+946	At the Lantern Fair, everyone set a light adrift on the river for those who had gone.
+947	The warm light I see when I fall... looks like them.
+948	The rain
+949	That night it rained. The bridge was slippery.
+950	My sister was on the other side. I went to get her.
+951	Someone in purple
+952	There was someone on the bridge. In purple. He held out his hand to me.
+953	I don't remember whether he caught me... or pushed me.
+954	The freezing water
+955	The water was freezing. Then, a cloud.
+956	And a voice: "Not yet". The same voice as always.
+957	My name
+958	My name... my name is not Ossian. He was the one who gave me that name.
+959	It won't be long before I remember everything.
+960	The crown is whole, Hex. Now what? Where's the Tide Gate?
+961	There is no gate, Ossian. There were seals. Nine. And you broke them all for me.
+962	The kings... weren't they guarding fragments?
+963	They were guarding my prison. You were the most patient key I ever had.
+964	And I keep my promises. Put on the crown. It gives back what the bridge took.
+965	...My hands. My face. I am... me again. I remember everything.
+966	It was you on the bridge. You held out your hand and let me fall.
+967	I needed someone with no fear of falling. The dead fear nothing.
+968	Now choose. I open the river path and you go home, to your sister. Whole.
+969	This world stays with me, of course. No one will miss it.
+970	And if I say no?
+971	Then try to bring me down. If you can, the seals return... and you turn back to bone. Forever.
+972	The Seals
+973	The world is free.
+974	You... chose the bones... over your home?
+975	My sister has the whole village. This world only had me.
+976	The seals are returning. I go back to the prison. And you...
+977	I go back to being bone. That's fine. Now I know who I am.
+978	And next time I fall, no one will pull me back.
+979	I'll cross the light when it's time. My own way.
+980	The River Path
+981	You went back home.
+982	I want to go home.
+983	Wise choice. The river will take you. Don't look back.
+984	...The islands are turning purple. The kings, the creatures. Everything.
+985	It's no longer your problem. Go. Your sister is waiting on the bridge.
+986	I got here before dark. As I promised.
+987	But sometimes, when I look at the river, I see purple clouds. And someone smiling inside them.
+988	The Tide Gate
+989	The crown is whole.
+990	The crown is whole. The gate opened... and on the other side there's a river. And lanterns.
+991	Put on the crown, Ossian. With it, no one will ever bring you down again. Stay. Rule the tide with me.
+992	The light is calling me again. By my name. The real one.
+993	If you cross, you will forget everything: the isles, the shapes, me. There will be no cloud to fetch you.
+994	You never saved me, did you? Every time I fell, I was leaving. And you brought me back.
+995	...I too once stood on that side of the light. So long ago that I forgot my name.
+996	So that's what happens to those who stay.
+997	The choice is yours. It always was. I just... never told you.
+998	Not yet.
+999	Back. Always back.
+1000	Don't look at the light.
+1001	I've got you.
+1002	It's not your time... to go.
+1003	I almost lost you.
+1004	That's it, Ossian! You touched another creature's essence and took on its shape.
+1005	Hex?! Where did you come from? And why do I have... this?
+1006	The gift I lent you. Your soul is loose from your bones, so it fits in any shape.
+1007	A living body could never do that. ...I mean, an ordinary body.
+1008	"Loose"? What do you mean, loose?
+1009	Details. Grab a creature's object and you become it. If you fall, you turn back to bone, and I fetch you. Go!
+1010	Scales. Skin at last. Too bad it isn't mine.
+1011	Great, now I have fleas. I didn't even know bones could get fleas.
+1012	A shark standing upright, harpoon in hand. Makes perfect sense. Nothing here does.
+1013	Short, green and holding a spear. I feel... perfectly normal.
+1014	Eight legs. I barely knew what to do with two.
+1015	A bat. Of course. The most natural thing for a skeleton.
+1016	A torch in the middle of a cave. What a bright idea. Literally.
+1017	I've become the Imp. If I run into myself, I promise to punch me.
+1018	Horns, muscles, the smell of a stable. Two out of three isn't bad.
+1019	Buzzing and with a stinger. If I had any dignity, it would be gone now.
+1020	A slingshot gnome. Still taller than I expected.
+1021	TIP
+1022	FUN FACT
+1023	RUMOR
+1024	Tap BACK right as the blow lands: PARRY! It breaks the attacker's guard and sends projectiles back.
+1025	Guarding without a shield is a half-moon: it only covers the front. Watch out for whoever comes from behind.
+1026	Crouch and press GRAB over an item to store it in the reserve box, without transforming.
+1027	The reserve box (top of the screen) holds one item. Press R, SELECT or tap the box and it drops from the sky.
+1028	Already transformed and grabbed another item? The old form goes to the reserve box, if it's empty.
+1029	When you respawn, the reserve item drops near you on its own. Stand under it!
+1030	Double-tap a direction and hold to sprint. Some platforms can only be reached at full speed.
+1031	Double jump: press JUMP again in midair. The second jump is a little lower.
+1032	Bats and bees fly: hold JUMP in the air. Spiders stick to walls.
+1033	Sharks swim freely. In water, ▼ dives and JUMP leaps out.
+1034	An item thrown on the ground blinks before it vanishes. Grab it fast or lose your chance.
+1035	Every key level hides 3 presents. Explore before opening the door.
+1036	The tide rises and falls. Crates float: use them as platforms at high tide.
+1037	A bubbling geyser warns before it erupts. Wait for the fire to pass.
+1038	Elites are bigger and wear armor: one blow isn't enough.
+1039	Bosses telegraph every attack. Watch the pattern before you rush in.
+1040	While paused (ESC or P) you can change music volume, screen shake and colorblind colors.
+1041	In the dark, stay close to the torches: their light shows the path and the enemies.
+1042	Lily pads sink slowly. Don't stop on them.
+1043	Web bridges snap if you stand still. Run across.
+1044	In versus, whoever knocks the other down gets the turn and runs toward their side. Reach the end to win.
+1045	Defeated enemies, presents and cleared levels give gold. Spend it at the Black-Ear Emporium, on the world map (B key).
+1046	Stubborn Bone, from the Emporium: while transformed, the fatal blow only undoes the form. You turn back into the skull and stay standing.
+1047	The Emporium's owner is a sheep with a black ear. She doesn't talk: she answers with signs. And she charges a lot.
+1048	They say the Emporium sheep showed up on the beach the same day as the skull. And that she already knew him.
+1049	All the music in the game is composed by the code itself, note by note, without a single audio file.
+1050	The skull can turn into 11 different creatures. Each one gets a sarcastic remark the first time.
+1051	Gnolls hunt in packs and gnaw on ancient bones. That's why their bone turns the skull into a Gnoll.
+1052	The Crimson Minotaur has hammered the same anvil for so long that the lava around it cooled into obsidian.
+1053	The forest gnomes plant an acorn for every visitor they drive out. The forest is huge.
+1054	Mine goblins paint their torches blue when they strike gold. Blue fire = rich vein.
+1055	Tide sharks use harpoons taken from sunken ships. Some still have names engraved on them.
+1056	The bat and bee Princes have been fighting since they hatched in the same nest.
+1057	Swamp lizards shed their skin once a year and keep the old skins as trophies.
+1058	The Giant Imp used to be small. He ate too many embers.
+1059	Sheep are the only animal no king has managed to tame. They only obey pressure plates.
+1060	The Spider Queen weaves a new cocoon every moon. Nobody knows what she keeps in them.
+1061	They say the Shaman has never left the central island. Not once. Not even to fetch a fragment.
+1062	The prairie elders swear that, before the kings, the middle island had no dark sky.
+1063	A crown broken in nine? The kings always said they were guarding something else.
+1064	Every time a king falls, someone swears they hear a chain snapping in the distance.
+1065	The Shaman knows the name of every king. But he never says his own.
+1066	Some say the skull once had a face. And a home. And someone waiting for him.
+1067	"Fragment" is a strange word for something that beats like a heart.
+1068	Crabs carry keys. Hit one and the key drops.
+1069	The isles' lighthouse lights itself when a king falls. Nobody lives there.
+1070	Stampede: climb up high and wait for it to pass.
+1071	The prairie mill grinds bones, not wheat. The Gnolls think that's normal.
+1072	Poison lizards spit in an arc. Approach from above.
+1073	Hanging spiders drop when you pass underneath. Run through.
+1074	The lava rises in waves. Keep an eye on the glowing crest.
+1075	Big mushrooms are springs. Heavy gates open with weight on the plate.
+1076	In the mines the ceiling caves in: falling dust warns where the rock will land.
+1077	Wind currents carry you up. Let go at the top and glide to the next island.
+1078	In flight, your mount depends on the pact with the Princes: bat or bee.
+1079	The sanctuary walls have marks made from the inside out.
+1080	RESERVE
+1081	GO  ➜
+1082	⬅  GO
+1083	Bone Hands
+1084	GRAB lifts keys, sheep and other objects over your head. GRAB again drops them; ATTACK throws them.
+1085	Somersault and Handstand
+1086	Crouched, press JUMP: handstand leap (much higher). While sprinting, turn the other way and jump: backflip (also higher).
+1087	Hammer
+1088	In midair, hold ▼ and press ATTACK: ground slam. It breaks cracked gold rocks and stuns anyone nearby.
+1089	Axe
+1090	ATTACK near a tree fells it toward the side you're facing: it becomes a bridge.
+1091	Pickaxe
+1092	Touching a wall in midair digs in the pickaxe: the skull climbs the wall on its own, like the spider.
+1093	Awakening
+1094	Finish the first level.
+1095	First Seal
+1096	Defeat the first king.
+1097	Half the Crown
+1098	Defeat five kings.
+1099	Whole Crown

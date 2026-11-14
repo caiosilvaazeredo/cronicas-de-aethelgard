@@ -1,0 +1,150 @@
+140	The village bell. The village of... of the Bridge. It rang six times and I'd run home.
+141	What was that? You said a name. What name did you say?
+142	The king is the size of my femur and has twice my rage.
+143	The small ones hold the biggest grudges. Go.
+144	Rails, beams, torches. Goblins like a tidy hole.
+145	They dig for gold. Gold! As if that could buy the way out.
+146	Torch goblins in a row. Someone warned them I was coming.
+147	The king counts every nugget and every soldier. He'll notice these are missing.
+148	Dust falling from the ceiling. Next, the ceiling.
+149	A paper lantern in my hands. I wrote a name on it. Whose?
+150	Hurry. These mines weren't built to last. Only to hide.
+151	Pitch black. Lucky that bone glows a little in the dark. It doesn't? Shame.
+152	Follow the torches. I don't go that deep. From here down, you're alone.
+153	Gold across the whole wall. And nobody here seems any happier for it.
+154	Riches in a prison are still a prison. ...It's a saying. Forget it.
+155	A barrel with a fuse. My kind of solution: quick and loud.
+156	Fireworks bursting in the sky. It was a festival. A small hand tugging at my sleeve.
+157	Careful what you wake with all that noise.
+158	The mine flooded. The goblins even left their lunchbox floating.
+159	Water always finds its way down. Like certain souls.
+160	Blue fire. Cold. It suits me better than the other kind.
+161	A blue coat hanging behind the door. Too small for me. Hers.
+162	Who is "she", Ossian? You're talking to yourself.
+163	A mountain of gold. And in the middle, an empty throne waiting.
+164	He stepped out to greet you. One fragment is worth more than all of that together.
+165	The king brought the biggest torch. Of course he did.
+166	Put it out. I don't like the way it lights things up.
+167	Cloud islands. Down below, nothing. Not looking, not looking, I looked.
+168	I can see you well from here. The sky is where I move best.
+169	The whole sky is red. It looks like a sunset that never ends.
+170	Sunset. "Be back before dark!" I always came back. Always. Except once.
+171	Except once what? Talk to me, Ossian.
+172	The wind carries me up. I'm light. That's the perk of having no filling.
+173	Let it carry you. Just don't rise too high: there's a light up there that is not for you.
+174	It's raining burning rocks. An umbrella won't cut it.
+175	The Imp throws whatever he has. He's afraid. They all are, in the end.
+176	Imps everywhere, laughing. I hate enemies that laugh.
+177	They laugh because they're young. They don't remember what they guard.
+178	Hot wind going up, fire going sideways. An oven with a view.
+179	Lanterns rising on the warm air. Each one for someone who's gone. I let one go.
+180	A castle on top of a cloud. Brave architecture.
+181	From here they watched the middle island for a long time. Now it's empty. Excellent.
+182	Wings in the middle of the embers. They shouldn't be this far from home.
+183	Nobody here is where they wanted to be. It's what unites us.
+184	A locked door in the sky. To keep what out? Birds?
+185	To keep something in, perhaps. Grab the key.
+186	The Giant Imp. He wants the whole sky for himself.
+187	The sky belongs to whoever gets there first. And I got there long before him.
+188	The gates of the enemy kingdom. My ally wouldn't come this far.
+189	Pacts are useful, Ossian. While they last.
+190	Flying is easy. The hard part is remembering I shouldn't know how.
+191	Light rain on my face. Night. A voice from the other side of the bridge: "I'm scared!"
+192	Huge, empty halls. The guards fly in circles without knowing why.
+193	They guard out of habit. They forgot the reason. Don't remind them.
+194	Thunder, lightning, rain. And me in the middle, made of conductive material.
+195	Heavy rain. The bridge slipping. I ran. She was on the other side.
+196	Fly lower. And stop looking at the rain.
+197	A key at the top of the tower. Always at the top. Never on the floor, next to the door.
+198	What is easy to open doesn't need guarding.
+199	Crossed air currents. The whole kingdom wants to blow me out.
+200	Let them blow. Only one left. Only one, Ossian, and...
+201	Night is falling. It had never gotten dark here before.
+202	Someone on the bridge, in purple. A hand held out. "Come. I'll take you."
+203	...The sky darkens as the end draws near. It's natural. Keep going.
+204	The king's entire guard in the air. They must like him a lot.
+205	Or they fear what happens if he falls. Same thing to us.
+206	The last gate. I can hear enormous wings on the other side.
+207	Freezing water. Then, a cloud. And a voice, far too calm: "Not yet."
+208	You're shaking. Skulls don't shake. Go in.
+209	The king of wings. The sky feels small with him in it.
+210	Bring him down. After him, the accounts are almost settled.
+211	An endless stairway. And broken chains on every step.
+212	Old ornaments. Don't trip on them.
+213	Nine chains, Hex. I counted.
+214	An urn in the middle of the hall. And everything in here wants to break it.
+215	A name. Someone shouting a name on the riverbank. It wasn't "Ossian".
+216	Protect the urn. What's inside is... important to both of us.
+217	Doors that lead to other doors. This house doesn't want me to reach the end.
+218	I used to get lost here myself. At first. I've had a long time to memorize it.
+219	Books with names on the spine. All crossed out. Except the last one.
+220	Don't read. Ossian, don't read that one.
+221	It's blank. Were you saving the spot for me?
+222	No light at all. Only the candle in my hand. And your voice.
+223	I remember. My sister on the other side. The hand in purple. I didn't slip.
+224	Memories deceive, Ossian. Come. The throne is just past the door.
+225	Hands. I have hands again. So let's use them.
+226	Ossian
+227	Shaman Hex
+228	Tide Isles
+229	Where the skull awakens. The first fragment of the crown shines at the end of the beach.
+230	Wake up. Slowly... the tide brought you back to the beach. Again.
+231	Again? I... don't remember anything. Only lights. Lanterns hanging over a river.
+232	Lanterns, a river... travel dreams. Forget it. What is your name?
+233	I... don't know. I had a name. It's on the tip of my tongue. If I had a tongue.
+234	Then you shall be Ossian. It's a good name. It has served others before.
+235	Others?
+236	Listen: the Crown of Bones was broken in four. Whole, it opens the Tide Gate. It is your way home.
+237	I lend you a gift: touch a creature's object and you'll take its shape. And if you fall, I'll fetch you on my cloud.
+238	And why are you helping me?
+239	Because that's what a counselor does. Go. The first fragment is at the end of the isles.
+240	Damp Cavern
+241	Stone steps, dark pits and webs on the ceiling. The second fragment is down at the bottom.
+242	Hex, when I fell in the water... I saw a light. Warm. Someone was calling a name. I think it was mine.
+243	The depths lie, Ossian. There is nothing down there for you. Don't follow lights.
+244	But you got there before I could reach it. You always get there first.
+245	I'm fast. That's what a cloud is for.
+246	There are names scratched on this stone. Dozens. All struck through with a line.
+247	Travelers who came before. They gave up on the path.
+248	This one... the handwriting looks like mine. "Ossian". Crossed out.
+249	Many hands look alike in the dark. Watch out for the ceiling spiders. Move on.
+250	Web Nest
+251	Spiders hanging all over the ceiling. You can get through without defeating them all.
+252	More webs. And more. The whole cave looks like a cocoon.
+253	The Nest. The Queen's daughters live hanging from the ceiling. Look up before you pass.
+254	Do I have to defeat them all?
+255	No. Go past them. No spider is worth a broken bone.
+256	You know this place well.
+257	I've crossed many things carrying someone on my back.
+258	Queen's Lair
+259	Eggs, thick webs and, at the bottom, the Spider Queen guarding a fragment.
+260	Hex... that thing at the back is a spider the size of a house. With a crown.
+261	The Queen of the Lair. She guards a fragment among the eggs.
+262	She spits web. If it traps you, strike and wait until it lets go. And watch the ceiling: she walks up there.
+263	And if I fall?
+264	I'll fetch you. She knows my cloud: she's lost a lot of prey to me.
+265	Prey. Is that what I am to you two?
+266	...Go, Ossian. She's waking up.
+267	Volcanic Forge
+268	The forge of the Imp, who is trying to melt the fragments into a crown all his own.
+269	I can go no further. The fire... can't stand me. If you fall in the lava, I'll have to wait for the smoke to settle.
+270	You can't get near the fire. Or the end of the path. Why?
+271	Everyone carries their own chains, Ossian. Mine are old.
+272	In the lava's reflection I saw myself with a face. Skin, wet hair... and a lantern cord on my wrist.
+273	Heat tricks the eyes. You are bone. You always were.
+274	The creatures here don't run from me. They run when your cloud shows up.
+275	They know me. I take those who fall. It's my trade.
+276	"Take"? Where to?
+277	Here every area has a fire barrier. It only goes out when no one else is left standing.
+278	And at the bottom of the forge lives the Crimson Minotaur. He won't fall to a single blow.
+279	Grab the fragment. The Imp must not complete the crown.
+280	Forge Escape
+281	Without the Minotaur, the mountain woke up. The lava is right behind: run without stopping.
+282	The ground is shaking. Hex, the whole forge is waking up!
+283	The Minotaur fell and the mountain has no master. The lava is coming after you. Run!
+284	Run where?
+285	Forward. Always forward. And don't stop: it won't.
+286	You never run from anything, do you?
+287	I don't need to. I float.
+288	Cloud Sanctuary
+289	The Shaman's home. The last fragment waits on the altar, among the enchanted clouds.

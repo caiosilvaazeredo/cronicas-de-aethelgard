@@ -1,0 +1,115 @@
+1290	A chave está no alto da torre. Picareta: encosta-te na parede no ar e sobe.
+1291	Do alto da torre até à porta!
+1292	PICARETA: salta na\nparede e a caveira\nsobe sozinha.
+1293	Corrida e tiro! Segura ATACAR para disparar ossos. Os inimigos não param de chegar.
+1294	Atravessaste a pradaria aos tiros!
+1295	Corrida e tiro na mina! Segura ATACAR: tochas, aranhas e morcegos vêm em ondas.
+1297	Uma caverna cheia de asas. No fundo, alguém com coroa espera por ti.
+1301	Protege a urna! Assombrações vêm dos dois lados. Se tocarem a urna 3 vezes, recomeça.
+1303	Uma árvore enorme, oca por dentro. Leva a chave até à porta lá no alto. Os 3 presentes valem ouro.
+1305	Área bónus!\nPresentes valem ouro.
+1306	Área bónus!\nA chave está lá no fim.
+1307	Área bónus!\nSobe até a chave.
+1312	Casulos pendurados até ao teto. Nem todos guardam aranhas: alguns guardam tesouros.
+1316	Uma roda de cogumelos que os gnomos juram ser encantada. Salta nos grandes.
+1319	O bolsão era teu!
+1324	Um rolo de filme antigo... A caveira entrou num desenho de 1930! Segura ATACAR para atirar.
+1326	Um caranguejo fugiu com a chave! Acerta-lhe para a chave cair e leva-a até à porta.
+1328	Acerta o caranguejo: a chave cai!
+1329	A maré sobe e desce sozinha. Quando ela vier, fica no alto!
+1330	Venceste a maré!
+1331	A maré sobe! Fica no alto quando ela vier.
+1332	Tábuas soltas afundam logo depois de pisadas. Não pares em cima delas!
+1333	Atravessaste o naufrágio!
+1334	Sobe a bordo! Canhões disparam pelo convés: salta as balas ou defende.
+1335	O convés é teu!
+1336	Balas de canhão: salta ou defende!
+1337	Debaixo de água a caveira vira Tubarão! ↑ (ou SALTAR) sobe, ▼ desce. Cuidado com as águas-vivas.
+1338	Atravessaste a caverna submarina!
+1339	↑ ou SALTAR sobe · ▼ desce
+1340	Golpeia as alavancas: maré alta faz os caixotes subirem; maré baixa abre os caminhos de baixo.
+1343	O convés afundou no meio. Atravessa pelas vergas e pelos cestos de gávea, lá no alto!
+1344	Dominaste os mastros!
+1347	O Rei Tubarão-Arpão manda na maré. Na maré baixa ele encalha: é a tua oportunidade!
+1350	A coroa devolveu o teu corpo. Agora, o Xamã.
+1353	Chegaste à pradaria!
+1355	A manada vem em disparada pelo chão! Quando ouvir o aviso, sobe no alto.
+1356	A manada passou, e tu também!
+1357	Estouro da manada:\nsobe no alto!
+1358	Rochas rolam ladeira abaixo. Salta por cima ou parte com um golpe!
+1359	Atravessaste o cemitério!
+1360	Põe as ovelhas nas placas para abrir os portões e leva a chave até à porta.
+1361	A porta da quinta abriu!
+1363	Moitas que tremem não são vento: são Gnolls à espera que chegues perto.
+1364	Nenhum Gnoll te apanhou de surpresa!
+1365	No capim alto,\nalgo mexe-se...
+1368	O vento da pradaria levanta quem entra nele. Segura SALTAR no ar para planar.
+1369	O vento levou-te até ao fim da pradaria!
+1370	Entre no vento para subir.\nSegura SALTAR para planar.
+1373	As pontes são fios de teia: elas rompem-se logo depois de pisadas. Não pares!
+1374	Atravessaste as pontes de teia!
+1375	Pontes de teia:\nnão pares em cima!
+1376	Breu total. Encosta-te nas tochas para acendê-las; as 3 grandes abrem a saída.
+1378	ESTÁ ESCURO...\nEncosta-te nas tochas\npara acendê-las.
+1381	Passaste pelo salão dos casulos!
+1382	Casulos a balançar:\nnão encosta-te!
+1385	A chave está no alto do ninho. Para passar a parede, troca a cor dos blocos.
+1386	A câmara dos ovos abriu-se!
+1388	Larga a chave (APANHAR),\ngolpeia a alavanca\ne apanha de novo.
+1389	A montanha de fogo. Géiseres borbulham antes de soltar a coluna de fogo: espera passar!
+1390	Passaste pelos portões da forja!
+1391	Géiser a borbulhar:\nespera o fogo passar!
+1392	A lava sobe e desce como maré. Quando ela vier, fica no alto ou em cima do basalto!
+1393	Venceste a maré de lava!
+1394	A lava sobe e desce.\nFica no alto!
+1395	Os géiseres disparam em sequência. Observa o ritmo e passa entre as colunas de fogo.
+1400	Atravessaste a ponte de obsidiana!
+1401	Pedras de ouro bloqueiam a oficina. Usa o MARTELO (no ar, ▼ + ATACAR) e leva a chave até à porta.
+1403	No ar: ▼ + ATACAR\nparte as pedras.
+1405	O caminho até ao Minotauro está aberto!
+1406	O bosque dos gnomos. Eles atiram bolotas com fisga e rolam troncos ladeira abaixo.
+1407	Entraste no bosque!
+1409	Paredes altas demais para saltar? Cai em cima dos cogumelos: eles lançam-te lá no alto!
+1410	Que saltos!
+1411	Cai no cogumelo:\nele lança-te no alto!
+1413	Atravessaste pelas copas!
+1414	Troncos boiam no rio: dá para pisar nelas. As tábuas soltas afundam.
+1415	Atravessaste o rio de troncos!
+1416	Corrida e tiro! Gnomos de fisga por toda a parte.
+1418	Montinhos de musgo a tremer escondem gnomos. E as troncos não param de rolar.
+1419	Nenhum gnomo te apanhou!
+1422	A vila rendeu-se!
+1425	As minas dos goblins. Tochas, ouro e pedras soltas no teto: olha a poeira a cair!
+1426	Entraste nas minas!
+1427	Poeira a cair do teto:\nlá vem pedra!
+1428	O teto da galeria está a desabar! A poeira avisa onde a pedra vai cair.
+1429	Escapaste do desabamento!
+1430	As tochas da galeria apagaram-se. Acende-as; as 3 grandes abrem a saída.
+1431	A galeria iluminou-se!
+1432	Pedras de ouro fecham as galerias. Martelo nelas e leva a chave até à porta.
+1433	O veio de ouro abriu-se!
+1435	Nenhuma explosão te apanhou!
+1436	A água da mina sobe e desce. Fica no alto, ou em cima dos caixotes.
+1437	Atravessaste a mina alagada!
+1438	O fogo aqui em baixo é azul e corre atrás de ti. E os géiseres não param.
+1439	Atravessaste o fogo azul!
+1441	O caminho até ao Rei Goblin está aberto!
+1445	Chegaste à lagoa!
+1448	Atravessaste as vitórias-régias!
+1449	Folhas afundam:\nnão pares em cima!
+1450	A água do pântano sobe e desce. Fica no alto ou em cima das troncos.
+1452	Espinhos venenosos no chão e lagartos roxos a cuspir veneno de todo o lado.
+1453	Saíste do brejo inteiro!
+1454	A chave da casa do pescador sumiu com um caranguejo do brejo. Acerta-lhe e leva a chave!
+1457	No fundo da lagoa, a caveira vira Lagarto e nada livre. ↑ (ou SALTAR) sobe, ▼ desce.
+1458	Atravessaste o fundo da lagoa!
+1461	Raízes e galhos sobre a água. Troncos rolam pelos troncos caídos.
+1462	Atravessaste o mangue!
+1464	O caminho até ao Rei Lagarto está aberto!
+1467	Nuvens em brasa desfazem-se logo depois de pisadas. E cair daqui é cair no vazio.
+1468	Atravessaste as nuvens de brasa!
+1469	Nuvens de brasa\ndesfazem-se: corra!
+1474	Correntes de vento quente entre as ilhas, e jatos de fogo a sair das pedras.
+1475	O vento quente levou-te até ao fim!
+1478	Um enxame de abelhas de brasa, e canhões do castelo a varrer as ilhas.
+1479	Atravessaste o enxame!

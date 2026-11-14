@@ -1,0 +1,62 @@
+441	A maré sobe e desce sozinha. O chão baixo some-se debaixo de água.
+442	A água está a subir! E a descer! E a subir de novo!
+449	Restos de um navio. As tábuas soltas afundam logo depois de pisadas.
+450	Um navio inteiro, partido em pedaços.
+455	Salta, Ossian.
+459	As balas vêm em linha reta. Salta ou defende com o escudo.
+461	Ele trabalha para o Rei Tubarão. Toda a gente nestas águas trabalha para ele.
+463	Uma caverna inteira debaixo de água. Só um tubarão atravessa.
+465	Não como tubarão. Lá dentro, eu dou-te a forma dele.
+466	Podes fazer isso sem eu apanhar um arpão?
+467	Aqui em baixo, posso mais do que tu imaginas.
+468	...Nunca tinhas dito isso antes.
+471	Alavancas abrem e fecham as comportas: maré alta ou maré baixa, tu escolhes.
+478	O convés partiu-se no meio! Não há por onde passar.
+479	Há sim: por cima. Pelas vergas e pelos cestos de gávea.
+481	Não olhes para a luz. Olha para onde pisas.
+485	Coral de fogo. Não lhe toques. E a maré ainda vem.
+494	Hex... porque é que queres tanto esse fragmento?
+500	Que cheiro é este? Capim... e cão molhado.
+501	Gnolls. A pradaria é deles. Os caçadores atiram ossos que fazem a curva e voltam.
+502	Ossos a voltar. Que ironia.
+506	O chão está a tremer!
+507	A manada dos Gnolls. Quando ela vier, sobe para qualquer coisa alta.
+508	E se eu ficar em baixo?
+509	Aí vou buscar-te de novo. Mas prefiro que não.
+516	Quinta dos Gnolls
+518	Ovelhas! Eu... já tratei de ovelhas. Acho.
+520	Porque é que me lembro de ovelhas, Hex?
+521	Toda a gente se lembra de ovelhas. Apanha a chave.
+523	Moitas que tremem. Gnolls escondidos à espera.
+524	Aquela moita mexeu-se.
+525	Espreitadores. Escondem-se no capim e saltam para quem passa perto.
+526	Dá para ver o tremor, pelo menos.
+530	Uma caravana inteira a vir na minha direção.
+531	Segura ATACAR e não pares de atirar.
+532	O que levam nessas carroças?
+536	Os vãos estão enormes. Não dá para saltar isto.
+537	Entra no vento. Ele levanta-te. Depois segura o salto e plana.
+539	Não há ponte nenhuma. É miragem do vento.
+543	O osso dele vai e volta. Baixo, salta; alto, agacha-te. Quando ele saltar, sai de baixo.
+544	Porque é que ele tem as mesmas cores que tu, Hex?
+545	Coincidência. Derruba-o, Ossian. O fragmento espera.
+547	Fios de teia esticados sobre o abismo. Eles rompem-se.
+548	Isto é uma ponte? É um fio de teia!
+554	Hex? Eu não vejo nada.
+555	Encosta-te às tochas. Elas acendem. As três grandes abrem a saída.
+557	Concentra-te nas tochas, Ossian.
+559	Casulos pendurados nos fios, a balançar.
+560	Estes casulos... têm alguém dentro?
+561	Têm o almoço da Rainha. Não lhes toques, ou viras o jantar.
+566	Elas saltam! As aranhas verdes saltam!
+567	Então não pares de atirar. Segura ATACAR.
+569	Esses mergulham. Atira-lhes antes.
+574	Com a chave na mão não posso bater na alavanca.
+575	Então larga a chave, bate, e apanha-a de novo. Nem tudo se resolve com pressa.
+578	O chão está a ferver, Hex. E aquele buraco a borbulhar?
+579	Géiser. Ele borbulha antes de cuspir fogo. Espera que passe e corre.
+581	No coração da montanha. A martelar a lava. A guardar o quinto fragmento.
+584	A lava está a subir! Tal como a maré nas ilhas!
+585	A montanha respira como o mar. Sobe para o basalto: ele boia.
+588	Géiseres de Fogo
+589	Campos de géiseres a disparar em ritmo.

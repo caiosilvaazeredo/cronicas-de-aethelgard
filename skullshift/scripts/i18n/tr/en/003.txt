@@ -1,0 +1,150 @@
+440	High Tide
+441	The tide rises and falls on its own. The low ground vanishes underwater.
+442	The water is rising! And falling! And rising again!
+443	The tide of these isles breathes. When it comes, climb up high and wait.
+444	Who commands it?
+445	The Harpoon Shark King. He guards the first fragment of the crown.
+446	A shark... with a crown?
+447	Every king guards a piece. Together, they open your path.
+448	Shipwreck Debris
+449	The remains of a ship. Loose planks sink right after you step on them.
+450	A whole ship, broken to pieces.
+451	Don't stop on the planks. They sink.
+452	Who was on that ship?
+453	People who also wanted to go home.
+454	...And did they?
+455	Jump, Ossian.
+456	Pirate Ship: Deck
+457	The goblin pirates' ship. Cannons sweep the deck.
+458	Pirates! And cannons aimed at me!
+459	The cannonballs fly in a straight line. Jump or block with the shield.
+460	The captain is on the quarterdeck, at the far end.
+461	He works for the Shark King. Everyone in these waters works for him.
+462	Undersea Cavern
+463	An entire cave underwater. Only a shark gets through.
+464	The cave is completely flooded, Hex. I'm going to sink.
+465	Not as a shark. In there, I'll give you its shape.
+466	You can do that without me grabbing a harpoon?
+467	Down here, I can do more than you imagine.
+468	...You've never said that before.
+469	Swim. The jellyfish are unforgiving.
+470	Lighthouse Floodgates
+471	Levers open and close the floodgates: high tide or low tide, you choose.
+472	Levers! What are they for?
+473	They open and close the lighthouse floodgates. High tide: the crates rise. Low tide: the ground appears.
+474	So I command the tide, like the King.
+475	For now. Use it while you can.
+476	Pirate Ship: Masts
+477	The deck sank in the middle: the way is across the yards, up high.
+478	The deck broke in the middle! There's no way through.
+479	Yes there is: over the top. Across the yards and the crow's nests.
+480	From up here you can see the lighthouse, the beach... and a warm light far away.
+481	Don't look at the light. Look where you step.
+482	Coral Reef
+483	Fire coral, jellyfish and the tide. The last step before the King.
+484	The corals here burn!
+485	Fire coral. Don't touch it. And the tide is still coming.
+486	After the reef, the Shark King.
+487	After the reef, the first fragment. Think of the fragment.
+488	Shark King's Arena
+489	The Harpoon Shark King commands the tide. At low tide, he gets stranded.
+490	It's him. The Harpoon Shark King.
+491	He commands the tide. When the water drops, he gets stuck in the sand. Attack then.
+492	And when the tide rises?
+493	You rise too. Onto the rocks at the sides. His harpoons stay stuck in midair: use them as steps.
+494	Hex... why do you want this fragment so badly?
+495	Me? It's for you, Ossian. It always was for you.
+496	The Shaman's Throne
+497	The crown is whole. The seals have fallen.
+498	Bone Road
+499	The entrance to the Bone Prairie, land of the Gnolls.
+500	What's that smell? Grass... and wet dog.
+501	Gnolls. The prairie is theirs. The hunters throw bones that curve around and come back.
+502	Bones coming back. How ironic.
+503	Everything comes back here, Ossian. Except those who move on.
+504	Stampede
+505	The herd stampedes across the low ground.
+506	The ground is shaking!
+507	The Gnolls' herd. When it comes, climb onto anything tall.
+508	And if I stay below?
+509	Then I fetch you again. But I'd rather not.
+510	Bone Graveyard
+511	Slopes of ancient bones. Rocks roll down from above.
+512	So many bones. Are they all gnoll?
+513	Not all. Some belong to travelers who came for a crown before you.
+514	...Before me? How many?
+515	Watch out for the rocks. They roll without warning.
+516	Gnoll Farm
+517	Sheep, plates and gates. The key is on top of the barn.
+518	Sheep! I... used to tend sheep. I think.
+519	Put the sheep on the plates. The gates open with weight.
+520	Why do I remember sheep, Hex?
+521	Everybody remembers sheep. Grab the key.
+522	Tall Grass
+523	Bushes that tremble. Hidden gnolls, waiting.
+524	That bush moved.
+525	Stalkers. They hide in the grass and pounce on anyone who passes close.
+526	At least you can see the shaking.
+527	Keep your eyes open, Ossian. In this world, almost nothing is what it seems.
+528	Gnoll Caravan
+529	The caravan never stops sending hunters.
+530	An entire caravan coming my way.
+531	Hold ATTACK and don't stop shooting.
+532	What do they carry in those wagons?
+533	Bones. For the King. He collects them.
+534	Windmills
+535	Wide gaps crossed on the wind currents.
+536	The gaps are huge. I can't jump that.
+537	Step into the wind. It lifts you. Then hold jump and glide.
+538	From up here I can see a bridge, far away, beyond the sea.
+539	There is no bridge. It's a mirage of the wind.
+540	Gnoll King's Lair
+541	The Gnoll King guards the second fragment.
+542	It's him. Bigger than I thought. And with purple spots...
+543	His bone goes out and comes back. Low, jump; high, crouch. When he leaps, get out from under.
+544	Why does he have the same colors as you, Hex?
+545	Coincidence. Bring him down, Ossian. The fragment awaits.
+546	Web Bridges
+547	Threads of web stretched over the abyss. They snap.
+548	That's a bridge? It's a strand of web!
+549	Strong threads, but not forever. Step and run.
+550	Who wove bridges in the middle of the cave?
+551	The Queen. She likes her visitors to reach her.
+552	Dark Cavern
+553	Pitch black. Only the torches show the way.
+554	Hex? I can't see anything.
+555	Touch the torches. They light up. The three big ones open the exit.
+556	Funny. Was I afraid of the dark? No... that was someone else.
+557	Focus on the torches, Ossian.
+558	Cocoon Hall
+559	Cocoons hanging from threads, swaying.
+560	These cocoons... is there someone inside?
+561	The Queen's lunch is inside. Don't touch, or you become dinner.
+562	Disgusting.
+563	Delicious, she would say.
+564	Web Shootout
+565	Jumping spiders and vampire bats, nonstop.
+566	They jump! The green spiders jump!
+567	Then don't stop shooting. Hold ATTACK.
+568	And the red bats?
+569	Those dive. Shoot them first.
+570	Egg Chamber
+571	The Queen's nest. The key is up top.
+572	Eggs. Thousands of eggs. And the key way up at the top of the nest.
+573	A wall of red blocks closes the way. Switch the color at the lever.
+574	With the key in my hand I can't hit the lever.
+575	Then drop the key, hit it, and pick it up again. Not everything is solved by rushing.
+576	Forge Gates
+577	The entrance to the mountain of fire.
+578	The ground is boiling, Hex. And that bubbling hole?
+579	A geyser. It bubbles before it spits fire. Wait for it to pass and run.
+580	Does the Crimson Minotaur live in here?
+581	In the heart of the mountain. Hammering the lava. Guarding the fifth fragment.
+582	Lava Tide
+583	The lava rises and falls like the tide.
+584	The lava is rising! Just like the tide on the isles!
+585	The mountain breathes like the sea. Climb onto the basalt: it floats.
+586	Everything in this world rises and falls. Even me.
+587	You only rise, Ossian. I'll see to it.
+588	Fire Geysers
+589	Fields of geysers firing in rhythm.

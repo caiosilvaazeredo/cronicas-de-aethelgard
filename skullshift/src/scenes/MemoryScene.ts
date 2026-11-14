@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { noTr, tr } from '../i18n';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { MEMORIES, type Memory } from '../data/lore';
@@ -96,7 +97,7 @@ export class MemoryScene extends Phaser.Scene {
     }
     this.index++;
     if (this.index >= this.lines.length) return this.leave();
-    this.full = `"${this.lines[this.index]}"`;
+    this.full = `"${tr(this.lines[this.index])}"`;
     let k = 0;
     this.text.setText('');
     this.typing = this.time.addEvent({
@@ -104,6 +105,7 @@ export class MemoryScene extends Phaser.Scene {
       repeat: this.full.length - 1,
       callback: () => {
         k++;
+        noTr(this.text);
         this.text.setText(this.full.slice(0, k));
         if (k >= this.full.length) this.typing = undefined;
       },

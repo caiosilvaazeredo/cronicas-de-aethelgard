@@ -1,0 +1,201 @@
+1680	BECAME SPIDER FOOD
+1681	CHOMP!
+1682	STORED!
+1683	{0}  grab\n{1}{2}
+1684	Hold JUMP in the air to fly
+1685	Sticks to walls and climbs
+1686	Swim! ▼ dives, JUMP leaves the water
+1687	THE LEVEL RESTARTS
+1688	FILM REEL!
+1689	A secret level appeared on the map...
+1690	Clear sky!
+1691	AREA CLEARED!
+1692	Boss defeated!
+1693	TRAPPED!
+1694	Level {0}
+1695	{0} · Bonus area
+1696	{0} FIGHTS BY YOUR SIDE!
+1697	his seal was broken: now he is free
+1698	{0} COMPLETE!
+1699	{0}   ·   Time: {1}s   ·   Deaths: {2}
+1700	Crown fragment recovered!
+1701	{0} WINS!
+1702	Reached the end on the opposite side
+1703	HOW TO PLAY
+1704	PLAY  ▶
+1705	Move
+1706	Jump
+1707	Crouch
+1708	Guard
+1709	Attack
+1710	Grab item
+1711	AD ←→
+1712	W ↑ Space
+1713	Grab
+1714	Also: arrows, Space,\nJ (attack), K (guard), L (grab)
+1715	Crouch (down)
+1716	LB / RB also guard
+1717	Drag: walk (far: sprint)
+1718	Swipe up: jump
+1719	Drag down: crouch
+1720	Quick tap/click: attack
+1721	Hold still: grab
+1722	2 fingers or right button: guard
+1723	Works with a finger on the screen or just the mouse (middle button also grabs).
+1724	Phone sideways or upright. You can use several fingers at once.
+1725	One hit kills.\nYou too!
+1726	GUARD: hold the button.\nTap BACK as the blow\nlands: PARRY!
+1727	Crouched: dodge shots\nand strike low.
+1728	Press jump in midair:\ndouble jump.
+1729	Another character's item\non the ground: GRAB transforms.
+1730	5 screens: reach the\nend on the opposite side.
+1731	Got a kill? Your turn.\nReach your end!
+1732	◀ JOURNAL
+1733	ACHIEVEMENTS ▶
+1734	ACHIEVEMENTS
+1735	◀  MAP
+1736	OSSIAN'S JOURNAL
+1737	MEMORIES
+1738	WORLDS
+1739	bonus ✓
+1740	bonus —
+1741	{0}  ·  {1}/{2} levels  ·  {3}/{4} presents  ·  {5}  ·  {6}
+1742	GOLD: {0}   ·   ABILITIES: {1}\nUPGRADES: {2}
+1743	tap a memory to see it again
+1744	{0}/{1} unlocked
+1745	LOADING
+1746	DUEL POWERS
+1747	FIGHT  ▶
+1748	◀ BACK
+1749	P1: W/S choose, E toggle  ·  P2: ↑/↓ choose, . toggle  ·  T: test mode  ·  Enter: fight  ·  tap toggles
+1750	{0}: still locked. Unlock it in story mode (or turn on TEST MODE).
+1751	Maximum of {0} powers per player (no limit in TEST MODE).
+1752	TEST MODE: ON
+1753	TEST MODE: OFF
+1754	ENTER  ▶
+1755	◀ WORLD
+1756	ENTER
+1757	Drag the map sideways · double-tap a level to run to it
+1758	UNDER CONSTRUCTION
+1759	{0} · BONUS
+1760	NEW ABILITY!
+1761	GOT IT
+1762	LEVEL {0}/{1} · {2}
+1763	{0}   ◀ ▶ choose · Enter / A / tap: enter · Esc: world
+1764	MEMORY {0}/{1} · {2}
+1765	CONTINUE ▶
+1766	STORY  ·  1 player
+1767	VERSUS  ·  2 players
+1768	FREE PLAY  ·  testing
+1769	SETTINGS
+1770	PLAY
+1771	⚙ SETTINGS
+1772	CREDITS
+1773	Enter · Space · A button · tap
+1774	On the next screen, each player chooses keyboard, controller or touch.
+1775	P1 = blue  ·  P2 = red. Both start as skeletons.
+1776	GUARD on the button (Q, K, B). Tap BACK as the blow lands: PARRY! Over another character's item, press GRAB to transform.
+1777	LEVEL {0} · {1}
+1778	GAME
+1779	Text speed
+1780	How fast the story lines appear.
+1781	SLOW
+1782	NORMAL
+1783	FAST
+1784	INSTANT
+1785	Skull remarks
+1786	A sarcastic speech bubble the first time in each form.
+1787	Screen shake
+1788	Shake intensity on impacts and explosions.
+1789	DISPLAY
+1790	Fullscreen
+1791	Turns fullscreen on or off.
+1792	Brightness
+1793	Brightens or darkens the game image.
+1794	AUDIO
+1795	Master volume
+1796	Volume of all sounds.
+1797	Sound effects
+1798	Jumps, hits, doors, explosions (8-bit sounds).
+1799	Music
+1800	Soundtrack: a theme for each area, bosses and memories.
+1801	CONTROLS
+1802	Double-tap to sprint
+1803	Tap a direction 2× and hold to sprint.
+1804	Touch buttons: size
+1805	Size of the buttons on the phone screen.
+1806	SMALL
+1807	MEDIUM
+1808	LARGE
+1809	Touch buttons: opacity
+1810	How visible the touch buttons are.
+1811	ACCESSIBILITY
+1812	Colorblind colors
+1813	Player 2 in orange instead of red.
+1814	Screen flashes
+1815	Turn off to avoid flashes (lightning, explosions).
+1816	RESTORE DEFAULTS
+1817	↑ ↓ option  ·  ← → adjust  ·  Q / E (LB / RB) tab  ·  Esc / B back
+1818	OFF
+1819	ON
+1820	BLACK-EAR EMPORIUM
+1821	◀ MAP
+1822	BUY
+1823	← → choose  ·  Enter / A buy  ·  Esc / B back
+1824	Baa. (I take gold. I don't take small talk.)
+1825	BOUGHT
+1826	Baa. (That one's already yours.)
+1827	Baa. ({0} gold short.)
+1828	EASY
+1829	level restarts after 9 deaths
+1830	level restarts after 5 deaths
+1831	HARD
+1832	level restarts on the 3rd death
+1833	CHOOSE A SAVE
+1834	◀ ▶ choose  ·  Enter / A: play  ·  Delete / X: erase  ·  Esc / B: back
+1835	SAVE {0}
+1836	EMPTY
+1837	New game — choose the difficulty:
+1838	STORY COMPLETE
+1839	{0} LEVELS · {1}/{2} FRAGMENTS
+1840	last played: {0}
+1841	REVIEW  ▶
+1842	CONTINUE  ▶
+1843	REALLY ERASE?
+1844	ERASE
+1845	EPILOGUE
+1846	CHAPTER {0}
+1847	NEXT  ▶
+1848	SKIP
+1849	FACE THE SHAMAN
+1850	GO HOME WITH HIS HELP
+1851	If you win, the world is free... and you turn back to bone.
+1852	You go home whole. The world stays with the Shaman.
+1853	THE CHOICE
+1854	MENU
+1855	Choose "Touchscreen"\non the controls screen\nto play on a phone
+1856	SPIDER SENSE
+1857	CONTINUE
+1858	RESTART LEVEL
+1859	EXIT TO MAP
+1860	EXIT TO MENU
+1861	PAUSED
+1862	!  DANGER  !
+1863	Choose carefully: this changes the flight levels.
+1864	PLAY AGAIN
+1865	◀ MENU
+1866	EMPORIUM · {0} gold
+1867	JOURNAL
+1868	EMPORIUM · {0}
+1869	Tap an area to select it · tap again to enter
+1870	EMPORIUM
+1871	THE WORLD BELONGS TO THE SHAMAN
+1872	THE WORLD IS FREE
+1873	{0} · CROWN FRAGMENTS {1}/{2}
+1874	{0}/{1} levels cleared (goal: {2} levels)
+1875	An area still covered in mist. Clear the Tide Isles to reach it.
+1876	A kingdom that only appears after the pact with the Princes (in the Web Cavern).
+1877	The Shaman's Sanctuary. It only opens when every fragment of the crown has been gathered.
+1878	An area still covered in mist. Clear the Bone Prairie to open the way.
+1879	{0}  ·  The levels in this area are still under construction.
+1880	CROWN FRAGMENT {0}/{1}!

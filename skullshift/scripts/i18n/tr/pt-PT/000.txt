@@ -1,0 +1,54 @@
+2	Isso, Ossian. Um passo de cada vez. Eu estou a olhar por ti.
+9	Para lado nenhum. Ninguém sai destas ilhas de navio. Nem de outra maneira.
+19	É só o tempo a mudar. Olha para a frente, não para lá.
+26	Um sino pequeno, a tocar ao longe. Era hora de recolher... recolher o quê?
+30	O chão está a tremer. Isso nunca é bom sinal.
+33	Eles não param de vir! Quem ensinou os gnolls a fazer fila?
+38	Uma quinta. Cerca, portão, ovelha em cima da placa. Quase normal.
+41	O capim mexeu-se. O capim não se devia mexer sozinho.
+43	Carroças abandonadas no meio da estrada. Fugiram a correr de alguma coisa.
+45	Um moinho que mói osso. Vou fingir que não li a placa.
+46	Uma menina pequena a correr atrás de mim. "Espera! Não me deixes no escuro!"
+52	Folha que afunda quando a gente para. O pântano não gosta de indecisos.
+53	Pedrinhas chatas a saltar num rio. Três, quatro saltos. Alguém batia palmas.
+57	Não brinques. Tu podes cair as vezes que forem; eu é que me canso de te ir buscar.
+58	Rede, anzol, bote furado. Um lagarto pescador. Simpatizo.
+59	Uma cana de pesca maior do que eu. Um velho a rir: "Peixe não, só galhos!"
+60	...Tu sorriste agora? As caveiras não deviam conseguir isso.
+67	Escolhes as palavras com muito cuidado, Hex.
+68	Uma aldeia inteira sobre a água. Com estendal, com fogão. Eles moram aqui.
+73	Escuro, húmido, cheio de teias. O lugar perfeito para alguém sem pele.
+76	Rabiscos de aranha. Não percas tempo a ler.
+78	Uma ponte que rebenta se eu parar. Já gostei mais de pontes.
+79	Chuva numa ponte. Tábua molhada. O pé a escorregar. Não, espera, ainda não...
+80	Corre, Ossian! Não fiques aí parado a olhar para baixo!
+84	Uma mãozinha a apertar a minha. "Fica comigo até eu adormecer. Tu prometeste."
+88	Elas descem do teto sem parar! Quantas patas cabem numa caverna?
+90	Dois príncipes. Um de asa de couro, outro de asa de vidro. E a brigar.
+92	Ovos. Centenas. Eu ando na ponta do pé que não tenho.
+93	Um cesto de ovos no braço. Um partiu-se no caminho. Riram-se de mim a semana inteira.
+95	Ela olhou-me com todos os olhos. E parecia... com pena?
+97	Calor. Eu devia estar a suar. Em vez disso, só estalo.
+98	Um machado a subir e a descer. Lenha a partir-se. Calo na mão. A minha mão.
+100	A lava vem atrás de mim! Isto não é um nível, é um despejo!
+101	Corre! Se caíres aí, eu demoro a encontrar-te!
+104	Pedra a boiar em fogo. O meu meio de transporte preferido, agora.
+106	Um, dois, FOGO. Um, dois, FOGO. Já apanhei o ritmo.
+107	Uma lareira. Castanhas a estalar. Alguém a contar histórias de barqueiros.
+108	Barqueiros? ...Que histórias, Ossian? De que é que te lembraste?
+109	Touros de lava em debandada. Hoje a forja resolveu odiar-me em fila.
+111	Vidro preto. Dá para ver o meu reflexo. Sou mais bonito de longe.
+112	Um rosto numa bacia de água. Olhos castanhos. Era o meu. Eu tinha um rosto.
+113	Não fiques a olhar para reflexos. Eles mostram o que já foi.
+114	Marteladas. De longe parecem um coração a bater.
+118	Ele parou de martelar. Está a olhar para mim.
+120	Árvore velha, sombra fresca. Primeiro lugar deste mundo que não me quer matar.
+121	Serradura no cabelo. Eu tinha cabelo. E alguém soprava para a tirar.
+125	Cogumelo que atira a gente para o alto. Finalmente uma planta do meu lado.
+130	Blocos coloridos, alavancas, portão. Os gnomos devem aborrecer-se muito.
+132	Troncos a descer o rio. Saltar de um para o outro. O que pode correr mal?
+133	Um rio largo, de água escura. Lanternas de papel a descer devagar. Dezenas.
+134	Não olhes tanto para a água. Olha para os troncos.
+135	Chuva de bolotas! Eu tinha dito que este bosque não me queria matar?
+137	O musgo piscou-me o olho. O musgo não pisca.
+139	Casinhas nas raízes, fumo nas chaminés. Tem até um sino.

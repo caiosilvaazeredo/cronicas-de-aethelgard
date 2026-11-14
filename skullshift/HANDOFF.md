@@ -119,6 +119,9 @@ originais (extraídas com PIL do PNG).
   depois da fala de entrada (`BossHost.onFightStart`).
 - **Diário de Ossian** (`JournalScene`, botão DIÁRIO ou tecla L no mapa do mundo): rever memórias vistas
   (`memory-N` em `seen`), progresso por mundo (fases, presentes, bônus, rei) e ouro/habilidades/aprimoramentos.
+- **Conquistas** (`achievements.ts`): 24, conferidas pelo save (`check`); contadores em `progress.stats`
+  (`addStat`: kills, parries, shifts) e lista em `progress.ach`. `announceAchievements(scene)` mostra o aviso
+  (fases, Empório, mapa do mundo). Página 2 do Diário. No modo livre nada é marcado.
 - **Empório no mapa**: casinha amarela com a ovelha entre a Maré e a Pradaria (`WorldScene.drawShop`).
   Cada mundo tem um 5º padrão do Xamã (`ShamanBoss.worldPower`): chuva marcada (água, veneno, teia, bolotas,
   pedras, meteoros na diagonal), toras rolando, gêiseres de fogo ou rajadas em duas alturas (ondas/ferrões).

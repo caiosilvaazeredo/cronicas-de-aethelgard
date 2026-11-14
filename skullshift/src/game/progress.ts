@@ -32,6 +32,9 @@ export interface SaveData {
   /** Ouro para gastar no Empório e aprimoramentos comprados. */
   coins?: number;
   upgrades?: string[];
+  /** Contadores (golpes, contras, transformações...) e conquistas desbloqueadas. */
+  stats?: Record<string, number>;
+  ach?: string[];
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -100,6 +103,8 @@ export function loadSlot(n: number): SaveData | null {
       reserve: typeof d.reserve === 'string' ? d.reserve : undefined,
       coins: Math.max(0, Number(d.coins) || 0),
       upgrades: Array.isArray(d.upgrades) ? d.upgrades : [],
+      stats: d.stats && typeof d.stats === 'object' ? d.stats : {},
+      ach: Array.isArray(d.ach) ? d.ach : [],
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -240,6 +245,31 @@ export function saveUpgrade(id: string): void {
   const d = current();
   d.upgrades = [...new Set([...(d.upgrades ?? []), id])];
   if (!free) saveSlot(currentSlot(), d);
+}
+
+export function getStat(k: string): number {
+  return current().stats?.[k] ?? 0;
+}
+
+/** Soma um contador (não salva no modo livre). */
+export function addStat(k: string, n = 1): void {
+  if (free) return;
+  const d = current();
+  d.stats = { ...(d.stats ?? {}), [k]: (d.stats?.[k] ?? 0) + n };
+  saveSlot(currentSlot(), d);
+}
+
+export function hasAch(id: string): boolean {
+  return !!current().ach?.includes(id);
+}
+
+/** Marca a conquista; devolve true se é nova. */
+export function unlockAch(id: string): boolean {
+  if (free || hasAch(id)) return false;
+  const d = current();
+  d.ach = [...(d.ach ?? []), id];
+  saveSlot(currentSlot(), d);
+  return true;
 }
 
 export function getReserve(): string | undefined {

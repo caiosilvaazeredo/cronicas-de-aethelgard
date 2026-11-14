@@ -6,6 +6,7 @@ import { sfx } from '../game/settings';
 import { playMusic } from '../game/music';
 import { UPGRADES, buyUpgrade, hasUpgrade } from '../game/upgrades';
 import { pillButton } from '../ui/devices';
+import { announceAchievements } from '../game/achievements';
 
 /**
  * Empório da Orelha-Preta: a loja de aprimoramentos (no espírito do Empório do Cuphead).
@@ -140,6 +141,7 @@ export class ShopScene extends Phaser.Scene {
     } else if (buyUpgrade(u.id)) {
       sfx('pick');
       this.say(u.sign);
+      announceAchievements(this);
       this.cameras.main.flash(120, 255, 240, 180);
       const c = this.cards[this.sel].box;
       this.tweens.add({ targets: c, angle: { from: -6, to: 0 }, duration: 300, ease: 'Back.easeOut' });

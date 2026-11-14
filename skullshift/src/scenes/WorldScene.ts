@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { announceAchievements } from '../game/achievements';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
@@ -96,6 +97,8 @@ export class WorldScene extends Phaser.Scene {
     this.select(this.sel, true);
 
     if (this.lastData.cleared) this.sealBreak(this.lastData.cleared);
+    // Conquistas que saíram fora das fases (acordo, memórias, finais...).
+    this.time.delayedCall(this.lastData.cleared ? 3500 : 400, () => announceAchievements(this));
   }
 
   update(time: number): void {

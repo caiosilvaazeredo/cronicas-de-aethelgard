@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
+import { announceAchievements } from '../game/achievements';
 import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game/finale';
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
@@ -18,7 +19,7 @@ import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
-import { addCoins, completeLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { addCoins, addStat, completeLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -775,6 +776,7 @@ export class GameScene extends Phaser.Scene {
 
   /** Brilho do contra-golpe: meia-lua dourada piscando e "CONTRA!". */
   private parryFx(f: Fighter, fromX: number): void {
+    if (this.mode === 'story' && f === this.players[0]) this.stat('parries');
     const dir = Math.sign(fromX - f.x) || f.facing;
     const arc = this.add
       .image(f.x + dir * (f.def.head * 0.3 + 6), f.feet - f.def.head * 0.5, 'guard_arc')
@@ -1377,6 +1379,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     // Ouro: cada inimigo derrotado pela caveira vale 1 (2 com o Dente de Ouro).
+    if (story && victim.team !== 0 && killer === this.players[0]) this.stat('kills');
     if (story && victim.team !== 0 && killer === this.players[0]) this.earn(this.hasPerk(0, 'goldtooth') ? 2 : 1, victim.x, victim.feet - victim.def.head - 20);
     // No final (o aldeão) ninguém deixa item: o corpo não troca mais de forma.
     const dropped = cause === 'hit' && !LEVELS[this.levelIndex].finale ? victim.def.drops : undefined;
@@ -2129,6 +2132,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private transform(pi: number, char: CharId): void {
+    if (this.mode === 'story' && pi === 0 && char !== 'skull') this.stat('shifts');
     const p = this.players[pi];
     sfx('pick');
     // Magia do Xamã: o corpo gira cada vez mais rápido, raios roxos sobem em espiral e,
@@ -2676,6 +2680,12 @@ export class GameScene extends Phaser.Scene {
     this.ui?.banner(`${w.kingName().toUpperCase()} LUTA AO SEU LADO!`, 1800, 'o selo dele foi quebrado: agora ele está livre');
   }
 
+  /** Soma um contador do save e avisa se alguma conquista saiu. */
+  private stat(k: string): void {
+    addStat(k);
+    announceAchievements(this.ui ?? this);
+  }
+
   /** O chefe está lutando agora (não na entrada nem numa fala)? */
   private bossFighting(): boolean {
     return !!this.boss && !(this.boss as unknown as { dying: boolean }).dying && (this.boss as unknown as { fighting: boolean }).fighting;
@@ -2774,6 +2784,7 @@ export class GameScene extends Phaser.Scene {
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
     completeLevel(this.levelIndex);
+    this.time.delayedCall(600, () => announceAchievements(this.ui ?? this));
     addCoins(LEVELS[this.levelIndex].boss ? 15 : 5);
     this.victory(0, `${this.levelTag().toUpperCase()} CONCLUÍDA!`, `${sub}   ·   Tempo: ${secs}s   ·   Mortes: ${this.deaths}`);
   }

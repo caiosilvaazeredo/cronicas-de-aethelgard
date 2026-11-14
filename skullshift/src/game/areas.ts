@@ -161,8 +161,10 @@ export const areaById = (id: string): AreaDef | undefined => ALL_AREAS.find((a) 
 
 /** Área de uma fase (pelo índice em LEVELS). */
 export function areaOfLevel(index: number): AreaDef | undefined {
-  const id = LEVELS[index]?.id;
-  return ALL_AREAS.find((a) => a.levels.includes(id));
+  const l = LEVELS[index];
+  // Áreas bônus pertencem à área onde aparecem no mapa.
+  if (l?.bonus) return ALL_AREAS.find((a) => a.id === l.bonus!.area);
+  return ALL_AREAS.find((a) => a.levels.includes(l?.id));
 }
 
 export const levelIndex = (id: string): number => LEVELS.findIndex((l) => l.id === id);

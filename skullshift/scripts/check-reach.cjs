@@ -9,14 +9,14 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
   const p = await b.newPage({ viewport: { width: 1280, height: 720 } });
   await p.goto('http://localhost:5173'); await p.waitForTimeout(3500);
   const results = [];
-  const total = await p.evaluate(() => window.__skullshift.scene.getScene("game").sys.game.registry.get("levels") ?? 97);
+  const total = await p.evaluate(async () => (await import('/src/game/level.ts')).LEVELS.length);
   for (let lv = 0; lv < total; lv++) {
     await p.evaluate((lv) => { window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv }); }, lv);
     await p.waitForTimeout(700);
     const r = await p.evaluate(() => {
       const s = window.__skullshift.scene.getScene('game');
       const L = s.level, def = L.def;
-      if (def.shmup || def.undersea || def.chase || def.secret) return { id: def.id, skip: true };
+      if (def.shmup || def.undersea || def.chase || (def.secret && !def.bonus)) return { id: def.id, skip: true };
       const T = 64, FLOOR = 472, top = (h) => FLOOR - h * T;
       const X = (sc, t) => sc * 1280 + t * T + T / 2;
       const surf = [];

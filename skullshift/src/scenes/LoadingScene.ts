@@ -43,7 +43,7 @@ export class LoadingScene extends Phaser.Scene {
     const top = P ? HH * 0.16 : 92;
     const hex = '#' + color.toString(16).padStart(6, '0');
     this.add
-      .text(W / 2, top, area ? `${t!.name.toUpperCase()}  ·  FASE ${idx}` : 'CARREGANDO', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: hex, stroke: '#0b1626', strokeThickness: 8 })
+      .text(W / 2, top, area ? `${t!.name.toUpperCase()}  ·  ${def.bonus ? 'ÁREA BÔNUS' : `FASE ${idx}`}` : 'CARREGANDO', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: hex, stroke: '#0b1626', strokeThickness: 8 })
       .setOrigin(0.5);
     const title = this.add
       .text(W / 2, top + (P ? 80 : 52), def?.name ?? '', { fontFamily: FONT, fontSize: P ? '84px' : '54px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 12 })

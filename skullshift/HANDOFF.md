@@ -132,6 +132,9 @@ originais (extraídas com PIL do PNG).
 - **Teclado no celular**: `config.hasKeyboard()` — só aparece depois de uma tecla física ser apertada.
 - **Mapa do mundo**: áreas trancadas no escuro; o Santuário fica numa ilha num mar interno (LAND), coberto
   por tempestade com relâmpagos até ser liberado.
+- **Áreas bônus (uma por mundo)**: fases `secret` com `bonus: { area, after, landmark, scale }` (Árvore Oca + `BONUS_LEVELS`
+  feitas por `bonusLevel` a partir de 3 plantas em `BONUS_PLANS`). Aparecem no mapa da área depois da fase `after`
+  (`MapScene`, trilha dourada + desenho do lugar); `areaOfLevel` devolve a área do bônus. Presentes = ouro.
 - **Área bônus**: `LEVEL_HOLLOW` ('hollowtree', secret) — Árvore Oca, no mapa da Maré depois da Maré Alta.
   ATENÇÃO: código antigo usa `LEVELS.findIndex(l => l.secret)` para a fase 'retro'; ela tem de continuar
   sendo a primeira secreta da lista.

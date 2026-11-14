@@ -2578,6 +2578,7 @@ export class GameScene extends Phaser.Scene {
   private levelTag(): string {
     const a = areaOfLevel(this.levelIndex);
     if (!a) return `Fase ${this.levelIndex + 1}`;
+    if (LEVELS[this.levelIndex].bonus) return `${areaTitle(a).name} · Área bônus`;
     return `${areaTitle(a).name} ${a.levels.indexOf(LEVELS[this.levelIndex].id) + 1}`;
   }
 

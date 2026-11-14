@@ -146,6 +146,8 @@ export interface LevelDef {
   finale?: boolean;
   /** Fase secreta (fica no fim de LEVELS; aparece no mapa quando o segredo é achado). */
   secret?: boolean;
+  /** Área bônus no mapa de uma área (aparece depois de 'after'); 'landmark' é o desenho no mapa. */
+  bonus?: { area: string; after: string; landmark: string; scale: number };
   /** Fase de chave e porta (quebra-cabeça). */
   puzzle?: PuzzleDef;
   /** Pradaria: estouro de manada e rochas rolando. */
@@ -895,6 +897,7 @@ export const LEVEL_HOLLOW: LevelDef = {
   theme: 'shore',
   tiles: 'tiles_forest',
   secret: true,
+  bonus: { area: 'mare', after: 'hightide', landmark: 'stump', scale: 0.55 },
   winText: 'A árvore guardava um tesouro!',
   screens: [
     { segments: [[0, 20, 0]], floats: [[5, 3, 2], [11, 3, 4]], deco: [[1, 'tree'], [18, 'bush']], sign: [2, 'Área bônus!\nPresentes valem ouro.'] },
@@ -910,6 +913,61 @@ export const LEVEL_HOLLOW: LevelDef = {
   storyStart: [0, 1],
   versusStart: [3, 16],
 };
+
+/** Três plantas de área bônus (chave, porta, 3 presentes), reaproveitadas com o chão de cada mundo. */
+const BONUS_PLANS: Array<Pick<LevelDef, 'screens' | 'puzzle'>> = [
+  {
+    screens: [
+      { segments: [[0, 20, 0]], floats: [[5, 3, 2], [11, 3, 4]], sign: [2, 'Área bônus!\nPresentes valem ouro.'] },
+      { segments: [[0, 8, 0], [10, 10, 1]], floats: [[3, 2, 3], [14, 3, 4]] },
+    ],
+    puzzle: { key: [0, 12, 4], door: [1, 17, 1], gifts: [[0, 6, 2], [1, 3, 3], [1, 15, 4]], ladders: [[0, 9, 0, 4]], springs: [[1, 8, 0]] },
+  },
+  {
+    screens: [
+      { segments: [[0, 10, 0], [12, 8, 1]], floats: [[4, 3, 3], [15, 3, 4]], sign: [2, 'Área bônus!\nA chave está lá no fim.'] },
+      { segments: [[0, 20, 0]], floats: [[6, 3, 2], [12, 3, 4]] },
+    ],
+    puzzle: { key: [1, 13, 4], door: [0, 3, 0], gifts: [[0, 5, 3], [0, 16, 4], [1, 7, 2]], ladders: [[1, 10, 0, 4]], springs: [[0, 13, 1]] },
+  },
+  {
+    screens: [
+      { segments: [[0, 6, 0], [8, 12, 0]], floats: [[6, 2, 2], [11, 3, 3], [15, 3, 5]], sign: [2, 'Área bônus!\nSuba até a chave.'] },
+      { segments: [[0, 20, 0]], floats: [[3, 3, 3], [9, 3, 5]] },
+    ],
+    puzzle: { key: [0, 16, 5], door: [1, 17, 0], gifts: [[0, 12, 3], [1, 4, 3], [1, 10, 5]], ladders: [[0, 14, 0, 3], [1, 8, 0, 5]], springs: [[1, 15, 0]] },
+  },
+];
+
+function bonusLevel(id: string, name: string, intro: string, winText: string, tiles: string, theme: Theme, plan: number, bonus: NonNullable<LevelDef['bonus']>, deco: Array<[number, DecoKind]> = []): LevelDef {
+  const p = BONUS_PLANS[plan];
+  return {
+    id,
+    name,
+    intro,
+    theme,
+    tiles,
+    secret: true,
+    bonus,
+    winText,
+    screens: p.screens.map((sc, i) => ({ ...sc, deco: i === 0 ? deco : [] })),
+    puzzle: p.puzzle,
+    storyStart: [0, 1],
+    versusStart: [3, 16],
+  };
+}
+
+/** Áreas bônus dos outros mundos (uma por mundo, como a Árvore Oca). */
+export const BONUS_LEVELS: LevelDef[] = [
+  bonusLevel('sheeppen', 'Curral Esquecido', 'Um curral vazio no meio do capim. Alguém deixou presentes para as ovelhas que nunca voltaram.', 'O curral guardava ouro!', 'tiles_prairie', 'shore', 1, { area: 'pradaria', after: 'farm', landmark: 'bld_yellow_barracks', scale: 0.4 }, [[17, 'bush']]),
+  bonusLevel('sunkenhut', 'Cabana Afundada', 'Uma cabana de lagarto meio afundada no pântano. Lá dentro, ainda seco, um baú.', 'A cabana guardava ouro!', 'tiles_swamp', 'shore', 2, { area: 'lagoa', after: 'fisherman', landmark: 'bld_black_house1', scale: 0.45 }, [[18, 'dead_tree']]),
+  bonusLevel('cocoonhall', 'Salão dos Casulos', 'Casulos pendurados até o teto. Nem todos guardam aranhas: alguns guardam tesouros.', 'Os casulos guardavam ouro!', 'tiles_cave', 'cave', 0, { area: 'teias', after: 'darkcave', landmark: 'cocoon', scale: 1.4 }, [[17, 'rock2']]),
+  bonusLevel('obsidianvault', 'Cofre de Obsidiana', 'Um cofre escavado no vidro negro do vulcão. O Minotauro guardava o que não queria ver.', 'O cofre guardava ouro!', 'tiles_volcano', 'volcano', 1, { area: 'forja', after: 'geysers', landmark: 'map_volcano', scale: 0.35 }, [[17, 'rock1']]),
+  bonusLevel('mushroomring', 'Roda de Cogumelos', 'Uma roda de cogumelos que os gnomos juram ser encantada. Pule nos grandes.', 'A roda guardava ouro!', 'tiles_forest', 'shore', 2, { area: 'bosque', after: 'treetops', landmark: 'mushroom', scale: 1.6 }, [[17, 'tree']]),
+  bonusLevel('goldpocket', 'Bolsão de Ouro', 'Um bolsão de ouro que nenhum goblin achou. Ainda.', 'O bolsão era seu!', 'tiles_mine', 'cave', 0, { area: 'minas', after: 'goldvein', landmark: 'gold_stone_big', scale: 0.6 }, [[17, 'gold']]),
+  bonusLevel('cloudnest', 'Ninho nas Nuvens', 'Um ninho enorme no meio da brasa. Quem o deixou ali voou para longe.', 'O ninho guardava ouro!', 'tiles_sky', 'sky', 1, { area: 'ceu', after: 'firewinds', landmark: 'bld_red_tower', scale: 0.4 }),
+  bonusLevel('featherspire', 'Torre das Penas', 'Uma torre esquecida do reino das asas, cheia de penas e de moedas.', 'A torre guardava ouro!', 'tiles_sky', 'sky', 2, { area: 'reino', after: 'wingcastle', landmark: 'bld_purple_monastery', scale: 0.35 }),
+];
 
 /** Fase secreta: um desenho perdido dos anos 1930 (preto e branco, grão de película). */
 export const LEVEL_RETRO: LevelDef = {
@@ -3000,6 +3058,7 @@ export const LEVELS: LevelDef[] = [
   // Secretas (sempre no fim).
   LEVEL_RETRO,
   LEVEL_HOLLOW,
+  ...BONUS_LEVELS,
 ];
 
 export class Level {

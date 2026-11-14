@@ -157,3 +157,10 @@ originais (extraídas com PIL do PNG).
 
 - Balancear dificuldade jogando de verdade (os testes automatizados tiram vida dos chefes direto).
 - Mais variedade visual por área (decorações próprias), mais segredos/presentes nas fases.
+
+## Robôs de teste (scripts/bots)
+- `node scripts/bots/bot.cjs <perfil> <segundos> <offset> [quantas] [tag]` com o servidor `npx vite --port 5173` no ar.
+  Perfis: agressivo, cauteloso (contra com toque para trás), explorador (pulo duplo, itens, reserva), caotico (teclas aleatórias), retrato (iPhone em pé).
+- `scripts/bots/run.sh` roda os 5 em duas levas (no máx. 3 navegadores juntos: cada um usa ~1,6 GB). `python3 scripts/bots/resumo.py` junta os `rel_*.json`.
+- Nas fases de voo o "progresso" sai 0 e "parado" alto: o robô lê `players[0]`, mas quem voa é o `shmup` (artefato da medição, não trava).
+- Achado da rodada: nas fases de voo densas dava para morrer no primeiro segundo; agora o voo começa com 2 s de invencibilidade.

@@ -5,3 +5,6 @@ public/assets/*
 !public/assets/sf/
 # Fonte Anak Manja (gerada por scripts/build-font.py)
 public/fonts/
+scripts/bots/rel_*.json
+scripts/bots/log_*.txt
+scripts/bots/done*.txt

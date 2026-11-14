@@ -156,6 +156,8 @@ export class ShmupSystem {
     this.meter = s.add.graphics();
     parts.push(this.meter);
     this.rider = s.add.container(this.x, this.y, parts).setDepth(DEPTH.fighters + 1);
+    // Um respiro no começo: pisca invencível enquanto as primeiras ondas entram na tela.
+    this.invulnUntil = s.time.now + 2000;
     this.planWaves();
   }
 

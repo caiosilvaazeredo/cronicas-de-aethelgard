@@ -122,6 +122,8 @@ originais (extraídas com PIL do PNG).
 - **Conquistas** (`achievements.ts`): 24, conferidas pelo save (`check`); contadores em `progress.stats`
   (`addStat`: kills, parries, shifts) e lista em `progress.ach`. `announceAchievements(scene)` mostra o aviso
   (fases, Empório, mapa do mundo). Página 2 do Diário. No modo livre nada é marcado.
+- **Créditos** (`CreditsScene`): depois de qualquer final (StoryScene → credits → world) e pelo botão CRÉDITOS na
+  tela inicial. Lista arte (Tiny Swords/Pixel Frog), fontes, Phaser, soundfont FluidR3/smplr e inspirações.
 - **Empório no mapa**: casinha amarela com a ovelha entre a Maré e a Pradaria (`WorldScene.drawShop`).
   Cada mundo tem um 5º padrão do Xamã (`ShamanBoss.worldPower`): chuva marcada (água, veneno, teia, bolotas,
   pedras, meteoros na diagonal), toras rolando, gêiseres de fogo ou rajadas em duas alturas (ondas/ferrões).

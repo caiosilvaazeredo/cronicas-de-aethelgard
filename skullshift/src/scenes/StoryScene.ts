@@ -344,7 +344,7 @@ export class StoryScene extends Phaser.Scene {
       // Fim: a tela some num branco morno e volta ao mapa do mundo (agora livre ou dominado).
       if (this.epilogue) setEnding('free');
       this.cameras.main.fadeOut(1600, 255, 247, 220);
-      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('world', { devices: this.devices, ending: true }));
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('credits', { next: 'world', data: { devices: this.devices, ending: true } }));
       return;
     }
     if (this.epilogue) {

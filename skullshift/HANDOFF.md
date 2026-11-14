@@ -114,6 +114,8 @@ originais (extraídas com PIL do PNG).
   dos aliados acertam o chefe via `BossHost.allies`). Barra derrubada: `ShamanBoss.defeat` fala a linha do
   mundo, abre um vórtice e chama `host.teleport` → `GameScene.finaleTeleport` reinicia a cena com
   `finalePhase + 1` (mortes continuam contando). No 9º mundo a derrota é a normal (epílogo livre).
+  Cada mundo tem um 5º padrão do Xamã (`ShamanBoss.worldPower`): chuva marcada (água, veneno, teia, bolotas,
+  pedras, meteoros na diagonal), toras rolando, gêiseres de fogo ou rajadas em duas alturas (ondas/ferrões).
 - **Poderes por jogador** (`GameScene.perks`, `hasPerk`, `applyPerks`): na história vêm do save (habilidades
   liberadas + aprimoramentos comprados); no versus vêm da `LoadoutScene` (HowTo → loadout → loading → game,
   `data.loadouts`), até 3 por jogador entre as habilidades e os aprimoramentos de luta já conquistados.

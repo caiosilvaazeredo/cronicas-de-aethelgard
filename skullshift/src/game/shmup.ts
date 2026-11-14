@@ -36,7 +36,7 @@ export interface ShmupHost {
 }
 
 /** Onda sônica (morcego) e ferrão (abelha), em pixel art. */
-function makeFlightArt(scene: Phaser.Scene): void {
+export function makeFlightArt(scene: Phaser.Scene): void {
   if (scene.textures.exists('sonic_wave')) return;
   const ink = 0x1d1a2b;
   const w = new Px(9, 22);

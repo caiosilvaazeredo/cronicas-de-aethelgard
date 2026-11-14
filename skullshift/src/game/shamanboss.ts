@@ -5,6 +5,7 @@ import type { CharId } from './characters';
 import type { Fighter } from './Fighter';
 import { sfx } from './settings';
 import { FINALE_WORLDS } from './finale';
+import { makeFlightArt } from './shmup';
 
 /** Ecos dos reis derrotados que o Xamã chama de volta (variantes e inimigos de cada área). */
 const ECHOES: CharId[] = ['shark_coral', 'goblin_pirate', 'lizard_tide', 'gnoll_wreck', 'spider', 'imp', 'torchgob', 'shark_hammer'] as CharId[];
@@ -39,7 +40,8 @@ export class ShamanBoss extends Boss {
     return 'shaman_attack';
   }
   protected patternCount(): number {
-    return 4;
+    // O 5º padrão é o poder do mundo da vez.
+    return 5;
   }
 
   protected bob(time: number): number {
@@ -126,7 +128,8 @@ export class ShamanBoss extends Boss {
     if (k === 0) await this.bolts(t);
     else if (k === 1) await this.echo(t);
     else if (k === 2) await this.slam(t);
-    else await this.chains(t);
+    else if (k === 3) await this.chains(t);
+    else await this.worldPower(t);
   }
 
   /** Rajada de feitiços roxos mirados no jogador. */
@@ -159,6 +162,157 @@ export class ShamanBoss extends Boss {
     }
     this.play('shaman_idle');
     await this.wait(400);
+  }
+
+  /**
+   * O poder do mundo da vez, feito com a arte daquele mundo:
+   * chuva marcada no chão (água, veneno, teia que prende, bolotas, pedras, meteoros), toras rolando
+   * (pule), gêiseres de fogo e rajadas do reino das asas em duas alturas (pule ou agache).
+   */
+  private async worldPower(t: number): Promise<void> {
+    const area = FINALE_WORLDS[this.world].area;
+    const bees = FINALE_WORLDS[this.world].minion() === 'bee';
+    this.replay('shaman_attack');
+    this.exclaim();
+    await this.wait(350);
+    if (!this.ok(t)) return;
+    switch (area) {
+      case 'mare':
+        return this.rain(t, 'water_ball', 'kill', false);
+      case 'lagoa':
+        return this.rain(t, 'poison_ball', 'kill', false);
+      case 'teias':
+        return this.rain(t, 'web_ball', 'root', false);
+      case 'bosque':
+        return this.rain(t, 'acorn', 'kill', false);
+      case 'minas':
+        return this.rain(t, 'meteor', 'kill', false);
+      case 'ceu':
+        return this.rain(t, 'meteor', 'kill', true);
+      case 'pradaria':
+        return this.roll(t, 'log_roll');
+      case 'forja':
+        return this.geysers(t);
+      default:
+        return this.gusts(t, bees ? 'stinger' : 'sonic_wave');
+    }
+  }
+
+  /** Coisas caindo do céu, cada uma com um aviso no chão antes. */
+  private async rain(t: number, tex: string, effect: 'kill' | 'root', diagonal: boolean): Promise<void> {
+    const s = this.scene;
+    const n = this.phase2 ? 7 : 5;
+    for (let i = 0; i < n && this.ok(t); i++) {
+      const x = i === 0 ? Phaser.Math.Clamp(this.player.x, this.host.x0 + 60, this.host.x1 - 60) : Phaser.Math.Between(this.host.x0 + 60, this.host.x1 - 60);
+      this.warnMark(x, 600);
+      const startX = diagonal ? x - 260 : x;
+      const o = s.add.image(startX, this.host.ceiling - 60, tex, 0).setScale(tex === 'meteor' ? 1.2 : 1.4).setDepth(DEPTH.projectiles);
+      const vx = diagonal ? 260 / 0.9 : 0;
+      let vy = 0;
+      let wait = 0.55;
+      this.addHazard({
+        x: startX,
+        y: o.y,
+        w: 36,
+        h: 36,
+        effect,
+        until: s.time.now + 4000,
+        obj: o,
+        step: (dt, h) => {
+          if (wait > 0) {
+            wait -= dt;
+            return;
+          }
+          vy = diagonal ? 520 : vy + 1800 * dt;
+          h.x += vx * dt;
+          h.y += vy * dt;
+          o.setPosition(h.x, h.y).setAngle(o.angle + 300 * dt);
+          if (h.y >= this.host.floor - 10) {
+            h.dead = true;
+            this.dust(h.x, this.host.floor, 1.1);
+          }
+        },
+      });
+      await this.wait(this.phase2 ? 260 : 360);
+    }
+    this.play('shaman_idle');
+    await this.wait(700);
+  }
+
+  /** Toras rolando pelo chão, uma de cada lado: pule por cima. */
+  private async roll(t: number, tex: string): Promise<void> {
+    const s = this.scene;
+    const n = this.phase2 ? 3 : 2;
+    for (let i = 0; i < n && this.ok(t); i++) {
+      const fromLeft = i % 2 === 0;
+      const dir = fromLeft ? 1 : -1;
+      const o = s.add.image(fromLeft ? this.host.x0 : this.host.x1, this.host.floor - 22, tex, 0).setDepth(DEPTH.projectiles);
+      this.addHazard({
+        x: o.x,
+        y: o.y,
+        w: 44,
+        h: 40,
+        until: s.time.now + 4000,
+        obj: o,
+        step: (dt, h) => {
+          h.x += dir * 420 * dt;
+          o.setPosition(h.x, h.y).setAngle(o.angle + dir * 500 * dt);
+          if (h.x < this.host.x0 - 30 || h.x > this.host.x1 + 30) h.dead = true;
+        },
+      });
+      await this.wait(this.phase2 ? 700 : 950);
+    }
+    this.play('shaman_idle');
+    await this.wait(500);
+  }
+
+  /** Gêiseres: o chão borbulha onde vai subir uma coluna de fogo. */
+  private async geysers(t: number): Promise<void> {
+    const s = this.scene;
+    const n = this.phase2 ? 4 : 3;
+    for (let i = 0; i < n && this.ok(t); i++) {
+      const x = i === 0 ? Phaser.Math.Clamp(this.player.x, this.host.x0 + 60, this.host.x1 - 60) : Phaser.Math.Between(this.host.x0 + 60, this.host.x1 - 60);
+      this.warnMark(x, 700);
+      await this.wait(this.phase2 ? 500 : 650);
+      if (!this.ok(t)) return;
+      const col = s.add.container(x, this.host.floor).setDepth(DEPTH.projectiles);
+      for (let k = 0; k < 5; k++) col.add(s.add.image(0, -k * 34, 'fire_ball').setScale(1.6 - k * 0.15));
+      col.setScale(1, 0.1);
+      s.tweens.add({ targets: col, scaleY: 1, duration: 140, yoyo: true, hold: 520 });
+      sfx('boom');
+      this.addHazard({ x, y: this.host.floor - 80, w: 44, h: 160, until: s.time.now + 760, obj: col });
+    }
+    this.play('shaman_idle');
+    await this.wait(600);
+  }
+
+  /** Rajadas do reino das asas em duas alturas: as baixas se pula, as altas se agacha. */
+  private async gusts(t: number, tex: string): Promise<void> {
+    const s = this.scene;
+    makeFlightArt(s);
+    const n = this.phase2 ? 5 : 3;
+    for (let i = 0; i < n && this.ok(t); i++) {
+      const low = Math.random() < 0.5;
+      const fromLeft = this.player.x > this.x;
+      const dir = fromLeft ? 1 : -1;
+      const o = s.add.image(fromLeft ? this.host.x0 : this.host.x1, this.host.floor - (low ? 20 : 80), tex, 0).setScale(1.4).setFlipX(dir < 0).setDepth(DEPTH.projectiles);
+      this.addHazard({
+        x: o.x,
+        y: o.y,
+        w: 50,
+        h: 26,
+        until: s.time.now + 3000,
+        obj: o,
+        step: (dt, h) => {
+          h.x += dir * 560 * dt;
+          o.setPosition(h.x, h.y);
+          if (h.x < this.host.x0 - 40 || h.x > this.host.x1 + 40) h.dead = true;
+        },
+      });
+      await this.wait(this.phase2 ? 420 : 600);
+    }
+    this.play('shaman_idle');
+    await this.wait(500);
   }
 
   /** Chama ecos dos reis derrotados (no máximo 3 vivos). */

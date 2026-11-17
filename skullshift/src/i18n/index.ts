@@ -146,6 +146,12 @@ function one(s: string, depth: number): string | undefined {
   if (!core) return undefined;
   const hit = lookup(core);
   if (hit !== undefined) return lead + hit + trail;
+  // Entre aspas ("Eu te seguro."): traduz o que está dentro.
+  const q = /^(["“«「])([\s\S]+)(["”»」])$/u.exec(core);
+  if (q) {
+    const mid = lookup(q[2]);
+    if (mid !== undefined) return lead + (current === 'ja' ? '「' + mid + '」' : q[1] + mid + q[3]) + trail;
+  }
   // Com enfeites nas pontas (setas, cadeado, estrela...): traduz só o miolo.
   const deco = /^([^\p{L}\p{N}"'(¿¡{]+)?([\s\S]*?)([^\p{L}\p{N}.!?…)"'%}]+)?$/u.exec(core);
   if (deco && (deco[1] || deco[3]) && deco[2]) {
@@ -168,7 +174,7 @@ export function tr(s: string, depth = 0): string {
   if (current === 'pt-BR' || !s || !/\p{L}{2,}/u.test(s)) return s;
   const c = cache.get(s);
   if (c !== undefined) return c;
-  let out = one(s, depth);
+  let out: string | undefined = dict[s] ?? one(s, depth);
   if (out === undefined && s.includes('\n')) {
     let any = false;
     const lines = s.split('\n').map((line) => {
@@ -218,17 +224,43 @@ export function tr(s: string, depth = 0): string {
  * Gancho: todo Text do Phaser traduz o que recebe. Se a tradução ficar mais larga que o original
  * (alemão, russo...), a fonte encolhe para caber no mesmo espaço; texto com quebra de linha só quebra.
  */
+/** Japonês e chinês não separam palavras com espaço: quebra a linha por caractere, sem deixar pontuação no começo. */
+const NO_START = /^[、。，．・：；？！」』）〕】〉》”’…ー々ゃゅょっぁぃぅぇぉャュョッァィゥェォ,.!?:;)\]}]/u;
+function cjkWrap(text: string, obj: Phaser.GameObjects.Text): string[] {
+  const max = (obj.style as unknown as { wordWrapWidth: number }).wordWrapWidth;
+  const ctx = obj.context;
+  const out: string[] = [];
+  for (const para of text.split('\n')) {
+    let line = '';
+    for (const ch of [...para]) {
+      if (line && ctx.measureText(line + ch).width > max && !NO_START.test(ch)) {
+        out.push(line);
+        line = ch === ' ' ? '' : ch;
+      } else line += ch;
+    }
+    out.push(line);
+  }
+  return out;
+}
+let CJK = false;
+
 export function hookText(): void {
   if (current === 'pt-BR') return;
+  CJK = current === 'ja' || current === 'zh-CN';
   const proto = Phaser.GameObjects.Text.prototype as unknown as { setText(v: string | string[]): Phaser.GameObjects.Text; __i18n?: boolean };
   if (proto.__i18n) return;
   proto.__i18n = true;
   const orig = proto.setText;
   proto.setText = function (this: Phaser.GameObjects.Text, v: string | string[]) {
+    const self = this as Phaser.GameObjects.Text & { __base?: number; __noTr?: boolean };
+    const st = this.style as Phaser.GameObjects.TextStyle & { wordWrapWidth?: number | null; wordWrapCallback?: unknown; wordWrapCallbackScope?: unknown };
+    if (CJK && st.wordWrapWidth && !st.wordWrapCallback) {
+      st.wordWrapCallback = cjkWrap;
+      st.wordWrapCallbackScope = null;
+    }
+    if (self.__noTr) return orig.call(this, v);
     const src = Array.isArray(v) ? v.join('\n') : typeof v === 'string' ? v : String(v ?? '');
     const out = tr(src);
-    const self = this as Phaser.GameObjects.Text & { __base?: number; __noTr?: boolean };
-    if (self.__noTr) return orig.call(this, v);
     if (out === src) {
       if (self.__base) {
         this.setFontSize(self.__base);

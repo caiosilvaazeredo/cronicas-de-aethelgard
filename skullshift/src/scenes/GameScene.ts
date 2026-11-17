@@ -32,6 +32,7 @@ import { settings, sfx } from '../game/settings';
 import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
+import { noTr, tr } from '../i18n';
 
 type Mode = 'story' | 'versus';
 
@@ -1727,6 +1728,13 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- aranhas penduradas ----------
 
+  /** Aviso de item: monta cada pedaço já traduzido (o nome do personagem vai à parte). */
+  private pickPrompt(key: string, name: string): string {
+    const fill = (t: string, ...v: string[]) => t.replace(/\{(\d+)\}/g, (_, k) => v[Number(k)] ?? '');
+    const keep = this.reserveOn ? fill(tr('\n▼+{0} guardar'), key) : '';
+    return fill(tr('{0}  pegar\n{1}{2}'), key, tr(name), keep);
+  }
+
   /** Aranha numa teia no teto, de cabeça para baixo, balançando no fio. */
   private addHanger(x: number): void {
     const f = new Fighter(this, x, HANG_FEET, 'spider', 2, 'enemy');
@@ -1951,7 +1959,7 @@ export class GameScene extends Phaser.Scene {
     if (kind === 'torch') sprite.play('torch_flame');
     this.tweens.add({ targets: sprite, y: y - 8, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: glow, alpha: 0.15, duration: 700, yoyo: true, repeat: -1 });
-    const prompt = this.add
+    const prompt = noTr(this.add
       .text(x, y - 46, '', {
         fontFamily: BODY_FONT,
         fontSize: '16px',
@@ -1963,7 +1971,7 @@ export class GameScene extends Phaser.Scene {
       })
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 1)
-      .setVisible(false);
+      .setVisible(false));
     this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0 });
   }
 
@@ -2031,7 +2039,7 @@ export class GameScene extends Phaser.Scene {
         }
         if (!shown) {
           it.prompt
-            .setText(`${PICK_LABEL[this.devices[i]]}  pegar\n${CHARS[char].name}${this.reserveOn ? `\n▼+${PICK_LABEL[this.devices[i]]} guardar` : ''}`)
+            .setText(this.pickPrompt(PICK_LABEL[this.devices[i]], CHARS[char].name))
             .setBackgroundColor(PLAYER_HEX[i])
             .setPosition(it.sprite.x, it.floor + 46)
             .setVisible(true);

@@ -1,0 +1,205 @@
+1118	Encuentra todos los regalos de los niveles de llave.
+1119	Fuera del Camino
+1120	Supera un área extra.
+1121	Explorador
+1122	Supera todas las áreas extra.
+1123	Bolsillo Pesado
+1124	Reúne 100 de oro de una vez.
+1125	Parroquiano
+1126	Compra una mejora en el Emporio.
+1127	Cliente Preferido
+1128	Compra todas las mejoras.
+1129	Gajes del Oficio
+1130	Derrota a 50 enemigos.
+1131	Leyenda de la Isla
+1132	Derrota a 250 enemigos.
+1133	¡CONTRA!
+1134	Haz un contragolpe.
+1135	Maestro del Retroceso
+1136	Haz 25 contragolpes.
+1137	Mil Formas
+1138	Transfórmate 30 veces.
+1139	Cinéfilo
+1140	Termina el Dibujo Perdido.
+1141	LOGRO · {0}
+1142	La playa donde despierta la calavera. El Tiburón Arponero guarda el primer fragmento.
+1143	Rey Tiburón Arponero
+1144	Campos de hierba y huesos antiguos. Los Gnolls cazan en manada.
+1145	Rey Gnoll
+1146	Laguna de los Lagartos
+1147	Un pantano tibio de agua verde. En el centro, el Rey Lagarto nunca duerme.
+1148	Rey Lagarto
+1149	Caverna de las Telarañas
+1150	Túneles cubiertos de telaraña. Al fondo, la Araña Reina y el nido de los Príncipes.
+1151	Araña Reina
+1152	La montaña de fuego donde el Minotauro Carmesí martilla la lava.
+1153	Minotauro Carmesí
+1154	Bosque de los Gnomos
+1155	Árboles viejos, setas y portones que solo se abren con peso. Al Rey Gnomo no le gustan las visitas.
+1156	Rey Gnomo
+1157	Minas de los Goblins
+1158	Túneles de oro iluminados por antorchas. El Rey Goblin cuenta cada pepita.
+1159	Rey Goblin de la Antorcha
+1160	Cielo de Brasa
+1161	Islas de nube y vientos fuertes. El Diablillo Gigante quiere el cielo solo para él.
+1162	Diablillo Gigante
+1163	Reino de las Alas
+1164	El reino enemigo de tu aliado. Solo se abre tras el pacto con los Príncipes.
+1165	Rey de las Alas
+1166	Santuario del Chamán
+1167	La isla de Hex, en medio de todo. El Portal de la Marea espera la corona entera.
+1168	Colmena Real
+1169	Rey de las Abejas
+1170	Reino de la Noche
+1171	Rey de los Murciélagos
+1172	MINOTAURO CARMESÍ
+1173	Señor de la Forja
+1174	ARAÑA REINA
+1175	Madre de la Guarida
+1176	Esqueleto
+1177	Aldeano
+1178	Lagarto
+1179	Gnoll
+1180	Tiburón Arponero
+1181	Goblin Lancero
+1182	Araña
+1183	Murciélago Gigante
+1184	Goblin de la Antorcha
+1185	Abejorro
+1186	Diablillo
+1187	Minotauro
+1188	Gnomo del Tirachinas
+1189	Teclado
+1190	WASD o flechas
+1191	Teclado · Preajuste 1
+1192	Lado izquierdo: WASD + F
+1193	Teclado · Preajuste 2
+1194	Lado derecho: flechas + Enter
+1195	Mando 1
+1196	Xbox, PlayStation o similar
+1197	Mando 2
+1198	Pantalla táctil
+1199	Botones virtuales
+1200	Gestos o ratón
+1201	Arrastrar, deslizar y tocar
+1202	AGARRA
+1203	MANTÉN
+1204	DEF
+1205	2 DEDOS
+1206	¡LA OLA ESTÁ CRECIENDO!
+1207	¡TIROLINA!
+1208	¡ESTAMPIDA! ¡SUBE!
+1209	ARPÓN REAL
+1210	La marea fue la primera en olvidar tu nombre, Ossian. Veamos si la pradera lo recuerda.
+1211	AULLIDO DE LA MANADA
+1212	Huesos y hierba. De aquí saqué tu cuerpo, ¿lo sabías? No. Nadie lo recuerda.
+1213	EMBESTIDA DEL PANTANO
+1214	El lagarto nunca cerró los ojos porque me vigilaba. Tú se los cerraste por mí.
+1215	TELARAÑA DE LA REINA
+1216	Los nombres tachados en la piedra... eran todos Ossian. Tú solo eres el último.
+1217	MARTILLO CARMESÍ
+1218	Él forjaba mi cadena. Ahora forja tu fin. Qué ironía de yunque.
+1219	BELLOTA GIGANTE
+1220	El bosque se plantó alrededor de mi prisión. Cada árbol, un guardia. No quedó ninguno.
+1221	ANTORCHA DEL REY
+1222	Oro, oro, oro. Ellos contaban pepitas mientras yo contaba los días. Un mundo más.
+1223	BRASA GIGANTE
+1224	El cielo arde porque yo respiro. Allá arriba, solo falta el último reino.
+1225	VUELO RASANTE REAL
+1226	No... ¿los nueve juntos? Eso no estaba en la barca. ¡Eso NO estaba en la barca!
+1227	Trono del Chamán · {0}
+1228	REY GNOLL
+1229	Señor de la Pradera
+1230	{0}: entrar
+1231	CERRADA · busca la llave
+1232	CERRADA · faltan {0} {1}
+1233	¡JIJIJI! PUERTA EQUIVOCADA
+1234	¡La puerta se abrió!
+1235	¡LLAVE!
+1236	¡PUENTE! {0}s
+1237	¡LA SALIDA SE ABRIÓ!
+1238	REY GNOMO
+1239	Guardián del Bosque
+1240	REY GOBLIN DE LA ANTORCHA
+1241	Señor de las Minas
+1242	REY LAGARTO
+1243	Señor de la Laguna
+1244	Hacia ATRÁS al recibir\nel golpe: ¡CONTRA!
+1245	Mira hacia arriba: las arañas esperan en las telarañas del techo.
+1246	Solo las nubes encantadas por el Chamán, las que brillan, aguantan tu peso.
+1247	La casa del Diablillo. Cada área solo se abre cuando caen todos sus enemigos.
+1248	¡El Minotauro Carmesí ha caído! ¡Fragmento recuperado!
+1249	¡DOBLE SALTO!\nsalta y, en el aire,\nsalta otra vez
+1250	¡CORRE!\n2× en la dirección y mantén\n+ doble salto
+1251	¡El Portal de la Marea está ante ti!
+1252	Hasta el Portal de la Marea solo llega quien combina carrera, doble salto y valor.
+1253	La casa engaña. Sigue la luna, y desconfía también de ella.
+1254	¡Encontraste la salida del laberinto de puertas!
+1255	LA CASA ENGAÑA.\nSigue siempre la LUNA.\n(AGARRAR: entrar)
+1256	No todas las lunas\ndicen la verdad.
+1257	¡LA SALIDA!
+1258	La salida está cerrada. En algún lugar entre las estanterías, una llave espera.
+1259	¡La llave giró en la cerradura!
+1260	LA SALIDA ESTÁ CERRADA.\nBusca la LLAVE.
+1261	GOLPEA LA PALANCA.\n¡El puente desaparece rápido!
+1262	No se ve nada. Enciende las velas y no te pares en suelos agrietados.
+1263	¡Las velas encendidas mostraron el camino!
+1264	ESTÁ OSCURO...\nToca las velas\npara encenderlas.
+1265	La puerta solo se abre con\nlas 3 VELAS GRANDES encendidas.
+1266	El techo está lleno de arañas. Mira hacia arriba y no dejes de andar.
+1267	Al fondo de la guarida, la Reina guarda el fragmento entre los huevos.
+1268	¡La Araña Reina ha caído! ¡Fragmento recuperado!
+1269	¡Una ola gigante de lava viene detrás! El suelo se hunde delante de ella: corre, salta, usa la tirolina.
+1270	¡Escapaste de la ola de lava!
+1271	Entra en las corrientes de viento para subir. Mantén SALTAR en el aire para planear.
+1272	¡El viento te llevó al otro lado!
+1273	¡VIENTO! Entra en la corriente\ny mantén SALTAR\npara planear.
+1274	Montado en el príncipe aliado, por la noche, hasta el rey del reino enemigo.
+1275	¡El rey cayó del cielo nocturno!
+1276	AGARRAR levanta la llave dorada. Llévala a la puerta cerrada. Hay 3 regalos escondidos.
+1277	¡La llave abrió la puerta!
+1278	AGARRAR levanta la llave.\nLlévala a la PUERTA.\n↑ sube la escalera.
+1279	Con la llave no hay\ndoble salto:\nusa el MUELLE.
+1280	Golpea la palanca para cambiar los bloques: solo el color activo es sólido.
+1281	¡Bloques en su sitio, puerta abierta!
+1282	Agachado + SALTAR:\npino\n(salto más alto).
+1283	Rocas de oro bloquean el paso. Martillo: en el aire, mantén ▼ y pulsa ATACAR.
+1284	¡Rocas rotas, puerta abierta!
+1285	MARTILLO: en el aire,\n▼ + ATACAR\nrompe las rocas.
+1286	Derriba el árbol para hacer un puente. Una oveja en una placa abre el portón.
+1287	¡El bosque abrió camino!
+1288	HACHA: ATACAR\nel árbol lo derriba\ny se vuelve puente.
+1289	Lleva la OVEJA\nhasta la placa.
+1290	La llave está en lo alto de la torre. Pico: toca la pared en el aire y sube.
+1291	¡De lo alto de la torre a la puerta!
+1292	PICO: salta a la\npared y la calavera\nsube sola.
+1293	¡Corre y dispara! Mantén ATACAR para lanzar huesos. Los enemigos no paran de llegar.
+1294	¡Cruzaste la pradera a tiros!
+1295	¡Corre y dispara en la mina! Mantén ATACAR: antorchas, arañas y murciélagos vienen en oleadas.
+1296	¡La mina quedó limpia a tiros!
+1297	Una caverna llena de alas. Al fondo, alguien con corona te espera.
+1298	¡La pelea de los Príncipes terminó!
+1299	Montado en el príncipe aliado: oleadas de enemigos y, al final, ¡el Diablillo Gigante en persona!
+1300	¡El Diablillo Gigante cayó del cielo!
+1301	¡Protege la urna! Los fantasmas vienen por los dos lados. Si tocan la urna 3 veces, vuelves a empezar.
+1302	¡La urna está a salvo!
+1303	Un árbol enorme, hueco por dentro. Lleva la llave a la puerta de arriba. Los 3 regalos valen oro.
+1304	¡El árbol guardaba un tesoro!
+1305	¡Área extra!\nLos regalos valen oro.
+1306	¡Área extra!\nLa llave está al final.
+1307	¡Área extra!\nSube hasta la llave.
+1308	Un corral vacío en medio de la hierba. Alguien dejó regalos para las ovejas que nunca volvieron.
+1309	¡El corral guardaba oro!
+1310	Una cabaña de lagarto medio hundida en el pantano. Dentro, todavía seco, un cofre.
+1311	¡La cabaña guardaba oro!
+1312	Capullos colgando hasta el techo. No todos guardan arañas: algunos guardan tesoros.
+1313	¡Los capullos guardaban oro!
+1314	Un cofre excavado en el vidrio negro del volcán. El Minotauro guardaba lo que no quería ver.
+1315	¡El cofre guardaba oro!
+1316	Un corro de setas que los gnomos juran que está encantado. Salta sobre las grandes.
+1317	¡El corro guardaba oro!
+1318	Una bolsa de oro que ningún goblin ha encontrado. Todavía.
+1319	¡La bolsa era tuya!
+1320	Un nido enorme en medio de las brasas. Quien lo dejó allí voló lejos.
+1321	¡El nido guardaba oro!
+1322	Una torre olvidada del reino de las alas, llena de plumas y de monedas.

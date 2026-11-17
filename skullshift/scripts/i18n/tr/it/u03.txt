@@ -1,0 +1,350 @@
+1543	Porta la CHIAVE dorata
+1544	LA MAREA STA PER SALIRE!
+1545	CHIUSE APERTE: ALTA MAREA!
+1546	CHIUSE SERRATE: BASSA MAREA
+1548	SCIAMANO HEX
+1549	Barra {0}/{1} · {2}
+1550	Nove sigilli, nove mondi. Ti trascinerò attraverso ognuno, Ossian. E in ognuno sarai uno dei MIEI.
+1551	{0}. {1} è tornato ad aiutarti? Che cosa commovente.
+1552	I sigilli sono tornati. Il mondo è libero.
+1553	RE SQUALO ARPIONE
+1554	Signore della Marea
+1555	BASSA MAREA: ATTACCA ORA!
+1556	LA MAREA STA PER SALIRE! SALI!
+1557	DIAVOLETTO GIGANTE
+1558	Signore dei Cieli
+1559	RE DELLE API
+1560	Sovrano dell'Alveare
+1561	RE DEI PIPISTRELLI
+1562	Signore della Notte Eterna
+1563	CIELO LIBERO!
+1564	SCUDO!
+1565	URLO PRONTO!
+1566	↑ ↓ ← →  vola  ·  tieni ATTACCA (SPARO) per sparare  ·  PRENDI / DIFENDI (URLO): urlo sonico
+1567	↑ ↓ ← →  vola  ·  tieni ATTACCA (o SPARO) per sparare
+1568	SALTA
+1569	ATT
+1570	SPARO
+1571	URLO
+1572	Osso Testardo
+1573	Da trasformato, il colpo che ti ucciderebbe disfa solo la trasformazione: torni a essere il teschio e resti in piedi.
+1574	Beee. (Cade la pelle, resta l'osso.)
+1575	Spada Respingente
+1576	Il colpo di spada respinge QUALSIASI proiettile che la tocchi: ossa, arpioni, ghiande, fuoco... e lo rimanda a chi l'ha lanciato.
+1577	Beee. (Colpisci ciò che vola.)
+1578	Candela Extra
+1579	Una vita in più in ogni livello prima che ricominci.
+1580	Beee. (Non lasciarla spegnere.)
+1581	Riflesso d'Osso
+1582	La finestra del CONTRO (toccare indietro nel momento del colpo) diventa molto più ampia.
+1583	Beee. (Indietro, in fretta.)
+1584	Mantello di Nuvola
+1585	Quando rinasci, resti intoccabile per il doppio del tempo.
+1586	Beee. (Fatto della sua nuvola. Non dirlo.)
+1587	Calamita d'Ossa
+1588	L'oggetto della cassa di riserva cade dritto e due volte più veloce, proprio su di te.
+1589	Beee. (Ciò che è tuo ritorna.)
+1590	Dente d'Oro
+1591	I nemici sconfitti danno il doppio dell'oro.
+1592	Beee. (Buon affare. Per me.)
+1593	Squalo Martello
+1594	Squalo di Corallo
+1595	Squalo Corazzato
+1596	Lucertola della Sabbia
+1597	Lucertola della Marea
+1598	Goblin Pirata
+1599	Capitano Goblin
+1600	Goblin Bombarolo
+1601	Gnoll Naufrago
+1602	Ragno Saltatore
+1603	Ragno Tessitore
+1604	Vedova Nera
+1605	Pipistrello Vampiro
+1606	Minotauro di Lava
+1607	Minotauro di Ossidiana
+1608	Lucertola di Magma
+1609	Gnomo dal Cappello Rosso
+1610	Gnomo del Muschio
+1611	Gnomo Anziano
+1612	Goblin del Fuoco Blu
+1613	Goblin Minatore
+1614	Capo Goblin
+1615	Lucertola Velenosa
+1616	Lucertola Coccodrillo
+1617	Ape di Brace
+1618	Ape della Tempesta
+1619	Gnoll Cacciatore
+1620	Gnoll in Agguato
+1621	Gnoll Bruto
+1624	CARICAMENTO 0%
+1625	CARICAMENTO {0}%
+1626	SCEGLI I COMANDI
+1627	Il controller non compare? Collegalo e premi un pulsante qualsiasi.  ·  Nome: ◀ ▶ o ✎ (tasti N / M)
+1628	◀  INDIETRO
+1629	CONFERMA  ▶
+1630	NUOVO
+1631	STANDARD
+1632	Tocco
+1633	Gesti/Mouse
+1634	NOME DEL GIOCATORE {0}
+1635	Idea, direzione e test
+1636	il team di Skullshift
+1637	Codice, testi e colonna sonora
+1638	realizzati con Claude Code (Anthropic)
+1639	Grafica
+1640	Tiny Swords, di Pixel Frog\nFree Pack ed Enemy Pack
+1641	Font
+1642	Anak Manja, di Khurasan Studio\nMatcha Style
+1643	Motore
+1645	Strumenti
+1646	flauto, chitarra e arpa dal soundfont FluidR3_GM (Frank Wen)\nconvertiti da midi-js-soundfonts (Benjamin Gleitzman)\nsuonati con la libreria smplr
+1647	Ispirazioni
+1649	Cast
+1650	Ossian, il teschio · Sciamano Hex\nRe Squalo Arpione · Re Gnoll · Re Lucertola · Regina Ragno\nMinotauro Scarlatto · Re Gnomo · Re Goblin della Torcia\nDiavoletto Gigante · Re delle Ali · i Principi\ne la pecora dall'orecchio nero
+1651	I sigilli sono tornati. Il mondo è libero.\nE Ossian è rimasto, di guardia.
+1652	Ossian è tornato a casa.\nE il mondo ora è di Hex.
+1653	La storia ti aspetta ancora.
+1654	GRAZIE PER AVER GIOCATO!
+1655	un tasto o un tocco per saltare
+1656	{0}   ·   Regali: {1}/3
+1657	L'URNA SI È ROTTA
+1658	VERSUS · {0}
+1659	ROTTO!
+1660	{0} (da lontano)
+1661	· RICORDO ·
+1662	AIUTANTE
+1663	AIUTANTE DI {0}
+1664	RAFFICA!
+1665	il vento spinge verso destra ➜
+1666	⬅ il vento spinge verso sinistra
+1667	PIOGGIA DI OSSA!
+1668	guarda le ombre a terra
+1669	PIOGGIA DI OGGETTI!
+1670	corri a prenderli per primo
+1671	BASSA GRAVITÀ!
+1672	salti altissimi
+1673	AIUTANTI!
+1674	prendi la sfera viola: una creatura combatte al tuo fianco
+1675	RESPINTO!
+1676	INTRAPPOLATO NELLA RAGNATELA!
+1677	INTRAPPOLATO NELLA RETE!
+1678	OSSO TESTARDO!
+1679	ATTACCATO!
+1680	DIVENTATO CIBO PER RAGNI
+1681	GNAM!
+1682	CONSERVATO!
+1683	{0}  prendi\n{1}{2}
+1684	Tieni SALTA in aria per volare
+1685	Si attacca alle pareti e sale
+1686	Nuota! ▼ si immerge, SALTA esce dall'acqua
+1687	IL LIVELLO RICOMINCIA
+1688	PELLICOLA!
+1689	Un livello segreto è comparso sulla mappa...
+1690	Cielo libero!
+1691	AREA LIBERATA!
+1692	Boss sconfitto!
+1693	INTRAPPOLATO!
+1694	Livello {0}
+1695	{0} · Area bonus
+1696	{0} COMBATTE AL TUO FIANCO!
+1697	il suo sigillo è stato spezzato: ora è libero
+1698	{0} COMPLETATO!
+1699	{0}   ·   Tempo: {1}s   ·   Morti: {2}
+1700	Frammento della corona recuperato!
+1701	{0} HA VINTO!
+1702	Ha raggiunto la fine del lato opposto
+1703	COME SI GIOCA
+1704	GIOCA  ▶
+1705	Muovi
+1706	Salta
+1707	Accovacciati
+1708	Difendi
+1709	Attacca
+1710	Prendi oggetto
+1712	W ↑ Spazio
+1713	Prendi
+1714	Anche: frecce, Spazio,\nJ (attacca), K (difendi), L (prendi)
+1715	Accovacciati (giù)
+1716	Anche LB / RB difendono
+1717	Trascina: cammina (lontano: corsa)
+1718	Scorri in su: salta
+1719	Trascina in giù: accovacciati
+1720	Tocco/clic rapido: attacca
+1721	Tieni fermo: prendi
+1722	2 dita o tasto destro: difendi
+1723	Funziona con il dito sullo schermo o solo con il mouse (anche il tasto centrale prende).
+1724	Telefono in orizzontale o in verticale. Puoi usare più dita insieme.
+1725	Un colpo uccide.\nAnche te!
+1726	DIFESA: tieni il pulsante.\nTocca INDIETRO nel momento\ndel colpo: CONTRO!
+1727	Accovacciato: schivi i colpi\ne colpisci basso.
+1728	Premi salta in aria:\ndoppio salto.
+1729	Oggetto di un altro personaggio\na terra: PRENDI trasforma.
+1730	5 scenari: arriva alla\nfine del lato opposto.
+1731	Abbattuto? Tocca a te.\nArriva alla tua fine!
+1732	◀ DIARIO
+1733	OBIETTIVI ▶
+1734	OBIETTIVI
+1735	◀  MAPPA
+1736	DIARIO DI OSSIAN
+1737	RICORDI
+1738	MONDI
+1739	bonus ✓
+1740	bonus —
+1741	{0}  ·  {1}/{2} livelli  ·  {3}/{4} regali  ·  {5}  ·  {6}
+1742	ORO: {0}   ·   ABILITÀ: {1}\nPOTENZIAMENTI: {2}
+1743	tocca un ricordo per rivederlo
+1744	{0}/{1} ottenuti
+1745	CARICAMENTO
+1746	POTERI DEL DUELLO
+1747	COMBATTI  ▶
+1748	◀ INDIETRO
+1749	P1: W/S sceglie, E segna  ·  P2: ↑/↓ sceglie, . segna  ·  T: modalità test  ·  Invio: combatti  ·  il tocco segna
+1750	{0}: ancora bloccato. Sbloccalo nella modalità storia (o attiva la MODALITÀ TEST).
+1751	Massimo {0} poteri per giocatore (nessun limite in MODALITÀ TEST).
+1752	MODALITÀ TEST: ATTIVA
+1753	MODALITÀ TEST: DISATTIVA
+1754	ENTRA  ▶
+1755	◀ MONDO
+1756	ENTRA
+1757	Trascina la mappa di lato · tocca 2× un livello per correrci
+1758	IN COSTRUZIONE
+1759	{0} · BONUS
+1760	NUOVA ABILITÀ!
+1761	HO CAPITO
+1762	LIVELLO {0}/{1} · {2}
+1763	{0}   ◀ ▶ scegli · Invio / A / tocco: entra · Esc: mondo
+1764	RICORDO {0}/{1} · {2}
+1765	CONTINUA ▶
+1766	STORIA  ·  1 giocatore
+1767	VERSUS  ·  2 giocatori
+1768	LIBERA  ·  test
+1769	IMPOSTAZIONI
+1770	GIOCA
+1771	⚙ OPZIONI
+1772	CREDITI
+1773	Invio · Spazio · pulsante A · tocco
+1774	Nella prossima schermata, ogni giocatore sceglie tastiera, controller o tocco.
+1775	P1 = blu  ·  P2 = rosso. Entrambi iniziano come scheletro.
+1776	DIFESA sul pulsante (Q, K, B). Tocca INDIETRO nel momento del colpo: CONTRO! Sopra l'oggetto di un altro personaggio, premi PRENDI per trasformarti.
+1777	LIVELLO {0} · {1}
+1778	GIOCO
+1779	Velocità del testo
+1780	Quanto velocemente compaiono i dialoghi della storia.
+1781	LENTO
+1782	NORMALE
+1783	VELOCE
+1784	ISTANTANEO
+1785	Commenti del teschio
+1786	Fumetto sarcastico la prima volta in ogni forma.
+1787	Tremolio dello schermo
+1788	Intensità del tremolio per impatti ed esplosioni.
+1789	SCHERMO
+1790	Schermo intero
+1791	Attiva o disattiva lo schermo intero.
+1792	Luminosità
+1793	Schiarisce o scurisce l'immagine del gioco.
+1794	AUDIO
+1795	Volume generale
+1796	Volume di tutti i suoni.
+1797	Effetti sonori
+1798	Salti, colpi, porte, esplosioni (suoni a 8 bit).
+1799	Musica
+1800	Colonna sonora: un tema per ogni area, boss e ricordi.
+1801	COMANDI
+1802	Corsa con doppio tocco
+1803	Toccare 2× la direzione e tenere per correre.
+1804	Pulsanti a tocco: dimensione
+1805	Dimensione dei pulsanti sullo schermo del telefono.
+1806	PICCOLO
+1807	MEDIO
+1808	GRANDE
+1809	Pulsanti a tocco: opacità
+1810	Quanto sono visibili i pulsanti a tocco.
+1811	ACCESSIBILITÀ
+1812	Colori per daltonici
+1813	Giocatore 2 in arancione invece che in rosso.
+1814	Lampi sullo schermo
+1815	Disattiva per evitare i lampi (fulmini, esplosioni).
+1816	RIPRISTINA PREDEFINITI
+1817	↑ ↓ opzione  ·  ← → regola  ·  Q / E (LB / RB) scheda  ·  Esc / B indietro
+1818	DISATTIVO
+1819	ATTIVO
+1820	EMPORIO DELL'ORECCHIO NERO
+1821	◀ MAPPA
+1822	COMPRA
+1823	← → scegli  ·  Invio / A compra  ·  Esc / B indietro
+1824	Beee. (Accetto oro. Non accetto chiacchiere.)
+1825	COMPRATO
+1826	Beee. (Quello è già tuo.)
+1827	Beee. (Mancano {0} monete d'oro.)
+1828	FACILE
+1829	il livello ricomincia dopo 9 morti
+1830	il livello ricomincia dopo 5 morti
+1831	DIFFICILE
+1832	il livello ricomincia alla 3ª morte
+1833	SCEGLI IL SALVATAGGIO
+1834	◀ ▶ scegli  ·  Invio / A: gioca  ·  Canc / X: cancella  ·  Esc / B: indietro
+1835	SALVATAGGIO {0}
+1836	VUOTO
+1837	Nuova partita — scegli la difficoltà:
+1838	STORIA COMPLETATA
+1839	{0} LIVELLI · {1}/{2} FRAMMENTI
+1840	ultima partita: {0}
+1841	RIVEDI  ▶
+1842	CONTINUA  ▶
+1843	CANCELLARE DAVVERO?
+1844	CANCELLA
+1845	EPILOGO
+1846	CAPITOLO {0}
+1847	AVANTI  ▶
+1848	SALTA
+1849	AFFRONTA LO SCIAMANO
+1850	TORNA A CASA CON IL SUO AIUTO
+1851	Se vinci, il mondo è libero... e tu torni a essere osso.
+1852	Torni a casa tutto intero. Il mondo resta allo Sciamano.
+1853	LA SCELTA
+1854	MENU
+1855	Scegli "Schermo tattile"\nnella schermata dei comandi\nper giocare dal telefono
+1856	SENSO DI RAGNO
+1857	CONTINUA
+1858	RICOMINCIA LIVELLO
+1859	ESCI ALLA MAPPA
+1860	ESCI AL MENU
+1861	PAUSA
+1862	!  PERICOLO  !
+1863	Scegli con cura: questo cambia i livelli di volo.
+1864	GIOCA ANCORA
+1865	◀ MENU
+1866	EMPORIO · {0} oro
+1867	DIARIO
+1868	EMPORIO · {0}
+1869	Tocca un'area per sceglierla · tocca di nuovo per entrare
+1870	EMPORIO
+1871	IL MONDO APPARTIENE ALLO SCIAMANO
+1872	IL MONDO È LIBERO
+1873	{0} · FRAMMENTI DELLA CORONA {1}/{2}
+1874	{0}/{1} livelli superati (obiettivo: {2} livelli)
+1875	Un'area ancora coperta dalla nebbia. Supera le Isole della Marea per raggiungerla.
+1876	Un regno che compare solo dopo il patto con i Principi (nella Caverna delle Ragnatele).
+1877	Il Santuario dello Sciamano. Si apre solo quando tutti i frammenti della corona sono riuniti.
+1878	Un'area ancora coperta dalla nebbia. Supera la Prateria delle Ossa per aprire la strada.
+1879	{0}  ·  I livelli di quest'area sono ancora in costruzione.
+1880	FRAMMENTO DELLA CORONA {0}/{1}!
+1881	candele grandi
+1882	candela grande
+1883	TORCIA GRANDE
+1884	CANDELA GRANDE
+1885	Porta aperta!
+1886	\n▼+{0} conserva
+1887	re ✓
+1888	re —
+1889	nessuno (vedi l'Emporio)
+1891	AREA BONUS
+1892	LIVELLO {0}
+1893	GIOCATORE 1
+1894	GIOCATORE 2
+1895	 · LIBERA
+1896	 · SALVATAGGIO {0}
+1897	MODALITÀ LIBERA
+1898	{0}/{1} livelli
+1899	{0} oro

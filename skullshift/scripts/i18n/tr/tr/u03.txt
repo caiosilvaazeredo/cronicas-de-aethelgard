@@ -1,0 +1,350 @@
+1543	Altın ANAHTAR'ı getir
+1544	GELGİT YÜKSELECEK!
+1545	SAVAKLAR AÇIK: YÜKSEK GELGİT!
+1546	SAVAKLAR KAPALI: ALÇAK GELGİT
+1548	ŞAMAN HEX
+1549	Çubuk {0}/{1} · {2}
+1550	Dokuz mühür, dokuz dünya. Seni hepsinde sürükleyeceğim, Ossian. Ve her birinde BENİMKİLERDEN biri olacaksın.
+1551	{0}. {1} sana yardıma mı döndü? Ne dokunaklı.
+1552	Mühürler geri döndü. Dünya özgür.
+1553	ZIPKINCI KÖPEKBALIĞI KRAL
+1554	Gelgitin Efendisi
+1555	ALÇAK GELGİT: ŞİMDİ SALDIR!
+1556	GELGİT YÜKSELECEK! YUKARI ÇIK!
+1557	DEV İBLİS
+1558	Göklerin Efendisi
+1559	ARILARIN KRALI
+1560	Kovanın Hükümdarı
+1561	YARASALARIN KRALI
+1562	Sonsuz Gecenin Efendisi
+1563	GÖKYÜZÜ TEMİZ!
+1564	KALKAN!
+1565	ÇIĞLIK HAZIR!
+1566	↑ ↓ ← →  uç  ·  ateş için SALDIR'ı (ATIŞ) basılı tut  ·  AL / SAVUN (ÇIĞLIK): sonik çığlık
+1567	↑ ↓ ← →  uç  ·  ateş için SALDIR'ı (ya da ATIŞ) basılı tut
+1568	ZIPLA
+1569	SLD
+1570	ATIŞ
+1571	ÇIĞLIK
+1572	İnatçı Kemik
+1573	Dönüşmüşken seni öldürecek darbe yalnızca dönüşümü bozar: yeniden kurukafa olur ve ayakta kalırsın.
+1574	Mee. (Deri düşer, kemik kalır.)
+1575	Savuşturan Kılıç
+1576	Kılıç darbesi ona değen HER mermiyi geri çevirir: kemik, zıpkın, palamut, ateş... ve atana geri döner.
+1577	Mee. (Uçana vur.)
+1578	Fazladan Mum
+1579	Bölüm yeniden başlamadan önce her bölümde bir can daha.
+1580	Mee. (Sönmesine izin verme.)
+1581	Kemik Refleksi
+1582	KARŞI penceresi (darbe anında geri dokunmak) çok daha genişler.
+1583	Mee. (Geriye, çabuk.)
+1584	Bulut Pelerini
+1585	Yeniden doğduğunda iki kat daha uzun süre dokunulmaz olursun.
+1586	Mee. (Onun bulutundan yapıldı. Söyleme.)
+1587	Kemik Mıknatısı
+1588	Yedek kutusundaki eşya dümdüz ve iki kat hızlı, doğruca sana düşer.
+1589	Mee. (Senin olan geri gelir.)
+1590	Altın Diş
+1591	Yenilen düşmanlar iki kat altın verir.
+1592	Mee. (İyi iş. Benim için.)
+1593	Çekiç Köpekbalığı
+1594	Mercan Köpekbalığı
+1595	Zırhlı Köpekbalığı
+1596	Kum Kertenkelesi
+1597	Gelgit Kertenkelesi
+1598	Korsan Goblin
+1599	Kaptan Goblin
+1600	Bombacı Goblin
+1601	Kazazede Gnoll
+1602	Zıplayan Örümcek
+1603	Dokumacı Örümcek
+1604	Karadul
+1605	Vampir Yarasa
+1606	Lav Minotoru
+1607	Obsidyen Minotor
+1608	Magma Kertenkelesi
+1609	Kırmızı Şapkalı Cüce
+1610	Yosun Cücesi
+1611	Yaşlı Cüce
+1612	Mavi Ateş Goblini
+1613	Madenci Goblin
+1614	Goblin Reisi
+1615	Zehirli Kertenkele
+1616	Timsah Kertenkele
+1617	Kor Arısı
+1618	Fırtına Arısı
+1619	Avcı Gnoll
+1620	Pusucu Gnoll
+1621	İri Gnoll
+1624	YÜKLENİYOR %0
+1625	YÜKLENİYOR %{0}
+1626	KONTROLÜ SEÇ
+1627	Oyun kolu görünmüyor mu? Bağla ve herhangi bir düğmesine bas.  ·  Ad: ◀ ▶ ya da ✎ (N / M tuşları)
+1628	◀  GERİ
+1629	ONAYLA  ▶
+1630	YENİ
+1631	STANDART
+1632	Dokunmatik
+1633	Hareket/Fare
+1634	OYUNCU {0} ADI
+1635	Fikir, yönetim ve testler
+1636	Skullshift ekibi
+1637	Kod, metinler ve müzik
+1638	Claude Code (Anthropic) ile yapıldı
+1639	Görseller
+1640	Tiny Swords, Pixel Frog\nFree Pack ve Enemy Pack
+1641	Yazı tipleri
+1642	Anak Manja, Khurasan Studio\nMatcha Style
+1643	Oyun motoru
+1645	Çalgılar
+1646	FluidR3_GM soundfont'undan (Frank Wen) flüt, gitar ve arp\nmidi-js-soundfonts (Benjamin Gleitzman) ile dönüştürüldü\nsmplr kitaplığıyla çalındı
+1647	İlham kaynakları
+1649	Oyuncular
+1650	Ossian, kurukafa · Şaman Hex\nZıpkıncı Köpekbalığı Kral · Gnoll Kral · Kertenkele Kral · Örümcek Kraliçe\nKızıl Minotor · Cüce Kral · Meşaleli Goblin Kral\nDev İblis · Kanatların Kralı · Prensler\nve kara kulaklı koyun
+1651	Mühürler geri döndü. Dünya özgür.\nVe Ossian nöbette kaldı.
+1652	Ossian eve döndü.\nVe dünya artık Hex'in.
+1653	Hikâye hâlâ seni bekliyor.
+1654	OYNADIĞIN İÇİN TEŞEKKÜRLER!
+1655	geçmek için herhangi bir tuş ya da dokunuş
+1656	{0}   ·   Hediyeler: {1}/3
+1657	VAZO KIRILDI
+1658	VERSUS · {0}
+1659	KIRILDI!
+1660	{0} (uzaktan)
+1661	· ANI ·
+1662	YARDIMCI
+1663	{0} YARDIMCISI
+1664	BORA!
+1665	rüzgâr sağa itiyor ➜
+1666	⬅ rüzgâr sola itiyor
+1667	KEMİK YAĞMURU!
+1668	yerdeki gölgelere bak
+1669	EŞYA YAĞMURU!
+1670	ilk sen almak için koş
+1671	DÜŞÜK YERÇEKİMİ!
+1672	upuzun zıplayışlar
+1673	YARDIMCILAR!
+1674	mor küreyi al: bir yaratık senin yanında savaşır
+1675	SAVUŞTURULDU!
+1676	AĞA YAKALANDIN!
+1677	FİLEYE YAKALANDIN!
+1678	İNATÇI KEMİK!
+1679	YAPIŞTI!
+1680	ÖRÜMCEK YEMİ OLDUN
+1681	HAM!
+1682	SAKLANDI!
+1683	{0}  al\n{1}{2}
+1684	Uçmak için havada ZIPLA'yı basılı tut
+1685	Duvarlara yapışır ve tırmanır
+1686	Yüz! ▼ dalar, ZIPLA sudan çıkar
+1687	BÖLÜM YENİDEN BAŞLIYOR
+1688	FİLM MAKARASI!
+1689	Haritada gizli bir bölüm belirdi...
+1690	Gökyüzü temiz!
+1691	ALAN TEMİZLENDİ!
+1692	Patron yenildi!
+1693	YAKALANDIN!
+1694	Bölüm {0}
+1695	{0} · Bonus alan
+1696	{0} SENİN YANINDA SAVAŞIYOR!
+1697	mührü kırıldı: artık özgür
+1698	{0} TAMAMLANDI!
+1699	{0}   ·   Süre: {1}sn   ·   Ölüm: {2}
+1700	Taç parçası geri alındı!
+1701	{0} KAZANDI!
+1702	Karşı tarafın sonuna ulaştı
+1703	NASIL OYNANIR
+1704	OYNA  ▶
+1705	Hareket
+1706	Zıpla
+1707	Çömel
+1708	Savun
+1709	Saldır
+1710	Eşya al
+1712	W ↑ Boşluk
+1713	Al
+1714	Ayrıca: ok tuşları, Boşluk,\nJ (saldır), K (savun), L (al)
+1715	Çömel (aşağı)
+1716	LB / RB de savunur
+1717	Sürükle: yürü (uzağa: koşu)
+1718	Yukarı kaydır: zıpla
+1719	Aşağı sürükle: çömel
+1720	Hızlı dokunuş/tık: saldır
+1721	Yerinde basılı tut: al
+1722	2 parmak ya da sağ tuş: savun
+1723	Ekranda parmakla ya da yalnızca fareyle çalışır (orta tuş da alır).
+1724	Telefon yatay ya da dikey. Aynı anda birkaç parmak kullanılabilir.
+1725	Tek darbe öldürür.\nSeni de!
+1726	SAVUNMA: düğmeyi basılı tut.\nDarbe anında GERİ dokun:\nKARŞI!
+1727	Çömelince: atışlardan kaçar\nve alttan vurursun.
+1728	Havada zıplaya bas:\nçift zıplama.
+1729	Yerdeki başka karakterin\neşyası: AL dönüştürür.
+1730	5 sahne: karşı tarafın\nsonuna ulaş.
+1731	Devirdin mi? Sıra sende.\nKendi sonuna ulaş!
+1732	◀ GÜNLÜK
+1733	BAŞARIMLAR ▶
+1734	BAŞARIMLAR
+1735	◀  HARİTA
+1736	OSSIAN'IN GÜNLÜĞÜ
+1737	ANILAR
+1738	DÜNYALAR
+1739	bonus ✓
+1740	bonus —
+1741	{0}  ·  {1}/{2} bölüm  ·  {3}/{4} hediye  ·  {5}  ·  {6}
+1742	ALTIN: {0}   ·   YETENEKLER: {1}\nGELİŞTİRMELER: {2}
+1743	yeniden görmek için bir anıya dokun
+1744	{0}/{1} kazanıldı
+1745	YÜKLENİYOR
+1746	DÜELLO GÜÇLERİ
+1747	DÖVÜŞ  ▶
+1748	◀ GERİ
+1749	P1: W/S seçer, E işaretler  ·  P2: ↑/↓ seçer, . işaretler  ·  T: test modu  ·  Enter: dövüş  ·  dokunuş işaretler
+1750	{0}: hâlâ kilitli. Hikâye modunda aç (ya da TEST MODU'nu aç).
+1751	Oyuncu başına en çok {0} güç (TEST MODU'nda sınır yok).
+1752	TEST MODU: AÇIK
+1753	TEST MODU: KAPALI
+1754	GİR  ▶
+1755	◀ DÜNYA
+1756	GİR
+1757	Haritayı yanlara sürükle · koşmak için bir bölüme 2× dokun
+1758	YAPIM AŞAMASINDA
+1759	{0} · BONUS
+1760	YENİ YETENEK!
+1761	ANLADIM
+1762	BÖLÜM {0}/{1} · {2}
+1763	{0}   ◀ ▶ seç · Enter / A / dokunuş: gir · Esc: dünya
+1764	ANI {0}/{1} · {2}
+1765	DEVAM ▶
+1766	HİKÂYE  ·  1 oyuncu
+1767	VERSUS  ·  2 oyuncu
+1768	SERBEST  ·  testler
+1769	AYARLAR
+1770	OYNA
+1771	⚙ AYARLAR
+1772	EMEĞİ GEÇENLER
+1773	Enter · Boşluk · A düğmesi · dokunuş
+1774	Sonraki ekranda her oyuncu klavye, oyun kolu ya da dokunmatik seçer.
+1775	P1 = mavi  ·  P2 = kırmızı. İkisi de iskelet olarak başlar.
+1776	SAVUNMA düğmede (Q, K, B). Darbe anında GERİ dokun: KARŞI! Başka karakterin eşyasının üstünde dönüşmek için AL'a bas.
+1777	BÖLÜM {0} · {1}
+1778	OYUN
+1779	Metin hızı
+1780	Hikâye konuşmalarının ne kadar hızlı belirdiği.
+1781	YAVAŞ
+1782	NORMAL
+1783	HIZLI
+1784	ANINDA
+1785	Kurukafanın yorumları
+1786	Her formda ilk seferde çıkan alaycı konuşma balonu.
+1787	Ekran sarsıntısı
+1788	Çarpma ve patlamalardaki sarsıntının şiddeti.
+1789	EKRAN
+1790	Tam ekran
+1791	Tam ekranı açar ya da kapatır.
+1792	Parlaklık
+1793	Oyun görüntüsünü aydınlatır ya da karartır.
+1794	SES
+1795	Genel ses
+1796	Bütün seslerin düzeyi.
+1797	Ses efektleri
+1798	Zıplamalar, darbeler, kapılar, patlamalar (8 bit sesler).
+1799	Müzik
+1800	Müzikler: her alan, patronlar ve anılar için bir tema.
+1801	KONTROLLER
+1802	Çift dokunuşla koş
+1803	Koşmak için yöne 2× dokun ve basılı tut.
+1804	Dokunmatik düğmeler: boyut
+1805	Telefon ekranındaki düğmelerin boyutu.
+1806	KÜÇÜK
+1807	ORTA
+1808	BÜYÜK
+1809	Dokunmatik düğmeler: opaklık
+1810	Dokunmatik düğmelerin ne kadar göründüğü.
+1811	ERİŞİLEBİLİRLİK
+1812	Renk körlüğü renkleri
+1813	Oyuncu 2 kırmızı yerine turuncu.
+1814	Ekran parlamaları
+1815	Parlamalardan (şimşek, patlama) kaçınmak için kapat.
+1816	VARSAYILANA DÖN
+1817	↑ ↓ seçenek  ·  ← → ayarla  ·  Q / E (LB / RB) sekme  ·  Esc / B geri
+1818	KAPALI
+1819	AÇIK
+1820	KARA KULAK DÜKKÂNI
+1821	◀ HARİTA
+1822	SATIN AL
+1823	← → seç  ·  Enter / A satın al  ·  Esc / B geri
+1824	Mee. (Altın alırım. Laf almam.)
+1825	ALINDI
+1826	Mee. (O zaten senin.)
+1827	Mee. ({0} altın eksik.)
+1828	KOLAY
+1829	9 ölümden sonra bölüm yeniden başlar
+1830	5 ölümden sonra bölüm yeniden başlar
+1831	ZOR
+1832	3. ölümde bölüm yeniden başlar
+1833	KAYDI SEÇ
+1834	◀ ▶ seç  ·  Enter / A: oyna  ·  Delete / X: sil  ·  Esc / B: geri
+1835	KAYIT {0}
+1836	BOŞ
+1837	Yeni oyun — zorluğu seç:
+1838	HİKÂYE TAMAMLANDI
+1839	{0} BÖLÜM · {1}/{2} PARÇA
+1840	son oyun: {0}
+1841	YENİDEN GÖR  ▶
+1842	DEVAM  ▶
+1843	GERÇEKTEN SİLİNSİN Mİ?
+1844	SİL
+1845	SON SÖZ
+1846	KISIM {0}
+1847	SONRAKİ  ▶
+1848	GEÇ
+1849	ŞAMAN'LA YÜZLEŞ
+1850	ONUN YARDIMIYLA EVE DÖN
+1851	Kazanırsan dünya özgür kalır... ve sen yeniden kemik olursun.
+1852	Eve sapasağlam dönersin. Dünya Şaman'a kalır.
+1853	SEÇİM
+1854	MENÜ
+1855	Telefonda oynamak için\nkontrol ekranında\n"Dokunmatik ekran"ı seç
+1856	ÖRÜMCEK HİSSİ
+1857	DEVAM
+1858	BÖLÜMÜ YENİDEN BAŞLAT
+1859	HARİTAYA ÇIK
+1860	MENÜYE ÇIK
+1861	DURAKLATILDI
+1862	!  TEHLİKE  !
+1863	Dikkatli seç: bu, uçuş bölümlerini değiştirir.
+1864	YENİDEN OYNA
+1865	◀ MENÜ
+1866	DÜKKÂN · {0} altın
+1867	GÜNLÜK
+1868	DÜKKÂN · {0}
+1869	Seçmek için bir alana dokun · girmek için yeniden dokun
+1870	DÜKKÂN
+1871	DÜNYA ŞAMAN'IN
+1872	DÜNYA ÖZGÜR
+1873	{0} · TAÇ PARÇALARI {1}/{2}
+1874	{0}/{1} bölüm geçildi (hedef: {2} bölüm)
+1875	Hâlâ sisle kaplı bir alan. Ulaşmak için Gelgit Adaları'nı geç.
+1876	Ancak Prenslerle anlaşmadan sonra (Ağlar Mağarası'nda) beliren bir krallık.
+1877	Şamanın Tapınağı. Ancak tacın bütün parçaları toplanınca açılır.
+1878	Hâlâ sisle kaplı bir alan. Yolu açmak için Kemik Çayırı'nı geç.
+1879	{0}  ·  Bu alanın bölümleri hâlâ yapım aşamasında.
+1880	TAÇ PARÇASI {0}/{1}!
+1881	büyük mum
+1882	büyük mum
+1883	BÜYÜK MEŞALE
+1884	BÜYÜK MUM
+1885	Kapı açık!
+1886	\n▼+{0} sakla
+1887	kral ✓
+1888	kral —
+1889	yok (Dükkâna bak)
+1891	BONUS ALAN
+1892	BÖLÜM {0}
+1893	OYUNCU 1
+1894	OYUNCU 2
+1895	 · SERBEST
+1896	 · KAYIT {0}
+1897	SERBEST MOD
+1898	{0}/{1} bölüm
+1899	{0} altın

@@ -1,0 +1,140 @@
+0	Sand zwischen den Knochen. Muss furchtbar sein. Zum Glück spüre ich nichts.
+1	Salz im Wind... diesen Geruch kannte ich. Von einem Fenster. Am Morgen.
+2	So ist es gut, Ossian. Ein Schritt nach dem anderen. Ich wache über dich.
+3	Eine Krabbe mit einem Schlüssel auf dem Rücken. Diese Welt hat einen seltsamen Humor.
+4	Hier bewacht alles irgendetwas, Ossian. Lerne zu sehen, wer was trägt.
+5	Das Wasser steigt, das Wasser fällt. Und ich mittendrin, ohne schwimmen zu können.
+6	Jemand hat mir beigebracht, mich treiben zu lassen. Große Hände unter meinem Rücken. „Vertrau mir."
+7	Die Gezeiten gehorchen dem Geduldigen. Wie alles andere auch.
+8	Ein ganzes Schiff, hier gestrandet. Wohin wollte es, Hex?
+9	Nirgendwohin. Niemand verlässt diese Inseln per Schiff. Auch nicht anders.
+10	...Sollte das ein Trost sein?
+11	Kanonen. Jemand hatte große Angst vor dem, was vom Meer kam.
+12	Oder vor dem, was von der Insel in der Mitte kam. Aber das ist eine alte Geschichte. Weiter.
+13	Ich bin ein Hai. Heute bin ich ein Hai. Alles gut.
+14	Dunkles Wasser über dem Kopf. Kalt. Ich war schon einmal hier unten... ohne Kiemen.
+15	Denk nicht daran. Schwimm, Ossian. Schwimm einfach.
+16	Wer hat so einen Leuchtturm gebaut? Haie haben keine Hände.
+17	Leute von früher. Sie warnten andere gern, fernzubleiben. Ich fand das übertrieben.
+18	Von hier oben sieht man die Insel in der Mitte. Der Himmel dort ist dunkler.
+19	Das Wetter schlägt nur um. Schau nach vorn, nicht dorthin.
+20	Korallen schneiden, Quallen brennen. Das ganze Meer will, dass ich verschwinde.
+21	Ein blaues Haus. Vom Bett aus hörte man das Meer. Ich zählte die Wellen, bis ich einschlief.
+22	Es ist nicht mehr weit bis zum Harpunenhai. Spar deine Kraft.
+23	Das ist er also. Größer, als ich dachte. Und ich dachte groß.
+24	Hör auf nichts, was er sagt. Könige lügen, um zu behalten, was anderen gehört.
+25	Gras bis zu den Knien. Hätte ich echte Knie, würde es kitzeln.
+26	Eine kleine Glocke, die in der Ferne läutet. Es war Zeit, heimzutreiben... was denn?
+27	Gnolle jagen im Rudel. Lass dich nicht einkreisen.
+28	Goldener Schlüssel, verschlossene Tür. Hier mag jemand Rätsel.
+29	Türen sind dazu da, Dinge drinnen zu halten, Ossian. Oder draußen. Kommt darauf an, wer den Schlüssel hat.
+30	Der Boden bebt. Das ist nie ein gutes Zeichen.
+31	Schafe. Ich habe echte Schafe gezählt. Eines lief immer weg, das mit dem schwarzen Ohr.
+32	Klettere nach oben und lass die Herde vorbei. Eile nützt nur den Lebenden.
+33	Sie kommen immer weiter! Wer hat Gnollen das Schlangestehen beigebracht?
+34	Ihr König. Ein Rudel ist nur gefährlich, wenn es jemandem gehorcht.
+35	Überall Knochen. Vettern? Kollegen? Ich weiß nicht, wie ich grüßen soll.
+36	Sie gehören denen, die vorher kamen. Rühr sie nicht an.
+37	Vor wem, Hex? ...Hex?
+38	Ein Hof. Zaun, Tor, ein Schaf auf der Platte. Fast normal.
+39	Der Duft von Brot. Ein Holztisch. Jemand hat einen Teller mehr hingestellt, für mich.
+40	Du bist still, Ossian. Was hast du gesehen?
+41	Das Gras hat sich bewegt. Gras sollte sich nicht von allein bewegen.
+42	Die Jäger warten. Das achte ich am meisten an ihnen: Sie können warten.
+43	Verlassene Wagen mitten auf der Straße. Sie sind vor etwas davongerannt.
+44	Vor schweren Zeiten. Sie sind vorbei. Fast alles geht vorbei.
+45	Eine Mühle, die Knochen mahlt. Ich tue so, als hätte ich das Schild nicht gelesen.
+46	Ein kleines Mädchen, das hinter mir herrennt. „Warte! Lass mich nicht im Dunkeln!"
+47	Der Gnollkönig ist hinter dem Hügel. Bist du bereit?
+48	Er trägt eine Krone aus Knochen auf dem Kopf. Eine echte. Ganz.
+49	Eine Nachahmung. Die wahre liegt in Stücken, und eines davon hat er. Bring ihn zu Fall.
+50	Grünes Wasser, lauwarm und still. Alles, worin ich nicht treten wollte.
+51	Der Sumpf hütet Geheimnisse gut. Sie sinken langsam, aber sie sinken.
+52	Blätter, die sinken, wenn man stehen bleibt. Der Sumpf mag keine Unentschlossenen.
+53	Flache Steinchen, die über einen Fluss hüpfen. Drei, vier Sprünge. Jemand klatschte.
+54	Sogar hier gibt es Gezeiten? Ich dachte, das wäre eine Sache der Inseln.
+55	Alles in diesem Reich steigt und fällt um dieselbe Mitte, Ossian. Du wirst es noch verstehen.
+56	Gift. An einem Skelett. Mal sehen, wer hier wen verdirbt.
+57	Scherze nicht. Du kannst so oft fallen, wie du willst; ich bin es, der es müde wird, dich zu holen.
+58	Netz, Haken, ein löchriges Boot. Eine Fischerechse. Ist mir sympathisch.
+59	Eine Angel, größer als ich. Ein alter Mann lacht: „Kein Fisch, nur Äste!"
+60	...Hast du gerade gelächelt? Schädel sollten das nicht können.
+61	Wieder am Grund. Wenigstens habe ich diesmal Haizähne.
+62	Schau nicht zur Oberfläche. Das Licht dort oben trügt.
+63	Krokodile im Gänsemarsch. Immerhin höflich.
+64	Der Echsenkönig weiß schon, dass du kommst. Er schläft nie: Er wacht.
+65	Überall Wurzeln. Es sieht aus wie ein Käfig aus Baum.
+66	Käfig ist ein starkes Wort. Zuflucht. Nennen wir es Zuflucht.
+67	Du wählst deine Worte sehr sorgfältig, Hex.
+68	Ein ganzes Dorf auf dem Wasser. Mit Wäscheleinen, mit Herd. Sie leben hier.
+69	Eine alte Holzbrücke. Bretter, die knarrten. Ich wusste, auf welche man nicht treten durfte.
+70	Häng dein Herz nicht an die Kulisse. Wir brauchen ihren König.
+71	Er hat die Augen offen. Beide. Ohne zu blinzeln.
+72	Er schließt sie schon sehr lange nicht mehr. Tu ihm den Gefallen.
+73	Dunkel, feucht, voller Netze. Der perfekte Ort für jemanden ohne Haut.
+74	Sprich leise hier drin. Die Wände bewahren Namen.
+75	Da steht etwas im Stein. Durchgestrichen. Viele Male.
+76	Spinnengekritzel. Verschwende keine Zeit mit Lesen.
+77	Schreiben Spinnen „Ossian", Hex?
+78	Eine Brücke, die reißt, wenn ich stehen bleibe. Ich mochte Brücken mal lieber.
+79	Regen auf einer Brücke. Ein nasses Brett. Der Fuß rutscht. Nein, warte, noch nicht...
+80	Lauf, Ossian! Steh nicht da und starr nach unten!
+81	Noch ein Schlüssel, noch eine Tür. Wer verriegelt eine Höhle so gründlich?
+82	Wer Angst hat vor dem, was unten ist. Oder vor dem, was draußen ist. Kommt aufs Gleiche heraus.
+83	Ich sehe nichts. Nur die Fackeln. Und ein paar Augen, weit hinten.
+84	Eine kleine Hand, die meine drückt. „Bleib bei mir, bis ich schlafe. Du hast es versprochen."
+85	Bleib nah am Licht. Aber nicht an jenem warmen Licht, das du beim Fallen siehst. Das niemals.
+86	Hängende Kokons. So groß wie ein Mensch.
+87	Die Königin behält, was sie fängt. Darin, das gebe ich zu, sind sie und ich uns ähnlich.
+88	Sie kommen pausenlos von der Decke! Wie viele Beine passen in eine Höhle?
+89	Mehr, als du zählen kannst. Schieß und schau nicht nach oben.
+90	Zwei Prinzen. Einer mit Flügeln aus Leder, einer mit Flügeln aus Glas. Und sie streiten.
+91	Lass sie streiten. Wer eine Seite wählt, gewinnt einen Freund. Und einen Feind.
+92	Eier. Hunderte. Ich gehe auf den Zehenspitzen, die ich nicht habe.
+93	Ein Korb Eier am Arm. Eins zerbrach unterwegs. Sie lachten die ganze Woche über mich.
+94	Die Königin ist gleich dort. Sie wird reden. Sie reden immer.
+95	Sie hat mich mit allen Augen angesehen. Und sie wirkte... mitleidig?
+96	Das ist ein Spinnentrick. Zerschneide die Fäden, bevor sie dich in Worte einwickelt.
+97	Hitze. Ich müsste schwitzen. Stattdessen knacke ich nur.
+98	Eine Axt, die auf- und niedergeht. Holz, das splittert. Schwielen an der Hand. Meiner Hand.
+99	Da gehe ich nicht mit dir hinein. Das Feuer und ich vertragen uns nicht.
+100	Die Lava ist hinter mir her! Das ist kein Level, das ist eine Zwangsräumung!
+101	Lauf! Wenn du da hineinfällst, brauche ich lange, um dich zu finden!
+102	Eine Mine im Vulkan. Jemand hat bis hierher gegraben, nur um eine Tür zu verschließen.
+103	Sie haben tief gegraben, ja. Sie dachten, je tiefer, desto sicherer. Sie irrten sich.
+104	Stein, der auf Feuer treibt. Jetzt mein liebstes Verkehrsmittel.
+105	Der Berg atmet. Er hebt sich, wenn er die Brust füllt, und senkt sich, wenn er loslässt.
+106	Eins, zwei, FEUER. Eins, zwei, FEUER. Ich hab den Rhythmus.
+107	Ein Kamin. Platzende Kastanien. Jemand erzählt Fährmannsgeschichten.
+108	Fährmänner? ...Welche Geschichten, Ossian? Woran hast du dich erinnert?
+109	Lavastiere im Galopp. Heute hat die Schmiede beschlossen, mich der Reihe nach zu hassen.
+110	Der Minotaurus schmiedet seine eigenen Soldaten. Fleißig. Stur.
+111	Schwarzes Glas. Ich sehe mein Spiegelbild. Von Weitem sehe ich besser aus.
+112	Ein Gesicht in einer Wasserschüssel. Braune Augen. Es war meins. Ich hatte ein Gesicht.
+113	Starr nicht auf Spiegelbilder. Sie zeigen, was einmal war.
+114	Hammerschläge. Von Weitem klingen sie wie ein schlagendes Herz.
+115	Er hämmert an derselben Sache, seit ich... seit jeher. Eine Kette. Ich meine, eine Krone.
+116	Ein Fluss aus Magma. Keine Brücke, kein Boot. Nur mein Mut. Wir sind verloren.
+117	Das Herz des Berges ist nah. Ich spüre es von hier. Es brennt.
+118	Er hat aufgehört zu hämmern. Er sieht mich an.
+119	Lass ihn den Satz nicht beenden. Was er schmiedet, ist nicht für dich.
+120	Alter Baum, kühler Schatten. Der erste Ort dieser Welt, der mich nicht umbringen will.
+121	Sägemehl im Haar. Ich hatte Haare. Und jemand pustete es weg.
+122	Vorsicht vor den Eicheln. Gnome schießen zuerst und murren danach.
+123	Ein Tor, das sich nur mit Gewicht darauf öffnet. Ich werde Hilfe brauchen... oder ein Schaf.
+124	Gnome bauen für die Ewigkeit. Nichts, was sie schließen, öffnet sich von allein.
+125	Ein Pilz, der einen in die Luft schleudert. Endlich eine Pflanze auf meiner Seite.
+126	Iss keinen. ...Nur so dahingesagt, ich weiß, dass du nicht isst.
+127	Von den Baumkronen aus sieht man alles. Nur nicht den Ausgang aus diesem Reich.
+128	Ich bin auf Bäume geklettert, um den Fluss zu sehen. Von oben sah die Brücke aus wie ein Spielzeug.
+129	Es gibt keinen Ausgang zu sehen, Ossian. Noch nicht. Dafür sammeln wir die Krone.
+130	Bunte Blöcke, Hebel, ein Tor. Die Gnome müssen sich sehr langweilen.
+131	Wer jahrhundertelang dasselbe bewacht, erfindet Zeitvertreib.
+132	Baumstämme treiben den Fluss hinab. Von einem zum nächsten springen. Was soll schon schiefgehen?
+133	Ein breiter Fluss mit dunklem Wasser. Papierlaternen treiben langsam hinab. Dutzende.
+134	Schau nicht so viel aufs Wasser. Schau auf die Stämme.
+135	Eichelregen! Hatte ich gesagt, dieser Wald wolle mich nicht umbringen?
+136	Die Gnome beschützen ihren König. Seltsames Volk: Sie kämpfen für jemanden, der ihnen nur Befehle gibt.
+137	Das Moos hat mir zugezwinkert. Moos zwinkert nicht.
+138	Hier wacht alles. Dafür wurde dieser Wald gepflanzt.
+139	Häuschen in den Wurzeln, Rauch in den Schornsteinen. Es gibt sogar eine Glocke.

@@ -1,0 +1,215 @@
+227	Chaman Hex
+228	Îles de la Marée
+240	Caverne Humide
+250	Nid des Toiles
+258	Repaire de la Reine
+267	Forge Volcanique
+280	Fuite de la Forge
+288	Sanctuaire des Nuages
+299	Courants du Ciel
+307	Vol de Nuit
+321	Escalier de la Marée
+332	Maison des Portes
+342	Bibliothèque Hantée
+350	Maison Sans Lumière
+358	Atelier de la Clé
+365	Prairie des Os
+371	Blocs Alternés
+379	Mine Fissurée
+385	Nid des Princes
+393	Duel dans le Ciel
+407	Bois du Bûcheron
+415	Mine d'Or
+421	Tour du Grimpeur
+427	Mausolée du Chaman
+434	Plage des Crabes
+440	Marée Haute
+448	Débris du Naufrage
+456	Navire Pirate : Pont
+462	Caverne Sous-Marine
+470	Vannes du Phare
+476	Navire Pirate : Mâts
+482	Récif de Corail
+488	Arène du Roi Requin
+496	Le Trône du Chaman
+498	Route des Os
+504	Ruée du Troupeau
+510	Cimetière d'Os
+516	Ferme des Gnolls
+522	Hautes Herbes
+528	Caravane des Gnolls
+534	Moulins à Vent
+540	Repaire du Roi Gnoll
+546	Ponts de Toile
+552	Caverne Obscure
+558	Salle des Cocons
+564	Fusillade dans la Toile
+570	Chambre des Œufs
+576	Portes de la Forge
+582	Marée de Lave
+588	Geysers de Feu
+594	Fusillade dans la Forge
+602	Pont d'Obsidienne
+608	Enclume du Forgeron
+614	Cœur de Magma
+620	Entrée du Bois
+626	Champignons Sauteurs
+632	Cimes des Arbres
+638	Rivière de Rondins
+644	Fusillade dans le Bois
+650	Mousse Traîtresse
+656	Village des Gnomes
+662	Arbre du Roi Gnome
+668	Entrée de la Mine
+674	Éboulement
+680	Galerie Obscure
+686	Filon d'Or
+694	Dynamite
+700	Mine Inondée
+706	Feu Bleu
+712	Trésor des Gobelins
+718	Trône du Roi Gobelin
+724	Bord du Marais
+730	Nénuphars Géants
+736	Crue du Marais
+742	Marécage Venimeux
+748	Maison du Pêcheur
+754	Fond de la Lagune
+760	Fusillade dans le Marécage
+766	Mangrove
+772	Village des Lézards
+778	Trône du Roi Lézard
+784	Nuages de Braise
+790	Pluie de Météores
+796	Fusillade dans le Ciel de Braise
+802	Vents de Feu
+810	Château dans les Nuages
+816	Essaim de Braise
+822	Coffre des Nuages
+828	Portail des Ailes
+834	Route du Vent
+842	Château des Ailes
+850	Vol dans la Tempête
+856	Chambre Royale
+862	Courants Royaux
+868	Vol au Crépuscule
+874	Fusillade Royale
+880	Garde Royale
+886	Dessin Animé Perdu (1930)
+894	Enclos Oublié
+900	Cabane Engloutie
+907	Coffre d'Obsidienne
+911	Ronde de Champignons
+915	Poche d'Or
+919	Nid dans les Nuages
+923	Tour des Plumes
+927	Arbre Creux
+933	Une maison bleue
+936	De vraies mains
+939	Les moutons
+942	Village du Pont
+945	La Foire aux Lanternes
+948	La pluie
+951	Quelqu'un en violet
+954	L'eau glacée
+957	Mon nom
+972	Les Sceaux
+980	Le Chemin de la Rivière
+988	Le Portail de la Marée
+1021	ASTUCE
+1022	LE SAVIEZ-VOUS
+1023	RUMEUR
+1024	Appuyez vers l'ARRIÈRE pile au moment du coup : CONTRE ! Brise la garde de l'attaquant et renvoie les projectiles.
+1025	La garde sans bouclier est une demi-lune : elle ne protège que l'avant. Attention à ce qui vient par-derrière.
+1026	Accroupissez-vous et appuyez sur PRENDRE sur un objet pour le ranger dans la boîte de réserve, sans vous transformer.
+1027	La boîte de réserve (en haut de l'écran) garde un objet. Appuyez sur R, SELECT ou touchez la boîte et il tombe du ciel.
+1028	Déjà transformé et vous prenez un autre objet ? L'ancienne forme va dans la boîte de réserve, si elle est vide.
+1029	À la réapparition, l'objet de la réserve tombe tout seul près de vous. Placez-vous dessous !
+1030	Appuyez deux fois dans une direction et maintenez pour courir. Certaines plateformes ne s'atteignent qu'en sprint.
+1031	Double saut : appuyez de nouveau sur SAUTER en l'air. Le second saut est un peu plus bas.
+1032	Chauves-souris et abeilles volent : maintenez SAUTER en l'air. Les araignées s'accrochent aux murs.
+1033	Les requins nagent librement. Dans l'eau, ▼ plonge et SAUTER fait bondir hors de l'eau.
+1034	Un objet jeté au sol clignote avant de disparaître. Prenez-le vite ou perdez votre chance.
+1035	Chaque niveau à clé cache 3 cadeaux. Explorez avant d'ouvrir la porte.
+1036	La marée monte et descend. Les caisses flottent : servez-vous-en comme plateformes à marée haute.
+1037	Un geyser qui bouillonne prévient avant d'exploser. Attendez que le feu passe.
+1038	Les élites sont plus grandes et portent une armure : un seul coup ne suffit pas.
+1039	Les boss préviennent avant chaque attaque. Observez le schéma avant de foncer.
+1040	En pause (ÉCHAP ou P), on peut régler le volume de la musique, les secousses d'écran et les couleurs pour daltoniens.
+1041	Dans le noir, restez près des torches : leur lumière montre le chemin et les ennemis.
+1042	Les nénuphars coulent lentement. Ne vous arrêtez pas dessus.
+1043	Les ponts de toile cèdent si vous restez immobile. Traversez en courant.
+1044	En versus, celui qui fait tomber l'autre prend la main et court vers son côté. Atteignez la fin pour gagner.
+1045	Ennemis vaincus, cadeaux et niveaux terminés donnent de l'or. Dépensez-le à l'Emporium de l'Oreille Noire, sur la carte du monde (touche B).
+1046	Os Têtu, de l'Emporium : transformé, le coup fatal défait seulement la forme. Vous redevenez le crâne et restez debout.
+1047	La patronne de l'Emporium est une brebis à l'oreille noire. Elle ne parle pas : elle répond par pancartes. Et c'est cher.
+1048	On dit que la brebis de l'Emporium est apparue sur la plage le même jour que le crâne. Et qu'elle le connaissait déjà.
+1049	Toute la musique du jeu est composée par le code lui-même, note par note, sans un seul fichier audio.
+1050	Le crâne peut devenir 11 créatures différentes. Chacune a droit à un commentaire sarcastique la première fois.
+1051	Les Gnolls chassent en meute et rongent de vieux os. C'est pourquoi leur os transforme le crâne en Gnoll.
+1052	Le Minotaure Écarlate martèle la même enclume depuis si longtemps que la lave autour a refroidi en obsidienne.
+1053	Les gnomes du bois plantent un gland pour chaque visiteur chassé. Le bois est immense.
+1054	Les gobelins des mines peignent leurs torches en bleu quand ils trouvent de l'or. Feu bleu = riche filon.
+1055	Les requins de la marée utilisent des harpons pris sur des navires coulés. Certains portent encore des noms gravés.
+1056	Les Princes chauve-souris et abeille se battent depuis qu'ils sont nés dans le même nid.
+1057	Les lézards du marais muent une fois par an et gardent leurs vieilles peaux comme trophées.
+1058	Le Diablotin Géant a été petit. Il a mangé trop de braises.
+1059	Les moutons sont le seul animal qu'aucun roi n'a réussi à dompter. Ils n'obéissent qu'aux plaques.
+1060	La Reine Araignée tisse un nouveau cocon à chaque lune. Personne ne sait ce qu'elle y garde.
+1061	On dit que le Chaman n'a jamais quitté l'île centrale. Pas une fois. Pas même pour aller chercher un fragment.
+1062	Les anciens de la prairie jurent qu'avant les rois, l'île du milieu n'avait pas de ciel sombre.
+1063	Une couronne brisée en neuf ? Les rois ont toujours dit qu'ils gardaient autre chose.
+1064	Chaque fois qu'un roi tombe, quelqu'un jure entendre une chaîne se rompre au loin.
+1065	Le Chaman connaît le nom de chaque roi. Mais il ne dit jamais le sien.
+1066	Certains disent que le crâne a eu un visage. Et une maison. Et quelqu'un qui l'attendait.
+1067	« Fragment » est un mot étrange pour quelque chose qui bat comme un cœur.
+1068	Les crabes portent des clés. Frappez-en un et la clé tombe.
+1069	Le phare des îles s'allume tout seul quand un roi tombe. Personne n'y habite.
+1070	Ruée du troupeau : montez en hauteur et attendez que ça passe.
+1071	Le moulin de la prairie moud des os, pas du blé. Les Gnolls trouvent ça normal.
+1072	Les lézards venimeux crachent en cloche. Approchez par le haut.
+1073	Les araignées suspendues descendent quand vous passez dessous. Passez en courant.
+1074	La lave monte par vagues. Surveillez la crête brillante.
+1075	Les gros champignons sont des ressorts. Les lourds portails s'ouvrent avec un poids sur la plaque.
+1076	Dans les mines, le plafond s'effondre : la poussière qui tombe indique où la roche va tomber.
+1077	Les courants de vent vous portent vers le haut. Lâchez en haut et planez jusqu'à l'île suivante.
+1078	En vol, la monture dépend du pacte avec les Princes : chauve-souris ou abeille.
+1079	Les murs du sanctuaire portent des marques faites de l'intérieur vers l'extérieur.
+1080	RÉSERVE
+1081	GO  ➜
+1082	⬅  GO
+1083	Mains d'Os
+1084	PRENDRE soulève clés, moutons et autres objets au-dessus de la tête. PRENDRE à nouveau lâche ; ATTAQUER lance.
+1085	Salto et Poirier
+1086	Accroupi, appuyez sur SAUTER : saut en poirier (bien plus haut). En courant, retournez-vous et sautez : salto arrière (plus haut aussi).
+1087	Marteau
+1088	En l'air, maintenez ▼ et appuyez sur ATTAQUER : coup de marteau au sol. Brise les rochers d'or fissurés et étourdit ceux qui sont près.
+1089	Hache
+1090	ATTAQUER près d'un arbre l'abat du côté où vous regardez : il devient un pont.
+1091	Pioche
+1092	Toucher un mur en l'air plante la pioche : le crâne grimpe tout seul le long du mur, comme l'araignée.
+1093	Éveil
+1094	Terminez le premier niveau.
+1095	Premier Sceau
+1096	Battez le premier roi.
+1097	Moitié de Couronne
+1098	Battez cinq rois.
+1099	Couronne Entière
+1100	Battez les neuf rois.
+1101	Pacte Scellé
+1102	Choisissez un camp dans le combat des Princes.
+1103	Ailes de Cuir
+1104	Faites le pacte avec le Prince Chauve-Souris.
+1105	Ailes de Verre
+1106	Faites le pacte avec la Princesse Abeille.
+1107	Le Monde Libre
+1108	Battez le Chaman sur le Trône.
+1109	Retour à la Maison
+1110	Acceptez l'aide du Chaman.
+1111	Éclats de Souvenir
+1112	Retrouvez trois souvenirs.
+1113	Mon Nom
+1114	Retrouvez tous les souvenirs.
+1115	Cadeau !
+1116	Trouvez un cadeau.
+1117	Collectionneur

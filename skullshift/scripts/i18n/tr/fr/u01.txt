@@ -1,0 +1,205 @@
+1118	Trouvez tous les cadeaux des niveaux à clé.
+1119	Hors des Sentiers
+1120	Terminez une zone bonus.
+1121	Explorateur
+1122	Terminez toutes les zones bonus.
+1123	Poche Lourde
+1124	Réunissez 100 pièces d'or d'un coup.
+1125	Client
+1126	Achetez une amélioration à l'Emporium.
+1127	Client Préféré
+1128	Achetez toutes les améliorations.
+1129	Les Os du Métier
+1130	Battez 50 ennemis.
+1131	Légende de l'Île
+1132	Battez 250 ennemis.
+1133	CONTRE !
+1134	Réussissez un contre.
+1135	Maître du Recul
+1136	Réussissez 25 contres.
+1137	Mille Formes
+1138	Transformez-vous 30 fois.
+1139	Cinéphile
+1140	Terminez le Dessin Animé Perdu.
+1141	SUCCÈS · {0}
+1142	La plage où le crâne s'éveille. Le Requin-Harpon garde le premier fragment.
+1143	Roi Requin-Harpon
+1144	Des champs d'herbe et de vieux os. Les Gnolls chassent en meute.
+1145	Roi Gnoll
+1146	Lagune des Lézards
+1147	Un marais tiède à l'eau verte. Au milieu, le Roi Lézard ne dort jamais.
+1148	Roi Lézard
+1149	Caverne des Toiles
+1150	Des tunnels couverts de toile. Au fond, la Reine Araignée et le nid des Princes.
+1151	Reine Araignée
+1152	La montagne de feu où le Minotaure Écarlate martèle la lave.
+1153	Minotaure Écarlate
+1154	Bois des Gnomes
+1155	Vieux arbres, champignons et portails qui ne s'ouvrent qu'avec un poids. Le Roi Gnome n'aime pas les visites.
+1156	Roi Gnome
+1157	Mines des Gobelins
+1158	Des tunnels d'or éclairés par des torches. Le Roi Gobelin compte chaque pépite.
+1159	Roi Gobelin à la Torche
+1160	Ciel de Braise
+1161	Îles de nuage et vents violents. Le Diablotin Géant veut le ciel pour lui seul.
+1162	Diablotin Géant
+1163	Royaume des Ailes
+1164	Le royaume ennemi de ton allié. Il ne s'ouvre qu'après le pacte avec les Princes.
+1165	Roi des Ailes
+1166	Sanctuaire du Chaman
+1167	L'île de Hex, au milieu de tout. Le Portail de la Marée attend la couronne entière.
+1168	Ruche Royale
+1169	Roi des Abeilles
+1170	Royaume de la Nuit
+1171	Roi des Chauves-Souris
+1172	MINOTAURE ÉCARLATE
+1173	Seigneur de la Forge
+1174	REINE ARAIGNÉE
+1175	Mère du Repaire
+1176	Squelette
+1177	Villageois
+1178	Lézard
+1179	Gnoll
+1180	Requin-Harpon
+1181	Gobelin Lancier
+1182	Araignée
+1183	Chauve-Souris Géante
+1184	Gobelin à la Torche
+1185	Bourdon
+1186	Diablotin
+1187	Minotaure
+1188	Gnome au Lance-Pierre
+1189	Clavier
+1190	ZQSD/WASD ou flèches
+1191	Clavier · Préréglage 1
+1192	Côté gauche : WASD + F
+1193	Clavier · Préréglage 2
+1194	Côté droit : flèches + Entrée
+1195	Manette 1
+1196	Xbox, PlayStation ou similaire
+1197	Manette 2
+1198	Écran tactile
+1199	Boutons virtuels
+1200	Gestes ou souris
+1201	Glisser, balayer et toucher
+1202	PRENDS
+1203	MAINTIENS
+1204	DÉF
+1205	2 DOIGTS
+1206	LA VAGUE GROSSIT !
+1207	TYROLIENNE !
+1208	RUÉE DU TROUPEAU ! MONTEZ !
+1209	HARPON ROYAL
+1210	La marée a été la première à oublier ton nom, Ossian. Voyons si la prairie s'en souvient.
+1211	HURLEMENT DE LA MEUTE
+1212	Des os et de l'herbe. C'est d'ici que j'ai tiré ton corps, le savais-tu ? Non. Personne ne s'en souvient.
+1213	ASSAUT DU MARAIS
+1214	Le lézard n'a jamais fermé les yeux parce qu'il me surveillait. Tu les lui as fermés pour moi.
+1215	TOILE DE LA REINE
+1216	Les noms rayés sur la pierre... c'étaient tous des Ossian. Tu n'es que le dernier.
+1217	MARTEAU ÉCARLATE
+1218	Il forgeait ma chaîne. Maintenant il forge ta fin. Quelle ironie d'enclume.
+1219	GLAND GÉANT
+1220	Le bois a été planté autour de ma prison. Chaque arbre, un garde. Il n'en reste aucun.
+1221	TORCHE DU ROI
+1222	De l'or, de l'or, de l'or. Ils comptaient les pépites pendant que je comptais les jours. Un monde de plus.
+1223	BRAISE GÉANTE
+1224	Le ciel brûle parce que je respire. Là-haut, il ne manque que le dernier royaume.
+1225	PIQUÉ ROYAL
+1226	Non... les neuf ensemble ? Ce n'était pas dans la barque. Ce n'était PAS dans la barque !
+1227	Trône du Chaman · {0}
+1228	ROI GNOLL
+1229	Seigneur de la Prairie
+1230	{0} : entrer
+1231	VERROUILLÉE · trouvez la clé
+1232	FERMÉE · il manque {0} {1}
+1233	HIHIHI ! MAUVAISE PORTE
+1234	La porte s'est ouverte !
+1235	CLÉ !
+1236	PONT ! {0}s
+1237	LA SORTIE S'EST OUVERTE !
+1238	ROI GNOME
+1239	Gardien du Bois
+1240	ROI GOBELIN À LA TORCHE
+1241	Seigneur des Mines
+1242	ROI LÉZARD
+1243	Seigneur de la Lagune
+1244	Vers l'ARRIÈRE au moment\ndu coup : CONTRE !
+1245	Regardez en haut : des araignées attendent dans les toiles du plafond.
+1246	Seuls les nuages enchantés par le Chaman, ceux qui brillent, supportent votre poids.
+1247	La maison du Diablotin. Chaque zone ne s'ouvre que lorsque tous ses ennemis sont tombés.
+1248	Le Minotaure Écarlate est tombé ! Fragment récupéré !
+1249	DOUBLE SAUT !\nsautez et, en l'air,\nsautez encore
+1250	COUREZ !\n2× dans la direction et maintenez\n+ double saut
+1251	Le Portail de la Marée est devant vous !
+1252	Seuls ceux qui allient course, double saut et courage atteignent le Portail de la Marée.
+1253	La maison trompe. Suivez la lune, et méfiez-vous d'elle aussi.
+1254	Vous avez trouvé la sortie du labyrinthe de portes !
+1255	LA MAISON TROMPE.\nSuivez toujours la LUNE.\n(PRENDRE : entrer)
+1256	Toutes les lunes\nne disent pas la vérité.
+1257	LA SORTIE !
+1258	La sortie est verrouillée. Quelque part entre les étagères, une clé attend.
+1259	La clé a tourné dans la serrure !
+1260	LA SORTIE EST VERROUILLÉE.\nTrouvez la CLÉ.
+1261	FRAPPEZ LE LEVIER.\nLe pont disparaît vite !
+1262	On n'y voit rien. Allumez les bougies, et ne vous arrêtez pas sur les sols fissurés.
+1263	Les bougies allumées ont révélé le chemin !
+1264	IL FAIT NOIR...\nTouchez les bougies\npour les allumer.
+1265	La porte ne s'ouvre qu'avec\nles 3 GRANDES BOUGIES allumées.
+1266	Le plafond est plein d'araignées. Regardez en haut, et ne cessez pas d'avancer.
+1267	Au fond du repaire, la Reine garde le fragment parmi les œufs.
+1268	La Reine Araignée est tombée ! Fragment récupéré !
+1269	Une vague géante de lave arrive derrière ! Le sol s'effondre devant elle : courez, sautez, prenez la tyrolienne.
+1270	Vous avez échappé à la vague de lave !
+1271	Entrez dans les courants de vent pour monter. Maintenez SAUTER en l'air pour planer.
+1272	Le vent vous a porté de l'autre côté !
+1273	VENT ! Entrez dans le courant\net maintenez SAUTER\npour planer.
+1274	Sur le dos du prince allié, à travers la nuit, jusqu'au roi du royaume ennemi.
+1275	Le roi est tombé du ciel nocturne !
+1276	PRENDRE soulève la clé dorée. Portez-la jusqu'à la porte verrouillée. Il y a 3 cadeaux cachés.
+1277	La clé a ouvert la porte !
+1278	PRENDRE soulève la clé.\nPortez-la à la PORTE.\n↑ monte l'échelle.
+1279	Avec la clé, pas de\ndouble saut :\nutilisez le RESSORT.
+1280	Frappez le levier pour changer les blocs : seule la couleur active est solide.
+1281	Blocs en place, porte ouverte !
+1282	Accroupi + SAUTER :\npoirier\n(saut plus haut).
+1283	Des rochers d'or bloquent le passage. Marteau : en l'air, maintenez ▼ et appuyez sur ATTAQUER.
+1284	Rochers brisés, porte ouverte !
+1285	MARTEAU : en l'air,\n▼ + ATTAQUER\nbrise les rochers.
+1286	Abattez l'arbre pour faire un pont. Un mouton sur une plaque ouvre le portail.
+1287	Le bois a ouvert la voie !
+1288	HACHE : ATTAQUER\nl'arbre l'abat\net il devient un pont.
+1289	Portez le MOUTON\njusqu'à la plaque.
+1290	La clé est en haut de la tour. Pioche : touchez le mur en l'air et grimpez.
+1291	Du haut de la tour jusqu'à la porte !
+1292	PIOCHE : sautez contre\nle mur et le crâne\ngrimpe tout seul.
+1293	Course et tir ! Maintenez ATTAQUER pour tirer des os. Les ennemis n'arrêtent pas d'arriver.
+1294	Vous avez traversé la prairie en tirant !
+1295	Course et tir dans la mine ! Maintenez ATTAQUER : torches, araignées et chauves-souris arrivent par vagues.
+1296	La mine a été nettoyée à coups de tir !
+1297	Une caverne pleine d'ailes. Au fond, quelqu'un de couronné vous attend.
+1298	Le combat des Princes est terminé !
+1299	Sur le dos du prince allié : des vagues d'ennemis et, à la fin, le Diablotin Géant en personne !
+1300	Le Diablotin Géant est tombé du ciel !
+1301	Protégez l'urne ! Des fantômes arrivent des deux côtés. S'ils touchent l'urne 3 fois, on recommence.
+1302	L'urne est sauve !
+1303	Un arbre énorme, creux à l'intérieur. Portez la clé jusqu'à la porte tout en haut. Les 3 cadeaux valent de l'or.
+1304	L'arbre cachait un trésor !
+1305	Zone bonus !\nLes cadeaux valent de l'or.
+1306	Zone bonus !\nLa clé est tout au bout.
+1307	Zone bonus !\nMontez jusqu'à la clé.
+1308	Un enclos vide au milieu de l'herbe. Quelqu'un a laissé des cadeaux pour les moutons qui ne sont jamais revenus.
+1309	L'enclos cachait de l'or !
+1310	Une cabane de lézard à moitié engloutie dans le marais. Dedans, encore au sec, un coffre.
+1311	La cabane cachait de l'or !
+1312	Des cocons suspendus jusqu'au plafond. Tous ne renferment pas des araignées : certains renferment des trésors.
+1313	Les cocons cachaient de l'or !
+1314	Un coffre creusé dans le verre noir du volcan. Le Minotaure y gardait ce qu'il ne voulait pas voir.
+1315	Le coffre cachait de l'or !
+1316	Une ronde de champignons que les gnomes jurent enchantée. Sautez sur les gros.
+1317	La ronde cachait de l'or !
+1318	Une poche d'or qu'aucun gobelin n'a trouvée. Pas encore.
+1319	La poche était à vous !
+1320	Un nid énorme au milieu des braises. Celui qui l'a laissé là s'est envolé au loin.
+1321	Le nid cachait de l'or !
+1322	Une tour oubliée du royaume des ailes, pleine de plumes et de pièces.

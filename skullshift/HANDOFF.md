@@ -164,3 +164,11 @@ originais (extraídas com PIL do PNG).
 - `scripts/bots/run.sh` roda os 5 em duas levas (no máx. 3 navegadores juntos: cada um usa ~1,6 GB). `python3 scripts/bots/resumo.py` junta os `rel_*.json`.
 - Nas fases de voo o "progresso" sai 0 e "parado" alto: o robô lê `players[0]`, mas quem voa é o `shmup` (artefato da medição, não trava).
 - Achado da rodada: nas fases de voo densas dava para morrer no primeiro segundo; agora o voo começa com 2 s de invencibilidade.
+
+## Idiomas (src/i18n)
+- 12 idiomas: pt-BR (origem), pt-PT, en, es, fr, de, it, pl, tr, ru, ja, zh-CN. Tela `language` (botão com o nome do idioma no menu, sem bandeiras). `?lang=xx` força um idioma. Trocar idioma recarrega a página.
+- As cenas continuam escritas em português: `hookText()` faz todo `Text.setText` passar por `tr()` (dicionário "texto pt → tradução", moldes `{0}` para textos com `${...}`, pedaços separados por ` · `, ` — `, `: `, `, `). Texto digitado aos poucos (StoryScene/MemoryScene) usa `tr()` + `noTr()`.
+- Fontes: a Anak Manja só cobre pt/en. es/fr/de/it usam Lilita One; pl/tr/ru usam Rubik; ja/zh usam a fonte do aparelho (mesmo nome de família, arquivo trocado em `main.ts`).
+- Fluxo: `python3 scripts/i18n/extract.py` (novos textos entram no fim de `strings.json`) → traduções numeradas em `scripts/i18n/tr/<idioma>/*.txt` → `python3 scripts/i18n/merge.py` gera `src/i18n/locales/*.json`. `node scripts/i18n/check.cjs <idioma> [pasta]` percorre telas e fases e lista o que ficou sem tradução. `ptpt_rules.py` gera o pt-PT dos textos de interface por regras.
+- Estado: en completo; pt-PT quase completo (diálogos à mão até o índice 1289, interface por regras); es/fr/de/it/pl/tr/ru/ja/zh-CN têm menus, HUD, nomes de fases/criaturas, dicas, conquistas e loja. FALTA nesses 9: as descrições/avisos de fase (índices 1323–1542, `chunk_ui.py 420 640`) e os diálogos da história (`story_idx.json`, ~8,9 mil palavras) — enquanto faltam, aparecem em inglês.
+- Não editar arquivos do projeto enquanto grava vídeo pelo servidor de desenvolvimento (a página recarrega).

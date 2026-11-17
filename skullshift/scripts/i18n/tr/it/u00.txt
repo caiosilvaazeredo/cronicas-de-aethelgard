@@ -1,0 +1,215 @@
+227	Sciamano Hex
+228	Isole della Marea
+240	Caverna Umida
+250	Nido delle Ragnatele
+258	Covo della Regina
+267	Fucina Vulcanica
+280	Fuga dalla Fucina
+288	Santuario delle Nuvole
+299	Correnti del Cielo
+307	Volo Notturno
+321	Scalinata della Marea
+332	Casa delle Porte
+342	Biblioteca Infestata
+350	Casa Senza Luce
+358	Officina della Chiave
+365	Prateria delle Ossa
+371	Blocchi Alternati
+379	Miniera Crepata
+385	Nido dei Principi
+393	Duello nel Cielo
+407	Bosco del Taglialegna
+415	Miniera d'Oro
+421	Torre dello Scalatore
+427	Mausoleo dello Sciamano
+434	Spiaggia dei Granchi
+440	Alta Marea
+448	Relitti del Naufragio
+456	Nave Pirata: Ponte
+462	Caverna Sottomarina
+470	Chiuse del Faro
+476	Nave Pirata: Alberi
+482	Barriera Corallina
+488	Arena del Re Squalo
+496	Il Trono dello Sciamano
+498	Strada delle Ossa
+504	Carica della Mandria
+510	Cimitero di Ossa
+516	Fattoria degli Gnoll
+522	Erba Alta
+528	Carovana degli Gnoll
+534	Mulini a Vento
+540	Covo del Re Gnoll
+546	Ponti di Ragnatela
+552	Caverna Buia
+558	Sala dei Bozzoli
+564	Sparatoria nella Ragnatela
+570	Camera delle Uova
+576	Cancelli della Fucina
+582	Marea di Lava
+588	Geyser di Fuoco
+594	Sparatoria nella Fucina
+602	Ponte di Ossidiana
+608	Incudine del Fabbro
+614	Cuore di Magma
+620	Ingresso del Bosco
+626	Funghi Saltellanti
+632	Chiome degli Alberi
+638	Fiume di Tronchi
+644	Sparatoria nel Bosco
+650	Muschio Traditore
+656	Villaggio degli Gnomi
+662	Albero del Re Gnomo
+668	Bocca della Miniera
+674	Crollo
+680	Galleria Buia
+686	Vena d'Oro
+694	Dinamite
+700	Miniera Allagata
+706	Fuoco Blu
+712	Tesoro dei Goblin
+718	Trono del Re Goblin
+724	Riva della Palude
+730	Ninfee Giganti
+736	Piena della Palude
+742	Acquitrino Velenoso
+748	Casa del Pescatore
+754	Fondo della Laguna
+760	Sparatoria nell'Acquitrino
+766	Mangrovie
+772	Villaggio delle Lucertole
+778	Trono del Re Lucertola
+784	Nuvole di Brace
+790	Pioggia di Meteore
+796	Sparatoria nel Cielo di Brace
+802	Venti di Fuoco
+810	Castello tra le Nuvole
+816	Sciame di Brace
+822	Forziere delle Nuvole
+828	Portale delle Ali
+834	Rotta del Vento
+842	Castello delle Ali
+850	Volo nella Tempesta
+856	Camera Reale
+862	Correnti Reali
+868	Volo al Tramonto
+874	Sparatoria Reale
+880	Guardia Reale
+886	Cartone Perduto (1930)
+894	Recinto Dimenticato
+900	Capanna Sommersa
+907	Forziere di Ossidiana
+911	Cerchio di Funghi
+915	Sacca d'Oro
+919	Nido tra le Nuvole
+923	Torre delle Piume
+927	Albero Cavo
+933	Una casa azzurra
+936	Mani vere
+939	Le pecore
+942	Villaggio del Ponte
+945	La Fiera delle Lanterne
+948	La pioggia
+951	Qualcuno in viola
+954	L'acqua gelida
+957	Il mio nome
+972	I Sigilli
+980	Il Sentiero del Fiume
+988	Il Portale della Marea
+1021	CONSIGLIO
+1022	CURIOSITÀ
+1023	DICERIA
+1024	Tocca INDIETRO proprio nel momento del colpo: CONTRO! Spezza la difesa di chi attacca e rimanda indietro i proiettili.
+1025	La difesa senza scudo è una mezzaluna: protegge solo davanti. Attento a chi arriva da dietro.
+1026	Accovacciati e premi PRENDI sopra un oggetto per metterlo nella cassa di riserva, senza trasformarti.
+1027	La cassa di riserva (in alto sullo schermo) conserva un oggetto. Premi R, SELECT o tocca la cassa e cadrà dal cielo.
+1028	Già trasformato e hai preso un altro oggetto? La forma precedente va nella cassa di riserva, se è vuota.
+1029	Quando rinasci, l'oggetto di riserva cade da solo vicino a te. Mettiti sotto!
+1030	Tocca due volte una direzione e tieni premuto per correre. Alcune piattaforme si raggiungono solo di corsa.
+1031	Doppio salto: premi di nuovo SALTA in aria. Il secondo salto è un po' più basso.
+1032	Pipistrelli e api volano: tieni premuto SALTA in aria. I ragni si attaccano alle pareti.
+1033	Gli squali nuotano liberi. In acqua, ▼ si immerge e SALTA balza fuori.
+1034	Un oggetto gettato a terra lampeggia prima di sparire. Prendilo subito o perdi l'occasione.
+1035	Ogni livello con chiave nasconde 3 regali. Esplora prima di aprire la porta.
+1036	La marea sale e scende. Le casse galleggiano: usale come piattaforme con l'alta marea.
+1037	Un geyser che ribolle avvisa prima di esplodere. Aspetta che il fuoco passi.
+1038	Le élite sono più grandi e portano l'armatura: un colpo solo non basta.
+1039	I boss avvisano prima di ogni attacco. Osserva lo schema prima di buttarti.
+1040	In pausa (ESC o P) puoi cambiare volume della musica, tremolio dello schermo e colori per daltonici.
+1041	Al buio, resta vicino alle torce: la loro luce mostra il cammino e i nemici.
+1042	Le foglie di ninfea affondano piano. Non fermarti sopra.
+1043	I ponti di ragnatela si rompono se resti fermo. Attraversa di corsa.
+1044	Nel versus, chi abbatte l'altro guadagna il turno e corre verso il suo lato. Arriva alla fine per vincere.
+1045	Nemici sconfitti, regali e livelli superati danno oro. Spendilo all'Emporio dell'Orecchio Nero, sulla mappa del mondo (tasto B).
+1046	Osso Testardo, dall'Emporio: da trasformato, il colpo fatale disfa solo la forma. Torni a essere il teschio e resti in piedi.
+1047	La padrona dell'Emporio è una pecora dall'orecchio nero. Non parla: risponde con i cartelli. E fa pagare caro.
+1048	Si dice che la pecora dell'Emporio sia comparsa sulla spiaggia lo stesso giorno del teschio. E che lo conoscesse già.
+1049	Tutta la musica del gioco è composta dal codice stesso, nota per nota, senza un solo file audio.
+1050	Il teschio può diventare 11 creature diverse. Ognuna ha un commento sarcastico la prima volta.
+1051	Gli Gnoll cacciano in branco e rosicchiano ossa antiche. Per questo il loro osso trasforma il teschio in Gnoll.
+1052	Il Minotauro Scarlatto martella la stessa incudine da così tanto che la lava intorno si è raffreddata in ossidiana.
+1053	Gli gnomi del bosco piantano una ghianda per ogni visitatore cacciato. Il bosco è enorme.
+1054	I goblin delle miniere dipingono le torce di blu quando trovano l'oro. Fuoco blu = vena ricca.
+1055	Gli squali della marea usano arpioni presi dalle navi affondate. Alcuni hanno ancora dei nomi incisi.
+1056	I Principi pipistrello e ape litigano da quando sono nati nello stesso nido.
+1057	Le lucertole della palude cambiano pelle una volta l'anno e conservano le vecchie pelli come trofeo.
+1058	Il Diavoletto Gigante una volta era piccolo. Ha mangiato troppa brace.
+1059	Le pecore sono l'unico animale che nessun re è riuscito a domare. Obbediscono solo alle piastre.
+1060	La Regina Ragno tesse un bozzolo nuovo a ogni luna. Nessuno sa cosa ci custodisca.
+1061	Si dice che lo Sciamano non abbia mai lasciato l'isola centrale. Nemmeno una volta. Nemmeno per prendere un frammento.
+1062	I vecchi della prateria giurano che, prima dei re, l'isola di mezzo non aveva il cielo scuro.
+1063	Una corona spezzata in nove? I re hanno sempre detto di custodire altro.
+1064	Ogni volta che un re cade, qualcuno giura di sentire una catena spezzarsi in lontananza.
+1065	Lo Sciamano conosce il nome di ogni re. Ma non dice mai il proprio.
+1066	C'è chi dice che il teschio abbia avuto un volto. E una casa. E qualcuno che lo aspettava.
+1067	"Frammento" è una parola strana per qualcosa che pulsa come un cuore.
+1068	I granchi portano le chiavi. Colpiscine uno e la chiave cade.
+1069	Il faro delle isole si accende da solo quando un re cade. Non ci abita nessuno.
+1070	Carica della mandria: sali in alto e aspetta che passi.
+1071	Il mulino della prateria macina ossa, non grano. Gli Gnoll lo trovano normale.
+1072	Le lucertole velenose sputano ad arco. Avvicinati dall'alto.
+1073	I ragni appesi scendono quando passi sotto. Passa di corsa.
+1074	La lava sale a ondate. Tieni d'occhio la cresta luminosa.
+1075	I funghi grandi sono molle. I cancelli pesanti si aprono con un peso sulla piastra.
+1076	Nelle miniere il soffitto crolla: la polvere che cade avvisa dove cadrà la roccia.
+1077	Le correnti di vento ti portano in alto. Molla in cima e plana fino all'isola successiva.
+1078	In volo, la cavalcatura dipende dal patto con i Principi: pipistrello o ape.
+1079	Le pareti del santuario hanno segni fatti da dentro verso fuori.
+1080	RISERVA
+1081	VAI  ➜
+1082	⬅  VAI
+1083	Mani d'Osso
+1084	PRENDI solleva chiavi, pecore e altri oggetti sopra la testa. PRENDI di nuovo li lascia; ATTACCA li lancia.
+1085	Capriola e Verticale
+1086	Accovacciato, premi SALTA: salto in verticale (molto più alto). Di corsa, girati dall'altra parte e salta: capriola all'indietro (più alta anche lei).
+1087	Martello
+1088	In aria, tieni ▼ e premi ATTACCA: martellata a terra. Rompe le rocce d'oro crepate e stordisce chi è vicino.
+1089	Ascia
+1090	ATTACCA vicino a un albero lo abbatte nella direzione in cui guardi: diventa un ponte.
+1091	Piccone
+1092	Toccare una parete in aria pianta il piccone: il teschio sale da solo lungo la parete, come il ragno.
+1093	Risveglio
+1094	Finisci il primo livello.
+1095	Primo Sigillo
+1096	Sconfiggi il primo re.
+1097	Mezza Corona
+1098	Sconfiggi cinque re.
+1099	Corona Intera
+1100	Sconfiggi i nove re.
+1101	Patto Sigillato
+1102	Scegli una parte nella lotta dei Principi.
+1103	Ali di Cuoio
+1104	Stringi il patto con il Principe Pipistrello.
+1105	Ali di Vetro
+1106	Stringi il patto con la Principessa Ape.
+1107	Il Mondo Libero
+1108	Sconfiggi lo Sciamano sul Trono.
+1109	Ritorno a Casa
+1110	Accetta l'aiuto dello Sciamano.
+1111	Cocci di Ricordo
+1112	Recupera tre ricordi.
+1113	Il Mio Nome
+1114	Recupera tutti i ricordi.
+1115	Regalo!
+1116	Trova un regalo.
+1117	Collezionista

@@ -1,0 +1,140 @@
+0	Du sable entre les os. Ça doit être horrible. Heureusement que je ne sens rien.
+1	Du sel dans le vent... je connaissais cette odeur. D'une fenêtre. Le matin.
+2	C'est ça, Ossian. Un pas à la fois. Je veille sur toi.
+3	Un crabe avec une clé sur le dos. Ce monde a un drôle de sens de l'humour.
+4	Ici, tout garde quelque chose, Ossian. Apprends à voir qui porte quoi.
+5	L'eau monte, l'eau descend. Et moi au milieu, sans savoir nager.
+6	Quelqu'un m'a appris à flotter. De grandes mains sous mon dos. « Aie confiance. »
+7	La marée obéit à qui est patient. Comme tout le reste.
+8	Un navire entier, échoué ici. Où allait-il, Hex ?
+9	Nulle part. Personne ne quitte ces îles en bateau. Ni autrement.
+10	...C'était censé me réconforter ?
+11	Des canons. Quelqu'un avait très peur de ce qui venait de la mer.
+12	Ou de ce qui venait de l'île du milieu. Mais c'est de l'histoire ancienne. Avance.
+13	Je suis un requin. Aujourd'hui, je suis un requin. Tout va bien.
+14	De l'eau sombre au-dessus de la tête. Froide. Je suis déjà venu ici, au fond... sans branchies.
+15	N'y pense pas. Nage, Ossian. Nage, c'est tout.
+16	Qui a construit un phare pareil ? Les requins n'ont pas de mains.
+17	Des gens d'autrefois. Ils aimaient prévenir les autres de rester loin. Je trouvais ça exagéré.
+18	D'ici, on voit l'île du milieu. Le ciel y est plus sombre.
+19	C'est juste le temps qui tourne. Regarde devant toi, pas là-bas.
+20	Le corail coupe, la méduse brûle. La mer entière veut que je parte.
+21	Une maison bleue. On entendait la mer depuis le lit. Je comptais les vagues jusqu'à m'endormir.
+22	Le Requin-Harpon n'est plus loin. Garde tes forces.
+23	Alors c'est lui. Plus grand que je l'imaginais. Et je l'imaginais grand.
+24	N'écoute rien de ce qu'il dira. Les rois mentent pour garder ce qui est aux autres.
+25	De l'herbe jusqu'aux genoux. Si j'avais de vrais genoux, ça chatouillerait.
+26	Une petite cloche, qui sonne au loin. C'était l'heure de rentrer... rentrer quoi ?
+27	Les Gnolls chassent en meute. Ne les laisse pas t'encercler.
+28	Clé dorée, porte verrouillée. Quelqu'un ici aime les énigmes.
+29	Les portes existent pour garder des choses dedans, Ossian. Ou dehors. Ça dépend de qui a la clé.
+30	Le sol tremble. Ce n'est jamais bon signe.
+31	Des moutons. Je comptais de vrais moutons. Il y en avait toujours un qui s'échappait, celui à l'oreille noire.
+32	Monte en hauteur et laisse passer le troupeau. La hâte ne sert qu'aux vivants.
+33	Ils n'arrêtent pas d'arriver ! Qui a appris aux gnolls à faire la queue ?
+34	Leur roi. Une meute n'est dangereuse que lorsqu'elle a quelqu'un à qui obéir.
+35	Des os partout. Des cousins ? Des collègues ? Je ne sais pas comment dire bonjour.
+36	Ils sont à ceux qui sont venus avant. N'y touche pas.
+37	Avant qui, Hex ? ...Hex ?
+38	Une ferme. Clôture, portail, un mouton sur la plaque. Presque normal.
+39	Une odeur de pain. Une table en bois. Quelqu'un a mis une assiette de plus, pour moi.
+40	Tu es silencieux, Ossian. Qu'as-tu vu ?
+41	L'herbe a bougé. L'herbe ne devrait pas bouger toute seule.
+42	Les chasseurs attendent. C'est ce que je respecte le plus chez eux : ils savent attendre.
+43	Des chariots abandonnés au milieu de la route. Ils ont fui quelque chose en courant.
+44	Des temps difficiles. C'est passé. Presque tout passe.
+45	Un moulin qui moud de l'os. Je vais faire comme si je n'avais pas lu la pancarte.
+46	Une petite fille qui court derrière moi. « Attends ! Ne me laisse pas dans le noir ! »
+47	Le Roi Gnoll est derrière la colline. Tu es prêt ?
+48	Il porte une couronne d'os sur la tête. Une vraie. Entière.
+49	Une imitation. La vraie est en morceaux, et il en détient un. Fais-le tomber.
+50	Une eau verte, tiède et immobile. Tout ce dans quoi je ne voulais pas marcher.
+51	Le marais garde bien les secrets. Ils coulent lentement, mais ils coulent.
+52	Des feuilles qui coulent quand on s'arrête. Le marais n'aime pas les indécis.
+53	Des petits cailloux plats qui ricochent sur une rivière. Trois, quatre rebonds. Quelqu'un applaudissait.
+54	Il y a une marée jusqu'ici ? Je croyais que c'était un truc des îles.
+55	Tout dans ce royaume monte et descend autour du même centre, Ossian. Tu finiras par comprendre.
+56	Du poison. Sur un squelette. On va voir qui abîme qui.
+57	Ne plaisante pas. Tu peux tomber autant de fois que tu veux ; c'est moi qui me lasse d'aller te chercher.
+58	Filet, hameçon, barque percée. Un lézard pêcheur. Il m'est sympathique.
+59	Une canne à pêche plus grande que moi. Un vieil homme qui rit : « Pas de poisson, que des branches ! »
+60	...Tu viens de sourire ? Les crânes ne devraient pas pouvoir faire ça.
+61	De nouveau au fond. Au moins, cette fois, j'ai des dents de requin.
+62	Ne regarde pas la surface. La lumière là-haut est trompeuse.
+63	Des crocodiles en file indienne. Polis, au moins.
+64	Le Roi Lézard sait déjà que tu arrives. Il ne dort jamais : il surveille.
+65	Des racines partout. On dirait une cage faite d'arbre.
+66	Cage est un mot fort. Abri. Disons un abri.
+67	Tu choisis tes mots avec beaucoup de soin, Hex.
+68	Un village entier sur l'eau. Avec du linge qui sèche, des fourneaux. Ils vivent ici.
+69	Un vieux pont de bois. Des planches qui grinçaient. Je savais sur lesquelles ne pas marcher.
+70	Ne t'attache pas au décor. C'est de leur roi que nous avons besoin.
+71	Il a les yeux ouverts. Les deux. Sans cligner.
+72	Cela fait bien longtemps qu'il ne les ferme plus. Rends-lui ce service.
+73	Sombre, humide, plein de toiles. L'endroit parfait pour quelqu'un sans peau.
+74	Parle bas ici. Les murs gardent des noms.
+75	Il y a quelque chose d'écrit sur la pierre. Rayé par-dessus. Plusieurs fois.
+76	Des gribouillis d'araignée. Ne perds pas ton temps à lire.
+77	Les araignées écrivent « Ossian », Hex ?
+78	Un pont qui casse si je m'arrête. J'ai déjà plus aimé les ponts.
+79	La pluie sur un pont. Une planche mouillée. Le pied qui glisse. Non, attends, pas encore...
+80	Cours, Ossian ! Ne reste pas planté là à regarder en bas !
+81	Encore une clé, encore une porte. Qui verrouille autant une grotte ?
+82	Quelqu'un qui a peur de ce qu'il y a au fond. Ou de ce qu'il y a dehors. C'est pareil.
+83	Je ne vois rien. Juste les torches. Et des yeux, là-bas, au loin.
+84	Une petite main qui serre la mienne. « Reste avec moi jusqu'à ce que je dorme. Tu as promis. »
+85	Reste près de la lumière. Mais pas de cette lumière chaude que tu vois en tombant. Celle-là, jamais.
+86	Des cocons suspendus. De la taille d'une personne.
+87	La Reine garde ce qu'elle attrape. En cela, je l'admets, elle et moi nous ressemblons.
+88	Elles descendent du plafond sans arrêt ! Combien de pattes tiennent dans une grotte ?
+89	Plus que tu ne peux en compter. Tire et ne regarde pas en haut.
+90	Deux princes. L'un aux ailes de cuir, l'autre aux ailes de verre. Et qui se battent.
+91	Laisse-les se battre. Qui choisit un camp gagne un ami. Et un ennemi.
+92	Des œufs. Des centaines. Je marche sur la pointe des pieds que je n'ai pas.
+93	Un panier d'œufs au bras. Un s'est cassé en chemin. On s'est moqué de moi toute la semaine.
+94	La Reine est juste là. Elle va parler. Elles parlent toujours.
+95	Elle m'a regardé de tous ses yeux. Et elle avait l'air... d'avoir pitié ?
+96	C'est une ruse d'araignée. Coupe les fils avant qu'elle t'enroule dans ses mots.
+97	La chaleur. Je devrais transpirer. À la place, je craque.
+98	Une hache qui monte et descend. Du bois qui se fend. De la corne dans la main. Ma main.
+99	Je n'entre pas là-dedans avec toi. Le feu et moi, on ne s'entend pas.
+100	La lave me poursuit ! Ce n'est pas un niveau, c'est une expulsion !
+101	Cours ! Si tu tombes là-dedans, je mettrai du temps à te retrouver !
+102	Une mine dans le volcan. Quelqu'un a creusé jusqu'ici juste pour verrouiller une porte.
+103	Ils ont creusé profond, oui. Ils pensaient que plus c'était profond, plus c'était sûr. Ils se trompaient.
+104	De la pierre qui flotte sur du feu. Mon moyen de transport préféré, désormais.
+105	La montagne respire. Elle monte quand elle gonfle la poitrine, descend quand elle relâche.
+106	Un, deux, FEU. Un, deux, FEU. J'ai pris le rythme.
+107	Une cheminée. Des châtaignes qui éclatent. Quelqu'un qui raconte des histoires de passeurs.
+108	Des passeurs ? ...Quelles histoires, Ossian ? De quoi t'es-tu souvenu ?
+109	Des taureaux de lave lancés au galop. Aujourd'hui, la forge a décidé de me détester à la file.
+110	Le Minotaure forge ses propres soldats. Travailleur. Têtu.
+111	Du verre noir. Je vois mon reflet. Je suis plus beau de loin.
+112	Un visage dans une bassine d'eau. Des yeux marron. C'était le mien. J'avais un visage.
+113	Ne reste pas à regarder les reflets. Ils montrent ce qui n'est plus.
+114	Des coups de marteau. De loin, on dirait un cœur qui bat.
+115	Il martèle la même chose depuis que je... depuis toujours. Une chaîne. Je veux dire, une couronne.
+116	Une rivière de magma. Sans pont, sans barque. Rien que mon courage. On est perdus.
+117	Le cœur de la montagne est proche. Je le sens d'ici. Il brûle.
+118	Il a arrêté de marteler. Il me regarde.
+119	Ne le laisse pas finir sa phrase. Ce qu'il forge n'est pas pour toi.
+120	Vieil arbre, ombre fraîche. Premier endroit de ce monde qui ne veut pas me tuer.
+121	De la sciure dans les cheveux. J'avais des cheveux. Et quelqu'un soufflait pour l'enlever.
+122	Attention aux glands. Les gnomes tirent d'abord et râlent ensuite.
+123	Un portail qui ne s'ouvre qu'avec un poids dessus. Je vais avoir besoin d'aide... ou d'un mouton.
+124	Les gnomes construisent pour durer. Rien de ce qu'ils ferment ne s'ouvre tout seul.
+125	Un champignon qui vous lance en l'air. Enfin une plante de mon côté.
+126	N'en mange aucun. ...Façon de parler, je sais que tu ne manges pas.
+127	Du haut des cimes, on voit tout. Sauf la sortie de ce royaume.
+128	Je grimpais aux arbres pour voir la rivière. De là-haut, le pont ressemblait à un jouet.
+129	Il n'y a pas de sortie à voir, Ossian. Pas encore. C'est pour cela que nous réunissons la couronne.
+130	Des blocs colorés, des leviers, un portail. Les gnomes doivent beaucoup s'ennuyer.
+131	Qui surveille la même chose pendant des siècles s'invente des passe-temps.
+132	Des rondins qui descendent la rivière. Sauter de l'un à l'autre. Qu'est-ce qui pourrait mal tourner ?
+133	Une large rivière, à l'eau sombre. Des lanternes de papier qui descendent lentement. Des dizaines.
+134	Ne regarde pas tant l'eau. Regarde les rondins.
+135	Une pluie de glands ! J'avais dit que ce bois ne voulait pas me tuer ?
+136	Les gnomes protègent leur roi. Drôle de peuple : ils se battent pour quelqu'un qui ne fait que leur donner des ordres.
+137	La mousse m'a fait un clin d'œil. La mousse ne cligne pas.
+138	Ici, tout surveille. C'est pour cela que ce bois a été planté.
+139	Des petites maisons dans les racines, de la fumée aux cheminées. Il y a même une cloche.

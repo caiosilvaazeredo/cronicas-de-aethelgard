@@ -27,10 +27,9 @@ export const LANGS: Lang[] = [
   { id: 'pl', name: 'Polski', display: 'rubik-900.ttf', body: 'rubik-600.ttf' },
   { id: 'tr', name: 'Türkçe', display: 'rubik-900.ttf', body: 'rubik-600.ttf' },
   { id: 'ru', name: 'Русский', display: 'rubik-900.ttf', body: 'rubik-600.ttf' },
-  // Japonês, chinês e coreano usam a fonte do próprio aparelho (as fontes do jogo não têm esses alfabetos).
+  // Japonês e chinês usam a fonte do próprio aparelho (as fontes do jogo não têm esses alfabetos).
   { id: 'ja', name: '日本語', display: '', body: '' },
   { id: 'zh-CN', name: '简体中文', display: '', body: '' },
-  { id: 'ko', name: '한국어', display: '', body: '' },
 ];
 
 const KEY = 'skullshift.lang';
@@ -96,6 +95,11 @@ export async function initI18n(): Promise<void> {
   try {
     const mod = await loaders[`./locales/${current}.json`]?.();
     dict = mod?.default ?? {};
+    // O que ainda não foi traduzido neste idioma aparece em inglês (e não em português).
+    if (current !== 'en' && current !== 'pt-PT') {
+      const en = await loaders['./locales/en.json']?.();
+      dict = { ...(en?.default ?? {}), ...dict };
+    }
   } catch {
     dict = {};
   }

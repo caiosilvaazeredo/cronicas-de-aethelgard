@@ -1,0 +1,205 @@
+1118	Finde alle Geschenke in den Schlüsselleveln.
+1119	Abseits des Weges
+1120	Schaffe ein Bonusgebiet.
+1121	Entdecker
+1122	Schaffe alle Bonusgebiete.
+1123	Schwere Tasche
+1124	Sammle 100 Gold auf einmal.
+1125	Kundschaft
+1126	Kaufe eine Verbesserung im Emporium.
+1127	Lieblingskunde
+1128	Kaufe alle Verbesserungen.
+1129	Knochenarbeit
+1130	Besiege 50 Gegner.
+1131	Legende der Insel
+1132	Besiege 250 Gegner.
+1133	KONTER!
+1134	Lande einen Konter.
+1135	Meister des Rückzugs
+1136	Lande 25 Konter.
+1137	Tausend Gestalten
+1138	Verwandle dich 30-mal.
+1139	Filmfreund
+1140	Beende den Verlorenen Trickfilm.
+1141	ERFOLG · {0}
+1142	Der Strand, an dem der Schädel erwacht. Der Harpunenhai bewacht das erste Fragment.
+1143	Harpunenhai-König
+1144	Felder aus Gras und alten Knochen. Die Gnolle jagen im Rudel.
+1145	Gnollkönig
+1146	Echsenlagune
+1147	Ein lauwarmer Sumpf mit grünem Wasser. Mittendrin schläft der Echsenkönig nie.
+1148	Echsenkönig
+1149	Netzhöhle
+1150	Von Netzen überzogene Tunnel. Ganz hinten die Spinnenkönigin und das Nest der Prinzen.
+1151	Spinnenkönigin
+1152	Der Feuerberg, auf dem der Scharlachrote Minotaurus die Lava hämmert.
+1153	Scharlachroter Minotaurus
+1154	Gnomenwald
+1155	Alte Bäume, Pilze und Tore, die sich nur mit Gewicht öffnen. Der Gnomenkönig mag keinen Besuch.
+1156	Gnomenkönig
+1157	Goblinminen
+1158	Goldtunnel im Fackelschein. Der Goblinkönig zählt jedes Nugget.
+1159	Fackelgoblin-König
+1160	Gluthimmel
+1161	Wolkeninseln und starke Winde. Der Riesenkobold will den Himmel für sich allein.
+1162	Riesenkobold
+1163	Reich der Schwingen
+1164	Das Reich des Feindes deines Verbündeten. Es öffnet sich erst nach dem Pakt mit den Prinzen.
+1165	König der Schwingen
+1166	Heiligtum des Schamanen
+1167	Hex' Insel, mitten in allem. Das Gezeitentor wartet auf die ganze Krone.
+1168	Königlicher Bienenstock
+1169	Bienenkönig
+1170	Reich der Nacht
+1171	Fledermauskönig
+1172	SCHARLACHROTER MINOTAURUS
+1173	Herr der Schmiede
+1174	SPINNENKÖNIGIN
+1175	Mutter des Baus
+1176	Skelett
+1177	Dorfbewohner
+1178	Echse
+1179	Gnoll
+1180	Harpunenhai
+1181	Speergoblin
+1182	Spinne
+1183	Riesenfledermaus
+1184	Fackelgoblin
+1185	Hummel
+1186	Kobold
+1187	Minotaurus
+1188	Schleudergnom
+1189	Tastatur
+1190	WASD oder Pfeiltasten
+1191	Tastatur · Voreinstellung 1
+1192	Linke Seite: WASD + F
+1193	Tastatur · Voreinstellung 2
+1194	Rechte Seite: Pfeiltasten + Enter
+1195	Controller 1
+1196	Xbox, PlayStation o. Ä.
+1197	Controller 2
+1198	Touchscreen
+1199	Virtuelle Tasten
+1200	Gesten oder Maus
+1201	Ziehen, wischen und tippen
+1202	NIMM
+1203	HALTEN
+1204	DECK
+1205	2 FINGER
+1206	DIE WELLE WÄCHST!
+1207	SEILRUTSCHE!
+1208	STAMPEDE! NACH OBEN!
+1209	KÖNIGLICHE HARPUNE
+1210	Die Gezeiten haben deinen Namen als Erste vergessen, Ossian. Mal sehen, ob sich die Prärie erinnert.
+1211	GEHEUL DES RUDELS
+1212	Knochen und Gras. Von hier habe ich deinen Körper geholt, wusstest du das? Nein. Niemand erinnert sich.
+1213	SUMPFSPRUNG
+1214	Die Echse schloss nie die Augen, weil sie mich bewachte. Du hast sie ihr für mich geschlossen.
+1215	NETZ DER KÖNIGIN
+1216	Die durchgestrichenen Namen im Stein... es waren alles Ossians. Du bist nur der letzte.
+1217	SCHARLACHROTER HAMMER
+1218	Er schmiedete meine Kette. Jetzt schmiedet er dein Ende. Welch Ironie des Ambosses.
+1219	RIESENEICHEL
+1220	Der Wald wurde um mein Gefängnis gepflanzt. Jeder Baum ein Wächter. Keiner ist geblieben.
+1221	FACKEL DES KÖNIGS
+1222	Gold, Gold, Gold. Sie zählten Nuggets, während ich die Tage zählte. Noch eine Welt.
+1223	RIESENGLUT
+1224	Der Himmel brennt, weil ich atme. Dort oben fehlt nur noch das letzte Reich.
+1225	KÖNIGLICHER TIEFFLUG
+1226	Nein... alle neun zusammen? Das stand nicht auf der Fähre. Das stand NICHT auf der Fähre!
+1227	Thron des Schamanen · {0}
+1228	GNOLLKÖNIG
+1229	Herr der Prärie
+1230	{0}: eintreten
+1231	VERSCHLOSSEN · finde den Schlüssel
+1232	ZU · es fehlen {0} {1}
+1233	HIHIHI! FALSCHE TÜR
+1234	Die Tür ist aufgegangen!
+1235	SCHLÜSSEL!
+1236	BRÜCKE! {0}s
+1237	DER AUSGANG IST OFFEN!
+1238	GNOMENKÖNIG
+1239	Wächter des Waldes
+1240	FACKELGOBLIN-KÖNIG
+1241	Herr der Minen
+1242	ECHSENKÖNIG
+1243	Herr der Lagune
+1244	Im Moment des Schlags\nnach HINTEN: KONTER!
+1245	Schau nach oben: Spinnen warten in den Netzen an der Decke.
+1246	Nur die vom Schamanen verzauberten Wolken, die leuchtenden, tragen dein Gewicht.
+1247	Das Haus des Kobolds. Jedes Gebiet öffnet sich erst, wenn all seine Gegner gefallen sind.
+1248	Der Scharlachrote Minotaurus ist gefallen! Fragment zurückgewonnen!
+1249	DOPPELSPRUNG!\nspring und spring\nin der Luft noch einmal
+1250	RENN!\n2× in die Richtung und halten\n+ Doppelsprung
+1251	Das Gezeitentor liegt vor dir!
+1252	Bis zum Gezeitentor kommt nur, wer Sprint, Doppelsprung und Mut verbindet.
+1253	Das Haus täuscht. Folge dem Mond, und misstraue auch ihm.
+1254	Du hast den Ausgang aus dem Türenlabyrinth gefunden!
+1255	DAS HAUS TÄUSCHT.\nFolge immer dem MOND.\n(NEHMEN: eintreten)
+1256	Nicht jeder Mond\nsagt die Wahrheit.
+1257	DER AUSGANG!
+1258	Der Ausgang ist verschlossen. Irgendwo zwischen den Regalen wartet ein Schlüssel.
+1259	Der Schlüssel hat sich im Schloss gedreht!
+1260	DER AUSGANG IST VERSCHLOSSEN.\nFinde den SCHLÜSSEL.
+1261	SCHLAG DEN HEBEL.\nDie Brücke verschwindet schnell!
+1262	Man sieht nichts. Zünde die Kerzen an und bleib nicht auf rissigen Böden stehen.
+1263	Die brennenden Kerzen haben den Weg gezeigt!
+1264	ES IST DUNKEL...\nBerühre die Kerzen,\num sie anzuzünden.
+1265	Die Tür öffnet sich nur, wenn\ndie 3 GROSSEN KERZEN brennen.
+1266	Die Decke ist voller Spinnen. Schau nach oben und bleib in Bewegung.
+1267	Ganz hinten im Bau bewacht die Königin das Fragment zwischen den Eiern.
+1268	Die Spinnenkönigin ist gefallen! Fragment zurückgewonnen!
+1269	Eine riesige Lavawelle ist hinter dir her! Der Boden bricht vor ihr ein: renn, spring, nimm die Seilrutsche.
+1270	Du bist der Lavawelle entkommen!
+1271	Tritt in die Windströmungen, um aufzusteigen. Halte SPRINGEN in der Luft, um zu gleiten.
+1272	Der Wind hat dich auf die andere Seite getragen!
+1273	WIND! Tritt in die Strömung\nund halte SPRINGEN,\num zu gleiten.
+1274	Auf dem verbündeten Prinzen durch die Nacht bis zum König des feindlichen Reichs.
+1275	Der König ist vom Nachthimmel gefallen!
+1276	NEHMEN hebt den goldenen Schlüssel. Bring ihn zur verschlossenen Tür. Es gibt 3 versteckte Geschenke.
+1277	Der Schlüssel hat die Tür geöffnet!
+1278	NEHMEN hebt den Schlüssel.\nBring ihn zur TÜR.\n↑ steigt die Leiter hoch.
+1279	Mit dem Schlüssel geht kein\nDoppelsprung:\nnimm die FEDER.
+1280	Schlag den Hebel, um die Blöcke zu wechseln: Nur die aktive Farbe ist fest.
+1281	Blöcke am Platz, Tür offen!
+1282	Geduckt + SPRINGEN:\nHandstand\n(höherer Sprung).
+1283	Goldfelsen versperren den Weg. Hammer: in der Luft ▼ halten und ANGRIFF drücken.
+1284	Felsen zerbrochen, Tür offen!
+1285	HAMMER: in der Luft\n▼ + ANGRIFF\nzerbricht die Felsen.
+1286	Fälle den Baum, um eine Brücke zu bauen. Ein Schaf auf einer Platte öffnet das Tor.
+1287	Der Wald hat den Weg freigegeben!
+1288	AXT: ANGRIFF\nfällt den Baum,\nund er wird zur Brücke.
+1289	Trag das SCHAF\nzur Platte.
+1290	Der Schlüssel liegt oben auf dem Turm. Spitzhacke: Berühre die Wand in der Luft und klettere.
+1291	Von der Turmspitze bis zur Tür!
+1292	SPITZHACKE: Spring an die\nWand, und der Schädel\nklettert von selbst.
+1293	Rennen und schießen! Halte ANGRIFF, um Knochen zu feuern. Die Gegner kommen ohne Ende.
+1294	Du hast die Prärie schießend durchquert!
+1295	Rennen und schießen in der Mine! Halte ANGRIFF: Fackeln, Spinnen und Fledermäuse kommen in Wellen.
+1296	Die Mine ist leergeschossen!
+1297	Eine Höhle voller Flügel. Ganz hinten wartet jemand mit Krone auf dich.
+1298	Der Kampf der Prinzen ist vorbei!
+1299	Auf dem verbündeten Prinzen: Wellen von Gegnern und am Ende der Riesenkobold höchstpersönlich!
+1300	Der Riesenkobold ist vom Himmel gefallen!
+1301	Beschütze die Urne! Geister kommen von beiden Seiten. Berühren sie die Urne 3-mal, beginnt alles von vorn.
+1302	Die Urne ist in Sicherheit!
+1303	Ein riesiger Baum, innen hohl. Bring den Schlüssel zur Tür ganz oben. Die 3 Geschenke sind Gold wert.
+1304	Der Baum barg einen Schatz!
+1305	Bonusgebiet!\nGeschenke sind Gold wert.
+1306	Bonusgebiet!\nDer Schlüssel liegt am Ende.
+1307	Bonusgebiet!\nKlettere zum Schlüssel.
+1308	Ein leerer Pferch mitten im Gras. Jemand hat Geschenke für die Schafe dagelassen, die nie zurückkamen.
+1309	Der Pferch barg Gold!
+1310	Eine Echsenhütte, halb im Sumpf versunken. Drinnen, noch trocken, eine Truhe.
+1311	Die Hütte barg Gold!
+1312	Kokons hängen bis zur Decke. Nicht alle bergen Spinnen: Manche bergen Schätze.
+1313	Die Kokons bargen Gold!
+1314	Ein Tresor, ins schwarze Glas des Vulkans gehauen. Der Minotaurus verwahrte, was er nicht sehen wollte.
+1315	Der Tresor barg Gold!
+1316	Ein Pilzkreis, von dem die Gnome schwören, er sei verzaubert. Spring auf die großen.
+1317	Der Kreis barg Gold!
+1318	Eine Goldtasche, die noch kein Goblin gefunden hat. Noch nicht.
+1319	Die Tasche gehörte dir!
+1320	Ein riesiges Nest mitten in der Glut. Wer es dort gelassen hat, ist weit fortgeflogen.
+1321	Das Nest barg Gold!
+1322	Ein vergessener Turm des Reichs der Schwingen, voller Federn und Münzen.

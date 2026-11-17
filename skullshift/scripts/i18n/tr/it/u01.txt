@@ -1,0 +1,205 @@
+1118	Trova tutti i regali dei livelli con chiave.
+1119	Fuori Strada
+1120	Supera un'area bonus.
+1121	Esploratore
+1122	Supera tutte le aree bonus.
+1123	Tasca Pesante
+1124	Raccogli 100 monete d'oro in una volta.
+1125	Avventore
+1126	Compra un potenziamento all'Emporio.
+1127	Cliente Preferito
+1128	Compra tutti i potenziamenti.
+1129	Ossa del Mestiere
+1130	Sconfiggi 50 nemici.
+1131	Leggenda dell'Isola
+1132	Sconfiggi 250 nemici.
+1133	CONTRO!
+1134	Metti a segno un contrattacco.
+1135	Maestro dell'Arretramento
+1136	Metti a segno 25 contrattacchi.
+1137	Mille Forme
+1138	Trasformati 30 volte.
+1139	Cinefilo
+1140	Finisci il Cartone Perduto.
+1141	OBIETTIVO · {0}
+1142	La spiaggia dove il teschio si risveglia. Lo Squalo Arpione custodisce il primo frammento.
+1143	Re Squalo Arpione
+1144	Campi d'erba e ossa antiche. Gli Gnoll cacciano in branco.
+1145	Re Gnoll
+1146	Laguna delle Lucertole
+1147	Una palude tiepida dall'acqua verde. Là in mezzo, il Re Lucertola non dorme mai.
+1148	Re Lucertola
+1149	Caverna delle Ragnatele
+1150	Gallerie coperte di ragnatele. In fondo, la Regina Ragno e il nido dei Principi.
+1151	Regina Ragno
+1152	La montagna di fuoco dove il Minotauro Scarlatto martella la lava.
+1153	Minotauro Scarlatto
+1154	Bosco degli Gnomi
+1155	Alberi vecchi, funghi e cancelli che si aprono solo con un peso. Al Re Gnomo non piacciono le visite.
+1156	Re Gnomo
+1157	Miniere dei Goblin
+1158	Gallerie d'oro illuminate dalle torce. Il Re Goblin conta ogni pepita.
+1159	Re Goblin della Torcia
+1160	Cielo di Brace
+1161	Isole di nuvola e venti forti. Il Diavoletto Gigante vuole il cielo tutto per sé.
+1162	Diavoletto Gigante
+1163	Regno delle Ali
+1164	Il regno nemico del tuo alleato. Si apre solo dopo il patto con i Principi.
+1165	Re delle Ali
+1166	Santuario dello Sciamano
+1167	L'isola di Hex, in mezzo a tutto. Il Portale della Marea attende la corona intera.
+1168	Alveare Reale
+1169	Re delle Api
+1170	Regno della Notte
+1171	Re dei Pipistrelli
+1172	MINOTAURO SCARLATTO
+1173	Signore della Fucina
+1174	REGINA RAGNO
+1175	Madre del Covo
+1176	Scheletro
+1177	Paesano
+1178	Lucertola
+1179	Gnoll
+1180	Squalo Arpione
+1181	Goblin Lanciere
+1182	Ragno
+1183	Pipistrello Gigante
+1184	Goblin della Torcia
+1185	Bombo
+1186	Diavoletto
+1187	Minotauro
+1188	Gnomo con la Fionda
+1189	Tastiera
+1190	WASD o frecce
+1191	Tastiera · Preimpostazione 1
+1192	Lato sinistro: WASD + F
+1193	Tastiera · Preimpostazione 2
+1194	Lato destro: frecce + Invio
+1195	Controller 1
+1196	Xbox, PlayStation o simili
+1197	Controller 2
+1198	Schermo tattile
+1199	Pulsanti virtuali
+1200	Gesti o mouse
+1201	Trascina, scorri e tocca
+1202	PRENDI
+1203	TIENI
+1204	DIF
+1205	2 DITA
+1206	L'ONDA STA CRESCENDO!
+1207	TELEFERICA!
+1208	CARICA DELLA MANDRIA! SALI!
+1209	ARPIONE REALE
+1210	La marea è stata la prima a dimenticare il tuo nome, Ossian. Vediamo se la prateria lo ricorda.
+1211	ULULATO DEL BRANCO
+1212	Ossa ed erba. È da qui che ho preso il tuo corpo, lo sapevi? No. Nessuno ricorda.
+1213	BALZO DELLA PALUDE
+1214	La lucertola non ha mai chiuso gli occhi perché mi sorvegliava. Glieli hai chiusi tu per me.
+1215	RAGNATELA DELLA REGINA
+1216	I nomi cancellati sulla pietra... erano tutti Ossian. Tu sei solo l'ultimo.
+1217	MARTELLO SCARLATTO
+1218	Lui forgiava la mia catena. Ora forgia la tua fine. Che ironia d'incudine.
+1219	GHIANDA GIGANTE
+1220	Il bosco fu piantato intorno alla mia prigione. Ogni albero, una guardia. Non ne è rimasto nessuno.
+1221	TORCIA DEL RE
+1222	Oro, oro, oro. Loro contavano pepite mentre io contavo i giorni. Un altro mondo.
+1223	BRACE GIGANTE
+1224	Il cielo brucia perché io respiro. Lassù manca solo l'ultimo regno.
+1225	PICCHIATA REALE
+1226	No... tutti e nove insieme? Questo non era sulla barca. Questo NON era sulla barca!
+1227	Trono dello Sciamano · {0}
+1228	RE GNOLL
+1229	Signore della Prateria
+1230	{0}: entra
+1231	CHIUSA A CHIAVE · trova la chiave
+1232	CHIUSA · mancano {0} {1}
+1233	IHIHIH! PORTA SBAGLIATA
+1234	La porta si è aperta!
+1235	CHIAVE!
+1236	PONTE! {0}s
+1237	L'USCITA SI È APERTA!
+1238	RE GNOMO
+1239	Guardiano del Bosco
+1240	RE GOBLIN DELLA TORCIA
+1241	Signore delle Miniere
+1242	RE LUCERTOLA
+1243	Signore della Laguna
+1244	INDIETRO nel momento\ndel colpo: CONTRO!
+1245	Guarda in alto: i ragni aspettano nelle ragnatele del soffitto.
+1246	Solo le nuvole incantate dallo Sciamano, quelle che brillano, reggono il tuo peso.
+1247	La casa del Diavoletto. Ogni area si apre solo quando cadono tutti i suoi nemici.
+1248	Il Minotauro Scarlatto è caduto! Frammento recuperato!
+1249	DOPPIO SALTO!\nsalta e, in aria,\nsalta ancora
+1250	CORRI!\n2× nella direzione e tieni\n+ doppio salto
+1251	Il Portale della Marea è davanti a te!
+1252	Al Portale della Marea arriva solo chi unisce corsa, doppio salto e coraggio.
+1253	La casa inganna. Segui la luna, e diffida anche di lei.
+1254	Hai trovato l'uscita dal labirinto di porte!
+1255	LA CASA INGANNA.\nSegui sempre la LUNA.\n(PRENDI: entra)
+1256	Non tutte le lune\ndicono la verità.
+1257	L'USCITA!
+1258	L'uscita è chiusa a chiave. Da qualche parte tra gli scaffali, una chiave aspetta.
+1259	La chiave ha girato nella serratura!
+1260	L'USCITA È CHIUSA A CHIAVE.\nTrova la CHIAVE.
+1261	COLPISCI LA LEVA.\nIl ponte sparisce in fretta!
+1262	Non si vede nulla. Accendi le candele e non fermarti sui pavimenti crepati.
+1263	Le candele accese hanno mostrato la via!
+1264	È BUIO...\nTocca le candele\nper accenderle.
+1265	La porta si apre solo con\nle 3 CANDELE GRANDI accese.
+1266	Il soffitto è pieno di ragni. Guarda in alto e non smettere di camminare.
+1267	In fondo al covo, la Regina custodisce il frammento tra le uova.
+1268	La Regina Ragno è caduta! Frammento recuperato!
+1269	Un'onda gigante di lava ti insegue! Il terreno crolla davanti a lei: corri, salta, usa la teleferica.
+1270	Sei sfuggito all'onda di lava!
+1271	Entra nelle correnti di vento per salire. Tieni premuto SALTA in aria per planare.
+1272	Il vento ti ha portato dall'altra parte!
+1273	VENTO! Entra nella corrente\ne tieni SALTA\nper planare.
+1274	In groppa al principe alleato, nella notte, fino al re del regno nemico.
+1275	Il re è caduto dal cielo notturno!
+1276	PRENDI solleva la chiave dorata. Portala alla porta chiusa. Ci sono 3 regali nascosti.
+1277	La chiave ha aperto la porta!
+1278	PRENDI solleva la chiave.\nPortala alla PORTA.\n↑ sale la scala.
+1279	Con la chiave niente\ndoppio salto:\nusa la MOLLA.
+1280	Colpisci la leva per scambiare i blocchi: solo il colore attivo è solido.
+1281	Blocchi a posto, porta aperta!
+1282	Accovacciato + SALTA:\nverticale\n(salto più alto).
+1283	Rocce d'oro bloccano il passaggio. Martello: in aria, tieni ▼ e premi ATTACCA.
+1284	Rocce rotte, porta aperta!
+1285	MARTELLO: in aria,\n▼ + ATTACCA\nrompe le rocce.
+1286	Abbatti l'albero per fare un ponte. Una pecora su una piastra apre il cancello.
+1287	Il bosco ha aperto la strada!
+1288	ASCIA: ATTACCA\nl'albero per abbatterlo\ne farne un ponte.
+1289	Porta la PECORA\nfino alla piastra.
+1290	La chiave è in cima alla torre. Piccone: tocca la parete in aria e sali.
+1291	Dalla cima della torre fino alla porta!
+1292	PICCONE: salta sulla\nparete e il teschio\nsale da solo.
+1293	Corri e spara! Tieni ATTACCA per sparare ossa. I nemici non smettono di arrivare.
+1294	Hai attraversato la prateria sparando!
+1295	Corri e spara nella miniera! Tieni ATTACCA: torce, ragni e pipistrelli arrivano a ondate.
+1296	La miniera è stata ripulita a colpi!
+1297	Una caverna piena di ali. In fondo, qualcuno con la corona ti aspetta.
+1298	La lotta dei Principi è finita!
+1299	In groppa al principe alleato: ondate di nemici e, alla fine, il Diavoletto Gigante in persona!
+1300	Il Diavoletto Gigante è caduto dal cielo!
+1301	Proteggi l'urna! I fantasmi arrivano dai due lati. Se toccano l'urna 3 volte, si ricomincia.
+1302	L'urna è salva!
+1303	Un albero enorme, cavo all'interno. Porta la chiave alla porta lassù in cima. I 3 regali valgono oro.
+1304	L'albero custodiva un tesoro!
+1305	Area bonus!\nI regali valgono oro.
+1306	Area bonus!\nLa chiave è là in fondo.
+1307	Area bonus!\nSali fino alla chiave.
+1308	Un recinto vuoto in mezzo all'erba. Qualcuno ha lasciato dei regali per le pecore che non sono mai tornate.
+1309	Il recinto custodiva oro!
+1310	Una capanna di lucertola mezza sommersa nella palude. Dentro, ancora asciutto, un baule.
+1311	La capanna custodiva oro!
+1312	Bozzoli appesi fino al soffitto. Non tutti custodiscono ragni: alcuni custodiscono tesori.
+1313	I bozzoli custodivano oro!
+1314	Un forziere scavato nel vetro nero del vulcano. Il Minotauro ci teneva ciò che non voleva vedere.
+1315	Il forziere custodiva oro!
+1316	Un cerchio di funghi che gli gnomi giurano sia incantato. Salta su quelli grandi.
+1317	Il cerchio custodiva oro!
+1318	Una sacca d'oro che nessun goblin ha trovato. Non ancora.
+1319	La sacca era tua!
+1320	Un nido enorme in mezzo alla brace. Chi l'ha lasciato lì è volato lontano.
+1321	Il nido custodiva oro!
+1322	Una torre dimenticata del regno delle ali, piena di piume e di monete.

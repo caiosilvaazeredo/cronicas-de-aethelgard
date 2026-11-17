@@ -1,0 +1,350 @@
+1543	Przynieś złoty KLUCZ
+1544	NADCHODZI PRZYPŁYW!
+1545	ŚLUZY OTWARTE: PRZYPŁYW!
+1546	ŚLUZY ZAMKNIĘTE: ODPŁYW
+1548	SZAMAN HEX
+1549	Pasek {0}/{1} · {2}
+1550	Dziewięć pieczęci, dziewięć światów. Przeciągnę cię przez każdy z nich, Ossianie. I w każdym będziesz jednym z MOICH.
+1551	{0}. {1} wrócił, żeby ci pomóc? Jakie to wzruszające.
+1552	Pieczęcie wróciły. Świat jest wolny.
+1553	KRÓL REKIN HARPUNNIK
+1554	Pan Przypływu
+1555	ODPŁYW: ATAKUJ TERAZ!
+1556	NADCHODZI PRZYPŁYW! W GÓRĘ!
+1557	OLBRZYMI CHOCHLIK
+1558	Pan Niebios
+1559	KRÓL PSZCZÓŁ
+1560	Władca Ula
+1561	KRÓL NIETOPERZY
+1562	Pan Wiecznej Nocy
+1563	CZYSTE NIEBO!
+1564	TARCZA!
+1565	KRZYK GOTOWY!
+1566	↑ ↓ ← →  lot  ·  przytrzymaj ATAK (STRZAŁ), by strzelać  ·  WEŹ / GARDA (KRZYK): krzyk dźwiękowy
+1567	↑ ↓ ← →  lot  ·  przytrzymaj ATAK (lub STRZAŁ), by strzelać
+1568	SKOK
+1569	ATAK
+1570	STRZAŁ
+1571	KRZYK
+1572	Uparta Kość
+1573	Gdy jesteś przemieniony, cios, który by cię zabił, tylko cofa przemianę: wracasz do postaci czaszki i stoisz dalej.
+1574	Bee. (Skóra opada, kość zostaje.)
+1575	Miecz Odbijający
+1576	Cios mieczem odbija KAŻDY pocisk, który go dotknie: kości, harpuny, żołędzie, ogień... i wraca on do tego, kto strzelał.
+1577	Bee. (Bij w to, co lata.)
+1578	Dodatkowa Świeca
+1579	Jedno życie więcej na każdym poziomie, zanim zacznie się od nowa.
+1580	Bee. (Nie daj jej zgasnąć.)
+1581	Refleks Kości
+1582	Okno KONTRY (stuknięcie w tył w chwili ciosu) staje się znacznie większe.
+1583	Bee. (Do tyłu, szybko.)
+1584	Płaszcz z Chmury
+1585	Po odrodzeniu jesteś nietykalny dwa razy dłużej.
+1586	Bee. (Zrobiony z jego chmury. Nie mów nikomu.)
+1587	Magnes na Kości
+1588	Przedmiot ze skrzynki rezerwy spada prosto i dwa razy szybciej, wprost na ciebie.
+1589	Bee. (Co twoje, wraca.)
+1590	Złoty Ząb
+1591	Pokonani wrogowie dają dwa razy więcej złota.
+1592	Bee. (Dobry interes. Dla mnie.)
+1593	Rekin Młot
+1594	Rekin Koralowy
+1595	Rekin Pancerny
+1596	Jaszczur Piaskowy
+1597	Jaszczur Przypływu
+1598	Goblin Pirat
+1599	Kapitan Goblin
+1600	Goblin Bombardier
+1601	Gnoll Rozbitek
+1602	Skaczący Pająk
+1603	Pająk Tkacz
+1604	Czarna Wdowa
+1605	Nietoperz Wampir
+1606	Minotaur z Lawy
+1607	Minotaur z Obsydianu
+1608	Jaszczur Magmowy
+1609	Gnom w Czerwonej Czapce
+1610	Gnom Mchu
+1611	Stary Gnom
+1612	Goblin Błękitnego Ognia
+1613	Goblin Górnik
+1614	Wódz Goblinów
+1615	Jadowity Jaszczur
+1616	Jaszczur Krokodyl
+1617	Pszczoła Żaru
+1618	Pszczoła Burzy
+1619	Gnoll Łowca
+1620	Gnoll Czatownik
+1621	Gnoll Osiłek
+1624	WCZYTYWANIE 0%
+1625	WCZYTYWANIE {0}%
+1626	WYBIERZ STEROWANIE
+1627	Nie widać kontrolera? Podłącz go i naciśnij dowolny przycisk.  ·  Imię: ◀ ▶ lub ✎ (klawisze N / M)
+1628	◀  WSTECZ
+1629	POTWIERDŹ  ▶
+1630	NOWE
+1631	STANDARD
+1632	Dotyk
+1633	Gesty/Mysz
+1634	IMIĘ GRACZA {0}
+1635	Pomysł, reżyseria i testy
+1636	zespół Skullshift
+1637	Kod, teksty i ścieżka dźwiękowa
+1638	stworzone z Claude Code (Anthropic)
+1639	Grafika
+1640	Tiny Swords, autor: Pixel Frog\nFree Pack i Enemy Pack
+1641	Czcionki
+1642	Anak Manja, autor: Khurasan Studio\nMatcha Style
+1643	Silnik
+1645	Instrumenty
+1646	flet, gitara i harfa z soundfontu FluidR3_GM (Frank Wen)\nprzekonwertowane przez midi-js-soundfonts (Benjamin Gleitzman)\ngrane za pomocą biblioteki smplr
+1647	Inspiracje
+1649	Obsada
+1650	Ossian, czaszka · Szaman Hex\nKról Rekin Harpunnik · Król Gnolli · Król Jaszczurów · Pajęcza Królowa\nSzkarłatny Minotaur · Król Gnomów · Król Goblinów z Pochodnią\nOlbrzymi Chochlik · Król Skrzydeł · Książęta\ni owca z czarnym uchem
+1651	Pieczęcie wróciły. Świat jest wolny.\nA Ossian został na straży.
+1652	Ossian wrócił do domu.\nA świat należy teraz do Hexa.
+1653	Opowieść wciąż na ciebie czeka.
+1654	DZIĘKUJEMY ZA GRĘ!
+1655	dowolny klawisz lub dotyk, by pominąć
+1656	{0}   ·   Prezenty: {1}/3
+1657	URNA PĘKŁA
+1658	VERSUS · {0}
+1659	ROZBITE!
+1660	{0} (z daleka)
+1661	· WSPOMNIENIE ·
+1662	POMOCNIK
+1663	POMOCNIK GRACZA {0}
+1664	WICHURA!
+1665	wiatr pcha w prawo ➜
+1666	⬅ wiatr pcha w lewo
+1667	DESZCZ KOŚCI!
+1668	patrz na cienie na ziemi
+1669	DESZCZ PRZEDMIOTÓW!
+1670	biegnij, by wziąć je pierwszy
+1671	NISKA GRAWITACJA!
+1672	niebotyczne skoki
+1673	POMOCNICY!
+1674	weź fioletową kulę: stworzenie walczy u twojego boku
+1675	ODBITE!
+1676	UWIĘZIONY W PAJĘCZYNIE!
+1677	UWIĘZIONY W SIECI!
+1678	UPARTA KOŚĆ!
+1679	PRZYKLEJONY!
+1680	ZOSTAŁEŚ KARMĄ DLA PAJĄKA
+1681	CHAPS!
+1682	SCHOWANE!
+1683	{0}  weź\n{1}{2}
+1684	Przytrzymaj SKOK w powietrzu, by latać
+1685	Trzyma się ścian i wspina
+1686	Płyń! ▼ nurkuje, SKOK wychodzi z wody
+1687	POZIOM ZACZYNA SIĘ OD NOWA
+1688	ROLKA FILMU!
+1689	Na mapie pojawił się sekretny poziom...
+1690	Czyste niebo!
+1691	OBSZAR OCZYSZCZONY!
+1692	Boss pokonany!
+1693	UWIĘZIONY!
+1694	Poziom {0}
+1695	{0} · Obszar bonusowy
+1696	{0} WALCZY U TWOJEGO BOKU!
+1697	jego pieczęć została złamana: teraz jest wolny
+1698	{0} UKOŃCZONE!
+1699	{0}   ·   Czas: {1}s   ·   Zgony: {2}
+1700	Fragment korony odzyskany!
+1701	{0} WYGRYWA!
+1702	Dotarł do końca po przeciwnej stronie
+1703	JAK GRAĆ
+1704	GRAJ  ▶
+1705	Ruch
+1706	Skok
+1707	Kucnięcie
+1708	Garda
+1709	Atak
+1710	Weź przedmiot
+1712	W ↑ Spacja
+1713	Weź
+1714	Także: strzałki, Spacja,\nJ (atak), K (garda), L (weź)
+1715	Kucnięcie (dół)
+1716	LB / RB to także garda
+1717	Przeciągnij: chód (daleko: sprint)
+1718	Przesuń w górę: skok
+1719	Przeciągnij w dół: kucnięcie
+1720	Szybkie stuknięcie/klik: atak
+1721	Przytrzymaj w miejscu: weź
+1722	2 palce lub prawy przycisk: garda
+1723	Działa palcem na ekranie albo samą myszą (środkowy przycisk też bierze).
+1724	Telefon poziomo lub pionowo. Można używać kilku palców naraz.
+1725	Jeden cios zabija.\nCiebie też!
+1726	GARDA: przytrzymaj przycisk.\nStuknij w TYŁ w chwili\nciosu: KONTRA!
+1727	Kucając: unikasz strzałów\ni bijesz nisko.
+1728	Naciśnij skok w powietrzu:\npodwójny skok.
+1729	Przedmiot innej postaci\nna ziemi: WEŹ przemienia.
+1730	5 plansz: dotrzyj do\nkońca po przeciwnej stronie.
+1731	Powaliłeś? Twoja kolej.\nDotrzyj do swojego końca!
+1732	◀ DZIENNIK
+1733	OSIĄGNIĘCIA ▶
+1734	OSIĄGNIĘCIA
+1735	◀  MAPA
+1736	DZIENNIK OSSIANA
+1737	WSPOMNIENIA
+1738	ŚWIATY
+1739	bonus ✓
+1740	bonus —
+1741	{0}  ·  {1}/{2} poziomów  ·  {3}/{4} prezentów  ·  {5}  ·  {6}
+1742	ZŁOTO: {0}   ·   UMIEJĘTNOŚCI: {1}\nULEPSZENIA: {2}
+1743	dotknij wspomnienia, by zobaczyć je ponownie
+1744	zdobyto {0}/{1}
+1745	WCZYTYWANIE
+1746	MOCE POJEDYNKU
+1747	WALCZ  ▶
+1748	◀ WSTECZ
+1749	P1: W/S wybiera, E zaznacza  ·  P2: ↑/↓ wybiera, . zaznacza  ·  T: tryb testowy  ·  Enter: walka  ·  dotyk zaznacza
+1750	{0}: wciąż zablokowane. Odblokuj w trybie fabularnym (lub włącz TRYB TESTOWY).
+1751	Najwyżej {0} mocy na gracza (w TRYBIE TESTOWYM bez limitu).
+1752	TRYB TESTOWY: WŁĄCZONY
+1753	TRYB TESTOWY: WYŁĄCZONY
+1754	WEJDŹ  ▶
+1755	◀ ŚWIAT
+1756	WEJDŹ
+1757	Przeciągnij mapę na boki · stuknij 2× w poziom, by do niego pobiec
+1758	W BUDOWIE
+1759	{0} · BONUS
+1760	NOWA UMIEJĘTNOŚĆ!
+1761	ROZUMIEM
+1762	POZIOM {0}/{1} · {2}
+1763	{0}   ◀ ▶ wybierz · Enter / A / dotyk: wejdź · Esc: świat
+1764	WSPOMNIENIE {0}/{1} · {2}
+1765	DALEJ ▶
+1766	FABUŁA  ·  1 gracz
+1767	VERSUS  ·  2 graczy
+1768	SWOBODNY  ·  testy
+1769	USTAWIENIA
+1770	GRAJ
+1771	⚙ OPCJE
+1772	TWÓRCY
+1773	Enter · Spacja · przycisk A · dotyk
+1774	Na następnym ekranie każdy gracz wybiera klawiaturę, kontroler lub dotyk.
+1775	P1 = niebieski  ·  P2 = czerwony. Obaj zaczynają jako szkielet.
+1776	GARDA pod przyciskiem (Q, K, B). Stuknij w TYŁ w chwili ciosu: KONTRA! Nad przedmiotem innej postaci naciśnij WEŹ, by się przemienić.
+1777	POZIOM {0} · {1}
+1778	GRA
+1779	Szybkość tekstu
+1780	Jak szybko pojawiają się dialogi fabuły.
+1781	WOLNO
+1782	NORMALNIE
+1783	SZYBKO
+1784	NATYCHMIAST
+1785	Komentarze czaszki
+1786	Sarkastyczny dymek przy pierwszej przemianie w każdą formę.
+1787	Drgania ekranu
+1788	Siła drgań przy uderzeniach i wybuchach.
+1789	EKRAN
+1790	Pełny ekran
+1791	Włącza lub wyłącza pełny ekran.
+1792	Jasność
+1793	Rozjaśnia lub przyciemnia obraz gry.
+1794	DŹWIĘK
+1795	Głośność ogólna
+1796	Głośność wszystkich dźwięków.
+1797	Efekty dźwiękowe
+1798	Skoki, ciosy, drzwi, wybuchy (dźwięki 8-bitowe).
+1799	Muzyka
+1800	Ścieżka dźwiękowa: motyw dla każdego obszaru, bossów i wspomnień.
+1801	STEROWANIE
+1802	Bieg podwójnym stuknięciem
+1803	Stuknij 2× w kierunku i przytrzymaj, by biec.
+1804	Przyciski dotykowe: rozmiar
+1805	Rozmiar przycisków na ekranie telefonu.
+1806	MAŁE
+1807	ŚREDNIE
+1808	DUŻE
+1809	Przyciski dotykowe: przezroczystość
+1810	Jak bardzo widoczne są przyciski dotykowe.
+1811	DOSTĘPNOŚĆ
+1812	Kolory dla daltonistów
+1813	Gracz 2 na pomarańczowo zamiast na czerwono.
+1814	Błyski na ekranie
+1815	Wyłącz, by uniknąć błysków (pioruny, wybuchy).
+1816	PRZYWRÓĆ DOMYŚLNE
+1817	↑ ↓ opcja  ·  ← → zmień  ·  Q / E (LB / RB) karta  ·  Esc / B wstecz
+1818	WYŁĄCZONE
+1819	WŁĄCZONE
+1820	EMPORIUM CZARNEGO UCHA
+1821	◀ MAPA
+1822	KUP
+1823	← → wybierz  ·  Enter / A kup  ·  Esc / B wstecz
+1824	Bee. (Przyjmuję złoto. Pogawędek nie.)
+1825	KUPIONE
+1826	Bee. (To już jest twoje.)
+1827	Bee. (Brakuje {0} złota.)
+1828	ŁATWY
+1829	poziom zaczyna się od nowa po 9 zgonach
+1830	poziom zaczyna się od nowa po 5 zgonach
+1831	TRUDNY
+1832	poziom zaczyna się od nowa przy 3. zgonie
+1833	WYBIERZ ZAPIS
+1834	◀ ▶ wybierz  ·  Enter / A: graj  ·  Delete / X: usuń  ·  Esc / B: wstecz
+1835	ZAPIS {0}
+1836	PUSTY
+1837	Nowa gra — wybierz poziom trudności:
+1838	FABUŁA UKOŃCZONA
+1839	{0} POZIOMÓW · {1}/{2} FRAGMENTÓW
+1840	ostatnia gra: {0}
+1841	PRZEJRZYJ  ▶
+1842	KONTYNUUJ  ▶
+1843	NA PEWNO USUNĄĆ?
+1844	USUŃ
+1845	EPILOG
+1846	ROZDZIAŁ {0}
+1847	DALEJ  ▶
+1848	POMIŃ
+1849	ZMIERZ SIĘ Z SZAMANEM
+1850	WRÓĆ DO DOMU Z JEGO POMOCĄ
+1851	Jeśli wygrasz, świat będzie wolny... a ty znów staniesz się kością.
+1852	Wracasz do domu cały. Świat zostaje przy Szamanie.
+1853	WYBÓR
+1854	MENU
+1855	Wybierz „Ekran dotykowy"\nna ekranie sterowania,\nby grać na telefonie
+1856	PAJĘCZY ZMYSŁ
+1857	KONTYNUUJ
+1858	ZACZNIJ POZIOM OD NOWA
+1859	WYJDŹ DO MAPY
+1860	WYJDŹ DO MENU
+1861	PAUZA
+1862	!  NIEBEZPIECZEŃSTWO  !
+1863	Wybierz rozważnie: to zmienia poziomy z lataniem.
+1864	ZAGRAJ PONOWNIE
+1865	◀ MENU
+1866	EMPORIUM · {0} złota
+1867	DZIENNIK
+1868	EMPORIUM · {0}
+1869	Dotknij obszaru, by go wybrać · dotknij ponownie, by wejść
+1870	EMPORIUM
+1871	ŚWIAT NALEŻY DO SZAMANA
+1872	ŚWIAT JEST WOLNY
+1873	{0} · FRAGMENTY KORONY {1}/{2}
+1874	ukończono {0}/{1} poziomów (cel: {2} poziomów)
+1875	Obszar wciąż spowity mgłą. Ukończ Wyspy Przypływu, by do niego dotrzeć.
+1876	Królestwo, które pojawia się dopiero po pakcie z Książętami (w Jaskini Pajęczyn).
+1877	Sanktuarium Szamana. Otwiera się dopiero, gdy zebrane są wszystkie fragmenty korony.
+1878	Obszar wciąż spowity mgłą. Ukończ Prerię Kości, by otworzyć drogę.
+1879	{0}  ·  Poziomy tego obszaru są jeszcze w budowie.
+1880	FRAGMENT KORONY {0}/{1}!
+1881	duże świece
+1882	duża świeca
+1883	DUŻA POCHODNIA
+1884	DUŻA ŚWIECA
+1885	Drzwi otwarte!
+1886	\n▼+{0} schowaj
+1887	król ✓
+1888	król —
+1889	brak (zajrzyj do Emporium)
+1891	OBSZAR BONUSOWY
+1892	POZIOM {0}
+1893	GRACZ 1
+1894	GRACZ 2
+1895	 · SWOBODNY
+1896	 · ZAPIS {0}
+1897	TRYB SWOBODNY
+1898	{0}/{1} poziomów
+1899	{0} złota

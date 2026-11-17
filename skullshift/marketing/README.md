@@ -9,3 +9,11 @@
   - `cards.html` + `cards.cjs`/`chips.cjs`: cartelas de título e avatar (PT/EN) na fonte do jogo.
   - `audio.cjs` grava a música do próprio jogo em tempo real.
   - `build.py pt|en` monta o trailer com ffmpeg. `caps.html` + `caps.cjs` geram as cápsulas.
+
+## Trailer v2 (sem spoilers)
+- `trailer/skullshift_trailer_v2_pt_*` e `_v2_en_*`: ~51 s, sem a tela inicial e sem a luta final; o Xamã aparece como
+  "um amigo na nuvem" (cena do resgate). Cortes mais curtos. A versão em inglês foi gravada com o jogo em inglês (`?lang=en`).
+- Os trailers da primeira versão continuam na pasta (mostram a luta final: não usar na loja).
+- `tools/build2.py pt|en <início do contra>` monta a v2; `clips.cjs rescue` grava a cena do resgate.
+- As gravações usam uma cópia congelada do projeto servida em outra porta (`BASE=http://localhost:5174`), porque o
+  servidor de desenvolvimento recarrega a página quando arquivos mudam.

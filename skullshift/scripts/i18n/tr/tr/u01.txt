@@ -1,0 +1,205 @@
+1118	Anahtar bölümlerindeki bütün hediyeleri bul.
+1119	Yolun Dışında
+1120	Bir bonus alanı geç.
+1121	Kâşif
+1122	Bütün bonus alanları geç.
+1123	Ağır Cep
+1124	Aynı anda 100 altın biriktir.
+1125	Müşteri
+1126	Dükkândan bir geliştirme satın al.
+1127	Gözde Müşteri
+1128	Bütün geliştirmeleri satın al.
+1129	Mesleğin Kemikleri
+1130	50 düşman yen.
+1131	Adanın Efsanesi
+1132	250 düşman yen.
+1133	KARŞI!
+1134	Bir karşı vuruş yap.
+1135	Geri Adım Ustası
+1136	25 karşı vuruş yap.
+1137	Bin Biçim
+1138	30 kez dönüş.
+1139	Sinemasever
+1140	Kayıp Çizgi Film'i bitir.
+1141	BAŞARIM · {0}
+1142	Kurukafanın uyandığı kumsal. Zıpkıncı Köpekbalığı ilk parçayı korur.
+1143	Zıpkıncı Köpekbalığı Kral
+1144	Ot ve eski kemik tarlaları. Gnoll'lar sürü hâlinde avlanır.
+1145	Gnoll Kral
+1146	Kertenkele Lagünü
+1147	Yeşil sulu ılık bir bataklık. Tam ortasında Kertenkele Kral hiç uyumaz.
+1148	Kertenkele Kral
+1149	Ağlar Mağarası
+1150	Ağla kaplı tüneller. Dipte Örümcek Kraliçe ve Prenslerin yuvası.
+1151	Örümcek Kraliçe
+1152	Kızıl Minotor'un lavı dövdüğü ateş dağı.
+1153	Kızıl Minotor
+1154	Cüceler Korusu
+1155	Yaşlı ağaçlar, mantarlar ve yalnızca ağırlıkla açılan kapılar. Cüce Kral ziyaretçi sevmez.
+1156	Cüce Kral
+1157	Goblin Madenleri
+1158	Meşalelerle aydınlanan altın tüneller. Goblin Kral her külçeyi sayar.
+1159	Meşaleli Goblin Kral
+1160	Kor Gökyüzü
+1161	Bulut adaları ve sert rüzgârlar. Dev İblis gökyüzünü yalnız kendine istiyor.
+1162	Dev İblis
+1163	Kanatlar Krallığı
+1164	Müttefikinin düşmanının krallığı. Ancak Prenslerle anlaşmadan sonra açılır.
+1165	Kanatların Kralı
+1166	Şamanın Tapınağı
+1167	Hex'in adası, her şeyin ortasında. Gelgit Kapısı tacın tamamını bekliyor.
+1168	Kraliyet Kovanı
+1169	Arıların Kralı
+1170	Gece Krallığı
+1171	Yarasaların Kralı
+1172	KIZIL MİNOTOR
+1173	Demirhanenin Efendisi
+1174	ÖRÜMCEK KRALİÇE
+1175	İnin Anası
+1176	İskelet
+1177	Köylü
+1178	Kertenkele
+1179	Gnoll
+1180	Zıpkıncı Köpekbalığı
+1181	Mızraklı Goblin
+1182	Örümcek
+1183	Dev Yarasa
+1184	Meşaleli Goblin
+1185	Yaban Arısı
+1186	İblis
+1187	Minotor
+1188	Sapanlı Cüce
+1189	Klavye
+1190	WASD ya da ok tuşları
+1191	Klavye · Hazır Ayar 1
+1192	Sol taraf: WASD + F
+1193	Klavye · Hazır Ayar 2
+1194	Sağ taraf: ok tuşları + Enter
+1195	Oyun Kolu 1
+1196	Xbox, PlayStation ya da benzeri
+1197	Oyun Kolu 2
+1198	Dokunmatik ekran
+1199	Sanal düğmeler
+1200	Hareketler ya da fare
+1201	Sürükle, kaydır ve dokun
+1202	AL
+1203	BASILI TUT
+1204	SAV
+1205	2 PARMAK
+1206	DALGA BÜYÜYOR!
+1207	HALAT KAYDIRAĞI!
+1208	SÜRÜ İZDİHAMI! YUKARI ÇIK!
+1209	KRALİYET ZIPKINI
+1210	Adını ilk unutan gelgit oldu, Ossian. Bakalım çayır hatırlıyor mu.
+1211	SÜRÜNÜN ULUMASI
+1212	Kemikler ve ot. Bedenini buradan aldım, biliyor muydun? Hayır. Kimse hatırlamaz.
+1213	BATAKLIK HAMLESİ
+1214	Kertenkele gözlerini hiç kapamadı, çünkü beni gözetliyordu. Onun gözlerini benim için sen kapadın.
+1215	KRALİÇENİN AĞI
+1216	Taşa kazınıp üstü çizilen adlar... hepsi Ossian'dı. Sen yalnızca sonuncususun.
+1217	KIZIL ÇEKİÇ
+1218	O benim zincirimi dövüyordu. Şimdi senin sonunu dövüyor. Örsün cilvesi.
+1219	DEV PALAMUT
+1220	Koru, zindanımın çevresine dikildi. Her ağaç bir nöbetçi. Hiçbiri kalmadı.
+1221	KRALIN MEŞALESİ
+1222	Altın, altın, altın. Onlar külçe sayarken ben günleri saydım. Bir dünya daha.
+1223	DEV KOR
+1224	Gökyüzü ben nefes aldığım için yanıyor. Yukarıda yalnızca son krallık kaldı.
+1225	KRALİYET PİKESİ
+1226	Hayır... dokuzu birden mi? Bu kayıkta yoktu. Bu kayıkta YOKTU!
+1227	Şamanın Tahtı · {0}
+1228	GNOLL KRAL
+1229	Çayırın Efendisi
+1230	{0}: gir
+1231	KİLİTLİ · anahtarı bul
+1232	KAPALI · {0} {1} eksik
+1233	HİHİHİ! YANLIŞ KAPI
+1234	Kapı açıldı!
+1235	ANAHTAR!
+1236	KÖPRÜ! {0}sn
+1237	ÇIKIŞ AÇILDI!
+1238	CÜCE KRAL
+1239	Korunun Bekçisi
+1240	MEŞALELİ GOBLİN KRAL
+1241	Madenlerin Efendisi
+1242	KERTENKELE KRAL
+1243	Lagünün Efendisi
+1244	Darbe anında GERİ:\nKARŞI!
+1245	Yukarı bak: örümcekler tavandaki ağlarda bekliyor.
+1246	Yalnızca Şaman'ın büyülediği, parlayan bulutlar ağırlığını taşır.
+1247	İblis'in evi. Her alan ancak içindeki bütün düşmanlar düşünce açılır.
+1248	Kızıl Minotor düştü! Parça geri alındı!
+1249	ÇİFT ZIPLAMA!\nzıpla ve havada\nbir daha zıpla
+1250	KOŞ!\nyöne 2× bas ve basılı tut\n+ çift zıplama
+1251	Gelgit Kapısı karşında!
+1252	Gelgit Kapısı'na ancak koşuyu, çift zıplamayı ve cesareti birleştiren ulaşır.
+1253	Ev aldatır. Ayı izle, ama ona da güvenme.
+1254	Kapılar labirentinin çıkışını buldun!
+1255	EV ALDATIR.\nHep AY'ı izle.\n(AL: gir)
+1256	Her ay\ndoğruyu söylemez.
+1257	ÇIKIŞ!
+1258	Çıkış kilitli. Rafların arasında bir yerde bir anahtar bekliyor.
+1259	Anahtar kilitte döndü!
+1260	ÇIKIŞ KİLİTLİ.\nANAHTAR'ı bul.
+1261	KOLA VUR.\nKöprü çabuk kaybolur!
+1262	Hiçbir şey görünmüyor. Mumları yak ve çatlak zeminlerde durma.
+1263	Yanan mumlar yolu gösterdi!
+1264	KARANLIK...\nYakmak için\nmumlara dokun.
+1265	Kapı ancak 3 BÜYÜK MUM\nyanınca açılır.
+1266	Tavan örümcek dolu. Yukarı bak ve yürümeyi bırakma.
+1267	İnin dibinde Kraliçe, parçayı yumurtaların arasında koruyor.
+1268	Örümcek Kraliçe düştü! Parça geri alındı!
+1269	Arkandan dev bir lav dalgası geliyor! Zemin onun önünde çöküyor: koş, zıpla, halat kaydırağını kullan.
+1270	Lav dalgasından kurtuldun!
+1271	Yükselmek için rüzgâr akıntılarına gir. Süzülmek için havada ZIPLA'yı basılı tut.
+1272	Rüzgâr seni karşıya taşıdı!
+1273	RÜZGÂR! Akıntıya gir\nve süzülmek için\nZIPLA'yı basılı tut.
+1274	Müttefik prensin sırtında, gece boyunca, düşman krallığın kralına.
+1275	Kral gece göğünden düştü!
+1276	AL, altın anahtarı kaldırır. Onu kilitli kapıya götür. 3 gizli hediye var.
+1277	Anahtar kapıyı açtı!
+1278	AL anahtarı kaldırır.\nOnu KAPI'ya götür.\n↑ merdiveni çıkar.
+1279	Anahtarla çift zıplama\nolmaz:\nYAY'ı kullan.
+1280	Blokları değiştirmek için kola vur: yalnızca etkin renk katıdır.
+1281	Bloklar yerinde, kapı açık!
+1282	Çömel + ZIPLA:\namut\n(daha yüksek sıçrayış).
+1283	Altın kayalar geçidi kapatıyor. Çekiç: havada ▼ tuşunu basılı tut ve SALDIR'a bas.
+1284	Kayalar kırıldı, kapı açık!
+1285	ÇEKİÇ: havada\n▼ + SALDIR\nkayaları kırar.
+1286	Köprü yapmak için ağacı devir. Plakadaki bir koyun kapıyı açar.
+1287	Koru yol verdi!
+1288	BALTA: ağaca SALDIR,\ndevrilir ve\nköprü olur.
+1289	KOYUN'u\nplakaya taşı.
+1290	Anahtar kulenin tepesinde. Kazma: havada duvara değ ve tırman.
+1291	Kulenin tepesinden kapıya!
+1292	KAZMA: duvara zıpla,\nkurukafa kendiliğinden\ntırmanır.
+1293	Koş ve ateş et! Kemik atmak için SALDIR'ı basılı tut. Düşmanların ardı arkası kesilmiyor.
+1294	Çayırı ateş ederek geçtin!
+1295	Madende koş ve ateş et! SALDIR'ı basılı tut: meşaleler, örümcekler ve yarasalar dalga dalga geliyor.
+1296	Maden ateşle temizlendi!
+1297	Kanatlarla dolu bir mağara. Dipte taçlı biri seni bekliyor.
+1298	Prenslerin kavgası bitti!
+1299	Müttefik prensin sırtında: düşman dalgaları ve sonunda bizzat Dev İblis!
+1300	Dev İblis gökten düştü!
+1301	Vazoyu koru! Hayaletler iki yandan geliyor. Vazoya 3 kez dokunurlarsa baştan başlarsın.
+1302	Vazo güvende!
+1303	İçi oyuk, kocaman bir ağaç. Anahtarı en tepedeki kapıya götür. 3 hediye altın eder.
+1304	Ağaç bir hazine saklıyordu!
+1305	Bonus alan!\nHediyeler altın eder.
+1306	Bonus alan!\nAnahtar en sonda.
+1307	Bonus alan!\nAnahtara tırman.
+1308	Otların ortasında boş bir ağıl. Biri, hiç dönmeyen koyunlar için hediyeler bırakmış.
+1309	Ağıl altın saklıyordu!
+1310	Bataklığa yarı batmış bir kertenkele kulübesi. İçeride, hâlâ kuru bir sandık.
+1311	Kulübe altın saklıyordu!
+1312	Tavana kadar asılı kozalar. Hepsi örümcek saklamaz: bazıları hazine saklar.
+1313	Kozalar altın saklıyordu!
+1314	Yanardağın kara camına oyulmuş bir kasa. Minotor görmek istemediğini burada saklardı.
+1315	Kasa altın saklıyordu!
+1316	Cücelerin büyülü olduğuna yemin ettiği bir mantar halkası. Büyüklerin üstüne zıpla.
+1317	Halka altın saklıyordu!
+1318	Hiçbir goblinin bulamadığı bir altın cebi. Henüz.
+1319	Cep senindi!
+1320	Korların ortasında kocaman bir yuva. Onu oraya bırakan uzaklara uçmuş.
+1321	Yuva altın saklıyordu!
+1322	Kanatlar krallığının unutulmuş bir kulesi; tüy ve sikke dolu.

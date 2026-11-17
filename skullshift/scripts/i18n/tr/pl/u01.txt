@@ -1,0 +1,205 @@
+1118	Znajdź wszystkie prezenty na poziomach z kluczem.
+1119	Poza Szlakiem
+1120	Ukończ obszar bonusowy.
+1121	Odkrywca
+1122	Ukończ wszystkie obszary bonusowe.
+1123	Ciężka Kieszeń
+1124	Zbierz 100 sztuk złota naraz.
+1125	Klient
+1126	Kup ulepszenie w Emporium.
+1127	Ulubiony Klient
+1128	Kup wszystkie ulepszenia.
+1129	Kości Rzemiosła
+1130	Pokonaj 50 wrogów.
+1131	Legenda Wyspy
+1132	Pokonaj 250 wrogów.
+1133	KONTRA!
+1134	Wykonaj kontrę.
+1135	Mistrz Odskoku
+1136	Wykonaj 25 kontr.
+1137	Tysiąc Postaci
+1138	Przemień się 30 razy.
+1139	Kinoman
+1140	Ukończ Zaginioną Kreskówkę.
+1141	OSIĄGNIĘCIE · {0}
+1142	Plaża, na której budzi się czaszka. Rekin Harpunnik strzeże pierwszego fragmentu.
+1143	Król Rekin Harpunnik
+1144	Pola trawy i starych kości. Gnolle polują stadem.
+1145	Król Gnolli
+1146	Laguna Jaszczurów
+1147	Ciepłe bagno o zielonej wodzie. Pośrodku Król Jaszczurów nigdy nie śpi.
+1148	Król Jaszczurów
+1149	Jaskinia Pajęczyn
+1150	Tunele pokryte pajęczyną. W głębi Pajęcza Królowa i gniazdo Książąt.
+1151	Pajęcza Królowa
+1152	Ognista góra, na której Szkarłatny Minotaur kuje lawę.
+1153	Szkarłatny Minotaur
+1154	Las Gnomów
+1155	Stare drzewa, grzyby i bramy, które otwiera tylko ciężar. Król Gnomów nie lubi gości.
+1156	Król Gnomów
+1157	Kopalnie Goblinów
+1158	Złote tunele oświetlone pochodniami. Król Goblinów liczy każdy samorodek.
+1159	Król Goblinów z Pochodnią
+1160	Niebo Żaru
+1161	Wyspy z chmur i silne wiatry. Olbrzymi Chochlik chce nieba tylko dla siebie.
+1162	Olbrzymi Chochlik
+1163	Królestwo Skrzydeł
+1164	Królestwo wroga twojego sojusznika. Otwiera się dopiero po pakcie z Książętami.
+1165	Król Skrzydeł
+1166	Sanktuarium Szamana
+1167	Wyspa Hexa, w samym środku wszystkiego. Brama Przypływu czeka na całą koronę.
+1168	Królewski Ul
+1169	Król Pszczół
+1170	Królestwo Nocy
+1171	Król Nietoperzy
+1172	SZKARŁATNY MINOTAUR
+1173	Pan Kuźni
+1174	PAJĘCZA KRÓLOWA
+1175	Matka Leża
+1176	Szkielet
+1177	Wieśniak
+1178	Jaszczur
+1179	Gnoll
+1180	Rekin Harpunnik
+1181	Goblin Włócznik
+1182	Pająk
+1183	Olbrzymi Nietoperz
+1184	Goblin z Pochodnią
+1185	Trzmiel
+1186	Chochlik
+1187	Minotaur
+1188	Gnom z Procą
+1189	Klawiatura
+1190	WASD lub strzałki
+1191	Klawiatura · Ustawienie 1
+1192	Lewa strona: WASD + F
+1193	Klawiatura · Ustawienie 2
+1194	Prawa strona: strzałki + Enter
+1195	Kontroler 1
+1196	Xbox, PlayStation lub podobny
+1197	Kontroler 2
+1198	Ekran dotykowy
+1199	Wirtualne przyciski
+1200	Gesty lub mysz
+1201	Przeciągnij, przesuń i stuknij
+1202	WEŹ
+1203	TRZYMAJ
+1204	GARDA
+1205	2 PALCE
+1206	FALA ROŚNIE!
+1207	TYROLKA!
+1208	PĘD STADA! W GÓRĘ!
+1209	KRÓLEWSKI HARPUN
+1210	Przypływ pierwszy zapomniał twoje imię, Ossianie. Zobaczmy, czy preria pamięta.
+1211	WYCIE STADA
+1212	Kości i trawa. To stąd wziąłem twoje ciało, wiedziałeś? Nie. Nikt nie pamięta.
+1213	BAGIENNY SKOK
+1214	Jaszczur nigdy nie zamykał oczu, bo mnie pilnował. Ty zamknąłeś mu je za mnie.
+1215	PAJĘCZYNA KRÓLOWEJ
+1216	Imiona wydrapane na kamieniu... wszystkie brzmiały Ossian. Ty jesteś tylko ostatni.
+1217	SZKARŁATNY MŁOT
+1218	On kuł mój łańcuch. Teraz kuje twój koniec. Cóż za ironia kowadła.
+1219	OLBRZYMI ŻOŁĄDŹ
+1220	Las zasadzono wokół mojego więzienia. Każde drzewo to strażnik. Nie został żaden.
+1221	POCHODNIA KRÓLA
+1222	Złoto, złoto, złoto. Oni liczyli samorodki, a ja liczyłem dni. Jeszcze jeden świat.
+1223	OLBRZYMI ŻAR
+1224	Niebo płonie, bo ja oddycham. Tam w górze brakuje już tylko ostatniego królestwa.
+1225	KRÓLEWSKI LOT KOSZĄCY
+1226	Nie... cała dziewiątka razem? Tego nie było na łodzi. Tego NIE było na łodzi!
+1227	Tron Szamana · {0}
+1228	KRÓL GNOLLI
+1229	Pan Prerii
+1230	{0}: wejdź
+1231	ZAMKNIĘTE · znajdź klucz
+1232	ZAMKNIĘTE · brakuje: {0} {1}
+1233	HIHIHI! ZŁE DRZWI
+1234	Drzwi się otworzyły!
+1235	KLUCZ!
+1236	MOST! {0}s
+1237	WYJŚCIE SIĘ OTWORZYŁO!
+1238	KRÓL GNOMÓW
+1239	Strażnik Lasu
+1240	KRÓL GOBLINÓW Z POCHODNIĄ
+1241	Pan Kopalni
+1242	KRÓL JASZCZURÓW
+1243	Pan Laguny
+1244	W TYŁ w chwili\nciosu: KONTRA!
+1245	Spójrz w górę: pająki czekają w pajęczynach na suficie.
+1246	Tylko chmury zaczarowane przez Szamana, te świecące, utrzymają twój ciężar.
+1247	Dom Chochlika. Każdy obszar otwiera się dopiero, gdy padną wszyscy jego wrogowie.
+1248	Szkarłatny Minotaur padł! Fragment odzyskany!
+1249	PODWÓJNY SKOK!\nskocz i w powietrzu\nskocz jeszcze raz
+1250	BIEGNIJ!\n2× w kierunku i przytrzymaj\n+ podwójny skok
+1251	Brama Przypływu jest przed tobą!
+1252	Do Bramy Przypływu dotrze tylko ten, kto połączy bieg, podwójny skok i odwagę.
+1253	Dom zwodzi. Podążaj za księżycem, ale jemu też nie ufaj.
+1254	Znalazłeś wyjście z labiryntu drzwi!
+1255	DOM ZWODZI.\nZawsze podążaj za KSIĘŻYCEM.\n(WEŹ: wejdź)
+1256	Nie każdy księżyc\nmówi prawdę.
+1257	WYJŚCIE!
+1258	Wyjście jest zamknięte. Gdzieś między regałami czeka klucz.
+1259	Klucz obrócił się w zamku!
+1260	WYJŚCIE JEST ZAMKNIĘTE.\nZnajdź KLUCZ.
+1261	UDERZ W DŹWIGNIĘ.\nMost szybko znika!
+1262	Nic nie widać. Zapal świece i nie zatrzymuj się na spękanych podłogach.
+1263	Zapalone świece pokazały drogę!
+1264	JEST CIEMNO...\nDotknij świec,\naby je zapalić.
+1265	Drzwi otwierają się tylko, gdy\npłoną 3 DUŻE ŚWIECE.
+1266	Sufit jest pełen pająków. Patrz w górę i nie przestawaj iść.
+1267	W głębi leża Królowa strzeże fragmentu wśród jaj.
+1268	Pajęcza Królowa padła! Fragment odzyskany!
+1269	Olbrzymia fala lawy goni cię z tyłu! Ziemia zapada się przed nią: biegnij, skacz, użyj tyrolki.
+1270	Uciekłeś przed falą lawy!
+1271	Wejdź w prądy wiatru, by się wznieść. Przytrzymaj SKOK w powietrzu, by szybować.
+1272	Wiatr przeniósł cię na drugą stronę!
+1273	WIATR! Wejdź w prąd\ni przytrzymaj SKOK,\nby szybować.
+1274	Na grzbiecie sprzymierzonego księcia, przez noc, do króla wrogiego królestwa.
+1275	Król spadł z nocnego nieba!
+1276	WEŹ podnosi złoty klucz. Zanieś go do zamkniętych drzwi. Są 3 ukryte prezenty.
+1277	Klucz otworzył drzwi!
+1278	WEŹ podnosi klucz.\nZanieś go do DRZWI.\n↑ wchodzi po drabinie.
+1279	Z kluczem nie ma\npodwójnego skoku:\nużyj SPRĘŻYNY.
+1280	Uderz w dźwignię, aby przełączyć bloki: tylko aktywny kolor jest twardy.
+1281	Bloki na miejscu, drzwi otwarte!
+1282	Kucnięcie + SKOK:\nstanie na rękach\n(wyższy skok).
+1283	Złote skały blokują przejście. Młot: w powietrzu przytrzymaj ▼ i naciśnij ATAK.
+1284	Skały rozbite, drzwi otwarte!
+1285	MŁOT: w powietrzu\n▼ + ATAK\nrozbija skały.
+1286	Powal drzewo, aby zrobić most. Owca na płycie otwiera bramę.
+1287	Las otworzył drogę!
+1288	TOPÓR: ATAK\nprzy drzewie powala je\ni powstaje most.
+1289	Zanieś OWCĘ\nna płytę.
+1290	Klucz jest na szczycie wieży. Kilof: dotknij ściany w powietrzu i wspinaj się.
+1291	Ze szczytu wieży aż do drzwi!
+1292	KILOF: skocz na\nścianę, a czaszka\nwespnie się sama.
+1293	Bieg i strzelanie! Przytrzymaj ATAK, by strzelać kośćmi. Wrogowie nie przestają nadchodzić.
+1294	Przeszedłeś prerię, strzelając!
+1295	Bieg i strzelanie w kopalni! Przytrzymaj ATAK: pochodnie, pająki i nietoperze nadciągają falami.
+1296	Kopalnia została oczyszczona ogniem!
+1297	Jaskinia pełna skrzydeł. W głębi czeka na ciebie ktoś w koronie.
+1298	Walka Książąt dobiegła końca!
+1299	Na grzbiecie sprzymierzonego księcia: fale wrogów, a na końcu sam Olbrzymi Chochlik!
+1300	Olbrzymi Chochlik spadł z nieba!
+1301	Chroń urnę! Upiory nadchodzą z obu stron. Jeśli dotkną urny 3 razy, zaczynasz od nowa.
+1302	Urna jest bezpieczna!
+1303	Ogromne drzewo, puste w środku. Zanieś klucz do drzwi na samej górze. 3 prezenty są warte złoto.
+1304	Drzewo skrywało skarb!
+1305	Obszar bonusowy!\nPrezenty są warte złoto.
+1306	Obszar bonusowy!\nKlucz jest na końcu.
+1307	Obszar bonusowy!\nWejdź po klucz.
+1308	Pusta zagroda pośród trawy. Ktoś zostawił prezenty dla owiec, które nigdy nie wróciły.
+1309	Zagroda skrywała złoto!
+1310	Chata jaszczura na wpół zatopiona w bagnie. W środku, wciąż sucha, skrzynia.
+1311	Chata skrywała złoto!
+1312	Kokony wiszące aż do sufitu. Nie wszystkie kryją pająki: niektóre kryją skarby.
+1313	Kokony skrywały złoto!
+1314	Skarbiec wykuty w czarnym szkle wulkanu. Minotaur trzymał tam to, czego nie chciał widzieć.
+1315	Skarbiec skrywał złoto!
+1316	Krąg grzybów, o którym gnomy przysięgają, że jest zaczarowany. Skacz na duże.
+1317	Krąg skrywał złoto!
+1318	Kieszeń złota, której nie znalazł żaden goblin. Jeszcze.
+1319	Kieszeń była twoja!
+1320	Ogromne gniazdo pośród żaru. Ten, kto je tam zostawił, odleciał daleko.
+1321	Gniazdo skrywało złoto!
+1322	Zapomniana wieża królestwa skrzydeł, pełna piór i monet.

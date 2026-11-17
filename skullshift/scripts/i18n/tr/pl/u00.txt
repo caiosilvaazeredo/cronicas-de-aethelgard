@@ -1,0 +1,215 @@
+227	Szaman Hex
+228	Wyspy Przypływu
+240	Wilgotna Jaskinia
+250	Gniazdo Pajęczyn
+258	Leże Królowej
+267	Wulkaniczna Kuźnia
+280	Ucieczka z Kuźni
+288	Sanktuarium Chmur
+299	Prądy Nieba
+307	Nocny Lot
+321	Schody Przypływu
+332	Dom Drzwi
+342	Nawiedzona Biblioteka
+350	Dom bez Światła
+358	Warsztat Klucza
+365	Preria Kości
+371	Przełączane Bloki
+379	Spękana Kopalnia
+385	Gniazdo Książąt
+393	Pojedynek na Niebie
+407	Las Drwala
+415	Kopalnia Złota
+421	Wieża Wspinacza
+427	Mauzoleum Szamana
+434	Plaża Krabów
+440	Przypływ
+448	Szczątki Wraku
+456	Statek Piracki: Pokład
+462	Podwodna Jaskinia
+470	Śluzy Latarni
+476	Statek Piracki: Maszty
+482	Rafa Koralowa
+488	Arena Króla Rekina
+496	Tron Szamana
+498	Droga Kości
+504	Pęd Stada
+510	Cmentarzysko Kości
+516	Farma Gnolli
+522	Wysoka Trawa
+528	Karawana Gnolli
+534	Wiatraki
+540	Leże Króla Gnolli
+546	Mosty z Pajęczyny
+552	Ciemna Jaskinia
+558	Sala Kokonów
+564	Strzelanina w Pajęczynie
+570	Komnata Jaj
+576	Bramy Kuźni
+582	Przypływ Lawy
+588	Ogniste Gejzery
+594	Strzelanina w Kuźni
+602	Most z Obsydianu
+608	Kowadło Kowala
+614	Serce Magmy
+620	Wejście do Lasu
+626	Skaczące Grzyby
+632	Korony Drzew
+638	Rzeka Kłód
+644	Strzelanina w Lesie
+650	Zdradliwy Mech
+656	Wioska Gnomów
+662	Drzewo Króla Gnomów
+668	Wejście do Kopalni
+674	Zawał
+680	Ciemny Chodnik
+686	Żyła Złota
+694	Dynamit
+700	Zalana Kopalnia
+706	Błękitny Ogień
+712	Skarbiec Goblinów
+718	Tron Króla Goblinów
+724	Brzeg Bagna
+730	Olbrzymie Lilie Wodne
+736	Wezbrane Bagno
+742	Trujące Mokradła
+748	Dom Rybaka
+754	Dno Laguny
+760	Strzelanina na Mokradłach
+766	Namorzyny
+772	Wioska Jaszczurów
+778	Tron Króla Jaszczurów
+784	Chmury Żaru
+790	Deszcz Meteorów
+796	Strzelanina na Niebie Żaru
+802	Ogniste Wiatry
+810	Zamek w Chmurach
+816	Rój Żaru
+822	Skarbiec Chmur
+828	Brama Skrzydeł
+834	Szlak Wiatru
+842	Zamek Skrzydeł
+850	Lot w Burzy
+856	Komnata Królewska
+862	Królewskie Prądy
+868	Lot o Zmierzchu
+874	Królewska Strzelanina
+880	Gwardia Królewska
+886	Zaginiona Kreskówka (1930)
+894	Zapomniana Zagroda
+900	Zatopiona Chata
+907	Obsydianowy Skarbiec
+911	Krąg Grzybów
+915	Kieszeń Złota
+919	Gniazdo w Chmurach
+923	Wieża Piór
+927	Dziuplaste Drzewo
+933	Niebieski dom
+936	Prawdziwe dłonie
+939	Owce
+942	Wioska przy Moście
+945	Jarmark Lampionów
+948	Deszcz
+951	Ktoś w fiolecie
+954	Lodowata woda
+957	Moje imię
+972	Pieczęcie
+980	Droga Rzeki
+988	Brama Przypływu
+1021	PORADA
+1022	CIEKAWOSTKA
+1023	PLOTKA
+1024	Stuknij w TYŁ dokładnie w chwili ciosu: KONTRA! Przełamuje gardę atakującego i odbija pociski.
+1025	Garda bez tarczy to półksiężyc: chroni tylko przód. Uważaj na to, co nadchodzi z tyłu.
+1026	Kucnij i naciśnij WEŹ nad przedmiotem, aby schować go do skrzynki rezerwy bez przemiany.
+1027	Skrzynka rezerwy (u góry ekranu) przechowuje jeden przedmiot. Naciśnij R, SELECT albo dotknij skrzynki, a spadnie z nieba.
+1028	Jesteś już przemieniony i bierzesz inny przedmiot? Stara forma trafia do skrzynki rezerwy, jeśli jest pusta.
+1029	Po odrodzeniu przedmiot z rezerwy sam spada obok ciebie. Stań pod nim!
+1030	Stuknij dwa razy w kierunku i przytrzymaj, aby biec. Do niektórych platform dotrzesz tylko sprintem.
+1031	Podwójny skok: naciśnij SKOK ponownie w powietrzu. Drugi skok jest nieco niższy.
+1032	Nietoperze i pszczoły latają: przytrzymaj SKOK w powietrzu. Pająki trzymają się ścian.
+1033	Rekiny pływają swobodnie. W wodzie ▼ nurkuje, a SKOK wyskakuje na zewnątrz.
+1034	Przedmiot rzucony na ziemię miga, zanim zniknie. Weź go szybko albo stracisz okazję.
+1035	Każdy poziom z kluczem ukrywa 3 prezenty. Rozejrzyj się, zanim otworzysz drzwi.
+1036	Przypływ wznosi się i opada. Skrzynie pływają: używaj ich jako platform podczas przypływu.
+1037	Bulgoczący gejzer ostrzega przed wybuchem. Poczekaj, aż ogień minie.
+1038	Elity są większe i noszą zbroję: jeden cios nie wystarczy.
+1039	Bossowie ostrzegają przed każdym atakiem. Poznaj schemat, zanim ruszysz.
+1040	W pauzie (ESC lub P) zmienisz głośność muzyki, drgania ekranu i kolory dla daltonistów.
+1041	W ciemności trzymaj się pochodni: ich światło pokazuje drogę i wrogów.
+1042	Liście lilii toną powoli. Nie zatrzymuj się na nich.
+1043	Mosty z pajęczyny pękają, gdy stoisz w miejscu. Przebiegnij.
+1044	W trybie versus ten, kto powali rywala, zyskuje turę i biegnie na jego stronę. Dotrzyj do końca, by wygrać.
+1045	Pokonani wrogowie, prezenty i ukończone poziomy dają złoto. Wydaj je w Emporium Czarnego Ucha na mapie świata (klawisz B).
+1046	Uparta Kość z Emporium: gdy jesteś przemieniony, śmiertelny cios tylko cofa formę. Wracasz do postaci czaszki i stoisz dalej.
+1047	Właścicielką Emporium jest owca z czarnym uchem. Nie mówi: odpowiada tabliczkami. I liczy sobie drogo.
+1048	Mówią, że owca z Emporium pojawiła się na plaży tego samego dnia co czaszka. I że już ją znała.
+1049	Całą muzykę w grze komponuje sam kod, nuta po nucie, bez ani jednego pliku audio.
+1050	Czaszka potrafi zmienić się w 11 różnych stworzeń. Każde dostaje za pierwszym razem sarkastyczny komentarz.
+1051	Gnolle polują stadem i ogryzają stare kości. Dlatego ich kość zmienia czaszkę w Gnolla.
+1052	Szkarłatny Minotaur kuje to samo kowadło tak długo, że lawa wokół zastygła w obsydian.
+1053	Leśne gnomy sadzą żołądź za każdego przegonionego gościa. Las jest ogromny.
+1054	Gobliny z kopalni malują pochodnie na niebiesko, gdy znajdą złoto. Błękitny ogień = bogata żyła.
+1055	Rekiny przypływu używają harpunów z zatopionych statków. Na niektórych wciąż są wyryte imiona.
+1056	Książęta nietoperz i pszczoła kłócą się, odkąd wykluli się w tym samym gnieździe.
+1057	Bagienne jaszczury zrzucają skórę raz w roku i zachowują stare skóry jako trofea.
+1058	Olbrzymi Chochlik był kiedyś mały. Zjadł za dużo żaru.
+1059	Owce to jedyne zwierzę, którego żaden król nie zdołał oswoić. Słuchają tylko płyt.
+1060	Pajęcza Królowa tka nowy kokon przy każdym księżycu. Nikt nie wie, co w nich trzyma.
+1061	Mówią, że Szaman nigdy nie opuścił środkowej wyspy. Ani razu. Nawet po fragment.
+1062	Starcy z prerii przysięgają, że przed królami środkowa wyspa nie miała ciemnego nieba.
+1063	Korona rozbita na dziewięć części? Królowie zawsze mówili, że strzegą czegoś innego.
+1064	Za każdym razem, gdy pada król, ktoś przysięga, że słyszy w oddali pękający łańcuch.
+1065	Szaman zna imię każdego króla. Ale nigdy nie mówi własnego.
+1066	Niektórzy mówią, że czaszka miała kiedyś twarz. I dom. I kogoś, kto na nią czekał.
+1067	„Fragment" to dziwne słowo na coś, co bije jak serce.
+1068	Kraby noszą klucze. Traf jednego, a klucz spadnie.
+1069	Latarnia na wyspach zapala się sama, gdy pada król. Nikt tam nie mieszka.
+1070	Pęd stada: wejdź wysoko i poczekaj, aż minie.
+1071	Młyn na prerii miele kości, nie pszenicę. Gnolle uważają to za normalne.
+1072	Trujące jaszczury plują łukiem. Podejdź od góry.
+1073	Wiszące pająki opuszczają się, gdy przechodzisz pod nimi. Przebiegnij.
+1074	Lawa wzbiera falami. Miej oko na świecący grzbiet.
+1075	Duże grzyby to sprężyny. Ciężkie bramy otwierają się pod ciężarem na płycie.
+1076	W kopalniach sufit się wali: opadający pył ostrzega, gdzie spadnie skała.
+1077	Prądy wiatru unoszą cię w górę. Puść na szczycie i szybuj do następnej wyspy.
+1078	W locie wierzchowiec zależy od paktu z Książętami: nietoperz albo pszczoła.
+1079	Ściany sanktuarium mają ślady zrobione od środka na zewnątrz.
+1080	REZERWA
+1081	NAPRZÓD  ➜
+1082	⬅  NAPRZÓD
+1083	Dłonie z Kości
+1084	WEŹ podnosi klucze, owce i inne przedmioty nad głowę. Ponowne WEŹ puszcza; ATAK rzuca.
+1085	Salto i Stanie na Rękach
+1086	Kucając, naciśnij SKOK: skok ze stania na rękach (znacznie wyższy). W biegu obróć się w drugą stronę i skocz: salto w tył (też wyższe).
+1087	Młot
+1088	W powietrzu przytrzymaj ▼ i naciśnij ATAK: uderzenie młotem w ziemię. Rozbija spękane złote skały i ogłusza wszystkich w pobliżu.
+1089	Topór
+1090	ATAK przy drzewie powala je w stronę, w którą patrzysz: staje się mostem.
+1091	Kilof
+1092	Dotknięcie ściany w powietrzu wbija kilof: czaszka sama wspina się po ścianie jak pająk.
+1093	Przebudzenie
+1094	Ukończ pierwszy poziom.
+1095	Pierwsza Pieczęć
+1096	Pokonaj pierwszego króla.
+1097	Pół Korony
+1098	Pokonaj pięciu królów.
+1099	Cała Korona
+1100	Pokonaj dziewięciu królów.
+1101	Pakt Przypieczętowany
+1102	Wybierz stronę w walce Książąt.
+1103	Skórzane Skrzydła
+1104	Zawrzyj pakt z Księciem Nietoperzem.
+1105	Szklane Skrzydła
+1106	Zawrzyj pakt z Księżniczką Pszczołą.
+1107	Wolny Świat
+1108	Pokonaj Szamana na Tronie.
+1109	Powrót do Domu
+1110	Przyjmij pomoc Szamana.
+1111	Okruchy Wspomnień
+1112	Odzyskaj trzy wspomnienia.
+1113	Moje Imię
+1114	Odzyskaj wszystkie wspomnienia.
+1115	Prezent!
+1116	Znajdź prezent.
+1117	Kolekcjoner

@@ -1,0 +1,215 @@
+227	Chamán Hex
+228	Islas de la Marea
+240	Caverna Húmeda
+250	Nido de Telarañas
+258	Guarida de la Reina
+267	Forja Volcánica
+280	Huida de la Forja
+288	Santuario de las Nubes
+299	Corrientes del Cielo
+307	Vuelo Nocturno
+321	Escalinata de la Marea
+332	Casa de las Puertas
+342	Biblioteca Embrujada
+350	Casa Sin Luz
+358	Taller de la Llave
+365	Pradera de los Huesos
+371	Bloques Alternos
+379	Mina Agrietada
+385	Nido de los Príncipes
+393	Duelo en el Cielo
+407	Bosque del Leñador
+415	Mina de Oro
+421	Torre del Escalador
+427	Mausoleo del Chamán
+434	Playa de los Cangrejos
+440	Marea Alta
+448	Restos del Naufragio
+456	Barco Pirata: Cubierta
+462	Caverna Submarina
+470	Compuertas del Faro
+476	Barco Pirata: Mástiles
+482	Arrecife de Coral
+488	Arena del Rey Tiburón
+496	El Trono del Chamán
+498	Camino de los Huesos
+504	Estampida
+510	Cementerio de Huesos
+516	Granja de los Gnolls
+522	Hierba Alta
+528	Caravana de los Gnolls
+534	Molinos de Viento
+540	Guarida del Rey Gnoll
+546	Puentes de Telaraña
+552	Caverna Oscura
+558	Salón de los Capullos
+564	Tiroteo en la Telaraña
+570	Cámara de los Huevos
+576	Puertas de la Forja
+582	Marea de Lava
+588	Géiseres de Fuego
+594	Tiroteo en la Forja
+602	Puente de Obsidiana
+608	Yunque del Herrero
+614	Corazón de Magma
+620	Entrada del Bosque
+626	Setas Saltarinas
+632	Copas de los Árboles
+638	Río de Troncos
+644	Tiroteo en el Bosque
+650	Musgo Traicionero
+656	Aldea de los Gnomos
+662	Árbol del Rey Gnomo
+668	Boca de la Mina
+674	Derrumbe
+680	Galería Oscura
+686	Veta de Oro
+694	Dinamita
+700	Mina Inundada
+706	Fuego Azul
+712	Tesoro de los Goblins
+718	Trono del Rey Goblin
+724	Orilla del Pantano
+730	Nenúfares Gigantes
+736	Crecida del Pantano
+742	Ciénaga Venenosa
+748	Casa del Pescador
+754	Fondo de la Laguna
+760	Tiroteo en la Ciénaga
+766	Manglar
+772	Aldea de los Lagartos
+778	Trono del Rey Lagarto
+784	Nubes de Brasa
+790	Lluvia de Meteoros
+796	Tiroteo en el Cielo de Brasa
+802	Vientos de Fuego
+810	Castillo en las Nubes
+816	Enjambre de Brasa
+822	Cofre de las Nubes
+828	Portal de las Alas
+834	Ruta del Viento
+842	Castillo de las Alas
+850	Vuelo en la Tormenta
+856	Cámara Real
+862	Corrientes Reales
+868	Vuelo al Atardecer
+874	Tiroteo Real
+880	Guardia Real
+886	Dibujo Perdido (1930)
+894	Corral Olvidado
+900	Cabaña Hundida
+907	Cofre de Obsidiana
+911	Corro de Setas
+915	Bolsa de Oro
+919	Nido en las Nubes
+923	Torre de las Plumas
+927	Árbol Hueco
+933	Una casa azul
+936	Manos de verdad
+939	Las ovejas
+942	Villa del Puente
+945	La Feria de los Farolillos
+948	La lluvia
+951	Alguien de morado
+954	El agua helada
+957	Mi nombre
+972	Los Sellos
+980	El Camino del Río
+988	El Portal de la Marea
+1021	CONSEJO
+1022	CURIOSIDAD
+1023	RUMOR
+1024	Toca hacia ATRÁS justo en el momento del golpe: ¡CONTRA! Rompe la defensa de quien ataca y devuelve proyectiles.
+1025	La defensa sin escudo es una media luna: solo protege el frente. Cuidado con quien viene por detrás.
+1026	Agáchate y pulsa AGARRAR sobre un objeto para guardarlo en la caja de reserva, sin transformarte.
+1027	La caja de reserva (arriba en la pantalla) guarda un objeto. Pulsa R, SELECT o toca la caja y caerá del cielo.
+1028	¿Ya transformado y agarraste otro objeto? La forma anterior va a la caja de reserva, si está vacía.
+1029	Al renacer, el objeto de la reserva cae solo cerca de ti. ¡Ponte debajo!
+1030	Toca dos veces una dirección y mantén para correr. Algunas plataformas solo se alcanzan a la carrera.
+1031	Doble salto: pulsa SALTAR de nuevo en el aire. El segundo salto es un poco más bajo.
+1032	Murciélagos y abejas vuelan: mantén SALTAR en el aire. Las arañas se pegan a las paredes.
+1033	Los tiburones nadan libres. En el agua, ▼ se sumerge y SALTAR sale fuera.
+1034	Un objeto tirado al suelo parpadea antes de desaparecer. Agárralo pronto o pierde la ocasión.
+1035	Cada nivel de llave esconde 3 regalos. Explora antes de abrir la puerta.
+1036	La marea sube y baja. Las cajas flotan: úsalas como plataforma con marea alta.
+1037	Un géiser que burbujea avisa antes de estallar. Espera a que pase el fuego.
+1038	Las élites son más grandes y llevan armadura: un solo golpe no basta.
+1039	Los jefes avisan antes de cada ataque. Observa el patrón antes de lanzarte.
+1040	En la pausa (ESC o P) puedes cambiar el volumen de la música, el temblor de pantalla y los colores para daltonismo.
+1041	En la oscuridad, quédate cerca de las antorchas: su luz muestra el camino y los enemigos.
+1042	Los nenúfares se hunden despacio. No te pares encima.
+1043	Los puentes de telaraña se rompen si te quedas quieto. Cruza corriendo.
+1044	En versus, quien derriba al otro gana el turno y corre hacia su lado. Llega al final para vencer.
+1045	Los enemigos derrotados, los regalos y los niveles superados dan oro. Gástalo en el Emporio de la Oreja Negra, en el mapa del mundo (tecla B).
+1046	Hueso Terco, del Emporio: transformado, el golpe fatal solo deshace la forma. Vuelves a ser la calavera y sigues en pie.
+1047	La dueña del Emporio es una oveja de oreja negra. No habla: responde con carteles. Y cobra caro.
+1048	Dicen que la oveja del Emporio apareció en la playa el mismo día que la calavera. Y que ya la conocía.
+1049	Toda la música del juego la compone el propio código, nota a nota, sin un solo archivo de audio.
+1050	La calavera puede convertirse en 11 criaturas distintas. Cada una tiene un comentario sarcástico la primera vez.
+1051	Los Gnolls cazan en manada y roen huesos antiguos. Por eso su hueso convierte a la calavera en Gnoll.
+1052	El Minotauro Carmesí martilla el mismo yunque desde hace tanto que la lava de alrededor se enfrió en obsidiana.
+1053	Los gnomos del bosque plantan una bellota por cada visitante expulsado. El bosque es enorme.
+1054	Los goblins de las minas pintan las antorchas de azul cuando hallan oro. Fuego azul = veta rica.
+1055	Los tiburones de la marea usan arpones sacados de barcos hundidos. Algunos aún tienen nombres grabados.
+1056	Los Príncipes murciélago y abeja se pelean desde que nacieron en el mismo nido.
+1057	Los lagartos del pantano mudan la piel una vez al año y guardan las pieles viejas como trofeo.
+1058	El Diablillo Gigante fue pequeño una vez. Comió demasiadas brasas.
+1059	Las ovejas son el único animal que ningún rey logró domar. Solo obedecen a las placas.
+1060	La Araña Reina teje un capullo nuevo cada luna. Nadie sabe qué guarda en ellos.
+1061	Dicen que el Chamán nunca salió de la isla central. Ni una vez. Ni para buscar un fragmento.
+1062	Los viejos de la pradera juran que, antes de los reyes, la isla del centro no tenía cielo oscuro.
+1063	¿Una corona partida en nueve? Los reyes siempre dijeron que guardaban otra cosa.
+1064	Cada vez que cae un rey, alguien jura oír una cadena romperse a lo lejos.
+1065	El Chamán conoce el nombre de cada rey. Pero nunca dice el suyo.
+1066	Hay quien dice que la calavera tuvo rostro. Y casa. Y alguien esperándola.
+1067	"Fragmento" es una palabra extraña para algo que late como un corazón.
+1068	Los cangrejos llevan llaves. Golpea a uno y la llave cae.
+1069	El faro de las islas se enciende solo cuando cae un rey. Nadie vive allí.
+1070	Estampida: sube a lo alto y espera a que pase.
+1071	El molino de la pradera muele huesos, no trigo. A los Gnolls les parece normal.
+1072	Los lagartos venenosos escupen en arco. Acércate por arriba.
+1073	Las arañas colgadas bajan cuando pasas por debajo. Pasa corriendo.
+1074	La lava sube en olas. No pierdas de vista la cresta brillante.
+1075	Las setas grandes son muelles. Los portones pesados se abren con peso sobre la placa.
+1076	En las minas el techo se derrumba: el polvo que cae avisa dónde caerá la roca.
+1077	Las corrientes de viento te llevan hacia arriba. Suelta en lo alto y planea hasta la siguiente isla.
+1078	En el vuelo, la montura depende del pacto con los Príncipes: murciélago o abeja.
+1079	Las paredes del santuario tienen marcas hechas desde dentro hacia fuera.
+1080	RESERVA
+1081	VE  ➜
+1082	⬅  VE
+1083	Manos de Hueso
+1084	AGARRAR levanta llaves, ovejas y otros objetos sobre la cabeza. AGARRAR otra vez suelta; ATACAR lanza.
+1085	Voltereta y Pino
+1086	Agachado, pulsa SALTAR: salto de pino (mucho más alto). Corriendo, gira hacia el otro lado y salta: voltereta hacia atrás (también más alta).
+1087	Martillo
+1088	En el aire, mantén ▼ y pulsa ATACAR: martillazo al suelo. Rompe rocas de oro agrietadas y aturde a quien esté cerca.
+1089	Hacha
+1090	ATACAR cerca de un árbol lo derriba hacia donde miras: se convierte en un puente.
+1091	Pico
+1092	Tocar una pared en el aire clava el pico: la calavera sube sola por la pared, como la araña.
+1093	Despertar
+1094	Termina el primer nivel.
+1095	Primer Sello
+1096	Derrota al primer rey.
+1097	Media Corona
+1098	Derrota a cinco reyes.
+1099	Corona Entera
+1100	Derrota a los nueve reyes.
+1101	Pacto Sellado
+1102	Elige un bando en la pelea de los Príncipes.
+1103	Alas de Cuero
+1104	Haz el pacto con el Príncipe Murciélago.
+1105	Alas de Cristal
+1106	Haz el pacto con la Princesa Abeja.
+1107	El Mundo Libre
+1108	Vence al Chamán en el Trono.
+1109	De Vuelta a Casa
+1110	Acepta la ayuda del Chamán.
+1111	Fragmentos de Recuerdo
+1112	Recupera tres recuerdos.
+1113	Mi Nombre
+1114	Recupera todos los recuerdos.
+1115	¡Regalo!
+1116	Encuentra un regalo.
+1117	Coleccionista

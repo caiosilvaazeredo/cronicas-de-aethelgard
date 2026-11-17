@@ -86,6 +86,14 @@ C.versus = async (r) => {
   });
   console.log('versus', JSON.stringify(st));
 };
+// o Xamã busca a caveira na nuvem (amigo e guia)
+C.rescue = async (r) => {
+  await game(r, 0); await r.skip(170);
+  await r.p.keyboard.down('d');
+  let log = [];
+  await r.rec('rescue', 420, async (i) => { if (i % 30 === 0) { const st = await r.hero(0, false, true); log.push([i, Math.round(st.x), st.alive]); } });
+  console.log('rescue', JSON.stringify(log));
+};
 // empório (bloco 8)
 C.shop = async (r) => { await r.start('shop', { devices: ['kb-full'] }); await r.skip(40); await r.rec('shop', 300, async (i) => { if (i % 50 === 40) await r.tap('d'); }); };
 // luta final (bloco 9)
@@ -98,8 +106,13 @@ C.finale = async (r) => {
 };
 (async () => {
   for (const n of which) {
-    const r = await R.open();
-    try { await C[n](r); } catch (e) { console.log(n, 'FALHOU', e.message.split('\n')[0]); }
-    await r.keysUp().catch(() => {}); await r.close();
+    for (let t = 0; t < 4; t++) {
+      let r;
+      try { r = await R.open(); } catch (e) { console.log(n, 'abrir falhou', t); continue; }
+      let ok = true;
+      try { await C[n](r); } catch (e) { ok = false; console.log(n, 'FALHOU', e.message.split('\n')[0]); }
+      await r.keysUp().catch(() => {}); await r.close().catch(() => {});
+      if (ok) break;
+    }
   }
 })();

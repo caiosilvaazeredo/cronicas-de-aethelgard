@@ -1,0 +1,215 @@
+227	Şaman Hex
+228	Gelgit Adaları
+240	Nemli Mağara
+250	Ağ Yuvası
+258	Kraliçenin İni
+267	Volkanik Demirhane
+280	Demirhaneden Kaçış
+288	Bulut Tapınağı
+299	Gökyüzü Akıntıları
+307	Gece Uçuşu
+321	Gelgit Merdiveni
+332	Kapılar Evi
+342	Perili Kütüphane
+350	Işıksız Ev
+358	Anahtar Atölyesi
+365	Kemik Çayırı
+371	Değişen Bloklar
+379	Çatlak Maden
+385	Prenslerin Yuvası
+393	Gökyüzü Düellosu
+407	Oduncunun Korusu
+415	Altın Madeni
+421	Tırmanıcı Kulesi
+427	Şamanın Anıt Mezarı
+434	Yengeç Kumsalı
+440	Yüksek Gelgit
+448	Batık Enkazı
+456	Korsan Gemisi: Güverte
+462	Sualtı Mağarası
+470	Fener Savakları
+476	Korsan Gemisi: Direkler
+482	Mercan Resifi
+488	Köpekbalığı Kralın Arenası
+496	Şamanın Tahtı
+498	Kemik Yolu
+504	Sürü İzdihamı
+510	Kemik Mezarlığı
+516	Gnoll Çiftliği
+522	Uzun Otlar
+528	Gnoll Kervanı
+534	Yel Değirmenleri
+540	Gnoll Kralının İni
+546	Ağ Köprüleri
+552	Karanlık Mağara
+558	Kozalar Salonu
+564	Ağda Çatışma
+570	Yumurta Odası
+576	Demirhane Kapıları
+582	Lav Gelgiti
+588	Ateş Gayzerleri
+594	Demirhanede Çatışma
+602	Obsidyen Köprü
+608	Demircinin Örsü
+614	Magmanın Kalbi
+620	Koru Girişi
+626	Zıplatan Mantarlar
+632	Ağaç Tepeleri
+638	Kütük Nehri
+644	Koruda Çatışma
+650	Hain Yosun
+656	Cüceler Köyü
+662	Cüce Kralın Ağacı
+668	Maden Ağzı
+674	Göçük
+680	Karanlık Galeri
+686	Altın Damarı
+694	Dinamit
+700	Su Basmış Maden
+706	Mavi Ateş
+712	Goblin Hazinesi
+718	Goblin Kralın Tahtı
+724	Bataklık Kıyısı
+730	Dev Nilüferler
+736	Bataklık Taşkını
+742	Zehirli Sazlık
+748	Balıkçının Evi
+754	Lagünün Dibi
+760	Sazlıkta Çatışma
+766	Mangrov
+772	Kertenkele Köyü
+778	Kertenkele Kralın Tahtı
+784	Kor Bulutları
+790	Meteor Yağmuru
+796	Kor Gökyüzünde Çatışma
+802	Ateş Rüzgârları
+810	Bulutlardaki Kale
+816	Kor Sürüsü
+822	Bulut Kasası
+828	Kanatlar Kapısı
+834	Rüzgâr Rotası
+842	Kanatlar Kalesi
+850	Fırtınada Uçuş
+856	Kraliyet Odası
+862	Kraliyet Akıntıları
+868	Alacakaranlık Uçuşu
+874	Kraliyet Çatışması
+880	Kraliyet Muhafızları
+886	Kayıp Çizgi Film (1930)
+894	Unutulmuş Ağıl
+900	Batık Kulübe
+907	Obsidyen Kasa
+911	Mantar Halkası
+915	Altın Cebi
+919	Bulutlardaki Yuva
+923	Tüy Kulesi
+927	Kovuk Ağaç
+933	Mavi bir ev
+936	Gerçek eller
+939	Koyunlar
+942	Köprü Köyü
+945	Fener Panayırı
+948	Yağmur
+951	Mor giymiş biri
+954	Buz gibi su
+957	Benim adım
+972	Mühürler
+980	Nehir Yolu
+988	Gelgit Kapısı
+1021	İPUCU
+1022	İLGİNÇ BİLGİ
+1023	SÖYLENTİ
+1024	Darbe tam gelirken GERİ dokun: KARŞI! Saldıranın savunmasını kırar ve mermileri geri yollar.
+1025	Kalkansız savunma bir yarım aydır: yalnızca önü korur. Arkadan gelene dikkat et.
+1026	Çömel ve bir eşyanın üstünde AL'a bas: dönüşmeden yedek kutusuna koyarsın.
+1027	Yedek kutusu (ekranın üstünde) bir eşya saklar. R'ye, SELECT'e bas ya da kutuya dokun; gökten düşer.
+1028	Dönüşmüşken başka bir eşya mı aldın? Eski form, boşsa yedek kutusuna gider.
+1029	Yeniden doğduğunda yedekteki eşya kendiliğinden yanına düşer. Altında dur!
+1030	Bir yöne iki kez dokunup basılı tutarak koş. Bazı platformlara ancak koşarak ulaşılır.
+1031	Çift zıplama: havada yeniden ZIPLA'ya bas. İkinci zıplama biraz daha alçaktır.
+1032	Yarasalar ve arılar uçar: havada ZIPLA'yı basılı tut. Örümcekler duvarlara yapışır.
+1033	Köpekbalıkları serbestçe yüzer. Suda ▼ dalar, ZIPLA dışarı fırlatır.
+1034	Yere atılan eşya kaybolmadan önce yanıp söner. Hemen al ya da fırsatı kaçır.
+1035	Her anahtar bölümü 3 hediye saklar. Kapıyı açmadan önce keşfet.
+1036	Gelgit yükselir ve alçalır. Sandıklar yüzer: yüksek gelgitte onları platform olarak kullan.
+1037	Fokurdayan gayzer patlamadan önce uyarır. Ateşin geçmesini bekle.
+1038	Elitler daha iridir ve zırh giyer: tek darbe yetmez.
+1039	Patronlar her saldırıdan önce uyarır. Atılmadan önce düzeni izle.
+1040	Duraklatmada (ESC ya da P) müzik sesini, ekran sarsıntısını ve renk körlüğü renklerini değiştirebilirsin.
+1041	Karanlıkta meşalelere yakın dur: ışıkları yolu ve düşmanları gösterir.
+1042	Nilüfer yaprakları yavaşça batar. Üstlerinde durma.
+1043	Ağ köprüleri yerinde durursan kopar. Koşarak geç.
+1044	Versus'ta rakibini deviren sırayı kazanır ve onun tarafına koşar. Kazanmak için sona ulaş.
+1045	Yenilen düşmanlar, hediyeler ve geçilen bölümler altın verir. Dünya haritasındaki Kara Kulak Dükkânı'nda harca (B tuşu).
+1046	Dükkândan İnatçı Kemik: dönüşmüşken ölümcül darbe yalnızca formu bozar. Yeniden kurukafa olur ve ayakta kalırsın.
+1047	Dükkânın sahibi kara kulaklı bir koyundur. Konuşmaz: tabelalarla cevap verir. Ve pahalıya satar.
+1048	Dükkândaki koyunun, kurukafayla aynı gün kumsalda belirdiği söylenir. Ve onu zaten tanıdığı.
+1049	Oyundaki bütün müziği kodun kendisi besteler; nota nota, tek bir ses dosyası olmadan.
+1050	Kurukafa 11 farklı yaratığa dönüşebilir. Her biri ilk seferinde alaycı bir yorum alır.
+1051	Gnoll'lar sürü hâlinde avlanır ve eski kemikleri kemirir. Bu yüzden kemikleri kurukafayı Gnoll'a çevirir.
+1052	Kızıl Minotor aynı örsü o kadar uzun zamandır dövüyor ki çevresindeki lav soğuyup obsidyene dönmüş.
+1053	Koru cüceleri kovdukları her ziyaretçi için bir palamut diker. Koru kocaman.
+1054	Maden goblinleri altın bulunca meşalelerini maviye boyar. Mavi ateş = zengin damar.
+1055	Gelgit köpekbalıkları batık gemilerden alınmış zıpkınlar kullanır. Bazılarında hâlâ kazınmış adlar var.
+1056	Yarasa ve arı Prensler aynı yuvada doğduklarından beri kavga ediyor.
+1057	Bataklık kertenkeleleri yılda bir kez deri değiştirir ve eski derilerini ganimet diye saklar.
+1058	Dev İblis bir zamanlar küçüktü. Fazla kor yedi.
+1059	Koyunlar hiçbir kralın evcilleştiremediği tek hayvandır. Yalnızca plakalara itaat ederler.
+1060	Örümcek Kraliçe her ay yeni bir koza örer. İçlerinde ne sakladığını kimse bilmez.
+1061	Şaman'ın ortadaki adadan hiç çıkmadığı söylenir. Bir kez bile. Bir parçayı almak için bile.
+1062	Çayırın yaşlıları, krallardan önce ortadaki adanın göğünün karanlık olmadığına yemin eder.
+1063	Dokuza bölünmüş bir taç mı? Krallar hep başka bir şeyi koruduklarını söyledi.
+1064	Ne zaman bir kral düşse, biri uzakta bir zincirin koptuğunu duyduğuna yemin eder.
+1065	Şaman her kralın adını bilir. Ama kendi adını asla söylemez.
+1066	Kurukafanın bir zamanlar bir yüzü olduğunu söyleyenler var. Bir evi. Ve onu bekleyen biri.
+1067	"Parça", kalp gibi atan bir şey için tuhaf bir sözcük.
+1068	Yengeçler anahtar taşır. Birine vur, anahtar düşer.
+1069	Adaların feneri bir kral düşünce kendiliğinden yanar. Orada kimse yaşamaz.
+1070	Sürü izdihamı: yükseğe çık ve geçmesini bekle.
+1071	Çayırdaki değirmen buğday değil, kemik öğütür. Gnoll'lar bunu normal bulur.
+1072	Zehirli kertenkeleler yay çizerek tükürür. Yukarıdan yaklaş.
+1073	Asılı örümcekler altlarından geçince iner. Koşarak geç.
+1074	Lav dalgalar hâlinde yükselir. Parlayan tepeyi gözden kaçırma.
+1075	Büyük mantarlar yaydır. Ağır kapılar plakanın üstündeki ağırlıkla açılır.
+1076	Madenlerde tavan çöker: dökülen toz, kayanın nereye düşeceğini haber verir.
+1077	Rüzgâr akıntıları seni yukarı taşır. Tepede bırak ve bir sonraki adaya süzül.
+1078	Uçuşta binek, Prenslerle yapılan anlaşmaya bağlıdır: yarasa ya da arı.
+1079	Tapınağın duvarlarında içeriden dışarıya doğru açılmış izler var.
+1080	YEDEK
+1081	YÜRÜ  ➜
+1082	⬅  YÜRÜ
+1083	Kemik Eller
+1084	AL; anahtarları, koyunları ve başka nesneleri başının üstüne kaldırır. Yeniden AL bırakır; SALDIR fırlatır.
+1085	Takla ve Amut
+1086	Çömelmişken ZIPLA'ya bas: amut sıçrayışı (çok daha yüksek). Koşarken öbür yöne dön ve zıpla: geri takla (o da daha yüksek).
+1087	Çekiç
+1088	Havada ▼ tuşunu basılı tut ve SALDIR'a bas: yere çekiç darbesi. Çatlak altın kayaları kırar ve yakındakileri sersemletir.
+1089	Balta
+1090	Bir ağacın yanında SALDIR, onu baktığın yöne devirir: köprü olur.
+1091	Kazma
+1092	Havada bir duvara değmek kazmayı saplar: kurukafa örümcek gibi kendiliğinden duvara tırmanır.
+1093	Uyanış
+1094	İlk bölümü bitir.
+1095	İlk Mühür
+1096	İlk kralı yen.
+1097	Tacın Yarısı
+1098	Beş kralı yen.
+1099	Bütün Taç
+1100	Dokuz kralı yen.
+1101	Mühürlü Anlaşma
+1102	Prenslerin kavgasında bir taraf seç.
+1103	Deri Kanatlar
+1104	Yarasa Prens'le anlaşma yap.
+1105	Cam Kanatlar
+1106	Arı Prenses'le anlaşma yap.
+1107	Özgür Dünya
+1108	Şaman'ı Taht'ta yen.
+1109	Eve Dönüş
+1110	Şaman'ın yardımını kabul et.
+1111	Anı Kırıntıları
+1112	Üç anıyı geri kazan.
+1113	Benim Adım
+1114	Bütün anıları geri kazan.
+1115	Hediye!
+1116	Bir hediye bul.
+1117	Koleksiyoncu

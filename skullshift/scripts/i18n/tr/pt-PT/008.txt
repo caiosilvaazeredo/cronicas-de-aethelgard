@@ -108,8 +108,122 @@
 1464	O caminho até ao Rei Lagarto está aberto!
 1467	Nuvens em brasa desfazem-se logo depois de pisadas. E cair daqui é cair no vazio.
 1468	Atravessaste as nuvens de brasa!
-1469	Nuvens de brasa\ndesfazem-se: corra!
+1469	Nuvens de brasa\ndesfazem-se: corre!
 1474	Correntes de vento quente entre as ilhas, e jatos de fogo a sair das pedras.
 1475	O vento quente levou-te até ao fim!
 1478	Um enxame de abelhas de brasa, e canhões do castelo a varrer as ilhas.
 1479	Atravessaste o enxame!
+1480	O cofre dos diabretes. Leva a chave pelas ilhas, usando as molas e a alavanca de cor.
+1482	A entrada do reino inimigo do teu aliado. Os guardas voam e mergulham.
+1483	Passaste pelo portal das asas!
+1484	O reino inimigo\ndo teu aliado.
+1485	Voo de dia, montado no teu aliado, a cruzar o céu do reino inimigo.
+1490	Atravessaste a tempestade!
+1491	A câmara real. Leva a chave pelas molas e escadas até à porta.
+1492	A câmara real abriu-se!
+1493	Correntes de vento entre as torres do reino, e guardas a mergulhar.
+1494	O vento levou-te até às torres!
+1496	O sol pôs-se atrás de ti!
+1499	A guarda real defende a última ponte antes do voo até ao rei.
+1508	O teu nome
+1523	Poupa minha vida, caveira. Derrota o Príncipe das Abelhas e eu serei teu maior aliado: voarei contigo até ao Rei das Abelhas.
+1524	Não escuta esse morcego traiçoeiro! Acaba com ele e EU voo contigo até ao Rei dos Morcegos!
+1534	O Príncipe das Abelhas agora voa contigo!
+1536	O Príncipe dos Morcegos agora é teu aliado!
+1541	O CARANGUEJO APANHOU A CHAVE!
+1543	Traz a CHAVE dourada
+1555	MARÉ BAIXA: ATACA AGORA!
+1556	A MARÉ VAI SUBIR! SOBE!
+1566	↑ ↓ ← →  voar  ·  segura ATACAR (TIRO) para atirar  ·  APANHAR / DEFENDER (GRITO): grito sônico
+1567	↑ ↓ ← →  voar  ·  segura ATACAR (ou TIRO) para atirar
+1568	SALTA
+1573	Transformado, o golpe que te mataria só desfaz a transformação: voltas a ser a caveira e continuas de pé.
+1577	Béé. (Bate no que voa.)
+1579	Uma vida a mais em cado nível antes de ele recomeçar.
+1580	Béé. (Não deixes apagar.)
+1585	Ao renascer, ficas intocável pelo dobro do tempo.
+1586	Béé. (Feito da nuvem dele. Não contes.)
+1588	O item da caixa de reserva cai reto e duas vezes mais rápido, direto para ti.
+1589	Béé. (O que é teu volta.)
+1624	A CARREGAR 0%
+1625	A CARREGAR {0}%
+1626	ESCOLHE O COMANDO
+1627	Comando não aparece? Liga-o e carrega em qualquer botão nele.  ·  Nome: ◀ ▶ ou ✎ (teclas N / M)
+1633	Gestos/Rato
+1636	a equipa do Skullshift
+1637	Código, textos e banda sonora
+1653	A história ainda espera por ti.
+1655	qualquer tecla ou toque para saltar
+1657	A URNA PARTIU-SE
+1659	PARTIU-SE!
+1668	olha as sombras no chão
+1670	corre para apanhar primeiro
+1672	saltos altíssimos
+1674	apanha o orbe roxo: uma criatura luta contigo
+1683	{0}  apanhar\n{1}{2}
+1684	Segura SALTAR no ar para voar
+1686	Nada! ▼ mergulha, SALTAR sai da água
+1687	O NÍVEL RECOMEÇA
+1689	Um nível secreto apareceu no mapa...
+1694	Nível {0}
+1695	{0} · Área bónus
+1696	{0} LUTA AO TEU LADO!
+1706	Saltar
+1710	Apanhar item
+1713	Apanhar
+1714	Também: setas, Espaço,\nJ (atacar), K (defender), L (apanhar)
+1718	Deslizar p/ cima: saltar
+1721	Segurar parado: apanhar
+1723	Funciona com o dedo no ecrã ou só com o rato (meio também pega).
+1724	Telemóvel deitado ou em pé. Dá para usar vários dedos ao mesmo tempo.
+1725	Um golpe mata.\nTu também!
+1726	DEFESA: segura o botão.\nToca para TRÁS na hora\ndo golpe: CONTRA!
+1728	Carrega em saltar no ar:\nsalto duplo.
+1729	Item de outro personagem\nno chão: APANHAR transforma.
+1730	5 cenários: chega ao\nfim do lado oposto.
+1731	Matou? Ganhou a vez.\nChega ao teu fim!
+1739	bónus ✓
+1740	bónus —
+1741	{0}  ·  {1}/{2} níveis  ·  {3}/{4} presentes  ·  {5}  ·  {6}
+1742	OURO: {0}   ·   HABILIDADES: {1}\nMELHORAMENTOS: {2}
+1743	toca numa memória para revê-la
+1745	A CARREGAR
+1750	{0}: ainda bloqueado. Desbloqueia no modo história (ou liga o MODO TESTE).
+1757	Arrasta o mapa para os lados · toca 2× num nível para correr até ela
+1759	{0} · BÓNUS
+1762	NÍVEL {0}/{1} · {2}
+1774	No próximo ecrã, cada jogador escolhe teclado, comando ou toque.
+1776	DEFESA no botão (Q, K, B). Toca para TRÁS na hora do golpe: CONTRA! Sobre o item de outro personagem, carrega em APANHAR para te transformares.
+1777	NÍVEL {0} · {1}
+1787	Tremor do ecrã
+1789	ECRÃ
+1790	Ecrã inteiro
+1791	Liga ou desliga o ecrã inteiro.
+1798	Saltos, golpes, portas, explosões (sons 8-bit).
+1800	Banda sonora 8-bit: um tema para cada área, chefes e memórias.
+1801	COMANDOS
+1805	Tamanho dos botões no ecrã do telemóvel.
+1814	Clarões no ecrã
+1815	Desliga para evitar flashes (relâmpagos, explosões).
+1826	Béé. (Esse já é teu.)
+1829	recomeça o nível após 9 mortes
+1830	recomeça o nível após 5 mortes
+1832	recomeça o nível na 3ª morte
+1833	ESCOLHE O JOGO GUARDADO
+1835	JOGO GUARDADO {0}
+1837	Novo jogo — escolhe a dificuldade:
+1839	{0} NÍVEIS · {1}/{2} FRAGMENTOS
+1848	SALTAR
+1851	Se venceres, o mundo fica livre... e tu voltas a ser osso.
+1852	Voltas inteiro para casa. O mundo fica com o Xamã.
+1853	A ESCOLHE
+1855	Escolhe "Toque no ecrã"\nno ecrã de comandos\npara jogar pelo telemóvel
+1858	RECOMEÇAR NÍVEL
+1863	Escolhe com cuidado: isso muda os níveis de voo.
+1869	Toca numa área para escolher · toca de novo para entrar
+1874	{0}/{1} níveis vencidos (meta: {2} níveis)
+1879	{0}  ·  Os níveis desta área ainda estão a ser construídos.
+1891	ÁREA BÓNUS
+1892	NÍVEL {0}
+1896	 · JOGO GUARDADO {0}
+1898	{0}/{1} níveis

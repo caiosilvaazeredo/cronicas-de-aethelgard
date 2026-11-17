@@ -1,0 +1,215 @@
+227	Schamane Hex
+228	Gezeiteninseln
+240	Feuchte Höhle
+250	Netznest
+258	Bau der Königin
+267	Vulkanschmiede
+280	Flucht aus der Schmiede
+288	Wolkenheiligtum
+299	Himmelsströmungen
+307	Nachtflug
+321	Gezeitentreppe
+332	Haus der Türen
+342	Spukbibliothek
+350	Haus ohne Licht
+358	Schlüsselwerkstatt
+365	Knochenprärie
+371	Wechselblöcke
+379	Rissige Mine
+385	Nest der Prinzen
+393	Duell am Himmel
+407	Holzfällerwald
+415	Goldmine
+421	Kletterturm
+427	Mausoleum des Schamanen
+434	Krabbenstrand
+440	Flut
+448	Wrackteile
+456	Piratenschiff: Deck
+462	Unterwasserhöhle
+470	Schleusen des Leuchtturms
+476	Piratenschiff: Masten
+482	Korallenriff
+488	Arena des Haikönigs
+496	Der Thron des Schamanen
+498	Knochenstraße
+504	Stampede
+510	Knochenfriedhof
+516	Gnollhof
+522	Hohes Gras
+528	Gnollkarawane
+534	Windmühlen
+540	Bau des Gnollkönigs
+546	Netzbrücken
+552	Dunkle Höhle
+558	Kokonhalle
+564	Schießerei im Netz
+570	Eierkammer
+576	Tore der Schmiede
+582	Lavaflut
+588	Feuergeysire
+594	Schießerei in der Schmiede
+602	Obsidianbrücke
+608	Amboss des Schmieds
+614	Magmaherz
+620	Waldeingang
+626	Hüpfpilze
+632	Baumkronen
+638	Stammfluss
+644	Schießerei im Wald
+650	Tückisches Moos
+656	Gnomendorf
+662	Baum des Gnomenkönigs
+668	Mineneingang
+674	Einsturz
+680	Dunkler Stollen
+686	Goldader
+694	Dynamit
+700	Geflutete Mine
+706	Blaues Feuer
+712	Goblinschatz
+718	Thron des Goblinkönigs
+724	Sumpfufer
+730	Riesenseerosen
+736	Sumpfflut
+742	Giftmoor
+748	Haus des Fischers
+754	Grund der Lagune
+760	Schießerei im Moor
+766	Mangroven
+772	Echsendorf
+778	Thron des Echsenkönigs
+784	Glutwolken
+790	Meteorschauer
+796	Schießerei im Gluthimmel
+802	Feuerwinde
+810	Wolkenschloss
+816	Glutschwarm
+822	Wolkentresor
+828	Tor der Schwingen
+834	Windroute
+842	Schloss der Schwingen
+850	Sturmflug
+856	Königliche Kammer
+862	Königliche Strömungen
+868	Flug in der Dämmerung
+874	Königliche Schießerei
+880	Königliche Garde
+886	Verlorener Trickfilm (1930)
+894	Vergessener Pferch
+900	Versunkene Hütte
+907	Obsidiantresor
+911	Pilzkreis
+915	Goldtasche
+919	Nest in den Wolken
+923	Federturm
+927	Hohler Baum
+933	Ein blaues Haus
+936	Echte Hände
+939	Die Schafe
+942	Brückendorf
+945	Das Laternenfest
+948	Der Regen
+951	Jemand in Lila
+954	Das eisige Wasser
+957	Mein Name
+972	Die Siegel
+980	Der Weg des Flusses
+988	Das Gezeitentor
+1021	TIPP
+1022	WISSENSWERTES
+1023	GERÜCHT
+1024	Tippe genau im Moment des Schlags nach HINTEN: KONTER! Bricht die Deckung des Angreifers und wirft Geschosse zurück.
+1025	Die Deckung ohne Schild ist ein Halbmond: Sie schützt nur vorn. Achte auf alles, was von hinten kommt.
+1026	Ducke dich und drücke NEHMEN über einem Gegenstand, um ihn in der Reservebox zu verstauen, ohne dich zu verwandeln.
+1027	Die Reservebox (oben im Bild) hält einen Gegenstand. Drücke R, SELECT oder tippe auf die Box, und er fällt vom Himmel.
+1028	Schon verwandelt und einen anderen Gegenstand genommen? Die alte Gestalt wandert in die Reservebox, wenn sie leer ist.
+1029	Beim Wiedererscheinen fällt der Reservegegenstand von selbst neben dich. Stell dich darunter!
+1030	Tippe zweimal in eine Richtung und halte, um zu rennen. Manche Plattformen erreicht man nur im Sprint.
+1031	Doppelsprung: Drücke in der Luft erneut SPRINGEN. Der zweite Sprung ist etwas niedriger.
+1032	Fledermäuse und Bienen fliegen: Halte SPRINGEN in der Luft. Spinnen haften an Wänden.
+1033	Haie schwimmen frei. Im Wasser taucht ▼, und SPRINGEN springt heraus.
+1034	Ein zu Boden geworfener Gegenstand blinkt, bevor er verschwindet. Nimm ihn schnell oder verpasse die Chance.
+1035	Jedes Schlüssellevel versteckt 3 Geschenke. Erkunde, bevor du die Tür öffnest.
+1036	Die Gezeiten steigen und fallen. Kisten treiben: Nutze sie bei Flut als Plattform.
+1037	Ein blubbernder Geysir warnt, bevor er ausbricht. Warte, bis das Feuer vorbei ist.
+1038	Eliten sind größer und tragen Rüstung: Ein einzelner Schlag reicht nicht.
+1039	Bosse kündigen jeden Angriff an. Beobachte das Muster, bevor du losstürmst.
+1040	In der Pause (ESC oder P) lassen sich Musiklautstärke, Bildschirmwackeln und Farben für Farbenblinde ändern.
+1041	Bleib im Dunkeln nah an den Fackeln: Ihr Licht zeigt den Weg und die Gegner.
+1042	Seerosenblätter sinken langsam. Bleib nicht darauf stehen.
+1043	Netzbrücken reißen, wenn du stehen bleibst. Renn hinüber.
+1044	Im Versus-Modus bekommt den Zug, wer den anderen besiegt, und rennt zu dessen Seite. Erreiche das Ende, um zu gewinnen.
+1045	Besiegte Gegner, Geschenke und geschaffte Level geben Gold. Gib es im Schwarzohr-Emporium auf der Weltkarte aus (Taste B).
+1046	Sturer Knochen aus dem Emporium: Verwandelt löst der tödliche Schlag nur die Gestalt auf. Du wirst wieder zum Schädel und bleibst stehen.
+1047	Die Besitzerin des Emporiums ist ein Schaf mit schwarzem Ohr. Sie spricht nicht: Sie antwortet mit Schildern. Und sie ist teuer.
+1048	Es heißt, das Schaf vom Emporium sei am selben Tag wie der Schädel am Strand aufgetaucht. Und es habe ihn schon gekannt.
+1049	Die gesamte Musik des Spiels komponiert der Code selbst, Note für Note, ohne eine einzige Audiodatei.
+1050	Der Schädel kann sich in 11 verschiedene Kreaturen verwandeln. Jede bekommt beim ersten Mal einen sarkastischen Kommentar.
+1051	Gnolle jagen im Rudel und nagen an alten Knochen. Darum verwandelt ihr Knochen den Schädel in einen Gnoll.
+1052	Der Scharlachrote Minotaurus hämmert schon so lange auf denselben Amboss, dass die Lava ringsum zu Obsidian erkaltet ist.
+1053	Die Waldgnome pflanzen für jeden vertriebenen Besucher eine Eichel. Der Wald ist riesig.
+1054	Minengoblins färben ihre Fackeln blau, wenn sie Gold finden. Blaues Feuer = reiche Ader.
+1055	Die Haie der Gezeiten benutzen Harpunen aus gesunkenen Schiffen. In manche sind noch Namen eingraviert.
+1056	Die Prinzen Fledermaus und Biene streiten, seit sie im selben Nest geschlüpft sind.
+1057	Sumpfechsen häuten sich einmal im Jahr und behalten die alten Häute als Trophäe.
+1058	Der Riesenkobold war einmal klein. Er hat zu viel Glut gefressen.
+1059	Schafe sind das einzige Tier, das kein König zähmen konnte. Sie gehorchen nur Platten.
+1060	Die Spinnenkönigin webt bei jedem Mond einen neuen Kokon. Niemand weiß, was sie darin aufbewahrt.
+1061	Es heißt, der Schamane habe die Insel in der Mitte nie verlassen. Kein einziges Mal. Nicht einmal, um ein Fragment zu holen.
+1062	Die Alten der Prärie schwören, dass die Insel in der Mitte vor den Königen keinen dunklen Himmel hatte.
+1063	Eine Krone, in neun Teile zerbrochen? Die Könige sagten immer, sie bewachten etwas anderes.
+1064	Jedes Mal, wenn ein König fällt, schwört jemand, in der Ferne eine Kette reißen zu hören.
+1065	Der Schamane kennt den Namen jedes Königs. Doch seinen eigenen nennt er nie.
+1066	Manche sagen, der Schädel habe einst ein Gesicht gehabt. Und ein Zuhause. Und jemanden, der auf ihn wartete.
+1067	„Fragment" ist ein seltsames Wort für etwas, das wie ein Herz schlägt.
+1068	Krabben tragen Schlüssel. Triff eine, und der Schlüssel fällt.
+1069	Der Leuchtturm der Inseln entzündet sich von selbst, wenn ein König fällt. Niemand wohnt dort.
+1070	Stampede: Klettere nach oben und warte, bis sie vorbei ist.
+1071	Die Mühle der Prärie mahlt Knochen, keinen Weizen. Die Gnolle finden das normal.
+1072	Giftechsen spucken im Bogen. Nähere dich von oben.
+1073	Hängende Spinnen lassen sich herab, wenn du darunter durchgehst. Renn durch.
+1074	Die Lava steigt in Wellen. Behalte den leuchtenden Kamm im Auge.
+1075	Große Pilze sind Sprungfedern. Schwere Tore öffnen sich mit Gewicht auf der Platte.
+1076	In den Minen stürzt die Decke ein: Herabrieselnder Staub zeigt, wo der Fels fallen wird.
+1077	Windströmungen tragen dich nach oben. Lass oben los und gleite zur nächsten Insel.
+1078	Im Flug hängt das Reittier vom Pakt mit den Prinzen ab: Fledermaus oder Biene.
+1079	Die Wände des Heiligtums tragen Spuren von innen nach außen.
+1080	RESERVE
+1081	LOS  ➜
+1082	⬅  LOS
+1083	Knochenhände
+1084	NEHMEN hebt Schlüssel, Schafe und andere Objekte über den Kopf. Erneut NEHMEN lässt los; ANGRIFF wirft.
+1085	Salto und Handstand
+1086	Geduckt SPRINGEN drücken: Handstandsprung (deutlich höher). Im Rennen umdrehen und springen: Rückwärtssalto (ebenfalls höher).
+1087	Hammer
+1088	In der Luft ▼ halten und ANGRIFF drücken: Hammerschlag auf den Boden. Zerbricht rissige Goldfelsen und betäubt alle in der Nähe.
+1089	Axt
+1090	ANGRIFF neben einem Baum fällt ihn in Blickrichtung: Er wird zur Brücke.
+1091	Spitzhacke
+1092	Eine Wand in der Luft zu berühren schlägt die Spitzhacke ein: Der Schädel klettert von selbst die Wand hoch, wie die Spinne.
+1093	Erwachen
+1094	Beende das erste Level.
+1095	Erstes Siegel
+1096	Besiege den ersten König.
+1097	Halbe Krone
+1098	Besiege fünf Könige.
+1099	Ganze Krone
+1100	Besiege die neun Könige.
+1101	Pakt besiegelt
+1102	Wähle eine Seite im Kampf der Prinzen.
+1103	Lederflügel
+1104	Schließe den Pakt mit dem Fledermausprinzen.
+1105	Glasflügel
+1106	Schließe den Pakt mit der Bienenprinzessin.
+1107	Die freie Welt
+1108	Besiege den Schamanen auf dem Thron.
+1109	Zurück nach Hause
+1110	Nimm die Hilfe des Schamanen an.
+1111	Erinnerungssplitter
+1112	Gewinne drei Erinnerungen zurück.
+1113	Mein Name
+1114	Gewinne alle Erinnerungen zurück.
+1115	Geschenk!
+1116	Finde ein Geschenk.
+1117	Sammler

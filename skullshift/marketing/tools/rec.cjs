@@ -8,8 +8,8 @@ exports.open = async (opts = {}) => {
   const c = await b.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: PREV ? 0.5 : 2 });
   const p = await c.newPage();
   p.on('pageerror', (e) => console.log('PAGEERR', e.message));
-  await p.goto('http://localhost:5173');
-  await p.waitForFunction(() => window.__skullshift?.scene.isActive('menu'), null, { timeout: 180000 });
+  await p.goto((process.env.BASE || 'http://localhost:5173') + '/?lang=' + (process.env.GAMELANG || 'pt-BR'));
+  try { await p.waitForFunction(() => window.__skullshift?.scene.isActive('menu'), null, { timeout: 90000 }); } catch (e) { await b.close(); throw e; }
   await p.evaluate(async () => { const m = await import('/src/game/progress.ts'); m.setFreePlay(true); const mu = await import('/src/game/music.ts'); mu.stopMusic?.(); });
   await p.clock.install();
   await p.clock.pauseAt(new Date(Date.now() + 500));
@@ -22,7 +22,7 @@ exports.open = async (opts = {}) => {
     skip: async (frames) => { for (let i = 0; i < frames; i++) { await p.clock.runFor(16); await api._tick(); } },
     // grava `frames` quadros em dir; fn(i) roda antes de cada quadro
     rec: async (dir, frames, fn) => {
-      dir = (PREV ? 'prev/' : 'clips/') + dir; fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true }); api.n = 0;
+      dir = (PREV ? 'prev/' : (process.env.CLIPDIR || 'clips/')) + dir; fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true }); api.n = 0;
       for (let i = 0; i < frames; i++) {
         if (fn) await fn(i);
         await p.clock.runFor(16); await api._tick();

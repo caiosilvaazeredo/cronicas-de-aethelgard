@@ -1,0 +1,350 @@
+1543	Bring den goldenen SCHLÜSSEL
+1544	DIE FLUT KOMMT!
+1545	SCHLEUSEN OFFEN: FLUT!
+1546	SCHLEUSEN ZU: EBBE
+1548	SCHAMANE HEX
+1549	Leiste {0}/{1} · {2}
+1550	Neun Siegel, neun Welten. Ich schleife dich durch jede von ihnen, Ossian. Und in jeder wirst du einer der MEINEN sein.
+1551	{0}. {1} ist zurück, um dir zu helfen? Wie rührend.
+1552	Die Siegel sind zurück. Die Welt ist frei.
+1553	HARPUNENHAI-KÖNIG
+1554	Herr der Gezeiten
+1555	EBBE: JETZT ANGREIFEN!
+1556	DIE FLUT KOMMT! NACH OBEN!
+1557	RIESENKOBOLD
+1558	Herr der Himmel
+1559	BIENENKÖNIG
+1560	Herrscher des Stocks
+1561	FLEDERMAUSKÖNIG
+1562	Herr der ewigen Nacht
+1563	HIMMEL FREI!
+1564	SCHILD!
+1565	SCHREI BEREIT!
+1566	↑ ↓ ← →  fliegen  ·  ANGRIFF (SCHUSS) halten zum Schießen  ·  NEHMEN / DECKUNG (SCHREI): Schallschrei
+1567	↑ ↓ ← →  fliegen  ·  ANGRIFF (oder SCHUSS) halten zum Schießen
+1568	SPRUNG
+1569	ANGR
+1570	SCHUSS
+1571	SCHREI
+1572	Sturer Knochen
+1573	Verwandelt löst der Schlag, der dich töten würde, nur die Verwandlung auf: Du wirst wieder zum Schädel und bleibst stehen.
+1574	Määh. (Die Haut fällt, der Knochen bleibt.)
+1575	Abwehrschwert
+1576	Der Schwerthieb schlägt JEDES Geschoss zurück, das ihn berührt: Knochen, Harpunen, Eicheln, Feuer... zurück zum Schützen.
+1577	Määh. (Schlag, was fliegt.)
+1578	Zusatzkerze
+1579	Ein Leben mehr in jedem Level, bevor es neu startet.
+1580	Määh. (Lass sie nicht ausgehen.)
+1581	Knochenreflex
+1582	Das KONTER-Fenster (im Moment des Schlags nach hinten tippen) wird deutlich größer.
+1583	Määh. (Nach hinten, schnell.)
+1584	Wolkenmantel
+1585	Nach dem Wiedererscheinen bist du doppelt so lange unantastbar.
+1586	Määh. (Aus seiner Wolke gemacht. Nicht weitersagen.)
+1587	Knochenmagnet
+1588	Der Gegenstand aus der Reservebox fällt gerade und doppelt so schnell, direkt auf dich.
+1589	Määh. (Was dir gehört, kommt zurück.)
+1590	Goldzahn
+1591	Besiegte Gegner geben doppelt so viel Gold.
+1592	Määh. (Gutes Geschäft. Für mich.)
+1593	Hammerhai
+1594	Korallenhai
+1595	Panzerhai
+1596	Sandechse
+1597	Gezeitenechse
+1598	Piratengoblin
+1599	Goblinkapitän
+1600	Bombengoblin
+1601	Schiffbrüchiger Gnoll
+1602	Springspinne
+1603	Weberspinne
+1604	Schwarze Witwe
+1605	Vampirfledermaus
+1606	Lavaminotaurus
+1607	Obsidianminotaurus
+1608	Magmaechse
+1609	Rotmützengnom
+1610	Moosgnom
+1611	Ältestengnom
+1612	Blaufeuergoblin
+1613	Bergmannsgoblin
+1614	Goblinhäuptling
+1615	Giftechse
+1616	Krokodilechse
+1617	Glutbiene
+1618	Sturmbiene
+1619	Gnolljäger
+1620	Gnollschleicher
+1621	Gnollrabauke
+1624	LÄDT 0 %
+1625	LÄDT {0} %
+1626	STEUERUNG WÄHLEN
+1627	Controller fehlt? Anschließen und eine Taste darauf drücken.  ·  Name: ◀ ▶ oder ✎ (Tasten N / M)
+1628	◀  ZURÜCK
+1629	BESTÄTIGEN  ▶
+1630	NEU
+1631	STANDARD
+1632	Touch
+1633	Gesten/Maus
+1634	NAME VON SPIELER {0}
+1635	Idee, Leitung und Tests
+1636	das Skullshift-Team
+1637	Code, Texte und Soundtrack
+1638	erstellt mit Claude Code (Anthropic)
+1639	Grafik
+1640	Tiny Swords von Pixel Frog\nFree Pack und Enemy Pack
+1641	Schriften
+1642	Anak Manja von Khurasan Studio\nMatcha Style
+1643	Engine
+1645	Instrumente
+1646	Flöte, Gitarre und Harfe aus dem Soundfont FluidR3_GM (Frank Wen)\nkonvertiert von midi-js-soundfonts (Benjamin Gleitzman)\ngespielt mit der Bibliothek smplr
+1647	Inspirationen
+1649	Besetzung
+1650	Ossian, der Schädel · Schamane Hex\nHarpunenhai-König · Gnollkönig · Echsenkönig · Spinnenkönigin\nScharlachroter Minotaurus · Gnomenkönig · Fackelgoblin-König\nRiesenkobold · König der Schwingen · die Prinzen\nund das Schaf mit dem schwarzen Ohr
+1651	Die Siegel sind zurück. Die Welt ist frei.\nUnd Ossian blieb und hält Wache.
+1652	Ossian ist heimgekehrt.\nUnd die Welt gehört nun Hex.
+1653	Die Geschichte wartet noch auf dich.
+1654	DANKE FÜRS SPIELEN!
+1655	beliebige Taste oder Tippen zum Überspringen
+1656	{0}   ·   Geschenke: {1}/3
+1657	DIE URNE IST ZERBROCHEN
+1658	VERSUS · {0}
+1659	ZERBROCHEN!
+1660	{0} (aus der Ferne)
+1661	· ERINNERUNG ·
+1662	HELFER
+1663	HELFER VON {0}
+1664	STURMBÖE!
+1665	der Wind drückt nach rechts ➜
+1666	⬅ der Wind drückt nach links
+1667	KNOCHENREGEN!
+1668	achte auf die Schatten am Boden
+1669	GEGENSTANDSREGEN!
+1670	renn und nimm sie zuerst
+1671	GERINGE SCHWERKRAFT!
+1672	turmhohe Sprünge
+1673	HELFER!
+1674	nimm die lila Kugel: Eine Kreatur kämpft an deiner Seite
+1675	ABGEWEHRT!
+1676	IM NETZ GEFANGEN!
+1677	IM FANGNETZ!
+1678	STURER KNOCHEN!
+1679	KLEBT!
+1680	ZU SPINNENFUTTER GEWORDEN
+1681	HAPPS!
+1682	VERSTAUT!
+1683	{0}  nehmen\n{1}{2}
+1684	SPRINGEN in der Luft halten, um zu fliegen
+1685	Haftet an Wänden und klettert
+1686	Schwimm! ▼ taucht, SPRINGEN verlässt das Wasser
+1687	DAS LEVEL STARTET NEU
+1688	FILMROLLE!
+1689	Ein geheimes Level ist auf der Karte erschienen...
+1690	Himmel frei!
+1691	GEBIET GESÄUBERT!
+1692	Boss besiegt!
+1693	GEFANGEN!
+1694	Level {0}
+1695	{0} · Bonusgebiet
+1696	{0} KÄMPFT AN DEINER SEITE!
+1697	sein Siegel wurde gebrochen: Jetzt ist er frei
+1698	{0} GESCHAFFT!
+1699	{0}   ·   Zeit: {1}s   ·   Tode: {2}
+1700	Kronenfragment zurückgewonnen!
+1701	{0} GEWINNT!
+1702	Hat das Ende der Gegenseite erreicht
+1703	SO WIRD GESPIELT
+1704	SPIELEN  ▶
+1705	Bewegen
+1706	Springen
+1707	Ducken
+1708	Decken
+1709	Angreifen
+1710	Gegenstand nehmen
+1712	W ↑ Leer
+1713	Nehmen
+1714	Auch: Pfeiltasten, Leertaste,\nJ (Angriff), K (Deckung), L (Nehmen)
+1715	Ducken (unten)
+1716	LB / RB decken ebenfalls
+1717	Ziehen: gehen (weit: Sprint)
+1718	Nach oben wischen: springen
+1719	Nach unten ziehen: ducken
+1720	Kurz tippen/klicken: angreifen
+1721	Still halten: nehmen
+1722	2 Finger oder rechte Taste: decken
+1723	Funktioniert mit dem Finger auf dem Bildschirm oder nur mit der Maus (die mittlere Taste nimmt auch).
+1724	Handy quer oder hochkant. Mehrere Finger gleichzeitig sind möglich.
+1725	Ein Treffer tötet.\nDich auch!
+1726	DECKUNG: Taste halten.\nIm Moment des Schlags\nnach HINTEN: KONTER!
+1727	Geduckt: weicht Schüssen aus\nund schlägt tief.
+1728	In der Luft Springen drücken:\nDoppelsprung.
+1729	Gegenstand einer anderen Figur\nam Boden: NEHMEN verwandelt.
+1730	5 Schauplätze: Erreiche das\nEnde der Gegenseite.
+1731	Getroffen? Du bist dran.\nErreiche dein Ende!
+1732	◀ TAGEBUCH
+1733	ERFOLGE ▶
+1734	ERFOLGE
+1735	◀  KARTE
+1736	OSSIANS TAGEBUCH
+1737	ERINNERUNGEN
+1738	WELTEN
+1739	Bonus ✓
+1740	Bonus —
+1741	{0}  ·  {1}/{2} Level  ·  {3}/{4} Geschenke  ·  {5}  ·  {6}
+1742	GOLD: {0}   ·   FÄHIGKEITEN: {1}\nVERBESSERUNGEN: {2}
+1743	tippe auf eine Erinnerung, um sie erneut zu sehen
+1744	{0}/{1} freigeschaltet
+1745	LÄDT
+1746	DUELLKRÄFTE
+1747	KÄMPFEN  ▶
+1748	◀ ZURÜCK
+1749	P1: W/S wählt, E markiert  ·  P2: ↑/↓ wählt, . markiert  ·  T: Testmodus  ·  Enter: kämpfen  ·  Tippen markiert
+1750	{0}: noch gesperrt. Schalte es im Storymodus frei (oder aktiviere den TESTMODUS).
+1751	Höchstens {0} Kräfte pro Spieler (im TESTMODUS ohne Limit).
+1752	TESTMODUS: AN
+1753	TESTMODUS: AUS
+1754	BETRETEN  ▶
+1755	◀ WELT
+1756	BETRETEN
+1757	Karte seitlich ziehen · 2× auf ein Level tippen, um hinzurennen
+1758	IM BAU
+1759	{0} · BONUS
+1760	NEUE FÄHIGKEIT!
+1761	VERSTANDEN
+1762	LEVEL {0}/{1} · {2}
+1763	{0}   ◀ ▶ wählen · Enter / A / Tippen: betreten · Esc: Welt
+1764	ERINNERUNG {0}/{1} · {2}
+1765	WEITER ▶
+1766	STORY  ·  1 Spieler
+1767	VERSUS  ·  2 Spieler
+1768	FREI  ·  Tests
+1769	EINSTELLUNGEN
+1770	SPIELEN
+1771	⚙ OPTIONEN
+1772	CREDITS
+1773	Enter · Leertaste · A-Taste · Tippen
+1774	Auf dem nächsten Bildschirm wählt jeder Spieler Tastatur, Controller oder Touch.
+1775	P1 = blau  ·  P2 = rot. Beide starten als Skelett.
+1776	DECKUNG auf der Taste (Q, K, B). Im Moment des Schlags nach HINTEN tippen: KONTER! Über dem Gegenstand einer anderen Figur NEHMEN drücken, um dich zu verwandeln.
+1777	LEVEL {0} · {1}
+1778	SPIEL
+1779	Textgeschwindigkeit
+1780	Wie schnell die Dialoge der Geschichte erscheinen.
+1781	LANGSAM
+1782	NORMAL
+1783	SCHNELL
+1784	SOFORT
+1785	Kommentare des Schädels
+1786	Sarkastische Sprechblase beim ersten Mal in jeder Gestalt.
+1787	Bildschirmwackeln
+1788	Stärke des Wackelns bei Einschlägen und Explosionen.
+1789	ANZEIGE
+1790	Vollbild
+1791	Schaltet das Vollbild ein oder aus.
+1792	Helligkeit
+1793	Hellt das Spielbild auf oder dunkelt es ab.
+1794	AUDIO
+1795	Gesamtlautstärke
+1796	Lautstärke aller Töne.
+1797	Soundeffekte
+1798	Sprünge, Schläge, Türen, Explosionen (8-Bit-Sounds).
+1799	Musik
+1800	Soundtrack: ein Thema für jedes Gebiet, Bosse und Erinnerungen.
+1801	STEUERUNG
+1802	Rennen per Doppeltipp
+1803	2× in die Richtung tippen und halten, um zu rennen.
+1804	Touch-Tasten: Größe
+1805	Größe der Tasten auf dem Handybildschirm.
+1806	KLEIN
+1807	MITTEL
+1808	GROSS
+1809	Touch-Tasten: Deckkraft
+1810	Wie stark die Touch-Tasten sichtbar sind.
+1811	BARRIEREFREIHEIT
+1812	Farben für Farbenblinde
+1813	Spieler 2 in Orange statt Rot.
+1814	Bildschirmblitze
+1815	Ausschalten, um Blitze zu vermeiden (Gewitter, Explosionen).
+1816	STANDARD WIEDERHERSTELLEN
+1817	↑ ↓ Option  ·  ← → anpassen  ·  Q / E (LB / RB) Reiter  ·  Esc / B zurück
+1818	AUS
+1819	AN
+1820	SCHWARZOHR-EMPORIUM
+1821	◀ KARTE
+1822	KAUFEN
+1823	← → wählen  ·  Enter / A kaufen  ·  Esc / B zurück
+1824	Määh. (Ich nehme Gold. Kein Geplauder.)
+1825	GEKAUFT
+1826	Määh. (Das gehört dir schon.)
+1827	Määh. (Es fehlen {0} Gold.)
+1828	LEICHT
+1829	Level startet nach 9 Toden neu
+1830	Level startet nach 5 Toden neu
+1831	SCHWER
+1832	Level startet beim 3. Tod neu
+1833	SPIELSTAND WÄHLEN
+1834	◀ ▶ wählen  ·  Enter / A: spielen  ·  Entf / X: löschen  ·  Esc / B: zurück
+1835	SPIELSTAND {0}
+1836	LEER
+1837	Neues Spiel — wähle die Schwierigkeit:
+1838	GESCHICHTE ABGESCHLOSSEN
+1839	{0} LEVEL · {1}/{2} FRAGMENTE
+1840	zuletzt gespielt: {0}
+1841	ANSEHEN  ▶
+1842	WEITER  ▶
+1843	WIRKLICH LÖSCHEN?
+1844	LÖSCHEN
+1845	EPILOG
+1846	KAPITEL {0}
+1847	WEITER  ▶
+1848	ÜBERSPRINGEN
+1849	DEM SCHAMANEN STELLEN
+1850	MIT SEINER HILFE HEIMKEHREN
+1851	Gewinnst du, ist die Welt frei... und du wirst wieder zu Knochen.
+1852	Du kehrst unversehrt heim. Die Welt bleibt beim Schamanen.
+1853	DIE WAHL
+1854	MENÜ
+1855	Wähle „Touchscreen"\nim Steuerungsbildschirm,\num am Handy zu spielen
+1856	SPINNENSINN
+1857	WEITER
+1858	LEVEL NEU STARTEN
+1859	ZUR KARTE
+1860	ZUM MENÜ
+1861	PAUSE
+1862	!  GEFAHR  !
+1863	Wähle mit Bedacht: Das verändert die Fluglevel.
+1864	NOCHMAL SPIELEN
+1865	◀ MENÜ
+1866	EMPORIUM · {0} Gold
+1867	TAGEBUCH
+1868	EMPORIUM · {0}
+1869	Tippe auf ein Gebiet, um es zu wählen · tippe erneut, um es zu betreten
+1870	EMPORIUM
+1871	DIE WELT GEHÖRT DEM SCHAMANEN
+1872	DIE WELT IST FREI
+1873	{0} · KRONENFRAGMENTE {1}/{2}
+1874	{0}/{1} Level geschafft (Ziel: {2} Level)
+1875	Ein Gebiet, noch von Nebel bedeckt. Schaffe die Gezeiteninseln, um es zu erreichen.
+1876	Ein Reich, das erst nach dem Pakt mit den Prinzen erscheint (in der Netzhöhle).
+1877	Das Heiligtum des Schamanen. Es öffnet sich erst, wenn alle Fragmente der Krone vereint sind.
+1878	Ein Gebiet, noch von Nebel bedeckt. Schaffe die Knochenprärie, um den Weg zu öffnen.
+1879	{0}  ·  Die Level dieses Gebiets sind noch im Bau.
+1880	KRONENFRAGMENT {0}/{1}!
+1881	große Kerzen
+1882	große Kerze
+1883	GROSSE FACKEL
+1884	GROSSE KERZE
+1885	Tür offen!
+1886	\n▼+{0} verstauen
+1887	König ✓
+1888	König —
+1889	keine (siehe Emporium)
+1891	BONUSGEBIET
+1892	LEVEL {0}
+1893	SPIELER 1
+1894	SPIELER 2
+1895	 · FREI
+1896	 · SPIELSTAND {0}
+1897	FREIER MODUS
+1898	{0}/{1} Level
+1899	{0} Gold

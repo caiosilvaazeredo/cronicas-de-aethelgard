@@ -1,0 +1,5 @@
+2120	Feuerlande
+2121	Ein heißer Spalt zwischen den Felsen. Dahinter: ein Lavameer, die Vulkanschmiede und der Glutenhimmel.
+2122	Festland
+2123	Der Weg zurück zum Festland, zum Dorf und zu den anderen Gebieten.
+2124	FEUERLANDE · STUFE {0}

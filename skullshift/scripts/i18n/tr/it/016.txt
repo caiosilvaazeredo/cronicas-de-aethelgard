@@ -1,0 +1,5 @@
+2120	Terre di Fuoco
+2121	Una fenditura rovente tra le rocce. Dall'altra parte: un mare di lava, la Fucina Vulcanica e il Cielo di Brace.
+2122	Continente
+2123	Il passaggio per tornare al continente, al Villaggio e alle altre aree.
+2124	TERRE DI FUOCO · LIVELLO {0}

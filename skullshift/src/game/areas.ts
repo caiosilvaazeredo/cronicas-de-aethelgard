@@ -25,6 +25,8 @@ export interface AreaDef {
   /** Posição no mapa do mundo (1280×720). */
   pos: [number, number];
   unlock: 'start' | 'after-mare' | 'after-pradaria' | 'pact' | 'all';
+  /** Região do mapa-múndi: 'fire' = Terras de Fogo (mapa à parte, como no Super Mario World). */
+  region?: 'fire';
 }
 
 /** Meta de fases por área (as que faltam aparecem como "em construção" no mapa da área). */
@@ -83,7 +85,9 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'minotaur_idle',
     color: 0xe0542e,
     levels: ['forgegate', 'chase', 'key3', 'lavatide', 'geysers', 'forgegun', 'obsidian', 'anvil', 'magma', 'volcano'],
-    pos: [832, 520],
+    // Terras de Fogo (mapa à parte): a ilha do vulcão.
+    pos: [600, 470],
+    region: 'fire',
     unlock: 'after-pradaria',
   },
   {
@@ -94,7 +98,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'sgnome_idle',
     color: 0x3f9a5a,
     levels: ['woods', 'key4', 'mushrooms', 'treetops', 'key5', 'logriver', 'acorngun', 'moss', 'gnomevillage', 'gnomeking'],
-    pos: [1130, 445],
+    pos: [1085, 455],
     unlock: 'after-pradaria',
   },
   {
@@ -116,8 +120,9 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'imp_idle',
     color: 0xd84a3a,
     levels: ['sky', 'emberclouds', 'winds', 'meteor', 'embergun', 'firewinds', 'cloudcastle', 'emberbees', 'skykey', 'plane'],
-    // Flutua logo acima do vulcão da Forja: a região de fogo do mapa.
-    pos: [892, 335],
+    // Terras de Fogo: flutua logo acima do vulcão da Forja.
+    pos: [630, 222],
+    region: 'fire',
     unlock: 'after-pradaria',
   },
   {

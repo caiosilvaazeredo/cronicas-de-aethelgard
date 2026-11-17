@@ -1,0 +1,5 @@
+2120	Ateş Toprakları
+2121	Kayalar arasında sıcak bir yarık. Öbür tarafta: bir lav denizi, Volkan Demirhanesi ve Kor Gökyüzü.
+2122	Anakara
+2123	Anakaraya, Köye ve diğer bölgelere dönüş yolu.
+2124	ATEŞ TOPRAKLARI · SEVİYE {0}

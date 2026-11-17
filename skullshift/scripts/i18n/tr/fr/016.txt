@@ -1,0 +1,5 @@
+2120	Terres de Feu
+2121	Une fissure brûlante entre les rochers. De l'autre côté : une mer de lave, la Forge Volcanique et le Ciel de Braise.
+2122	Continent
+2123	Le passage de retour vers le continent, le Village et les autres zones.
+2124	TERRES DE FEU · NIVEAU {0}

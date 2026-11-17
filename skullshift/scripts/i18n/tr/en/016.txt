@@ -1,0 +1,5 @@
+2120	Lands of Fire
+2121	A hot crack between the rocks. On the other side: a sea of lava, the Volcanic Forge and the Ember Sky.
+2122	Mainland
+2123	The way back to the mainland, the Village and the other areas.
+2124	LANDS OF FIRE · LEVEL {0}

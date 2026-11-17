@@ -1,3 +1,4 @@
+import { sfx } from '../game/settings';
 import Phaser from 'phaser';
 import { announceAchievements } from '../game/achievements';
 import { playMusic } from '../game/music';
@@ -19,6 +20,31 @@ const INK = 0x1d1a2b;
  * uma corrente e o céu sobre o santuário escurece um pouco (pista sutil do que o Xamã quer).
  * Escolher uma área abre o mapa dela, com as suas fases.
  */
+/** Passagens entre o continente e as Terras de Fogo (nós do mapa, sem fases). */
+const LINK_FIRE: AreaDef = {
+  id: 'link-fire',
+  name: 'Terras de Fogo',
+  blurb: 'Uma fenda quente entre as rochas. Do outro lado: um mar de lava, a Forja Vulcânica e o Céu de Brasa.',
+  king: '',
+  kingAnim: 'imp_idle',
+  color: 0xd84a3a,
+  levels: [],
+  pos: [860, 505],
+  unlock: 'after-pradaria',
+};
+const LINK_BACK: AreaDef = {
+  id: 'link-main',
+  name: 'Continente',
+  blurb: 'A passagem de volta ao continente, à Vila e às outras áreas.',
+  king: '',
+  kingAnim: 'skull_idle',
+  color: 0x2f86e0,
+  levels: [],
+  pos: [130, 488],
+  unlock: 'start',
+};
+const isLink = (a: AreaDef): boolean => a === LINK_FIRE || a === LINK_BACK;
+
 export class WorldScene extends Phaser.Scene {
   private devices: DeviceId[] = ['kb-full'];
   private sel = 0;
@@ -29,16 +55,22 @@ export class WorldScene extends Phaser.Scene {
   private uiCam?: Phaser.Cameras.Scene2D.Camera;
   private busy = false;
   private prevPad = { l: true, r: true, u: true, d: true, a: true, b: true };
-  lastData: { devices?: DeviceId[]; area?: string; cleared?: string } = {};
+  lastData: { devices?: DeviceId[]; area?: string; cleared?: string; region?: 'main' | 'fire' } = {};
+  /** Qual mapa: o continente ou as Terras de Fogo (à parte, como no Super Mario World). */
+  private region: 'main' | 'fire' = 'main';
+  /** Áreas deste mapa (mais a passagem para o outro). */
+  private list: AreaDef[] = [];
 
   constructor() {
     super('world');
   }
 
-  init(data: { devices?: DeviceId[]; area?: string; cleared?: string }): void {
+  init(data: { devices?: DeviceId[]; area?: string; cleared?: string; region?: 'main' | 'fire' }): void {
     this.lastData = data;
     this.devices = data.devices ?? ['kb-full'];
-    const i = ALL_AREAS.findIndex((a) => a.id === data.area);
+    this.region = data.region ?? (ALL_AREAS.find((a) => a.id === data.area)?.region === 'fire' ? 'fire' : 'main');
+    this.list = this.region === 'fire' ? [...ALL_AREAS.filter((a) => a.region === 'fire'), LINK_BACK] : [...ALL_AREAS.filter((a) => !a.region), LINK_FIRE];
+    const i = this.list.findIndex((a) => a.id === data.area);
     this.sel = i >= 0 ? i : this.firstOpen();
     this.busy = false;
     this.uiCam = undefined;
@@ -47,7 +79,7 @@ export class WorldScene extends Phaser.Scene {
 
   /** Área sugerida: a primeira aberta e ainda não vencida. */
   private firstOpen(): number {
-    const i = ALL_AREAS.findIndex((a) => areaUnlocked(a) && a.levels.length > 0 && !areaCleared(a));
+    const i = this.list.findIndex((a) => areaUnlocked(a) && a.levels.length > 0 && !areaCleared(a));
     return i >= 0 ? i : 0;
   }
 
@@ -65,14 +97,34 @@ export class WorldScene extends Phaser.Scene {
     cam.setBounds(0, 0, MW, MH);
 
     this.drawSea();
-    this.drawChains();
-    ALL_AREAS.forEach((a, i) => this.drawArea(a, i));
-    this.drawShop();
-    this.drawGloom();
+    if (this.region === 'main') this.drawChains();
+    this.list.forEach((a, i) => this.drawArea(a, i));
+    if (this.region === 'main') {
+      this.drawShop();
+      this.drawGloom();
+    } else {
+      this.cameras.main.fadeIn(400, 200, 54, 26);
+      // Trilhas pontilhadas (como no Super Mario World): passagem → Forja → Céu de Brasa.
+      const g = this.add.graphics().setDepth(4.2);
+      const forja = this.list.find((a) => a.id === 'forja')!;
+      const ceu = this.list.find((a) => a.id === 'ceu')!;
+      const trail = (a: [number, number], b: [number, number], bend: number) => {
+        const n = Math.floor(Math.hypot(b[0] - a[0], b[1] - a[1]) / 22);
+        for (let i = 2; i < n - 1; i++) {
+          const t = i / n;
+          const x = a[0] + (b[0] - a[0]) * t;
+          const y = a[1] + (b[1] - a[1]) * t - Math.sin(t * Math.PI) * bend;
+          g.fillStyle(INK, 0.8).fillCircle(x, y, 6);
+          g.fillStyle(0xfff7dc, 1).fillCircle(x, y, 4);
+        }
+      };
+      trail(LINK_BACK.pos, forja.pos, 30);
+      trail(forja.pos, ceu.pos, 0);
+    }
 
     this.ring = this.add.graphics().setDepth(18);
     this.hero = this.add.sprite(0, 0, 'skull_idle').play('skull_idle').setScale(0.6).setDepth(20);
-    const [hx, hy] = this.anchor(ALL_AREAS[this.sel]);
+    const [hx, hy] = this.anchor(this.list[this.sel]);
     this.hero.setPosition(hx, hy);
     cam.centerOn(hx, MH / 2);
     if (P) cam.startFollow(this.hero, true, 0.1, 0.1);
@@ -103,7 +155,7 @@ export class WorldScene extends Phaser.Scene {
 
   update(time: number): void {
     // Anel pulsando em volta da área escolhida.
-    const a = ALL_AREAS[this.sel];
+    const a = this.list[this.sel];
     const [x, y] = a.pos;
     const r = (a === CENTER ? 150 : 112) + Math.sin(time / 220) * 6;
     this.ring.clear();
@@ -200,7 +252,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private journal(): void {
-    this.scene.start('journal', { devices: this.devices, area: ALL_AREAS[this.sel].id });
+    this.scene.start('journal', { devices: this.devices, area: this.list[this.sel].id });
   }
 
   private village(): void {
@@ -208,7 +260,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private shop(): void {
-    this.scene.start('shop', { devices: this.devices, area: ALL_AREAS[this.sel].id });
+    this.scene.start('shop', { devices: this.devices, area: this.list[this.sel].id });
   }
 
   private header(): string {
@@ -216,18 +268,22 @@ export class WorldScene extends Phaser.Scene {
     const e = getEnding();
     if (e === 'home') return 'O MUNDO PERTENCE AO XAMÃ';
     if (e === 'free') return 'O MUNDO ESTÁ LIVRE';
+    if (this.region === 'fire') return `TERRAS DE FOGO · NÍVEL ${getLevel()}`;
     return `${isFreePlay() ? 'MODO LIVRE' : `SAVE ${currentSlot()}`} · NÍVEL ${getLevel()} · FRAGMENTOS ${sealsBroken()}/${n}`;
   }
 
   private select(i: number, instant = false): void {
     this.sel = i;
-    const a = ALL_AREAS[i];
+    const a = this.list[i];
     const open = areaUnlocked(a);
     const t = areaTitle(a);
     const done = a.levels.filter((id) => isDone(id)).length;
     if (!open) {
       this.infoTitle.setText('???');
       this.info.setText(this.lockedHint(a));
+    } else if (isLink(a)) {
+      this.infoTitle.setText(a.name.toUpperCase());
+      this.info.setText(a.blurb);
     } else {
       const status = areaCleared(a) ? 'Fragmento da coroa recuperado!' : `${done}/${a.levels.length} fases vencidas (meta: ${AREA_GOAL} fases)`;
       this.infoTitle.setText(`${t.name.toUpperCase()} · ${t.king.toUpperCase()}`);
@@ -259,10 +315,10 @@ export class WorldScene extends Phaser.Scene {
   /** Setas: escolhe a área mais próxima naquela direção. */
   private nav(dx: number, dy: number): void {
     if (this.busy) return;
-    const [x0, y0] = ALL_AREAS[this.sel].pos;
+    const [x0, y0] = this.list[this.sel].pos;
     let best = -1;
     let bestScore = Infinity;
-    ALL_AREAS.forEach((a, i) => {
+    this.list.forEach((a, i) => {
       if (i === this.sel) return;
       const vx = a.pos[0] - x0;
       const vy = a.pos[1] - y0;
@@ -280,12 +336,22 @@ export class WorldScene extends Phaser.Scene {
 
   private cycle(dir: number): void {
     if (this.busy) return;
-    this.select(Phaser.Math.Wrap(this.sel + dir, 0, ALL_AREAS.length));
+    this.select(Phaser.Math.Wrap(this.sel + dir, 0, this.list.length));
   }
 
   private enter(): void {
     if (this.busy) return;
-    const a = ALL_AREAS[this.sel];
+    const a = this.list[this.sel];
+    if (isLink(a) && areaUnlocked(a)) {
+      // Passagem para o outro mapa (como os canos e estradas do Super Mario World).
+      this.busy = true;
+      sfx('jump');
+      const to = a === LINK_FIRE ? 'fire' : 'main';
+      const [r, gg, b] = to === 'fire' ? [200, 54, 26] : [16, 34, 58];
+      this.cameras.main.fadeOut(400, r, gg, b);
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('world', { devices: this.devices, region: to, area: to === 'fire' ? LINK_BACK.id : LINK_FIRE.id }));
+      return;
+    }
     if (!areaUnlocked(a) || a.levels.length === 0) {
       this.cameras.main.shake(160, 0.004);
       if (areaUnlocked(a)) this.info.setText(`${a.blurb}  ·  As fases desta área ainda estão sendo construídas.`);
@@ -315,23 +381,34 @@ export class WorldScene extends Phaser.Scene {
     '..######.....#####..',
     '.#######.###.######.',
     '.#######.###.######.',
-    '.#######.###...####.',
-    '..######...####.###.',
-    '..#######..####.###.',
-    '...#####...####.....',
+    '.#######.###.######.',
+    '..######.....#####..',
+    '..#######..#######..',
+    '...#####....#####...',
     '....................',
   ];
 
-  /** Mar de lava em volta da ilha da Forja (o mesmo desenho do mar, em vermelho). */
-  private static readonly LAVA_SEA = { x: 832, y: 548, rx: 240, ry: 175 };
+  /** Terras de Fogo (mapa à parte): a ilha do vulcão num mar de lava e uma ilhota de volta. */
+  private static readonly FIRE_LAND = [
+    '....................',
+    '....................',
+    '....................',
+    '....................',
+    '....................',
+    '.......#####........',
+    '......#######.......',
+    '.###..#######.......',
+    '.###..#######.......',
+    '.......#####........',
+    '....................',
+  ];
 
-  private inLavaSea(x: number, y: number): boolean {
-    const L = WorldScene.LAVA_SEA;
-    return ((x - L.x) / L.rx) ** 2 + ((y - L.y) / L.ry) ** 2 <= 1;
+  private land(): string[] {
+    return this.region === 'fire' ? WorldScene.FIRE_LAND : WorldScene.LAND;
   }
 
   private isLand(c: number, r: number): boolean {
-    return WorldScene.LAND[r]?.[c] === '#';
+    return this.land()[r]?.[c] === '#';
   }
 
   /** Chão de cada área no mapa do mundo (tileset e tom). */
@@ -349,19 +426,17 @@ export class WorldScene extends Phaser.Scene {
   private drawSea(): void {
     const s = this.add.tileSprite(-MW, -MH, MW * 3, MH * 3, 'waves').setOrigin(0).setAlpha(0.35).setDepth(0);
     this.tweens.add({ targets: s, tilePositionX: 256, duration: 9000, repeat: -1 });
-    // A Forja fica num mar de lava: a mesma água, tingida de vermelho, com as ondas correndo.
-    const L = WorldScene.LAVA_SEA;
-    const maskG = this.make.graphics({}, false);
-    maskG.fillStyle(0xffffff).fillEllipse(L.x, L.y, L.rx * 2, L.ry * 2);
-    const lavaMask = maskG.createGeometryMask();
-    const base = this.add.graphics().setDepth(0.4);
-    // Borda macia: a lava vai se misturando à água em anéis cada vez mais transparentes.
-    for (let k = 4; k >= 1; k--) base.fillStyle(0xc8361a, 0.12 + (4 - k) * 0.05).fillEllipse(L.x, L.y, L.rx * 2 + k * 34, L.ry * 2 + k * 26);
-    base.fillStyle(0xc8361a, 1).fillEllipse(L.x, L.y, L.rx * 2, L.ry * 2);
-    for (let k = 0; k < 4; k++) base.fillStyle(0xff7a2a, 0.12).fillEllipse(L.x, L.y + 10, L.rx * (1.6 - k * 0.3), L.ry * (1.5 - k * 0.3));
-    const lw = this.add.tileSprite(L.x - L.rx, L.y - L.ry, L.rx * 2, L.ry * 2, 'waves').setOrigin(0).setTint(0xffd060).setAlpha(0.6).setDepth(0.5).setMask(lavaMask);
-    this.tweens.add({ targets: lw, tilePositionX: 256, duration: 7000, repeat: -1 });
-    this.tweens.add({ targets: base, alpha: 0.85, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Terras de Fogo: o mesmo mar, todo em lava (vermelho, com as ondas correndo e um brilho que pulsa).
+    if (this.region === 'fire') {
+      this.cameras.main.setBackgroundColor('#c8361a');
+      s.setTint(0xffd060).setAlpha(0.55);
+      const glow = this.add.graphics().setDepth(0.4);
+      for (let k = 0; k < 5; k++) glow.fillStyle(0xff7a2a, 0.08).fillEllipse(MW / 2, MH / 2 + 60, MW * (1.4 - k * 0.22), MH * (1.2 - k * 0.2));
+      this.tweens.add({ targets: glow, alpha: 0.5, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.add
+        .particles(0, MH, 'spark', { x: { min: 0, max: MW }, speedY: { min: -50, max: -20 }, lifespan: 4000, scale: { start: 0.3, end: 0 }, tint: [0xffe066, 0xff8a2a], alpha: { start: 0.9, end: 0 }, frequency: 120 })
+        .setDepth(1.5);
+    }
     const rng = new Phaser.Math.RandomDataGenerator(['world-rocks']);
     // Pedrinhas só na água (fora do continente).
     for (let i = 0; i < 40; i++) {
@@ -369,14 +444,14 @@ export class WorldScene extends Phaser.Scene {
       const r = rng.between(0, 10);
       if (this.isLand(c, r) || this.isLand(c, r + 1) || this.isLand(c, r - 1)) continue;
       const rock = this.add.sprite(c * 64 + 32, r * 64 + 32, 'water_rocks').setScale(1.1).setDepth(1).play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
-      if (this.inLavaSea(c * 64 + 32, r * 64 + 32)) rock.setTint(0x6a3a30);
+      if (this.region === 'fire') rock.setTint(0x6a3a30);
     }
     this.drawLand();
   }
 
   private drawLand(): void {
-    const land = ALL_AREAS.filter((a) => WorldScene.GROUND[a.id]);
-    for (let r = 0; r < WorldScene.LAND.length; r++)
+    const land = this.list.filter((a) => WorldScene.GROUND[a.id]);
+    for (let r = 0; r < this.land().length; r++)
       for (let c = 0; c < 20; c++) {
         if (!this.isLand(c, r)) continue;
         const up = !this.isLand(c, r - 1);
@@ -388,7 +463,7 @@ export class WorldScene extends Phaser.Scene {
         if (up || down || left || right) {
           const foam = this.add.sprite(x + 32, y + 32, 'water_foam').setDepth(2).play({ key: 'water_foam', startFrame: (c + r) % 16 });
           // Na beira do mar de lava a espuma é brasa.
-          if (this.inLavaSea(x + 32, y + 32)) foam.setTint(0xffa040);
+          if (this.region === 'fire') foam.setTint(0xffa040);
         }
         // Área mais perto desta célula decide o chão.
         let best = land[0];
@@ -530,6 +605,41 @@ export class WorldScene extends Phaser.Scene {
         deco(t.kingAnim.includes('bee') ? 'bld_yellow_castle' : 'bld_black_castle', 0, 0, 0.34);
         break;
       }
+      case 'link-fire': {
+        // Fenda vulcânica entre as rochas: brilho vermelho, fumaça e brasas subindo.
+        const glow = this.add.graphics().setDepth(4.5);
+        for (let k = 0; k < 4; k++) glow.fillStyle(0xff4a2a, 0.12).fillEllipse(x, y + 4, 150 - k * 30, 80 - k * 14);
+        this.tweens.add({ targets: glow, alpha: 0.5, duration: 1100, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        const cave = this.add.graphics().setDepth(5);
+        cave.fillStyle(INK, 1).fillEllipse(x, y + 10, 104, 74);
+        cave.fillStyle(0x5a3430, 1).fillEllipse(x, y + 10, 94, 64);
+        cave.fillStyle(0x2a0e0a, 1).fillEllipse(x, y + 18, 62, 44);
+        cave.fillStyle(0xff6a1a, 0.9).fillEllipse(x, y + 30, 44, 14);
+        cave.fillStyle(0xffd060, 0.9).fillEllipse(x, y + 31, 22, 6);
+        deco('stone3', -62, 34, 0.7);
+        deco('stone1', 60, 36, 0.6);
+        this.add
+          .particles(x, y + 20, 'spark', { x: { min: -20, max: 20 }, speedY: { min: -60, max: -30 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xffe066, 0xff7a1a], frequency: 140 })
+          .setDepth(6);
+        // Setinha indicando que leva para outro mapa.
+        const arrow = this.add.text(x + 70, y - 36, '▶', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
+        this.tweens.add({ targets: arrow, x: arrow.x + 8, duration: 500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        break;
+      }
+      case 'link-main': {
+        // Ilhota com um arco de pedra azul: a volta ao continente.
+        const g = this.add.graphics().setDepth(5);
+        g.fillStyle(INK, 1).fillRoundedRect(x - 42, y - 70, 84, 100, { tl: 40, tr: 40, bl: 0, br: 0 });
+        g.fillStyle(0x6a6470, 1).fillRoundedRect(x - 36, y - 64, 72, 94, { tl: 34, tr: 34, bl: 0, br: 0 });
+        g.fillStyle(0x2f86e0, 1).fillRoundedRect(x - 24, y - 50, 48, 80, { tl: 24, tr: 24, bl: 0, br: 0 });
+        const sw = this.add.graphics().setDepth(5.1);
+        sw.fillStyle(0x8fd9ff, 0.7).fillEllipse(0, 0, 30, 54);
+        sw.setPosition(x, y - 8);
+        this.tweens.add({ targets: sw, scaleX: 0.7, alpha: 0.5, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        const arrow = this.add.text(x - 62, y - 36, '◀', { fontFamily: FONT, fontSize: '30px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
+        this.tweens.add({ targets: arrow, x: arrow.x - 8, duration: 500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        break;
+      }
       case 'centro':
         // Trancado: nada à vista, só a tempestade (o suspense fica para o fim).
         if (!open) {
@@ -544,7 +654,7 @@ export class WorldScene extends Phaser.Scene {
         break;
     }
     // Rei da área (silhueta enquanto trancada).
-    if (a !== CENTER) {
+    if (a !== CENTER && !isLink(a)) {
       const t = areaTitle(a);
       const k = this.add.sprite(x + 56, y - 34, t.kingAnim).setScale(0.55).setFlipX(true).setDepth(8).play(t.kingAnim);
       if (!open) k.setTintFill(0x10223a).setAlpha(0.5);
@@ -610,7 +720,10 @@ export class WorldScene extends Phaser.Scene {
     const g = this.add.graphics().setDepth(1.5);
     this.chainG = g;
     // Final livre: os selos voltaram (correntes inteiras de novo).
-    for (const a of AREAS) this.chain(g, a, areaCleared(a) && getEnding() !== 'free');
+    for (const a of AREAS) if (!a.region) this.chain(g, a, areaCleared(a) && getEnding() !== 'free');
+    // As Terras de Fogo ficam num mapa à parte: a corrente vai até a passagem.
+    const fire = AREAS.filter((a) => a.region === 'fire');
+    this.chain(g, LINK_FIRE, fire.every(areaCleared) && getEnding() !== 'free');
   }
 
   private chain(g: Phaser.GameObjects.Graphics, a: AreaDef, broken: boolean): void {
@@ -655,7 +768,7 @@ export class WorldScene extends Phaser.Scene {
     const a = AREAS.find((x) => x.id === id);
     if (!a) return;
     this.busy = true;
-    const [x0, y0] = CENTER.pos;
+    const [x0, y0] = this.region === 'fire' ? LINK_BACK.pos : CENTER.pos;
     const [x1, y1] = a.pos;
     const mx = (x0 + x1) / 2;
     const my = (y0 + y1) / 2;

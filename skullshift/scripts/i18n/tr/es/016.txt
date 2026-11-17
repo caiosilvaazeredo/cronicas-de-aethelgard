@@ -1,0 +1,5 @@
+2120	Tierras de Fuego
+2121	Una grieta caliente entre las rocas. Al otro lado: un mar de lava, la Forja Volcánica y el Cielo de Brasas.
+2122	Continente
+2123	El paso de vuelta al continente, a la Aldea y a las otras zonas.
+2124	TIERRAS DE FUEGO · NIVEL {0}

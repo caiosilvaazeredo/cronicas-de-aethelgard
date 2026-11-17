@@ -1,0 +1,5 @@
+2120	Ziemie Ognia
+2121	Gorąca szczelina między skałami. Po drugiej stronie: morze lawy, Wulkaniczna Kuźnia i Żarzące Niebo.
+2122	Kontynent
+2123	Przejście z powrotem na kontynent, do Wioski i innych obszarów.
+2124	ZIEMIE OGNIA · POZIOM {0}

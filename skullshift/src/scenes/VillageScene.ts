@@ -1,4 +1,5 @@
-import { drawHills } from '../ui/props';
+import { CHARS, type CharId } from '../game/characters';
+import { drawHills, drawMountains } from '../ui/props';
 import { SMITH, smithCost } from '../game/dungeon';
 import { noTr, tr, trf } from '../i18n';
 import Phaser from 'phaser';
@@ -102,17 +103,22 @@ export class VillageScene extends Phaser.Scene {
 
   create(): void {
     playMusic('pradaria', 'vila');
-    this.drawWorld();
-    this.hero = this.add.sprite(420, GY, 'skull_idle').setOrigin(0.5, 0.82).setScale(0.75).setDepth(10).play('skull_idle');
     const cam = this.cameras.main;
-    cam.setBounds(0, 0, VW, VH);
     const P = VIEW.portrait;
+    this.skyTop = 0;
     if (P) {
+      // Em pé: a vila ocupa todo o espaço entre o cabeçalho e os botões; mostra ~720 px de rua
+      // de largura e, se sobrar altura, mais céu por cima.
       const HH = this.scale.height;
-      const top = 250 + PORTRAIT.topPad;
-      const zoom = Phaser.Math.Clamp((HH - top - 520) / VH, 1, 2.2);
-      cam.setViewport(0, top, W, VH * zoom).setZoom(zoom);
+      const top = 300 + PORTRAIT.topPad;
+      const h = HH - top - 480;
+      const zoom = Phaser.Math.Clamp(W / 560, 1, h / (VH - 330));
+      cam.setViewport(0, top, W, h).setZoom(zoom);
+      this.skyTop = Math.min(0, VH - h / zoom);
     }
+    cam.setBounds(0, this.skyTop, VW, VH - this.skyTop);
+    this.drawWorld();
+    this.hero = this.add.sprite(420, GY, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(0.75).setDepth(10).play('skull_idle');
     cam.startFollow(this.hero, true, 0.12, 0.12);
     this.prompt = this.add
       .text(0, 0, '', { fontFamily: FONT, fontSize: '18px', color: '#10223a', backgroundColor: '#fff7dc', padding: { x: 10, y: 5 } })
@@ -145,12 +151,20 @@ export class VillageScene extends Phaser.Scene {
     const sky = this.add.image(0, 0, 'sky').setOrigin(0).setScrollFactor(0).setDepth(-10);
     sky.setDisplaySize(W, this.scale.height);
     // Morros ao fundo (parallax leve).
-    const hills = this.add.graphics().setScrollFactor(0.4).setDepth(-5);
+    // Parallax feito à mão (segue a área visível), assim funciona igual com zoom no modo em pé.
+    const peaks = this.add.graphics().setDepth(-5.5);
+    drawMountains(peaks, -200, 1900, GY - 40);
+    const hills = this.add.graphics().setDepth(-5);
+    this.parallax = [{ obj: hills, k: 0.6 }, { obj: peaks, k: 0.85 }];
     const row = (o: number) => Array.from({ length: 9 }, (_, i) => i * 360 + o);
     drawHills(hills, row(120), GY + 30, 520, 260, 0x6fb86a, 0x8fd07a);
     drawHills(hills, row(300), GY + 60, 460, 200, 0x5aa257, 0x78bf68);
-    for (let i = 0; i < 7; i++) {
-      const c = this.add.image(Phaser.Math.Between(0, VW), Phaser.Math.Between(60, 220), `cloud_0${Phaser.Math.Between(1, 8)}`).setScrollFactor(0.2).setDepth(-6).setScale(0.5).setAlpha(0.9);
+    const clouds = this.add.container(0, 0).setDepth(-6);
+    this.parallax.push({ obj: clouds, k: 0.8 });
+    const skyTop = Math.min(60, this.skyTop + 60);
+    for (let i = 0; i < 7 + Math.round((60 - skyTop) / 90); i++) {
+      const c = this.add.image(Phaser.Math.Between(0, VW * 0.4), Phaser.Math.Between(skyTop, 220), `cloud_0${Phaser.Math.Between(1, 8)}`).setScale(0.5).setAlpha(0.9);
+      clouds.add(c);
       this.tweens.add({ targets: c, x: c.x + 200, duration: 30000, yoyo: true, repeat: -1 });
     }
     // Chão de grama do Tiny Swords.
@@ -175,7 +189,7 @@ export class VillageScene extends Phaser.Scene {
     // 2) Empório da Orelha-Preta.
     stand(600, 'bld_yellow_house2', 178 / 192, 0.9);
     this.npc(690, 'villager', 0xffd0a0, false);
-    this.add.sprite(520, GY, 'sheep_idle').setOrigin(0.5, 0.8).setScale(0.95).setDepth(6).play('sheep_idle');
+    this.add.sprite(520, GY, 'sheep_idle').setOrigin(0.5, 0.66).setScale(0.95).setDepth(6).play('sheep_idle');
     this.label(600, 'EMPÓRIO');
     this.addSpot(640, 'EMPÓRIO', () => this.scene.start('shop', { devices: ['kb-full'], from: 'village' }));
 
@@ -213,7 +227,7 @@ export class VillageScene extends Phaser.Scene {
     for (let x = 2626; x < 2626 + 64 * 0.8 * 5; x += 64 * 0.8) this.add.image(x, GY + 4, 'prop_fence').setOrigin(0, 1).setScale(0.8).setDepth(5);
     this.add.image(2626 + 64 * 0.8 * 5 + 3, GY + 4, 'prop_fencepost').setOrigin(0, 1).setScale(0.8).setDepth(5);
     for (const x of [2690, 2770, 2850]) {
-      const sh = this.add.sprite(x, GY - 4, 'sheep_move').setOrigin(0.5, 0.8).setScale(0.95).setDepth(4.5).play('sheep_move');
+      const sh = this.add.sprite(x, GY - 3, 'sheep_move').setOrigin(0.5, 0.66).setScale(0.95).setDepth(4.5).play('sheep_move');
       this.walkers.push({ spr: sh, min: 2660, max: 2880, dir: x % 2 ? 1 : -1 });
     }
     this.npc(2950, 'villager', 0xc8f0a0, true);
@@ -270,7 +284,7 @@ export class VillageScene extends Phaser.Scene {
 
   /** Personagem parado (ou andando) na rua. */
   private npc(x: number, id: string, tint: number | undefined, flip: boolean): Phaser.GameObjects.Sprite {
-    const s = this.add.sprite(x, GY, `${id}_idle`).setOrigin(0.5, 0.8).setScale(0.62).setDepth(6).setFlipX(flip).play(`${id}_idle`);
+    const s = this.add.sprite(x, GY, `${id}_idle`).setOrigin(0.5, CHARS[id as CharId].feetY / CHARS[id as CharId].frame).setScale(0.62).setDepth(6).setFlipX(flip).play(`${id}_idle`);
     if (tint !== undefined) s.setTint(tint);
     return s;
   }
@@ -296,8 +310,8 @@ export class VillageScene extends Phaser.Scene {
     const HH = this.scale.height;
     const k = P ? 2 : 1;
     const top = P ? 80 + PORTRAIT.topPad : 36;
-    if (P) this.add.rectangle(0, 0, W, 250 + PORTRAIT.topPad, INK).setOrigin(0);
-    this.add.text(W / 2, P ? 222 + PORTRAIT.topPad : 34, 'A VILA', { fontFamily: FONT, fontSize: P ? '56px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
+    if (P) this.add.rectangle(0, 0, W, 300 + PORTRAIT.topPad, INK).setOrigin(0);
+    this.add.text(W / 2, P ? 245 + PORTRAIT.topPad : 34, 'A VILA', { fontFamily: FONT, fontSize: P ? '56px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
     pillButton(this, P ? 150 : 100, top, '◀ MUNDO', () => this.toWorld(), 180).setScale(0.75 * k);
     // Nível e barra de XP, e o ouro.
     const lp = levelProgress();
@@ -338,8 +352,8 @@ export class VillageScene extends Phaser.Scene {
     };
     hold(180, '◀', -1);
     hold(470, '▶', 1);
-    pillButton(this, W - 470, y - 50, 'PULAR', () => this.jump(), 300, 0xffe066).setScale(1.6);
-    pillButton(this, W - 230, y + 70, 'USAR', () => this.action(), 300, 0xc8a8ff).setScale(1.6);
+    pillButton(this, W - 300, y - 58, 'PULAR', () => this.jump(), 300, 0xffe066).setScale(1.4);
+    pillButton(this, W - 300, y + 62, 'USAR', () => this.action(), 300, 0xc8a8ff).setScale(1.4);
     this.add.text(W / 2, HH - 120, 'Toque no cenário para andar até um lugar', { fontFamily: BODY_FONT, fontSize: '30px', color: '#bfd0e0' }).setOrigin(0.5);
   }
 
@@ -370,19 +384,24 @@ export class VillageScene extends Phaser.Scene {
     const HH = this.scale.height;
     const k = P ? 2 : 1;
     const pw = P ? W - 80 : 980;
-    const rows = Math.max(1, choices.length);
-    const ph = (150 + rows * 62) * k;
     const x = W / 2 - pw / 2;
-    const y = (P ? HH - 140 : VH - 40) - ph;
     const first = this.children.list.length;
     const g = this.add.graphics();
+    const title = this.add.text(x + 28, 0, name, { fontFamily: FONT, fontSize: `${Math.round(24 * k)}px`, color: '#7a3ad0' });
+    const body = this.add.text(x + 28, 0, text, { fontFamily: BODY_FONT, fontSize: `${Math.round(19 * k)}px`, color: '#10223a', wordWrap: { width: choices.length && !P ? pw - 56 - 420 * k : pw - 56 }, lineSpacing: 4 });
+    // Altura pelo texto: com escolhas, os botões ficam na coluna da direita; só "OK", embaixo do texto.
+    const rows = Math.max(1, choices.length);
+    const textH = 62 * k + body.height + 22 * k;
+    // Em pé a tela é estreita: os botões sempre vão embaixo do texto.
+    const ph = choices.length && !P ? Math.max(textH, (40 + rows * 64) * k) : P ? textH + (rows * 64 + 10) * k : textH + 70 * k;
+    const y = (P ? HH - 140 : VH - 40) - ph;
+    title.setY(y + 22 * k);
+    body.setY(y + 62 * k);
     g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 22);
     g.fillStyle(0xfff7dc, 1).fillRoundedRect(x, y, pw, ph, 18);
-    this.add.text(x + 28, y + 22 * k, name, { fontFamily: FONT, fontSize: `${Math.round(24 * k)}px`, color: '#7a3ad0' });
-    this.add.text(x + 28, y + 62 * k, text, { fontFamily: BODY_FONT, fontSize: `${Math.round(19 * k)}px`, color: '#10223a', wordWrap: { width: choices.length ? pw - 56 - 420 * k : pw - 56 }, lineSpacing: 4 });
     const list = choices.length ? choices : [{ label: 'OK', act: () => this.closeDialog() }];
     list.forEach((c, i) => {
-      const btn = pillButton(this, x + pw - 230 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 500, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.78 * k);
+      const btn = pillButton(this, P ? W / 2 : x + pw - 230 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 500, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.78 * k);
       if ((c as { raw?: boolean }).raw) noTr(btn.list[1] as Phaser.GameObjects.Text).setText(c.label);
     });
     const objs = this.children.list.slice(first);
@@ -500,7 +519,13 @@ export class VillageScene extends Phaser.Scene {
     }
   }
 
+  private parallax: Array<{ obj: Phaser.GameObjects.Graphics | Phaser.GameObjects.Container; k: number }> = [];
+  /** Topo do mundo visível (negativo em pé: mostra mais céu acima da vila). */
+  private skyTop = 0;
+
   update(_t: number, delta: number): void {
+    const view = this.cameras.main.worldView;
+    for (const p of this.parallax) p.obj.x = view.x * p.k;
     const dt = Math.min(0.05, delta / 1000);
     const k = this.keys;
     let move = 0;

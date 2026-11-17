@@ -1,3 +1,4 @@
+import { CHARS } from '../game/characters';
 import { drawDock, drawHills, drawPlankWall, drawPond } from '../ui/props';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
@@ -88,7 +89,7 @@ export class MinigameScene extends Phaser.Scene {
     this.tweens.add({ targets: glint, alpha: 0.15, duration: 1100, yoyo: true, repeat: -1 });
     // Píer e a caveira com a vara.
     drawDock(this.add.graphics(), 80, gy - 12, 330, [120, 240, 360].map((x) => x - 80), 80);
-    const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, 0.82).setScale(VIEW.portrait ? 1.6 : 0.9).play('skull_idle');
+    const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(VIEW.portrait ? 1.6 : 0.9).play('skull_idle');
     const rod = this.add.graphics();
     const bob = this.add.container(0, 0);
     const bx = 760;
@@ -294,14 +295,14 @@ export class MinigameScene extends Phaser.Scene {
     }
     // Em pé tudo fica maior (a tela é bem mais alta que larga).
     const K = VIEW.portrait ? 2.2 : 1;
-    const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, 0.82).setScale(K).play('skull_idle').setDepth(5);
+    const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(K).play('skull_idle').setDepth(5);
     let vy = 0;
     let ground = true;
     let left = 40;
     let target: number | null = null;
     const flock: Array<{ s: Phaser.GameObjects.Sprite; v: number; vy: number; until: number }> = [];
     const addSheep = () => {
-      const s = this.add.sprite(Phaser.Math.Between(60, W - 60), gy, 'sheep_move').setOrigin(0.5, 0.8).setScale(1.1 * K).play('sheep_move').setDepth(4);
+      const s = this.add.sprite(Phaser.Math.Between(60, W - 60), gy, 'sheep_move').setOrigin(0.5, 0.66).setScale(1.1 * K).play('sheep_move').setDepth(4);
       flock.push({ s, v: (Math.random() < 0.5 ? -1 : 1) * Phaser.Math.Between(90, 170), vy: 0, until: 0 });
     };
     for (let i = 0; i < 5; i++) addSheep();

@@ -600,3 +600,20 @@ export function makeProps(scene: Phaser.Scene): void {
 
   g.destroy();
 }
+
+/** Cordilheira distante: picos com contorno, face iluminada à esquerda e neve no topo. */
+export function drawMountains(g: G, x0: number, x1: number, baseY: number, seed = 13, pal = [0x6f8fb8, 0x9ab8dc, 0x52709a]): void {
+  const R = rng(seed);
+  const peaks: Array<[number, number, number]> = [];
+  for (let x = x0; x < x1; x += 150 + R() * 120) peaks.push([x, 150 + R() * 140, 110 + R() * 70]);
+  for (const [px, h, w] of peaks) poly(g, [px - w * 1.3, baseY, px, baseY - h, px + w * 1.3, baseY], pal[0], 4);
+  for (const [px, h, w] of peaks) {
+    g.fillStyle(pal[0]).fillTriangle(px - w * 1.3 + 6, baseY, px, baseY - h + 4, px + w * 1.3 - 6, baseY);
+    g.fillStyle(pal[1]).fillTriangle(px - w * 1.3 + 8, baseY, px, baseY - h + 4, px - w * 0.15, baseY);
+    g.fillStyle(pal[2]).fillTriangle(px + w * 0.35, baseY, px, baseY - h + 4, px + w * 1.3 - 8, baseY);
+    // Neve.
+    const s = 0.28;
+    poly(g, [px - w * 1.3 * s, baseY - h * (1 - s), px, baseY - h, px + w * 1.3 * s, baseY - h * (1 - s), px + w * 0.18, baseY - h * (1 - s) + 10, px, baseY - h * (1 - s) + 2, px - w * 0.2, baseY - h * (1 - s) + 12], 0xf4f8ff, 2);
+    g.fillStyle(0xc8d8ee).fillTriangle(px + 2, baseY - h + 4, px + w * 1.3 * s - 2, baseY - h * (1 - s), px + w * 0.16, baseY - h * (1 - s) + 8);
+  }
+}

@@ -1,0 +1,139 @@
+595	Diablillos y minotauros de lava, sin parar.
+596	¡Minotauros rojos! ¡Corren como toros bravos!
+597	Entonces dispara antes de que lleguen. Mantén ATACAR.
+598	¿Quién entrenó a tantos toros de lava?
+599	El Minotauro no entrena: forja. Cada soldado sale del yunque sabiendo ya a quién proteger.
+600	¿Proteger de mí?
+601	De ti. De mí. En el fondo, de lo mismo.
+603	Losas de piedra negra que se hunden en la lava.
+604	¡Losas negras flotando en la lava! ¡Y cañones!
+605	La obsidiana se hunde después de pisarla. No pares.
+606	¿Quién puso cañones en una forja?
+607	Al Minotauro no le gustan las visitas. A ningún rey.
+609	El taller del herrero, cerrado por rocas de oro.
+610	Un taller. Yunques, herramientas... sé usar estas cosas.
+611	¿Sabes? Interesante. Usa el martillo en las rocas y coge la llave.
+612	Tenía callos en las manos de tanto trabajar. Lo recuerdo.
+613	Los huesos no tienen callos, Ossian.
+615	El corazón de la montaña. Nada pasa sin luchar.
+616	Los caminos se cierran con fuego hasta que derribo a todos.
+617	El Minotauro no deja pasar a nadie sin luchar. Después de esto, es él.
+618	Se siente la montaña latiendo bajo los pies.
+619	Es el fragmento. Laten cuando alguien se acerca. Como si tuvieran miedo.
+621	El bosque de los gnomos del tirachinas.
+622	Árboles enormes. Y alguien tirándome bellotas a la cabeza.
+623	Gnomos. Pequeños, tercos y con buena puntería.
+624	Ese olor a madera... lo conozco.
+625	Todos los bosques huelen igual, Ossian.
+627	Setas que lanzan a quien cae encima.
+628	Las paredes son demasiado altas para saltar.
+629	Cae sobre las setas rojas. Te lanzarán muy alto.
+630	¿Y si me como una?
+631	No tienes estómago, Ossian.
+633	El suelo desaparece en el río. El camino va por arriba.
+634	El río se tragó el camino.
+635	Entonces ve por arriba, de copa en copa. No mires abajo.
+636	Desde allí arriba se ven tejados azules, lejos, muy lejos...
+637	Es solo el reflejo del cielo en el agua.
+639	Troncos flotando en el río: se puede pisarlos.
+640	Troncos flotando. Alguien taló estos árboles.
+641	Los gnomos tiran los troncos al río para llevarlos a la aldea. Písalos.
+642	Yo cortaba leña. Detrás de una casa azul. Estoy seguro.
+643	Cruza el río, Ossian.
+645	Gnomos con tirachinas por todas partes.
+646	¡Una lluvia de bellotas!
+647	Responde con huesos. Mantén ATACAR.
+648	¿Por qué defienden tanto un bosque?
+649	Porque los plantaron aquí para eso. Un gnomo no pregunta; un gnomo vigila.
+651	Montones de musgo que esconden gnomos.
+652	Ese musgo tembló. Igual que la hierba de la pradera.
+653	Gnomos del musgo. Aprendieron de los Gnolls.
+654	O alguien les enseñó a los dos.
+655	...Cuidado con los troncos.
+657	La aldea de los gnomos. Nadie pasa sin luchar.
+658	Una aldea de verdad. Casas, chimeneas, tendederos...
+659	Los habitantes defienden al Rey. Cada área solo se abre cuando caen todos.
+660	Yo vivía en una aldea así, ¿verdad?
+661	Vivías donde te encontré: en la playa.
+663	El Rey Gnomo guarda el fragmento al pie del árbol más viejo.
+664	Un gnomo del tamaño de una casa. Con gorro morado.
+665	Lanza bellotas en arco, hace rodar troncos gigantes y sacude el árbol.
+666	Morado, otra vez. Todos los reyes usan tu morado, Hex.
+667	Es el color de la realeza. Nada más. Ve.
+669	Las minas de los goblins, llenas de antorchas y oro.
+670	¡Cuánto oro! Y cuántas antorchas encendidas.
+671	Los goblins cavan desde hace siglos. El techo es viejo: cuando caiga polvo, apártate.
+672	¿Cavan para qué? Aquí el oro no compra nada. Tú mismo lo dijiste.
+673	El Rey Goblin no lo sabe. Ni necesita saberlo.
+675	El techo de la galería se está derrumbando.
+676	¡Todo el techo se está cayendo!
+677	El polvo avisa dónde cae la piedra. Corre entre ellas.
+678	Estas vigas están podridas. ¿Cuánto tiempo llevan cavando aquí?
+679	Desde que alguien mandó esconder el fragmento muy hondo. Hace mucho, mucho tiempo.
+681	Las antorchas se apagaron.
+682	Oscuro otra vez. Alguien apagó las antorchas a propósito.
+683	Enciende las antorchas. Las tres grandes abren la salida.
+684	Mi hermana tenía miedo a la oscuridad. Yo le dejaba una vela encendida.
+685	...Tu hermana. Hm. Enciende las antorchas, Ossian.
+687	Rocas de oro cierran las galerías.
+688	Rocas de oro otra vez. ¡Martillo con ellas!
+689	En el aire, baja con todo. Y lleva la llave a la puerta.
+690	Tanto oro y nadie se lo lleva.
+691	¿Llevarlo adónde? No hay mercado fuera de este reino. No hay fuera.
+692	Dijiste que el Portal de la Marea lleva fuera.
+693	Lo dije. Y lleva. Para ti.
+695	Goblins mineros lanzan bombas.
+696	¡Están lanzando bombas!
+697	Mineros. Hacen volar la roca y a quien esté cerca. Esquiva el arco.
+698	Si exploto con ella, ¿irás a buscarme?
+699	Siempre. En pedazos, si hace falta. No pierdo a ninguno de los míos.
+701	El agua de la mina sube y baja.
+702	¿Marea dentro de una mina? Eso no tiene sentido.
+703	El agua sube desde abajo. Vuelve a bajar. Como todo aquí.
+704	Como todo aquí... vuelve.
+705	Quédate en lo alto, Ossian.
+707	El fuego de las profundidades es azul.
+708	¡Fuego azul! Y los goblins que lo llevan corren como locos.
+709	Es el fuego del fondo de la tierra. Más caliente que el rojo. No dejes que te toque.
+710	¿Por qué este fuego es azul?
+711	Es un fuego que no calienta. Los goblins lo usan para ver sin ser vistos. No me gusta ninguna de las dos cosas.
+713	El tesoro del Rey. Guardado por todos.
+714	Montañas de oro. Y guardias en cada rincón.
+715	Cada área solo se abre cuando caen todos. Después, el Rey.
+716	Si el rey tiene todo esto, ¿por qué sigue queriendo el fragmento?
+717	No QUIERE el fragmento, Ossian. Él... olvídalo. Los reyes son codiciosos, eso es todo.
+719	El Rey Goblin de la Antorcha guarda el fragmento en medio del oro.
+720	El Rey Goblin. Capucha negra y antorcha roja.
+721	Golpea el suelo con la antorcha y suelta ondas de fuego: salta. Y corre de un lado a otro.
+722	Hex, cuando caiga el último rey, ¿qué le pasará a este mundo?
+723	Nada que vayas a ver, Ossian. Estarás en casa.
+725	Agua quieta, musgo y lagartos.
+726	Qué agua tan verde. Y ese olor a hoja podrida.
+727	La laguna de los lagartos. El Rey Lagarto vive en medio y nunca duerme.
+728	¿Nunca? ¿Ni una siesta?
+729	Quien guarda un sello... quiero decir, un fragmento... no puede dormir.
+731	Hojas gigantes que se hunden al pisarlas.
+732	¡Hojas del tamaño de una mesa!
+733	Aguantan a un esqueleto un instante. Solo un instante.
+734	Estas flores solo se abren cuando paso.
+735	Sienten el movimiento. Aquí hace mucho que poca cosa anda de pie.
+737	El agua del pantano sube y baja.
+738	Aquí también sube el agua. ¿Hasta el pantano tiene marea?
+739	Toda el agua de este mundo obedece al mismo ritmo.
+740	¿Al ritmo de quién?
+741	Sube a los troncos, Ossian.
+743	Espinas y lagartos morados escupiendo veneno.
+744	Lagartos morados. Morados como tú, Hex.
+745	Su veneno es morado. Yo no tengo veneno.
+746	¿Seguro?
+747	Esquiva las espinas.
+749	Un cangrejo de la ciénaga se llevó la llave.
+750	Una casita de pescador. Igual que las de mi... las que vi.
+751	Un cangrejo se llevó la llave. Ya sabes qué hacer.
+752	Un lagarto pescando. Parece en paz.
+753	La paz de quien no sabe lo que vigila. No lo despiertes a eso; solo pasa.
+755	En el fondo de la laguna, solo un lagarto la cruza.
+756	El camino se hunde en la laguna.
+757	Allá abajo te daré la forma de un lagarto. Los lagartos nadan.
+758	Ya no necesitas ningún objeto para transformarme, ¿verdad?
+759	Cuantos más sellos caen... quiero decir, cuantos más fragmentos reúnes, más puedo.

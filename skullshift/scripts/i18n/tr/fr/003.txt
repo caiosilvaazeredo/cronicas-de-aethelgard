@@ -1,0 +1,129 @@
+441	La marée monte et descend toute seule. Le sol bas disparaît sous l'eau.
+442	L'eau monte ! Et descend ! Et remonte !
+443	La marée de ces îles respire. Quand elle arrive, monte en hauteur et attends.
+444	Qui la commande ?
+445	Le Roi Requin-Harpon. Il garde le premier fragment de la couronne.
+446	Un requin... avec une couronne ?
+447	Chaque roi garde un morceau. Ensemble, ils ouvrent ton chemin.
+449	Les restes d'un navire. Les planches détachées coulent juste après qu'on a marché dessus.
+450	Un navire entier, brisé en morceaux.
+451	Ne t'arrête pas sur les planches. Elles coulent.
+452	Qui était sur ce navire ?
+453	Des gens qui voulaient eux aussi rentrer chez eux.
+454	...Et ils sont rentrés ?
+455	Saute, Ossian.
+457	Le navire des gobelins pirates. Les canons balaient le pont.
+458	Des pirates ! Et des canons pointés sur moi !
+459	Les boulets arrivent en ligne droite. Saute ou garde avec le bouclier.
+460	Le capitaine est sur la dunette, tout au fond.
+461	Il travaille pour le Roi Requin. Tout le monde, dans ces eaux, travaille pour lui.
+463	Une caverne entière sous l'eau. Seul un requin peut la traverser.
+464	La caverne est complètement inondée, Hex. Je vais couler.
+465	Pas en requin. Là-dedans, je te donnerai sa forme.
+466	Tu peux faire ça sans que je prenne un harpon ?
+467	Ici, en bas, je peux plus que tu ne l'imagines.
+468	...Tu n'avais jamais dit ça.
+469	Nage. Les méduses ne pardonnent pas.
+471	Des leviers ouvrent et ferment les vannes : marée haute ou marée basse, c'est toi qui choisis.
+472	Des leviers ! À quoi ils servent ?
+473	Ils ouvrent et ferment les vannes du phare. Marée haute : les caisses montent. Marée basse : le sol apparaît.
+474	Alors c'est moi qui commande la marée, comme le Roi.
+475	Pour l'instant. Profites-en tant que tu peux.
+477	Le pont s'est effondré au milieu : le chemin passe par les vergues, tout là-haut.
+478	Le pont s'est brisé au milieu ! Il n'y a pas de passage.
+479	Si : par le haut. Par les vergues et les nids-de-pie.
+480	D'ici, on voit le phare, la plage... et une lumière chaude, très loin.
+481	Ne regarde pas la lumière. Regarde où tu mets les pieds.
+483	Coraux de feu, méduses et marée. Le dernier pas avant le Roi.
+484	Les coraux d'ici brûlent !
+485	Corail de feu. Ne le touche pas. Et la marée arrive encore.
+486	Après le récif, le Roi Requin.
+487	Après le récif, le premier fragment. Pense au fragment.
+489	Le Roi Requin-Harpon commande la marée. À marée basse, il s'échoue.
+490	C'est lui. Le Roi Requin-Harpon.
+491	Il commande la marée. Quand l'eau baissera, il restera coincé dans le sable. Attaque à ce moment-là.
+492	Et quand la marée montera ?
+493	Monte toi aussi. Sur les rochers des côtés. Ses harpons restent plantés en l'air : sers-t'en comme de marches.
+494	Hex... pourquoi tiens-tu tant à ce fragment ?
+495	Moi ? C'est pour toi, Ossian. Ça a toujours été pour toi.
+497	La couronne est entière. Les sceaux sont tombés.
+499	L'entrée de la Prairie des Os, terre des Gnolls.
+500	Quelle est cette odeur ? De l'herbe... et du chien mouillé.
+501	Des Gnolls. La prairie est à eux. Les chasseurs lancent des os qui font la courbe et reviennent.
+502	Des os qui reviennent. Quelle ironie.
+503	Ici, tout revient, Ossian. Sauf ceux qui vont de l'avant.
+505	Le troupeau charge sur le sol bas.
+506	Le sol tremble !
+507	Le troupeau des Gnolls. Quand il arrive, grimpe sur n'importe quoi de haut.
+508	Et si je reste en bas ?
+509	Alors je viendrai encore te chercher. Mais je préférerais éviter.
+511	Des pentes d'os anciens. Des rochers dévalent d'en haut.
+512	Que d'os. Ils sont tous de gnoll ?
+513	Pas tous. Certains appartiennent à des voyageurs venus chercher une couronne avant toi.
+514	...Avant moi ? Combien ?
+515	Attention aux rochers. Ils roulent sans prévenir.
+517	Des moutons, des plaques et des portails. La clé est en haut de la grange.
+518	Des moutons ! Je... gardais des moutons. Je crois.
+519	Mets les moutons sur les plaques. Les portails s'ouvrent avec du poids.
+520	Pourquoi je me souviens de moutons, Hex ?
+521	Tout le monde se souvient des moutons. Prends la clé.
+523	Des buissons qui tremblent. Des Gnolls cachés qui attendent.
+524	Ce buisson a bougé.
+525	Des rôdeurs. Ils se cachent dans l'herbe et bondissent sur qui passe près.
+526	Au moins, on voit le tremblement.
+527	Ouvre l'œil, Ossian. Dans ce monde, presque rien n'est ce qu'il paraît.
+529	La caravane n'arrête pas d'envoyer des chasseurs.
+530	Toute une caravane qui vient vers moi.
+531	Maintiens ATTAQUER et n'arrête pas de tirer.
+532	Qu'est-ce qu'ils transportent dans ces chariots ?
+533	Des os. Pour le Roi. Il les collectionne.
+535	De larges vides qu'on franchit sur les courants de vent.
+536	Les vides sont énormes. Je ne peux pas sauter ça.
+537	Entre dans le vent. Il te soulèvera. Puis maintiens le saut et plane.
+538	D'ici, je vois un pont, au loin, après la mer.
+539	Il n'y a aucun pont. C'est un mirage du vent.
+541	Le Roi Gnoll garde le deuxième fragment.
+542	C'est lui. Plus grand que je ne pensais. Et avec des taches violettes...
+543	Son os part et revient. Bas, saute ; haut, accroupis-toi. Quand il bondit, écarte-toi.
+544	Pourquoi a-t-il les mêmes couleurs que toi, Hex ?
+545	Coïncidence. Fais-le tomber, Ossian. Le fragment attend.
+547	Des fils de toile tendus au-dessus de l'abîme. Ils cèdent.
+548	C'est ça, un pont ? C'est un fil de toile !
+549	Des fils solides, mais pas éternels. Marche et cours.
+550	Qui a tissé des ponts au milieu de la grotte ?
+551	La Reine. Elle aime que ses visiteurs arrivent jusqu'à elle.
+553	Noir complet. Seules les torches montrent le chemin.
+554	Hex ? Je ne vois rien.
+555	Touche les torches. Elles s'allument. Les trois grandes ouvrent la sortie.
+556	C'est drôle. J'avais peur du noir ? Non... c'était quelqu'un d'autre.
+557	Concentre-toi sur les torches, Ossian.
+559	Des cocons suspendus aux fils, qui se balancent.
+560	Ces cocons... il y a quelqu'un dedans ?
+561	Il y a le déjeuner de la Reine. N'y touche pas, ou tu deviens le dîner.
+562	Beurk.
+563	Miam, dirait-elle.
+565	Des araignées sauteuses et des chauves-souris vampires, sans arrêt.
+566	Elles sautent ! Les araignées vertes sautent !
+567	Alors n'arrête pas de tirer. Maintiens ATTAQUER.
+568	Et les chauves-souris rouges ?
+569	Celles-là piquent. Tire-leur dessus avant.
+571	Le nid de la Reine. La clé est tout là-haut.
+572	Des œufs. Des milliers d'œufs. Et la clé tout en haut du nid.
+573	Un mur de blocs rouges bloque le chemin. Change la couleur au levier.
+574	Avec la clé en main, je ne peux pas frapper le levier.
+575	Alors lâche la clé, frappe, et reprends-la. Tout ne se règle pas dans la précipitation.
+577	L'entrée de la montagne de feu.
+578	Le sol bout, Hex. Et ce trou qui bouillonne ?
+579	Un geyser. Il bouillonne avant de cracher du feu. Attends qu'il passe et cours.
+580	Le Minotaure Écarlate vit là-dedans ?
+581	Au cœur de la montagne. À marteler la lave. À garder le cinquième fragment.
+583	La lave monte et descend comme la marée.
+584	La lave monte ! Comme la marée sur les îles !
+585	La montagne respire comme la mer. Monte sur le basalte : il flotte.
+586	Tout dans ce monde monte et descend. Même moi.
+587	Toi, tu ne fais que monter, Ossian. Je te le garantis.
+589	Des champs de geysers qui jaillissent en rythme.
+590	Un, deux, trois... ils jaillissent en séquence.
+591	Comme un cœur. Apprends le rythme et passe entre les battements.
+592	Tu connais bien cette montagne.
+593	Je connais bien toutes les prisons. Je veux dire... tous les endroits.

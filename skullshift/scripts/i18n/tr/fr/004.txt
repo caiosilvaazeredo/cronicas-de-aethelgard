@@ -1,0 +1,139 @@
+595	Des diablotins et des minotaures de lave, sans arrêt.
+596	Des minotaures rouges ! Ils chargent comme des taureaux furieux !
+597	Alors tire avant qu'ils arrivent. Maintiens ATTAQUER.
+598	Qui a dressé autant de taureaux de lave ?
+599	Le Minotaure ne dresse pas : il forge. Chaque soldat sort de l'enclume en sachant déjà qui protéger.
+600	Protéger de moi ?
+601	De toi. De moi. Au fond, de la même chose.
+603	Des dalles de pierre noire qui s'enfoncent dans la lave.
+604	Des dalles noires qui flottent sur la lave. Et des canons !
+605	L'obsidienne coule après qu'on a marché dessus. Ne t'arrête pas.
+606	Qui a mis des canons dans une forge ?
+607	Le Minotaure n'aime pas les visites. Aucun roi ne les aime.
+609	L'atelier du forgeron, bloqué par des rochers d'or.
+610	Un atelier. Des enclumes, des outils... je sais me servir de ces choses.
+611	Ah oui ? Intéressant. Utilise le marteau sur les rochers et prends la clé.
+612	J'avais des cals aux mains à force de travailler. Je m'en souviens.
+613	Les os n'ont pas de cals, Ossian.
+615	Le cœur de la montagne. Rien ne passe sans combattre.
+616	Les chemins se ferment par le feu jusqu'à ce que j'abatte tout le monde.
+617	Le Minotaure ne laisse passer personne sans combattre. Après ici, c'est lui.
+618	On sent la montagne battre sous nos pieds.
+619	C'est le fragment. Ils palpitent quand quelqu'un approche. Comme s'ils avaient peur.
+621	Le bois des gnomes au lance-pierre.
+622	Des arbres immenses. Et quelqu'un qui me lance des glands sur la tête.
+623	Des gnomes. Petits, têtus et bons tireurs.
+624	Cette odeur de bois... je la connais.
+625	Tous les bois sentent pareil, Ossian.
+627	Des champignons qui propulsent ceux qui tombent dessus.
+628	Les murs sont trop hauts pour sauter.
+629	Retombe sur les champignons rouges. Ils te propulseront tout en haut.
+630	Et si j'en mange un ?
+631	Tu n'as pas d'estomac, Ossian.
+633	Le sol disparaît dans la rivière. Le chemin passe par en haut.
+634	La rivière a avalé le chemin.
+635	Alors passe par en haut, de cime en cime. Ne regarde pas en bas.
+636	De là-haut, on voit des toits bleus, loin, très loin...
+637	Ce n'est que le reflet du ciel sur l'eau.
+639	Des rondins qui flottent sur la rivière : on peut marcher dessus.
+640	Des rondins qui flottent. Quelqu'un a abattu ces arbres.
+641	Les gnomes jettent les rondins à la rivière pour les mener au village. Marche dessus.
+642	Je coupais du bois. Derrière une maison bleue. J'en suis sûr.
+643	Traverse la rivière, Ossian.
+645	Des gnomes au lance-pierre partout.
+646	Une pluie de glands !
+647	Réponds avec des os. Maintiens ATTAQUER.
+648	Pourquoi défendent-ils autant un bois ?
+649	Parce qu'on les a plantés ici pour ça. Un gnome ne demande pas ; un gnome garde.
+651	Des tas de mousse qui cachent des gnomes.
+652	Cette mousse a tremblé. Comme l'herbe de la prairie.
+653	Des gnomes de la mousse. Ils ont appris des Gnolls.
+654	Ou quelqu'un leur a appris à tous les deux.
+655	...Attention aux rondins.
+657	Le village des gnomes. Personne ne passe sans combattre.
+658	Un vrai village. Des maisons, des cheminées, du linge qui sèche...
+659	Les habitants défendent le Roi. Chaque zone ne s'ouvre que lorsque tous sont tombés.
+660	J'habitais dans un village comme ça, non ?
+661	Tu habitais là où je t'ai trouvé : sur la plage.
+663	Le Roi Gnome garde le fragment au pied du plus vieil arbre.
+664	Un gnome grand comme une maison. Avec un chapeau violet.
+665	Il lance des glands en cloche, fait rouler des rondins géants et secoue l'arbre.
+666	Du violet, encore. Tous les rois portent ton violet, Hex.
+667	C'est la couleur de la royauté. C'est tout. Va.
+669	Les mines des gobelins, pleines de torches et d'or.
+670	Que d'or ! Et que de torches allumées.
+671	Les gobelins creusent depuis des siècles. Le plafond est vieux : quand de la poussière tombe, écarte-toi.
+672	Ils creusent pour quoi ? Ici, l'or n'achète rien. C'est toi qui l'as dit.
+673	Le Roi Gobelin ne le sait pas. Et il n'a pas besoin de le savoir.
+675	Le plafond de la galerie s'effondre.
+676	Tout le plafond est en train de tomber !
+677	La poussière indique où tombe la pierre. Cours entre elles.
+678	Ces poutres sont pourries. Depuis quand creusent-ils ici ?
+679	Depuis que quelqu'un a ordonné de cacher le fragment très profond. Il y a très, très longtemps.
+681	Les torches se sont éteintes.
+682	Encore le noir. Quelqu'un a éteint les torches exprès.
+683	Allume les torches. Les trois grandes ouvrent la sortie.
+684	Ma sœur avait peur du noir. Je lui laissais une bougie allumée.
+685	...Ta sœur. Hm. Allume les torches, Ossian.
+687	Des rochers d'or ferment les galeries.
+688	Encore des rochers d'or. Un coup de marteau !
+689	En l'air, descends de toutes tes forces. Et porte la clé jusqu'à la porte.
+690	Tant d'or, et personne ne l'emporte.
+691	L'emporter où ? Il n'y a pas de marché hors de ce royaume. Il n'y a pas de dehors.
+692	Tu as dit que le Portail de la Marée mène dehors.
+693	Je l'ai dit. Et c'est vrai. Pour toi.
+695	Des gobelins mineurs lancent des bombes.
+696	Ils lancent des bombes !
+697	Des mineurs. Ils font sauter la roche et quiconque est à côté. Évite la trajectoire.
+698	Si j'explose avec, tu viendras me chercher ?
+699	Toujours. En morceaux, s'il le faut. Je ne perds aucun des miens.
+701	L'eau de la mine monte et descend.
+702	Une marée dans une mine ? Ça n'a aucun sens.
+703	L'eau monte par en dessous. Elle redescend. Comme tout ici.
+704	Comme tout ici... elle revient.
+705	Reste en hauteur, Ossian.
+707	Le feu des profondeurs est bleu.
+708	Du feu bleu ! Et les gobelins qui le portent courent comme des fous.
+709	C'est le feu du fond de la terre. Plus chaud que le rouge. Ne le laisse pas te toucher.
+710	Pourquoi ce feu est-il bleu ?
+711	C'est un feu qui ne réchauffe pas. Les gobelins s'en servent pour voir sans être vus. Je n'aime ni l'un ni l'autre.
+713	Le trésor du Roi. Gardé par tous.
+714	Des montagnes d'or. Et des gardes dans chaque coin.
+715	Chaque zone ne s'ouvre que lorsque tous sont tombés. Ensuite, le Roi.
+716	Si le roi a tout ça, pourquoi veut-il encore le fragment ?
+717	Il ne VEUT pas le fragment, Ossian. Il... laisse tomber. Les rois sont avides, c'est tout.
+719	Le Roi Gobelin à la Torche garde le fragment au milieu de l'or.
+720	Le Roi Gobelin. Capuche noire et torche rouge.
+721	Il frappe le sol avec sa torche et libère des vagues de feu : saute. Et il court d'un bout à l'autre.
+722	Hex, quand le dernier roi tombera, qu'arrivera-t-il à ce monde ?
+723	Rien que tu verras, Ossian. Tu seras chez toi.
+725	Eau stagnante, mousse et lézards.
+726	Quelle eau verte. Et cette odeur de feuilles pourries.
+727	La lagune des lézards. Le Roi Lézard vit en son milieu et ne dort jamais.
+728	Jamais ? Pas même une sieste ?
+729	Celui qui garde un sceau... je veux dire, un fragment... ne peut pas dormir.
+731	Des feuilles géantes qui coulent quand on marche dessus.
+732	Des feuilles grandes comme une table !
+733	Elles portent un squelette un instant. Un instant seulement.
+734	Ces fleurs ne s'ouvrent que quand je passe.
+735	Elles sentent le mouvement. Ici, peu de choses marchent debout depuis longtemps.
+737	L'eau du marais monte et descend.
+738	L'eau monte ici aussi. Même le marais a une marée ?
+739	Toute l'eau de ce monde obéit au même rythme.
+740	Au rythme de qui ?
+741	Monte sur les rondins, Ossian.
+743	Des épines et des lézards violets qui crachent du poison.
+744	Des lézards violets. Violets comme toi, Hex.
+745	Leur poison est violet. Moi, je n'ai pas de poison.
+746	Tu en es sûr ?
+747	Évite les épines.
+749	Un crabe du marécage a pris la clé.
+750	Une petite maison de pêcheur. Comme celles de mon... celles que j'ai vues.
+751	Un crabe a pris la clé. Tu sais quoi faire.
+752	Un lézard qui pêche. Il a l'air en paix.
+753	La paix de celui qui ignore ce qu'il garde. Ne le réveille pas pour ça ; passe, simplement.
+755	Au fond de la lagune, seul un lézard peut traverser.
+756	Le chemin s'enfonce dans la lagune.
+757	Là en bas, je te donnerai la forme d'un lézard. Les lézards nagent.
+758	Tu n'as plus besoin d'aucun objet pour me transformer, hein ?
+759	Plus il tombe de sceaux... je veux dire, plus tu réunis de fragments, plus je peux.

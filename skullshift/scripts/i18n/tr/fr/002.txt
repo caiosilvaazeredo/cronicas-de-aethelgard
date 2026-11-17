@@ -1,0 +1,133 @@
+290	Bienvenue dans mon sanctuaire. Ne marche que sur les nuages qui brillent ; les autres ne portent personne.
+291	Cet endroit... il y a une rangée de couronnes brisées sur l'autel. Et une autre de lanternes éteintes.
+292	Des souvenirs de ceux qui sont passés par ici.
+293	Passés où, Hex ? Personne n'est jamais rentré chez soi, n'est-ce pas ?
+294	Chez soi, c'est là où quelqu'un vous attend. Moi, je t'attends chaque fois que tu tombes. Penses-y.
+295	Quand je prendrai le dernier fragment, le portail s'ouvrira. Tu l'as juré.
+296	J'ai juré qu'il s'ouvrirait. Je n'ai pas juré de quel côté.
+297	...Quoi ?
+298	Rien. Des histoires de vieux. Va, Ossian. Termine ce que tu as commencé.
+300	D'immenses vides entre les nuages. Seul le vent mène d'une île à l'autre.
+301	Il n'y a plus de nuages. Seulement du vent entre une île et l'autre.
+302	Courants du Ciel. Entre dans le vent et il te portera vers le haut. Maintiens le saut et plane.
+303	Et si le vent s'arrête ?
+304	Il ne s'arrête pas. Il souffle depuis que je suis arrivé ici. Depuis longtemps.
+305	Combien de temps ?
+306	Plus longtemps que tu ne te souviens d'avoir vécu.
+308	Avec le Prince des Chauves-Souris, à travers la nuit, jusqu'au Roi des Abeilles.
+309	Le prince dit que le Roi des Abeilles garde le chemin de l'Escalier de la Marée.
+310	Il le garde. Et il n'aimera pas voir son neveu vaincu.
+311	Je n'ai trahi personne. J'ai choisi un camp.
+312	Ici, choisir un camp, c'est la même chose. Vole, Ossian. La nuit appartient à la chauve-souris.
+313	Tu m'aides beaucoup ces derniers temps, Hex.
+314	...Nous approchons de la fin. Je veux que tu y arrives.
+315	Vraiment ?
+316	Avec le Prince des Abeilles, à travers la nuit, jusqu'au Roi des Chauves-Souris.
+317	L'abeille a dit que le Roi des Chauves-Souris veut venger son fils.
+318	Et la nuit est à lui. Chaque ombre est une chauve-souris. Elles seront nombreuses, et plus fortes.
+319	Et moi avec un petit os à la fois.
+320	Tu as voulu abattre le prince. Maintenant, abats le père.
+322	Des îles flottantes qui montent jusqu'au Portail de la Marée. Seuls ceux qui courent et ressautent en l'air passent.
+323	La couronne est entière entre tes mains. Il ne reste qu'à gravir l'Escalier de la Marée jusqu'au Portail.
+324	Un escalier ? Ce sont des îles flottantes, avec la mer en dessous et d'énormes vides entre elles.
+325	Personne n'atteint le portail en marchant. Tu dois courir, sauter et sauter encore en l'air. Tout à la fois.
+326	Tu parles comme quelqu'un qui en a vu beaucoup essayer.
+327	Beaucoup. Les vides se sont élargis à chaque chute.
+328	Et tu les as tous ramenés sur ton nuage.
+329	...Je les ramenais. Jusqu'au jour où ils ont cessé de tomber.
+330	Que leur est-il arrivé, Hex ?
+331	Ils ont atteint le portail. Va, Ossian. Cette fois, je reste ici, à regarder.
+333	Le portail ne menait pas chez toi. Il menait à une maison. Des portes partout, et presque toutes mentent.
+334	J'ai franchi le portail et... c'est une maison ? Des couloirs, des portes partout.
+335	La Maison du Passeur. Ma vieille maison. Elle aime jouer avec ceux qui entrent.
+336	Ta maison ? Tu n'as jamais dit que tu avais une maison.
+337	Tu ne l'as jamais demandé. Suis la lune peinte sur les portes : elle indique toujours la sortie.
+338	Et les autres portes ?
+339	Elles te ramènent au début. Et méfie-toi de la lune rouge. Elle ment aussi.
+340	Qui sont ces squelettes translucides ?
+341	Des locataires. Des os qui ont refusé de suivre la lune. Ne t'arrête pas pour bavarder.
+343	Des étagères jusqu'au plafond, des ponts qui n'existent qu'un instant et une porte verrouillée.
+344	Une bibliothèque. Tous les livres portent le même titre sur la tranche : « Ossian ».
+345	Coïncidence. C'est un nom courant par ici.
+346	La porte de sortie est verrouillée.
+347	La clé est en haut des étagères. Les leviers réveillent les ponts fantômes, mais seulement un instant.
+348	Ce livre a une page marquée : « Le passeur qui ne lâchait pas la rame ». C'est toi ?
+349	...Pose ce livre, Ossian. Prends la clé.
+351	Obscurité presque totale. Des bougies à allumer et des sols fissurés qui ne portent personne.
+352	Je ne vois rien. Hex ? Hex !
+353	Je suis là. Je suis toujours là. Touche les bougies : le chemin apparaît avec la lumière.
+354	La moitié de ce sol est fausse. Il se fissure et cède quand je marche dessus.
+355	Comme les promesses de cette maison. Ne t'arrête pas dessus. Et allume les trois grandes bougies : la dernière porte ne s'ouvre qu'avec elles.
+356	Là-bas au fond... c'est la lumière des lanternes ? Celle de la foire, sur la rivière ?
+357	...Oui. Cette fois, je ne viendrai pas te chercher si tu tombes. Ni si tu ne tombes pas.
+359	Un atelier abandonné sur la plage. La porte ne s'ouvre qu'avec la clé dorée.
+360	Une porte verrouillée au milieu de la plage ? Qui verrouille une porte sans mur ?
+361	Quelqu'un qui voulait ne laisser passer qu'un seul genre de voyageur. Ceux qui portent ce qui est à eux.
+362	Tes mains d'os tiennent les choses, maintenant. Prends la clé et porte-la jusqu'à la porte.
+363	Et ces cadeaux colorés éparpillés ?
+364	Des souvenirs de ceux qui sont passés avant. Prends-les, si tu veux. Personne d'autre ne viendra les chercher.
+366	Une prairie pleine de pillards. Maintiens ATTAQUER : les os partent en rafale.
+367	Ils n'arrêtent pas d'arriver, Hex !
+368	Alors n'arrête pas de tirer. Maintiens le coup et tes os voleront tout seuls.
+369	Depuis quand je tire des os ?
+370	Depuis toujours. Tu n'avais simplement aucune raison de t'en souvenir.
+372	Des blocs rouges et bleus qui apparaissent et disparaissent avec un levier.
+373	Les blocs disparaissent quand je frappe le levier. Rouge, bleu, rouge...
+374	Une seule couleur existe à la fois. Choisis bien quel monde tu laisses debout.
+375	Accroupi, je saute plus haut maintenant. Le poirier.
+376	Des saltos aussi. Un corps léger fait des tours qu'un corps vivant ne ferait pas.
+377	Tu parles toujours de ce « corps vivant ».
+378	Ce n'est qu'une façon de parler, Ossian.
+380	Des rochers d'or bloquent la mine. Un marteau règle ça.
+381	J'ai pris un marteau de forgeron pendant la fuite. Il est encore chaud.
+382	En l'air, descends de toutes tes forces : le coup de marteau au sol brise les rochers d'or.
+383	De l'or qui bouche le passage. Quel gâchis.
+384	Ici, l'or n'achète rien. Pas même une sortie.
+386	Deux princes, un nid et un pacte qui change le ciel.
+387	Hex, cette grotte est pleine d'ailes. Des chauves-souris ET des abeilles ?
+388	Deux royaumes qui se haïssent. Les princes se disputent ce nid depuis des siècles.
+389	Et je vais devoir passer au milieu de cette dispute.
+390	Les princes parlent, Ossian. Chose rare par ici. Écoute ce qu'ils te proposent.
+391	Depuis quand fais-tu confiance à ceux qui parlent ?
+392	Je ne leur fais pas confiance. Mais un prince qui te doit la vie... vole très bien.
+394	Sur le dos du Prince des Chauves-Souris, contre le Diablotin Géant.
+395	Le Diablotin a grandi ? Il est de la taille d'un nuage !
+396	Il a mangé les braises de la forge. Maintenant il veut le ciel. Ton nouvel allié t'emmène jusqu'à lui.
+397	La chauve-souris lâche trois os d'un coup et crie en plus. Ce n'est pas de la triche ?
+398	C'est un prince. Le cri efface les tirs proches, et ses ailes encaissent un coup.
+399	Tu ne viens pas ?
+400	D'en bas, je vois mieux. Tire jusqu'à vider sa barre.
+401	Sur le dos du Prince des Abeilles, contre le Diablotin Géant.
+402	Il a mangé les braises de la forge. Maintenant il veut le ciel. Monte sur le Prince des Abeilles et fais-le tomber.
+403	Il ne lâche qu'un petit os à la fois, Hex.
+404	Tu as choisi d'abattre la chauve-souris. Maintenant, tout son royaume veut ta tête. Esquive beaucoup et tire sans arrêt.
+405	Tu as l'air... satisfait.
+406	Un allié faible a davantage besoin de moi. C'est tout.
+408	Un bois avec un précipice, un portail et un mouton têtu.
+409	Une hache ? Au Sanctuaire, il n'y avait que des nuages.
+410	Je l'ai trouvée par là. Abats l'arbre dans la bonne direction et il deviendra un pont.
+411	Et le mouton ?
+412	Mets-le sur la plaque. Le portail s'ouvre avec du poids. Comme presque tout sur cette terre.
+413	Presque tout ?
+414	Tu ne pèses rien, Ossian. C'est pour ça que la plaque ne sent pas tes pas.
+416	Une mine sombre pleine de gobelins, d'araignées et de chauves-souris.
+417	Encore des tirs. Encore des os. Encore des choses qui sortent de l'obscurité.
+418	La mine garde de l'or et garde de la peur. Tire sur les deux.
+419	Hex, à qui est cet or ?
+420	À ceux qui sont restés. Ceux qui traversent n'emportent rien.
+422	La clé est en haut d'une tour de pierre.
+423	La clé est là-haut. Il n'y a pas d'échelle.
+424	Tu as la pioche maintenant. Saute contre le mur et grimpe.
+425	Mais avec la clé en main, je ne peux pas grimper.
+426	Alors redescends de l'autre côté. Toute montée n'a pas besoin d'un retour.
+428	Une urne au centre du mausolée et des fantômes qui arrivent des deux côtés.
+429	Une urne. Avec ton nom dessus, Hex.
+430	Ne laisse pas les fantômes la toucher. Trois contacts et elle se brise.
+431	Qu'y a-t-il dedans ?
+432	Ce qu'il reste d'un passeur. Protège-la, Ossian. S'il te plaît.
+433	...Tu n'avais jamais dit « s'il te plaît ».
+435	Un crabe s'est enfui avec la clé de la plage.
+436	Hex, ce crabe porte une clé sur son dos !
+437	Les crabes gardent tout ce qui brille. Frappe-le : la clé tombe.
+438	Et s'il la reprend ?
+439	Alors frappe-le encore. Ici, personne ne lâche ce qui est à lui sans se battre.

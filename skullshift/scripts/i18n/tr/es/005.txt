@@ -1,0 +1,220 @@
+761	Lagartos y náufragos sin parar.
+762	¡Salen del agua por todos lados!
+763	Mantén ATACAR y avanza.
+764	Atacan sin rabia. Parece una obligación.
+765	Es una obligación. La más antigua que tienen.
+767	Raíces, ramas y troncos caídos sobre el agua.
+768	Raíces por todos lados. Parece un bosque ahogado.
+769	Era un bosque. El agua subió un día y nunca volvió a bajar.
+770	¿Quién hizo subir el agua?
+771	Los troncos están rodando. Atención.
+773	La aldea de los lagartos. Nadie pasa sin luchar.
+774	Una aldea de lagartos. Tienen casas, Hex. Familia.
+775	Y defienden al Rey. Cada área solo se abre cuando caen todos.
+776	No me gusta luchar contra quien tiene familia.
+777	No son de verdad, Ossian. Nada aquí lo es. Solo tú.
+779	El Rey Lagarto nunca duerme.
+780	El Rey Lagarto. Me está mirando... y a ti, Hex.
+781	Escupe veneno, estira la lengua: baja, salta; alta, agáchate. Y salta salpicando charcos.
+782	¿Por qué te mira con tanto odio?
+783	Viejas rencillas. Derríbalo y se acabó.
+785	Nubes de brasa que se deshacen al pisarlas.
+786	El cielo está rojo. Como una brasa.
+787	Es el cielo del Diablillo. Quemó las nubes para quedarse con el cielo para él solo.
+788	¿Y las nubes aguantan mi peso?
+789	Un instante. No te pares encima.
+791	Meteoros en brasa cayendo del cielo.
+792	¡Está lloviendo piedra en llamas!
+793	Las chispas avisan dónde cae. Mantente lejos.
+794	¡Todo el cielo se me está cayendo encima!
+795	Solo los trozos sueltos. Lo que importa en el cielo sigue sujeto en su sitio. Por ahora.
+797	Diablillos y abejas de brasa sin parar.
+798	¡Abejas rojas y diablillos por todas partes!
+799	Mantén ATACAR. El cielo no perdona a quien duda.
+800	Diablillos pequeños, diablillo gigante. ¿Dónde están los medianos?
+801	Se vuelven gigantes o se vuelven ceniza. Aquí arriba no hay término medio.
+803	Corrientes de viento caliente entre las islas.
+804	Aquí el viento es caliente. Y sale fuego de las piedras.
+805	Entra en el viento, planea y no aterrices sobre los chorros.
+806	¿Estás bien con tanto calor?
+807	Me mantengo lejos. El fuego me recuerda demasiado a los farolillos.
+808	¿Qué farolillos?
+809	...Es un decir. Sube con el viento, vamos.
+811	El castillo de los diablillos.
+812	Un castillo flotando. Rojo, como el cielo.
+813	El castillo de los diablillos. Nada pasa sin luchar.
+814	¿Cuántos castillos has visto caer, Hex?
+815	Muchos. Y todos se levantaron otra vez. Menos uno.
+817	Abejas de brasa y cañones del castillo.
+818	¡Un enjambre entero! ¡Y cañones!
+819	Las abejas de brasa se lanzan en picado. Las de la tormenta aguantan tres golpes.
+820	Están perdidas aquí, Hex.
+821	Como lo estabas tú en la playa. La diferencia es que tú me tienes a mí.
+823	El cofre de los diablillos.
+824	Un cofre en medio del cielo. Con una pared de bloques rojos.
+825	Suelta la llave, cambia el color, vuelve a cogerla. Ya lo sabes.
+826	Siempre sabes cómo abrirlo todo, Hex. Cofres, puertas...
+827	...Y prisiones. Ve, Ossian.
+829	La entrada al reino enemigo de tu aliado.
+830	El reino enemigo de mi aliado. Lleno de alas zumbando.
+831	Elegiste un bando en el nido de los Príncipes. Ahora todo el otro bando te quiere lejos.
+832	Mi aliado dice que su rey es el último guardián.
+833	El último fragmento. Después de él, la corona estará entera.
+835	Un vuelo de día por el cielo del reino.
+836	¡Volar otra vez! Mi aliado conoce el camino.
+837	Mantén el disparo y esquívalo todo. La ruta es larga.
+838	Desde aquí arriba el reino parece una rueda. Todo girando alrededor de tu isla.
+839	Bonita imagen. Nunca me había fijado.
+840	Mentira.
+841	...Un poco.
+843	El castillo del reino. Nada pasa sin luchar.
+844	Torres por todos lados. Y guardias en cada una.
+845	Cada área solo se abre cuando caen todos.
+846	Hay un trono para cada uno de los reyes, pintado en la pared. Nueve.
+847	Arte antiguo. De cuando se reunían.
+848	¿Para qué?
+849	Para decidir qué hacer conmigo. Digo: con el reino.
+851	Un vuelo nocturno en plena tormenta.
+852	Rayos, lluvia y enemigos. Todo a la vez.
+853	La tormenta es vieja. No ha parado desde que yo... desde que existe el reino.
+854	No me gusta la lluvia. No sé por qué.
+855	A nadie le gusta. Cruza deprisa y no pienses en ello.
+857	La cámara real, cerrada.
+858	Una cámara cerrada en lo alto de la torre.
+859	Muelles y escaleras. Lleva la llave a la puerta, sin prisa.
+860	Otra llave. He abierto tantas puertas por ti, Hex.
+861	Por nosotros. Y esta es casi la última.
+863	Corrientes de viento entre las torres.
+864	El viento sopla entre las torres. Se puede planear hasta el otro lado.
+865	Entra en el viento, mantén el salto. Y cuidado con los que se lanzan en picado.
+866	Aquí el viento tiene voz. Parece alguien llamando.
+867	Es solo viento. Si oyes un nombre, no respondas.
+869	El último vuelo de día antes de la noche del rey.
+870	El sol se está poniendo. Recuerdo una puesta de sol en un río... con farolillos.
+871	Aquí no hay río. Vuela, Ossian. La noche del rey se acerca.
+872	El cielo sobre la isla del centro ya está negro.
+873	Señal de que estamos cerca. Las cosas grandes dan sombra.
+875	Corre y dispara en las murallas del reino.
+876	Las murallas están llenas de guardias.
+877	Mantén ATACAR y cruza.
+878	Gritan algo antes de atacar. Suena a "no lo sueltes".
+879	Gritan "no pases". Lo oíste mal.
+881	La guardia real defiende el último puente.
+882	La guardia real. Después de ella, el rey.
+883	El último rey, Ossian. El último... fragmento.
+884	Hex, estás temblando.
+885	Es el viento. Solo el viento.
+887	Un viejo rollo de película. Todo en blanco y negro, con el chirrido del proyector.
+888	¿Hex? ¿Por qué está todo gris? ¿Y ese chirrido?
+889	Encontraste un rollo de película. Es un recuerdo muy, muy antiguo.
+890	¿Recuerdo de quién?
+891	Mío. De antes de la barca. De cuando yo también me reía con dibujos así.
+892	¿Tú también estuviste... vivo?
+893	Dispara, Ossian. La película se acaba.
+895	Un corral vacío en la hierba.
+896	Un corral. Sin ninguna oveja.
+897	Huyeron hace mucho. Pero dejaron regalos. Cógelos.
+898	Una de ellas tenía la oreja negra...
+899	Todas tienen orejas, Ossian. Vamos.
+901	Una cabaña medio hundida.
+902	Una cabaña hundiéndose en el pantano. ¿Hay alguien ahí?
+903	Nadie. Solo lo que quedó. Llévate lo que brille.
+904	Capullos hasta el techo.
+905	Capullos por todas partes. ¿Y si alguno se mueve?
+906	Los que se mueven no son los que guardan oro. Elige bien.
+908	Un cofre en el vidrio negro.
+909	Un cofre dentro del volcán. ¿Quién guarda oro en el fuego?
+910	Quien quiere olvidar que lo tiene. El Minotauro era así.
+912	Un corro encantado.
+913	Los gnomos dicen que este corro está encantado.
+914	Los gnomos dicen muchas cosas. Salta sobre las grandes y no pises las pequeñas.
+916	Oro que ningún goblin encontró.
+917	¡Oro! Y ningún goblin cerca.
+918	Todavía. Cógelo rápido.
+920	Un nido enorme entre las brasas.
+921	Un nido del tamaño de una casa. ¿Qué pájaro hace eso?
+922	Uno que ya se fue. Casi todo aquí ya se fue.
+924	Una torre olvidada.
+925	Plumas y monedas. Los guardias del reino eran presumidos.
+926	Eran leales. Da lo mismo. Coge las monedas.
+928	Un árbol gigante que antes no estaba ahí. Dentro, un tesoro.
+929	Hex, este árbol no estaba aquí cuando pasé.
+930	Los árboles viejos aparecen para quien ha andado lo suficiente. Este guarda oro.
+931	¿Y quién guardó oro dentro de un árbol?
+932	Alguien que pensaba volver. Nadie vuelve. Cógelo todo.
+934	Cuando el fragmento brilló, vi una casa. Azul, cerca del mar.
+935	Alguien dentro llamaba a cenar. ¿Me llamaba... a mí?
+937	Tenía manos. Manos de verdad, con callos de partir leña.
+938	Recuerdo el olor a madera cortada. Los huesos no huelen.
+940	Cuidaba ovejas. Y a una hermana pequeña, que tenía miedo a la oscuridad.
+941	Prometí que siempre volvería antes de anochecer.
+943	El pueblo se llamaba Villa del Puente. Un puente viejo cruzaba el río.
+944	Hex nunca habló de ríos. Solo de mareas.
+946	En la Feria de los Farolillos, cada uno soltaba una luz en el río por quien ya se había ido.
+947	La luz cálida que veo cuando caigo... se parece a ellas.
+949	Aquella noche llovió. El puente estaba resbaladizo.
+950	Mi hermana se quedó al otro lado. Fui a buscarla.
+952	Había alguien en el puente. De morado. Me tendió la mano.
+953	No recuerdo si me sujetó... o si me empujó.
+955	El agua estaba helada. Después, una nube.
+956	Y una voz: "Todavía no". La misma voz de siempre.
+958	Mi nombre... mi nombre no es Ossian. Fue él quien me dio ese nombre.
+959	Falta poco para que lo recuerde todo.
+960	La corona está entera, Hex. ¿Y ahora? ¿Dónde está el Portal de la Marea?
+961	No hay portal, Ossian. Había sellos. Nueve. Y los rompiste todos por mí.
+962	Los reyes... ¿no guardaban fragmentos?
+963	Guardaban mi prisión. Fuiste la llave más paciente que he tenido.
+964	Y yo cumplo lo que prometo. Ponte la corona. Te devuelve lo que se llevó el puente.
+965	...Mis manos. Mi cara. Soy... yo otra vez. Lo recuerdo todo.
+966	Fuiste tú en el puente. Me tendiste la mano y me dejaste caer.
+967	Necesitaba a alguien sin miedo a caer. Un muerto no le teme a nada.
+968	Ahora elige. Abro el camino del río y vuelves a casa, con tu hermana. Entero.
+969	Este mundo se queda conmigo, claro. Nadie lo echará de menos.
+970	¿Y si digo que no?
+971	Entonces intenta derribarme. Si lo consigues, los sellos vuelven... y tú vuelves a ser hueso. Para siempre.
+973	El mundo es libre.
+974	¿Tú... preferiste los huesos... a tu casa?
+975	Mi hermana tiene a todo el pueblo. Este mundo solo me tenía a mí.
+976	Los sellos están volviendo. Yo vuelvo a la prisión. Y tú...
+977	Yo vuelvo a ser hueso. No pasa nada. Ahora sé quién soy.
+978	Y la próxima vez que caiga, nadie me hará volver.
+979	Cruzaré la luz cuando llegue la hora. A mi manera.
+981	Volviste a casa.
+982	Quiero volver a casa.
+983	Sabia elección. El río te lleva. No mires atrás.
+984	...Las islas se están volviendo moradas. Los reyes, las criaturas. Todo.
+985	Ya no es asunto tuyo. Ve. Tu hermana te espera en el puente.
+986	Llegué antes de anochecer. Como prometí.
+987	Pero a veces, cuando miro el río, veo nubes moradas. Y a alguien sonriendo dentro.
+989	La corona está entera.
+990	La corona está entera. El portal se abrió... y al otro lado hay un río. Y farolillos.
+991	Ponte la corona, Ossian. Con ella, nadie volverá a derribarte. Quédate. Reina sobre la marea conmigo.
+992	La luz me está llamando otra vez. Por mi nombre. El de verdad.
+993	Si cruzas, lo olvidarás todo: las islas, las formas, a mí. No habrá nube que te busque.
+994	Nunca me salvaste, ¿verdad? Cada vez que caía, me estaba yendo. Y tú me traías de vuelta.
+995	...Yo también estuve una vez a ese lado de la luz. Hace tanto que olvidé mi nombre.
+996	Así que eso es lo que les pasa a los que se quedan.
+997	La elección es tuya. Siempre lo fue. Yo solo... nunca te lo conté.
+998	Todavía no.
+999	De vuelta. Siempre de vuelta.
+1000	No mires la luz.
+1001	Te tengo.
+1002	No es tu hora... de irte.
+1003	Casi te pierdo.
+1004	¡Eso es, Ossian! Tocaste la esencia de otra criatura y tomaste su forma.
+1005	¡¿Hex?! ¿De dónde saliste? ¿Y por qué tengo... esto?
+1006	El don que te presté. Tu alma está suelta de los huesos, por eso cabe en cualquier forma.
+1007	Un cuerpo vivo jamás haría eso. ...Quiero decir, un cuerpo normal.
+1008	¿"Suelta"? ¿Cómo que suelta?
+1009	Detalles. Coge el objeto de una criatura y serás ella. Si caes, vuelves a ser hueso, y yo voy a buscarte. ¡Ve!
+1010	Escamas. Por fin una piel. Lástima que no sea la mía.
+1011	Genial, ahora tengo pulgas. Ni sabía que a los huesos les daban pulgas.
+1012	Un tiburón de pie, arpón en mano. Tiene todo el sentido. Nada aquí lo tiene.
+1013	Bajito, verde y con una lanza. Me siento... perfectamente normal.
+1014	Ocho patas. Apenas sabía qué hacer con dos.
+1015	Murciélago. Claro. Lo más natural para un esqueleto.
+1016	Una antorcha en medio de la cueva. Qué idea tan brillante. Literalmente.
+1017	Me convertí en el Diablillo. Si me encuentro, prometo darme un puñetazo.
+1018	Cuernos, músculos, olor a establo. Dos de tres no está mal.
+1019	Zumbando y con aguijón. Si tuviera dignidad, se habría acabado ahora.
+1020	Un gnomo de tirachinas. Aun así, más alto de lo que esperaba.

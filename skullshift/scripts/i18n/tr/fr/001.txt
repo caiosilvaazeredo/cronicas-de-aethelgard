@@ -1,0 +1,142 @@
+140	La cloche du village. Le village du... du Pont. Elle sonnait six fois et je courais à la maison.
+141	Qu'est-ce que c'était ? Tu as dit un nom. Quel nom as-tu dit ?
+142	Le roi a la taille de mon fémur et deux fois ma rage.
+143	Les petits gardent les plus grandes rancunes. Va.
+144	Rails, poutres, torches. Les gobelins aiment les trous bien rangés.
+145	Ils creusent pour de l'or. De l'or ! Comme si ça achetait la sortie.
+146	Des gobelins à torche en file. Quelqu'un les a prévenus de mon arrivée.
+147	Le roi compte chaque pépite et chaque soldat. Il remarquera l'absence de ceux-là.
+148	De la poussière tombe du plafond. Ensuite, le plafond.
+149	Une lanterne de papier dans mes mains. J'y ai écrit un nom. Lequel ?
+150	Vite. Ces mines n'ont pas été faites pour durer. Seulement pour cacher.
+151	Noir complet. Heureusement que l'os brille un peu dans le noir. Il ne brille pas ? Dommage.
+152	Suis les torches. Je ne descends pas aussi profond. À partir d'ici, tu es seul.
+153	De l'or sur tout le mur. Et personne ici n'a l'air plus heureux pour autant.
+154	La richesse dans une prison reste une prison. ...C'est un dicton. Oublie.
+155	Un tonneau avec une mèche. Mon genre de solution : rapide et bruyante.
+156	Des feux d'artifice qui éclatent dans le ciel. C'était la fête. Une petite main qui tirait ma manche.
+157	Fais attention à ce que tu réveilles avec tout ce bruit.
+158	La mine a été inondée. Les gobelins ont même laissé leur gamelle flotter.
+159	L'eau trouve toujours le chemin vers le bas. Comme certaines âmes.
+160	Du feu bleu. Froid. Il me va mieux que l'autre.
+161	Un manteau bleu accroché derrière la porte. Trop petit pour moi. Le sien.
+162	Qui est « elle », Ossian ? Tu parles tout seul.
+163	Une montagne d'or. Et au milieu, un trône vide qui attend.
+164	Il est sorti t'accueillir. Un fragment vaut plus que tout ça réuni.
+165	Le roi a apporté la plus grande torche. Évidemment.
+166	Éteins-la. Je n'aime pas la façon dont elle éclaire les choses.
+167	Des îles de nuages. En bas, rien. Je ne regarde pas, je ne regarde pas, j'ai regardé.
+168	D'ici, je te vois bien. C'est dans le ciel que je me déplace le mieux.
+169	Tout le ciel est rouge. On dirait un crépuscule qui ne finit jamais.
+170	Le crépuscule. « Rentre avant la nuit ! » Je rentrais toujours. Toujours. Sauf une fois.
+171	Sauf une fois quoi ? Parle-moi, Ossian.
+172	Le vent m'emporte vers le haut. Je suis léger. C'est l'avantage de ne pas avoir de rembourrage.
+173	Laisse-toi porter. Mais ne monte pas trop haut : il y a là-haut une lumière qui n'est pas pour toi.
+174	Il pleut des pierres en flammes. Un parapluie n'y suffira pas.
+175	Le Diablotin lance tout ce qu'il a. Il a peur. Ils ont tous peur, au fond.
+176	Des diablotins partout, qui rient. Je déteste les ennemis qui rient.
+177	Ils rient parce qu'ils sont jeunes. Ils ne se souviennent pas de ce qu'ils gardent.
+178	Vent chaud vers le haut, feu sur les côtés. Un four avec vue.
+179	Des lanternes qui montent dans l'air chaud. Chacune pour quelqu'un qui est parti. J'en ai lâché une.
+180	Un château sur un nuage. Une architecture audacieuse.
+181	C'est d'ici qu'on a longtemps surveillé l'île du milieu. Maintenant c'est vide. Parfait.
+182	Des ailes au milieu des braises. Elles ne devraient pas être si loin de chez elles.
+183	Personne ici n'est là où il voulait être. C'est ce qui nous unit.
+184	Une porte verrouillée dans le ciel. Pour garder quoi dehors ? Des oiseaux ?
+185	Pour garder quelque chose dedans, peut-être. Prends la clé.
+186	Le Diablotin Géant. Il veut tout le ciel pour lui.
+187	Le ciel appartient à qui arrive le premier. Et je suis arrivé bien avant lui.
+188	Les portes du royaume ennemi. Mon allié n'a pas voulu venir jusqu'ici.
+189	Les pactes sont utiles, Ossian. Tant qu'ils durent.
+190	Voler, c'est facile. Le plus dur, c'est de se rappeler que je ne devrais pas savoir le faire.
+191	Une pluie fine sur le visage. La nuit. Une voix de l'autre côté du pont : « J'ai peur ! »
+192	D'immenses salles vides. Les gardes volent en rond sans savoir pourquoi.
+193	Ils gardent par habitude. Ils ont oublié pourquoi. Ne le leur rappelle pas.
+194	Tonnerre, éclairs, pluie. Et moi au milieu, fait de matériau conducteur.
+195	Une pluie battante. Le pont qui glisse. J'ai couru. Elle était de l'autre côté.
+196	Vole plus bas. Et arrête de regarder la pluie.
+197	Une clé en haut de la tour. Toujours en haut. Jamais par terre, à côté de la porte.
+198	Ce qui est facile à ouvrir n'a pas besoin d'être gardé.
+199	Des courants d'air croisés. Tout le royaume veut me souffler dehors.
+200	Qu'ils soufflent. Il n'en reste qu'un. Un seul, Ossian, et...
+201	La nuit tombe. Elle n'était encore jamais tombée ici.
+202	Quelqu'un sur le pont, en violet. La main tendue. « Viens. Je t'emmène. »
+203	...Le ciel s'assombrit quand la fin approche. C'est naturel. Continue.
+204	Toute la garde du roi dans les airs. Ils doivent beaucoup l'aimer.
+205	Ou ils craignent ce qui arrivera s'il tombe. Pour nous, c'est pareil.
+206	La dernière porte. On entend d'énormes ailes de l'autre côté.
+207	De l'eau glacée. Puis un nuage. Et une voix, bien trop calme : « Pas encore. »
+208	Tu trembles. Les crânes ne tremblent pas. Entre.
+209	Le roi des ailes. Le ciel paraît petit avec lui dedans.
+210	Fais-le tomber. Après lui, les comptes sont presque soldés.
+211	Un escalier sans fin. Et des chaînes brisées sur chaque marche.
+212	De vieux ornements. Ne trébuche pas dessus.
+213	Neuf chaînes, Hex. Je les ai comptées.
+214	Une urne au milieu de la salle. Et tout ici veut la briser.
+215	Un nom. Quelqu'un qui crie un nom sur la rive. Ce n'était pas « Ossian ».
+216	Protège l'urne. Ce qu'elle contient est... important pour nous deux.
+217	Des portes qui donnent sur d'autres portes. Cette maison ne veut pas que j'arrive au bout.
+218	Je m'y perdais moi-même. Au début. J'ai eu tout le temps de l'apprendre par cœur.
+219	Des livres avec des noms sur la tranche. Tous rayés. Sauf le dernier.
+220	Ne lis pas. Ossian, ne lis pas celui-là.
+221	Il est vierge. Tu me gardais la place ?
+222	Aucune lumière. Rien que la bougie dans ma main. Et ta voix.
+223	Je me souviens. Ma sœur de l'autre côté. La main en violet. Je n'ai pas glissé.
+224	Les souvenirs trompent, Ossian. Viens. Le trône est juste derrière la porte.
+225	Des mains. J'ai de nouveau des mains. Alors servons-nous-en.
+226	Ossian
+229	Là où le crâne s'éveille. Le premier fragment de la couronne brille au bout de la plage.
+230	Réveille-toi. Doucement... la marée t'a ramené sur la plage. Encore.
+231	Encore ? Je... ne me souviens de rien. Seulement de lumières. Des lanternes suspendues au-dessus d'une rivière.
+232	Des lanternes, une rivière... des rêves de voyage. Oublie. Comment t'appelles-tu ?
+233	Je... ne sais pas. J'avais un nom. Je l'ai sur le bout de la langue. Si j'avais une langue.
+234	Alors tu seras Ossian. C'est un bon nom. Il a déjà servi à d'autres.
+235	À d'autres ?
+236	Écoute : la Couronne des Os a été brisée en quatre. Entière, elle ouvre le Portail de la Marée. C'est ton chemin vers chez toi.
+237	Je te prête un don : touche l'objet d'une créature et tu prendras sa forme. Et si tu tombes, je viendrai te chercher sur mon nuage.
+238	Et pourquoi m'aides-tu ?
+239	Parce que c'est ce que fait un conseiller. Va. Le premier fragment est au bout des îles.
+241	Des marches de pierre, des puits sombres et des toiles au plafond. Le deuxième fragment est tout au fond.
+242	Hex, quand je suis tombé dans l'eau... j'ai vu une lumière. Chaude. Quelqu'un appelait un nom. Je crois que c'était le mien.
+243	Les profondeurs mentent, Ossian. Il n'y a rien pour toi là en bas. Ne suis pas les lumières.
+244	Mais tu es arrivé avant que je l'atteigne. Tu arrives toujours avant.
+245	Je suis rapide. C'est à ça que sert un nuage.
+246	Il y a des noms gravés sur cette pierre. Des dizaines. Tous barrés d'un trait.
+247	Des voyageurs venus avant toi. Ils ont renoncé au chemin.
+248	Celui-ci... l'écriture ressemble à la mienne. « Ossian ». Barré.
+249	Beaucoup d'écritures se ressemblent dans le noir. Attention aux araignées du plafond. Avance.
+251	Des araignées suspendues à tout le plafond. On peut passer sans toutes les battre.
+252	Encore des toiles. Et encore. Toute la grotte ressemble à un cocon.
+253	Le Nid. Les filles de la Reine vivent suspendues au plafond. Regarde en haut avant de passer.
+254	Je dois toutes les battre ?
+255	Non. Passe entre elles. Aucune araignée ne vaut un os cassé.
+256	Tu connais bien cet endroit.
+257	J'ai traversé bien des choses en portant quelqu'un sur mon dos.
+259	Des œufs, des toiles épaisses et, au fond, la Reine Araignée qui garde un fragment.
+260	Hex... ce truc au fond, c'est une araignée grande comme une maison. Avec une couronne.
+261	La Reine du Repaire. Elle garde un fragment parmi les œufs.
+262	Elle crache de la toile. Si elle t'attrape, frappe et attends d'être libéré. Et surveille le plafond : elle s'y promène.
+263	Et si je tombe ?
+264	Je viendrai te chercher. Elle connaît mon nuage : elle a perdu bien des proies à cause de moi.
+265	Des proies. C'est ce que je suis pour vous deux ?
+266	...Va, Ossian. Elle se réveille.
+268	La forge du Diablotin, qui tente de fondre les fragments en une couronne rien qu'à lui.
+269	Je ne vais pas plus loin. Le feu... ne me supporte pas. Si tu tombes dans la lave, je devrai attendre que la fumée retombe.
+270	Tu ne peux pas approcher du feu. Ni de la fin du chemin. Pourquoi ?
+271	Chacun porte ses propres chaînes, Ossian. Les miennes sont vieilles.
+272	Dans le reflet de la lave, je me suis vu avec un visage. De la peau, des cheveux mouillés... et un cordon de lanterne au poignet.
+273	La chaleur trompe les yeux. Tu es os. Tu l'as toujours été.
+274	Les créatures d'ici ne me fuient pas. Elles fuient quand ton nuage apparaît.
+275	Elles me connaissent. J'emmène ceux qui tombent. C'est mon métier.
+276	« J'emmène » ? Où ça ?
+277	Ici, chaque zone a une barrière de feu. Elle ne s'éteint que lorsqu'il ne reste plus personne debout.
+278	Et au fond de la forge vit le Minotaure Écarlate. Il ne tombe pas d'un seul coup.
+279	Prends le fragment. Le Diablotin ne doit pas compléter la couronne.
+281	Sans le Minotaure, la montagne s'est réveillée. La lave arrive derrière : cours sans t'arrêter.
+282	Le sol tremble. Hex, toute la forge se réveille !
+283	Le Minotaure est tombé et la montagne n'a plus de maître. La lave te poursuit. Cours !
+284	Courir où ?
+285	En avant. Toujours en avant. Et ne t'arrête pas : elle, elle ne s'arrête pas.
+286	Tu ne fuis jamais rien, toi, hein ?
+287	Pas besoin. Je flotte.
+289	La demeure du Chaman. Le dernier fragment attend sur l'autel, parmi les nuages enchantés.

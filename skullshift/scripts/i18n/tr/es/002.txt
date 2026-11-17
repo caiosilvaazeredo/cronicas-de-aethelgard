@@ -1,0 +1,133 @@
+290	Bienvenido a mi santuario. Pisa solo las nubes que brillan; las demás no aguantan a nadie.
+291	Este lugar... hay una fila de coronas rotas en el altar. Y otra de farolillos apagados.
+292	Recuerdos de los que pasaron por aquí.
+293	¿Pasaron adónde, Hex? Nadie volvió nunca a casa, ¿verdad?
+294	Casa es donde alguien te espera. Yo te espero cada vez que caes. Piénsalo.
+295	Cuando coja el último fragmento, el portal se abre. Lo juraste.
+296	Juré que se abriría. No juré hacia qué lado.
+297	...¿Qué?
+298	Nada. Cosas de viejo. Ve, Ossian. Termina lo que empezaste.
+300	Huecos enormes entre las nubes. Solo el viento lleva de una isla a otra.
+301	Se acabaron las nubes. Solo hay viento entre una isla y otra.
+302	Corrientes del Cielo. Entra en el viento y te llevará hacia arriba. Mantén el salto y planea.
+303	¿Y si el viento para?
+304	No para. Sopla desde que llegué aquí. Hace mucho.
+305	¿Cuánto?
+306	Más de lo que recuerdas haber vivido.
+308	Con el Príncipe de los Murciélagos, de noche, hasta el Rey de las Abejas.
+309	El príncipe dice que el Rey de las Abejas guarda el camino a la Escalinata de la Marea.
+310	La guarda. Y no le gustará ver a su sobrino derrotado.
+311	No traicioné a nadie. Elegí un bando.
+312	Aquí, elegir un bando es lo mismo. Vuela, Ossian. La noche es del murciélago.
+313	Me estás ayudando demasiado últimamente, Hex.
+314	...Estamos cerca del final. Quiero que llegues.
+315	¿De verdad?
+316	Con el Príncipe de las Abejas, de noche, hasta el Rey de los Murciélagos.
+317	La abeja dijo que el Rey de los Murciélagos quiere vengar a su hijo.
+318	Y la noche es suya. Cada sombra es un murciélago. Serán muchos, y más fuertes.
+319	Y yo con un huesito cada vez.
+320	Quisiste derribar al príncipe. Ahora derriba al padre.
+322	Islas sueltas que suben hasta el Portal de la Marea. Solo pasa quien corre y vuelve a saltar en el aire.
+323	La corona está entera en tus manos. Solo falta subir la Escalinata de la Marea hasta el Portal.
+324	¿Escalinata? Son islas sueltas, con el mar debajo y huecos enormes entre ellas.
+325	Nadie llega al portal andando. Tienes que correr, saltar y volver a saltar en el aire. Todo a la vez.
+326	Hablas como quien ha visto a muchos intentarlo.
+327	A muchos. Los huecos se hicieron más anchos con cada uno que cayó.
+328	Y tú los buscaste a todos en tu nube.
+329	...Los buscaba. Hasta el día en que dejaron de caer.
+330	¿Qué les pasó, Hex?
+331	Llegaron al portal. Ve, Ossian. Esta vez me quedo aquí, mirando.
+333	El portal no llevaba a casa. Llevaba a una casa. Puertas por todas partes, y casi todas mienten.
+334	Crucé el portal y... ¿es una casa? Pasillos, puertas por todos lados.
+335	La Casa del Barquero. Mi vieja casa. Le gusta jugar con quien entra.
+336	¿Tu casa? Nunca dijiste que tuvieras una casa.
+337	Nunca preguntaste. Sigue la luna pintada en las puertas: siempre apunta hacia fuera.
+338	¿Y las otras puertas?
+339	Te devuelven al principio. Y cuidado con la luna roja. También miente.
+340	¿Quiénes son esos esqueletos translúcidos?
+341	Inquilinos. Huesos que se negaron a seguir la luna. No te pares a charlar.
+343	Estanterías hasta el techo, puentes que solo existen un instante y una puerta cerrada.
+344	Una biblioteca. Todos los libros tienen el mismo título en el lomo: "Ossian".
+345	Coincidencia. Es un nombre común por aquí.
+346	La puerta de salida está cerrada.
+347	La llave está en lo alto de las estanterías. Las palancas despiertan los puentes fantasma, pero solo un instante.
+348	Este libro tiene una página marcada: "El barquero que no soltó el remo". ¿Eres tú?
+349	...Suelta ese libro, Ossian. Coge la llave.
+351	Oscuridad casi total. Velas que encender y suelos agrietados que no aguantan a nadie.
+352	No veo nada. ¿Hex? ¡Hex!
+353	Estoy aquí. Siempre estoy. Toca las velas: el camino aparece con la luz.
+354	La mitad de este suelo es falso. Se agrieta y cae cuando lo piso.
+355	Como las promesas de esta casa. No te pares encima. Y enciende las tres velas grandes: la última puerta solo se abre con ellas.
+356	Allá al fondo... ¿es la luz de los farolillos? ¿La de la feria, sobre el río?
+357	...Lo es. Esta vez no iré a buscarte si caes. Ni si no caes.
+359	Un taller abandonado en la playa. La puerta solo se abre con la llave dorada.
+360	¿Una puerta cerrada en medio de la playa? ¿Quién cierra una puerta sin pared?
+361	Alguien que quería que solo pasara un tipo de viajero. Los que cargan con lo suyo.
+362	Tus manos de hueso ya sostienen cosas. Coge la llave y llévala a la puerta.
+363	¿Y estos regalos de colores esparcidos?
+364	Recuerdos de los que pasaron antes. Cógelos, si quieres. Nadie más vendrá a por ellos.
+366	Una pradera llena de saqueadores. Mantén ATACAR: los huesos salen en ráfaga.
+367	¡No paran de venir, Hex!
+368	Entonces no pares de disparar. Mantén el golpe y tus huesos volarán solos.
+369	¿Desde cuándo disparo huesos?
+370	Desde siempre. Solo que no tenías motivo para recordarlo.
+372	Bloques rojos y azules que aparecen y desaparecen con una palanca.
+373	Los bloques desaparecen cuando golpeo la palanca. Rojo, azul, rojo...
+374	Solo existe un color a la vez. Elige bien qué mundo dejas en pie.
+375	Agachado, ahora salto más alto. Haciendo el pino.
+376	Volteretas también. Un cuerpo ligero hace trucos que un cuerpo vivo no haría.
+377	Siempre hablas de ese "cuerpo vivo".
+378	Es solo una forma de hablar, Ossian.
+380	Rocas de oro bloquean la mina. Un martillo lo arregla.
+381	Cogí un martillo de herrero en la huida. Todavía está caliente.
+382	En el aire, baja con todo: el martillazo al suelo rompe las rocas de oro.
+383	Oro tapando el paso. Qué desperdicio.
+384	Aquí el oro no compra nada. Ni siquiera la salida.
+386	Dos príncipes, un nido y un pacto que cambia el cielo.
+387	Hex, esta cueva está llena de alas. ¿Murciélagos Y abejas?
+388	Dos reinos que se odian. Los príncipes se pelean por este nido desde hace siglos.
+389	Y yo tendré que pasar en medio de esa pelea.
+390	Los príncipes hablan, Ossian. Algo raro por aquí. Escucha lo que te ofrezcan.
+391	¿Desde cuándo te fías de quien habla?
+392	No me fío. Pero un príncipe que te debe la vida... vuela muy bien.
+394	Montado en el Príncipe de los Murciélagos, contra el Diablillo Gigante.
+395	¿El Diablillo creció? ¡Es del tamaño de una nube!
+396	Se comió las brasas de la forja. Ahora quiere el cielo. Tu nuevo aliado te llevará hasta él.
+397	El murciélago suelta tres huesos a la vez y encima grita. ¿Eso no es trampa?
+398	Es un príncipe. El grito borra los disparos cercanos, y sus alas aguantan un golpe.
+399	¿No vienes?
+400	Desde aquí abajo veo mejor. Dispara hasta vaciar su barra.
+401	Montado en el Príncipe de las Abejas, contra el Diablillo Gigante.
+402	Se comió las brasas de la forja. Ahora quiere el cielo. Monta en el Príncipe de las Abejas y derríbalo.
+403	Solo suelta un huesito cada vez, Hex.
+404	Elegiste derribar al murciélago. Ahora todo su reino quiere tu cabeza. Esquiva mucho y dispara siempre.
+405	Pareces... satisfecho.
+406	Un aliado débil me necesita más. Eso es todo.
+408	Un bosque con un precipicio, un portón y una oveja terca.
+409	¿Un hacha? En el Santuario solo había nubes.
+410	La encontré por ahí. Derriba el árbol en la dirección correcta y se convertirá en puente.
+411	¿Y la oveja?
+412	Ponla en la placa. El portón se abre con peso. Como casi todo en esta tierra.
+413	¿Casi todo?
+414	No pesas nada, Ossian. Por eso la placa no siente tus pasos.
+416	Una mina oscura llena de goblins, arañas y murciélagos.
+417	Más disparos. Más huesos. Más cosas saliendo de la oscuridad.
+418	La mina guarda oro y guarda miedo. Dispara a los dos.
+419	Hex, ¿de quién es este oro?
+420	De quienes se quedaron. Quien cruza no se lleva nada.
+422	La llave está en lo alto de una torre de piedra.
+423	La llave está ahí arriba. No hay escalera.
+424	Ahora tienes el pico. Salta a la pared y sube.
+425	Pero con la llave en la mano no puedo escalar.
+426	Entonces baja por el otro lado. No toda subida necesita vuelta.
+428	Una urna en el centro del mausoleo y fantasmas llegando por ambos lados.
+429	Una urna. Con tu nombre, Hex.
+430	No dejes que los fantasmas la toquen. Tres toques y se rompe.
+431	¿Qué hay dentro?
+432	Lo que quedó de un barquero. Protégela, Ossian. Por favor.
+433	...Nunca habías dicho "por favor".
+435	Un cangrejo huyó con la llave de la playa.
+436	¡Hex, ese cangrejo lleva una llave en la espalda!
+437	Los cangrejos guardan todo lo que brilla. Golpéalo: la llave cae.
+438	¿Y si la vuelve a coger?
+439	Entonces golpéalo otra vez. Aquí nadie suelta lo suyo sin pelear.

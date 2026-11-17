@@ -1,0 +1,142 @@
+140	La campana del pueblo. El pueblo del... del Puente. Sonaba seis veces y yo corría a casa.
+141	¿Qué fue eso? Dijiste un nombre. ¿Qué nombre dijiste?
+142	El rey es del tamaño de mi fémur y tiene el doble de mi rabia.
+143	Los pequeños guardan los mayores rencores. Ve.
+144	Raíles, vigas, antorchas. A los goblins les gusta un agujero ordenado.
+145	Cavan buscando oro. ¡Oro! Como si eso comprara la salida.
+146	Goblins de antorcha en fila. Alguien les avisó de que venía.
+147	El rey cuenta cada pepita y cada soldado. Notará que faltan estos.
+148	Polvo cayendo del techo. A continuación, el techo.
+149	Un farolillo de papel en mis manos. Escribí un nombre en él. ¿De quién?
+150	Deprisa. Estas minas no se hicieron para durar. Solo para esconder.
+151	Oscuridad total. Menos mal que el hueso brilla un poco en la oscuridad. ¿No brilla? Qué pena.
+152	Sigue las antorchas. Yo no bajo tan hondo. De aquí para abajo estás solo.
+153	Oro en toda la pared. Y nadie aquí parece más feliz por ello.
+154	La riqueza en una prisión sigue siendo una prisión. ...Es un dicho. Olvídalo.
+155	Un barril con mecha. Mi tipo de solución: rápida y ruidosa.
+156	Fuegos artificiales estallando en el cielo. Era fiesta. Una mano pequeña tirándome de la manga.
+157	Cuidado con lo que despiertas con tanto ruido.
+158	La mina se inundó. Los goblins hasta dejaron la fiambrera flotando.
+159	El agua siempre encuentra el camino hacia abajo. Como ciertas almas.
+160	Fuego azul. Frío. Me pega más que el otro.
+161	Un abrigo azul colgado detrás de la puerta. Demasiado pequeño para mí. Suyo.
+162	¿Quién es "ella", Ossian? Estás hablando solo.
+163	Una montaña de oro. Y en medio, un trono vacío esperando.
+164	Salió a recibirte. Un fragmento vale más que todo eso junto.
+165	El rey trajo la antorcha más grande. Claro que sí.
+166	Apágala. No me gusta cómo ilumina las cosas.
+167	Islas de nube. Abajo, nada. No miro, no miro, miré.
+168	Desde aquí te veo bien. Es en el cielo donde mejor me muevo.
+169	Todo el cielo rojo. Parece un atardecer que nunca termina.
+170	Atardecer. "¡Vuelve antes de que anochezca!" Yo siempre volvía. Siempre. Menos una vez.
+171	¿Menos una vez qué? Háblame, Ossian.
+172	El viento me lleva hacia arriba. Soy ligero. Es la ventaja de no tener relleno.
+173	Déjate llevar. Pero no subas demasiado: allá arriba hay una luz que no es para ti.
+174	Está lloviendo piedra en llamas. Un paraguas no lo arregla.
+175	El Diablillo lanza lo que tiene. Tiene miedo. Todos lo tienen, al final.
+176	Diablillos por todas partes, riendo. Odio a los enemigos que ríen.
+177	Ríen porque son jóvenes. No recuerdan lo que guardan.
+178	Viento caliente hacia arriba, fuego hacia los lados. Un horno con vistas.
+179	Farolillos subiendo en el aire caliente. Cada uno por alguien que se fue. Yo solté uno.
+180	Un castillo encima de una nube. Arquitectura valiente.
+181	Desde aquí vigilaron la isla del centro durante mucho tiempo. Ahora está vacío. Estupendo.
+182	Alas en medio de las brasas. No deberían estar tan lejos de casa.
+183	Nadie aquí está donde quería estar. Es lo que nos une.
+184	Una puerta cerrada en el cielo. ¿Para dejar fuera qué? ¿Pajaritos?
+185	Para dejar algo dentro, quizá. Coge la llave.
+186	El Diablillo Gigante. Quiere todo el cielo para él.
+187	El cielo es de quien llega primero. Y yo llegué mucho antes que él.
+188	Las puertas del reino enemigo. Mi aliado no quiso venir hasta aquí.
+189	Los pactos son útiles, Ossian. Mientras duran.
+190	Volar es fácil. Lo difícil es recordar que no debería saber hacerlo.
+191	Lluvia fina en la cara. Noche. Una voz al otro lado del puente: "¡Tengo miedo!"
+192	Salones enormes, vacíos. Los guardias vuelan en círculos sin saber por qué.
+193	Vigilan por costumbre. Olvidaron el motivo. No se lo recuerdes.
+194	Trueno, rayo, lluvia. Y yo en medio, hecho de material conductor.
+195	Lluvia fuerte. El puente resbalando. Corrí. Ella estaba al otro lado.
+196	Vuela más bajo. Y deja de mirar la lluvia.
+197	Una llave en lo alto de la torre. Siempre en lo alto. Nunca en el suelo, junto a la puerta.
+198	Lo que es fácil de abrir no necesita guardarse.
+199	Corrientes de aire cruzadas. Todo el reino quiere soplarme fuera.
+200	Que soplen. Solo falta uno. Solo uno, Ossian, y...
+201	Está anocheciendo. Aquí nunca había anochecido.
+202	Alguien en el puente, de morado. La mano tendida. "Ven. Yo te llevo."
+203	...El cielo se oscurece cuando el final se acerca. Es natural. Sigue.
+204	Toda la guardia del rey en el aire. Deben de quererlo mucho.
+205	O temen lo que pase si cae. A nosotros nos da igual.
+206	La última puerta. Se oyen alas enormes al otro lado.
+207	Agua helada. Después, una nube. Y una voz, demasiado tranquila: "Todavía no."
+208	Estás temblando. Las calaveras no tiemblan. Entra.
+209	El rey de las alas. El cielo se queda pequeño con él dentro.
+210	Derríbalo. Después de él, las cuentas casi están saldadas.
+211	Una escalinata sin fin. Y cadenas rotas en cada escalón.
+212	Adornos viejos. No tropieces con ellos.
+213	Nueve cadenas, Hex. Las conté.
+214	Una urna en medio del salón. Y todo aquí dentro quiere romperla.
+215	Un nombre. Alguien gritando un nombre en la orilla del río. No era "Ossian".
+216	Protege la urna. Lo que hay dentro es... importante para los dos.
+217	Puertas que llevan a otras puertas. Esta casa no quiere que llegue al final.
+218	Yo mismo me perdía aquí. Al principio. Tuve mucho tiempo para memorizarla.
+219	Libros con nombres en el lomo. Todos tachados. Menos el último.
+220	No leas. Ossian, no leas ese.
+221	Está en blanco. ¿Me estabas guardando el sitio?
+222	Ninguna luz. Solo la vela en mi mano. Y tu voz.
+223	Lo recuerdo. Mi hermana al otro lado. La mano de morado. No resbalé.
+224	Los recuerdos engañan, Ossian. Ven. El trono está justo después de la puerta.
+225	Manos. Vuelvo a tener manos. Pues usémoslas.
+226	Ossian
+229	Donde despierta la calavera. El primer fragmento de la corona brilla al final de la playa.
+230	Despierta. Despacio... la marea te devolvió a la playa. Otra vez.
+231	¿Otra vez? Yo... no recuerdo nada. Solo luces. Farolillos colgados sobre un río.
+232	Farolillos, un río... sueños de viaje. Olvídalo. ¿Cómo te llamas?
+233	Yo... no lo sé. Tenía un nombre. Lo tengo en la punta de la lengua. Si tuviera lengua.
+234	Entonces serás Ossian. Es un buen nombre. Ya sirvió a otros.
+235	¿A otros?
+236	Escucha: la Corona de los Huesos se rompió en cuatro. Entera, abre el Portal de la Marea. Es tu camino a casa.
+237	Te presto un don: toca el objeto de una criatura y tendrás su forma. Y si caes, iré a buscarte en mi nube.
+238	¿Y por qué me ayudas?
+239	Porque eso es lo que hace un consejero. Ve. El primer fragmento está al final de las islas.
+241	Escalones de piedra, pozos oscuros y telarañas en el techo. El segundo fragmento está allá al fondo.
+242	Hex, cuando caí al agua... vi una luz. Cálida. Alguien llamaba un nombre. Creo que era el mío.
+243	Las profundidades mienten, Ossian. Allá abajo no hay nada para ti. No sigas luces.
+244	Pero tú llegaste antes de que yo la alcanzara. Siempre llegas antes.
+245	Soy rápido. Para eso sirve una nube.
+246	Hay nombres rayados en esta piedra. Docenas. Todos tachados con una raya.
+247	Viajeros que vinieron antes. Abandonaron el camino.
+248	Este de aquí... la letra se parece a la mía. "Ossian". Tachado.
+249	Muchas letras se parecen en la oscuridad. Cuidado con las arañas del techo. Sigue.
+251	Arañas colgando por todo el techo. Se puede pasar sin derrotarlas a todas.
+252	Más telarañas. Y más. Toda la cueva parece un capullo.
+253	El Nido. Las hijas de la Reina viven colgadas del techo. Mira arriba antes de pasar.
+254	¿Tengo que derrotarlas a todas?
+255	No. Pasa entre ellas. Ninguna araña vale un hueso roto.
+256	Conoces bien este lugar.
+257	He cruzado muchas cosas cargando a alguien a la espalda.
+259	Huevos, telarañas gruesas y, al fondo, la Araña Reina guardando un fragmento.
+260	Hex... eso del fondo es una araña del tamaño de una casa. Con corona.
+261	La Reina de la Guarida. Guarda un fragmento entre los huevos.
+262	Escupe telaraña. Si te atrapa, golpea y espera a soltarte. Y mira el techo: ella anda por allí.
+263	¿Y si caigo?
+264	Iré a buscarte. Conoce mi nube: ya ha perdido muchas presas por mi culpa.
+265	Presas. ¿Eso es lo que soy para vosotros dos?
+266	...Ve, Ossian. Se está despertando.
+268	La forja del Diablillo, que intenta fundir los fragmentos en una corona solo suya.
+269	De aquí no paso. El fuego... no me soporta. Si caes en la lava, tendré que esperar a que baje el humo.
+270	No puedes acercarte al fuego. Ni al final del camino. ¿Por qué?
+271	Cada uno carga sus propias cadenas, Ossian. Las mías son viejas.
+272	En el reflejo de la lava me vi con rostro. Piel, pelo mojado... y un cordel de farolillo en la muñeca.
+273	El calor engaña a los ojos. Eres hueso. Siempre lo fuiste.
+274	Las criaturas de aquí no huyen de mí. Huyen cuando aparece tu nube.
+275	Me conocen. Yo me llevo a quien cae. Es mi oficio.
+276	¿"Me llevo"? ¿Adónde?
+277	Aquí cada área tiene una barrera de fuego. Solo se apaga cuando no queda nadie en pie.
+278	Y al fondo de la forja vive el Minotauro Carmesí. No cae de un solo golpe.
+279	Coge el fragmento. El Diablillo no puede completar la corona.
+281	Sin el Minotauro, la montaña despertó. La lava viene detrás: corre sin parar.
+282	El suelo tiembla. ¡Hex, toda la forja se está despertando!
+283	El Minotauro cayó y la montaña se quedó sin dueño. La lava va tras de ti. ¡Corre!
+284	¿Correr adónde?
+285	Hacia delante. Siempre hacia delante. Y no pares: ella no para.
+286	Tú nunca huyes de nada, ¿verdad?
+287	No lo necesito. Floto.
+289	El hogar del Chamán. El último fragmento espera en el altar, entre las nubes encantadas.

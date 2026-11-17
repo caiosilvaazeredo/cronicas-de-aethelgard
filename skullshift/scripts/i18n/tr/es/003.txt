@@ -1,0 +1,129 @@
+441	La marea sube y baja sola. El suelo bajo desaparece bajo el agua.
+442	¡El agua está subiendo! ¡Y bajando! ¡Y subiendo otra vez!
+443	La marea de estas islas respira. Cuando venga, sube a lo alto y espera.
+444	¿Quién la manda?
+445	El Rey Tiburón Arponero. Guarda el primer fragmento de la corona.
+446	¿Un tiburón... con corona?
+447	Cada rey guarda un trozo. Juntos, abren tu camino.
+449	Restos de un barco. Las tablas sueltas se hunden justo después de pisarlas.
+450	Un barco entero, roto en pedazos.
+451	No te pares en las tablas. Se hunden.
+452	¿Quién iba en ese barco?
+453	Gente que también quería volver a casa.
+454	...¿Y volvieron?
+455	Salta, Ossian.
+457	El barco de los goblins piratas. Los cañones barren la cubierta.
+458	¡Piratas! ¡Y cañones apuntándome!
+459	Las balas vienen en línea recta. Salta o defiéndete con el escudo.
+460	El capitán está en el alcázar, al fondo.
+461	Trabaja para el Rey Tiburón. Todos en estas aguas trabajan para él.
+463	Una caverna entera bajo el agua. Solo un tiburón la cruza.
+464	La caverna está toda inundada, Hex. Me voy a hundir.
+465	No como tiburón. Ahí dentro te daré su forma.
+466	¿Puedes hacerlo sin que yo coja un arpón?
+467	Aquí abajo puedo más de lo que imaginas.
+468	...Nunca habías dicho eso.
+469	Nada. Las medusas no perdonan.
+471	Las palancas abren y cierran las compuertas: marea alta o marea baja, tú eliges.
+472	¡Palancas! ¿Para qué sirven?
+473	Abren y cierran las compuertas del faro. Marea alta: las cajas suben. Marea baja: aparece el suelo.
+474	Entonces yo mando en la marea, como el Rey.
+475	Por ahora. Aprovéchalo mientras puedas.
+477	La cubierta se hundió por el medio: el camino va por las vergas, allá arriba.
+478	¡La cubierta se partió por la mitad! No hay por dónde pasar.
+479	Sí lo hay: por arriba. Por las vergas y las cofas.
+480	Desde aquí arriba se ve el faro, la playa... y una luz cálida a lo lejos.
+481	No mires la luz. Mira dónde pisas.
+483	Corales de fuego, medusas y la marea. El último paso antes del Rey.
+484	¡Los corales de aquí queman!
+485	Coral de fuego. No lo toques. Y la marea sigue viniendo.
+486	Después del arrecife, el Rey Tiburón.
+487	Después del arrecife, el primer fragmento. Piensa en el fragmento.
+489	El Rey Tiburón Arponero manda en la marea. Con marea baja, encalla.
+490	Es él. El Rey Tiburón Arponero.
+491	Manda en la marea. Cuando el agua baje, se quedará atrapado en la arena. Ataca entonces.
+492	¿Y cuando suba la marea?
+493	Sube tú también. A las rocas de los lados. Sus arpones se quedan clavados en el aire: úsalos de escalón.
+494	Hex... ¿por qué quieres tanto ese fragmento?
+495	¿Yo? Es para ti, Ossian. Siempre fue para ti.
+497	La corona está entera. Los sellos han caído.
+499	La entrada a la Pradera de los Huesos, tierra de los Gnolls.
+500	¿Qué olor es ese? Hierba... y perro mojado.
+501	Gnolls. La pradera es suya. Los cazadores lanzan huesos que hacen la curva y vuelven.
+502	Huesos que vuelven. Qué ironía.
+503	Aquí todo vuelve, Ossian. Menos quien sigue adelante.
+505	La manada corre en estampida por el suelo bajo.
+506	¡El suelo está temblando!
+507	La manada de los Gnolls. Cuando venga, súbete a cualquier cosa alta.
+508	¿Y si me quedo abajo?
+509	Entonces iré a buscarte otra vez. Pero prefiero que no.
+511	Laderas de huesos antiguos. Las rocas ruedan desde arriba.
+512	Cuánto hueso. ¿Son todos de gnoll?
+513	No todos. Algunos son de viajeros que vinieron a buscar una corona antes que tú.
+514	...¿Antes que yo? ¿Cuántos?
+515	Cuidado con las rocas. Ruedan sin avisar.
+517	Ovejas, placas y portones. La llave está en lo alto del granero.
+518	¡Ovejas! Yo... cuidaba ovejas. Creo.
+519	Pon las ovejas en las placas. Los portones se abren con peso.
+520	¿Por qué recuerdo ovejas, Hex?
+521	Todo el mundo recuerda ovejas. Coge la llave.
+523	Matorrales que tiemblan. Gnolls escondidos esperando.
+524	Ese matorral se movió.
+525	Acechadores. Se esconden en la hierba y saltan sobre quien pasa cerca.
+526	Al menos se ve el temblor.
+527	Ojos atentos, Ossian. En este mundo, casi nada es lo que parece.
+529	La caravana no para de enviar cazadores.
+530	Una caravana entera viniendo hacia mí.
+531	Mantén ATACAR y no pares de disparar.
+532	¿Qué llevan en esas carretas?
+533	Huesos. Para el Rey. Los colecciona.
+535	Huecos anchos que se cruzan con las corrientes de viento.
+536	Los huecos son enormes. No puedo saltar eso.
+537	Entra en el viento. Te levantará. Luego mantén el salto y planea.
+538	Desde aquí arriba veo un puente, a lo lejos, después del mar.
+539	No hay ningún puente. Es un espejismo del viento.
+541	El Rey Gnoll guarda el segundo fragmento.
+542	Es él. Más grande de lo que pensaba. Y con manchas moradas...
+543	Su hueso va y vuelve. Bajo, salta; alto, agáchate. Cuando salte, apártate.
+544	¿Por qué tiene los mismos colores que tú, Hex?
+545	Coincidencia. Derríbalo, Ossian. El fragmento espera.
+547	Hilos de telaraña tendidos sobre el abismo. Se rompen.
+548	¿Esto es un puente? ¡Es un hilo de telaraña!
+549	Hilos fuertes, pero no para siempre. Pisa y corre.
+550	¿Quién tejió puentes en medio de la cueva?
+551	La Reina. Le gusta que las visitas lleguen hasta ella.
+553	Oscuridad total. Solo las antorchas muestran el camino.
+554	¿Hex? No veo nada.
+555	Toca las antorchas. Se encienden. Las tres grandes abren la salida.
+556	Qué curioso. ¿Yo tenía miedo a la oscuridad? No... era otra persona quien lo tenía.
+557	Concéntrate en las antorchas, Ossian.
+559	Capullos colgados de los hilos, balanceándose.
+560	Esos capullos... ¿hay alguien dentro?
+561	Está la comida de la Reina. No los toques, o serás la cena.
+562	Qué asco.
+563	Qué hambre, diría ella.
+565	Arañas saltarinas y murciélagos vampiro, sin parar.
+566	¡Saltan! ¡Las arañas verdes saltan!
+567	Entonces no pares de disparar. Mantén ATACAR.
+568	¿Y los murciélagos rojos?
+569	Esos se lanzan en picado. Dispárales antes.
+571	El nido de la Reina. La llave está allá arriba.
+572	Huevos. Miles de huevos. Y la llave en lo alto del nido.
+573	Una pared de bloques rojos cierra el camino. Cambia el color en la palanca.
+574	Con la llave en la mano no puedo golpear la palanca.
+575	Entonces suelta la llave, golpea y vuelve a cogerla. No todo se resuelve con prisa.
+577	La entrada a la montaña de fuego.
+578	El suelo está hirviendo, Hex. ¿Y ese agujero burbujeando?
+579	Un géiser. Burbujea antes de escupir fuego. Espera a que pase y corre.
+580	¿El Minotauro Carmesí vive aquí dentro?
+581	En el corazón de la montaña. Martilleando la lava. Guardando el quinto fragmento.
+583	La lava sube y baja como la marea.
+584	¡La lava está subiendo! ¡Igual que la marea en las islas!
+585	La montaña respira como el mar. Sube al basalto: flota.
+586	Todo en este mundo sube y baja. Hasta yo.
+587	Tú solo subes, Ossian. Te lo garantizo.
+589	Campos de géiseres que disparan con ritmo.
+590	Uno, dos, tres... disparan en secuencia.
+591	Como un corazón. Aprende el ritmo y pasa entre los latidos.
+592	Conoces bien esta montaña.
+593	Conozco bien todas las prisiones. Quiero decir... todos los lugares.

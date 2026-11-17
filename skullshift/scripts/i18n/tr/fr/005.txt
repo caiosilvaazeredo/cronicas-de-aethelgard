@@ -1,0 +1,220 @@
+761	Des lézards et des naufragés sans arrêt.
+762	Ils sortent de l'eau de tous les côtés !
+763	Maintiens ATTAQUER et avance.
+764	Ils attaquent sans colère. On dirait une obligation.
+765	C'est une obligation. La plus ancienne qu'ils aient.
+767	Racines, branches et troncs tombés au-dessus de l'eau.
+768	Des racines partout. On dirait une forêt noyée.
+769	C'était une forêt. L'eau est montée un jour et n'est jamais redescendue.
+770	Qui a fait monter l'eau ?
+771	Les rondins roulent. Attention.
+773	Le village des lézards. Personne ne passe sans combattre.
+774	Un village de lézards. Ils ont des maisons, Hex. Une famille.
+775	Et ils défendent le Roi. Chaque zone ne s'ouvre que lorsque tous sont tombés.
+776	Je n'aime pas me battre contre ceux qui ont une famille.
+777	Ils ne sont pas réels, Ossian. Rien ici ne l'est. Seulement toi.
+779	Le Roi Lézard ne dort jamais.
+780	Le Roi Lézard. Il me regarde... et il te regarde, Hex.
+781	Il crache du poison, projette sa langue : basse, saute ; haute, accroupis-toi. Et il bondit en éclaboussant des flaques.
+782	Pourquoi te regarde-t-il avec tant de haine ?
+783	De vieilles querelles. Fais-le tomber et c'est fini.
+785	Des nuages de braise qui se défont quand on marche dessus.
+786	Le ciel est rouge. Comme une braise.
+787	C'est le ciel du Diablotin. Il a brûlé les nuages pour garder le ciel pour lui seul.
+788	Et les nuages supportent mon poids ?
+789	Un instant. Ne t'arrête pas dessus.
+791	Des météores incandescents qui tombent du ciel.
+792	Il pleut des pierres en feu !
+793	Les étincelles indiquent où ça tombe. Tiens-toi à l'écart.
+794	Tout le ciel me tombe dessus !
+795	Seulement les morceaux détachés. Ce qui compte dans le ciel reste bien attaché. Pour l'instant.
+797	Des diablotins et des abeilles de braise sans arrêt.
+798	Des abeilles rouges et des diablotins partout !
+799	Maintiens ATTAQUER. Le ciel ne pardonne pas à ceux qui hésitent.
+800	Petits diablotins, diablotin géant. Où sont les moyens ?
+801	Ils deviennent géants ou ils deviennent cendre. Ici, en haut, pas de juste milieu.
+803	Des courants de vent chaud entre les îles.
+804	Le vent ici est chaud. Et du feu sort des pierres.
+805	Entre dans le vent, plane, et ne te pose pas sur les jets.
+806	Ça va, avec toute cette chaleur ?
+807	Je m'en tiens loin. Le feu me rappelle trop les lanternes.
+808	Quelles lanternes ?
+809	...Façon de parler. Monte avec le vent, allez.
+811	Le château des diablotins.
+812	Un château qui flotte. Rouge, comme le ciel.
+813	Le château des diablotins. Rien ne passe sans combattre.
+814	Combien de châteaux as-tu vu tomber, Hex ?
+815	Beaucoup. Et tous se sont relevés. Sauf un.
+817	Des abeilles de braise et les canons du château.
+818	Tout un essaim ! Et des canons !
+819	Les abeilles de braise piquent. Celles de la tempête encaissent trois coups.
+820	Elles sont perdues ici, Hex.
+821	Comme tu l'étais sur la plage. La différence, c'est que toi, tu m'as.
+823	Le coffre des diablotins.
+824	Un coffre au milieu du ciel. Avec un mur de blocs rouges.
+825	Lâche la clé, change la couleur, reprends-la. Tu connais.
+826	Tu sais toujours tout ouvrir, Hex. Les coffres, les portes...
+827	...Et les prisons. Va, Ossian.
+829	L'entrée du royaume ennemi de ton allié.
+830	Le royaume ennemi de mon allié. Plein d'ailes qui bourdonnent.
+831	Tu as choisi un camp dans le nid des Princes. Maintenant, tout l'autre camp veut se débarrasser de toi.
+832	Mon allié dit que leur roi est le dernier gardien.
+833	Le dernier fragment. Après lui, la couronne est entière.
+835	Un vol de jour dans le ciel du royaume.
+836	Voler de nouveau ! Mon allié connaît le chemin.
+837	Maintiens le tir et esquive tout. La route est longue.
+838	D'ici, le royaume ressemble à une roue. Tout tourne autour de ton île.
+839	Jolie image. Je ne l'avais jamais remarqué.
+840	Menteur.
+841	...Un peu.
+843	Le château du royaume. Rien ne passe sans combattre.
+844	Des tours partout. Et des gardes dans chacune.
+845	Chaque zone ne s'ouvre que lorsque tous sont tombés.
+846	Il y a un trône pour chacun des rois, peint sur le mur. Neuf.
+847	De l'art ancien. De l'époque où ils se réunissaient.
+848	Pour quoi faire ?
+849	Pour décider quoi faire de moi. Je veux dire : du royaume.
+851	Un vol de nuit au cœur de la tempête.
+852	Éclairs, pluie et ennemis. Tout à la fois.
+853	La tempête est vieille. Elle ne s'est jamais arrêtée depuis que je... depuis que le royaume existe.
+854	Je n'aime pas la pluie. Je ne sais pas pourquoi.
+855	Personne ne l'aime. Traverse vite et n'y pense pas.
+857	La chambre royale, verrouillée.
+858	Une chambre verrouillée en haut de la tour.
+859	Des ressorts et des échelles. Porte la clé jusqu'à la porte, sans te presser.
+860	Encore une clé. J'ai ouvert tant de portes pour toi, Hex.
+861	Pour nous. Et celle-ci est presque la dernière.
+863	Des courants de vent entre les tours.
+864	Le vent souffle entre les tours. On peut planer jusqu'à l'autre côté.
+865	Entre dans le vent, maintiens le saut. Et attention à ceux qui piquent.
+866	Le vent ici a une voix. On dirait quelqu'un qui appelle.
+867	Ce n'est que le vent. Si tu entends un nom, ne réponds pas.
+869	Le dernier vol de jour avant la nuit du roi.
+870	Le soleil se couche. Je me souviens d'un coucher de soleil sur une rivière... avec des lanternes.
+871	Il n'y a pas de rivière ici. Vole, Ossian. La nuit du roi approche.
+872	Le ciel au-dessus de l'île du milieu est noir, maintenant.
+873	Signe que nous sommes proches. Les grandes choses font de l'ombre.
+875	Course et tir sur les remparts du royaume.
+876	Les remparts sont pleins de gardes.
+877	Maintiens ATTAQUER et traverse.
+878	Ils crient quelque chose avant d'attaquer. On dirait « ne lâche pas ».
+879	Ils crient « ne passe pas ». Tu as mal entendu.
+881	La garde royale défend le dernier pont.
+882	La garde royale. Après elle, le roi.
+883	Le dernier roi, Ossian. Le dernier... fragment.
+884	Hex, tu trembles.
+885	C'est le vent. Rien que le vent.
+887	Une vieille bobine de film. Tout en noir et blanc, avec le grésillement du projecteur.
+888	Hex ? Pourquoi tout est gris ? Et ce grésillement ?
+889	Tu as trouvé une bobine de film. C'est un souvenir très, très ancien.
+890	Le souvenir de qui ?
+891	Le mien. D'avant la barque. Du temps où, moi aussi, je riais devant des dessins animés comme ça.
+892	Toi aussi, tu as été... vivant ?
+893	Tire, Ossian. Le film touche à sa fin.
+895	Un enclos vide dans l'herbe.
+896	Un enclos. Sans le moindre mouton.
+897	Ils se sont enfuis il y a longtemps. Mais ils ont laissé des cadeaux. Prends-les.
+898	L'un d'eux avait l'oreille noire...
+899	Ils ont tous des oreilles, Ossian. Avance.
+901	Une cabane à moitié engloutie.
+902	Une cabane qui s'enfonce dans le marais. Il y a quelqu'un ?
+903	Personne. Seulement ce qui est resté. Prends ce qui brille.
+904	Des cocons jusqu'au plafond.
+905	Des cocons partout. Et si l'un d'eux bouge ?
+906	Ceux qui bougent ne sont pas ceux qui gardent de l'or. Choisis bien.
+908	Un coffre dans le verre noir.
+909	Un coffre dans le volcan. Qui enferme de l'or dans le feu ?
+910	Quelqu'un qui veut oublier qu'il en a. Le Minotaure était comme ça.
+912	Une ronde enchantée.
+913	Les gnomes disent que cette ronde est enchantée.
+914	Les gnomes disent beaucoup de choses. Saute sur les gros et ne marche pas sur les petits.
+916	De l'or qu'aucun gobelin n'a trouvé.
+917	De l'or ! Et pas un gobelin en vue.
+918	Pas encore. Prends-le vite.
+920	Un nid énorme dans les braises.
+921	Un nid grand comme une maison. Quel oiseau fait ça ?
+922	Un qui est déjà parti. Presque tout ici est déjà parti.
+924	Une tour oubliée.
+925	Des plumes et des pièces. Les gardes du royaume étaient coquets.
+926	Ils étaient loyaux. Ça revient au même. Prends les pièces.
+928	Un arbre géant qui n'était pas là avant. À l'intérieur, un trésor.
+929	Hex, cet arbre n'était pas là quand je suis passé.
+930	Les vieux arbres apparaissent à ceux qui ont assez marché. Celui-ci garde de l'or.
+931	Et qui a caché de l'or dans un arbre ?
+932	Quelqu'un qui pensait revenir. Personne ne revient. Prends tout.
+934	Quand le fragment a brillé, j'ai vu une maison. Bleue, près de la mer.
+935	Quelqu'un à l'intérieur appelait pour le dîner. M'appelait... moi ?
+937	J'avais des mains. De vraies mains, avec des cals à force de fendre du bois.
+938	Je me souviens de l'odeur du bois coupé. Les os ne sentent rien.
+940	Je gardais des moutons. Et une petite sœur, qui avait peur du noir.
+941	J'avais promis de toujours rentrer avant la nuit.
+943	Le hameau s'appelait le Village du Pont. Un vieux pont traversait la rivière.
+944	Hex n'a jamais parlé de rivières. Seulement de marées.
+946	À la Foire aux Lanternes, chacun laissait une lumière sur la rivière pour ceux qui étaient partis.
+947	La lumière chaude que je vois quand je tombe... leur ressemble.
+949	Cette nuit-là, il a plu. Le pont était glissant.
+950	Ma sœur était restée de l'autre côté. Je suis allé la chercher.
+952	Il y avait quelqu'un sur le pont. En violet. Il m'a tendu la main.
+953	Je ne me souviens pas s'il m'a retenu... ou s'il m'a poussé.
+955	L'eau était glacée. Puis, un nuage.
+956	Et une voix : « Pas encore ». La même voix que toujours.
+958	Mon nom... mon nom n'est pas Ossian. C'est lui qui m'a donné ce nom.
+959	Il ne me manque plus grand-chose pour tout me rappeler.
+960	La couronne est entière, Hex. Et maintenant ? Où est le Portail de la Marée ?
+961	Il n'y a pas de portail, Ossian. Il y avait des sceaux. Neuf. Et tu les as tous brisés pour moi.
+962	Les rois... ils ne gardaient pas des fragments ?
+963	Ils gardaient ma prison. Tu as été la clé la plus patiente que j'aie jamais eue.
+964	Et moi, je tiens mes promesses. Mets la couronne. Elle te rend ce que le pont t'a pris.
+965	...Mes mains. Mon visage. Je suis... moi de nouveau. Je me souviens de tout.
+966	C'était toi, sur le pont. Tu m'as tendu la main et tu m'as laissé tomber.
+967	J'avais besoin de quelqu'un qui n'ait pas peur de tomber. Un mort n'a peur de rien.
+968	Maintenant, choisis. J'ouvre le chemin de la rivière et tu rentres chez toi, auprès de ta sœur. Entier.
+969	Ce monde reste à moi, bien sûr. Personne ne le regrettera.
+970	Et si je dis non ?
+971	Alors essaie de me faire tomber. Si tu y arrives, les sceaux reviennent... et tu redeviens os. Pour toujours.
+973	Le monde est libre.
+974	Tu as... préféré les os... à ta maison ?
+975	Ma sœur a tout le village. Ce monde n'avait que moi.
+976	Les sceaux reviennent. Je retourne en prison. Et toi...
+977	Je redeviens os. Ce n'est pas grave. Maintenant, je sais qui je suis.
+978	Et la prochaine fois que je tomberai, personne ne me ramènera.
+979	Je traverserai la lumière quand ce sera l'heure. À ma manière.
+981	Tu es rentré chez toi.
+982	Je veux rentrer chez moi.
+983	Sage décision. La rivière t'emmène. Ne regarde pas en arrière.
+984	...Les îles deviennent violettes. Les rois, les créatures. Tout.
+985	Ce n'est plus ton problème. Va. Ta sœur t'attend sur le pont.
+986	Je suis arrivé avant la nuit. Comme promis.
+987	Mais parfois, quand je regarde la rivière, je vois des nuages violets. Et quelqu'un qui sourit à l'intérieur.
+989	La couronne est entière.
+990	La couronne est entière. Le portail s'est ouvert... et de l'autre côté, il y a une rivière. Et des lanternes.
+991	Mets la couronne, Ossian. Avec elle, plus personne ne te fera tomber. Reste. Règne sur la marée avec moi.
+992	La lumière m'appelle de nouveau. Par mon nom. Le vrai.
+993	Si tu traverses, tu oublieras tout : les îles, les formes, moi. Il n'y aura plus de nuage pour venir te chercher.
+994	Tu ne m'as jamais sauvé, hein ? Chaque fois que je tombais, je m'en allais. Et toi, tu me ramenais.
+995	...Moi aussi, j'ai été de ce côté-là de la lumière. Il y a si longtemps que j'ai oublié mon nom.
+996	Alors c'est ça qui arrive à ceux qui restent.
+997	Le choix t'appartient. Il t'a toujours appartenu. Simplement... je ne te l'ai jamais dit.
+998	Pas encore.
+999	De retour. Toujours de retour.
+1000	Ne regarde pas la lumière.
+1001	Je te tiens.
+1002	Ce n'est pas ton heure... de partir.
+1003	J'ai failli te perdre.
+1004	C'est ça, Ossian ! Tu as touché l'essence d'une autre créature et tu as pris sa forme.
+1005	Hex ?! D'où sors-tu ? Et pourquoi j'ai... ça ?
+1006	Le don que je t'ai prêté. Ton âme est détachée de tes os, c'est pour ça qu'elle tient dans n'importe quelle forme.
+1007	Un corps vivant ne ferait jamais ça. ...Je veux dire, un corps ordinaire.
+1008	« Détachée » ? Comment ça, détachée ?
+1009	Des détails. Prends l'objet d'une créature et tu deviendras elle. Si tu tombes, tu redeviens os, et je viens te chercher. Va !
+1010	Des écailles. Enfin une peau. Dommage que ce ne soit pas la mienne.
+1011	Génial, maintenant j'ai des puces. Je ne savais même pas que les os attrapaient des puces.
+1012	Un requin debout, harpon à la main. Ça se tient parfaitement. Rien ne se tient ici.
+1013	Petit, vert et armé d'une lance. Je me sens... parfaitement normal.
+1014	Huit pattes. Je savais à peine quoi faire avec deux.
+1015	Une chauve-souris. Évidemment. La chose la plus naturelle pour un squelette.
+1016	Une torche au milieu de la grotte. Quelle idée lumineuse. Littéralement.
+1017	Je suis devenu le Diablotin. Si je me croise, je promets de me mettre un coup de poing.
+1018	Des cornes, des muscles, une odeur d'étable. Deux sur trois, ce n'est pas mal.
+1019	Bourdonnant et armé d'un dard. Si j'avais de la dignité, elle serait partie à l'instant.
+1020	Un gnome au lance-pierre. Plus grand que prévu, quand même.

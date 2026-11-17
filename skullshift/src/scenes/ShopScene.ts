@@ -14,7 +14,7 @@ import { announceAchievements } from '../game/achievements';
  * juntado nas fases. ←/→ escolhe, Enter/A compra, Esc/B volta ao mapa do mundo.
  */
 export class ShopScene extends Phaser.Scene {
-  lastData: { devices?: DeviceId[]; area?: string } = {};
+  lastData: { devices?: DeviceId[]; area?: string; from?: string } = {};
   private sel = 0;
   private cards: Array<{ box: Phaser.GameObjects.Container; frame: Phaser.GameObjects.Rectangle; tag: Phaser.GameObjects.Text }> = [];
   private coinText!: Phaser.GameObjects.Text;
@@ -28,7 +28,7 @@ export class ShopScene extends Phaser.Scene {
     super('shop');
   }
 
-  init(data: { devices?: DeviceId[]; area?: string }): void {
+  init(data: { devices?: DeviceId[]; area?: string; from?: string }): void {
     this.lastData = data;
     this.cards = [];
     this.prevPad = { l: true, r: true, u: true, d: true, a: true, b: true };
@@ -65,7 +65,7 @@ export class ShopScene extends Phaser.Scene {
     // Ouro.
     this.add.image(W - 400, oy + 44, 'gold').setScale(1.6);
     this.coinText = this.add.text(W - 368, oy + 44, '', { fontFamily: FONT, fontSize: '34px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 8 }).setOrigin(0, 0.5);
-    pillButton(this, W - 110, oy + 44, '◀ MAPA', () => this.back(), 180).setScale(0.8);
+    pillButton(this, W - 110, oy + 44, this.lastData.from === 'village' ? '◀ VILA' : '◀ MAPA', () => this.back(), 180).setScale(0.8);
 
     // Prateleira: um cartão por aprimoramento.
     // Cartões cabem na largura, quantos forem os aprimoramentos.
@@ -154,6 +154,7 @@ export class ShopScene extends Phaser.Scene {
   }
 
   private back(): void {
+    if (this.lastData.from === 'village') return void this.scene.start('village', {});
     this.scene.start('world', { devices: this.lastData.devices, area: this.lastData.area });
   }
 

@@ -92,7 +92,7 @@ export class WorldScene extends Phaser.Scene {
     kb.on('keydown-S', () => this.nav(0, 1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
     kb.on('keydown-ESC', () => this.scene.start('menu', { stage: 'modes' }));
-    kb.on('keydown-B', () => this.shop());
+    kb.on('keydown-B', () => this.village());
     kb.on('keydown-L', () => this.journal());
     this.select(this.sel, true);
 
@@ -144,7 +144,7 @@ export class WorldScene extends Phaser.Scene {
     fix(pillButton(this, MW - 170, MH - 62, 'ENTRAR  ▶', () => this.enter(), 240, 0xffe066).setDepth(30));
     fix(pillButton(this, 100, 36, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 170).setScale(0.75).setDepth(30));
     // Empório da Orelha-Preta: loja de aprimoramentos (tecla B).
-    fix(pillButton(this, MW - 170, 36, `EMPÓRIO · ${getCoins()} ouro`, () => this.shop(), 400, 0xffd84a).setScale(0.75).setDepth(30));
+    fix(pillButton(this, MW - 170, 36, `VILA · ${getCoins()} ouro`, () => this.village(), 400, 0xffd84a).setScale(0.75).setDepth(30));
     fix(pillButton(this, MW - 170, 84, 'DIÁRIO', () => this.journal(), 200, 0xd9b478).setScale(0.75).setDepth(30));
   }
 
@@ -159,7 +159,7 @@ export class WorldScene extends Phaser.Scene {
     this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
     this.add.text(MW / 2, 175 + top, this.header(), { fontFamily: FONT, fontSize: '46px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
     pillButton(this, 150, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.1);
-    pillButton(this, MW - 250, 80 + top, `EMPÓRIO · ${getCoins()}`, () => this.shop(), 400, 0xffd84a).setScale(1.1);
+    pillButton(this, MW - 250, 80 + top, `VILA · ${getCoins()}`, () => this.village(), 400, 0xffd84a).setScale(1.1);
     pillButton(this, MW / 2 + 40, 80 + top, 'DIÁRIO', () => this.journal(), 220, 0xd9b478).setScale(1.1);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
@@ -180,10 +180,13 @@ export class WorldScene extends Phaser.Scene {
   private drawShop(): void {
     const [x, y] = [360, 392];
     this.add.ellipse(x, y + 2, 90, 16, 0x10223a, 0.25).setDepth(5.9);
+    // A Vila: três casinhas juntas (o Empório no meio).
+    this.add.image(x - 34, y - 6, 'bld_blue_house1').setOrigin(0.5, 173 / 192).setScale(0.36).setDepth(6 + (y - 6) / 1000);
+    this.add.image(x + 30, y - 10, 'bld_red_house1').setOrigin(0.5, 173 / 192).setScale(0.34).setDepth(6 + (y - 10) / 1000);
     this.add.image(x, y + 4, 'bld_yellow_house2').setOrigin(0.5, 178 / 192).setScale(0.5).setDepth(6 + y / 1000);
     const sheep = this.add.sprite(x + 40, y + 6, 'sheep_idle').setScale(0.42).setOrigin(0.5, 0.8).setFlipX(true).setDepth(6.5).play('sheep_idle');
     this.tweens.add({ targets: sheep, y: y + 2, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-    const txt = this.add.text(x, y + 26, 'EMPÓRIO', { fontFamily: FONT, fontSize: '14px', color: '#3a2412' }).setOrigin(0.5).setDepth(12);
+    const txt = this.add.text(x, y + 26, 'VILA', { fontFamily: FONT, fontSize: '14px', color: '#3a2412' }).setOrigin(0.5).setDepth(12);
     const plate = this.add.graphics().setDepth(11);
     plate.fillStyle(INK, 1).fillRoundedRect(txt.x - txt.width / 2 - 10, txt.y - 12, txt.width + 20, 24, 6);
     plate.fillStyle(0xdcb06e, 1).fillRoundedRect(txt.x - txt.width / 2 - 7, txt.y - 9, txt.width + 14, 18, 5);
@@ -193,11 +196,15 @@ export class WorldScene extends Phaser.Scene {
       .zone(x, y - 20, 100, 100)
       .setInteractive({ useHandCursor: true })
       .setDepth(16)
-      .on('pointerdown', () => !this.busy && this.shop());
+      .on('pointerdown', () => !this.busy && this.village());
   }
 
   private journal(): void {
     this.scene.start('journal', { devices: this.devices, area: ALL_AREAS[this.sel].id });
+  }
+
+  private village(): void {
+    this.scene.start('village', {});
   }
 
   private shop(): void {

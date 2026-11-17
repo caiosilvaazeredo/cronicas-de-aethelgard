@@ -1,3 +1,4 @@
+import { completedCount } from '../game/progress';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { DEVICES, type DeviceId } from '../game/controls';
@@ -354,7 +355,8 @@ export class HowToScene extends Phaser.Scene {
 
   private play(): void {
     // História: mapa de fases (com a visual novel antes de cada uma). Versus: direto para a partida.
-    if (this.mode === 'story') this.scene.start('world', { devices: this.devices });
+    // História: depois da primeira fase, o ponto de partida é a Vila.
+    if (this.mode === 'story') this.scene.start(completedCount() > 0 ? 'village' : 'world', { devices: this.devices });
     // Versus: antes da partida, cada um escolhe as habilidades que vai usar.
     else this.scene.start('loadout', { devices: this.devices, level: this.level });
   }

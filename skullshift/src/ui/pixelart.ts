@@ -316,10 +316,92 @@ export function makeVolcanoBackdrop(scene: Phaser.Scene, key: string, width: num
 }
 
 /** Vulcão do mapa-múndi (pixel 3×), com contorno escuro como o resto do mapa. */
+/**
+ * Vulcão dos mapas, no traço das outras artes do mapa (Tiny Swords): formas lisas em alta
+ * resolução, contorno escuro grosso, luz à esquerda e sombra à direita, cratera com lava acesa,
+ * dois rios de lava e pedras na base. Textura 336×252 (pés no meio da borda de baixo).
+ * Também gera 'map_smoke', uma nuvenzinha de fumaça lisa para sair da cratera.
+ */
 export function makeMapVolcano(scene: Phaser.Scene, key: string): void {
-  const px = new Px(56, 42);
-  drawCone(px, { cx: 28, peak: 5, base: 40, half: 26, crater: 10, seed: 4, rivers: 2, ink: 0x1d1a2b });
-  px.toTexture(scene, key, 3);
+  const W = 336;
+  const H = 252;
+  const INK = 0x1d1a2b;
+  const g = scene.make.graphics({}, false);
+  const P = (pts: number[]) => pts.reduce<Phaser.Types.Math.Vector2Like[]>((a, v, i) => (i % 2 ? (a[a.length - 1].y = v, a) : [...a, { x: v, y: 0 }]), []);
+  // Encosta curva: de (x0, y0) até (x1, y1), barriga para fora.
+  const slope = (x0: number, y0: number, x1: number, y1: number, bulge: number, n = 10): number[] => {
+    const out: number[] = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      const x = x0 + (x1 - x0) * t + Math.sin(t * Math.PI) * bulge;
+      const y = y0 + (y1 - y0) * t;
+      out.push(x, y);
+    }
+    return out;
+  };
+  const baseY = 232;
+  const left = 22;
+  const right = 314;
+  const cl = 132; // borda esquerda da cratera
+  const cr = 204;
+  const top = 58;
+  // Sombra no chão.
+  g.fillStyle(0x000000, 0.18).fillEllipse(W / 2 + 8, baseY + 4, 300, 34);
+  // Silhueta (contorno grosso).
+  const outline = [...slope(left - 7, baseY + 6, cl - 8, top - 6, -16), ...slope(cr + 8, top - 6, right + 7, baseY + 6, -16)];
+  g.fillStyle(INK).fillPoints(P(outline), true);
+  // Corpo em três faixas: luz, meio e sombra.
+  const body = [...slope(left, baseY, cl, top, -16), ...slope(cr, top, right, baseY, -16)];
+  g.fillStyle(0x7a4a3c).fillPoints(P(body), true);
+  g.fillStyle(0x9c6450).fillPoints(P([...slope(left, baseY, cl, top, -16), 150, top, 130, 120, 112, baseY]), true);
+  g.fillStyle(0xb87c62).fillPoints(P([...slope(left + 10, baseY - 8, cl + 2, top + 4, -14, 8), 138, 90, 92, 150, 62, baseY - 8]), true);
+  g.fillStyle(0x5a3430).fillPoints(P([186, top, ...slope(cr, top, right, baseY, -16), 230, baseY, 214, 140]), true);
+  // Faixas de rocha (estratos) e rachaduras.
+  g.lineStyle(4, 0x4a2a28, 0.55);
+  for (const [y, a, b] of [[118, 98, 150], [160, 66, 120], [190, 214, 270], [138, 222, 250], [204, 52, 96]]) g.lineBetween(a, y, b, y + 6);
+  g.lineStyle(3, 0xd89a7a, 0.6).lineBetween(70, 196, 104, 170).lineBetween(110, 132, 128, 106);
+  // Brilho da lava saindo da cratera.
+  for (let k = 0; k < 4; k++) g.fillStyle(0xff8a2a, 0.1).fillEllipse((cl + cr) / 2, top - 6, 150 - k * 28, 70 - k * 14);
+  // Cratera: borda escura e lava acesa dentro.
+  g.fillStyle(INK).fillEllipse((cl + cr) / 2, top + 2, cr - cl + 28, 40);
+  g.fillStyle(0x4a2626).fillEllipse((cl + cr) / 2, top + 2, cr - cl + 16, 30);
+  g.fillStyle(0x2a1416).fillEllipse((cl + cr) / 2, top - 2, cr - cl + 4, 18);
+  g.fillStyle(0xff5a1a).fillEllipse((cl + cr) / 2, top + 6, cr - cl - 2, 18);
+  g.fillStyle(0xffb02e).fillEllipse((cl + cr) / 2 - 4, top + 6, cr - cl - 22, 10);
+  g.fillStyle(0xfff1a8).fillEllipse((cl + cr) / 2 - 10, top + 5, 22, 5);
+  // Rios de lava descendo (contorno, laranja, miolo amarelo).
+  const river = (pts: number[], w: number) => {
+    const v = P(pts);
+    const draw = (width: number, color: number) => {
+      g.lineStyle(width, color);
+      for (let i = 1; i < v.length; i++) g.lineBetween(v[i - 1].x!, v[i - 1].y!, v[i].x!, v[i].y!);
+      for (const p of v) g.fillStyle(color).fillCircle(p.x!, p.y!, width / 2);
+    };
+    draw(w + 8, INK);
+    draw(w, 0xff6a1a);
+    draw(Math.max(3, w - 8), 0xffc23a);
+  };
+  river([150, top + 10, 146, 92, 132, 118, 136, 146, 118, 176, 112, 206], 14);
+  river([188, top + 10, 196, 96, 210, 124, 204, 158, 224, 192], 11);
+  // Pedras na base, com contorno.
+  const rock = (x: number, y: number, r: number) => {
+    g.fillStyle(INK).fillEllipse(x, y, r * 2 + 8, r * 1.5 + 8);
+    g.fillStyle(0x6a6470).fillEllipse(x, y, r * 2, r * 1.5);
+    g.fillStyle(0x9a94a0).fillEllipse(x - r * 0.3, y - r * 0.3, r, r * 0.6);
+  };
+  rock(42, baseY - 2, 14);
+  rock(70, baseY + 4, 9);
+  rock(286, baseY, 16);
+  rock(258, baseY + 6, 9);
+  g.generateTexture(key, W, H);
+
+  // Fumaça lisa da cratera.
+  g.clear();
+  g.fillStyle(INK).fillCircle(18, 26, 15).fillCircle(32, 18, 17).fillCircle(44, 28, 13);
+  g.fillStyle(0x8a7f88).fillCircle(18, 26, 11).fillCircle(32, 18, 13).fillCircle(44, 28, 9);
+  g.fillStyle(0xb8aeb4).fillCircle(15, 23, 6).fillCircle(29, 14, 7);
+  g.generateTexture('map_smoke', 64, 48);
+  g.destroy();
 }
 
 /** Fumaça em pixel art: nuvenzinha de cinza com luz no alto e contorno (3 tamanhos). */

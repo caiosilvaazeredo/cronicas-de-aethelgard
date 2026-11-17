@@ -405,9 +405,9 @@ export class MapScene extends Phaser.Scene {
       this.tweens.add({ targets: crown, y: crown.y - 8, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     if (l.id === 'volcano') {
-      this.add.image(x, y - 20, 'map_volcano').setOrigin(0.5, 1).setDepth(5);
+      this.add.image(x, y - 20, 'map_volcano').setOrigin(0.5, 1).setScale(0.5).setDepth(5);
       this.add
-        .particles(x, y - 146, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3600, scale: { start: 0.67, end: 1.33 }, alpha: { start: 0.95, end: 0 }, frequency: 700 })
+        .particles(x + 4, y - 112, 'map_smoke', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3600, scale: { start: 0.45, end: 1 }, alpha: { start: 0.95, end: 0 }, frequency: 700 })
         .setDepth(6);
     }
     if (l.chase) {

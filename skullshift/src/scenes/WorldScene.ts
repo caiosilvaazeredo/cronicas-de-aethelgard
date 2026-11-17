@@ -435,9 +435,9 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'forja':
-        this.add.image(x + 10, y + 30, 'map_volcano').setOrigin(0.5, 1).setScale(0.8).setDepth(5);
+        this.add.image(x + 10, y + 30, 'map_volcano').setOrigin(0.5, 1).setScale(0.4).setDepth(5);
         this.add
-          .particles(x + 10, y - 86, 'vsmoke_1', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3000, scale: { start: 0.5, end: 1 }, alpha: { start: 0.9, end: 0 }, frequency: 800 })
+          .particles(x + 14, y - 50, 'map_smoke', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3000, scale: { start: 0.35, end: 0.8 }, alpha: { start: 0.9, end: 0 }, frequency: 800 })
           .setDepth(6);
         deco('stone3', -80, 30, 0.7);
         break;

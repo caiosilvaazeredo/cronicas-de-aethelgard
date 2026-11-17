@@ -40,6 +40,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       await sleep(1500);
       const t0 = Date.now();
       let res = 'tempo esgotado';
+      let last = null;
       while (Date.now() - t0 < SECS * 1000) {
         const st = await p
           .evaluate(async () => {
@@ -50,9 +51,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
             const active = g.scene.getScenes(true).map((x) => x.scene.key);
             let near = 9999;
             if (s?.players?.[0]) for (const e of s.enemies ?? []) if (e.f.alive) near = Math.min(near, Math.abs(e.f.x - s.players[0].x));
-            return { r: r ? { hearts: r.hearts, last: r.lastFight, over: r.over } : null, active, near };
+            return { r: r ? { hearts: r.hearts, last: r.lastFight, over: r.over } : null, active, near, x: s?.players?.[0] ? Math.round(s.players[0].x) : -1, w: s?.level?.width, ended: !!s?.ended,
+              // Buraco ou degrau logo à frente: hora de pular.
+              edge: (() => { const pl = s?.players?.[0]; if (!pl || !s.level) return false; const here = s.level.groundY(pl.x); const ahead = s.level.groundY(pl.x + 90); return ahead === null || (here !== null && ahead < here - 10); })() };
           })
           .catch(() => null);
+        if (st) last = st;
         if (st && (!st.r || st.r.over === 'lose')) {
           res = 'derrota';
           break;
@@ -70,13 +74,24 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
         if (st && st.near < 120 && Math.random() < 0.3) {
           await kb.down('q'); await sleep(200); await kb.up('q');
         }
-        await kb.press('j'); await sleep(110); await kb.press('j');
-        if (Math.random() < 0.35) await kb.press('w');
+        if (!st?.edge) {
+          await kb.press('j'); await sleep(110); await kb.press('j');
+        }
+        if (st?.edge) {
+          await kb.down('Shift');
+          await kb.down('w'); await sleep(260); await kb.up('w');
+          await sleep(120);
+          await kb.press('w'); // pulo duplo, se tiver
+          await sleep(250);
+          await kb.up('Shift');
+        } else if (Math.random() < 0.1) await kb.press('w');
         await sleep(140);
       }
       for (const k of ['d', 'q']) await kb.up(k).catch(() => {});
+      // Deixa a troca de tela terminar (vitória/derrota voltam ao mapa da dungeon) antes da próxima sala.
+      if (res !== 'tempo esgotado') await p.waitForFunction(() => window.__skullshift.scene.isActive('dungeon'), null, { timeout: 10000 }).catch(() => {});
       const after = await p.evaluate(async () => (await import('/src/game/dungeon.ts')).getRun()?.hearts ?? 0).catch(() => 0);
-      rows.push({ area, rec: info.rec, nivel: info.lvl, resultado: res, segundos: Math.round((Date.now() - t0) / 1000), coracoes: `${after}/${info.hearts}` });
+      rows.push({ area, rec: info.rec, nivel: info.lvl, resultado: res, segundos: Math.round((Date.now() - t0) / 1000), coracoes: `${after}/${info.hearts}`, x: last?.x, w: last?.w, cenas: last?.active?.join('+') });
       console.log(JSON.stringify(rows[rows.length - 1]));
     }
   }

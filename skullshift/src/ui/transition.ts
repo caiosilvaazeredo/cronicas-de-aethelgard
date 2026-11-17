@@ -79,7 +79,11 @@ export function installTransitions(game: Phaser.Game): void {
     const my = ++token;
     const src = this.scene;
     const input = src.input;
-    if (input) input.enabled = false;
+    if (input) {
+      input.enabled = false;
+      // Se a cena for encerrada no meio da troca (por outro caminho), o controle volta ligado.
+      src.sys.events.once(Phaser.Scenes.Events.SHUTDOWN, () => (input.enabled = true));
+    }
     game.scene.bringToTop('fade');
     const curtain = fade.curtain;
     fade.tweens.killTweensOf(curtain);

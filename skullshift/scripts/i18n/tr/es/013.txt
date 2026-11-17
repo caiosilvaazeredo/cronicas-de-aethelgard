@@ -188,3 +188,4 @@
 2098	{0} · NIVEL {1} · FRAGMENTOS {2}/{3}
 2099	¡SUBISTE DE NIVEL!  NIVEL {0}
 2100	Más corazones y más fuerza en las mazmorras.
+2101	+{0} XP para la incursión · +1 corazón

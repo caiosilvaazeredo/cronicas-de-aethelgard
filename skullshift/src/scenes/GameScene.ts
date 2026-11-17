@@ -2899,9 +2899,11 @@ export class GameScene extends Phaser.Scene {
     if (rn) {
       rn.xp += d.xp;
       rn.lastFight = 'win';
+      // Respiro entre as salas: cada luta vencida devolve um coração.
+      rn.hearts = Math.min(rn.maxHearts, rn.hearts + 1);
     }
     jingle('win');
-    this.ui?.banner(d.kind === 'boss' ? 'GUARDIÃO DERROTADO!' : 'SALA LIMPA!', 1400, `+${d.xp} XP para a run`);
+    this.ui?.banner(d.kind === 'boss' ? 'GUARDIÃO DERROTADO!' : 'SALA LIMPA!', 1400, `+${d.xp} XP para a run · +1 coração`);
     this.time.delayedCall(1700, () => this.scene.start('dungeon', {}));
   }
 

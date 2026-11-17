@@ -188,3 +188,4 @@
 2098	{0} · SEVİYE {1} · PARÇALAR {2}/{3}
 2099	SEVİYE ATLADIN!  SEVİYE {0}
 2100	Zindanlarda daha çok kalp ve daha çok güç.
+2101	Sefer için +{0} TP · +1 kalp

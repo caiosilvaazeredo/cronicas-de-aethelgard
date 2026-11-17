@@ -188,3 +188,4 @@
 2098	{0} · LIVELLO {1} · FRAMMENTI {2}/{3}
 2099	LIVELLO SUPERIORE!  LIVELLO {0}
 2100	Più cuori e più forza nei dungeon.
+2101	+{0} XP per la spedizione · +1 cuore

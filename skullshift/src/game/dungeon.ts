@@ -96,8 +96,8 @@ function rng(seed: number): () => number {
 const pick = <T>(r: () => number, list: readonly T[]): T => list[Math.floor(r() * list.length)];
 const between = (r: () => number, a: number, b: number) => a + Math.floor(r() * (b - a + 1));
 
-/** Corações da caveira numa dungeon: 3 + 1 a cada 3 níveis. */
-export const heartsFor = (level: number): number => 3 + Math.floor(level / 3);
+/** Corações da caveira numa dungeon: 5 + 1 a cada 3 níveis. */
+export const heartsFor = (level: number): number => 5 + Math.floor(level / 3);
 
 /** Começa uma run nova na dungeon da área. */
 export function startRun(areaId: string, from: 'village' | 'map', replay: boolean): DungeonRun {

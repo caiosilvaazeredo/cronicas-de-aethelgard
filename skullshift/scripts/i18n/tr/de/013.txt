@@ -188,3 +188,4 @@
 2098	{0} · STUFE {1} · FRAGMENTE {2}/{3}
 2099	STUFE AUFGESTIEGEN!  STUFE {0}
 2100	Mehr Herzen und mehr Kraft in den Verliesen.
+2101	+{0} EP für den Streifzug · +1 Herz

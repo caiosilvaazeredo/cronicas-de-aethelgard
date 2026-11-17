@@ -188,3 +188,4 @@
 2098	{0} · POZIOM {1} · FRAGMENTY {2}/{3}
 2099	NOWY POZIOM!  POZIOM {0}
 2100	Więcej serc i więcej siły w lochach.
+2101	+{0} PD dla wyprawy · +1 serce

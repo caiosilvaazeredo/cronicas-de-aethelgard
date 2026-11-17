@@ -188,3 +188,4 @@
 2098	{0} · LEVEL {1} · FRAGMENTS {2}/{3}
 2099	LEVEL UP!  LEVEL {0}
 2100	More hearts and more strength in the dungeons.
+2101	+{0} XP for the run · +1 heart

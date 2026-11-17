@@ -188,3 +188,4 @@
 2098	{0} · NIVEAU {1} · FRAGMENTS {2}/{3}
 2099	NIVEAU SUPÉRIEUR !  NIVEAU {0}
 2100	Plus de cœurs et plus de force dans les donjons.
+2101	+{0} XP pour l'expédition · +1 cœur

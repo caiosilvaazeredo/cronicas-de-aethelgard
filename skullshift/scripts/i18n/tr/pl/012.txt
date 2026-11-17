@@ -1,0 +1,6 @@
+1900	Wciśnij ATAK dokładnie w chwili ciosu wroga: KONTRA! Przełamuje gardę atakującego i odbija pociski.
+1901	Mistrz Kontry
+1902	ATAK w chwili\nciosu: KONTRA!
+1903	Okno KONTRY (atak w chwili ciosu) staje się znacznie większe.
+1906	GARDA: przytrzymaj przycisk.\nATAK dokładnie w chwili\nciosu: KONTRA!
+1907	GARDA pod przyciskiem (Q, K, B). ATAK dokładnie w chwili ciosu: KONTRA! Nad przedmiotem innej postaci naciśnij WEŹ, by się przemienić.

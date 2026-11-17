@@ -13,7 +13,7 @@ export interface Tip {
 
 export const TIPS: Tip[] = [
   // ---------- dicas de jogo ----------
-  { kind: 'DICA', text: 'Toque para TRÁS bem na hora do golpe: CONTRA! Quebra a defesa de quem bate e devolve projéteis.' },
+  { kind: 'DICA', text: 'ATAQUE bem na hora do golpe inimigo: CONTRA! Quebra a defesa de quem bate e devolve projéteis.' },
   { kind: 'DICA', text: 'A defesa sem escudo é uma meia-lua: só protege a frente. Cuidado com quem vem por trás.' },
   { kind: 'DICA', text: 'Agache e aperte PEGAR em cima de um item para guardá-lo na caixa de reserva, sem se transformar.' },
   { kind: 'DICA', text: 'A caixa de reserva (no alto da tela) guarda um item. Aperte R, SELECT ou toque na caixa e ele cai do céu.' },

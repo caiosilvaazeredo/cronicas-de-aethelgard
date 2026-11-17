@@ -1,0 +1,6 @@
+1900	Pulsa ATAQUE justo cuando llega el golpe enemigo: ¡CONTRA! Rompe la defensa de quien ataca y devuelve proyectiles.
+1901	Maestro del Contra
+1902	ATACA al recibir\nel golpe: ¡CONTRA!
+1903	La ventana del CONTRA (atacar justo al recibir el golpe) se vuelve mucho mayor.
+1906	DEFENSA: mantén el botón.\nATACA justo al recibir\nel golpe: ¡CONTRA!
+1907	DEFENSA en el botón (Q, K, B). ATACA justo al recibir el golpe: ¡CONTRA! Sobre el objeto de otro personaje, pulsa AGARRAR para transformarte.

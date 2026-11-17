@@ -553,7 +553,10 @@ export class GameScene extends Phaser.Scene {
     this.players.forEach((p, i) => {
       p.intent = p.alive ? this.controllers[i].read() : emptyIntent();
       // Corrida e tiro: ATACAR dispara ossos em vez do golpe corpo a corpo.
-      if (i === 0 && this.mode === 'story' && LEVELS[this.levelIndex].gun) p.intent = { ...p.intent, attack: false };
+      if (i === 0 && this.mode === 'story' && LEVELS[this.levelIndex].gun) {
+        p.noteAttack(p.intent.attack);
+        p.intent = { ...p.intent, attack: false };
+      }
       // Preso na teia da Aranha-Rainha: não anda nem pula (dá para atacar e defender).
       if (i === 0 && time < this.rootedUntil) p.intent = { ...p.intent, move: 0, jump: false, jumpHeld: false, sprint: false };
       p.faceTarget = this.nearestFoe(p)?.x ?? null;
@@ -746,8 +749,8 @@ export class GameScene extends Phaser.Scene {
       if (!hb) continue;
       for (const b of all) {
         if (!b.alive || b.team === a.team || a.attackHits.has(b)) continue;
-        // Contra-golpe: tocou para trás no instante certo → a defesa de quem atacou quebra.
-        // Vale mesmo se o recuo tirou o corpo do alcance por pouco (o golpe "passou raspando").
+        // Contra-golpe: apertou ATAQUE no instante certo → a defesa de quem atacou quebra.
+        // Vale mesmo se o golpe ia passar raspando.
         const near = { ...hb, x1: hb.x1 - 60, x2: hb.x2 + 60 };
         const parry = !b.invulnerable && overlap(near, bodyBox(b)) && b.parries(a.x);
         if (!parry && !overlap(hb, bodyBox(b))) continue;

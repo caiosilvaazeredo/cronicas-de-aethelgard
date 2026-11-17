@@ -1,0 +1,6 @@
+1900	Düşmanın darbesi tam gelirken SALDIRI'ya bas: KARŞI! Saldıranın savunmasını kırar ve mermileri geri yollar.
+1901	Karşı Ustası
+1902	Darbe anında\nSALDIR: KARŞI!
+1903	KARŞI penceresi (darbe anında saldırmak) çok daha genişler.
+1906	SAVUNMA: düğmeyi basılı tut.\nDarbe tam gelirken SALDIR:\nKARŞI!
+1907	SAVUNMA düğmede (Q, K, B). Darbe tam gelirken SALDIR: KARŞI! Başka karakterin eşyasının üstünde dönüşmek için AL'a bas.

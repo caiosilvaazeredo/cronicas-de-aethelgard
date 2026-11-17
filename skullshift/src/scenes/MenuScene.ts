@@ -269,7 +269,7 @@ export class MenuScene extends Phaser.Scene {
         [
           'Na próxima tela, cada jogador escolhe teclado, controle ou toque.',
           'P1 = azul  ·  P2 = vermelho. Os dois começam como esqueleto.',
-          'DEFESA no botão (Q, K, B). Toque para TRÁS na hora do golpe: CONTRA! Sobre o item de outro personagem, aperte PEGAR para se transformar.',
+          'DEFESA no botão (Q, K, B). ATAQUE bem na hora do golpe: CONTRA! Sobre o item de outro personagem, aperte PEGAR para se transformar.',
         ].join('\n'),
         {
           fontFamily: BODY_FONT,

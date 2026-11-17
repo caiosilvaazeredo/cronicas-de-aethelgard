@@ -18,7 +18,7 @@ const BODY_H = 50;
 const CROUCH_SPEED = 120;
 /** O segundo pulo (no ar) é um pouco mais fraco. */
 const DOUBLE_JUMP = 0.88;
-/** Janela do contra-golpe (tocar para trás no instante do golpe), em ms. */
+/** Janela do contra-golpe (apertar ATAQUE no instante do golpe), em ms. */
 const PARRY_MS = 170;
 /** Pique: multiplicador de velocidade. */
 const SPRINT = 1.6;
@@ -122,6 +122,9 @@ export class Fighter {
   private lastTurnAt = -9999;
   private lastMoveSign = 0;
   private moveStartAt = -9999;
+  /** Quando ATAQUE foi apertado pela última vez (toque novo), para o contra-golpe. */
+  private attackPressAt = -9999;
+  private prevAttackIntent = false;
   private lastMove = 0;
 
   constructor(
@@ -259,15 +262,27 @@ export class Fighter {
   }
 
   /**
-   * Contra-golpe: em vez de defender, tocou para trás (para longe de quem ataca) no instante do
-   * golpe. Golpe corpo a corpo: quebra a defesa de quem atacou. Tiro: volta para quem atirou.
+   * Contra-golpe: apertou ATAQUE bem no instante em que o golpe ia acertar. Golpe corpo a corpo:
+   * quebra a defesa de quem atacou. Tiro: volta para quem atirou. Defender (segurar a defesa ou
+   * recuar) nunca conta: o contra é só para quem bate na hora certa.
    */
-  parries(fromX: number): boolean {
-    // O contra vale para quem TOCOU para trás AGORA (um toque novo, no tempo certo). Quem já vinha
-    // segurando a direção precisa soltar e tocar de novo; segurar a defesa também não conta.
+  /** Fases de tiro: o ATAQUE vira disparo antes de chegar aqui; o toque ainda vale para o contra. */
+  noteAttack(held: boolean): void {
+    if (held && !this.prevRawAttack) this.pressAttack(this.scene.time.now);
+    this.prevRawAttack = held;
+  }
+  private prevRawAttack = false;
+  private lastPressAt = -9999;
+
+  /** Abre a janela do contra; apertar sem parar (menos de 0,3 s entre toques) não conta. */
+  private pressAttack(now: number): void {
+    this.attackPressAt = now - this.lastPressAt > 300 ? now : -9999;
+    this.lastPressAt = now;
+  }
+
+  parries(_fromX: number): boolean {
     if (!this.isPlayer || !this.alive || this.intent.guard || this.isStunned || this.zipping) return false;
-    const toward = Math.sign(fromX - this.x) || this.facing;
-    return this.lastMoveSign === -toward && this.scene.time.now - this.moveStartAt <= PARRY_MS + this.parryBonus;
+    return this.scene.time.now - this.attackPressAt <= PARRY_MS + this.parryBonus;
   }
 
   knockback(dir: number, power = 320): void {
@@ -486,7 +501,9 @@ export class Fighter {
         .setFlipX(this.facing < 0)
         .setAlpha(0.85);
     }
-    // Começo de cada movimento (para o contra-golpe: tocar para trás no instante do golpe).
+    // Toque novo em ATAQUE (para o contra-golpe).
+    if (this.intent.attack && !this.prevAttackIntent) this.pressAttack(now);
+    this.prevAttackIntent = this.intent.attack;
     const m = Math.sign(this.intent.move);
     if (m !== this.lastMoveSign) {
       this.lastMoveSign = m;

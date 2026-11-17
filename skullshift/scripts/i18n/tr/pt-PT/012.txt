@@ -1,0 +1,3 @@
+1900	Carrega em ATAQUE mesmo na hora do golpe inimigo: CONTRA! Quebra a defesa de quem bate e devolve projéteis.
+1906	DEFESA: segura o botão.\nATAQUE mesmo na hora\ndo golpe: CONTRA!
+1907	DEFESA no botão (Q, K, B). ATAQUE mesmo na hora do golpe: CONTRA! Sobre o item de outro personagem, carrega em APANHAR para te transformares.

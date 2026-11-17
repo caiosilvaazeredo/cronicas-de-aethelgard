@@ -1,0 +1,6 @@
+1900	Press ATTACK right as the enemy's blow lands: PARRY! Breaks the attacker's guard and sends projectiles back.
+1901	Master of the Parry
+1902	ATTACK as the blow\nlands: PARRY!
+1903	The PARRY window (attacking right as the blow lands) gets much wider.
+1906	GUARD: hold the button.\nATTACK right as the blow\nlands: PARRY!
+1907	GUARD on the button (Q, K, B). ATTACK right as the blow lands: PARRY! Over another character's item, press PICK UP to transform.

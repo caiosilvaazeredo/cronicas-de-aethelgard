@@ -1,0 +1,6 @@
+1900	Premi ATTACCO proprio nel momento del colpo nemico: CONTRO! Spezza la difesa di chi attacca e rimanda indietro i proiettili.
+1901	Maestro del Contro
+1902	ATTACCA nel momento\ndel colpo: CONTRO!
+1903	La finestra del CONTRO (attaccare nel momento del colpo) diventa molto più ampia.
+1906	DIFESA: tieni il pulsante.\nATTACCA proprio nel momento\ndel colpo: CONTRO!
+1907	DIFESA sul pulsante (Q, K, B). ATTACCA proprio nel momento del colpo: CONTRO! Sopra l'oggetto di un altro personaggio, premi PRENDI per trasformarti.

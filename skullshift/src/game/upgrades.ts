@@ -51,7 +51,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Reflexo de Osso',
     icon: 'guard_arc',
     price: 35,
-    how: 'A janela do CONTRA (tocar para trás na hora do golpe) fica bem maior.',
+    how: 'A janela do CONTRA (atacar bem na hora do golpe) fica bem maior.',
     sign: 'Béé. (Para trás, depressa.)',
   },
   {

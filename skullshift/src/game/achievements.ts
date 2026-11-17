@@ -40,7 +40,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'kills50', name: 'Ossos do Ofício', desc: 'Derrote 50 inimigos.', check: () => getStat('kills') >= 50 },
   { id: 'kills250', name: 'Lenda da Ilha', desc: 'Derrote 250 inimigos.', check: () => getStat('kills') >= 250 },
   { id: 'parry1', name: 'CONTRA!', desc: 'Faça um contra-golpe.', check: () => getStat('parries') >= 1 },
-  { id: 'parry25', name: 'Mestre do Recuo', desc: 'Faça 25 contra-golpes.', check: () => getStat('parries') >= 25 },
+  { id: 'parry25', name: 'Mestre do Contra', desc: 'Faça 25 contra-golpes.', check: () => getStat('parries') >= 25 },
   { id: 'shift11', name: 'Mil Formas', desc: 'Transforme-se 30 vezes.', check: () => getStat('shifts') >= 30 },
   { id: 'retro', name: 'Cinéfilo', desc: 'Termine o Desenho Perdido.', check: () => isSecretDone('retro') },
 ];

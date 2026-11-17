@@ -1,0 +1,6 @@
+1900	Appuyez sur ATTAQUE pile au moment du coup ennemi : CONTRE ! Brise la garde de l'attaquant et renvoie les projectiles.
+1901	Maître du Contre
+1902	ATTAQUEZ au moment\ndu coup : CONTRE !
+1903	La fenêtre du CONTRE (attaquer au moment du coup) devient bien plus large.
+1906	GARDE : maintenez le bouton.\nATTAQUEZ pile au moment\ndu coup : CONTRE !
+1907	GARDE sur le bouton (Q, K, B). ATTAQUEZ pile au moment du coup : CONTRE ! Sur l'objet d'un autre personnage, appuyez sur PRENDRE pour vous transformer.

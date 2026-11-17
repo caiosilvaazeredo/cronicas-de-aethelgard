@@ -97,6 +97,8 @@ export class GameScene extends Phaser.Scene {
   private hangers: Hanger[] = [];
   /** Cena de conversa: o jogo congela enquanto os balões aparecem. */
   private cutscene = false;
+  /** Fim da fase: a nuvem do Hex esperando no fim do mapa. */
+  private goal?: { rig: Phaser.GameObjects.Container; shaman: Phaser.GameObjects.Sprite; done: boolean };
   private prevStart = true;
   /** Casa assombrada (portas, chave, alavancas, velas, escuridão). */
   private haunt?: HauntSystem;
@@ -185,6 +187,7 @@ export class GameScene extends Phaser.Scene {
     this.finalePhase = data.finalePhase ?? 0;
     // Reinício da cena (teleporte da luta final): nada de conversa ou pausa herdada.
     this.cutscene = false;
+    this.goal = undefined;
     this.quip = undefined;
     this.allies = [];
     this.bossAnchor = undefined;
@@ -2789,8 +2792,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   /** Vitória no modo história (fim do mapa, porta de saída ou chefe derrotado). */
-  private storyWin(sub: string): void {
-    if (!this.ended) jingle('win');
+  private storyWin(sub: string, quiet = false): void {
+    if (!this.ended && !quiet) jingle('win');
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
     completeLevel(this.levelIndex);
@@ -2821,12 +2824,97 @@ export class GameScene extends Phaser.Scene {
     if (this.puzzle || this.mausoleum) return; // chave e porta / mausoléu: vitória própria
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
+    if (this.mode === 'story') {
+      // História: a nuvem do Hex espera no fim; perto dela, a caveira comemora e vai embora com ele.
+      if (!this.goal) this.goal = this.makeGoalCloud();
+      if (!this.goal.done && p1.alive && (p1.x >= this.goal.rig.x - 240 && p1.onGround || p1.x >= end - 20)) void this.goalFinale(p1);
+      return;
+    }
     if (p1.alive && p1.x >= end) {
-      if (this.mode === 'story') this.storyWin(LEVELS[this.levelIndex].winText ?? 'Fragmento da coroa recuperado!');
-      else this.victory(0, `${playerName(0).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
+      this.victory(0, `${playerName(0).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, `${playerName(1).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     }
+  }
+
+  /** A nuvem do Hex parada no fim do mapa, baixinha, esperando a caveira. */
+  private makeGoalCloud(): { rig: Phaser.GameObjects.Container; shaman: Phaser.GameObjects.Sprite; done: boolean } {
+    const x = this.level.width - 240;
+    const floor = this.level.groundY(x) ?? this.level.groundY(x - 120) ?? FLOOR_Y;
+    const glow = this.add.image(0, 10, 'aura').setTint(0x9b6bf0).setBlendMode(Phaser.BlendModes.ADD).setScale(2, 1).setAlpha(0.45);
+    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.42);
+    const shaman = this.add.sprite(44, -6, 'shaman_idle').play('shaman_idle').setFlipX(true);
+    const rig = this.add.container(x, floor - 112, [glow, cloud, shaman]).setDepth(DEPTH.fighters - 0.5);
+    this.tweens.add({ targets: rig, y: rig.y - 10, duration: 1300, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.tweens.add({ targets: glow, alpha: 0.2, duration: 900, yoyo: true, repeat: -1 });
+    // De vez em quando o Hex acena, chamando.
+    this.time.addEvent({
+      delay: 3200,
+      loop: true,
+      callback: () => {
+        if (this.goal?.done || !shaman.active) return;
+        shaman.play('shaman_attack').once('animationcomplete', () => shaman.active && shaman.play('shaman_idle'));
+      },
+    });
+    return { rig, shaman, done: false };
+  }
+
+  /** Fim da fase: comemora, anda até a nuvem, sobe e o Hex leva os dois para fora da tela. */
+  private async goalFinale(p: Fighter): Promise<void> {
+    const g = this.goal!;
+    g.done = true;
+    this.cutscene = true;
+    this.prevSkip = true;
+    this.physics.world.pause();
+    this.quip?.close();
+    this.tweens.killTweensOf(g.rig);
+    jingle('win');
+    // Inimigos por perto somem numa fumacinha (a fase acabou).
+    for (const e of this.enemies) {
+      if (!e.f.alive || Math.abs(e.f.x - p.x) > W) continue;
+      this.smokeBurst(e.f.x, e.f.feet, 0x8a6ad0, 0.8);
+      e.f.sprite.setVisible(false);
+      e.f.setMarkersVisible(false);
+    }
+    p.setMarkersVisible(false);
+    const spr = p.sprite;
+    const id = p.def.id;
+    const off = p.feet - spr.y; // dos pés ao centro do sprite (a física está parada)
+    const ground = spr.y;
+    spr.setFlipX(false).play(`${id}_idle`, true);
+    // 1) Dois pulinhos de alegria, com faíscas.
+    for (let k = 0; k < 2; k++) {
+      await this.tweenP({ targets: spr, y: ground - 46, duration: 190, yoyo: true, ease: 'Sine.easeOut' });
+      for (let i = 0; i < 6; i++) {
+        const a = -Math.PI / 2 + (i - 2.5) * 0.45;
+        const sp = this.add.image(spr.x, p.feet - 40, 'spark').setTint(i % 2 ? 0xffe066 : 0xd8b8ff).setScale(0.45).setDepth(DEPTH.fx).setBlendMode(Phaser.BlendModes.ADD);
+        this.tweens.add({ targets: sp, x: sp.x + Math.cos(a) * 70, y: sp.y + Math.sin(a) * 70, alpha: 0, scale: 0.1, duration: 500, onComplete: () => sp.destroy() });
+      }
+    }
+    // 2) Anda até a nuvem (o Hex acena).
+    g.shaman.play('shaman_attack').once('animationcomplete', () => g.shaman.active && g.shaman.play('shaman_idle'));
+    const tx = g.rig.x - 46;
+    const top = g.rig.y + 30; // onde os pés ficam em cima da nuvem
+    const standX = tx - 70;
+    if (Math.abs(spr.x - standX) > 4) {
+      spr.setFlipX(standX < spr.x).play(`${id}_run`, true);
+      await this.tweenP({ targets: spr, x: standX, duration: (Math.abs(spr.x - standX) / 240) * 1000 });
+    }
+    // 3) Pula para a nuvem.
+    spr.setFlipX(false).play(`${id}_idle`, true);
+    this.tweens.add({ targets: spr, x: tx, duration: 420 });
+    await this.tweenP({ targets: spr, y: Math.min(ground, top - off) - 70, duration: 230, ease: 'Sine.easeOut' });
+    await this.tweenP({ targets: spr, y: top - off, duration: 190, ease: 'Sine.easeIn' });
+    sfx('jump');
+    await this.waitP(350);
+    // 4) A nuvem leva os dois para fora da tela.
+    const dx = W * 0.9;
+    const dy = -460;
+    this.tweens.add({ targets: g.rig, x: g.rig.x + dx, y: g.rig.y + dy, duration: 1500, ease: 'Sine.easeIn' });
+    await this.tweenP({ targets: spr, x: spr.x + dx, y: spr.y + dy, duration: 1500, ease: 'Sine.easeIn' });
+    if (!this.scene.isActive()) return;
+    this.cutscene = false;
+    this.storyWin(LEVELS[this.levelIndex].winText ?? 'Fragmento da coroa recuperado!', true);
   }
 
   /** Animação de vitória: holofote, comemoração do vencedor, confete, fogos e faixa. */

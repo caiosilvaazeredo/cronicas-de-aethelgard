@@ -85,20 +85,25 @@ export class SettingsScene extends Phaser.Scene {
     const HH = this.scale.height;
     // Abas.
     TABS.forEach((t, i) => {
-      const x = P ? 140 + (i % 3) * 340 + 30 : 170;
-      const y = P ? 260 + Math.floor(i / 3) * 110 : 150 + i * 72;
+      // Em pé: três por linha, cada linha centralizada.
+      const perRow = 3;
+      const line = Math.floor(i / perRow);
+      const inLine = Math.min(perRow, TABS.length - line * perRow);
+      const x = P ? W / 2 + ((i % perRow) - (inLine - 1) / 2) * 384 : 170;
+      const y = P ? 250 + line * 118 : 150 + i * 72;
       const c = this.add.container(x, y);
       const g = this.add.graphics();
-      const txt = this.add.text(0, 0, t.name, { fontFamily: FONT, fontSize: P ? '30px' : '22px', color: '#fff7dc' }).setOrigin(0.5);
+      const txt = this.add.text(0, 0, t.name, { fontFamily: FONT, fontSize: P ? '36px' : '22px', color: '#fff7dc' }).setOrigin(0.5);
       c.add([g, txt]);
-      c.setSize(P ? 320 : 250, P ? 80 : 56).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.setTab(i));
+      c.setSize(P ? 360 : 250, P ? 96 : 56).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.setTab(i));
       this.tabs.push(c);
     });
     const by = P ? HH - 150 : 668;
-    pillButton(this, P ? 330 : 400, by, 'RESTAURAR PADRÃO', () => this.reset(), 300, 0xe7eef2).setScale(P ? 1.3 : 0.85);
-    pillButton(this, P ? 950 : W - 170, by, '◀  VOLTAR', () => this.back(), 230, 0xffe066).setScale(P ? 1.3 : 1);
-    this.add
-      .text(P ? W / 2 : 820, P ? HH - 250 : 612, '↑ ↓ opção  ·  ← → ajustar  ·  Q / E (LB / RB) aba  ·  Esc / B voltar', {
+    pillButton(this, P ? 340 : 400, by, 'RESTAURAR PADRÃO', () => this.reset(), 300, 0xe7eef2).setScale(P ? 1.5 : 0.85);
+    pillButton(this, P ? 960 : W - 170, by, '◀  VOLTAR', () => this.back(), 230, 0xffe066).setScale(P ? 1.5 : 1);
+    // A dica de teclado só faz sentido deitado (no celular em pé, tudo é por toque).
+    if (!P) this.add
+      .text(820, 612, '↑ ↓ opção  ·  ← → ajustar  ·  Q / E (LB / RB) aba  ·  Esc / B voltar', {
         fontFamily: BODY_FONT,
         fontSize: P ? '26px' : '15px',
         color: '#fff7dc',
@@ -149,8 +154,8 @@ export class SettingsScene extends Phaser.Scene {
       const g = c.list[0] as Phaser.GameObjects.Graphics;
       const t = c.list[1] as Phaser.GameObjects.Text;
       const on = k === this.tab;
-      const w = P ? 320 : 250;
-      const h = P ? 80 : 56;
+      const w = P ? 360 : 250;
+      const h = P ? 96 : 56;
       g.clear();
       g.fillStyle(INK, 1).fillRoundedRect(-w / 2 - 4, -h / 2 - 4, w + 8, h + 8, 18);
       g.fillStyle(on ? 0xffe066 : 0x10223a, 1).fillRoundedRect(-w / 2, -h / 2, w, h, 14);
@@ -190,11 +195,18 @@ export class SettingsScene extends Phaser.Scene {
   private drawPanel(): void {
     this.panel?.destroy();
     const P = VIEW.portrait;
-    const px = P ? 60 : 330;
-    const py = P ? 480 : 110;
-    const pw = P ? W - 120 : W - 380;
+    const px = P ? 50 : 330;
+    const py = P ? 250 + Math.ceil(TABS.length / 3) * 118 - 10 : 110;
+    const pw = P ? W - 100 : W - 380;
     const tab = TABS[this.tab];
-    const rowH = P ? 250 : 150;
+    // Em pé: as linhas crescem para ocupar a altura livre (até os botões de baixo), e tudo
+    // dentro delas cresce junto (k), na mesma proporção para todas as abas.
+    const free = this.scale.height - 300 - py - 30;
+    const rowH = P ? Phaser.Math.Clamp(free / tab.rows.length, 250, 460) : 150;
+    // Sobrou espaço (abas com poucas opções): o painel fica no meio do vão.
+    const top = P ? py + Math.max(0, (free - tab.rows.length * rowH) / 2) : py;
+    const k = P ? rowH / 250 : 1;
+    const fs = (n: number) => `${Math.round(n * k)}px`;
     const items: Phaser.GameObjects.GameObject[] = [];
     const bg = this.add.graphics();
     bg.fillStyle(INK, 0.92).fillRoundedRect(0, 0, pw, tab.rows.length * rowH + 30, 20);
@@ -213,22 +225,23 @@ export class SettingsScene extends Phaser.Scene {
         this.drawPanel();
       });
       items.push(hit);
-      items.push(this.add.text(30, y + 14, r.label, { fontFamily: FONT, fontSize: P ? '36px' : '24px', color: on ? '#ffe066' : '#fff7dc' }));
-      items.push(this.add.text(30, y + (P ? 62 : 44), r.help, { fontFamily: BODY_FONT, fontSize: P ? '26px' : '16px', color: '#bfd0e0', wordWrap: { width: pw - 60 } }));
-      const cy = y + (P ? 170 : 104);
+      items.push(this.add.text(30, y + 14, r.label, { fontFamily: FONT, fontSize: P ? fs(40) : '24px', color: on ? '#ffe066' : '#fff7dc' }));
+      items.push(this.add.text(30, y + (P ? 64 * k : 44), r.help, { fontFamily: BODY_FONT, fontSize: P ? fs(28) : '16px', color: '#bfd0e0', wordWrap: { width: pw - 60 } }));
+      const cy = y + (P ? 170 * k : 104);
       const v = this.value(r);
       if (r.kind === 'toggle' || r.kind === 'fullscreen') {
         // DESLIGADO | LIGADO
-        const ww = P ? 220 : 140;
+        const ww = P ? 250 * k : 140;
+        const bh = P ? 56 * k : 44;
         for (const [k, lab] of [[0, 'DESLIGADO'], [1, 'LIGADO']] as const) {
           const sel = (k === 1) === !!v;
           const x = pw / 2 - ww + k * ww;
           const g = this.add.graphics();
-          g.fillStyle(sel ? (k ? 0x58b947 : 0x8a95a3) : 0x10223a, 1).fillRoundedRect(x, cy - 22, ww - 6, 44, 10);
+          g.fillStyle(sel ? (k ? 0x58b947 : 0x8a95a3) : 0x10223a, 1).fillRoundedRect(x, cy - bh / 2, ww - 6, bh, 10);
           items.push(g);
-          items.push(this.add.text(x + (ww - 6) / 2, cy, lab, { fontFamily: FONT, fontSize: P ? '26px' : '17px', color: sel ? '#10223a' : '#8a95a3' }).setOrigin(0.5));
+          items.push(this.add.text(x + (ww - 6) / 2, cy, lab, { fontFamily: FONT, fontSize: P ? fs(28) : '17px', color: sel ? '#10223a' : '#8a95a3' }).setOrigin(0.5));
           items.push(
-            this.add.zone(x + (ww - 6) / 2, cy, ww - 6, 44).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
+            this.add.zone(x + (ww - 6) / 2, cy, ww - 6, bh).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
               if ((k === 1) !== !!this.value(r)) this.adjust(0, i);
             }),
           );
@@ -236,35 +249,36 @@ export class SettingsScene extends Phaser.Scene {
       } else if (r.kind === 'slider') {
         // − ●●●○○○ +
         const steps = r.max - r.min;
-        const x0 = 110;
-        const x1 = pw - 110;
+        const x0 = P ? 120 * k : 110;
+        const x1 = pw - (P ? 120 * k : 110);
+        const dot = P ? k * 1.3 : 1;
         const g = this.add.graphics();
         g.fillStyle(0xfff7dc, 0.35).fillRect(x0, cy - 2, x1 - x0, 4);
         for (let k = 0; k <= steps; k++) {
           const x = x0 + ((x1 - x0) * k) / steps;
           const filled = k <= (v as number) - r.min;
-          g.fillStyle(INK, 1).fillCircle(x, cy, 10);
-          g.fillStyle(filled ? 0xffe066 : 0x5f6872, 1).fillCircle(x, cy, 7);
+          g.fillStyle(INK, 1).fillCircle(x, cy, 10 * dot);
+          g.fillStyle(filled ? 0xffe066 : 0x5f6872, 1).fillCircle(x, cy, 7 * dot);
         }
         const kx = x0 + ((x1 - x0) * ((v as number) - r.min)) / steps;
-        g.fillStyle(INK, 1).fillCircle(kx, cy, 17);
-        g.fillStyle(0xfff7dc, 1).fillCircle(kx, cy, 13);
+        g.fillStyle(INK, 1).fillCircle(kx, cy, 17 * dot);
+        g.fillStyle(0xfff7dc, 1).fillCircle(kx, cy, 13 * dot);
         items.push(g);
-        items.push(this.add.text(kx, cy + 30, r.fmt ? r.fmt(v as number) : String(v), { fontFamily: FONT, fontSize: P ? '28px' : '18px', color: '#ffe066' }).setOrigin(0.5, 0));
+        items.push(this.add.text(kx, cy + 30 * dot, r.fmt ? r.fmt(v as number) : String(v), { fontFamily: FONT, fontSize: P ? fs(32) : '18px', color: '#ffe066' }).setOrigin(0.5, 0));
         for (const [dx, lab] of [[-1, '−'], [1, '+']] as const) {
-          const bx = dx < 0 ? 55 : pw - 55;
-          const b = this.add.circle(bx, cy, P ? 30 : 22, 0xffe066).setStrokeStyle(4, INK).setInteractive({ useHandCursor: true });
+          const bx = dx < 0 ? (P ? 62 * k : 55) : pw - (P ? 62 * k : 55);
+          const b = this.add.circle(bx, cy, P ? 38 * k : 22, 0xffe066).setStrokeStyle(4, INK).setInteractive({ useHandCursor: true });
           b.on('pointerdown', () => this.adjust(dx, i));
           items.push(b);
-          items.push(this.add.text(bx, cy, lab, { fontFamily: FONT, fontSize: P ? '36px' : '26px', color: '#10223a' }).setOrigin(0.5));
+          items.push(this.add.text(bx, cy, lab, { fontFamily: FONT, fontSize: P ? fs(44) : '26px', color: '#10223a' }).setOrigin(0.5));
         }
       } else {
         // ◀ VALOR ▶
-        items.push(this.add.text(pw / 2, cy, r.options[v as number] ?? '', { fontFamily: FONT, fontSize: P ? '32px' : '22px', color: '#ffe066' }).setOrigin(0.5));
+        items.push(this.add.text(pw / 2, cy, r.options[v as number] ?? '', { fontFamily: FONT, fontSize: P ? fs(38) : '22px', color: '#ffe066' }).setOrigin(0.5));
         for (const dx of [-1, 1]) {
           items.push(
             this.add
-              .text(pw / 2 + dx * (P ? 260 : 170), cy, dx < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? '40px' : '28px', color: '#fff7dc' })
+              .text(pw / 2 + dx * (P ? 330 * k : 170), cy, dx < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? fs(48) : '28px', color: '#fff7dc' })
               .setOrigin(0.5)
               .setPadding(12)
               .setInteractive({ useHandCursor: true })
@@ -273,7 +287,7 @@ export class SettingsScene extends Phaser.Scene {
         }
       }
     });
-    this.panel = this.add.container(px, py, items);
+    this.panel = this.add.container(px, top, items);
   }
 
   private reset(): void {

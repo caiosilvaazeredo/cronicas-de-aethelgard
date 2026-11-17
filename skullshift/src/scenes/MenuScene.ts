@@ -90,8 +90,9 @@ export class MenuScene extends Phaser.Scene {
     };
     // Uma vila de casinhas (sem castelos), em três tons do mesmo reino.
     const HOUSES: Array<[number, string, number, number]> = P
-      ? [[200, 'bld_blue_house1', 173, 0.9], [560, 'bld_blue_house2', 178, 0.85], [920, 'bld_blue_house3', 172, 0.9]]
-      : [[150, 'bld_blue_house1', 173, 0.95], [330, 'bld_blue_house2', 178, 0.85], [600, 'bld_blue_house3', 172, 0.8], [880, 'bld_blue_house1', 173, 0.85], [1130, 'bld_blue_house2', 178, 0.95]];
+      ? [[200, 'bld_blue_house1', 173, 0.9], [560, 'bld_blue_house2', 178, 0.85], [920, 'bld_blue_house1', 173, 0.9]]
+      : [[150, 'bld_blue_house1', 173, 0.95], [330, 'bld_blue_house2', 178, 0.85], [600, 'bld_blue_house1', 173, 0.8], [880, 'bld_blue_house2', 178, 0.85], [1130, 'bld_blue_house1', 173, 0.95]];
+    // (house3 é casa de palafita: sobre a grama parece flutuar, então fica de fora.)
     for (const [x, key, foot, sc] of HOUSES) stand(x, key, foot / 192, sc);
     for (const [x, sc] of (P ? [[40, 0.9], [380, 0.8], [760, 0.85], [1240, 0.95]] : [[30, 0.9], [470, 0.75], [740, 0.8], [1010, 0.8], [1250, 0.95]]) as Array<[number, number]>) {
       if (!this.textures.exists('res_tree')) continue;

@@ -96,7 +96,12 @@ export function loadingVignette(
     }
   } else addFixed(scene.add.rectangle(cx, ground + 24, width, 48, 0x4f9d4a));
 
-  const foe: CharId = (opts.area && AREA_CHAR[opts.area]) || Phaser.Utils.Array.GetRandom(['gnoll', 'shark', 'goblin', 'spider', 'lizard', 'torchgob', 'imp', 'sgnome', 'minotaur'] as CharId[]);
+  // No carregamento inicial a folha do Minotauro ainda vai ser trocada (encolhida) no meio da
+  // animação; um sprite usando a folha antiga quebraria o desenho. Então ele só entra depois.
+  const minoReady = scene.textures.exists('boss_mino_run');
+  const pool0: CharId[] = ['gnoll', 'shark', 'goblin', 'spider', 'lizard', 'torchgob', 'imp', 'sgnome', ...(minoReady ? (['minotaur'] as CharId[]) : [])];
+  let foe: CharId = (opts.area && AREA_CHAR[opts.area]) || Phaser.Utils.Array.GetRandom(pool0);
+  if (foe === 'minotaur' && !minoReady) foe = 'gnoll';
   const pool: Vignette[] = ['chase', 'flee', 'transform', 'flight', 'parade'];
   if (scene.textures.exists('sheep_move')) pool.push('sheep');
   if (opts.king && scene.anims.exists(opts.king)) pool.push('king', 'king');

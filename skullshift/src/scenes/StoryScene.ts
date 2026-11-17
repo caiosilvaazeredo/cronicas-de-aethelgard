@@ -93,7 +93,7 @@ export class StoryScene extends Phaser.Scene {
     const k = area ? area.levels.indexOf(LEVELS[this.level].id) + 1 : this.level + 1;
     const where = this.epilogue ? 'EPÍLOGO' : area ? `${areaTitle(area).name.toUpperCase()} ${k}` : `CAPÍTULO ${k}`;
     this.add
-      .text(W / 2, VIEW.portrait ? 120 : 46, `${where} · ${ch.title.toUpperCase()}`, {
+      .text(W / 2, VIEW.portrait ? 120 : 46, area && ch.title === areaTitle(area).name ? where : `${where} · ${ch.title.toUpperCase()}`, {
         fontFamily: FONT,
         fontSize: VIEW.portrait ? '48px' : '34px',
         color: '#fff7dc',

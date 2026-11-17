@@ -1,0 +1,18 @@
+2102	Corazón de Hierro
+2103	+1 corazón en las mazmorras
+2104	Hoja Afilada
+2105	enemigos de las mazmorras con una capa menos de armadura
+2106	Dado Trucado
+2107	+4% de probabilidad en cada dado
+2108	Aliento
+2109	+1 corazón recuperado por cada sala superada
+2110	Bolsa Cosida
+2111	si caes, guarda el 15% del oro de la mazmorra
+2112	\nLa Bolsa Cosida guardó: {0}
+2113	Oro perdido: {0}\nExperiencia perdida: {1}{2}
+2114	HERRERO
+2115	{0} · MÁX
+2116	{0} {1}/{2} · {3} de oro
+2117	Bruno el Herrero
+2118	Oro: {0}. Mejoras que duran para siempre, en toda mazmorra:\n{1}
+2119	SALIR

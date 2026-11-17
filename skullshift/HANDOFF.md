@@ -193,3 +193,7 @@ originais (extraídas com PIL do PNG).
 - **Minigames** (`scenes/MinigameScene.ts`): pesca, tiro ao alvo e pega-ovelha; recompensa cai 25% a cada partida do mesmo jogo no mesmo dia (contador `mg_<tipo>_<data>` em stats).
 - Verificador de alcance com salas geradas: `DUNGEON=90 node scripts/check-reach.cjs`.
 - Tradução: moldes com pelo menos 2 letras fixas (antes 3) para pegar "{0}/{1} XP" e "NV {0}"; `trf(modelo, ...)` traduz e preenche direto.
+
+- **Ferreiro** (Vila, `SMITH` em `dungeon.ts`, níveis em `save.smith`): Coração de Ferro (+1 coração), Lâmina Afiada (−1 camada de armadura dos inimigos), Dado Viciado (+4%/dado), Fôlego (+1 coração por sala vencida), Bolsa Costurada (guarda 15% do ouro se cair). Preço = base × (nível+1).
+- **Run salva**: a dungeon em andamento fica em `localStorage` (`skullshift.run.<save>`); `getRun()` recarrega. Se a página fechar no meio de uma luta (`run.fighting`), a luta reabre obrigatória.
+- **Mapa-múndi**: a Forja é uma ilha à parte (grade `LAND`), cercada por mar de lava (`LAVA_SEA`: o mesmo `waves` tingido, borda macia, espuma e pedras alaranjadas); o Céu de Brasa flutua acima.

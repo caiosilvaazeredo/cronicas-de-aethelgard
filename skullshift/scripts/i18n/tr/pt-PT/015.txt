@@ -1,0 +1,2 @@
+2111	se caíres, guarda 15% do ouro da dungeon
+2118	Ouro: {0}. Melhorias para sempre, em todas as dungeons:\n{1}

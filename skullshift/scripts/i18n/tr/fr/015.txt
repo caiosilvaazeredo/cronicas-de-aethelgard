@@ -1,0 +1,18 @@
+2102	Cœur de Fer
+2103	+1 cœur dans les donjons
+2104	Lame Affûtée
+2105	ennemis des donjons avec une couche d'armure en moins
+2106	Dé Pipé
+2107	+4 % de chance sur chaque dé
+2108	Second Souffle
+2109	+1 cœur récupéré par salle nettoyée
+2110	Bourse Cousue
+2111	si vous tombez, garde 15 % de l'or du donjon
+2112	\nLa Bourse Cousue a gardé : {0}
+2113	Or perdu : {0}\nExpérience perdue : {1}{2}
+2114	FORGERON
+2115	{0} · MAX
+2116	{0} {1}/{2} · {3} or
+2117	Bruno le Forgeron
+2118	Or : {0}. Des améliorations pour toujours, dans tous les donjons :\n{1}
+2119	PARTIR

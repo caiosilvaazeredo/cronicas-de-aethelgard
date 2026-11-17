@@ -83,7 +83,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'minotaur_idle',
     color: 0xe0542e,
     levels: ['forgegate', 'chase', 'key3', 'lavatide', 'geysers', 'forgegun', 'obsidian', 'anvil', 'magma', 'volcano'],
-    pos: [860, 505],
+    pos: [832, 520],
     unlock: 'after-pradaria',
   },
   {
@@ -94,7 +94,7 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'sgnome_idle',
     color: 0x3f9a5a,
     levels: ['woods', 'key4', 'mushrooms', 'treetops', 'key5', 'logriver', 'acorngun', 'moss', 'gnomevillage', 'gnomeking'],
-    pos: [1085, 455],
+    pos: [1130, 445],
     unlock: 'after-pradaria',
   },
   {

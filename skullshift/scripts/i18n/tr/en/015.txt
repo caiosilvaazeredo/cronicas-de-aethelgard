@@ -1,0 +1,18 @@
+2102	Iron Heart
+2103	+1 heart in dungeons
+2104	Sharp Blade
+2105	dungeon enemies with one less layer of armor
+2106	Loaded Die
+2107	+4% chance on each die
+2108	Second Wind
+2109	+1 heart recovered per room cleared
+2110	Sewn Purse
+2111	if you fall, keep 15% of the dungeon gold
+2112	\nThe Sewn Purse kept: {0}
+2113	Gold lost: {0}\nExperience lost: {1}{2}
+2114	BLACKSMITH
+2115	{0} · MAX
+2116	{0} {1}/{2} · {3} gold
+2117	Bruno the Blacksmith
+2118	Gold: {0}. Upgrades that last forever, in every dungeon:\n{1}
+2119	LEAVE

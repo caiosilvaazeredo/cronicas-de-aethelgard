@@ -315,12 +315,20 @@ export class WorldScene extends Phaser.Scene {
     '..######.....#####..',
     '.#######.###.######.',
     '.#######.###.######.',
-    '.#######.###.######.',
-    '..######.....#####..',
-    '..#######..#######..',
-    '...#####....#####...',
+    '.#######.###...####.',
+    '..######...####.###.',
+    '..#######..####.###.',
+    '...#####...####.....',
     '....................',
   ];
+
+  /** Mar de lava em volta da ilha da Forja (o mesmo desenho do mar, em vermelho). */
+  private static readonly LAVA_SEA = { x: 832, y: 548, rx: 240, ry: 175 };
+
+  private inLavaSea(x: number, y: number): boolean {
+    const L = WorldScene.LAVA_SEA;
+    return ((x - L.x) / L.rx) ** 2 + ((y - L.y) / L.ry) ** 2 <= 1;
+  }
 
   private isLand(c: number, r: number): boolean {
     return WorldScene.LAND[r]?.[c] === '#';
@@ -341,13 +349,27 @@ export class WorldScene extends Phaser.Scene {
   private drawSea(): void {
     const s = this.add.tileSprite(-MW, -MH, MW * 3, MH * 3, 'waves').setOrigin(0).setAlpha(0.35).setDepth(0);
     this.tweens.add({ targets: s, tilePositionX: 256, duration: 9000, repeat: -1 });
+    // A Forja fica num mar de lava: a mesma água, tingida de vermelho, com as ondas correndo.
+    const L = WorldScene.LAVA_SEA;
+    const maskG = this.make.graphics({}, false);
+    maskG.fillStyle(0xffffff).fillEllipse(L.x, L.y, L.rx * 2, L.ry * 2);
+    const lavaMask = maskG.createGeometryMask();
+    const base = this.add.graphics().setDepth(0.4);
+    // Borda macia: a lava vai se misturando à água em anéis cada vez mais transparentes.
+    for (let k = 4; k >= 1; k--) base.fillStyle(0xc8361a, 0.12 + (4 - k) * 0.05).fillEllipse(L.x, L.y, L.rx * 2 + k * 34, L.ry * 2 + k * 26);
+    base.fillStyle(0xc8361a, 1).fillEllipse(L.x, L.y, L.rx * 2, L.ry * 2);
+    for (let k = 0; k < 4; k++) base.fillStyle(0xff7a2a, 0.12).fillEllipse(L.x, L.y + 10, L.rx * (1.6 - k * 0.3), L.ry * (1.5 - k * 0.3));
+    const lw = this.add.tileSprite(L.x - L.rx, L.y - L.ry, L.rx * 2, L.ry * 2, 'waves').setOrigin(0).setTint(0xffd060).setAlpha(0.6).setDepth(0.5).setMask(lavaMask);
+    this.tweens.add({ targets: lw, tilePositionX: 256, duration: 7000, repeat: -1 });
+    this.tweens.add({ targets: base, alpha: 0.85, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     const rng = new Phaser.Math.RandomDataGenerator(['world-rocks']);
     // Pedrinhas só na água (fora do continente).
     for (let i = 0; i < 40; i++) {
       const c = rng.between(0, 19);
       const r = rng.between(0, 10);
       if (this.isLand(c, r) || this.isLand(c, r + 1) || this.isLand(c, r - 1)) continue;
-      this.add.sprite(c * 64 + 32, r * 64 + 32, 'water_rocks').setScale(1.1).setDepth(1).play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
+      const rock = this.add.sprite(c * 64 + 32, r * 64 + 32, 'water_rocks').setScale(1.1).setDepth(1).play({ key: 'water_rocks', startFrame: rng.between(0, 15) });
+      if (this.inLavaSea(c * 64 + 32, r * 64 + 32)) rock.setTint(0x6a3a30);
     }
     this.drawLand();
   }
@@ -363,7 +385,11 @@ export class WorldScene extends Phaser.Scene {
         const right = !this.isLand(c + 1, r);
         const x = c * 64;
         const y = r * 64;
-        if (up || down || left || right) this.add.sprite(x + 32, y + 32, 'water_foam').setDepth(2).play({ key: 'water_foam', startFrame: (c + r) % 16 });
+        if (up || down || left || right) {
+          const foam = this.add.sprite(x + 32, y + 32, 'water_foam').setDepth(2).play({ key: 'water_foam', startFrame: (c + r) % 16 });
+          // Na beira do mar de lava a espuma é brasa.
+          if (this.inLavaSea(x + 32, y + 32)) foam.setTint(0xffa040);
+        }
         // Área mais perto desta célula decide o chão.
         let best = land[0];
         let bd = Infinity;

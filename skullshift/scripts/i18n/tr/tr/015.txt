@@ -1,0 +1,18 @@
+2102	Demir Kalp
+2103	Zindanlarda +1 kalp
+2104	Keskin Kılıç
+2105	zindan düşmanlarında bir kat daha az zırh
+2106	Hileli Zar
+2107	herzarda +%4 şans
+2108	İkinci Nefes
+2109	temizlenen her odada +1 kalp
+2110	Dikişli Kese
+2111	düşersen zindan altınının %15'ini saklar
+2112	\nDikişli Kese sakladı: {0}
+2113	Kaybedilen altın: {0}\nKaybedilen tecrübe: {1}{2}
+2114	DEMİRCİ
+2115	{0} · MAKS
+2116	{0} {1}/{2} · {3} altın
+2117	Demirci Bruno
+2118	Altın: {0}. Her zindanda kalıcı geliştirmeler:\n{1}
+2119	ÇIK

@@ -373,7 +373,7 @@ export class VillageScene extends Phaser.Scene {
     return o;
   }
 
-  private openDialog(name: string, text: string, choices: Array<{ label: string; act: () => void }> = []): void {
+  private openDialog(name: string, text: string, choices: Array<{ label: string; act: () => void; raw?: boolean }> = []): void {
     this.closeDialog();
     const P = VIEW.portrait;
     const HH = this.scale.height;
@@ -391,7 +391,8 @@ export class VillageScene extends Phaser.Scene {
     this.add.text(x + 28, y + 62 * k, text, { fontFamily: BODY_FONT, fontSize: `${Math.round(19 * k)}px`, color: '#10223a', wordWrap: { width: choices.length ? pw - 56 - 420 * k : pw - 56 }, lineSpacing: 4 });
     const list = choices.length ? choices : [{ label: 'OK', act: () => this.closeDialog() }];
     list.forEach((c, i) => {
-      pillButton(this, x + pw - 230 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 500, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.78 * k);
+      const btn = pillButton(this, x + pw - 230 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 500, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.78 * k);
+      if ((c as { raw?: boolean }).raw) noTr(btn.list[1] as Phaser.GameObjects.Text).setText(c.label);
     });
     const objs = this.children.list.slice(first);
     this.fixUI(objs);
@@ -463,7 +464,9 @@ export class VillageScene extends Phaser.Scene {
       const maxed = lvl >= u.max;
       const cost = smithCost(u.id, lvl);
       return {
-        label: maxed ? `${u.name} · MÁX` : `${u.name} ${lvl + 1}/${u.max} · ${cost} ouro`,
+        // Montado já traduzido (o nome tem espaços e o molde "{0} {1}/{2}" cortaria no lugar errado).
+        label: maxed ? trf('{0} · MÁX', tr(u.name)) : trf('{0} {1}/{2} · {3} ouro', tr(u.name), lvl + 1, u.max, cost),
+        raw: true,
         act: () => {
           if (maxed) return;
           if (!buySmith(u.id, cost)) {
@@ -476,7 +479,7 @@ export class VillageScene extends Phaser.Scene {
         },
       };
     });
-    const lines = SMITH.map((u) => `${u.name}: ${u.desc}.`).join('\n');
+    const lines = SMITH.map((u) => `${u.name}: ${u.desc}`).join('\n');
     this.openDialog('Ferreiro Bruno', `Ouro: ${getCoins()}. Melhorias que ficam para sempre, em toda dungeon:\n${lines}`, [...choices, { label: 'SAIR', act: () => this.closeDialog() }]);
   }
 

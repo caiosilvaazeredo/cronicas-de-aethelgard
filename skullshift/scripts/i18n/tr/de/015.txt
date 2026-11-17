@@ -1,0 +1,18 @@
+2102	Eisenherz
+2103	+1 Herz in Verliesen
+2104	Scharfe Klinge
+2105	Verlies-Gegner mit einer Rüstungsschicht weniger
+2106	Gezinkter Würfel
+2107	+4 % Chance pro Würfel
+2108	Zweite Luft
+2109	+1 Herz zurück pro gesäubertem Raum
+2110	Genähter Beutel
+2111	wenn du fällst, behältst du 15 % des Verlies-Golds
+2112	\nDer Genähte Beutel behielt: {0}
+2113	Verlorenes Gold: {0}\nVerlorene Erfahrung: {1}{2}
+2114	SCHMIED
+2115	{0} · MAX
+2116	{0} {1}/{2} · {3} Gold
+2117	Schmied Bruno
+2118	Gold: {0}. Verbesserungen für immer, in jedem Verlies:\n{1}
+2119	GEHEN

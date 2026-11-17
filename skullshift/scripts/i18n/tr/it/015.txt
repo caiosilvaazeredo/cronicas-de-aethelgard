@@ -1,0 +1,18 @@
+2102	Cuore di Ferro
+2103	+1 cuore nei dungeon
+2104	Lama Affilata
+2105	nemici dei dungeon con uno strato di armatura in meno
+2106	Dado Truccato
+2107	+4% di probabilità su ogni dado
+2108	Fiato
+2109	+1 cuore recuperato per ogni sala liberata
+2110	Borsa Cucita
+2111	se cadi, tieni il 15% dell'oro del dungeon
+2112	\nLa Borsa Cucita ha tenuto: {0}
+2113	Oro perso: {0}\nEsperienza persa: {1}{2}
+2114	FABBRO
+2115	{0} · MAX
+2116	{0} {1}/{2} · {3} oro
+2117	Bruno il Fabbro
+2118	Oro: {0}. Potenziamenti per sempre, in ogni dungeon:\n{1}
+2119	ESCI

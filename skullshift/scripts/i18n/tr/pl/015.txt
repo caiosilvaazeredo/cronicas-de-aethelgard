@@ -1,0 +1,18 @@
+2102	Żelazne Serce
+2103	+1 serce w lochach
+2104	Ostre Ostrze
+2105	wrogowie w lochach mają o jedną warstwę pancerza mniej
+2106	Obciążona Kość
+2107	+4% szansy na każdej kości
+2108	Drugi Oddech
+2109	+1 serce odzyskane za każdą oczyszczoną salę
+2110	Zszyta Sakiewka
+2111	gdy upadniesz, zachowujesz 15% złota z lochu
+2112	\nZszyta Sakiewka ocaliła: {0}
+2113	Stracone złoto: {0}\nStracone doświadczenie: {1}{2}
+2114	KOWAL
+2115	{0} · MAKS
+2116	{0} {1}/{2} · {3} złota
+2117	Kowal Bruno
+2118	Złoto: {0}. Ulepszenia na zawsze, w każdym lochu:\n{1}
+2119	WYJDŹ

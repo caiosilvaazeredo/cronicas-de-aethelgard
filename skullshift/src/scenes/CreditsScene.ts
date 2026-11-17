@@ -1,25 +1,15 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, W } from '../config';
-import { getEnding } from '../game/progress';
 import { playMusic } from '../game/music';
 import { loadingVignette } from '../ui/loading';
 
 /**
- * Créditos: o texto sobe devagar sobre um céu de fim de tarde, enquanto os personagens passam
- * correndo lá embaixo (cenas que trocam sozinhas). Aparece depois de qualquer final e pelo menu.
- * Qualquer tecla ou toque (depois de um instante) pula.
+ * Créditos: curtos e diretos. O logo, o nome do autor e o estúdio entram em sequência rápida
+ * sobre o céu de fim de tarde, com os personagens correndo lá embaixo. Depois de alguns segundos
+ * segue sozinho; qualquer tecla ou toque pula.
  */
-const CREDITS: Array<[string, string]> = [
-  ['', 'SKULLSHIFT'],
-  ['Ideia, direção e testes', 'a equipe do Skullshift'],
-  ['Código, textos e trilha', 'feitos com Claude Code (Anthropic)'],
-  ['Arte', 'Tiny Swords, de Pixel Frog\nFree Pack e Enemy Pack'],
-  ['Fontes', 'Anak Manja, de Khurasan Studio\nMatcha Style'],
-  ['Motor', 'Phaser 3'],
-  ['Instrumentos', 'flauta, violão e harpa do soundfont FluidR3_GM (Frank Wen)\nconvertidos por midi-js-soundfonts (Benjamin Gleitzman)\ntocados com a biblioteca smplr'],
-  ['Inspirações', 'Nidhogg · Super Mario Wonder · Shadow of the Colossus\nZelda: Ocarina of Time · Cuphead · Super Smash Bros.'],
-  ['Elenco', 'Ossian, a caveira · Xamã Hex\nRei Tubarão-Arpão · Rei Gnoll · Rei Lagarto · Aranha-Rainha\nMinotauro Rubro · Rei Gnomo · Rei Goblin da Tocha\nDiabrete Gigante · Rei das Asas · os Príncipes\ne a ovelha de orelha preta'],
-];
+const AUTHOR = 'Msc Caio Azeredo';
+const STUDIO = 'Sapo Papão Games';
 
 export class CreditsScene extends Phaser.Scene {
   lastData: { next?: string; data?: Record<string, unknown> } = {};
@@ -51,63 +41,48 @@ export class CreditsScene extends Phaser.Scene {
       },
     });
 
-    // A coluna de créditos (com o final que a pessoa viu, no fim).
-    const ending = getEnding();
-    const last =
-      ending === 'free' ? 'Os selos voltaram. O mundo está livre.\nE Ossian ficou, de guarda.' : ending === 'home' ? 'Ossian voltou para casa.\nE o mundo agora é de Hex.' : 'A história ainda espera por você.';
-    const items: Phaser.GameObjects.GameObject[] = [];
-    let y = 0;
+    // Logo, autor e estúdio, um depois do outro.
     const s = P ? 1.5 : 1;
-    for (const [role, who] of CREDITS) {
-      if (!role) {
-        if (this.textures.exists('logo')) {
-          const lw = P ? 900 : 560;
-          items.push(this.add.image(0, y + lw * 0.27, 'logo').setDisplaySize(lw, (lw * 640) / 1200));
-          y += lw * 0.6;
-        } else {
-          items.push(this.add.text(0, y, who, { fontFamily: FONT, fontSize: `${Math.round(64 * s)}px`, color: '#fff7dc', stroke: '#10223a', strokeThickness: 12 }).setOrigin(0.5, 0));
-          y += 110 * s;
-        }
-        continue;
-      }
-      items.push(this.add.text(0, y, role.toUpperCase(), { fontFamily: FONT, fontSize: `${Math.round(22 * s)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5, 0));
-      y += 36 * s;
-      const t = this.add.text(0, y, who, { fontFamily: BODY_FONT, fontSize: `${Math.round(20 * s)}px`, color: '#fff7dc', stroke: '#10223a', strokeThickness: 5, align: 'center', lineSpacing: 6 * s }).setOrigin(0.5, 0);
-      items.push(t);
-      y += t.height + 46 * s;
+    const top = P ? HH * 0.2 : 70;
+    const items: Phaser.GameObjects.Components.Transform[] = [];
+    let y = top;
+    if (this.textures.exists('logo')) {
+      const lw = P ? 820 : 470;
+      items.push(this.add.image(W / 2, y + (lw * 640) / 1200 / 2, 'logo').setDisplaySize(lw, (lw * 640) / 1200));
+      y += (lw * 640) / 1200 + 24 * s;
     }
-    const end = this.add.text(0, y + 40 * s, last, { fontFamily: FONT, fontSize: `${Math.round(26 * s)}px`, color: '#d8b8ff', stroke: '#10223a', strokeThickness: 8, align: 'center' }).setOrigin(0.5, 0);
-    items.push(end);
-    y += end.height + 120 * s;
-    const thanks = this.add.text(0, y, 'OBRIGADO POR JOGAR!', { fontFamily: FONT, fontSize: `${Math.round(40 * s)}px`, color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5, 0);
-    items.push(thanks);
-    const col = this.add.container(W / 2, HH + 20, items);
-    // Sobe até o "obrigado" ficar no meio da tela, para e espera.
-    const stopAt = HH * 0.35 - y;
-    const duration = ((HH + 20 - stopAt) / (P ? 70 : 55)) * 1000;
-    this.tweens.add({ targets: col, y: stopAt, duration, ease: 'Linear', onComplete: () => this.time.delayedCall(4000, () => this.leave()) });
-    // O texto só aparece acima do gramado (entra por baixo dele, sem passar por cima dos personagens).
-    const maskG = this.make.graphics({}, false);
-    maskG.fillStyle(0xffffff).fillRect(0, 0, W, ground - (P ? 200 : 110));
-    col.setMask(maskG.createGeometryMask());
+    const author = this.add.text(W / 2, y, AUTHOR, { fontFamily: FONT, fontSize: `${Math.round(46 * s)}px`, color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5, 0);
+    items.push(author);
+    y += author.height + 14 * s;
+    items.push(this.add.text(W / 2, y, STUDIO, { fontFamily: FONT, fontSize: `${Math.round(30 * s)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 8 }).setOrigin(0.5, 0));
+    items.forEach((o, i) => {
+      const go = o as unknown as Phaser.GameObjects.Image;
+      const sx = go.scaleX;
+      const sy = go.scaleY;
+      go.setAlpha(0).setScale(sx * 0.85, sy * 0.85);
+      go.y += 16;
+      this.tweens.add({ targets: go, alpha: 1, scaleX: sx, scaleY: sy, y: go.y - 16, duration: 380, delay: 150 + i * 260, ease: 'Back.easeOut' });
+    });
+    // Fica um pouco na tela e segue.
+    this.time.delayedCall(5200, () => this.leave());
 
     const hint = this.add
       .text(W - 20, HH - 16, 'qualquer tecla ou toque para pular', { fontFamily: BODY_FONT, fontSize: P ? '26px' : '15px', color: '#bfd0e0' })
       .setOrigin(1, 1)
       .setAlpha(0);
-    this.time.delayedCall(1200, () => {
+    this.time.delayedCall(400, () => {
       hint.setAlpha(1);
       this.input.keyboard?.once('keydown', () => this.leave());
       this.input.once('pointerdown', () => this.leave());
       this.input.gamepad?.once('down', () => this.leave());
     });
-    this.cameras.main.fadeIn(800, 0, 0, 0);
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
 
   private leave(): void {
     if (this.leaving) return;
     this.leaving = true;
-    this.cameras.main.fadeOut(600, 0, 0, 0);
+    this.cameras.main.fadeOut(350, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start(this.lastData.next ?? 'menu', this.lastData.data ?? {}));
   }
 }

@@ -43,12 +43,12 @@ export class MinigameScene extends Phaser.Scene {
     this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, this.HH);
     const P = VIEW.portrait;
     const titles: Record<Kind, string> = { fish: 'PESCARIA NO LAGO', targets: 'TIRO AO ALVO', sheep: 'PEGA-OVELHA' };
-    this.add.text(W / 2, P ? 160 : 40, titles[this.kind], { fontFamily: FONT, fontSize: P ? '56px' : '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setDepth(50);
+    this.add.text(W / 2, P ? 230 : 40, titles[this.kind], { fontFamily: FONT, fontSize: P ? '84px' : '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setDepth(50);
     this.info = this.add
-      .text(W / 2, P ? 230 : 84, '', { fontFamily: FONT, fontSize: P ? '32px' : '20px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6, align: 'center' })
-      .setOrigin(0.5)
+      .text(W / 2, P ? 300 : 84, '', { fontFamily: FONT, fontSize: P ? '44px' : '20px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: W - 80 } })
+      .setOrigin(0.5, P ? 0 : 0.5)
       .setDepth(50);
-    pillButton(this, P ? 150 : 100, P ? 80 : 36, '◀ VILA', () => this.scene.start('village', {}), 170).setScale(P ? 1.1 : 0.75).setDepth(50);
+    pillButton(this, P ? 180 : 100, P ? 110 : 36, '◀ VILA', () => this.scene.start('village', {}), 170).setScale(P ? 1.8 : 0.75).setDepth(50);
     this.input.keyboard?.on('keydown-ESC', () => this.scene.start('village', {}));
     if (this.kind === 'fish') this.fish();
     else if (this.kind === 'targets') this.targets();
@@ -69,7 +69,7 @@ export class MinigameScene extends Phaser.Scene {
     g.fillStyle(INK, 1).fillRect(80, gy - 14, 330, 22);
     g.fillStyle(0x8a5a35, 1).fillRect(84, gy - 11, 322, 16);
     for (const x of [120, 240, 360]) g.fillStyle(0x6a4428, 1).fillRect(x, gy + 5, 12, 70);
-    const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, 0.82).setScale(0.9).play('skull_idle');
+    const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, 0.82).setScale(VIEW.portrait ? 1.6 : 0.9).play('skull_idle');
     const rod = this.add.graphics();
     const bob = this.add.graphics();
     const bx = 760;
@@ -169,7 +169,8 @@ export class MinigameScene extends Phaser.Scene {
   private targets(): void {
     const HH = this.HH;
     const P = VIEW.portrait;
-    const top = P ? 320 : 130;
+    const top = P ? 560 : 130;
+    const K = P ? 2.2 : 1;
     const bottom = P ? HH - 200 : HH - 40;
     const g = this.add.graphics();
     g.fillStyle(0x8a5a35, 1).fillRoundedRect(40, top, W - 80, bottom - top, 18);
@@ -185,9 +186,9 @@ export class MinigameScene extends Phaser.Scene {
     const spawn = () => {
       if (this.done) return;
       const gold = Math.random() < 0.15;
-      const r = gold ? 30 : Phaser.Math.Between(34, 48);
-      const x = Phaser.Math.Between(90, W - 90);
-      const y = Phaser.Math.Between(top + 60, bottom - 60);
+      const r = (gold ? 30 : Phaser.Math.Between(34, 48)) * K;
+      const x = Phaser.Math.Between(60 + r, W - 60 - r);
+      const y = Phaser.Math.Between(top + 20 + r, bottom - 20 - r);
       const t = this.add.graphics();
       const rings = gold ? [0xffe066, 0xffffff, 0xffb02e] : [0xe8463a, 0xffffff, 0xe8463a];
       t.fillStyle(INK, 1).fillCircle(0, 0, r + 4);
@@ -271,14 +272,16 @@ export class MinigameScene extends Phaser.Scene {
       this.add.image(i * 64, gy - 6, 'tilemap', 27 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
       this.add.image(i * 64, gy + 58, 'tilemap', 45 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
     }
-    const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, 0.82).setScale(1).play('skull_idle').setDepth(5);
+    // Em pé tudo fica maior (a tela é bem mais alta que larga).
+    const K = VIEW.portrait ? 2.2 : 1;
+    const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, 0.82).setScale(K).play('skull_idle').setDepth(5);
     let vy = 0;
     let ground = true;
     let left = 40;
     let target: number | null = null;
     const flock: Array<{ s: Phaser.GameObjects.Sprite; v: number; vy: number; until: number }> = [];
     const addSheep = () => {
-      const s = this.add.sprite(Phaser.Math.Between(60, W - 60), gy, 'sheep_move').setOrigin(0.5, 0.8).setScale(1.1).play('sheep_move').setDepth(4);
+      const s = this.add.sprite(Phaser.Math.Between(60, W - 60), gy, 'sheep_move').setOrigin(0.5, 0.8).setScale(1.1 * K).play('sheep_move').setDepth(4);
       flock.push({ s, v: (Math.random() < 0.5 ? -1 : 1) * Phaser.Math.Between(90, 170), vy: 0, until: 0 });
     };
     for (let i = 0; i < 5; i++) addSheep();
@@ -321,7 +324,7 @@ export class MinigameScene extends Phaser.Scene {
         if (Math.abs(d) < 10) target = null;
         else move = Math.sign(d);
       }
-      hero.x = Phaser.Math.Clamp(hero.x + move * 330 * dt, 30, W - 30);
+      hero.x = Phaser.Math.Clamp(hero.x + move * 330 * (K > 1 ? 1.5 : 1) * dt, 30, W - 30);
       if (move) hero.setFlipX(move < 0);
       if (!ground) {
         vy += 1700 * dt;
@@ -337,7 +340,7 @@ export class MinigameScene extends Phaser.Scene {
       for (const f of flock) {
         // Fogem da caveira quando ela chega perto; às vezes dão um pulinho.
         const away = Math.sign(f.s.x - hero.x) || 1;
-        if (Math.abs(f.s.x - hero.x) < 180 && time > f.until) {
+        if (Math.abs(f.s.x - hero.x) < 180 * K && time > f.until) {
           f.v = away * Phaser.Math.Between(150, 230);
           f.until = time + 600;
           if (Math.random() < 0.3 && f.s.y >= gy) f.vy = -420;
@@ -353,7 +356,7 @@ export class MinigameScene extends Phaser.Scene {
           if (f.s.y >= gy) f.vy = 0;
         }
         f.s.setFlipX(f.v < 0);
-        if (Math.abs(f.s.x - hero.x) < 40 && Math.abs(f.s.y - hero.y) < 50 && f.s.visible) {
+        if (Math.abs(f.s.x - hero.x) < 40 * K && Math.abs(f.s.y - hero.y) < 50 * K && f.s.visible) {
           this.score++;
           sfx('pick');
           const t = this.add.text(f.s.x, f.s.y - 80, '+1', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);

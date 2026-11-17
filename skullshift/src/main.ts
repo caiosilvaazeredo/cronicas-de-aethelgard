@@ -1,3 +1,4 @@
+import { DungeonScene } from './scenes/DungeonScene';
 import { installTransitions, TRANSITION_SCENE } from './ui/transition';
 import Phaser from 'phaser';
 import { GRAVITY, VIEW, W, computeView } from './config';
@@ -59,7 +60,7 @@ function boot(): void {
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     physics: { default: 'arcade', arcade: { gravity: { x: 0, y: GRAVITY }, debug: false } },
     input: { gamepad: true, activePointers: 5 },
-    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene, JournalScene, CreditsScene, LanguageScene, TRANSITION_SCENE],
+    scene: [PreloadScene, BootScene, MenuScene, SlotsScene, ControlsScene, HowToScene, MapScene, WorldScene, MemoryScene, StoryScene, GameScene, UIScene, SettingsScene, LoadingScene, ShopScene, LoadoutScene, JournalScene, CreditsScene, LanguageScene, DungeonScene, TRANSITION_SCENE],
   });
   installTransitions(game);
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;

@@ -35,6 +35,10 @@ export interface SaveData {
   /** Contadores (golpes, contras, transformações...) e conquistas desbloqueadas. */
   stats?: Record<string, number>;
   ach?: string[];
+  /** Experiência acumulada (o nível sai dela; ver levelOf). */
+  xp?: number;
+  /** Dungeons concluídas (id da área): abrem o selo do rei daquela área. */
+  dungeons?: string[];
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -105,6 +109,8 @@ export function loadSlot(n: number): SaveData | null {
       upgrades: Array.isArray(d.upgrades) ? d.upgrades : [],
       stats: d.stats && typeof d.stats === 'object' ? d.stats : {},
       ach: Array.isArray(d.ach) ? d.ach : [],
+      xp: Math.max(0, Number(d.xp) || 0),
+      dungeons: Array.isArray(d.dungeons) ? d.dungeons : [],
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -318,4 +324,58 @@ export function deathLimit(level: number, d: Difficulty = getDifficulty()): numb
   // Vela Extra (Empório): uma vida a mais.
   // Fácil: 10 vidas · Padrão: 6 · Difícil: 3.
   return (d === 'hard' ? 3 : d === 'easy' ? 10 : 6) + (current().upgrades?.includes('candle') ? 1 : 0);
+}
+
+// ---------- nível e experiência ----------
+
+/** Nível máximo. */
+export const MAX_LEVEL = 30;
+
+/** XP total para chegar ao nível L (nível 1 = 0). Cresce em curva: 60, 180, 360, 600... */
+export function xpForLevel(l: number): number {
+  return 30 * (l - 1) * l;
+}
+
+export function levelOf(xp: number): number {
+  let l = 1;
+  while (l < MAX_LEVEL && xp >= xpForLevel(l + 1)) l++;
+  return l;
+}
+
+export function getXp(): number {
+  return current().xp ?? 0;
+}
+
+export function getLevel(): number {
+  return levelOf(getXp());
+}
+
+/** Progresso dentro do nível atual (0..1) e quanto falta para o próximo. */
+export function levelProgress(xp = getXp()): { level: number; into: number; need: number; frac: number } {
+  const level = levelOf(xp);
+  if (level >= MAX_LEVEL) return { level, into: 0, need: 0, frac: 1 };
+  const a = xpForLevel(level);
+  const b = xpForLevel(level + 1);
+  return { level, into: xp - a, need: b - a, frac: (xp - a) / (b - a) };
+}
+
+/** Soma XP; devolve quantos níveis subiu (0 se nenhum). No modo livre vale só na sessão. */
+export function addXp(n: number): number {
+  const d = current();
+  const before = levelOf(d.xp ?? 0);
+  d.xp = Math.max(0, (d.xp ?? 0) + Math.round(n));
+  if (!free) saveSlot(currentSlot(), d);
+  return levelOf(d.xp) - before;
+}
+
+// ---------- dungeons ----------
+
+export function isDungeonDone(area: string): boolean {
+  return free || !!current().dungeons?.includes(area);
+}
+
+export function markDungeonDone(area: string): void {
+  const d = current();
+  d.dungeons = [...new Set([...(d.dungeons ?? []), area])];
+  if (!free) saveSlot(currentSlot(), d);
 }

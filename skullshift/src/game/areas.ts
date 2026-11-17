@@ -1,5 +1,5 @@
 import { LEVELS } from './level';
-import { getPact, hasPact, isDone, isFreePlay } from './progress';
+import { getPact, hasPact, isDone, isDungeonDone, isFreePlay } from './progress';
 
 /**
  * O mundo é dividido em áreas em volta de uma ilha central (o Santuário do Xamã).
@@ -197,7 +197,29 @@ export function areaUnlocked(a: AreaDef): boolean {
 export function levelUnlocked(a: AreaDef, i: number): boolean {
   if (!areaUnlocked(a)) return false;
   if (isFreePlay() || i === 0) return true;
+  if (kingSealed(a, i)) return false;
   return isDone(a.levels[i - 1]);
+}
+
+/**
+ * Selo de área: a fase do rei (a última) só abre depois de limpar a dungeon da área.
+ * Saves em que o rei já caiu continuam livres.
+ */
+export function kingSealed(a: AreaDef, i: number): boolean {
+  if (isFreePlay() || a === CENTER || i !== a.levels.length - 1) return false;
+  return !isDungeonDone(a.id) && !isDone(a.levels[i]);
+}
+
+/** Ordem da área (0 = Ilhas da Maré): base da dificuldade das dungeons e do XP. */
+export function areaTier(a: AreaDef | undefined): number {
+  if (!a) return 0;
+  const i = AREAS.indexOf(a);
+  return i < 0 ? AREAS.length : i;
+}
+
+/** Nível sugerido para a dungeon da área. */
+export function recommendedLevel(a: AreaDef): number {
+  return 1 + areaTier(a) * 2;
 }
 
 /** Quantos selos (reis) já caíram. */

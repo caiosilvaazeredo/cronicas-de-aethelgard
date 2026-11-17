@@ -18,8 +18,10 @@ import { ShamanBoss } from '../game/shamanboss';
 import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
-import { CENTER, areaOfLevel, areaTitle } from '../game/areas';
-import { addCoins, addStat, completeLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { CENTER, areaOfLevel, areaTier, areaTitle } from '../game/areas';
+import { levelUpBanner } from '../ui/levelup';
+import { addCoins, addStat, addXp, completeLevel, isDone, isSecretDone, getLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { getRun } from '../game/dungeon';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -249,7 +251,7 @@ export class GameScene extends Phaser.Scene {
     // Trilha: tema da área (voo tem o seu; versus, o duelo).
     if (this.mode !== 'story') playMusic('versus');
     else if (def.shmup) playMusic('flight', def.id);
-    else playMusic((areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.id);
+    else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
@@ -277,6 +279,7 @@ export class GameScene extends Phaser.Scene {
           // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
           if (def.haunt && def.theme === 'haunted') f.sprite.setTint(0xc8b8ff);
           this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
+          this.dungeonArmor(f);
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
       });
@@ -412,7 +415,9 @@ export class GameScene extends Phaser.Scene {
     // Interface em uma cena por cima (sem o zoom da câmera do mundo).
     this.scene.launch('ui', { game: this });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
-    if (this.mode === 'story') {
+    const dRun = def.dungeon ? getRun() : undefined;
+    if (dRun) this.time.delayedCall(0, () => this.ui?.setHearts(dRun.hearts, dRun.maxHearts));
+    else if (this.mode === 'story') {
       const limit = deathLimit(this.levelIndex);
       this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
     }
@@ -832,7 +837,10 @@ export class GameScene extends Phaser.Scene {
 
   /** Ganha ouro (para o Empório), com um "+N" dourado subindo. */
   private earn(n: number, x: number, y: number): void {
-    addCoins(n);
+    // Na dungeon o ouro fica com a run (só é entregue se o guardião cair).
+    const rn = LEVELS[this.levelIndex].dungeon ? getRun() : undefined;
+    if (rn) rn.gold += n;
+    else addCoins(n);
     const t = this.add.text(x, y, `+${n}`, { fontFamily: FONT, fontSize: '20px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx + 2);
     const c = this.add.image(x - 22, y, 'gold').setScale(0.28).setDepth(DEPTH.fx + 2);
     this.tweens.add({ targets: [t, c], y: y - 34, alpha: 0, duration: 800, ease: 'Quad.easeOut', onComplete: () => (t.destroy(), c.destroy()) });
@@ -1367,7 +1375,13 @@ export class GameScene extends Phaser.Scene {
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
     // Elite: o golpe tira uma "camada" de armadura em vez de derrubar.
     if (cause === 'hit' && victim.armor > 0) {
-      victim.armor--;
+      // Dungeon: nível alto (ou a bênção da Fúria) tira mais de uma camada por golpe.
+      const power = killer && this.players.includes(killer) ? (LEVELS[this.levelIndex].dungeon?.power ?? 1) : 1;
+      victim.armor -= power;
+      if (victim.armor < 0) {
+        victim.armor = 0;
+        return this.killFighter(victim, killer, cause);
+      }
       sfx('hit');
       victim.knockback(dir, 420);
       victim.sprite.setTintFill(0xffffff);
@@ -2279,6 +2293,22 @@ export class GameScene extends Phaser.Scene {
    * (a fase recomeça do início, sem a visual novel).
    */
   countStoryDeath(delay = 700): boolean {
+    const dd = LEVELS[this.levelIndex].dungeon;
+    const rn = dd ? getRun() : undefined;
+    if (dd && rn) {
+      // Dungeon: cada queda tira corações; sem corações, a run acaba (e perde tudo).
+      this.deaths++;
+      rn.hearts = Math.max(0, rn.hearts - dd.dmg);
+      this.ui?.setHearts(rn.hearts, rn.maxHearts);
+      if (rn.hearts > 0) return false;
+      this.ended = true;
+      rn.over = 'lose';
+      this.time.delayedCall(delay, () => {
+        this.wasted(0, 'A DUNGEON TE DERROTOU', 3000);
+        this.time.delayedCall(3200, () => this.scene.start('dungeon', {}));
+      });
+      return true;
+    }
     this.deaths++;
     const limit = deathLimit(this.levelIndex);
     this.ui?.setLives(limit === Infinity ? null : limit - this.deaths, limit - 1);
@@ -2790,15 +2820,25 @@ export class GameScene extends Phaser.Scene {
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
     this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
+    this.dungeonArmor(f);
     this.smokeBurst(x, feet, 0x8a6ad0, 0.7);
     return f;
   }
 
   /** Vitória no modo história (fim do mapa, porta de saída ou chefe derrotado). */
   private storyWin(sub: string, quiet = false): void {
+    if (LEVELS[this.levelIndex].dungeon) return this.dungeonRoomWin();
     if (!this.ended && !quiet) jingle('win');
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
+    // Experiência: cresce com a área; chefe vale o triplo; repetir fase já vencida dá 25%.
+    const def = LEVELS[this.levelIndex];
+    const first = def.secret ? !isSecretDone(def.id) : !isDone(def.id);
+    let xp = (20 + 8 * areaTier(areaOfLevel(this.levelIndex))) * (def.boss ? 3 : 1);
+    if (!first) xp = Math.max(1, Math.round(xp * 0.25));
+    const ups = addXp(xp);
+    sub = `${sub}   ·   +${xp} XP`;
+    if (ups > 0) levelUpBanner(this.ui ?? this, getLevel(), 900);
     completeLevel(this.levelIndex);
     this.time.delayedCall(600, () => announceAchievements(this.ui ?? this));
     addCoins(LEVELS[this.levelIndex].boss ? 15 : 5);
@@ -2827,6 +2867,10 @@ export class GameScene extends Phaser.Scene {
     if (this.puzzle || this.mausoleum) return; // chave e porta / mausoléu: vitória própria
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
+    if (this.mode === 'story' && LEVELS[this.levelIndex].dungeon) {
+      if (p1.alive && p1.x >= end - 20) this.storyWin('');
+      return;
+    }
     if (this.mode === 'story') {
       // História: a nuvem do Hex espera no fim; perto dela, a caveira comemora e vai embora com ele.
       if (!this.goal) this.goal = this.makeGoalCloud();
@@ -2838,6 +2882,27 @@ export class GameScene extends Phaser.Scene {
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, `${playerName(1).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     }
+  }
+
+  /** Dungeon: armadura extra dos inimigos conforme a diferença de nível. */
+  private dungeonArmor(f: Fighter): void {
+    const d = LEVELS[this.levelIndex].dungeon;
+    if (d) f.armor += d.armor;
+  }
+
+  /** Sala da dungeon vencida: guarda o XP na run e volta para o mapa da dungeon. */
+  private dungeonRoomWin(): void {
+    if (this.ended) return;
+    this.ended = true;
+    const d = LEVELS[this.levelIndex].dungeon!;
+    const rn = getRun();
+    if (rn) {
+      rn.xp += d.xp;
+      rn.lastFight = 'win';
+    }
+    jingle('win');
+    this.ui?.banner(d.kind === 'boss' ? 'GUARDIÃO DERROTADO!' : 'SALA LIMPA!', 1400, `+${d.xp} XP para a run`);
+    this.time.delayedCall(1700, () => this.scene.start('dungeon', {}));
   }
 
   /** A nuvem do Hex parada no fim do mapa, baixinha, esperando a caveira. */

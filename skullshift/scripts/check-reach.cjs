@@ -9,14 +9,26 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
   const p = await b.newPage({ viewport: { width: 1280, height: 720 } });
   await p.goto('http://localhost:5173'); await p.waitForTimeout(3500);
   const results = [];
-  const total = await p.evaluate(async () => (await import('/src/game/level.ts')).LEVELS.length);
+  // DUNGEON=n: em vez das fases, gera n salas de dungeon (todas as áreas, tipos variados) e checa cada uma.
+  const dungeon = Number(process.env.DUNGEON || 0);
+  const total = dungeon || (await p.evaluate(async () => (await import('/src/game/level.ts')).LEVELS.length));
   for (let lv = 0; lv < total; lv++) {
-    await p.evaluate((lv) => { window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv }); }, lv);
+    if (dungeon) {
+      await p.evaluate(async (k) => {
+        const d = await import('/src/game/dungeon.ts');
+        const A = ['mare', 'pradaria', 'lagoa', 'teias', 'forja', 'bosque', 'minas', 'ceu', 'reino'];
+        const rn = d.startRun(A[k % A.length], 'map', false);
+        const fights = rn.nodes.filter((n) => n.kind === 'fight' || n.kind === 'elite' || n.kind === 'boss');
+        const idx = d.prepareRoom(rn, fights[k % fights.length]);
+        d.getRun().__area = A[k % A.length];
+        window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: idx });
+      }, lv);
+    } else await p.evaluate((lv) => { window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv }); }, lv);
     await p.waitForTimeout(700);
     const r = await p.evaluate(() => {
       const s = window.__skullshift.scene.getScene('game');
       const L = s.level, def = L.def;
-      if (def.shmup || def.undersea || def.chase || (def.secret && !def.bonus)) return { id: def.id, skip: true };
+      if (def.shmup || def.undersea || def.chase || (def.secret && !def.bonus && !def.dungeon)) return { id: def.id, skip: true };
       const T = 64, FLOOR = 472, top = (h) => FLOOR - h * T;
       const X = (sc, t) => sc * 1280 + t * T + T / 2;
       const surf = [];
@@ -103,7 +115,7 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
       const reached = surf.some((u, i) => seen[i] && u.x0 <= goalX && u.x1 >= goalX - 1);
       // primeira superfície (em x) não alcançada, para depurar
       const firstMiss = surf.filter((u, i) => !seen[i] && u.kind === 'seg').sort((a, b) => a.x0 - b.x0)[0];
-      return { id: def.id, reached, maxX: Math.round(maxX), goalX: Math.round(goalX), miss: firstMiss ? [Math.floor(firstMiss.x0 / 1280), Math.round((firstMiss.x0 % 1280) / 64), (FLOOR - firstMiss.y) / 64] : null };
+      return { id: def.dungeon ? `dungeon:${def.tiles}:${def.dungeon.kind}` : def.id, reached, maxX: Math.round(maxX), goalX: Math.round(goalX), miss: firstMiss ? [Math.floor(firstMiss.x0 / 1280), Math.round((firstMiss.x0 % 1280) / 64), (FLOOR - firstMiss.y) / 64] : null };
     });
     if (only && !only.includes(r.id)) continue;
     results.push(r);

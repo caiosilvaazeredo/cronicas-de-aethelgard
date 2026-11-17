@@ -4,7 +4,7 @@ import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
 import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
-import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins } from '../game/progress';
+import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins, getLevel } from '../game/progress';
 import { MEMORIES } from '../data/lore';
 import { pillButton } from '../ui/devices';
 
@@ -209,7 +209,7 @@ export class WorldScene extends Phaser.Scene {
     const e = getEnding();
     if (e === 'home') return 'O MUNDO PERTENCE AO XAMÃ';
     if (e === 'free') return 'O MUNDO ESTÁ LIVRE';
-    return `${isFreePlay() ? 'MODO LIVRE' : `SAVE ${currentSlot()}`} · FRAGMENTOS DA COROA ${sealsBroken()}/${n}`;
+    return `${isFreePlay() ? 'MODO LIVRE' : `SAVE ${currentSlot()}`} · NÍVEL ${getLevel()} · FRAGMENTOS ${sealsBroken()}/${n}`;
   }
 
   private select(i: number, instant = false): void {

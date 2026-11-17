@@ -1,3 +1,4 @@
+import { endRun, getRun } from '../game/dungeon';
 import Phaser from 'phaser';
 import { RESERVE_LABEL } from '../game/controls';
 import { DEPTH, BODY_FONT, FONT, PORTRAIT, SPLIT, VIEW, W } from '../config';
@@ -279,6 +280,19 @@ export class UIScene extends Phaser.Scene {
       { label: 'REINICIAR FASE', act: () => g.restartMatch() },
       { label: story ? 'SAIR PARA O MAPA' : 'SAIR PARA O MENU', act: () => (story ? g.scene.start('map', { devices: g.devices, level: g.levelIndex }) : g.scene.start('menu', { stage: 'modes' })) },
     ];
+    // Sala de dungeon: sair é desistir da dungeon (perde o que a run juntou).
+    const run = LEVELS[g.levelIndex]?.dungeon ? getRun() : undefined;
+    if (run) {
+      this.pauseRows[3] = {
+        label: 'DESISTIR DA DUNGEON',
+        act: () => {
+          const back = run.from;
+          const area = run.area;
+          endRun();
+          g.scene.start(back === 'village' ? 'village' : 'map', { devices: g.devices, area });
+        },
+      };
+    }
     const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.65).setInteractive()];
     const pw = P ? 760 : 520;
     const rh = P ? 110 : 74;
@@ -563,6 +577,28 @@ export class UIScene extends Phaser.Scene {
     const y = P ? PORTRAIT.topPad + 60 : 30;
     this.livesBox = this.add.container(x, y, items).setDepth(DEPTH.hud + 2);
     if (left !== null && left < max) this.tweens.add({ targets: this.livesBox, scale: { from: 1.25, to: 1 }, duration: 300, ease: 'Back.easeOut' });
+  }
+
+  /** Corações da dungeon (no lugar das vidas): cheios, vazios e um tremor quando cai um. */
+  setHearts(left: number, max: number): void {
+    this.livesBox?.destroy();
+    const P = VIEW.portrait;
+    const k = P ? 1.4 : 1;
+    const g = this.add.graphics();
+    const heart = (x: number, on: boolean) => {
+      const r = 8 * k;
+      g.fillStyle(0x10223a, 1).fillCircle(x - r * 0.62, -r * 0.2, r + 3).fillCircle(x + r * 0.62, -r * 0.2, r + 3);
+      g.fillTriangle(x - r * 1.75, 0, x + r * 1.75, 0, x, r * 2.1);
+      g.fillStyle(on ? 0xe8463a : 0x445566, 1).fillCircle(x - r * 0.62, -r * 0.2, r).fillCircle(x + r * 0.62, -r * 0.2, r);
+      g.fillTriangle(x - r * 1.45, 0, x + r * 1.45, 0, x, r * 1.75);
+      if (on) g.fillStyle(0xffb0a0, 1).fillCircle(x - r * 0.8, -r * 0.5, r * 0.3);
+    };
+    const step = 34 * k;
+    for (let i = 0; i < max; i++) heart(-i * step, i < max - left ? false : true);
+    const x = W - (P ? 50 : 36);
+    const y = P ? PORTRAIT.topPad + 60 : 32;
+    this.livesBox = this.add.container(x, y, [g]).setDepth(DEPTH.hud + 2);
+    this.tweens.add({ targets: this.livesBox, scale: { from: 1.2, to: 1 }, duration: 300, ease: 'Back.easeOut' });
   }
 
   /** Parte de tela da vitória: confete, fogos, avatar, faixa e botões. */

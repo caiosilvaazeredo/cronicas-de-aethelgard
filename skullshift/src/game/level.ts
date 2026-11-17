@@ -179,6 +179,8 @@ export interface LevelDef {
   haunt?: HauntDef;
   /** Modo versus: tiles de início no cenário central. */
   versusStart: [p1Tile: number, p2Tile: number];
+  /** Sala de luta de uma dungeon (gerada): armadura extra dos inimigos, corações por golpe, força da caveira e XP. */
+  dungeon?: { kind: string; armor: number; dmg: number; power: number; xp: number };
 }
 
 export const SCREEN_TILES = W / TILE; // 20

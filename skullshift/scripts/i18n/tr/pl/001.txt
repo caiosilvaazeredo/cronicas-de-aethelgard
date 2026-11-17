@@ -1,0 +1,142 @@
+140	Dzwon wioski. Wioski przy... przy Moście. Bił sześć razy, a ja biegłem do domu.
+141	Co to było? Powiedziałeś imię. Jakie imię powiedziałeś?
+142	Król jest wielkości mojej kości udowej i ma dwa razy więcej złości niż ja.
+143	Mali chowają największe urazy. Idź.
+144	Szyny, belki, pochodnie. Gobliny lubią porządne dziury.
+145	Kopią w poszukiwaniu złota. Złota! Jakby to kupiło wyjście.
+146	Gobliny z pochodniami w szeregu. Ktoś je uprzedził, że idę.
+147	Król liczy każdy samorodek i każdego żołnierza. Zauważy, że tych brakuje.
+148	Pył sypie się z sufitu. Zaraz potem sufit.
+149	Papierowy lampion w moich dłoniach. Napisałem na nim imię. Czyje?
+150	Szybko. Te kopalnie nie powstały, by przetrwać. Tylko by ukrywać.
+151	Kompletna ciemność. Dobrze, że kości trochę świecą w ciemności. Nie świecą? Szkoda.
+152	Idź za pochodniami. Ja tak głęboko nie schodzę. Od tego miejsca jesteś sam.
+153	Złoto na całej ścianie. A nikt tu nie wygląda przez to na szczęśliwszego.
+154	Bogactwo w więzieniu to wciąż więzienie. ...To takie powiedzenie. Nieważne.
+155	Beczka z lontem. Moje ulubione rozwiązanie: szybkie i głośne.
+156	Fajerwerki wybuchające na niebie. Było święto. Mała rączka ciągnęła mnie za rękaw.
+157	Uważaj, co budzisz takim hałasem.
+158	Kopalnię zalało. Gobliny zostawiły nawet pływającą menażkę.
+159	Woda zawsze znajduje drogę w dół. Jak niektóre dusze.
+160	Błękitny ogień. Zimny. Pasuje do mnie bardziej niż tamten.
+161	Niebieski płaszcz wiszący za drzwiami. Za mały na mnie. Jej.
+162	Kim jest „ona", Ossianie? Mówisz do siebie.
+163	Góra złota. A pośrodku pusty tron, który czeka.
+164	Wyszedł cię powitać. Jeden fragment jest wart więcej niż to wszystko razem.
+165	Król przyniósł największą pochodnię. Oczywiście.
+166	Zgaś ją. Nie podoba mi się, jak oświetla rzeczy.
+167	Wyspy z chmur. Na dole nic. Nie patrzę, nie patrzę, spojrzałem.
+168	Stąd dobrze cię widzę. Najlepiej poruszam się po niebie.
+169	Całe niebo jest czerwone. Jak zmierzch, który nigdy się nie kończy.
+170	Zmierzch. „Wróć przed zmrokiem!" Zawsze wracałem. Zawsze. Poza jednym razem.
+171	Poza jednym razem co? Mów do mnie, Ossianie.
+172	Wiatr niesie mnie w górę. Jestem lekki. To zaleta braku nadzienia.
+173	Daj się nieść. Tylko nie wznoś się za wysoko: tam w górze jest światło, które nie jest dla ciebie.
+174	Pada płonącymi kamieniami. Parasol nie pomoże.
+175	Chochlik rzuca, czym ma. Boi się. W końcu wszyscy się boją.
+176	Wszędzie chochliki, które się śmieją. Nienawidzę wrogów, którzy się śmieją.
+177	Śmieją się, bo są młode. Nie pamiętają, czego strzegą.
+178	Gorący wiatr w górę, ogień na boki. Piec z widokiem.
+179	Lampiony unoszące się w ciepłym powietrzu. Każdy za kogoś, kto odszedł. Ja też jeden wypuściłem.
+180	Zamek na chmurze. Odważna architektura.
+181	Stąd długo pilnowano środkowej wyspy. Teraz jest pusto. Świetnie.
+182	Skrzydła pośród żaru. Nie powinny być tak daleko od domu.
+183	Nikt tu nie jest tam, gdzie chciał być. To nas łączy.
+184	Zamknięte drzwi na niebie. Żeby co zostało na zewnątrz? Ptaszki?
+185	Może żeby coś zostało w środku. Weź klucz.
+186	Olbrzymi Chochlik. Chce całego nieba dla siebie.
+187	Niebo należy do tego, kto przybędzie pierwszy. A ja byłem tu długo przed nim.
+188	Bramy wrogiego królestwa. Mój sojusznik nie chciał tu ze mną lecieć.
+189	Pakty są przydatne, Ossianie. Dopóki trwają.
+190	Latanie jest łatwe. Trudno pamiętać, że nie powinienem tego umieć.
+191	Drobny deszcz na twarzy. Noc. Głos po drugiej stronie mostu: „Boję się!"
+192	Ogromne, puste sale. Strażnicy krążą w powietrzu, nie wiedząc po co.
+193	Pilnują z przyzwyczajenia. Zapomnieli dlaczego. Nie przypominaj im.
+194	Grzmot, błyskawica, deszcz. A ja pośrodku, z materiału przewodzącego.
+195	Ulewa. Śliski most. Pobiegłem. Ona była po drugiej stronie.
+196	Leć niżej. I przestań patrzeć na deszcz.
+197	Klucz na szczycie wieży. Zawsze na szczycie. Nigdy na ziemi, przy drzwiach.
+198	Tego, co łatwo otworzyć, nie trzeba strzec.
+199	Krzyżujące się prądy powietrza. Całe królestwo chce mnie wydmuchać.
+200	Niech dmuchają. Został tylko jeden. Tylko jeden, Ossianie, i...
+201	Zapada noc. Tu nigdy wcześniej nie zapadała noc.
+202	Ktoś na moście, w fiolecie. Wyciągnięta dłoń. „Chodź. Zabiorę cię."
+203	...Niebo ciemnieje, gdy zbliża się koniec. To naturalne. Idź dalej.
+204	Cała gwardia króla w powietrzu. Musi go bardzo kochać.
+205	Albo boi się tego, co będzie, gdy padnie. Nam to wszystko jedno.
+206	Ostatnia brama. Po drugiej stronie słychać ogromne skrzydła.
+207	Lodowata woda. Potem chmura. I głos, zbyt spokojny: „Jeszcze nie."
+208	Drżysz. Czaszki nie drżą. Wejdź.
+209	Król skrzydeł. Niebo robi się małe, gdy on w nim jest.
+210	Powal go. Po nim rachunki są prawie wyrównane.
+211	Niekończące się schody. I rozerwane łańcuchy na każdym stopniu.
+212	Stare ozdoby. Nie potknij się o nie.
+213	Dziewięć łańcuchów, Hex. Policzyłem.
+214	Urna pośrodku sali. I wszystko tutaj chce ją rozbić.
+215	Imię. Ktoś krzyczy imię na brzegu rzeki. To nie było „Ossian".
+216	Chroń urnę. To, co jest w środku, jest... ważne dla nas obu.
+217	Drzwi prowadzące do kolejnych drzwi. Ten dom nie chce, żebym dotarł do końca.
+218	Sam się tu gubiłem. Na początku. Miałem dużo czasu, żeby nauczyć się go na pamięć.
+219	Książki z imionami na grzbietach. Wszystkie przekreślone. Poza ostatnią.
+220	Nie czytaj. Ossianie, nie czytaj tej.
+221	Jest pusta. Trzymałeś dla mnie miejsce?
+222	Żadnego światła. Tylko świeca w mojej dłoni. I twój głos.
+223	Pamiętam. Moja siostra po drugiej stronie. Dłoń w fiolecie. Nie poślizgnąłem się.
+224	Wspomnienia zwodzą, Ossianie. Chodź. Tron jest tuż za drzwiami.
+225	Dłonie. Znowu mam dłonie. To ich użyjmy.
+226	Ossian
+229	Tu budzi się czaszka. Pierwszy fragment korony lśni na końcu plaży.
+230	Obudź się. Powoli... przypływ znów wyrzucił cię na plażę. Znowu.
+231	Znowu? Ja... nic nie pamiętam. Tylko światła. Lampiony wiszące nad rzeką.
+232	Lampiony, rzeka... sny o podróży. Zapomnij. Jak się nazywasz?
+233	Ja... nie wiem. Miałem imię. Mam je na końcu języka. Gdybym miał język.
+234	W takim razie będziesz Ossianem. To dobre imię. Służyło już innym.
+235	Innym?
+236	Słuchaj: Korona Kości została rozbita na cztery części. Cała otwiera Bramę Przypływu. To twoja droga do domu.
+237	Pożyczam ci dar: dotknij przedmiotu stworzenia, a przybierzesz jego postać. A jeśli spadniesz, przylecę po ciebie na swojej chmurze.
+238	A dlaczego mi pomagasz?
+239	Bo tak robi doradca. Idź. Pierwszy fragment jest na końcu wysp.
+241	Kamienne schody, ciemne studnie i pajęczyny pod sufitem. Drugi fragment jest tam, na dnie.
+242	Hex, kiedy wpadłem do wody... zobaczyłem światło. Ciepłe. Ktoś wołał imię. Chyba moje.
+243	Głębiny kłamią, Ossianie. Tam na dole nie ma nic dla ciebie. Nie idź za światłami.
+244	Ale zjawiłeś się, zanim do niego dotarłem. Zawsze zjawiasz się pierwszy.
+245	Jestem szybki. Od tego jest chmura.
+246	Na tym kamieniu wydrapano imiona. Dziesiątki. Wszystkie przekreślone kreską.
+247	Podróżnicy, którzy byli tu przed tobą. Porzucili drogę.
+248	To tutaj... pismo wygląda jak moje. „Ossian". Przekreślone.
+249	W ciemności wiele pism wygląda podobnie. Uważaj na pająki pod sufitem. Idź dalej.
+251	Pająki zwisają z całego sufitu. Da się przejść bez pokonywania wszystkich.
+252	Więcej pajęczyn. I jeszcze więcej. Cała jaskinia wygląda jak kokon.
+253	Gniazdo. Córki Królowej żyją zawieszone pod sufitem. Spójrz w górę, zanim przejdziesz.
+254	Muszę pokonać je wszystkie?
+255	Nie. Przejdź obok nich. Żaden pająk nie jest wart złamanej kości.
+256	Dobrze znasz to miejsce.
+257	Przeszedłem przez wiele, niosąc kogoś na plecach.
+259	Jaja, grube pajęczyny, a w głębi Pajęcza Królowa strzegąca fragmentu.
+260	Hex... to coś w głębi to pająk wielkości domu. W koronie.
+261	Królowa Leża. Strzeże fragmentu wśród jaj.
+262	Pluje pajęczyną. Jeśli cię złapie, uderzaj i czekaj, aż się uwolnisz. I patrz na sufit: ona tam chodzi.
+263	A jeśli spadnę?
+264	Przylecę po ciebie. Zna moją chmurę: straciła przeze mnie wiele ofiar.
+265	Ofiar. Tym właśnie jestem dla was obojga?
+266	...Idź, Ossianie. Ona się budzi.
+268	Kuźnia Chochlika, który próbuje stopić fragmenty w koronę tylko dla siebie.
+269	Dalej nie pójdę. Ogień... mnie nie znosi. Jeśli wpadniesz do lawy, będę musiał zaczekać, aż opadnie dym.
+270	Nie możesz zbliżyć się do ognia. Ani do końca drogi. Dlaczego?
+271	Każdy nosi własne łańcuchy, Ossianie. Moje są stare.
+272	W odbiciu lawy zobaczyłem siebie z twarzą. Skóra, mokre włosy... i sznurek od lampionu na nadgarstku.
+273	Gorąco zwodzi oczy. Jesteś kością. Zawsze byłeś.
+274	Tutejsze stworzenia nie uciekają przede mną. Uciekają, gdy pojawia się twoja chmura.
+275	Znają mnie. Zabieram tych, którzy spadają. To moje rzemiosło.
+276	„Zabieram"? Dokąd?
+277	Tu każdy obszar ma ognistą barierę. Gaśnie dopiero, gdy nikt już nie stoi.
+278	A w głębi kuźni mieszka Szkarłatny Minotaur. Nie padnie od jednego ciosu.
+279	Weź fragment. Chochlik nie może dokończyć korony.
+281	Bez Minotaura góra się przebudziła. Lawa nadciąga z tyłu: biegnij bez przerwy.
+282	Ziemia drży. Hex, cała kuźnia się budzi!
+283	Minotaur padł, a góra została bez pana. Lawa cię goni. Biegnij!
+284	Biec dokąd?
+285	Naprzód. Zawsze naprzód. I nie zatrzymuj się: ona się nie zatrzymuje.
+286	Ty nigdy przed niczym nie uciekasz, co?
+287	Nie muszę. Unoszę się.
+289	Dom Szamana. Ostatni fragment czeka na ołtarzu, wśród zaczarowanych chmur.

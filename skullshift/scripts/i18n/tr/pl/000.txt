@@ -1,0 +1,140 @@
+0	Piasek między kośćmi. To musi być okropne. Dobrze, że nic nie czuję.
+1	Sól na wietrze... znałem ten zapach. Z okna. Rano.
+2	Właśnie tak, Ossianie. Krok po kroku. Czuwam nad tobą.
+3	Krab z kluczem na grzbiecie. Ten świat ma dziwne poczucie humoru.
+4	Tu wszystko czegoś strzeże, Ossianie. Naucz się widzieć, kto co niesie.
+5	Woda się podnosi, woda opada. A ja pośrodku, nie umiejąc pływać.
+6	Ktoś nauczył mnie unosić się na wodzie. Duże dłonie pod plecami. „Zaufaj mi."
+7	Przypływ słucha cierpliwych. Jak wszystko inne.
+8	Cały statek, uwięziony tutaj. Dokąd płynął, Hex?
+9	Donikąd. Nikt nie opuszcza tych wysp statkiem. Ani w inny sposób.
+10	...To miało być pocieszenie?
+11	Armaty. Ktoś bardzo bał się tego, co przychodziło od morza.
+12	Albo tego, co przychodziło ze środkowej wyspy. Ale to stara historia. Idź dalej.
+13	Jestem rekinem. Dziś jestem rekinem. Wszystko w porządku.
+14	Ciemna woda nad głową. Zimna. Byłem już tu na dole... bez skrzeli.
+15	Nie myśl o tym. Płyń, Ossianie. Po prostu płyń.
+16	Kto zbudował taką latarnię? Rekiny nie mają rąk.
+17	Dawni ludzie. Lubili ostrzegać innych, żeby trzymali się z daleka. Uważałem, że przesadzają.
+18	Stąd widać środkową wyspę. Niebo jest tam ciemniejsze.
+19	To tylko zmiana pogody. Patrz przed siebie, nie tam.
+20	Koral tnie, meduza parzy. Całe morze chce, żebym sobie poszedł.
+21	Niebieski dom. Z łóżka było słychać morze. Liczyłem fale, aż zasnąłem.
+22	Do Rekina Harpunnika już niedaleko. Oszczędzaj siły.
+23	A więc to on. Większy, niż sobie wyobrażałem. A wyobrażałem sobie dużego.
+24	Nie słuchaj niczego, co powie. Królowie kłamią, żeby zatrzymać to, co cudze.
+25	Trawa po kolana. Gdybym miał prawdziwe kolana, łaskotałaby.
+26	Mały dzwonek, dzwoniący w oddali. Czas było zganiać... zganiać co?
+27	Gnolle polują stadem. Nie daj się otoczyć.
+28	Złoty klucz, zamknięte drzwi. Ktoś tu lubi zagadki.
+29	Drzwi istnieją, by trzymać rzeczy w środku, Ossianie. Albo na zewnątrz. Zależy, kto ma klucz.
+30	Ziemia drży. To nigdy nie wróży dobrze.
+31	Owce. Liczyłem prawdziwe owce. Jedna zawsze uciekała, ta z czarnym uchem.
+32	Wejdź wysoko i przepuść stado. Pośpiech służy tylko żywym.
+33	Ciągle nadchodzą! Kto nauczył gnolle stać w kolejce?
+34	Ich król. Stado jest groźne tylko wtedy, gdy ma kogo słuchać.
+35	Wszędzie kości. Kuzyni? Koledzy? Nie wiem, jak się przywitać.
+36	Należą do tych, którzy byli tu przedtem. Nie ruszaj ich.
+37	Przed kim, Hex? ...Hex?
+38	Farma. Płot, brama, owca na płycie. Prawie normalnie.
+39	Zapach chleba. Drewniany stół. Ktoś postawił dodatkowy talerz, dla mnie.
+40	Jesteś cichy, Ossianie. Co zobaczyłeś?
+41	Trawa się poruszyła. Trawa nie powinna ruszać się sama.
+42	Łowcy czekają. To szanuję w nich najbardziej: umieją czekać.
+43	Wozy porzucone na środku drogi. Przed czymś uciekali.
+44	Przed trudnymi czasami. Minęły. Prawie wszystko mija.
+45	Młyn, który miele kości. Udam, że nie przeczytałem tabliczki.
+46	Mała dziewczynka biegnie za mną. „Zaczekaj! Nie zostawiaj mnie w ciemności!"
+47	Król Gnolli jest za wzgórzem. Jesteś gotów?
+48	Ma na głowie koronę z kości. Prawdziwą. Całą.
+49	Podróbka. Prawdziwa jest w kawałkach, a jeden z nich ma on. Powal go.
+50	Zielona woda, ciepła i nieruchoma. Wszystko, w co nie chciałem wchodzić.
+51	Bagno dobrze strzeże tajemnic. Toną powoli, ale toną.
+52	Liście, które toną, gdy się zatrzymasz. Bagno nie lubi niezdecydowanych.
+53	Płaskie kamyczki skaczące po rzece. Trzy, cztery odbicia. Ktoś klaskał.
+54	Nawet tu jest przypływ? Myślałem, że to sprawa wysp.
+55	Wszystko w tym królestwie wznosi się i opada wokół tego samego środka, Ossianie. Jeszcze zrozumiesz.
+56	Jad. Na szkielecie. Zobaczymy, kto komu zaszkodzi.
+57	Nie żartuj. Możesz spadać, ile chcesz; to ja się męczę, przychodząc po ciebie.
+58	Sieć, haczyk, dziurawa łódka. Jaszczur rybak. Lubię go.
+59	Wędka większa ode mnie. Starzec się śmieje: „Ryb nie ma, same gałęzie!"
+60	...Właśnie się uśmiechnąłeś? Czaszki nie powinny tego umieć.
+61	Znowu na dnie. Przynajmniej tym razem mam rekinie zęby.
+62	Nie patrz na powierzchnię. Światło tam w górze zwodzi.
+63	Krokodyle gęsiego. Przynajmniej uprzejme.
+64	Król Jaszczurów już wie, że nadchodzisz. Nigdy nie śpi: czuwa.
+65	Wszędzie korzenie. Wygląda jak klatka z drzewa.
+66	Klatka to mocne słowo. Schronienie. Nazwijmy to schronieniem.
+67	Bardzo starannie dobierasz słowa, Hex.
+68	Cała wioska na wodzie. Z suszącym się praniem, z paleniskiem. Oni tu mieszkają.
+69	Stary drewniany most. Skrzypiące deski. Wiedziałem, na które nie stawać.
+70	Nie przywiązuj się do scenerii. Potrzebujemy ich króla.
+71	Ma otwarte oczy. Oba. Nie mruga.
+72	Od dawna ich nie zamyka. Zrób mu tę przysługę.
+73	Ciemno, wilgotno, pełno pajęczyn. Idealne miejsce dla kogoś bez skóry.
+74	Mów tu cicho. Ściany przechowują imiona.
+75	Na kamieniu coś jest napisane. Przekreślone. Wiele razy.
+76	Pajęcze bazgroły. Nie trać czasu na czytanie.
+77	Pająki piszą „Ossian", Hex?
+78	Most, który pęka, gdy się zatrzymam. Kiedyś bardziej lubiłem mosty.
+79	Deszcz na moście. Mokra deska. Noga się ślizga. Nie, czekaj, jeszcze nie...
+80	Biegnij, Ossianie! Nie stój tam, patrząc w dół!
+81	Kolejny klucz, kolejne drzwi. Kto tak zamyka jaskinię?
+82	Ktoś, kto boi się tego, co jest na dnie. Albo tego, co jest na zewnątrz. Na jedno wychodzi.
+83	Nic nie widzę. Tylko pochodnie. I jakieś oczy, daleko.
+84	Mała rączka ściska moją. „Zostań ze mną, aż zasnę. Obiecałeś."
+85	Trzymaj się blisko światła. Ale nie tego ciepłego światła, które widzisz, spadając. Tego nigdy.
+86	Wiszące kokony. Wielkości człowieka.
+87	Królowa zatrzymuje to, co złapie. Przyznaję, że w tym jesteśmy do siebie podobni.
+88	Bez przerwy schodzą z sufitu! Ile nóg mieści się w jednej jaskini?
+89	Więcej, niż zdołasz policzyć. Strzelaj i nie patrz w górę.
+90	Dwóch książąt. Jeden ze skórzanymi skrzydłami, drugi ze szklanymi. I się kłócą.
+91	Niech się kłócą. Kto wybiera stronę, zyskuje przyjaciela. I wroga.
+92	Jaja. Setki. Chodzę na palcach, których nie mam.
+93	Koszyk jaj na ramieniu. Jedno stłukło się po drodze. Śmiali się ze mnie cały tydzień.
+94	Królowa jest tuż obok. Będzie mówić. One zawsze mówią.
+95	Spojrzała na mnie wszystkimi oczami. I wyglądała na... współczującą?
+96	To pajęcza sztuczka. Przetnij nici, zanim owinie cię słowami.
+97	Gorąco. Powinienem się pocić. Zamiast tego tylko trzeszczę.
+98	Siekiera w górę i w dół. Pękające drewno. Odcisk na dłoni. Mojej dłoni.
+99	Nie wejdę tam z tobą. Ogień i ja się nie dogadujemy.
+100	Lawa mnie goni! To nie poziom, to eksmisja!
+101	Biegnij! Jeśli tam wpadniesz, długo będę cię szukać!
+102	Kopalnia wewnątrz wulkanu. Ktoś kopał aż tutaj tylko po to, żeby zamknąć drzwi.
+103	Kopali głęboko, owszem. Myśleli, że im głębiej, tym bezpieczniej. Mylili się.
+104	Kamień unoszący się na ogniu. Teraz mój ulubiony środek transportu.
+105	Góra oddycha. Unosi się, gdy nabiera powietrza, opada, gdy je wypuszcza.
+106	Raz, dwa, OGIEŃ. Raz, dwa, OGIEŃ. Złapałem rytm.
+107	Kominek. Pękające kasztany. Ktoś opowiada historie o przewoźnikach.
+108	O przewoźnikach? ...Jakie historie, Ossianie? Co sobie przypomniałeś?
+109	Lawowe byki pędzą. Dziś kuźnia postanowiła nienawidzić mnie po kolei.
+110	Minotaur wykuwa własnych żołnierzy. Pracowity. Uparty.
+111	Czarne szkło. Widzę swoje odbicie. Z daleka wyglądam lepiej.
+112	Twarz w misce z wodą. Brązowe oczy. To była moja. Miałem twarz.
+113	Nie gap się na odbicia. Pokazują to, co minęło.
+114	Uderzenia młota. Z daleka brzmią jak bijące serce.
+115	Kuje to samo, odkąd ja... od zawsze. Łańcuch. To znaczy, koronę.
+116	Rzeka magmy. Bez mostu, bez łodzi. Tylko moja odwaga. Zginęliśmy.
+117	Serce góry jest blisko. Czuję je stąd. Pali.
+118	Przestał kuć. Patrzy na mnie.
+119	Nie pozwól mu dokończyć zdania. To, co wykuwa, nie jest dla ciebie.
+120	Stare drzewo, chłodny cień. Pierwsze miejsce w tym świecie, które nie chce mnie zabić.
+121	Trociny we włosach. Miałem włosy. I ktoś je zdmuchiwał.
+122	Uważaj na żołędzie. Gnomy najpierw strzelają, potem narzekają.
+123	Brama, która otwiera się tylko z ciężarem na górze. Będę potrzebował pomocy... albo owcy.
+124	Gnomy budują na długo. Nic, co zamkną, nie otworzy się samo.
+125	Grzyb, który wyrzuca cię w powietrze. Wreszcie roślina po mojej stronie.
+126	Nie jedz żadnego. ...To tylko takie powiedzenie, wiem, że nie jesz.
+127	Z koron drzew widać wszystko. Poza wyjściem z tego królestwa.
+128	Wspinałem się na drzewa, żeby widzieć rzekę. Stamtąd most wyglądał jak zabawka.
+129	Nie ma wyjścia do zobaczenia, Ossianie. Jeszcze nie. Po to zbieramy koronę.
+130	Kolorowe bloki, dźwignie, brama. Gnomy muszą się bardzo nudzić.
+131	Kto pilnuje tego samego przez wieki, wymyśla sobie rozrywki.
+132	Kłody spływające rzeką. Skakać z jednej na drugą. Co może pójść nie tak?
+133	Szeroka rzeka o ciemnej wodzie. Papierowe lampiony płynące powoli. Dziesiątki.
+134	Nie patrz tak na wodę. Patrz na kłody.
+135	Deszcz żołędzi! Mówiłem, że ten las nie chce mnie zabić?
+136	Gnomy chronią króla. Dziwny lud: walczą za kogoś, kto tylko wydaje im rozkazy.
+137	Mech do mnie mrugnął. Mech nie mruga.
+138	Tu wszystko czuwa. Po to posadzono ten las.
+139	Domki w korzeniach, dym z kominów. Jest nawet dzwon.

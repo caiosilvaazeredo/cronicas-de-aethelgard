@@ -1,0 +1,133 @@
+290	Witaj w moim sanktuarium. Stąpaj tylko po chmurach, które świecą; inne nikogo nie utrzymają.
+291	To miejsce... na ołtarzu stoi rząd rozbitych koron. I rząd zgaszonych lampionów.
+292	Pamiątki po tych, którzy tędy przeszli.
+293	Przeszli dokąd, Hex? Nikt nigdy nie wrócił do domu, prawda?
+294	Dom jest tam, gdzie ktoś na ciebie czeka. Ja czekam na ciebie za każdym razem, gdy spadasz. Pomyśl o tym.
+295	Kiedy zdobędę ostatni fragment, brama się otworzy. Przysiągłeś.
+296	Przysiągłem, że się otworzy. Nie przysiągłem, w którą stronę.
+297	...Co?
+298	Nic. Gadanie starca. Idź, Ossianie. Dokończ to, co zacząłeś.
+300	Ogromne przepaście między chmurami. Tylko wiatr niesie z wyspy na wyspę.
+301	Chmury się skończyły. Między wyspami jest tylko wiatr.
+302	Prądy Nieba. Wejdź w wiatr, a uniesie cię w górę. Przytrzymaj skok i szybuj.
+303	A jeśli wiatr ustanie?
+304	Nie ustanie. Wieje, odkąd tu przybyłem. Od dawna.
+305	Od jak dawna?
+306	Dłużej, niż pamiętasz, że żyłeś.
+308	Z Księciem Nietoperzy, przez noc, aż do Króla Pszczół.
+309	Książę mówi, że Król Pszczół strzeże drogi do Schodów Przypływu.
+310	Strzeże. I nie spodoba mu się widok pokonanego bratanka.
+311	Nikogo nie zdradziłem. Wybrałem stronę.
+312	Tutaj wybór strony to to samo. Leć, Ossianie. Noc należy do nietoperza.
+313	Ostatnio bardzo mi pomagasz, Hex.
+314	...Jesteśmy blisko końca. Chcę, żebyś tam dotarł.
+315	Naprawdę?
+316	Z Księciem Pszczół, przez noc, aż do Króla Nietoperzy.
+317	Pszczoła mówiła, że Król Nietoperzy chce zemsty za syna.
+318	A noc należy do niego. Każdy cień to nietoperz. Będzie ich wiele, i silniejszych.
+319	A ja z jedną kosteczką naraz.
+320	Chciałeś powalić księcia. Teraz powal ojca.
+322	Luźne wyspy wznoszące się aż do Bramy Przypływu. Przejdzie tylko ten, kto biegnie i skacze ponownie w powietrzu.
+323	Korona jest cała w twoich rękach. Zostało tylko wejść po Schodach Przypływu do Bramy.
+324	Schody? To luźne wyspy, z morzem pod spodem i ogromnymi przepaściami między nimi.
+325	Nikt nie dociera do bramy pieszo. Musisz biec, skoczyć i skoczyć ponownie w powietrzu. Wszystko naraz.
+326	Mówisz jak ktoś, kto widział wielu, którzy próbowali.
+327	Wielu. Przepaście poszerzały się z każdym, kto spadł.
+328	A ty zabierałeś ich wszystkich na swoją chmurę.
+329	...Zabierałem. Aż do dnia, w którym przestali spadać.
+330	Co się z nimi stało, Hex?
+331	Dotarli do bramy. Idź, Ossianie. Tym razem zostanę tutaj i popatrzę.
+333	Brama nie prowadziła do domu. Prowadziła do domu, ale obcego. Wszędzie drzwi, i prawie wszystkie kłamią.
+334	Przeszedłem przez bramę i... to dom? Korytarze, wszędzie drzwi.
+335	Dom Przewoźnika. Mój stary dom. Lubi bawić się tymi, którzy wchodzą.
+336	Twój dom? Nigdy nie mówiłeś, że masz dom.
+337	Nigdy nie pytałeś. Podążaj za księżycem namalowanym na drzwiach: zawsze wskazuje wyjście.
+338	A inne drzwi?
+339	Odsyłają na początek. I uważaj na czerwony księżyc. On też kłamie.
+340	Kim są te przezroczyste szkielety?
+341	Lokatorami. Kośćmi, które nie chciały iść za księżycem. Nie zatrzymuj się na pogawędki.
+343	Regały aż do sufitu, mosty istniejące tylko przez chwilę i zamknięte drzwi.
+344	Biblioteka. Wszystkie książki mają ten sam tytuł na grzbiecie: „Ossian".
+345	Zbieg okoliczności. To tutaj popularne imię.
+346	Drzwi wyjściowe są zamknięte.
+347	Klucz jest na szczycie regałów. Dźwignie budzą widmowe mosty, ale tylko na chwilę.
+348	Ta książka ma zaznaczoną stronę: „Przewoźnik, który nie puścił wiosła". To ty?
+349	...Odłóż tę książkę, Ossianie. Weź klucz.
+351	Prawie całkowita ciemność. Świece do zapalenia i spękane podłogi, które nikogo nie utrzymają.
+352	Nic nie widzę. Hex? Hex!
+353	Jestem tu. Zawsze jestem. Dotykaj świec: droga pojawia się wraz ze światłem.
+354	Połowa tej podłogi jest fałszywa. Pęka i zapada się, gdy na nią stanę.
+355	Jak obietnice tego domu. Nie zatrzymuj się na niej. I zapal trzy duże świece: tylko one otwierają ostatnie drzwi.
+356	Tam w głębi... to światło lampionów? Tych z jarmarku, nad rzeką?
+357	...Tak. Tym razem nie przyjdę po ciebie, jeśli spadniesz. Ani jeśli nie spadniesz.
+359	Opuszczony warsztat na plaży. Drzwi otwiera tylko złoty klucz.
+360	Zamknięte drzwi na środku plaży? Kto zamyka drzwi bez ściany?
+361	Ktoś, kto chciał przepuszczać tylko jeden rodzaj podróżnych. Tych, którzy niosą to, co ich.
+362	Twoje kościste dłonie potrafią już trzymać rzeczy. Weź klucz i zanieś go do drzwi.
+363	A te kolorowe prezenty porozrzucane wokół?
+364	Pamiątki po tych, którzy byli tu wcześniej. Weź je, jeśli chcesz. Nikt inny po nie nie przyjdzie.
+366	Preria pełna rabusiów. Przytrzymaj ATAK: kości lecą serią.
+367	Ciągle nadchodzą, Hex!
+368	To nie przestawaj strzelać. Przytrzymaj cios, a twoje kości polecą same.
+369	Od kiedy strzelam kośćmi?
+370	Od zawsze. Po prostu nie miałeś powodu, żeby to pamiętać.
+372	Czerwone i niebieskie bloki, które pojawiają się i znikają za sprawą dźwigni.
+373	Bloki znikają, gdy uderzam w dźwignię. Czerwony, niebieski, czerwony...
+374	Naraz istnieje tylko jeden kolor. Wybierz dobrze, który świat zostawisz.
+375	Teraz z kucnięcia skaczę wyżej. Stanie na rękach.
+376	Salta też. Lekkie ciało robi sztuczki, których żywe ciało by nie zrobiło.
+377	Ciągle mówisz o tym „żywym ciele".
+378	To tylko takie wyrażenie, Ossianie.
+380	Złote skały blokują kopalnię. Młot to załatwi.
+381	Podczas ucieczki zabrałem kowalski młot. Wciąż jest ciepły.
+382	W powietrzu uderz z całej siły w dół: cios młotem w ziemię rozbija złote skały.
+383	Złoto zatykające przejście. Co za marnotrawstwo.
+384	Tu złoto nic nie kupuje. Nawet wyjścia.
+386	Dwóch książąt, jedno gniazdo i pakt, który zmienia niebo.
+387	Hex, ta jaskinia jest pełna skrzydeł. Nietoperze I pszczoły?
+388	Dwa królestwa, które się nienawidzą. Książęta walczą o to gniazdo od wieków.
+389	A ja będę musiał przejść w samym środku tej kłótni.
+390	Książęta mówią, Ossianie. Rzadkość w tych stronach. Wysłuchaj, co zaproponują.
+391	Od kiedy ufasz tym, którzy mówią?
+392	Nie ufam. Ale książę, który zawdzięcza ci życie... świetnie lata.
+394	Na grzbiecie Księcia Nietoperzy, przeciwko Olbrzymiemu Chochlikowi.
+395	Chochlik urósł? Jest wielkości chmury!
+396	Zjadł żar z kuźni. Teraz chce nieba. Twój nowy sojusznik zaniesie cię do niego.
+397	Nietoperz wypuszcza trzy kości naraz i jeszcze krzyczy. To nie oszustwo?
+398	To książę. Krzyk zmazuje pobliskie pociski, a jego skrzydła wytrzymują jeden cios.
+399	Nie lecisz?
+400	Stąd, z dołu, lepiej widzę. Strzelaj, aż jego pasek się opróżni.
+401	Na grzbiecie Księcia Pszczół, przeciwko Olbrzymiemu Chochlikowi.
+402	Zjadł żar z kuźni. Teraz chce nieba. Dosiądź Księcia Pszczół i go powal.
+403	Wypuszcza tylko jedną kosteczkę naraz, Hex.
+404	Wybrałeś powalenie nietoperza. Teraz całe jego królestwo chce twojej głowy. Dużo unikaj i strzelaj bez przerwy.
+405	Wyglądasz na... zadowolonego.
+406	Słaby sojusznik bardziej mnie potrzebuje. To wszystko.
+408	Las z przepaścią, bramą i upartą owcą.
+409	Topór? W Sanktuarium były same chmury.
+410	Znalazłem go gdzieś. Powal drzewo we właściwą stronę, a stanie się mostem.
+411	A owca?
+412	Postaw ją na płycie. Brama otwiera się pod ciężarem. Jak prawie wszystko w tej krainie.
+413	Prawie wszystko?
+414	Nic nie ważysz, Ossianie. Dlatego płyta nie czuje twoich kroków.
+416	Ciemna kopalnia pełna goblinów, pająków i nietoperzy.
+417	Więcej strzałów. Więcej kości. Więcej rzeczy wyłażących z ciemności.
+418	Kopalnia strzeże złota i strzeże strachu. Strzelaj w oba.
+419	Hex, czyje jest to złoto?
+420	Tych, którzy zostali. Kto przechodzi na drugą stronę, nie zabiera nic.
+422	Klucz jest na szczycie kamiennej wieży.
+423	Klucz jest tam na górze. Nie ma drabiny.
+424	Masz teraz kilof. Skocz na ścianę i się wspinaj.
+425	Ale z kluczem w ręku nie mogę się wspinać.
+426	To zejdź z drugiej strony. Nie każda wspinaczka wymaga powrotu.
+428	Urna w środku mauzoleum i upiory nadchodzące z obu stron.
+429	Urna. Z twoim imieniem, Hex.
+430	Nie pozwól, żeby upiory jej dotknęły. Trzy dotknięcia i pęknie.
+431	Co jest w środku?
+432	To, co zostało z przewoźnika. Chroń ją, Ossianie. Proszę.
+433	...Nigdy wcześniej nie powiedziałeś „proszę".
+435	Krab uciekł z kluczem do plaży.
+436	Hex, ten krab niesie klucz na grzbiecie!
+437	Kraby trzymają wszystko, co błyszczy. Traf go: klucz spadnie.
+438	A jeśli znowu go złapie?
+439	To traf go jeszcze raz. Tu nikt nie oddaje swojego bez walki.

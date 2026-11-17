@@ -1,0 +1,220 @@
+761	Jaszczury i rozbitkowie bez przerwy.
+762	Wychodzą z wody ze wszystkich stron!
+763	Przytrzymaj ATAK i idź naprzód.
+764	Atakują bez złości. Jakby z obowiązku.
+765	To jest obowiązek. Najstarszy, jaki mają.
+767	Korzenie, gałęzie i zwalone pnie nad wodą.
+768	Wszędzie korzenie. Wygląda jak utopiony las.
+769	To był las. Pewnego dnia woda się podniosła i już nie opadła.
+770	Kto sprawił, że woda się podniosła?
+771	Kłody się toczą. Uwaga.
+773	Wioska jaszczurów. Nikt nie przejdzie bez walki.
+774	Wioska jaszczurów. Mają domy, Hex. Rodziny.
+775	I bronią Króla. Każdy obszar otwiera się dopiero, gdy wszyscy padną.
+776	Nie lubię walczyć z kimś, kto ma rodzinę.
+777	Oni nie są prawdziwi, Ossianie. Nic tutaj nie jest. Tylko ty.
+779	Król Jaszczurów nigdy nie śpi.
+780	Król Jaszczurów. Patrzy na mnie... i na ciebie, Hex.
+781	Pluje jadem, wystrzeliwuje język: nisko, skacz; wysoko, kucnij. I skacze, rozchlapując kałuże.
+782	Dlaczego patrzy na ciebie z taką nienawiścią?
+783	Stare zatargi. Powal go i po sprawie.
+785	Chmury żaru, które rozpadają się pod stopami.
+786	Niebo jest czerwone. Jak rozżarzony węgiel.
+787	To niebo Chochlika. Spalił chmury, żeby mieć niebo tylko dla siebie.
+788	A chmury utrzymają mój ciężar?
+789	Przez chwilę. Nie zatrzymuj się na nich.
+791	Rozżarzone meteory spadające z nieba.
+792	Pada płonącymi kamieniami!
+793	Iskry ostrzegają, gdzie spadnie. Trzymaj się z daleka.
+794	Całe niebo spada mi na głowę!
+795	Tylko luźne kawałki. To, co ważne na niebie, wciąż trzyma się na miejscu. Na razie.
+797	Chochliki i pszczoły żaru bez przerwy.
+798	Czerwone pszczoły i chochliki wszędzie!
+799	Przytrzymaj ATAK. Niebo nie wybacza wahania.
+800	Małe chochliki, olbrzymi chochlik. Gdzie są te średnie?
+801	Stają się olbrzymami albo popiołem. Tu, w górze, nie ma nic pośrodku.
+803	Prądy gorącego wiatru między wyspami.
+804	Wiatr jest tu gorący. A z kamieni bucha ogień.
+805	Wejdź w wiatr, szybuj i nie ląduj na strumieniach ognia.
+806	Dobrze się czujesz w tym upale?
+807	Trzymam się z daleka. Ogień zbyt mocno przypomina mi lampiony.
+808	Jakie lampiony?
+809	...Takie powiedzenie. Wznieś się z wiatrem, no już.
+811	Zamek chochlików.
+812	Unoszący się zamek. Czerwony, jak niebo.
+813	Zamek chochlików. Nic nie przejdzie bez walki.
+814	Ile zamków widziałeś upadających, Hex?
+815	Wiele. I wszystkie znów się podniosły. Poza jednym.
+817	Pszczoły żaru i zamkowe armaty.
+818	Cały rój! I armaty!
+819	Pszczoły żaru pikują. Te burzowe wytrzymują trzy ciosy.
+820	One się tu zgubiły, Hex.
+821	Jak ty na plaży. Różnica jest taka, że ty masz mnie.
+823	Skarbiec chochlików.
+824	Skarbiec na środku nieba. Ze ścianą z czerwonych bloków.
+825	Puść klucz, zmień kolor, weź go znowu. Już wiesz.
+826	Zawsze wiesz, jak wszystko otworzyć, Hex. Skarbce, drzwi...
+827	...I więzienia. Idź, Ossianie.
+829	Wejście do królestwa wroga twojego sojusznika.
+830	Wrogie królestwo mojego sojusznika. Pełne bzyczących skrzydeł.
+831	Wybrałeś stronę w gnieździe Książąt. Teraz cała druga strona chce się ciebie pozbyć.
+832	Mój sojusznik mówi, że ich król jest ostatnim strażnikiem.
+833	Ostatni fragment. Po nim korona będzie cała.
+835	Dzienny lot po niebie królestwa.
+836	Znów latanie! Mój sojusznik zna drogę.
+837	Trzymaj strzał i unikaj wszystkiego. Trasa jest długa.
+838	Stąd królestwo wygląda jak koło. Wszystko kręci się wokół twojej wyspy.
+839	Piękny obraz. Nigdy tego nie zauważyłem.
+840	Kłamca.
+841	...Trochę.
+843	Zamek królestwa. Nic nie przejdzie bez walki.
+844	Wszędzie wieże. I strażnicy w każdej z nich.
+845	Każdy obszar otwiera się dopiero, gdy wszyscy padną.
+846	Na ścianie namalowano tron dla każdego z królów. Dziewięć.
+847	Dawna sztuka. Z czasów, gdy się zbierali.
+848	Po co?
+849	Żeby zdecydować, co ze mną zrobić. To znaczy: z królestwem.
+851	Nocny lot w samym środku burzy.
+852	Pioruny, deszcz i wrogowie. Wszystko naraz.
+853	Burza jest stara. Nie ustała, odkąd ja... odkąd istnieje królestwo.
+854	Nie lubię deszczu. Nie wiem dlaczego.
+855	Nikt go nie lubi. Przeleć szybko i nie myśl o tym.
+857	Komnata królewska, zamknięta.
+858	Zamknięta komnata na szczycie wieży.
+859	Sprężyny i drabiny. Zanieś klucz do drzwi, bez pośpiechu.
+860	Kolejny klucz. Otworzyłem dla ciebie tyle drzwi, Hex.
+861	Dla nas. A te są prawie ostatnie.
+863	Prądy wiatru między wieżami.
+864	Wiatr wieje między wieżami. Da się doszybować na drugą stronę.
+865	Wejdź w wiatr, przytrzymaj skok. I uważaj na tych, co pikują.
+866	Wiatr ma tu głos. Brzmi, jakby ktoś wołał.
+867	To tylko wiatr. Jeśli usłyszysz imię, nie odpowiadaj.
+869	Ostatni dzienny lot przed nocą króla.
+870	Słońce zachodzi. Pamiętam zachód słońca nad rzeką... z lampionami.
+871	Tu nie ma rzeki. Leć, Ossianie. Noc króla nadchodzi.
+872	Niebo nad środkową wyspą jest już czarne.
+873	Znak, że jesteśmy blisko. Wielkie rzeczy rzucają cień.
+875	Bieg i strzelanie na murach królestwa.
+876	Mury są pełne strażników.
+877	Przytrzymaj ATAK i przejdź.
+878	Krzyczą coś przed atakiem. Brzmi jak „nie puszczaj".
+879	Krzyczą „nie przechodź". Przesłyszałeś się.
+881	Gwardia królewska broni ostatniego mostu.
+882	Gwardia królewska. Za nią król.
+883	Ostatni król, Ossianie. Ostatni... fragment.
+884	Hex, drżysz.
+885	To wiatr. Tylko wiatr.
+887	Stara rolka filmu. Wszystko czarno-białe, z terkotem projektora.
+888	Hex? Dlaczego wszystko jest szare? I co to za terkot?
+889	Znalazłeś rolkę filmu. To bardzo, bardzo stare wspomnienie.
+890	Czyje wspomnienie?
+891	Moje. Sprzed łodzi. Z czasów, gdy ja też śmiałem się z takich kreskówek.
+892	Ty też byłeś... żywy?
+893	Strzelaj, Ossianie. Film się kończy.
+895	Pusta zagroda w trawie.
+896	Zagroda. Bez ani jednej owcy.
+897	Uciekły dawno temu. Ale zostawiły prezenty. Weź je.
+898	Jedna z nich miała czarne ucho...
+899	Wszystkie mają uszy, Ossianie. Idziemy.
+901	Na wpół zatopiona chata.
+902	Chata tonąca w bagnie. Jest tam ktoś?
+903	Nikt. Tylko to, co zostało. Weź, co błyszczy.
+904	Kokony aż do sufitu.
+905	Wszędzie kokony. A jeśli któryś się poruszy?
+906	Te, które się ruszają, nie są tymi, które kryją złoto. Wybieraj mądrze.
+908	Skarbiec w czarnym szkle.
+909	Skarbiec we wnętrzu wulkanu. Kto zamyka złoto w ogniu?
+910	Ktoś, kto chce zapomnieć, że je ma. Taki był Minotaur.
+912	Zaczarowany krąg.
+913	Gnomy mówią, że ten krąg jest zaczarowany.
+914	Gnomy mówią wiele rzeczy. Skacz na duże i nie depcz małych.
+916	Złoto, którego nie znalazł żaden goblin.
+917	Złoto! I ani jednego goblina w pobliżu.
+918	Jeszcze. Bierz szybko.
+920	Ogromne gniazdo w żarze.
+921	Gniazdo wielkości domu. Jaki ptak takie buduje?
+922	Taki, który już odleciał. Prawie wszystko tu już odeszło.
+924	Zapomniana wieża.
+925	Pióra i monety. Strażnicy królestwa byli próżni.
+926	Byli lojalni. Na jedno wychodzi. Weź monety.
+928	Olbrzymie drzewo, którego wcześniej tu nie było. W środku skarb.
+929	Hex, tego drzewa tu nie było, kiedy przechodziłem.
+930	Stare drzewa ukazują się tym, którzy przeszli dość daleko. To strzeże złota.
+931	A kto schował złoto w drzewie?
+932	Ktoś, kto zamierzał wrócić. Nikt nie wraca. Bierz wszystko.
+934	Kiedy fragment zalśnił, zobaczyłem dom. Niebieski, blisko morza.
+935	Ktoś w środku wołał na kolację. Wołał... mnie?
+937	Miałem dłonie. Prawdziwe dłonie, z odciskami od rąbania drewna.
+938	Pamiętam zapach ściętego drewna. Kości nie czują zapachów.
+940	Pasłem owce. I opiekowałem się młodszą siostrą, która bała się ciemności.
+941	Obiecałem, że zawsze wrócę przed zmrokiem.
+943	Wioska nazywała się Wioską przy Moście. Stary most przecinał rzekę.
+944	Hex nigdy nie mówił o rzekach. Tylko o przypływach.
+946	Na Jarmarku Lampionów każdy puszczał światło na rzekę dla tych, którzy odeszli.
+947	Ciepłe światło, które widzę, kiedy spadam... wygląda jak one.
+949	Tamtej nocy padało. Most był śliski.
+950	Moja siostra została po drugiej stronie. Poszedłem po nią.
+952	Ktoś był na moście. W fiolecie. Wyciągnął do mnie rękę.
+953	Nie pamiętam, czy mnie złapał... czy popchnął.
+955	Woda była lodowata. Potem chmura.
+956	I głos: „Jeszcze nie". Ten sam głos co zawsze.
+958	Moje imię... moje imię to nie Ossian. To on mi je nadał.
+959	Niewiele brakuje, żebym przypomniał sobie wszystko.
+960	Korona jest cała, Hex. I co teraz? Gdzie jest Brama Przypływu?
+961	Nie ma bramy, Ossianie. Były pieczęcie. Dziewięć. I wszystkie złamałeś dla mnie.
+962	Królowie... nie strzegli fragmentów?
+963	Strzegli mojego więzienia. Byłeś najcierpliwszym kluczem, jakiego miałem.
+964	A ja dotrzymuję obietnic. Załóż koronę. Odda ci to, co zabrał most.
+965	...Moje dłonie. Moja twarz. Jestem... znowu sobą. Pamiętam wszystko.
+966	To ty byłeś na moście. Wyciągnąłeś do mnie rękę i pozwoliłeś mi spaść.
+967	Potrzebowałem kogoś, kto nie boi się spadać. Martwy niczego się nie boi.
+968	Teraz wybierz. Otworzę drogę rzeki, a ty wrócisz do domu, do siostry. Cały.
+969	Ten świat zostanie oczywiście przy mnie. Nikt za nim nie zatęskni.
+970	A jeśli odmówię?
+971	To spróbuj mnie powalić. Jeśli ci się uda, pieczęcie wrócą... a ty znów staniesz się kością. Na zawsze.
+973	Świat jest wolny.
+974	Ty... wolałeś kości... od swojego domu?
+975	Moja siostra ma całą wioskę. Ten świat miał tylko mnie.
+976	Pieczęcie wracają. Ja wracam do więzienia. A ty...
+977	Znów stanę się kością. Nic się nie stało. Teraz wiem, kim jestem.
+978	A kiedy następnym razem spadnę, nikt mnie nie zawróci.
+979	Przejdę przez światło, kiedy przyjdzie czas. Po swojemu.
+981	Wróciłeś do domu.
+982	Chcę wrócić do domu.
+983	Mądry wybór. Rzeka cię poniesie. Nie oglądaj się za siebie.
+984	...Wyspy robią się fioletowe. Królowie, stworzenia. Wszystko.
+985	To już nie twój problem. Idź. Twoja siostra czeka na moście.
+986	Zdążyłem przed zmrokiem. Tak jak obiecałem.
+987	Ale czasem, kiedy patrzę na rzekę, widzę fioletowe chmury. I kogoś, kto się w nich uśmiecha.
+989	Korona jest cała.
+990	Korona jest cała. Brama się otworzyła... a po drugiej stronie jest rzeka. I lampiony.
+991	Załóż koronę, Ossianie. Z nią nikt cię już nie powali. Zostań. Rządź ze mną przypływem.
+992	Światło znowu mnie woła. Moim imieniem. Prawdziwym.
+993	Jeśli przejdziesz, zapomnisz o wszystkim: o wyspach, postaciach, o mnie. Nie będzie chmury, która po ciebie przyleci.
+994	Nigdy mnie nie ratowałeś, prawda? Za każdym razem, gdy spadałem, odchodziłem. A ty mnie zawracałeś.
+995	...Ja też kiedyś stałem po tamtej stronie światła. Tak dawno, że zapomniałem swojego imienia.
+996	Więc to dzieje się z tymi, którzy zostają.
+997	Wybór należy do ciebie. Zawsze należał. Tylko... nigdy ci tego nie powiedziałem.
+998	Jeszcze nie.
+999	Z powrotem. Zawsze z powrotem.
+1000	Nie patrz na światło.
+1001	Mam cię.
+1002	To nie twój czas... by odejść.
+1003	Prawie cię straciłem.
+1004	Właśnie tak, Ossianie! Dotknąłeś esencji innego stworzenia i przybrałeś jego postać.
+1005	Hex?! Skąd się wziąłeś? I dlaczego mam... to?
+1006	Dar, który ci pożyczyłem. Twoja dusza jest luźno związana z kośćmi, dlatego mieści się w każdej postaci.
+1007	Żywe ciało nigdy by tego nie zrobiło. ...To znaczy, zwykłe ciało.
+1008	„Luźno"? Jak to luźno?
+1009	Szczegóły. Weź przedmiot stworzenia, a staniesz się nim. Jeśli spadniesz, znowu będziesz kością, a ja po ciebie przylecę. Idź!
+1010	Łuski. Wreszcie skóra. Szkoda, że nie moja.
+1011	Świetnie, teraz mam pchły. Nawet nie wiedziałem, że kości łapią pchły.
+1012	Rekin stojący na nogach, z harpunem w ręku. To ma pełen sens. Nic tutaj nie ma sensu.
+1013	Niski, zielony i z włócznią. Czuję się... zupełnie normalnie.
+1014	Osiem nóg. Ledwo wiedziałem, co zrobić z dwiema.
+1015	Nietoperz. No jasne. Najnaturalniejsza rzecz dla szkieletu.
+1016	Pochodnia na środku jaskini. Co za błyskotliwy pomysł. Dosłownie.
+1017	Zmieniłem się w Chochlika. Jeśli siebie spotkam, obiecuję sobie przyłożyć.
+1018	Rogi, mięśnie, zapach obory. Dwa na trzy to nieźle.
+1019	Bzyczący i z żądłem. Gdybym miał godność, właśnie by się skończyła.
+1020	Gnom z procą. I tak wyższy, niż się spodziewałem.

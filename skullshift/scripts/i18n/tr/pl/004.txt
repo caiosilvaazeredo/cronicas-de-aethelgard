@@ -1,0 +1,139 @@
+595	Chochliki i minotaury z lawy, bez przerwy.
+596	Czerwone minotaury! Szarżują jak rozjuszone byki!
+597	To strzelaj, zanim dobiegną. Przytrzymaj ATAK.
+598	Kto wytresował tyle lawowych byków?
+599	Minotaur nie tresuje: on kuje. Każdy żołnierz schodzi z kowadła, wiedząc już, kogo chronić.
+600	Chronić przede mną?
+601	Przed tobą. Przede mną. W gruncie rzeczy przed tym samym.
+603	Płyty z czarnego kamienia, które toną w lawie.
+604	Czarne płyty pływające po lawie. I armaty!
+605	Obsydian tonie, gdy na niego staniesz. Nie zatrzymuj się.
+606	Kto stawia armaty w kuźni?
+607	Minotaur nie lubi gości. Żaden król nie lubi.
+609	Warsztat kowala, zamknięty złotymi skałami.
+610	Warsztat. Kowadła, narzędzia... umiem tego używać.
+611	Umiesz? Ciekawe. Użyj młota na skałach i weź klucz.
+612	Miałem odciski na dłoniach od ciężkiej pracy. Pamiętam.
+613	Kości nie mają odcisków, Ossianie.
+615	Serce góry. Nic nie przejdzie bez walki.
+616	Drogi zamykają się ogniem, dopóki nie powalę wszystkich.
+617	Minotaur nie przepuszcza nikogo bez walki. Za tym miejscem jest on.
+618	Czuć, jak góra bije pod stopami.
+619	To fragment. Pulsują, gdy ktoś się zbliża. Jakby się bały.
+621	Las gnomów z procami.
+622	Ogromne drzewa. I ktoś rzuca mi żołędziami w głowę.
+623	Gnomy. Małe, uparte i celne.
+624	Ten zapach drewna... znam go.
+625	Każdy las pachnie tak samo, Ossianie.
+627	Grzyby, które wyrzucają w górę każdego, kto na nie spadnie.
+628	Ściany są za wysokie, żeby przeskoczyć.
+629	Spadnij na czerwone grzyby. Wyrzucą cię wysoko w górę.
+630	A jeśli jednego zjem?
+631	Nie masz żołądka, Ossianie.
+633	Ziemia znika w rzece. Droga prowadzi górą.
+634	Rzeka połknęła drogę.
+635	To idź górą, z korony na koronę. Nie patrz w dół.
+636	Stamtąd widać niebieskie dachy, daleko, daleko...
+637	To tylko odbicie nieba w wodzie.
+639	Kłody pływające po rzece: można po nich chodzić.
+640	Pływające kłody. Ktoś ściął te drzewa.
+641	Gnomy wrzucają kłody do rzeki, żeby spławić je do wioski. Stąpaj po nich.
+642	Rąbałem drewno. Za niebieskim domem. Jestem tego pewien.
+643	Przejdź przez rzekę, Ossianie.
+645	Gnomy z procami wszędzie.
+646	Deszcz żołędzi!
+647	Odpowiedz kośćmi. Przytrzymaj ATAK.
+648	Dlaczego tak bronią lasu?
+649	Bo po to ich tu posadzono. Gnom nie pyta; gnom pilnuje.
+651	Kępy mchu kryjące gnomy.
+652	Ten mech zadrżał. Tak samo jak trawa na prerii.
+653	Gnomy mchu. Nauczyły się od Gnolli.
+654	Albo ktoś nauczył i jednych, i drugich.
+655	...Uważaj na kłody.
+657	Wioska gnomów. Nikt nie przejdzie bez walki.
+658	Prawdziwa wioska. Domy, kominy, sznury z praniem...
+659	Mieszkańcy bronią Króla. Każdy obszar otwiera się dopiero, gdy wszyscy padną.
+660	Mieszkałem w takiej wiosce, prawda?
+661	Mieszkałeś tam, gdzie cię znalazłem: na plaży.
+663	Król Gnomów strzeże fragmentu u stóp najstarszego drzewa.
+664	Gnom wielkości domu. W fioletowej czapce.
+665	Rzuca żołędziami łukiem, toczy olbrzymie kłody i trzęsie drzewem.
+666	Znowu fiolet. Wszyscy królowie noszą twój fiolet, Hex.
+667	To kolor królewski. Nic więcej. Idź.
+669	Kopalnie goblinów, pełne pochodni i złota.
+670	Ile złota! I ile zapalonych pochodni.
+671	Gobliny kopią od wieków. Strop jest stary: gdy sypie się pył, uciekaj spod niego.
+672	Kopią po co? Tu złoto nic nie kupuje. Sam tak mówiłeś.
+673	Król Goblinów tego nie wie. I nie musi wiedzieć.
+675	Strop chodnika się wali.
+676	Cały strop spada!
+677	Pył ostrzega, gdzie spadnie kamień. Biegnij między nimi.
+678	Te belki są zgniłe. Od jak dawna tu kopią?
+679	Odkąd ktoś kazał ukryć fragment bardzo głęboko. Bardzo, bardzo dawno temu.
+681	Pochodnie zgasły.
+682	Znowu ciemno. Ktoś celowo zgasił pochodnie.
+683	Zapal pochodnie. Trzy duże otwierają wyjście.
+684	Moja siostra bała się ciemności. Zostawiałem jej zapaloną świecę.
+685	...Twoja siostra. Hm. Zapal pochodnie, Ossianie.
+687	Złote skały zamykają chodniki.
+688	Znowu złote skały. Młotem w nie!
+689	W powietrzu uderz z całej siły w dół. I zanieś klucz do drzwi.
+690	Tyle złota, a nikt go nie zabiera.
+691	Dokąd? Poza tym królestwem nie ma targu. Nie ma żadnego „poza".
+692	Mówiłeś, że Brama Przypływu prowadzi na zewnątrz.
+693	Mówiłem. I prowadzi. Dla ciebie.
+695	Gobliny górnicy rzucają bomby.
+696	Rzucają bombami!
+697	Górnicy. Wysadzają skałę i każdego w pobliżu. Unikaj łuku.
+698	Jeśli wylecę w powietrze razem z nią, przyjdziesz po mnie?
+699	Zawsze. W kawałkach, jeśli trzeba. Nie tracę nikogo ze swoich.
+701	Woda w kopalni wzbiera i opada.
+702	Przypływ w kopalni? To nie ma sensu.
+703	Woda podnosi się od spodu. I znowu opada. Jak wszystko tutaj.
+704	Jak wszystko tutaj... wraca.
+705	Zostań wysoko, Ossianie.
+707	Ogień głębin jest błękitny.
+708	Błękitny ogień! A gobliny, które go niosą, biegają jak szalone.
+709	To ogień z głębi ziemi. Gorętszy niż czerwony. Nie pozwól, żeby cię dotknął.
+710	Dlaczego ten ogień jest błękitny?
+711	To ogień, który nie grzeje. Gobliny używają go, by widzieć, nie będąc widzianymi. Nie lubię ani jednego, ani drugiego.
+713	Skarbiec Króla. Strzeżony przez wszystkich.
+714	Góry złota. I strażnicy w każdym kącie.
+715	Każdy obszar otwiera się dopiero, gdy wszyscy padną. Potem Król.
+716	Skoro król ma to wszystko, dlaczego wciąż chce fragmentu?
+717	On nie CHCE fragmentu, Ossianie. On... nieważne. Królowie są chciwi, i tyle.
+719	Król Goblinów z Pochodnią strzeże fragmentu pośród złota.
+720	Król Goblinów. Czarny kaptur i czerwona pochodnia.
+721	Uderza pochodnią w ziemię i wypuszcza fale ognia: skacz. I biega z jednej strony na drugą.
+722	Hex, kiedy padnie ostatni król, co się stanie z tym światem?
+723	Nic, co zobaczysz, Ossianie. Będziesz w domu.
+725	Stojąca woda, mech i jaszczury.
+726	Jaka zielona woda. I ten zapach gnijących liści.
+727	Laguna jaszczurów. Król Jaszczurów żyje pośrodku i nigdy nie śpi.
+728	Nigdy? Nawet drzemki?
+729	Kto strzeże pieczęci... to znaczy, fragmentu... nie może spać.
+731	Olbrzymie liście, które toną pod stopami.
+732	Liście wielkości stołu!
+733	Utrzymają szkielet przez chwilę. Tylko przez chwilę.
+734	Te kwiaty otwierają się tylko, gdy przechodzę.
+735	Czują ruch. Od dawna mało co chodzi tu na dwóch nogach.
+737	Woda w bagnie wzbiera i opada.
+738	Tu też woda się podnosi. Nawet bagno ma przypływ?
+739	Cała woda tego świata słucha tego samego rytmu.
+740	Czyjego rytmu?
+741	Wejdź na kłody, Ossianie.
+743	Kolce i fioletowe jaszczury plujące jadem.
+744	Fioletowe jaszczury. Fioletowe jak ty, Hex.
+745	Ich jad jest fioletowy. Ja nie mam jadu.
+746	Na pewno?
+747	Omijaj kolce.
+749	Krab z mokradeł zabrał klucz.
+750	Domek rybaka. Taki sam jak te w moim... te, które widziałem.
+751	Krab zabrał klucz. Wiesz, co robić.
+752	Jaszczur łowi ryby. Wygląda na spokojnego.
+753	Spokój kogoś, kto nie wie, czego pilnuje. Nie budź go do tego; po prostu przejdź.
+755	Na dnie laguny przepłynie tylko jaszczur.
+756	Droga znika w lagunie.
+757	Tam, na dole, dam ci postać jaszczura. Jaszczury pływają.
+758	Już nie potrzebujesz żadnego przedmiotu, żeby mnie przemienić, prawda?
+759	Im więcej pieczęci pada... to znaczy, im więcej fragmentów zbierzesz, tym więcej mogę.

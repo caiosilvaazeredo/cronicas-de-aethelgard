@@ -1,0 +1,129 @@
+441	Przypływ sam wzbiera i opada. Niski grunt znika pod wodą.
+442	Woda się podnosi! I opada! I znowu się podnosi!
+443	Przypływ tych wysp oddycha. Gdy nadejdzie, wejdź wysoko i czekaj.
+444	Kto nim rządzi?
+445	Król Rekin Harpunnik. Strzeże pierwszego fragmentu korony.
+446	Rekin... w koronie?
+447	Każdy król strzeże jednego kawałka. Razem otwierają ci drogę.
+449	Szczątki statku. Luźne deski toną zaraz po nadepnięciu.
+450	Cały statek, rozbity na kawałki.
+451	Nie zatrzymuj się na deskach. Toną.
+452	Kto był na tym statku?
+453	Ludzie, którzy też chcieli wrócić do domu.
+454	...I wrócili?
+455	Skacz, Ossianie.
+457	Statek goblińskich piratów. Armaty ostrzeliwują pokład.
+458	Piraci! I armaty wycelowane we mnie!
+459	Kule lecą prosto. Skacz albo broń się tarczą.
+460	Kapitan jest na rufówce, na samym końcu.
+461	Pracuje dla Króla Rekina. Wszyscy na tych wodach dla niego pracują.
+463	Cała jaskinia pod wodą. Przepłynie ją tylko rekin.
+464	Jaskinia jest całkiem zalana, Hex. Utonę.
+465	Nie jako rekin. Tam w środku dam ci jego postać.
+466	Możesz to zrobić, zanim złapię harpun?
+467	Tu, na dole, mogę więcej, niż myślisz.
+468	...Nigdy wcześniej tego nie mówiłeś.
+469	Płyń. Meduzy nie wybaczają.
+471	Dźwignie otwierają i zamykają śluzy: przypływ albo odpływ, ty wybierasz.
+472	Dźwignie! Do czego służą?
+473	Otwierają i zamykają śluzy latarni. Przypływ: skrzynie się unoszą. Odpływ: pojawia się grunt.
+474	Czyli to ja rządzę przypływem, jak Król.
+475	Na razie. Korzystaj, póki możesz.
+477	Pokład zapadł się pośrodku: droga prowadzi po rejach, tam w górze.
+478	Pokład pękł na pół! Nie ma którędy przejść.
+479	Jest: górą. Po rejach i bocianich gniazdach.
+480	Stąd widać latarnię, plażę... i ciepłe światło, daleko.
+481	Nie patrz na światło. Patrz, gdzie stawiasz stopy.
+483	Ogniste koralowce, meduzy i przypływ. Ostatni krok przed Królem.
+484	Tutejsze koralowce parzą!
+485	Ognisty koralowiec. Nie dotykaj. A przypływ wciąż nadchodzi.
+486	Za rafą jest Król Rekin.
+487	Za rafą jest pierwszy fragment. Myśl o fragmencie.
+489	Król Rekin Harpunnik rządzi przypływem. Przy odpływie osiada na mieliźnie.
+490	To on. Król Rekin Harpunnik.
+491	Rządzi przypływem. Gdy woda opadnie, utknie w piasku. Wtedy atakuj.
+492	A kiedy przypływ wróci?
+493	Też się wznieś. Na skały po bokach. Jego harpuny zostają wbite w powietrzu: używaj ich jak stopni.
+494	Hex... dlaczego tak bardzo chcesz tego fragmentu?
+495	Ja? To dla ciebie, Ossianie. Zawsze było dla ciebie.
+497	Korona jest cała. Pieczęcie upadły.
+499	Wejście na Prerię Kości, ziemię Gnolli.
+500	Co to za zapach? Trawa... i mokry pies.
+501	Gnolle. Preria należy do nich. Łowcy rzucają kości, które zataczają łuk i wracają.
+502	Wracające kości. Co za ironia.
+503	Tu wszystko wraca, Ossianie. Poza tymi, którzy idą dalej.
+505	Stado pędzi po niskim terenie.
+506	Ziemia drży!
+507	Stado Gnolli. Gdy nadbiegnie, wejdź na cokolwiek wysokiego.
+508	A jeśli zostanę na dole?
+509	Wtedy znowu po ciebie przylecę. Ale wolałbym nie.
+511	Zbocza z prastarych kości. Z góry toczą się skały.
+512	Ile kości. Wszystkie są gnolli?
+513	Nie wszystkie. Niektóre należą do podróżnych, którzy przyszli po koronę przed tobą.
+514	...Przede mną? Ilu ich było?
+515	Uważaj na skały. Toczą się bez ostrzeżenia.
+517	Owce, płyty i bramy. Klucz jest na dachu stodoły.
+518	Owce! Ja... pasłem owce. Chyba.
+519	Postaw owce na płytach. Bramy otwierają się pod ciężarem.
+520	Dlaczego pamiętam owce, Hex?
+521	Wszyscy pamiętają owce. Weź klucz.
+523	Krzaki, które drżą. Ukryte Gnolle czekają.
+524	Ten krzak się poruszył.
+525	Czatownicy. Chowają się w trawie i rzucają na każdego, kto przejdzie blisko.
+526	Przynajmniej widać drżenie.
+527	Miej oczy otwarte, Ossianie. W tym świecie prawie nic nie jest tym, czym się wydaje.
+529	Karawana bez przerwy wysyła łowców.
+530	Cała karawana jedzie w moją stronę.
+531	Przytrzymaj ATAK i nie przestawaj strzelać.
+532	Co wiozą w tych wozach?
+533	Kości. Dla Króla. On je kolekcjonuje.
+535	Szerokie przepaście, które pokonuje się z prądami wiatru.
+536	Przepaście są ogromne. Nie przeskoczę tego.
+537	Wejdź w wiatr. Uniesie cię. Potem przytrzymaj skok i szybuj.
+538	Stąd widzę most, daleko, za morzem.
+539	Nie ma żadnego mostu. To miraż wiatru.
+541	Król Gnolli strzeże drugiego fragmentu.
+542	To on. Większy, niż myślałem. I z fioletowymi plamami...
+543	Jego kość leci i wraca. Nisko: skacz; wysoko: kucnij. Gdy skoczy, uciekaj spod niego.
+544	Dlaczego ma takie same kolory jak ty, Hex?
+545	Przypadek. Powal go, Ossianie. Fragment czeka.
+547	Nici pajęczyny rozpięte nad przepaścią. Pękają.
+548	To ma być most? To nitka pajęczyny!
+549	Mocne nici, ale nie na zawsze. Stań i biegnij.
+550	Kto utkał mosty na środku jaskini?
+551	Królowa. Lubi, gdy goście do niej docierają.
+553	Kompletna ciemność. Drogę pokazują tylko pochodnie.
+554	Hex? Nic nie widzę.
+555	Dotknij pochodni. Zapalą się. Trzy duże otwierają wyjście.
+556	Dziwne. Bałem się ciemności? Nie... to ktoś inny się bał.
+557	Skup się na pochodniach, Ossianie.
+559	Kokony wiszące na niciach, kołyszące się.
+560	Te kokony... jest ktoś w środku?
+561	Jest obiad Królowej. Nie dotykaj, bo zostaniesz kolacją.
+562	Ohyda.
+563	Pycha, powiedziałaby ona.
+565	Skaczące pająki i nietoperze wampiry, bez przerwy.
+566	One skaczą! Zielone pająki skaczą!
+567	To nie przestawaj strzelać. Przytrzymaj ATAK.
+568	A czerwone nietoperze?
+569	Te pikują. Zestrzel je wcześniej.
+571	Gniazdo Królowej. Klucz jest na samej górze.
+572	Jaja. Tysiące jaj. I klucz na szczycie gniazda.
+573	Ściana z czerwonych bloków zamyka drogę. Zmień kolor dźwignią.
+574	Z kluczem w ręku nie mogę uderzyć w dźwignię.
+575	To puść klucz, uderz i weź go z powrotem. Nie wszystko załatwia się w pośpiechu.
+577	Wejście do ognistej góry.
+578	Ziemia wrze, Hex. A ta bulgocząca dziura?
+579	Gejzer. Bulgocze, zanim wypluje ogień. Poczekaj, aż minie, i biegnij.
+580	Szkarłatny Minotaur mieszka tu w środku?
+581	W sercu góry. Kuje lawę. Strzeże piątego fragmentu.
+583	Lawa wzbiera i opada jak przypływ.
+584	Lawa się podnosi! Zupełnie jak przypływ na wyspach!
+585	Góra oddycha jak morze. Wejdź na bazalt: on pływa.
+586	Wszystko w tym świecie wznosi się i opada. Nawet ja.
+587	Ty tylko się wznosisz, Ossianie. Ręczę za to.
+589	Pola gejzerów wybuchających w rytmie.
+590	Raz, dwa, trzy... wybuchają po kolei.
+591	Jak serce. Naucz się rytmu i przejdź między uderzeniami.
+592	Dobrze znasz tę górę.
+593	Dobrze znam wszystkie więzienia. To znaczy... wszystkie miejsca.

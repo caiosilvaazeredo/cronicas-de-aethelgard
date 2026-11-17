@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { LEVELS, type DecoKind, type LevelDef, type ScreenDef, type Segment } from './level';
 import { areaById, areaTier, recommendedLevel, type AreaDef } from './areas';
-import { getLevel } from './progress';
+import { getLevel, isFreePlay, currentSlot, loadRunData, saveRunData, smithLevel } from './progress';
 import { variantOf } from './variants';
 import type { EnemyId } from './characters';
 
@@ -61,6 +61,10 @@ export interface DungeonRun {
   /** Resultado da última sala de luta (a cena da dungeon mostra e limpa). */
   lastFight?: 'win';
   over?: 'win' | 'lose';
+  /** Sala de luta em andamento (se a página fechar no meio, a luta é obrigatória ao voltar). */
+  fighting?: number;
+  /** De qual save é esta run. */
+  slot?: string;
 }
 
 export const DUNGEON_SLOT = LEVELS.length;
@@ -77,10 +81,46 @@ LEVELS.push({
 });
 
 let run: DungeonRun | undefined;
-export const getRun = (): DungeonRun | undefined => run;
+const slotTag = () => (isFreePlay() ? 'free' : String(currentSlot()));
+
+/** Run em andamento: na memória ou, se a página foi fechada, a que ficou salva no navegador. */
+export function getRun(): DungeonRun | undefined {
+  if (run && run.slot === slotTag()) return run;
+  run = undefined;
+  const raw = loadRunData();
+  if (!raw) return undefined;
+  try {
+    const r = JSON.parse(raw) as DungeonRun;
+    if (r && Array.isArray(r.nodes) && r.slot === slotTag()) run = r;
+  } catch {
+    /* run corrompida: descarta */
+  }
+  return run;
+}
+
+/** Guarda a run no navegador (chamado a cada passo importante). */
+export function saveRun(): void {
+  saveRunData(run ? JSON.stringify(run) : null);
+}
+
 export function endRun(): void {
   run = undefined;
+  saveRunData(null);
 }
+
+/**
+ * Ferreiro da Vila (melhorias permanentes, como a mansão do Rogue Legacy): cada nível custa mais.
+ *   heart: +1 coração · might: inimigos com 1 camada a menos de armadura · luck: +4% nos dados
+ *   breath: +1 coração recuperado por sala vencida · purse: guarda 15% do ouro da run se cair.
+ */
+export const SMITH: Array<{ id: string; name: string; desc: string; max: number; base: number }> = [
+  { id: 'heart', name: 'Coração de Ferro', desc: '+1 coração nas dungeons', max: 5, base: 60 },
+  { id: 'might', name: 'Lâmina Afiada', desc: 'inimigos das dungeons com uma camada a menos de armadura', max: 3, base: 90 },
+  { id: 'luck', name: 'Dado Viciado', desc: '+4% de chance em cada dado', max: 5, base: 50 },
+  { id: 'breath', name: 'Fôlego', desc: '+1 coração recuperado a cada sala vencida', max: 2, base: 120 },
+  { id: 'purse', name: 'Bolsa Costurada', desc: 'se cair, guarda 15% do ouro da dungeon', max: 3, base: 100 },
+];
+export const smithCost = (id: string, level = smithLevel(id)): number => (SMITH.find((x) => x.id === id)?.base ?? 100) * (level + 1);
 
 /** Gerador simples e repetível (mulberry32). */
 function rng(seed: number): () => number {
@@ -97,7 +137,7 @@ const pick = <T>(r: () => number, list: readonly T[]): T => list[Math.floor(r() 
 const between = (r: () => number, a: number, b: number) => a + Math.floor(r() * (b - a + 1));
 
 /** Corações da caveira numa dungeon: 5 + 1 a cada 3 níveis. */
-export const heartsFor = (level: number): number => 5 + Math.floor(level / 3);
+export const heartsFor = (level: number): number => 5 + Math.floor(level / 3) + smithLevel('heart');
 
 /** Começa uma run nova na dungeon da área. */
 export function startRun(areaId: string, from: 'village' | 'map', replay: boolean): DungeonRun {
@@ -119,7 +159,9 @@ export function startRun(areaId: string, from: 'village' | 'map', replay: boolea
     blessings: [],
     replay,
     from,
+    slot: slotTag(),
   };
+  saveRun();
   return run;
 }
 
@@ -200,8 +242,8 @@ export function levelGap(rn: DungeonRun, node: DNode): number {
 
 /** Chance (0..1) de cada dado dar certo nos eventos: sorte, nível e bênçãos. */
 export function successChance(rn: DungeonRun, node: DNode): number {
-  const luck = rn.blessings.filter((b) => b === 'luck').length * 0.12;
-  return Phaser.Math.Clamp(0.62 - levelGap(rn, node) * 0.035 + luck, 0.2, 0.92);
+  const luck = rn.blessings.filter((b) => b === 'luck').length * 0.12 + smithLevel('luck') * 0.04;
+  return Phaser.Math.Clamp(0.62 - levelGap(rn, node) * 0.035 + luck, 0.2, 0.95);
 }
 
 /** Força da caveira: golpes que tiram mais de uma camada de armadura (nível alto ou Fúria). */
@@ -312,7 +354,7 @@ export function prepareRoom(rn: DungeonRun, node: DNode): number {
     if (node.kind === 'boss' && i === nScreens - 1) list.splice(0, 3, pick(r, pools.elite), pick(r, pools.elite), pick(r, pools.elite));
     screens.push(genScreen(r, base.theme, list, i === 0));
   }
-  const armor = Phaser.Math.Clamp(Math.ceil(gap / 3), 0, 4) + (node.kind === 'boss' ? 1 : 0);
+  const armor = Math.max(0, Phaser.Math.Clamp(Math.ceil(gap / 3), 0, 4) + (node.kind === 'boss' ? 1 : 0) - smithLevel('might'));
   const names: Record<string, string> = { fight: 'Sala de Luta', elite: 'Sala da Elite', boss: 'Covil do Guardião' };
   const def: LevelDef = {
     id: 'dungeon_room',
@@ -329,5 +371,7 @@ export function prepareRoom(rn: DungeonRun, node: DNode): number {
     dungeon: { kind: node.kind, armor, dmg: gap >= 6 ? 2 : 1, power: playerPower(rn, node), xp: roomXp(rn, node) },
   };
   LEVELS[DUNGEON_SLOT] = def;
+  rn.fighting = node.id;
+  saveRun();
   return DUNGEON_SLOT;
 }

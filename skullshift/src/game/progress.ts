@@ -39,6 +39,8 @@ export interface SaveData {
   xp?: number;
   /** Dungeons concluídas (id da área): abrem o selo do rei daquela área. */
   dungeons?: string[];
+  /** Melhorias permanentes do Ferreiro (id → nível). */
+  smith?: Record<string, number>;
   /** Data do último jogo (ms). */
   updated: number;
 }
@@ -111,6 +113,7 @@ export function loadSlot(n: number): SaveData | null {
       ach: Array.isArray(d.ach) ? d.ach : [],
       xp: Math.max(0, Number(d.xp) || 0),
       dungeons: Array.isArray(d.dungeons) ? d.dungeons : [],
+      smith: d.smith && typeof d.smith === 'object' ? d.smith : {},
       updated: Number(d.updated) || 0,
     };
   } catch {
@@ -378,4 +381,32 @@ export function markDungeonDone(area: string): void {
   const d = current();
   d.dungeons = [...new Set([...(d.dungeons ?? []), area])];
   if (!free) saveSlot(currentSlot(), d);
+}
+
+// ---------- Ferreiro (melhorias permanentes das dungeons) ----------
+
+export function smithLevel(id: string): number {
+  return current().smith?.[id] ?? 0;
+}
+
+/** Compra o próximo nível (se tiver ouro); devolve true se comprou. */
+export function buySmith(id: string, cost: number): boolean {
+  const d = current();
+  if ((d.coins ?? 0) < cost) return false;
+  d.coins = (d.coins ?? 0) - cost;
+  d.smith = { ...(d.smith ?? {}), [id]: (d.smith?.[id] ?? 0) + 1 };
+  if (!free) saveSlot(currentSlot(), d);
+  return true;
+}
+
+// ---------- dungeon em andamento (sobrevive a fechar a página) ----------
+
+const runKey = () => `skullshift.run.${free ? 'free' : currentSlot()}`;
+
+export function saveRunData(json: string | null): void {
+  write(runKey(), json);
+}
+
+export function loadRunData(): string | null {
+  return read(runKey());
 }

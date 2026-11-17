@@ -1,16 +1,17 @@
+import { SMITH, smithCost } from '../game/dungeon';
 import { noTr, tr, trf } from '../i18n';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaTitle, areaUnlocked, recommendedLevel } from '../game/areas';
 import { getRun, heartsFor, startRun } from '../game/dungeon';
 import { playMusic } from '../game/music';
-import { getCoins, getLevel, isDungeonDone, levelProgress } from '../game/progress';
+import { buySmith, getCoins, getLevel, isDungeonDone, levelProgress, smithLevel } from '../game/progress';
 import { sfx } from '../game/settings';
 import { pillButton } from '../ui/devices';
 
 const INK = 0x10223a;
 /** Largura da vila (3 telas). */
-const VW = 3600;
+const VW = 4000;
 const VH = 720;
 const GY = 560;
 
@@ -159,7 +160,7 @@ export class VillageScene extends Phaser.Scene {
       this.add.image(i * 64, GY + 122, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
     }
     const tree = (x: number, s = 0.8) => this.add.sprite(x, GY, 'res_tree').setOrigin(0.5, 0.9).setScale(s).setDepth(3).play({ key: 'res_tree', startFrame: (x >> 4) % 8 });
-    for (const x of [60, 820, 1180, 1600, 2050, 2480, 2950, 3420, 3560]) tree(x, Phaser.Math.FloatBetween(0.7, 0.95));
+    for (const x of [60, 820, 1180, 1600, 2050, 2480, 2950, 3420, 3940]) tree(x, Phaser.Math.FloatBetween(0.7, 0.95));
     const stand = (x: number, key: string, foot: number, s: number) => {
       this.add.ellipse(x, GY - 2, 120 * s, 18, INK, 0.2).setDepth(2.5);
       return this.add.image(x, GY, key).setOrigin(0.5, foot).setScale(s).setDepth(4);
@@ -221,6 +222,17 @@ export class VillageScene extends Phaser.Scene {
     this.npc(2950, 'villager', 0xc8f0a0, true);
     this.label(2770, 'CURRAL');
     this.addSpot(2900, 'PEGA-OVELHA', () => this.scene.start('minigame', { kind: 'sheep' }));
+
+    // 9) Ferreiro: melhorias permanentes para as dungeons (como a mansão do Rogue Legacy).
+    stand(3640, 'bld_red_barracks', 240 / 256, 0.75);
+    const anvil = this.add.graphics().setDepth(5);
+    anvil.fillStyle(INK, 1).fillRect(3734, GY - 40, 64, 16).fillRect(3750, GY - 26, 32, 26);
+    anvil.fillStyle(0x6a6470, 1).fillRect(3737, GY - 37, 58, 11).fillRect(3753, GY - 24, 26, 22);
+    this.add.image(3790, GY - 46, 'tool_hammer').setScale(0.7).setAngle(-40).setDepth(5.1);
+    const smith = this.npc(3720, 'villager', 0x9a8070, true);
+    this.time.addEvent({ delay: 1400, loop: true, callback: () => smith.active && this.add.particles(3766, GY - 44, 'spark', { speed: { min: 60, max: 140 }, angle: { min: 220, max: 320 }, lifespan: 400, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff8a2a], quantity: 6, emitting: false }).setDepth(6).explode(6) });
+    this.label(3640, 'FERREIRO');
+    this.addSpot(3700, 'FERREIRO', () => this.smith());
 
     // 8) Estalagem e moradores.
     stand(3260, 'bld_red_house1', 173 / 192, 0.9);
@@ -307,7 +319,7 @@ export class VillageScene extends Phaser.Scene {
     noTr(this.add
       .text(bx + 100 * k, top - 16 * k, lp.need ? trf('{0}/{1} XP', lp.into, lp.need) : tr('NÍVEL MÁXIMO'), { fontFamily: BODY_FONT, fontSize: `${Math.round(13 * k)}px`, color: '#d8b8ff' })
       .setOrigin(0, 0.5));
-    this.add.text(bx, top + 40 * k, `Ouro: ${getCoins()}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5);
+    this.goldText = this.add.text(bx, top + 40 * k, `Ouro: ${getCoins()}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5);
     if (P) this.touchPad(HH);
     else this.add
       .text(W / 2, VH - 20, '◀ ▶ andar · ↑/W pular · E usar/conversar · toque para ir até lá', { fontFamily: BODY_FONT, fontSize: P ? '26px' : '15px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 4 })
@@ -376,10 +388,10 @@ export class VillageScene extends Phaser.Scene {
     g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 22);
     g.fillStyle(0xfff7dc, 1).fillRoundedRect(x, y, pw, ph, 18);
     this.add.text(x + 28, y + 22 * k, name, { fontFamily: FONT, fontSize: `${Math.round(24 * k)}px`, color: '#7a3ad0' });
-    this.add.text(x + 28, y + 62 * k, text, { fontFamily: BODY_FONT, fontSize: `${Math.round(19 * k)}px`, color: '#10223a', wordWrap: { width: pw - 56 }, lineSpacing: 4 });
+    this.add.text(x + 28, y + 62 * k, text, { fontFamily: BODY_FONT, fontSize: `${Math.round(19 * k)}px`, color: '#10223a', wordWrap: { width: choices.length ? pw - 56 - 420 * k : pw - 56 }, lineSpacing: 4 });
     const list = choices.length ? choices : [{ label: 'OK', act: () => this.closeDialog() }];
     list.forEach((c, i) => {
-      pillButton(this, x + pw - 200 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 340, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.8 * k);
+      pillButton(this, x + pw - 230 * k, y + ph - (list.length - i) * 64 * k + 20 * k, c.label, () => c.act(), 500, i === 0 ? 0xffe066 : 0xe7eef2).setScale(0.78 * k);
     });
     const objs = this.children.list.slice(first);
     this.fixUI(objs);
@@ -440,6 +452,32 @@ export class VillageScene extends Phaser.Scene {
       `Seu nível: ${L}. Escolha uma dungeon (o número é o nível sugerido). Dá para entrar acima do seu nível, mas vai doer.${run ? '\nVocê tem uma dungeon em andamento.' : ''}`,
       choices,
     );
+  }
+
+  private goldText?: Phaser.GameObjects.Text;
+
+  /** Ferreiro: lista as melhorias com nível e preço; comprar reabre a lista atualizada. */
+  private smith(): void {
+    const choices = SMITH.map((u) => {
+      const lvl = smithLevel(u.id);
+      const maxed = lvl >= u.max;
+      const cost = smithCost(u.id, lvl);
+      return {
+        label: maxed ? `${u.name} · MÁX` : `${u.name} ${lvl + 1}/${u.max} · ${cost} ouro`,
+        act: () => {
+          if (maxed) return;
+          if (!buySmith(u.id, cost)) {
+            this.cameras.main.shake(120, 0.004);
+            return;
+          }
+          sfx('pick');
+          this.goldText?.setText(`Ouro: ${getCoins()}`);
+          this.smith();
+        },
+      };
+    });
+    const lines = SMITH.map((u) => `${u.name}: ${u.desc}.`).join('\n');
+    this.openDialog('Ferreiro Bruno', `Ouro: ${getCoins()}. Melhorias que ficam para sempre, em toda dungeon:\n${lines}`, [...choices, { label: 'SAIR', act: () => this.closeDialog() }]);
   }
 
   private toWorld(): void {

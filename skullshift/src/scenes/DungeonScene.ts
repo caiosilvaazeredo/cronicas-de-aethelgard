@@ -2,12 +2,13 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { areaById, areaTitle } from '../game/areas';
 import { playMusic, type Track } from '../game/music';
-import { addCoins, addXp, getLevel, markDungeonDone } from '../game/progress';
+import { addCoins, addXp, getLevel, markDungeonDone, smithLevel } from '../game/progress';
 import { sfx } from '../game/settings';
 import {
   clearReward,
   endRun,
   getRun,
+  saveRun,
   levelGap,
   prepareRoom,
   roomLevel,
@@ -245,8 +246,12 @@ export class DungeonScene extends Phaser.Scene {
     if (rn.over === 'lose') return this.showLose();
     if (rn.lastFight === 'win') {
       rn.lastFight = undefined;
+      saveRun();
       const node = rn.nodes[rn.at];
       if (node.kind === 'boss') return this.showWin();
+    } else if (rn.fighting !== undefined && rn.fighting === rn.at) {
+      // A página fechou no meio de uma luta: ela continua obrigatória.
+      this.time.delayedCall(300, () => this.resolve(rn.nodes[rn.at]));
     }
 
     pillButton(this, P ? W / 2 : 150, P ? HH - 140 : HH - 40, 'DESISTIR', () => this.askAbandon(), 200, 0xe7eef2).setScale(P ? 1.4 : 0.8);
@@ -445,6 +450,7 @@ export class DungeonScene extends Phaser.Scene {
       onComplete: () => {
         rn.at = id;
         if (!rn.visited.includes(id)) rn.visited.push(id);
+        saveRun();
         this.choice = 0;
         this.busy = false;
         this.drawMap();
@@ -654,6 +660,7 @@ export class DungeonScene extends Phaser.Scene {
   /** Mostra o resultado e volta ao mapa (ou acaba a run, se os corações zeraram). */
   private result(text: string): void {
     const rn = getRun()!;
+    saveRun();
     this.drawHud();
     if (rn.hearts <= 0) {
       rn.over = 'lose';
@@ -685,7 +692,10 @@ export class DungeonScene extends Phaser.Scene {
     const rn = getRun()!;
     const back = rn.from;
     const area = rn.area;
-    const lost = `Ouro perdido: ${rn.gold}\nExperiência perdida: ${rn.xp}`;
+    // Bolsa Costurada (Ferreiro): guarda uma parte do ouro mesmo caindo.
+    const kept = Math.floor(rn.gold * 0.15 * smithLevel('purse'));
+    if (kept > 0) addCoins(kept);
+    const lost = `Ouro perdido: ${rn.gold - kept}\nExperiência perdida: ${rn.xp}${kept ? `\nA Bolsa Costurada guardou: ${kept}` : ''}`;
     endRun();
     this.openModal('VOCÊ CAIU NA DUNGEON', `O Xamã te trouxe de volta, mas tudo o que você achou ficou lá embaixo.\n\n${lost}`, [{ label: 'VOLTAR', act: () => this.leave(back, area) }]);
   }

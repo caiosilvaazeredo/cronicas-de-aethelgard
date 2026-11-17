@@ -20,8 +20,8 @@ import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
 import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTier, areaTitle } from '../game/areas';
 import { levelUpBanner } from '../ui/levelup';
-import { addCoins, addStat, addXp, completeLevel, isDone, isSecretDone, getLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
-import { getRun } from '../game/dungeon';
+import { smithLevel, addCoins, addStat, addXp, completeLevel, isDone, isSecretDone, getLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
+import { getRun, saveRun } from '../game/dungeon';
 import { SpeechBubble } from '../game/speech';
 import { HauntSystem } from '../game/haunt';
 import { ShmupSystem } from '../game/shmup';
@@ -2300,9 +2300,11 @@ export class GameScene extends Phaser.Scene {
       this.deaths++;
       rn.hearts = Math.max(0, rn.hearts - dd.dmg);
       this.ui?.setHearts(rn.hearts, rn.maxHearts);
+      saveRun();
       if (rn.hearts > 0) return false;
       this.ended = true;
       rn.over = 'lose';
+      saveRun();
       this.time.delayedCall(delay, () => {
         this.wasted(0, 'A DUNGEON TE DERROTOU', 3000);
         this.time.delayedCall(3200, () => this.scene.start('dungeon', {}));
@@ -2899,8 +2901,10 @@ export class GameScene extends Phaser.Scene {
     if (rn) {
       rn.xp += d.xp;
       rn.lastFight = 'win';
-      // Respiro entre as salas: cada luta vencida devolve um coração.
-      rn.hearts = Math.min(rn.maxHearts, rn.hearts + 1);
+      // Respiro entre as salas: cada luta vencida devolve um coração (mais com o Fôlego do Ferreiro).
+      rn.hearts = Math.min(rn.maxHearts, rn.hearts + 1 + smithLevel('breath'));
+      rn.fighting = undefined;
+      saveRun();
     }
     jingle('win');
     this.ui?.banner(d.kind === 'boss' ? 'GUARDIÃO DERROTADO!' : 'SALA LIMPA!', 1400, `+${d.xp} XP para a run · +1 coração`);

@@ -1,0 +1,220 @@
+761	Kertenkeleler ve kazazedeler durmadan.
+762	Her yandan sudan çıkıyorlar!
+763	SALDIR'ı basılı tut ve ilerle.
+764	Öfkesizce saldırıyorlar. Bir görev gibi.
+765	Bir görev. Sahip oldukları en eski görev.
+767	Suyun üstünde kökler, dallar ve devrik gövdeler.
+768	Her yerde kökler. Boğulmuş bir orman gibi.
+769	Bir ormandı. Bir gün su yükseldi ve bir daha hiç çekilmedi.
+770	Suyu kim yükseltti?
+771	Kütükler yuvarlanıyor. Dikkat.
+773	Kertenkelelerin köyü. Kimse savaşmadan geçemez.
+774	Bir kertenkele köyü. Evleri var, Hex. Aileleri.
+775	Ve Kral'ı savunuyorlar. Her alan ancak hepsi düşünce açılır.
+776	Ailesi olanlarla dövüşmeyi sevmem.
+777	Onlar gerçek değil, Ossian. Burada hiçbir şey gerçek değil. Sadece sen.
+779	Kertenkele Kral hiç uyumaz.
+780	Kertenkele Kral. Bana bakıyor... ve sana, Hex.
+781	Zehir tükürür, dilini fırlatır: alçaksa zıpla; yüksekse çömel. Ve su birikintileri saçarak zıplar.
+782	Sana neden bu kadar nefretle bakıyor?
+783	Eski hesaplar. Devir onu, iş bitsin.
+785	Basınca dağılan kor bulutları.
+786	Gökyüzü kırmızı. Bir kor gibi.
+787	İblis'in göğü. Gökyüzünü yalnız kendine saklamak için bulutları yaktı.
+788	Peki bulutlar ağırlığımı taşır mı?
+789	Bir anlığına. Üstlerinde durma.
+791	Gökten düşen kızgın meteorlar.
+792	Yanan taş yağıyor!
+793	Kıvılcımlar nereye düşeceğini haber verir. Uzak dur.
+794	Bütün gökyüzü üstüme düşüyor!
+795	Sadece kopan parçalar. Gökte önemli olan hâlâ yerinde duruyor. Şimdilik.
+797	İblisler ve kor arıları durmadan.
+798	Her yerde kırmızı arılar ve iblisler!
+799	SALDIR'ı basılı tut. Gökyüzü tereddüt edeni affetmez.
+800	Küçük iblisler, dev iblis. Orta boylar nerede?
+801	Ya dev olurlar ya kül. Burada ortası yoktur.
+803	Adalar arasında sıcak rüzgâr akıntıları.
+804	Buradaki rüzgâr sıcak. Ve taşlardan ateş fışkırıyor.
+805	Rüzgâra gir, süzül ve fışkırmaların üstüne inme.
+806	Bu sıcakta iyi misin?
+807	Ondan uzak dururum. Ateş bana fenerleri fazlasıyla hatırlatır.
+808	Hangi fenerleri?
+809	...Laf olsun diye. Rüzgârla yüksel, hadi.
+811	İblislerin kalesi.
+812	Yüzen bir kale. Gökyüzü gibi kırmızı.
+813	İblislerin kalesi. Hiçbir şey savaşmadan geçemez.
+814	Kaç kalenin düştüğünü gördün, Hex?
+815	Çok. Ve hepsi yeniden ayağa kalktı. Biri hariç.
+817	Kor arıları ve kalenin topları.
+818	Koca bir sürü! Bir de toplar!
+819	Kor arıları pike yapar. Fırtına arıları üç darbeye dayanır.
+820	Burada kaybolmuşlar, Hex.
+821	Kumsaldaki sen gibi. Farkı şu ki senin yanında ben varım.
+823	İblislerin kasası.
+824	Göğün ortasında bir kasa. Kırmızı bloklardan bir duvarla.
+825	Anahtarı bırak, rengi değiştir, yeniden al. Biliyorsun.
+826	Her şeyi nasıl açacağını hep biliyorsun, Hex. Kasaları, kapıları...
+827	...Ve hapishaneleri. Git, Ossian.
+829	Müttefikinin düşmanının krallığına giriş.
+830	Müttefikimin düşman krallığı. Vızıldayan kanatlarla dolu.
+831	Prenslerin yuvasında bir taraf seçtin. Şimdi öbür tarafın tamamı seni uzakta istiyor.
+832	Müttefikim onların kralının son bekçi olduğunu söylüyor.
+833	Son parça. Ondan sonra taç tamamlanır.
+835	Krallığın göğünde gündüz uçuşu.
+836	Yine uçuyoruz! Müttefikim yolu biliyor.
+837	Ateşi basılı tut ve her şeyden kaç. Rota uzun.
+838	Buradan krallık bir tekerleğe benziyor. Her şey senin adanın etrafında dönüyor.
+839	Güzel bir görüntü. Hiç fark etmemiştim.
+840	Yalancı.
+841	...Biraz.
+843	Krallığın kalesi. Hiçbir şey savaşmadan geçemez.
+844	Her yerde kuleler. Ve her birinde muhafızlar.
+845	Her alan ancak hepsi düşünce açılır.
+846	Duvarda her kral için boyanmış bir taht var. Dokuz tane.
+847	Eski sanat. Toplandıkları zamandan kalma.
+848	Ne için?
+849	Bana ne yapılacağına karar vermek için. Yani: krallığa.
+851	Fırtınanın ortasında bir gece uçuşu.
+852	Şimşek, yağmur ve düşmanlar. Hepsi birden.
+853	Fırtına eski. Ben... krallık var olduğundan beri hiç durmadı.
+854	Yağmuru sevmiyorum. Neden bilmiyorum.
+855	Kimse sevmez. Hızla geç ve düşünme.
+857	Kraliyet odası, kilitli.
+858	Kulenin tepesinde kilitli bir oda.
+859	Yaylar ve merdivenler. Anahtarı kapıya götür, acele etmeden.
+860	Bir anahtar daha. Senin için ne çok kapı açtım, Hex.
+861	Bizim için. Ve bu neredeyse sonuncusu.
+863	Kuleler arasında rüzgâr akıntıları.
+864	Rüzgâr kulelerin arasında esiyor. Karşıya süzülmek mümkün.
+865	Rüzgâra gir, zıplamayı basılı tut. Bir de pike yapanlara dikkat et.
+866	Buradaki rüzgârın bir sesi var. Biri sesleniyor gibi.
+867	Sadece rüzgâr. Bir isim duyarsan cevap verme.
+869	Kral'ın gecesinden önceki son gündüz uçuşu.
+870	Güneş batıyor. Bir nehirde gün batımını hatırlıyorum... fenerlerle.
+871	Burada nehir yok. Uç, Ossian. Kral'ın gecesi geliyor.
+872	Ortadaki adanın üstündeki gökyüzü artık simsiyah.
+873	Yakında olduğumuzun işareti. Büyük şeyler gölge yapar.
+875	Krallığın surlarında koş ve ateş et.
+876	Surlar muhafız dolu.
+877	SALDIR'ı basılı tut ve geç.
+878	Saldırmadan önce bir şey bağırıyorlar. "Bırakma" gibi.
+879	"Geçme" diye bağırıyorlar. Yanlış duydun.
+881	Kraliyet muhafızları son köprüyü savunuyor.
+882	Kraliyet muhafızları. Onlardan sonra kral.
+883	Son kral, Ossian. Son... parça.
+884	Hex, titriyorsun.
+885	Rüzgâr. Sadece rüzgâr.
+887	Eski bir film makarası. Her şey siyah beyaz, projektör cızırtısıyla.
+888	Hex? Her şey neden gri? Ya bu cızırtı?
+889	Bir film makarası buldun. Bu çok, çok eski bir anı.
+890	Kimin anısı?
+891	Benim. Kayıktan önce. Benim de böyle çizgi filmlere güldüğüm zamanlardan.
+892	Sen de mi... yaşadın?
+893	Ateş et, Ossian. Film bitiyor.
+895	Otların arasında boş bir ağıl.
+896	Bir ağıl. İçinde tek bir koyun yok.
+897	Uzun zaman önce kaçtılar. Ama hediyeler bıraktılar. Al.
+898	İçlerinden birinin kulağı karaydı...
+899	Hepsinin kulağı var, Ossian. Yürü.
+901	Yarısı batmış bir kulübe.
+902	Bataklığa gömülen bir kulübe. Orada kimse var mı?
+903	Kimse. Sadece geride kalanlar. Parlayanı al.
+904	Tavana kadar kozalar.
+905	Her yerde kozalar. Ya biri kıpırdarsa?
+906	Kıpırdayanlar altın saklayanlar değildir. İyi seç.
+908	Kara camda bir kasa.
+909	Yanardağın içinde bir kasa. Altını ateşe kim kilitler?
+910	Ona sahip olduğunu unutmak isteyen. Minotor öyleydi.
+912	Büyülü bir halka.
+913	Cüceler bu halkanın büyülü olduğunu söylüyor.
+914	Cüceler çok şey söyler. Büyüklerin üstüne zıpla, küçüklere basma.
+916	Hiçbir goblinin bulamadığı altın.
+917	Altın! Ve etrafta tek bir goblin yok.
+918	Henüz. Çabuk al.
+920	Korların içinde kocaman bir yuva.
+921	Ev büyüklüğünde bir yuva. Hangi kuş böyle bir şey yapar?
+922	Çoktan gitmiş biri. Buradaki neredeyse her şey çoktan gitti.
+924	Unutulmuş bir kule.
+925	Tüyler ve sikkeler. Krallığın muhafızları kendini beğenmişti.
+926	Sadıktılar. Aynı kapıya çıkar. Sikkeleri al.
+928	Daha önce orada olmayan dev bir ağaç. İçinde bir hazine.
+929	Hex, ben geçerken bu ağaç burada değildi.
+930	Yaşlı ağaçlar yeterince yürümüş olanlara görünür. Bu altın saklıyor.
+931	Peki bir ağacın içine altını kim sakladı?
+932	Geri dönmeyi düşünen biri. Kimse geri dönmez. Hepsini al.
+934	Parça parladığında bir ev gördüm. Mavi, denize yakın.
+935	İçeride biri yemeğe çağırıyordu. Beni mi... çağırıyordu?
+937	Ellerim vardı. Gerçek eller, odun yarmaktan nasırlı.
+938	Kesilmiş odun kokusunu hatırlıyorum. Kemikler koku almaz.
+940	Koyunlara bakardım. Bir de karanlıktan korkan küçük bir kız kardeşe.
+941	Hava kararmadan hep döneceğime söz vermiştim.
+943	Köyün adı Köprü Köyü'ydü. Nehrin üstünden eski bir köprü geçerdi.
+944	Hex nehirlerden hiç söz etmedi. Sadece gelgitten.
+946	Fener Panayırı'nda herkes gidenler için nehre bir ışık bırakırdı.
+947	Düştüğümde gördüğüm sıcak ışık... onlara benziyor.
+949	O gece yağmur yağıyordu. Köprü kaygandı.
+950	Kız kardeşim öbür tarafta kalmıştı. Onu almaya gittim.
+952	Köprüde biri vardı. Mor giymiş. Bana elini uzattı.
+953	Beni tuttu mu... yoksa itti mi, hatırlamıyorum.
+955	Su buz gibiydi. Sonra bir bulut.
+956	Ve bir ses: "Henüz değil". Hep aynı ses.
+958	Adım... adım Ossian değil. Bu adı bana o verdi.
+959	Her şeyi hatırlamama az kaldı.
+960	Taç bütün, Hex. Şimdi ne olacak? Gelgit Kapısı nerede?
+961	Kapı yok, Ossian. Mühürler vardı. Dokuz tane. Ve hepsini benim için kırdın.
+962	Krallar... parçaları korumuyor muydu?
+963	Hapishanemi koruyorlardı. Sen sahip olduğum en sabırlı anahtardın.
+964	Ve ben sözümü tutarım. Tacı tak. Köprünün aldığını sana geri verir.
+965	...Ellerim. Yüzüm. Ben... yine benim. Her şeyi hatırlıyorum.
+966	Köprüdeki sendin. Bana elini uzattın ve düşmeme izin verdin.
+967	Düşmekten korkmayan birine ihtiyacım vardı. Bir ölü hiçbir şeyden korkmaz.
+968	Şimdi seç. Nehrin yolunu açarım, sen de evine, kız kardeşine dönersin. Sapasağlam.
+969	Bu dünya da bende kalır, elbette. Kimse onu özlemez.
+970	Ya hayır dersem?
+971	O zaman beni devirmeyi dene. Başarırsan mühürler geri gelir... ve sen yeniden kemik olursun. Sonsuza dek.
+973	Dünya özgür.
+974	Sen... kemikleri... evine mi tercih ettin?
+975	Kız kardeşimin bütün bir köyü var. Bu dünyanın ise yalnızca ben vardım.
+976	Mühürler geri dönüyor. Ben hapishaneye dönüyorum. Ve sen...
+977	Yeniden kemik oluyorum. Sorun değil. Artık kim olduğumu biliyorum.
+978	Ve bir dahaki düşüşümde kimse beni geri çekmeyecek.
+979	Zamanı gelince ışığın öbür yanına geçeceğim. Kendi bildiğim gibi.
+981	Evine döndün.
+982	Eve dönmek istiyorum.
+983	Akıllıca seçim. Nehir seni götürür. Arkana bakma.
+984	...Adalar mora dönüyor. Krallar, yaratıklar. Her şey.
+985	Artık senin sorunun değil. Git. Kız kardeşin köprüde bekliyor.
+986	Hava kararmadan vardım. Söz verdiğim gibi.
+987	Ama bazen nehre baktığımda mor bulutlar görüyorum. Ve içlerinde gülümseyen birini.
+989	Taç bütün.
+990	Taç bütün. Kapı açıldı... ve öbür tarafta bir nehir var. Ve fenerler.
+991	Tacı tak, Ossian. Onunla kimse seni bir daha deviremez. Kal. Gelgite benimle hükmet.
+992	Işık beni yine çağırıyor. Adımla. Gerçek adımla.
+993	Geçersen her şeyi unutursun: adaları, biçimleri, beni. Seni almaya gelecek bir bulut olmayacak.
+994	Beni hiç kurtarmadın, değil mi? Her düştüğümde gidiyordum. Ve sen beni geri getiriyordun.
+995	...Ben de bir zamanlar ışığın o yanındaydım. Öyle uzun zaman önce ki adımı unuttum.
+996	Demek kalanlara olan bu.
+997	Seçim senin. Hep seninti. Ben sadece... sana hiç söylemedim.
+998	Henüz değil.
+999	Geri. Her zaman geri.
+1000	Işığa bakma.
+1001	Seni tuttum.
+1002	Gitme vaktin değil... henüz.
+1003	Seni neredeyse kaybediyordum.
+1004	İşte böyle, Ossian! Başka bir yaratığın özüne dokundun ve onun biçimini aldın.
+1005	Hex?! Nereden çıktın? Ve neden bende... bu var?
+1006	Sana ödünç verdiğim yetenek. Ruhun kemiklerinden gevşek, bu yüzden her biçime sığar.
+1007	Yaşayan bir beden bunu asla yapamazdı. ...Yani, sıradan bir beden.
+1008	"Gevşek" mi? Nasıl yani, gevşek?
+1009	Ayrıntılar. Bir yaratığın eşyasını al, o olursun. Düşersen yeniden kemik olursun, ben de seni almaya gelirim. Git!
+1010	Pullar. Sonunda bir deri. Ne yazık ki benim değil.
+1011	Harika, şimdi pirelerim var. Kemiklerin pire kaptığını bile bilmiyordum.
+1012	Elinde zıpkın, ayakta duran bir köpekbalığı. Gayet mantıklı. Burada hiçbir şey mantıklı değil.
+1013	Kısa, yeşil ve elinde mızrak. Kendimi... gayet normal hissediyorum.
+1014	Sekiz bacak. İkisiyle ne yapacağımı zor biliyordum.
+1015	Yarasa. Elbette. Bir iskelet için en doğal şey.
+1016	Mağaranın ortasında bir meşale. Ne parlak bir fikir. Kelimenin tam anlamıyla.
+1017	İblis'e dönüştüm. Kendimle karşılaşırsam kendime bir yumruk atacağıma söz veriyorum.
+1018	Boynuzlar, kaslar, ahır kokusu. Üçte iki fena değil.
+1019	Vızıldayan ve iğneli. Bir onurum olsaydı şu an biterdi.
+1020	Sapanlı bir cüce. Yine de beklediğimden uzun.

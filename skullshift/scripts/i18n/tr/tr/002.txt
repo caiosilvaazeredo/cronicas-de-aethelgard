@@ -1,0 +1,133 @@
+290	Tapınağıma hoş geldin. Yalnızca parlayan bulutlara bas; ötekiler kimseyi taşımaz.
+291	Burası... sunakta bir sıra kırık taç var. Bir de sönmüş fenerlerden bir sıra.
+292	Buradan geçenlerden kalan hatıralar.
+293	Nereye geçtiler, Hex? Hiç kimse eve dönmedi, değil mi?
+294	Ev, birinin seni beklediği yerdir. Ben her düştüğünde seni beklerim. Düşün bunu.
+295	Son parçayı aldığımda kapı açılacak. Yemin ettin.
+296	Açılacağına yemin ettim. Hangi yöne açılacağına değil.
+297	...Ne?
+298	Hiç. Yaşlı adam lafı. Git, Ossian. Başladığını bitir.
+300	Bulutların arasında devasa boşluklar. Bir adadan ötekine yalnızca rüzgâr taşır.
+301	Bulutlar bitti. Bir adayla öteki arasında sadece rüzgâr var.
+302	Gökyüzü Akıntıları. Rüzgâra gir, seni yukarı taşır. Zıplamayı basılı tut ve süzül.
+303	Ya rüzgâr durursa?
+304	Durmaz. Buraya geldiğimden beri esiyor. Çok uzun zamandır.
+305	Ne kadar zamandır?
+306	Yaşadığını hatırladığından daha uzun.
+308	Yarasaların Prensi'yle, gece boyunca, Arıların Kralı'na.
+309	Prens, Arıların Kralı'nın Gelgit Merdiveni'ne giden yolu koruduğunu söylüyor.
+310	Koruyor. Ve yeğeninin yenildiğini görmekten hoşlanmayacak.
+311	Kimseye ihanet etmedim. Bir taraf seçtim.
+312	Burada taraf seçmek aynı şey. Uç, Ossian. Gece yarasanındır.
+313	Son zamanlarda bana çok yardım ediyorsun, Hex.
+314	...Sona yaklaştık. Oraya varmanı istiyorum.
+315	Gerçekten mi?
+316	Arıların Prensi'yle, gece boyunca, Yarasaların Kralı'na.
+317	Arı, Yarasaların Kralı'nın oğlunun intikamını almak istediğini söyledi.
+318	Ve gece onun. Her gölge bir yarasa. Çok olacaklar, ve daha güçlü.
+319	Ben de tek tek kemikçiklerle.
+320	Prensi devirmek istedin. Şimdi babayı devir.
+322	Gelgit Kapısı'na kadar yükselen kopuk adalar. Yalnızca koşup havada yeniden zıplayan geçer.
+323	Taç ellerinde bütün. Geriye yalnızca Gelgit Merdiveni'nden Kapı'ya çıkmak kaldı.
+324	Merdiven mi? Bunlar kopuk adalar; altta deniz, aralarında devasa boşluklar.
+325	Kimse kapıya yürüyerek varamaz. Koşman, zıplaman ve havada yeniden zıplaman gerek. Hepsi birden.
+326	Birçoklarının denediğini görmüş biri gibi konuşuyorsun.
+327	Birçoğunun. Düşen her biriyle boşluklar genişledi.
+328	Ve sen hepsini bulutunla aldın.
+329	...Alırdım. Düşmeyi bıraktıkları güne kadar.
+330	Onlara ne oldu, Hex?
+331	Kapıya vardılar. Git, Ossian. Bu sefer burada kalıp izleyeceğim.
+333	Kapı eve açılmıyordu. Bir eve açılıyordu. Her yerde kapılar, ve neredeyse hepsi yalan söylüyor.
+334	Kapıdan geçtim ve... bu bir ev mi? Koridorlar, her yanda kapılar.
+335	Kayıkçının Evi. Eski evim. İçeri girenlerle oynamayı sever.
+336	Senin evin mi? Bir evin olduğunu hiç söylemedin.
+337	Hiç sormadın. Kapılara boyanmış ayı izle: hep çıkışı gösterir.
+338	Ya öteki kapılar?
+339	Seni başa döndürürler. Kırmızı aydan da sakın. O da yalan söyler.
+340	Bu yarı saydam iskeletler kim?
+341	Kiracılar. Ayı izlemeyi reddetmiş kemikler. Sohbet için durma.
+343	Tavana kadar raflar, yalnızca bir an var olan köprüler ve kilitli bir kapı.
+344	Bir kütüphane. Bütün kitapların sırtında aynı başlık var: "Ossian".
+345	Tesadüf. Buralarda yaygın bir isim.
+346	Çıkış kapısı kilitli.
+347	Anahtar rafların tepesinde. Kollar hayalet köprüleri uyandırır, ama yalnızca bir anlığına.
+348	Bu kitapta işaretlenmiş bir sayfa var: "Küreği bırakmayan kayıkçı". Bu sen misin?
+349	...Bırak o kitabı, Ossian. Anahtarı al.
+351	Neredeyse zifiri karanlık. Yakılacak mumlar ve kimseyi taşımayan çatlak zeminler.
+352	Hiçbir şey göremiyorum. Hex? Hex!
+353	Buradayım. Hep buradayım. Mumlara dokun: yol ışıkla birlikte belirir.
+354	Bu zeminin yarısı sahte. Bastığımda çatlıyor ve çöküyor.
+355	Bu evin vaatleri gibi. Üstünde durma. Ve üç büyük mumu yak: son kapı ancak onlarla açılır.
+356	Orada, en dipte... fenerlerin ışığı mı o? Panayırdaki, nehrin üstündeki?
+357	...Evet. Bu sefer düşersen seni almaya gelmeyeceğim. Düşmezsen de.
+359	Kumsalda terk edilmiş bir atölye. Kapı yalnızca altın anahtarla açılır.
+360	Kumsalın ortasında kilitli bir kapı mı? Duvarı olmayan bir kapıyı kim kilitler?
+361	Yalnızca tek tür yolcunun geçmesini isteyen biri. Kendi olanı taşıyanların.
+362	Kemik ellerin artık bir şeyler tutabiliyor. Anahtarı al ve kapıya götür.
+363	Ya etrafa saçılmış bu renkli hediyeler?
+364	Önceden geçenlerden kalma hatıralar. İstersen al. Onları almaya başka kimse gelmeyecek.
+366	Yağmacılarla dolu bir çayır. SALDIR'ı basılı tut: kemikler seri hâlinde çıkar.
+367	Gelmeyi bırakmıyorlar, Hex!
+368	O zaman ateş etmeyi bırakma. Darbeyi basılı tut, kemiklerin kendiliğinden uçar.
+369	Ne zamandan beri kemik atıyorum?
+370	Ezelden beri. Hatırlaman için bir sebep yoktu, o kadar.
+372	Bir kolla belirip kaybolan kırmızı ve mavi bloklar.
+373	Kola vurunca bloklar kayboluyor. Kırmızı, mavi, kırmızı...
+374	Aynı anda yalnızca bir renk vardır. Hangi dünyayı ayakta bırakacağını iyi seç.
+375	Çömelince artık daha yükseğe zıplıyorum. Amut.
+376	Taklalar da. Hafif bir beden, yaşayan bir bedenin yapamayacağı numaralar yapar.
+377	Hep şu "yaşayan beden"den bahsediyorsun.
+378	Sadece bir söz, Ossian.
+380	Altın kayalar madeni kapatıyor. Bir çekiç halleder.
+381	Kaçarken bir demirci çekici aldım. Hâlâ sıcak.
+382	Havada bütün gücünle aşağı in: yere inen çekiç darbesi altın kayaları kırar.
+383	Geçidi tıkayan altın. Ne israf.
+384	Altın burada hiçbir şey satın almaz. Bir çıkışı bile.
+386	İki prens, bir yuva ve gökyüzünü değiştiren bir anlaşma.
+387	Hex, bu mağara kanat dolu. Yarasalar VE arılar mı?
+388	Birbirinden nefret eden iki krallık. Prensler yüzyıllardır bu yuva için kavga ediyor.
+389	Ve ben bu kavganın tam ortasından geçmek zorunda kalacağım.
+390	Prensler konuşur, Ossian. Buralarda nadir bir şey. Ne teklif ettiklerini dinle.
+391	Ne zamandan beri konuşanlara güveniyorsun?
+392	Güvenmiyorum. Ama sana hayatını borçlu bir prens... çok iyi uçar.
+394	Yarasaların Prensi'nin sırtında, Dev İblis'e karşı.
+395	İblis büyümüş mü? Bir bulut kadar olmuş!
+396	Demirhanenin korlarını yedi. Şimdi gökyüzünü istiyor. Yeni müttefikin seni ona götürecek.
+397	Yarasa aynı anda üç kemik atıyor, üstüne bir de çığlık atıyor. Bu hile değil mi?
+398	O bir prens. Çığlık yakındaki atışları siler, kanatları da bir darbeye dayanır.
+399	Gelmiyor musun?
+400	Aşağıdan daha iyi görüyorum. Çubuğu boşalana kadar ateş et.
+401	Arıların Prensi'nin sırtında, Dev İblis'e karşı.
+402	Demirhanenin korlarını yedi. Şimdi gökyüzünü istiyor. Arıların Prensi'ne bin ve onu devir.
+403	Tek seferde yalnızca bir kemikçik atıyor, Hex.
+404	Yarasayı devirmeyi seçtin. Şimdi bütün krallığı senin başını istiyor. Çok kaç ve hiç durmadan ateş et.
+405	Sen... memnun görünüyorsun.
+406	Zayıf bir müttefikin bana daha çok ihtiyacı olur. O kadar.
+408	Uçurumu, kapısı ve inatçı bir koyunu olan bir koru.
+409	Balta mı? Tapınakta yalnızca bulutlar vardı.
+410	Bir yerde buldum. Ağacı doğru yöne devir, köprü olur.
+411	Ya koyun?
+412	Plakaya koy. Kapı ağırlıkla açılır. Bu topraklardaki neredeyse her şey gibi.
+413	Neredeyse her şey mi?
+414	Sen hiçbir şey tartmazsın, Ossian. Plaka adımlarını bu yüzden hissetmez.
+416	Goblin, örümcek ve yarasayla dolu karanlık bir maden.
+417	Daha çok atış. Daha çok kemik. Karanlıktan çıkan daha çok şey.
+418	Maden altın da saklar, korku da. İkisine de ateş et.
+419	Hex, bu altın kimin?
+420	Kalanların. Karşıya geçen hiçbir şey götürmez.
+422	Anahtar taştan bir kulenin tepesinde.
+423	Anahtar yukarıda. Merdiven yok.
+424	Artık kazman var. Duvara zıpla ve tırman.
+425	Ama elimde anahtarla tırmanamıyorum.
+426	O zaman öbür taraftan in. Her tırmanışın bir dönüşü olması gerekmez.
+428	Anıt mezarın ortasında bir vazo ve iki yandan gelen hayaletler.
+429	Bir vazo. Üstünde senin adın var, Hex.
+430	Hayaletlerin ona dokunmasına izin verme. Üç dokunuşta kırılır.
+431	İçinde ne var?
+432	Bir kayıkçıdan geriye kalan. Koru onu, Ossian. Lütfen.
+433	...Daha önce hiç "lütfen" dememiştin.
+435	Bir yengeç kumsalın anahtarıyla kaçtı.
+436	Hex, şu yengeç sırtında anahtar taşıyor!
+437	Yengeçler parlayan her şeyi saklar. Ona vur: anahtar düşer.
+438	Ya geri alırsa?
+439	O zaman bir daha vur. Burada kimse kendi olanı kavgasız bırakmaz.

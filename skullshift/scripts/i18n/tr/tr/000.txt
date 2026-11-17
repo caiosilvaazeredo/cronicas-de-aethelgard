@@ -1,0 +1,140 @@
+0	Kemiklerin arasında kum. Korkunç olmalı. İyi ki hiçbir şey hissetmiyorum.
+1	Rüzgârda tuz... bu kokuyu tanıyordum. Bir pencereden. Sabahları.
+2	İşte böyle, Ossian. Adım adım. Ben seni gözetiyorum.
+3	Sırtında anahtar taşıyan bir yengeç. Bu dünyanın tuhaf bir mizah anlayışı var.
+4	Burada her şey bir şeyi korur, Ossian. Kimin neyi taşıdığını görmeyi öğren.
+5	Su yükselir, su alçalır. Ben de ortasında, yüzme bilmeden.
+6	Biri bana su üstünde kalmayı öğretmişti. Sırtımın altında kocaman eller. "Güven bana."
+7	Gelgit sabırlıya itaat eder. Her şey gibi.
+8	Koca bir gemi, burada kalakalmış. Nereye gidiyordu, Hex?
+9	Hiçbir yere. Kimse bu adalardan gemiyle ayrılmaz. Başka yolla da.
+10	...Bunun teselli olması mı gerekiyordu?
+11	Toplar. Biri denizden gelenden çok korkuyormuş.
+12	Ya da ortadaki adadan gelenden. Ama bu eski hikâye. Devam et.
+13	Ben bir köpekbalığıyım. Bugün bir köpekbalığıyım. Sorun yok.
+14	Başımın üstünde karanlık su. Soğuk. Buraya daha önce de inmiştim... solungaçsız.
+15	Düşünme bunu. Yüz, Ossian. Sadece yüz.
+16	Böyle bir feneri kim yaptı? Köpekbalıklarının eli yok.
+17	Eski insanlar. Başkalarını uzak durmaları için uyarmayı severlerdi. Bana abartılı gelirdi.
+18	Buradan ortadaki ada görünüyor. Oradaki gökyüzü daha karanlık.
+19	Hava dönüyor, o kadar. Önüne bak, oraya değil.
+20	Mercan keser, denizanası yakar. Bütün deniz gitmemi istiyor.
+21	Mavi bir ev. Yataktan denizin sesi duyulurdu. Uyuyana kadar dalgaları sayardım.
+22	Zıpkıncı Köpekbalığı'na az kaldı. Gücünü sakla.
+23	Demek o. Hayal ettiğimden büyük. Ve büyük hayal etmiştim.
+24	Söylediği hiçbir şeyi dinleme. Krallar başkasının olanı tutmak için yalan söyler.
+25	Dizime kadar otlar. Gerçek dizlerim olsaydı gıdıklanırdım.
+26	Küçük bir çan, uzaklarda çalıyor. Toplama vaktiydi... neyi toplama?
+27	Gnoll'lar sürü hâlinde avlanır. Seni kuşatmalarına izin verme.
+28	Altın anahtar, kilitli kapı. Burada biri bilmeceleri seviyor.
+29	Kapılar bir şeyleri içeride tutmak için vardır, Ossian. Ya da dışarıda. Anahtar kimdeyse ona bağlı.
+30	Yer titriyor. Bu hiç iyiye işaret değil.
+31	Koyunlar. Gerçek koyunları sayardım. Biri hep kaçardı, kara kulaklı olan.
+32	Yükseğe çık ve sürünün geçmesine izin ver. Acele yalnızca yaşayanların işine yarar.
+33	Gelmeye devam ediyorlar! Gnoll'lara sıraya girmeyi kim öğretti?
+34	Kralları. Bir sürü ancak itaat edeceği biri olunca tehlikelidir.
+35	Her yerde kemik. Kuzenler mi? İş arkadaşları mı? Nasıl selam vereceğimi bilmiyorum.
+36	Senden önce gelenlerin. Dokunma onlara.
+37	Kimden önce, Hex? ...Hex?
+38	Bir çiftlik. Çit, kapı, plakanın üstünde bir koyun. Neredeyse normal.
+39	Ekmek kokusu. Ahşap bir masa. Biri benim için fazladan bir tabak koymuş.
+40	Sessizsin, Ossian. Ne gördün?
+41	Otlar kıpırdadı. Otların kendi kendine kıpırdamaması gerekir.
+42	Avcılar bekler. En çok bu yönlerine saygı duyuyorum: beklemeyi bilirler.
+43	Yolun ortasında terk edilmiş arabalar. Bir şeyden kaçmışlar.
+44	Zor zamanlardan. Geçti. Neredeyse her şey geçer.
+45	Kemik öğüten bir değirmen. Tabelayı okumamış gibi yapacağım.
+46	Peşimden koşan küçük bir kız. "Bekle! Beni karanlıkta bırakma!"
+47	Gnoll Kral tepenin ötesinde. Hazır mısın?
+48	Başında kemikten bir taç var. Gerçek bir tane. Bütün.
+49	Taklit. Gerçeği parçalara ayrılmış ve parçalardan biri onda. Devir onu.
+50	Yeşil, ılık ve durgun su. Ayak basmak istemediğim her şey.
+51	Bataklık sırları iyi saklar. Yavaşça batarlar, ama batarlar.
+52	Durunca batan yapraklar. Bataklık kararsızları sevmez.
+53	Nehrin üstünde seken yassı taşlar. Üç, dört sekme. Biri alkışlardı.
+54	Burada bile gelgit mi var? Bunun adalara özgü olduğunu sanıyordum.
+55	Bu krallıkta her şey aynı merkezin etrafında yükselip alçalır, Ossian. Anlayacaksın.
+56	Zehir. Bir iskelette. Bakalım kim kimi bozacak.
+57	Şaka yapma. İstediğin kadar düşebilirsin; seni almaya gelmekten yorulan benim.
+58	Ağ, olta, delik bir sandal. Balıkçı bir kertenkele. Sempati duydum.
+59	Benden büyük bir olta. Gülen yaşlı bir adam: "Balık yok, sadece dal!"
+60	...Az önce gülümsedin mi? Kurukafaların bunu yapamaması gerekir.
+61	Yine dipteyim. En azından bu sefer köpekbalığı dişlerim var.
+62	Yüzeye bakma. Yukarıdaki ışık aldatır.
+63	Tek sıra timsahlar. En azından kibarlar.
+64	Kertenkele Kral geldiğini zaten biliyor. Hiç uyumaz: nöbet tutar.
+65	Her yerde kökler. Ağaçtan yapılmış bir kafes gibi.
+66	Kafes ağır bir söz. Sığınak. Sığınak diyelim.
+67	Sözcüklerini çok dikkatli seçiyorsun, Hex.
+68	Suyun üstünde koca bir köy. Çamaşır ipleri, ocakları var. Burada yaşıyorlar.
+69	Eski ahşap bir köprü. Gıcırdayan tahtalar. Hangilerine basmamam gerektiğini bilirdim.
+70	Manzaraya bağlanma. Bize onların kralı lazım.
+71	Gözleri açık. İkisi de. Kırpmadan.
+72	Çok uzun zamandır kapamıyor. Bu iyiliği yap ona.
+73	Karanlık, nemli, ağ dolu. Derisi olmayan biri için mükemmel bir yer.
+74	Burada alçak sesle konuş. Duvarlar isimleri saklar.
+75	Taşta bir şey yazıyor. Üstü çizilmiş. Defalarca.
+76	Örümcek karalamaları. Okumakla vakit kaybetme.
+77	Örümcekler "Ossian" mı yazar, Hex?
+78	Durursam kopan bir köprü. Köprüleri eskiden daha çok severdim.
+79	Bir köprüde yağmur. Islak bir tahta. Kayan ayak. Hayır, bekle, daha değil...
+80	Koş, Ossian! Orada durup aşağı bakma!
+81	Bir anahtar daha, bir kapı daha. Bir mağarayı bu kadar kim kilitler?
+82	Dipteki şeyden korkan biri. Ya da dışarıdakinden. Aynı kapıya çıkar.
+83	Hiçbir şey göremiyorum. Sadece meşaleler. Bir de uzakta birkaç göz.
+84	Elimi sıkan minik bir el. "Uyuyana kadar yanımda kal. Söz vermiştin."
+85	Işığa yakın dur. Ama düşerken gördüğün o sıcak ışığa değil. Ona asla.
+86	Asılı kozalar. Bir insan büyüklüğünde.
+87	Kraliçe yakaladığını saklar. Bu konuda, itiraf edeyim, onunla birbirimize benziyoruz.
+88	Tavandan durmadan iniyorlar! Bir mağaraya kaç bacak sığar?
+89	Sayabileceğinden fazla. Ateş et ve yukarı bakma.
+90	İki prens. Biri deri kanatlı, öbürü cam kanatlı. Ve kavga ediyorlar.
+91	Bırak kavga etsinler. Taraf seçen bir dost kazanır. Bir de düşman.
+92	Yumurtalar. Yüzlerce. Olmayan ayak parmaklarımın ucunda yürüyorum.
+93	Kolumda bir sepet yumurta. Biri yolda kırıldı. Bütün hafta bana güldüler.
+94	Kraliçe hemen orada. Konuşacak. Hep konuşurlar.
+95	Bütün gözleriyle bana baktı. Ve sanki... acıyor gibiydi?
+96	Örümcek numarası. Seni sözlerle sarmadan iplerini kes.
+97	Sıcak. Terlemem gerekirdi. Onun yerine sadece çatırdıyorum.
+98	İnip kalkan bir balta. Yarılan odun. Elde nasır. Benim elimde.
+99	Oraya seninle girmem. Ateşle aram iyi değil.
+100	Lav peşimde! Bu bir bölüm değil, tahliye!
+101	Koş! Oraya düşersen seni bulmam uzun sürer!
+102	Yanardağın içinde bir maden. Biri sırf bir kapıyı kilitlemek için buraya kadar kazmış.
+103	Derin kazdılar, evet. Ne kadar derin, o kadar güvenli sandılar. Yanıldılar.
+104	Ateşin üstünde yüzen taş. Artık en sevdiğim ulaşım aracı.
+105	Dağ nefes alıyor. Göğsünü şişirince yükseliyor, bırakınca alçalıyor.
+106	Bir, iki, ATEŞ. Bir, iki, ATEŞ. Ritmi yakaladım.
+107	Bir şömine. Patlayan kestaneler. Kayıkçı hikâyeleri anlatan biri.
+108	Kayıkçılar mı? ...Ne hikâyeleri, Ossian? Ne hatırladın?
+109	Dörtnala koşan lav boğaları. Demirhane bugün benden sırayla nefret etmeye karar verdi.
+110	Minotor kendi askerlerini döver. Çalışkan. İnatçı.
+111	Kara cam. Yansımamı görebiliyorum. Uzaktan daha yakışıklıyım.
+112	Bir leğen suda bir yüz. Kahverengi gözler. Benimdi. Bir yüzüm vardı.
+113	Yansımalara dalıp gitme. Olmuş olanı gösterirler.
+114	Çekiç darbeleri. Uzaktan atan bir kalbe benziyorlar.
+115	Ben... ben ezelden beri aynı şeyi dövüyor. Bir zincir. Yani, bir taç.
+116	Bir magma nehri. Köprü yok, sandal yok. Sadece cesaretim. Mahvolduk.
+117	Dağın kalbi yakın. Buradan hissediyorum. Yakıyor.
+118	Çekiç sallamayı bıraktı. Bana bakıyor.
+119	Cümlesini bitirmesine izin verme. Dövdüğü şey senin için değil.
+120	Yaşlı ağaç, serin gölge. Bu dünyada beni öldürmek istemeyen ilk yer.
+121	Saçımda talaş. Saçım vardı. Ve biri üfleyerek temizlerdi.
+122	Palamutlara dikkat. Cüceler önce ateş eder, sonra söylenir.
+123	Ancak üstünde ağırlık olunca açılan bir kapı. Yardıma ihtiyacım olacak... ya da bir koyuna.
+124	Cüceler kalıcı inşa eder. Kapattıkları hiçbir şey kendiliğinden açılmaz.
+125	İnsanı havaya fırlatan bir mantar. Sonunda benden yana bir bitki.
+126	Hiçbirini yeme. ...Laf olsun diye, yemek yemediğini biliyorum.
+127	Ağaç tepelerinden her şey görünüyor. Bu krallığın çıkışı dışında.
+128	Nehri görmek için ağaçlara tırmanırdım. Oradan köprü oyuncak gibi görünürdü.
+129	Görülecek bir çıkış yok, Ossian. Henüz. Tacı bu yüzden topluyoruz.
+130	Renkli bloklar, kollar, kapı. Cüceler çok sıkılıyor olmalı.
+131	Yüzyıllarca aynı şeyi bekleyen, kendine uğraş icat eder.
+132	Nehirden aşağı akan kütükler. Birinden ötekine atlamak. Ne ters gidebilir ki?
+133	Karanlık sulu geniş bir nehir. Yavaşça süzülen kâğıt fenerler. Onlarca.
+134	Suya bu kadar bakma. Kütüklere bak.
+135	Palamut yağmuru! Bu korunun beni öldürmek istemediğini mi söylemiştim?
+136	Cüceler krallarını korur. Tuhaf halk: onlara yalnızca emir veren biri için savaşırlar.
+137	Yosun bana göz kırptı. Yosun göz kırpmaz.
+138	Burada her şey nöbet tutar. Bu koru bunun için dikildi.
+139	Köklerin arasında küçük evler, bacalarda duman. Bir çan bile var.

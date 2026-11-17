@@ -1,0 +1,139 @@
+595	İblisler ve lav minotorları, durmadan.
+596	Kırmızı minotorlar! Azgın boğalar gibi saldırıyorlar!
+597	O zaman gelmeden ateş et. SALDIR'ı basılı tut.
+598	Bu kadar lav boğasını kim eğitti?
+599	Minotor eğitmez: döver. Her asker örsten kimi koruyacağını bilerek çıkar.
+600	Benden mi koruyacak?
+601	Senden. Benden. Özünde aynı şeyden.
+603	Lavın içine gömülen kara taş levhalar.
+604	Lavın üstünde yüzen kara levhalar. Bir de toplar!
+605	Obsidyen bastıktan sonra batar. Durma.
+606	Bir demirhaneye kim top koyar?
+607	Minotor ziyaretçi sevmez. Hiçbir kral sevmez.
+609	Altın kayalarla kapatılmış demircinin atölyesi.
+610	Bir atölye. Örsler, aletler... bunları kullanmayı biliyorum.
+611	Biliyor musun? İlginç. Kayalara çekici kullan ve anahtarı al.
+612	Çok çalışmaktan ellerim nasır tutmuştu. Hatırlıyorum.
+613	Kemiklerin nasırı olmaz, Ossian.
+615	Dağın kalbi. Hiçbir şey savaşmadan geçemez.
+616	Herkesi devirene kadar yollar ateşle kapanıyor.
+617	Minotor kimseyi savaşmadan geçirmez. Buradan sonra o var.
+618	Dağın ayaklarımın altında attığını hissediyorum.
+619	Parça bu. Biri yaklaşınca nabız gibi atarlar. Korkuyorlarmış gibi.
+621	Sapanlı cücelerin korusu.
+622	Kocaman ağaçlar. Ve biri kafama palamut fırlatıyor.
+623	Cüceler. Küçük, inatçı ve nişancı.
+624	Bu odun kokusu... bunu tanıyorum.
+625	Her koru aynı kokar, Ossian.
+627	Üstüne düşeni fırlatan mantarlar.
+628	Duvarlar zıplanamayacak kadar yüksek.
+629	Kırmızı mantarların üstüne düş. Seni yukarılara fırlatırlar.
+630	Ya birini yersem?
+631	Midein yok, Ossian.
+633	Zemin nehirde kayboluyor. Yol yukarıdan.
+634	Nehir yolu yuttu.
+635	O zaman yukarıdan git, ağaç tepesinden ağaç tepesine. Aşağı bakma.
+636	Oradan mavi çatılar görünüyor, uzakta, çok uzakta...
+637	Sadece gökyüzünün sudaki yansıması.
+639	Nehirde yüzen kütükler: üstlerine basılabilir.
+640	Yüzen kütükler. Biri bu ağaçları kesmiş.
+641	Cüceler kütükleri köye taşımak için nehre atar. Üstlerine bas.
+642	Odun kırardım. Mavi bir evin arkasında. Eminim.
+643	Nehri geç, Ossian.
+645	Her yerde sapanlı cüceler.
+646	Palamut yağmuru!
+647	Kemiklerle karşılık ver. SALDIR'ı basılı tut.
+648	Bir koruyu neden bu kadar savunuyorlar?
+649	Çünkü buraya bunun için dikildiler. Cüce sormaz; cüce nöbet tutar.
+651	Cüce saklayan yosun yığınları.
+652	O yosun titredi. Tıpkı çayırdaki otlar gibi.
+653	Yosun cüceleri. Gnoll'lardan öğrenmişler.
+654	Ya da biri ikisine de öğretmiş.
+655	...Kütüklere dikkat.
+657	Cücelerin köyü. Kimse savaşmadan geçemez.
+658	Gerçek bir köy. Evler, bacalar, çamaşır ipleri...
+659	Köylüler Kral'ı savunuyor. Her alan ancak hepsi düşünce açılır.
+660	Ben de böyle bir köyde yaşıyordum, değil mi?
+661	Seni bulduğum yerde yaşıyordun: kumsalda.
+663	Cüce Kral parçayı en yaşlı ağacın dibinde koruyor.
+664	Ev büyüklüğünde bir cüce. Mor şapkalı.
+665	Yay çizerek palamut atar, dev kütükler yuvarlar ve ağacı sallar.
+666	Yine mor. Bütün krallar senin morunu giyiyor, Hex.
+667	Krallığın rengi o. Hepsi bu. Git.
+669	Meşale ve altınla dolu goblin madenleri.
+670	Ne çok altın! Ve ne çok yanan meşale.
+671	Goblinler yüzyıllardır kazıyor. Tavan eski: toz düşünce altından çekil.
+672	Ne için kazıyorlar? Burada altın hiçbir şey satın almaz. Kendin söyledin.
+673	Goblin Kral bunu bilmiyor. Bilmesi de gerekmiyor.
+675	Galerinin tavanı çöküyor.
+676	Bütün tavan iniyor!
+677	Toz taşın nereye düşeceğini haber verir. Aralarından koş.
+678	Bu kirişler çürük. Ne zamandır burada kazıyorlar?
+679	Biri parçanın çok derine saklanmasını emrettiğinden beri. Çok, çok uzun zaman önce.
+681	Meşaleler söndü.
+682	Yine karanlık. Biri meşaleleri bilerek söndürmüş.
+683	Meşaleleri yak. Üç büyük meşale çıkışı açar.
+684	Kız kardeşim karanlıktan korkardı. Ona yanık bir mum bırakırdım.
+685	...Kız kardeşin. Hm. Meşaleleri yak, Ossian.
+687	Altın kayalar galerileri kapatıyor.
+688	Yine altın kayalar. Çekiç onlara!
+689	Havada bütün gücünle aşağı in. Ve anahtarı kapıya götür.
+690	Bu kadar altın ve kimse götürmüyor.
+691	Nereye götürecek? Bu krallığın dışında pazar yok. Dışarısı yok.
+692	Gelgit Kapısı'nın dışarı açıldığını söylemiştin.
+693	Söyledim. Açılır da. Senin için.
+695	Madenci goblinler bomba atıyor.
+696	Bomba atıyorlar!
+697	Madenciler. Kayayı ve yakındaki herkesi havaya uçururlar. Yaydan kaç.
+698	Onunla birlikte havaya uçarsam beni almaya gelir misin?
+699	Her zaman. Gerekirse parça parça. Kendimden kimseyi kaybetmem.
+701	Madendeki su yükselip alçalıyor.
+702	Madenin içinde gelgit mi? Bu hiç mantıklı değil.
+703	Su aşağıdan yükselir. Sonra yine alçalır. Buradaki her şey gibi.
+704	Buradaki her şey gibi... geri gelir.
+705	Yüksekte kal, Ossian.
+707	Derinliklerin ateşi mavidir.
+708	Mavi ateş! Onu taşıyan goblinler de deli gibi koşuyor.
+709	Toprağın dibinden gelen ateş bu. Kırmızıdan daha sıcak. Sana değmesine izin verme.
+710	Bu ateş neden mavi?
+711	Isıtmayan bir ateştir. Goblinler onu görünmeden görmek için kullanır. İkisini de sevmem.
+713	Kral'ın hazinesi. Herkes tarafından korunuyor.
+714	Altın dağları. Ve her köşede muhafızlar.
+715	Her alan ancak hepsi düşünce açılır. Sonra Kral.
+716	Kralın bunca şeyi varken neden hâlâ parçayı istiyor?
+717	Parçayı İSTEMİYOR, Ossian. O... boş ver. Krallar açgözlüdür, o kadar.
+719	Meşaleli Goblin Kral parçayı altının ortasında koruyor.
+720	Goblin Kral. Siyah kukuleta ve kırmızı meşale.
+721	Meşaleyi yere vurup ateş dalgaları salar: zıpla. Bir de bir yandan öbür yana koşar.
+722	Hex, son kral düştüğünde bu dünyaya ne olacak?
+723	Göreceğin hiçbir şey, Ossian. Evinde olacaksın.
+725	Durgun su, yosun ve kertenkeleler.
+726	Ne yeşil bir su. Ve şu çürük yaprak kokusu.
+727	Kertenkelelerin lagünü. Kertenkele Kral tam ortasında yaşar ve hiç uyumaz.
+728	Hiç mi? Bir şekerleme bile mi?
+729	Bir mührü... yani bir parçayı koruyan uyuyamaz.
+731	Basınca batan dev yapraklar.
+732	Masa büyüklüğünde yapraklar!
+733	Bir iskeleti bir anlığına taşırlar. Sadece bir anlığına.
+734	Bu çiçekler yalnızca ben geçerken açılıyor.
+735	Hareketi hissederler. Burada uzun zamandır pek az şey ayakta yürüyor.
+737	Bataklığın suyu yükselip alçalıyor.
+738	Burada da su yükseliyor. Bataklığın bile gelgiti mi var?
+739	Bu dünyadaki bütün sular aynı ritme uyar.
+740	Kimin ritmine?
+741	Kütüklerin üstüne çık, Ossian.
+743	Dikenler ve zehir tüküren mor kertenkeleler.
+744	Mor kertenkeleler. Senin gibi mor, Hex.
+745	Onların zehri mor. Benim zehrim yok.
+746	Emin misin?
+747	Dikenlerden kaç.
+749	Bir sazlık yengeci anahtarı aldı.
+750	Küçük bir balıkçı evi. Benim... gördüklerim gibi.
+751	Bir yengeç anahtarı aldı. Ne yapacağını biliyorsun.
+752	Balık tutan bir kertenkele. Huzurlu görünüyor.
+753	Neyi gözettiğini bilmeyenin huzuru. Onu buna uyandırma; sadece geç.
+755	Lagünün dibinde yalnızca bir kertenkele geçebilir.
+756	Yol lagüne gömülüyor.
+757	Aşağıda sana bir kertenkelenin biçimini vereceğim. Kertenkeleler yüzer.
+758	Beni dönüştürmek için artık hiçbir eşyaya ihtiyacın yok, değil mi?
+759	Ne kadar çok mühür düşerse... yani ne kadar çok parça toplarsan, o kadar çok şey yapabilirim.

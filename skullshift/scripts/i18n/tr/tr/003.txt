@@ -1,0 +1,129 @@
+441	Gelgit kendiliğinden yükselip alçalır. Alçak zemin suyun altında kaybolur.
+442	Su yükseliyor! Ve alçalıyor! Ve yine yükseliyor!
+443	Bu adaların gelgiti nefes alır. Geldiğinde yükseğe çık ve bekle.
+444	Ona kim hükmediyor?
+445	Zıpkıncı Köpekbalığı Kral. Tacın ilk parçasını o koruyor.
+446	Bir köpekbalığı... taçlı mı?
+447	Her kral bir parçayı korur. Birlikte senin yolunu açarlar.
+449	Bir geminin kalıntıları. Gevşek tahtalar basar basmaz batar.
+450	Koca bir gemi, paramparça.
+451	Tahtaların üstünde durma. Batarlar.
+452	O gemide kim vardı?
+453	Onlar da eve dönmek isteyen insanlar.
+454	...Peki döndüler mi?
+455	Zıpla, Ossian.
+457	Korsan goblinlerin gemisi. Toplar güverteyi tarıyor.
+458	Korsanlar! Ve bana nişan almış toplar!
+459	Gülleler dümdüz gelir. Zıpla ya da kalkanla savun.
+460	Kaptan en arkada, kıç güvertesinde.
+461	Köpekbalığı Kral için çalışıyor. Bu sulardaki herkes onun için çalışır.
+463	Suyun altında koca bir mağara. Yalnızca bir köpekbalığı geçebilir.
+464	Mağaranın tamamını su basmış, Hex. Batacağım.
+465	Köpekbalığı olarak değil. İçeride sana onun biçimini vereceğim.
+466	Ben zıpkın almadan bunu yapabilir misin?
+467	Burada, aşağıda, sandığından fazlasını yapabilirim.
+468	...Bunu daha önce hiç söylememiştin.
+469	Yüz. Denizanaları affetmez.
+471	Kollar savakları açıp kapatır: yüksek gelgit ya da alçak gelgit, sen seçersin.
+472	Kollar! Ne işe yarıyorlar?
+473	Fenerin savaklarını açıp kapatıyorlar. Yüksek gelgit: sandıklar yükselir. Alçak gelgit: zemin ortaya çıkar.
+474	Demek gelgite ben hükmediyorum, Kral gibi.
+475	Şimdilik. Elinden geldiğince kullan.
+477	Güverte ortasından çöktü: yol yukarıdan, serenlerin üstünden.
+478	Güverte ortadan ikiye ayrıldı! Geçecek yer yok.
+479	Var: yukarıdan. Serenlerden ve gözcü sepetlerinden.
+480	Buradan fener görünüyor, kumsal... ve uzakta sıcak bir ışık.
+481	Işığa bakma. Nereye bastığına bak.
+483	Ateş mercanları, denizanaları ve gelgit. Kral'dan önceki son adım.
+484	Buradaki mercanlar yakıyor!
+485	Ateş mercanı. Dokunma. Ve gelgit hâlâ geliyor.
+486	Resifin ardında Köpekbalığı Kral var.
+487	Resifin ardında ilk parça var. Parçayı düşün.
+489	Zıpkıncı Köpekbalığı Kral gelgite hükmeder. Alçak gelgitte karaya oturur.
+490	O. Zıpkıncı Köpekbalığı Kral.
+491	Gelgite hükmeder. Su çekilince kuma saplanıp kalır. O zaman saldır.
+492	Ya gelgit yükselince?
+493	Sen de yüksel. Yanlardaki kayalara. Zıpkınları havada saplı kalır: onları basamak gibi kullan.
+494	Hex... o parçayı neden bu kadar istiyorsun?
+495	Ben mi? O senin için, Ossian. Hep senin içindi.
+497	Taç bütün. Mühürler düştü.
+499	Gnoll'ların yurdu Kemik Çayırı'nın girişi.
+500	Bu koku ne? Ot... ve ıslak köpek.
+501	Gnoll'lar. Çayır onların. Avcılar dönüp geri gelen kemikler fırlatır.
+502	Geri dönen kemikler. Ne ironi.
+503	Burada her şey geri döner, Ossian. İleri gidenler hariç.
+505	Sürü alçak zeminde dörtnala koşuyor.
+506	Yer titriyor!
+507	Gnoll'ların sürüsü. Geldiğinde yüksek bir şeyin üstüne çık.
+508	Ya aşağıda kalırsam?
+509	O zaman yine seni almaya gelirim. Ama gelmemeyi yeğlerim.
+511	Kadim kemiklerden yamaçlar. Yukarıdan kayalar yuvarlanıyor.
+512	Ne çok kemik. Hepsi gnoll'un mu?
+513	Hepsi değil. Bazıları senden önce bir taç aramaya gelen yolcuların.
+514	...Benden önce mi? Kaç kişi?
+515	Kayalara dikkat. Haber vermeden yuvarlanırlar.
+517	Koyunlar, plakalar ve kapılar. Anahtar ambarın tepesinde.
+518	Koyunlar! Ben... koyunlara bakardım. Sanırım.
+519	Koyunları plakalara koy. Kapılar ağırlıkla açılır.
+520	Neden koyunları hatırlıyorum, Hex?
+521	Herkes koyunları hatırlar. Anahtarı al.
+523	Titreyen çalılar. Saklanıp bekleyen Gnoll'lar.
+524	Şu çalı kıpırdadı.
+525	Pusucular. Otların arasına saklanıp yakından geçenin üstüne atlarlar.
+526	En azından titremesi görünüyor.
+527	Gözünü dört aç, Ossian. Bu dünyada neredeyse hiçbir şey göründüğü gibi değil.
+529	Kervan durmadan avcı yolluyor.
+530	Koca bir kervan bana doğru geliyor.
+531	SALDIR'ı basılı tut ve ateş etmeyi bırakma.
+532	O arabalarda ne taşıyorlar?
+533	Kemik. Kral için. Kemik biriktirir.
+535	Rüzgâr akıntılarıyla geçilen geniş boşluklar.
+536	Boşluklar kocaman. Bunu zıplayamam.
+537	Rüzgâra gir. Seni kaldırır. Sonra zıplamayı basılı tut ve süzül.
+538	Buradan uzakta, denizin ötesinde bir köprü görüyorum.
+539	Köprü falan yok. Rüzgârın serabı.
+541	Gnoll Kral ikinci parçayı koruyor.
+542	O. Sandığımdan büyük. Ve mor benekli...
+543	Kemiği gidip geri gelir. Alçaksa zıpla; yüksekse çömel. Zıpladığında altından çekil.
+544	Neden seninle aynı renklerde, Hex?
+545	Tesadüf. Devir onu, Ossian. Parça bekliyor.
+547	Uçurumun üstüne gerilmiş ağ iplikleri. Kopuyorlar.
+548	Bu köprü mü? Bu bir ağ ipliği!
+549	Sağlam iplikler, ama sonsuza dek değil. Bas ve koş.
+550	Mağaranın ortasına köprüleri kim ördü?
+551	Kraliçe. Ziyaretçilerinin ona kadar ulaşmasını sever.
+553	Zifiri karanlık. Yolu yalnızca meşaleler gösteriyor.
+554	Hex? Hiçbir şey göremiyorum.
+555	Meşalelere dokun. Yanarlar. Üç büyük meşale çıkışı açar.
+556	Tuhaf. Ben karanlıktan korkar mıydım? Hayır... korkan başka biriydi.
+557	Meşalelere odaklan, Ossian.
+559	İpliklere asılı, sallanan kozalar.
+560	Bu kozalar... içinde biri mi var?
+561	Kraliçe'nin öğle yemeği var. Dokunma, yoksa akşam yemeği sen olursun.
+562	İğrenç.
+563	Nefis, derdi o.
+565	Zıplayan örümcekler ve vampir yarasalar, durmadan.
+566	Zıplıyorlar! Yeşil örümcekler zıplıyor!
+567	O zaman ateş etmeyi bırakma. SALDIR'ı basılı tut.
+568	Ya kırmızı yarasalar?
+569	Onlar pike yapar. Önce onları vur.
+571	Kraliçe'nin yuvası. Anahtar en yukarıda.
+572	Yumurtalar. Binlerce yumurta. Ve anahtar yuvanın tepesinde.
+573	Kırmızı bloklardan bir duvar yolu kapatıyor. Renk kolunu değiştir.
+574	Elimde anahtarla kola vuramam.
+575	O zaman anahtarı bırak, vur ve yeniden al. Her şey aceleyle çözülmez.
+577	Ateş dağının girişi.
+578	Zemin kaynıyor, Hex. Ya o fokurdayan delik?
+579	Gayzer. Ateş tükürmeden önce fokurdar. Geçmesini bekle ve koş.
+580	Kızıl Minotor burada mı yaşıyor?
+581	Dağın kalbinde. Lavı dövüyor. Beşinci parçayı koruyor.
+583	Lav gelgit gibi yükselip alçalır.
+584	Lav yükseliyor! Tıpkı adalardaki gelgit gibi!
+585	Dağ deniz gibi nefes alır. Bazalta çık: yüzer.
+586	Bu dünyada her şey yükselip alçalır. Ben bile.
+587	Sen sadece yükselirsin, Ossian. Ben garanti ederim.
+589	Ritimle fışkıran gayzer tarlaları.
+590	Bir, iki, üç... sırayla fışkırıyorlar.
+591	Bir kalp gibi. Ritmi öğren ve atışların arasından geç.
+592	Bu dağı iyi tanıyorsun.
+593	Bütün hapishaneleri iyi tanırım. Yani... bütün yerleri.

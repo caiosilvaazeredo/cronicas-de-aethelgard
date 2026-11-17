@@ -1,0 +1,142 @@
+140	Köyün çanı. Köprü... Köprü Köyü'nün. Altı kez çalardı ve ben eve koşardım.
+141	O neydi? Bir isim söyledin. Hangi ismi söyledin?
+142	Kral benim uyluk kemiğim boyunda ve benim iki katım öfkeli.
+143	Küçükler en büyük kinleri besler. Git.
+144	Raylar, kirişler, meşaleler. Goblinler derli toplu bir deliği sever.
+145	Altın için kazıyorlar. Altın! Sanki çıkışı satın alabilirmiş gibi.
+146	Sıra sıra meşaleli goblinler. Biri geleceğimi haber vermiş.
+147	Kral her külçeyi ve her askeri sayar. Bunların eksik olduğunu fark edecek.
+148	Tavandan toz dökülüyor. Ardından da tavan.
+149	Ellerimde kâğıttan bir fener. Üstüne bir isim yazmıştım. Kimin?
+150	Acele et. Bu madenler dayanıklı olsun diye yapılmadı. Sadece saklamak için.
+151	Zifiri karanlık. İyi ki kemik karanlıkta biraz parlar. Parlamaz mı? Yazık.
+152	Meşaleleri izle. Ben o kadar derine inmem. Buradan aşağısında yalnızsın.
+153	Bütün duvar altın. Ve burada kimse bu yüzden daha mutlu görünmüyor.
+154	Hapishanedeki zenginlik yine hapishanedir. ...Bir deyiş. Boş ver.
+155	Fitilli bir varil. Benim türümden bir çözüm: hızlı ve gürültülü.
+156	Gökte patlayan havai fişekler. Bayramdı. Küçük bir el yenimi çekiştiriyordu.
+157	Bu kadar gürültüyle neyi uyandırdığına dikkat et.
+158	Madeni su basmış. Goblinler sefer taslarını bile yüzer bırakmış.
+159	Su her zaman aşağı inmenin yolunu bulur. Bazı ruhlar gibi.
+160	Mavi ateş. Soğuk. Bana ötekinden daha çok yakışıyor.
+161	Kapının arkasında asılı mavi bir palto. Bana çok küçük. Onun.
+162	"O" kim, Ossian? Kendi kendine konuşuyorsun.
+163	Bir altın dağı. Ve ortasında, bekleyen boş bir taht.
+164	Seni karşılamaya çıktı. Tek bir parça bunların hepsinden değerli.
+165	Kral en büyük meşaleyi getirmiş. Elbette getirmiş.
+166	Söndür onu. Her şeyi aydınlatma biçimini sevmiyorum.
+167	Bulut adaları. Aşağıda hiçbir şey. Bakmıyorum, bakmıyorum, baktım.
+168	Buradan seni iyi görüyorum. En iyi gökyüzünde hareket ederim.
+169	Bütün gökyüzü kırmızı. Hiç bitmeyen bir akşamüstü gibi.
+170	Akşamüstü. "Hava kararmadan dön!" Hep dönerdim. Her zaman. Bir kez hariç.
+171	Bir kez hariç ne? Konuş benimle, Ossian.
+172	Rüzgâr beni yukarı taşıyor. Hafifim. İçi boş olmanın avantajı.
+173	Bırak taşısın. Yalnız çok yükselme: yukarıda senin için olmayan bir ışık var.
+174	Yanan taş yağıyor. Şemsiye kâr etmez.
+175	İblis elinde ne varsa atıyor. Korkuyor. Sonunda hepsi korkar.
+176	Her yerde gülen iblisler. Gülen düşmanlardan nefret ederim.
+177	Genç oldukları için gülüyorlar. Neyi koruduklarını hatırlamıyorlar.
+178	Yukarı sıcak rüzgâr, yanlara ateş. Manzaralı bir fırın.
+179	Sıcak havada yükselen fenerler. Her biri gitmiş biri için. Ben de bir tane bıraktım.
+180	Bir bulutun üstünde bir kale. Cesur bir mimari.
+181	Ortadaki ada uzun süre buradan gözetlendi. Şimdi boş. Harika.
+182	Korların ortasında kanatlar. Evlerinden bu kadar uzakta olmamalılar.
+183	Burada kimse olmak istediği yerde değil. Bizi birleştiren de bu.
+184	Gökyüzünde kilitli bir kapı. Neyi dışarıda tutmak için? Kuşları mı?
+185	Belki bir şeyi içeride tutmak için. Anahtarı al.
+186	Dev İblis. Bütün gökyüzünü kendine istiyor.
+187	Gökyüzü önce gelenindir. Ve ben ondan çok önce geldim.
+188	Düşman krallığın kapıları. Müttefikim buraya kadar gelmek istemedi.
+189	Anlaşmalar işe yarar, Ossian. Sürdükleri sürece.
+190	Uçmak kolay. Zor olan, bunu bilmemem gerektiğini hatırlamak.
+191	Yüzümde ince bir yağmur. Gece. Köprünün öbür yanından bir ses: "Korkuyorum!"
+192	Devasa, boş salonlar. Muhafızlar neden olduğunu bilmeden daireler çiziyor.
+193	Alışkanlıktan nöbet tutuyorlar. Sebebini unuttular. Hatırlatma onlara.
+194	Gök gürültüsü, şimşek, yağmur. Ve ben ortasında, iletken malzemeden yapılmış hâlde.
+195	Sağanak. Kayan köprü. Koştum. O öbür taraftaydı.
+196	Daha alçaktan uç. Ve yağmura bakmayı bırak.
+197	Kulenin tepesinde bir anahtar. Hep tepede. Asla yerde, kapının yanında değil.
+198	Kolay açılan şeyin korunmaya ihtiyacı yoktur.
+199	Kesişen hava akıntıları. Bütün krallık beni üfleyip atmak istiyor.
+200	Bıraksınlar üflesinler. Bir tane kaldı. Sadece bir tane, Ossian, ve...
+201	Hava kararıyor. Burada daha önce hiç hava kararmamıştı.
+202	Köprüde mor giymiş biri. Uzatılmış bir el. "Gel. Seni götüreyim."
+203	...Son yaklaştıkça gökyüzü kararır. Doğal bu. Devam et.
+204	Kralın bütün muhafızları havada. Onu çok seviyor olmalılar.
+205	Ya da düşerse olacaklardan korkuyorlar. Bizim için fark etmez.
+206	Son kapı. Öbür tarafta kocaman kanatlar duyuluyor.
+207	Buz gibi su. Sonra bir bulut. Ve fazlasıyla sakin bir ses: "Henüz değil."
+208	Titriyorsun. Kurukafalar titremez. Gir içeri.
+209	Kanatların kralı. O içindeyken gökyüzü küçük kalıyor.
+210	Devir onu. Ondan sonra hesaplar neredeyse kapanır.
+211	Sonsuz bir merdiven. Ve her basamakta kırık zincirler.
+212	Eski süsler. Takılma onlara.
+213	Dokuz zincir, Hex. Saydım.
+214	Salonun ortasında bir vazo. Ve buradaki her şey onu kırmak istiyor.
+215	Bir isim. Nehir kıyısında biri bir isim haykırıyor. "Ossian" değildi.
+216	Vazoyu koru. İçindeki şey... ikimiz için de önemli.
+217	Başka kapılara açılan kapılar. Bu ev sona ulaşmamı istemiyor.
+218	Ben de burada kaybolurdum. Başlarda. Ezberlemek için bolca vaktim oldu.
+219	Sırtlarında isimler olan kitaplar. Hepsinin üstü çizili. Sonuncusu hariç.
+220	Okuma. Ossian, onu okuma.
+221	Boş. Yerimi mi tutuyordun?
+222	Hiç ışık yok. Sadece elimdeki mum. Ve senin sesin.
+223	Hatırlıyorum. Kız kardeşim öbür tarafta. Mor giymiş el. Kaymadım.
+224	Anılar aldatır, Ossian. Gel. Taht kapının hemen ardında.
+225	Eller. Yine ellerim var. O hâlde kullanalım.
+226	Ossian
+229	Kurukafanın uyandığı yer. Tacın ilk parçası kumsalın sonunda parlıyor.
+230	Uyan. Yavaşça... gelgit seni yine kumsala getirdi. Yine.
+231	Yine mi? Ben... hiçbir şey hatırlamıyorum. Sadece ışıklar. Bir nehrin üstüne asılmış fenerler.
+232	Fenerler, bir nehir... yolculuk düşleri. Boş ver. Adın ne?
+233	Ben... bilmiyorum. Bir adım vardı. Dilimin ucunda. Dilim olsaydı.
+234	O zaman Ossian olacaksın. Güzel bir ad. Başkalarının da işine yaradı.
+235	Başkalarının mı?
+236	Dinle: Kemik Tacı dörde bölündü. Bütün olduğunda Gelgit Kapısı'nı açar. Bu senin eve dönüş yolun.
+237	Sana bir yetenek ödünç veriyorum: bir yaratığın eşyasına dokun, onun biçimini alırsın. Düşersen de bulutumla gelip seni alırım.
+238	Peki neden bana yardım ediyorsun?
+239	Çünkü bir danışman bunu yapar. Git. İlk parça adaların sonunda.
+241	Taş basamaklar, karanlık kuyular ve tavanda ağlar. İkinci parça en dipte.
+242	Hex, suya düştüğümde... bir ışık gördüm. Sıcak. Biri bir isim çağırıyordu. Sanırım benimkiydi.
+243	Derinlikler yalan söyler, Ossian. Aşağıda senin için hiçbir şey yok. Işıkların peşinden gitme.
+244	Ama ben ona ulaşamadan sen geldin. Hep önce sen gelirsin.
+245	Hızlıyım. Bulut bunun içindir.
+246	Bu taşa isimler kazınmış. Onlarca. Hepsinin üstü bir çizgiyle çizilmiş.
+247	Senden önce gelen yolcular. Yoldan vazgeçtiler.
+248	Bu... yazı benimkine benziyor. "Ossian". Üstü çizili.
+249	Karanlıkta pek çok yazı birbirine benzer. Tavandaki örümceklere dikkat et. Devam.
+251	Bütün tavandan sarkan örümcekler. Hepsini yenmeden geçmek mümkün.
+252	Daha çok ağ. Daha da çok. Bütün mağara bir kozaya benziyor.
+253	Yuva. Kraliçe'nin kızları tavandan sarkarak yaşar. Geçmeden önce yukarı bak.
+254	Hepsini yenmem mi gerekiyor?
+255	Hayır. Yanlarından geç. Hiçbir örümcek kırık bir kemiğe değmez.
+256	Burayı iyi tanıyorsun.
+257	Sırtımda biriyle pek çok yerden geçtim.
+259	Yumurtalar, kalın ağlar ve dipte bir parçayı koruyan Örümcek Kraliçe.
+260	Hex... dipteki şey ev büyüklüğünde bir örümcek. Taçlı.
+261	İnin Kraliçesi. Yumurtaların arasında bir parçayı koruyor.
+262	Ağ tükürür. Seni yakalarsa vur ve kurtulmayı bekle. Bir de tavana bak: orada yürür.
+263	Ya düşersem?
+264	Seni almaya gelirim. Bulutumu tanır: benim yüzümden çok av kaçırdı.
+265	Av. Ben sizin için bu muyum?
+266	...Git, Ossian. Uyanıyor.
+268	Parçaları yalnızca kendisine ait bir taçta eritmeye çalışan İblis'in demirhanesi.
+269	Buradan öteye geçmem. Ateş... bana tahammül edemez. Lava düşersen dumanın dağılmasını beklemem gerekir.
+270	Ateşe yaklaşamıyorsun. Yolun sonuna da. Neden?
+271	Herkes kendi zincirini taşır, Ossian. Benimkiler eski.
+272	Lavın yansımasında kendimi yüzüyle gördüm. Deri, ıslak saçlar... ve bileğimde bir fener ipi.
+273	Sıcaklık gözleri aldatır. Sen kemiksin. Hep öyleydin.
+274	Buradaki yaratıklar benden kaçmıyor. Senin bulutun görününce kaçıyorlar.
+275	Beni tanırlar. Düşenleri ben alırım. Mesleğim bu.
+276	"Alırım" mı? Nereye?
+277	Burada her alanın bir ateş bariyeri var. Ancak ayakta kimse kalmayınca söner.
+278	Ve demirhanenin dibinde Kızıl Minotor yaşar. Tek darbede düşmez.
+279	Parçayı al. İblis tacı tamamlamamalı.
+281	Minotor olmadan dağ uyandı. Lav arkadan geliyor: durmadan koş.
+282	Yer titriyor. Hex, bütün demirhane uyanıyor!
+283	Minotor düştü ve dağ sahipsiz kaldı. Lav peşinde. Koş!
+284	Nereye koşayım?
+285	İleri. Hep ileri. Ve durma: o durmuyor.
+286	Sen hiçbir şeyden kaçmazsın, değil mi?
+287	Gerek yok. Süzülürüm.
+289	Şamanın yuvası. Son parça büyülü bulutların arasında, sunakta bekliyor.

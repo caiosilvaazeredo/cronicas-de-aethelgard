@@ -12,8 +12,16 @@ export const CROUCH_SCALE = 0.66;
  * `${id}_crouch_idle`, `${id}_crouch_run` e `${id}_crouch_attack`.
  */
 export function makeCrouchAnims(scene: Phaser.Scene): void {
-  for (const id of Object.keys(CHARS) as CharId[]) {
-    if (id === 'spider') continue;
+  for (const t of crouchTasks(scene)) t();
+}
+
+/** Uma etapa por personagem (para gerar aos poucos na tela de carregamento). */
+export function crouchTasks(scene: Phaser.Scene): Array<() => void> {
+  return (Object.keys(CHARS) as CharId[]).filter((id) => id !== 'spider').map((id) => () => crouchOne(scene, id));
+}
+
+function crouchOne(scene: Phaser.Scene, id: CharId): void {
+  {
     const d = CHARS[id];
     // Cabeça (e o que fica acima dela: armas, cristas, chifres) não deforma: só a parte de
     // baixo do corpo perde linhas, como joelhos dobrando.

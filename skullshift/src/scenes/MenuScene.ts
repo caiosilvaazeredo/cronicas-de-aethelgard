@@ -410,6 +410,8 @@ export class MenuScene extends Phaser.Scene {
     const TRAVEL = 900;
     const SPIN = 700;
     w.pause = TRAVEL + SPIN + 300;
+    // O alvo para de andar (e de mexer as pernas) enquanto é transformado.
+    w.spr.play(`${w.id}_idle`);
     const tick = () => {
       if (!g.active) return;
       const t = this.time.now - t0;

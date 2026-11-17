@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
-import { makeCrouchAnims } from '../game/crouch';
+import { crouchTasks } from '../game/crouch';
 import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet, swimSheet, makeShamanOrb } from '../game/sheets';
 import { MINO_SCALE } from '../game/characters';
-import { makeVariants } from '../game/variants';
+import { variantTasks } from '../game/variants';
 import { makeSeaArt, makeSeaTiles } from '../game/sea';
 import { makeFieldArt, makeFieldTiles } from '../game/field';
 import { makeKingShark } from '../game/sharkking';
@@ -35,10 +35,13 @@ export class BootScene extends Phaser.Scene {
     this.add.rectangle(W / 2, by, 424, 26, 0x10223a).setStrokeStyle(3, 0xfff7dc, 0.8);
     const bar = this.add.rectangle(W / 2 - 206, by, 0, 14, 0xffe066).setOrigin(0, 0.5);
     const pct = this.add.text(W / 2, by + 34, 'CARREGANDO 0%', { fontFamily: FONT, fontSize: '18px', color: '#9fb4c8' }).setOrigin(0.5);
-    this.load.on('progress', (p: number) => {
+    // Baixar arquivos é 75% da barra; os outros 25% são as artes geradas em etapas (create).
+    const show = (p: number) => {
       bar.width = 412 * p;
       pct.setText(`CARREGANDO ${Math.round(p * 100)}%`);
-    });
+    };
+    this.load.on('progress', (p: number) => show(p * 0.75));
+    this.prep = (p: number) => show(0.75 + p * 0.25);
 
     this.load.setPath('assets');
     for (const id of Object.keys(CHARS) as CharId[]) {
@@ -96,112 +99,213 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('water_foam', 'terrain/water_foam.png', { frameWidth: 192, frameHeight: 192 });
   }
 
+  private prep?: (p: number) => void;
+
   create(): void {
-    // Chefes: folhas recoloridas à mão (antes de encolher o Minotauro comum).
-    for (const k of ['idle', 'run', 'attack']) {
-      recolorSheet(this, `minotaur_${k}`, `boss_mino_${k}`, 320, 320, MINO_BOSS_PALETTE);
-      recolorSheet(this, `spider_${k}`, `boss_spider_${k}`, 192, 192, SPIDER_QUEEN_PALETTE);
-      // Príncipes e reis (morcegos e abelhas), também com paletas feitas à mão.
-      recolorSheet(this, `bat_${k}`, `prince_bat_${k}`, 192, 192, BAT_PRINCE_PALETTE);
-      recolorSheet(this, `bat_${k}`, `king_bat_${k}`, 192, 192, BAT_KING_PALETTE);
-      recolorSheet(this, `bee_${k}`, `prince_bee_${k}`, 192, 192, BEE_PRINCE_PALETTE);
-      recolorSheet(this, `bee_${k}`, `king_bee_${k}`, 192, 192, BEE_KING_PALETTE);
-    }
-    // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
-    for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
-    for (const id of Object.keys(CHARS) as CharId[]) {
-      const d = CHARS[id];
-      this.anim(`${id}_idle`, d.idle.n, d.idle.fps, -1);
-      this.anim(`${id}_run`, d.run.n, d.run.fps, -1);
-      if (d.attackSheets) {
-        // Ataque montado de várias folhas, em sequência.
-        this.anims.create({
-          key: `${id}_attack`,
-          frames: d.attackSheets.flatMap((p) => this.anims.generateFrameNumbers(p.key, { start: 0, end: p.n - 1 })),
-          frameRate: d.attack.fps,
-          repeat: 0,
-        });
-      } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
-    }
-    this.anim('skull_guard', 7, 10, -1);
-    this.anim('sheep_idle', 6, 8, -1);
-    this.anim('sheep_move', 4, 10, -1);
-    this.anim('res_tree', 8, 8, -1);
-    this.anim('boss_mino_idle', 16, 12, -1);
-    this.anim('boss_mino_run', 8, 12, -1);
-    this.anim('boss_mino_attack', 12, 14, 0);
-    this.anim('boss_spider_idle', 8, 10, -1);
-    this.anim('boss_spider_run', 5, 14, -1);
-    this.anim('boss_spider_attack', 8, 16, 0);
-    this.anim('prince_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
-    this.anim('prince_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
-    this.anim('king_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
-    this.anim('king_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
-    this.anim('prince_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
-    this.anim('prince_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
-    this.anim('king_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
-    this.anim('king_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
-    makeCrouchAnims(this);
-    this.anim('bone', 4, 16, -1);
-    this.anim('water_rocks', 16, 8, -1);
-    this.anim('bush', 8, 8, -1);
-    this.anim('tree', 8, 8, -1);
-    this.anim('splash', 9, 18, 0);
-    this.anim('dust', 8, 18, 0);
-    this.anim('transform', 11, 22, 0);
-    this.anim('shaman_idle', 8, 10, -1);
-    this.anim('shaman_attack', 10, 14, 0);
-    this.anim('water_foam', 16, 10, -1);
-
-    this.makeSky();
-    this.makeCaveAndHighSky();
-    this.anim('acorn', 4, 14, -1);
-    this.makeShield();
-    this.makeSpear();
-    this.makeCrest();
-    this.makeNewItems();
-    this.makePixelWebs();
-    this.makeBubble();
-    this.makeGuardArc();
-    this.makeVolcano();
-    makeTorch(this);
-    makeCocoon(this);
-    makeBossFx(this);
-    makeLavaWave(this);
-    makePuzzleArt(this);
-    makeVariants(this);
-    makeShamanOrb(this);
-    // Tubarões (e variantes) ganham folhas de nado: corpo deitado e ondulando, sem a sombra do chão.
-    for (const id of Object.keys(CHARS) as CharId[]) {
-      if (!id.startsWith('shark')) continue;
-      const d = CHARS[id];
-      const pivot: [number, number] = [d.frame / 2 - 11, d.feetY - 34];
-      swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 9);
-      swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2);
-      this.anim(`${id}_swim`, d.run.n, 11, -1);
-      this.anim(`${id}_swim_attack`, d.attack.n, d.attack.fps, 0);
-    }
-    for (let i = 1; i <= 4; i++) this.anim(`bush${i}`, 8, 8, -1);
-    this.makeVillagerAvatar();
-    makeSeaTiles(this);
-    makeFieldTiles(this);
-    makeFieldArt(this);
-    makeSeaArt(this);
-    makeKingShark(this);
-    makeGnollKing(this);
-    makeKings(this);
-    makeHauntArt(this);
-    makeHauntBackdrop(this, 'haunt_bg', W, H);
-    makeMapMansion(this, 'map_mansion');
-    this.makeSpark();
-    this.makeConfetti();
-    this.makeAura();
-    this.makePuff();
-    this.makeWindAndWaves();
-
-    // Fica pelo menos um instante para dar tempo de ver a animação e ler a dica.
-    this.time.delayedCall(Math.max(0, 2600 - (Date.now() - this.t0)), () => this.scene.start('menu'));
+    // Gera as artes em etapas, algumas por quadro, para a animação do carregamento não congelar.
+    this.runTasks([
+      () => {
+        // Chefes: folhas recoloridas à mão (antes de encolher o Minotauro comum).
+        for (const k of ['idle', 'run', 'attack']) {
+          recolorSheet(this, `minotaur_${k}`, `boss_mino_${k}`, 320, 320, MINO_BOSS_PALETTE);
+          recolorSheet(this, `spider_${k}`, `boss_spider_${k}`, 192, 192, SPIDER_QUEEN_PALETTE);
+          // Príncipes e reis (morcegos e abelhas), também com paletas feitas à mão.
+          recolorSheet(this, `bat_${k}`, `prince_bat_${k}`, 192, 192, BAT_PRINCE_PALETTE);
+          recolorSheet(this, `bat_${k}`, `king_bat_${k}`, 192, 192, BAT_KING_PALETTE);
+          recolorSheet(this, `bee_${k}`, `prince_bee_${k}`, 192, 192, BEE_PRINCE_PALETTE);
+          recolorSheet(this, `bee_${k}`, `king_bee_${k}`, 192, 192, BEE_KING_PALETTE);
+        }
+      },
+      () => {
+        // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
+        for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
+      },
+      () => {
+        for (const id of Object.keys(CHARS) as CharId[]) {
+          const d = CHARS[id];
+          this.anim(`${id}_idle`, d.idle.n, d.idle.fps, -1);
+          this.anim(`${id}_run`, d.run.n, d.run.fps, -1);
+          if (d.attackSheets) {
+            // Ataque montado de várias folhas, em sequência.
+            this.anims.create({
+              key: `${id}_attack`,
+              frames: d.attackSheets.flatMap((p) => this.anims.generateFrameNumbers(p.key, { start: 0, end: p.n - 1 })),
+              frameRate: d.attack.fps,
+              repeat: 0,
+            });
+          } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
+        }
+      },
+      () => {
+        this.anim('skull_guard', 7, 10, -1);
+        this.anim('sheep_idle', 6, 8, -1);
+        this.anim('sheep_move', 4, 10, -1);
+        this.anim('res_tree', 8, 8, -1);
+        this.anim('boss_mino_idle', 16, 12, -1);
+        this.anim('boss_mino_run', 8, 12, -1);
+        this.anim('boss_mino_attack', 12, 14, 0);
+        this.anim('boss_spider_idle', 8, 10, -1);
+        this.anim('boss_spider_run', 5, 14, -1);
+        this.anim('boss_spider_attack', 8, 16, 0);
+        this.anim('prince_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
+        this.anim('prince_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
+        this.anim('king_bat_idle', CHARS.bat.idle.n, CHARS.bat.idle.fps, -1);
+        this.anim('king_bat_attack', CHARS.bat.attack.n, CHARS.bat.attack.fps, 0);
+        this.anim('prince_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
+        this.anim('prince_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
+        this.anim('king_bee_idle', CHARS.bee.idle.n, CHARS.bee.idle.fps, -1);
+        this.anim('king_bee_attack', CHARS.bee.attack.n, CHARS.bee.attack.fps, 0);
+      },
+      ...crouchTasks(this),
+      () => {
+        this.anim('bone', 4, 16, -1);
+        this.anim('water_rocks', 16, 8, -1);
+        this.anim('bush', 8, 8, -1);
+        this.anim('tree', 8, 8, -1);
+        this.anim('splash', 9, 18, 0);
+        this.anim('dust', 8, 18, 0);
+        this.anim('transform', 11, 22, 0);
+        this.anim('shaman_idle', 8, 10, -1);
+        this.anim('shaman_attack', 10, 14, 0);
+        this.anim('water_foam', 16, 10, -1);
+      },
+      () => {
+        this.makeSky();
+      },
+      () => {
+        this.makeCaveAndHighSky();
+      },
+      () => {
+        this.anim('acorn', 4, 14, -1);
+      },
+      () => {
+        this.makeShield();
+      },
+      () => {
+        this.makeSpear();
+      },
+      () => {
+        this.makeCrest();
+      },
+      () => {
+        this.makeNewItems();
+      },
+      () => {
+        this.makePixelWebs();
+      },
+      () => {
+        this.makeBubble();
+      },
+      () => {
+        this.makeGuardArc();
+      },
+      () => {
+        this.makeVolcano();
+      },
+      () => {
+        makeTorch(this);
+      },
+      () => {
+        makeCocoon(this);
+      },
+      () => {
+        makeBossFx(this);
+      },
+      () => {
+        makeLavaWave(this);
+      },
+      () => {
+        makePuzzleArt(this);
+      },
+      ...variantTasks(this),
+      () => {
+        makeShamanOrb(this);
+      },
+      () => {
+        // Tubarões (e variantes) ganham folhas de nado: corpo deitado e ondulando, sem a sombra do chão.
+        // (Depois das variantes; uma etapa por tubarão.)
+        return (Object.keys(CHARS) as CharId[])
+          .filter((id) => id.startsWith('shark'))
+          .map((id) => () => {
+            const d = CHARS[id];
+            const pivot: [number, number] = [d.frame / 2 - 11, d.feetY - 34];
+            swimSheet(this, `${id}_run`, `${id}_swim`, d.frame, pivot, 9);
+            swimSheet(this, `${id}_attack`, `${id}_swim_attack`, d.frame, pivot, 2);
+            this.anim(`${id}_swim`, d.run.n, 11, -1);
+            this.anim(`${id}_swim_attack`, d.attack.n, d.attack.fps, 0);
+          });
+      },
+      () => {
+        for (let i = 1; i <= 4; i++) this.anim(`bush${i}`, 8, 8, -1);
+      },
+      () => {
+        this.makeVillagerAvatar();
+      },
+      () => {
+        makeSeaTiles(this);
+      },
+      () => {
+        makeFieldTiles(this);
+      },
+      () => {
+        makeFieldArt(this);
+      },
+      () => {
+        makeSeaArt(this);
+      },
+      () => {
+        makeKingShark(this);
+      },
+      () => {
+        makeGnollKing(this);
+      },
+      () => {
+        makeKings(this);
+      },
+      () => {
+        makeHauntArt(this);
+      },
+      () => {
+        makeHauntBackdrop(this, 'haunt_bg', W, H);
+      },
+      () => {
+        makeMapMansion(this, 'map_mansion');
+      },
+      () => {
+        this.makeSpark();
+      },
+      () => {
+        this.makeConfetti();
+      },
+      () => {
+        this.makeAura();
+      },
+      () => {
+        this.makePuff();
+      },
+      () => {
+        this.makeWindAndWaves();
+      },
+    ]);
   }
+
+  /** Roda as etapas com um orçamento de tempo por quadro e avança a barra; no fim, vai ao menu. */
+  private runTasks(tasks: Array<() => void | Array<() => void>>): void {
+    let i = 0;
+    const step = () => {
+      const t = performance.now();
+      while (i < tasks.length && (performance.now() - t < 12 || i === 0)) {
+        const more = tasks[i++]();
+        if (more) tasks.splice(i, 0, ...more);
+      }
+      this.prep?.(i / tasks.length);
+      if (i < tasks.length) this.time.delayedCall(0, step);
+      // Fica pelo menos um instante para dar tempo de ver a animação e ler a dica.
+      else this.time.delayedCall(Math.max(0, 2600 - (Date.now() - this.t0)), () => this.scene.start('menu'));
+    };
+    this.time.delayedCall(0, step);
+  }
+
 
   /** Retrato do aldeão (o pacote não tem): o rosto recortado do primeiro quadro, ampliado. */
   private makeVillagerAvatar(): void {

@@ -266,8 +266,16 @@ function makeArt(scene: Phaser.Scene): void {
 
 /** Cria as folhas, as animações e as fichas (CHARS) de todas as variantes. */
 export function makeVariants(scene: Phaser.Scene): void {
-  makeArt(scene);
-  for (const v of VARIANTS) {
+  for (const t of variantTasks(scene)) t();
+}
+
+/** As mesmas etapas de makeVariants, uma por variante (para gerar aos poucos, sem travar a tela). */
+export function variantTasks(scene: Phaser.Scene): Array<() => void> {
+  return [() => makeArt(scene), ...VARIANTS.map((v) => () => makeVariant(scene, v))];
+}
+
+function makeVariant(scene: Phaser.Scene, v: (typeof VARIANTS)[number]): void {
+  {
     const b = CHARS[v.base];
     const k = v.scale ?? 1;
     for (const part of ['idle', 'run', 'attack'] as const) {

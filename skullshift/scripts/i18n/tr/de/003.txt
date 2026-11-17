@@ -1,0 +1,129 @@
+441	Die Flut steigt und fällt von selbst. Der niedrige Boden verschwindet unter Wasser.
+442	Das Wasser steigt! Und fällt! Und steigt wieder!
+443	Die Flut dieser Inseln atmet. Wenn sie kommt, klettere nach oben und warte.
+444	Wer befiehlt ihr?
+445	Der Harpunenhai-König. Er hütet das erste Fragment der Krone.
+446	Ein Hai... mit Krone?
+447	Jeder König hütet ein Stück. Zusammen öffnen sie deinen Weg.
+449	Reste eines Schiffs. Lose Bretter sinken, kaum dass man drauftritt.
+450	Ein ganzes Schiff, in Stücke gebrochen.
+451	Bleib nicht auf den Brettern stehen. Sie sinken.
+452	Wer war auf diesem Schiff?
+453	Leute, die auch nach Hause wollten.
+454	...Und sind sie heimgekommen?
+455	Spring, Ossian.
+457	Das Schiff der Goblinpiraten. Kanonen fegen übers Deck.
+458	Piraten! Und Kanonen, die auf mich zielen!
+459	Die Kugeln kommen geradeaus. Spring oder deck dich mit dem Schild.
+460	Der Kapitän steht ganz hinten auf dem Achterdeck.
+461	Er arbeitet für den Haikönig. Jeder in diesen Gewässern arbeitet für ihn.
+463	Eine ganze Höhle unter Wasser. Nur ein Hai kommt hindurch.
+464	Die Höhle ist komplett geflutet, Hex. Ich werde untergehen.
+465	Nicht als Hai. Dort drinnen gebe ich dir seine Gestalt.
+466	Kannst du das, ohne dass ich eine Harpune nehme?
+467	Hier unten kann ich mehr, als du denkst.
+468	...Das hast du noch nie gesagt.
+469	Schwimm. Die Quallen verzeihen nichts.
+471	Hebel öffnen und schließen die Schleusen: Flut oder Ebbe, du entscheidest.
+472	Hebel! Wofür sind die?
+473	Sie öffnen und schließen die Schleusen des Leuchtturms. Flut: Die Kisten steigen. Ebbe: Der Boden kommt zum Vorschein.
+474	Dann gebiete ich über die Gezeiten, wie der König.
+475	Vorerst. Nutze es, solange du kannst.
+477	Das Deck ist in der Mitte eingesunken: Der Weg führt über die Rahen, ganz oben.
+478	Das Deck ist in der Mitte gebrochen! Hier kommt man nicht durch.
+479	Doch: oben drüber. Über die Rahen und die Ausgucke.
+480	Von hier oben sieht man den Leuchtturm, den Strand... und ein warmes Licht, weit weg.
+481	Schau nicht ins Licht. Schau, wohin du trittst.
+483	Feuerkorallen, Quallen und die Flut. Der letzte Schritt vor dem König.
+484	Die Korallen hier brennen!
+485	Feuerkoralle. Nicht berühren. Und die Flut kommt immer noch.
+486	Nach dem Riff kommt der Haikönig.
+487	Nach dem Riff kommt das erste Fragment. Denk an das Fragment.
+489	Der Harpunenhai-König gebietet über die Gezeiten. Bei Ebbe strandet er.
+490	Das ist er. Der Harpunenhai-König.
+491	Er gebietet über die Gezeiten. Wenn das Wasser sinkt, bleibt er im Sand stecken. Dann greif an.
+492	Und wenn die Flut steigt?
+493	Steig auch du. Auf die Felsen an den Seiten. Seine Harpunen bleiben in der Luft stecken: Benutz sie als Stufen.
+494	Hex... warum willst du dieses Fragment so sehr?
+495	Ich? Es ist für dich, Ossian. Es war immer für dich.
+497	Die Krone ist ganz. Die Siegel sind gefallen.
+499	Der Eingang zur Knochenprärie, dem Land der Gnolle.
+500	Was ist das für ein Geruch? Gras... und nasser Hund.
+501	Gnolle. Die Prärie gehört ihnen. Die Jäger werfen Knochen, die einen Bogen machen und zurückkommen.
+502	Knochen, die zurückkommen. Welche Ironie.
+503	Hier kommt alles zurück, Ossian. Außer denen, die weitergehen.
+505	Die Herde stürmt über den niedrigen Boden.
+506	Der Boden bebt!
+507	Die Herde der Gnolle. Wenn sie kommt, kletter auf irgendetwas Hohes.
+508	Und wenn ich unten bleibe?
+509	Dann hole ich dich wieder. Aber lieber nicht.
+511	Hänge aus uralten Knochen. Von oben rollen Felsen herab.
+512	So viele Knochen. Sind das alles Gnolle?
+513	Nicht alle. Manche gehören Reisenden, die vor dir nach einer Krone suchten.
+514	...Vor mir? Wie viele?
+515	Vorsicht vor den Felsen. Sie rollen ohne Vorwarnung.
+517	Schafe, Platten und Tore. Der Schlüssel liegt oben auf der Scheune.
+518	Schafe! Ich... habe mal Schafe gehütet. Glaube ich.
+519	Stell die Schafe auf die Platten. Die Tore öffnen sich mit Gewicht.
+520	Warum erinnere ich mich an Schafe, Hex?
+521	Jeder erinnert sich an Schafe. Nimm den Schlüssel.
+523	Büsche, die zittern. Versteckte Gnolle, die warten.
+524	Der Busch da hat sich bewegt.
+525	Schleicher. Sie verstecken sich im Gras und springen jeden an, der nah vorbeikommt.
+526	Wenigstens sieht man das Zittern.
+527	Augen auf, Ossian. In dieser Welt ist fast nichts, wie es scheint.
+529	Die Karawane schickt ohne Ende Jäger.
+530	Eine ganze Karawane kommt auf mich zu.
+531	Halte ANGRIFF und hör nicht auf zu schießen.
+532	Was transportieren sie in diesen Wagen?
+533	Knochen. Für den König. Er sammelt sie.
+535	Breite Lücken, die man mit den Windströmungen überquert.
+536	Die Lücken sind riesig. Das kann ich nicht springen.
+537	Tritt in den Wind. Er hebt dich hoch. Dann halte den Sprung und gleite.
+538	Von hier oben sehe ich eine Brücke, weit weg, hinter dem Meer.
+539	Da ist keine Brücke. Eine Täuschung des Windes.
+541	Der Gnollkönig hütet das zweite Fragment.
+542	Das ist er. Größer, als ich dachte. Und mit lila Flecken...
+543	Sein Knochen fliegt hin und zurück. Tief: springen; hoch: ducken. Wenn er springt, geh unter ihm weg.
+544	Warum hat er dieselben Farben wie du, Hex?
+545	Zufall. Bring ihn zu Fall, Ossian. Das Fragment wartet.
+547	Netzfäden, über den Abgrund gespannt. Sie reißen.
+548	Das soll eine Brücke sein? Das ist ein Netzfaden!
+549	Starke Fäden, aber nicht für immer. Tritt drauf und renn.
+550	Wer hat mitten in der Höhle Brücken gewebt?
+551	Die Königin. Sie mag es, wenn ihre Besucher bis zu ihr kommen.
+553	Stockdunkel. Nur die Fackeln zeigen den Weg.
+554	Hex? Ich sehe nichts.
+555	Berühre die Fackeln. Sie gehen an. Die drei großen öffnen den Ausgang.
+556	Komisch. Hatte ich Angst im Dunkeln? Nein... das war jemand anderes.
+557	Konzentrier dich auf die Fackeln, Ossian.
+559	Kokons, die an Fäden hängen und schaukeln.
+560	Diese Kokons... ist da jemand drin?
+561	Da ist das Mittagessen der Königin drin. Nicht anfassen, sonst wirst du das Abendessen.
+562	Wie eklig.
+563	Wie lecker, würde sie sagen.
+565	Springspinnen und Vampirfledermäuse, ohne Ende.
+566	Sie springen! Die grünen Spinnen springen!
+567	Dann hör nicht auf zu schießen. Halte ANGRIFF.
+568	Und die roten Fledermäuse?
+569	Die stoßen herab. Schieß sie vorher ab.
+571	Das Nest der Königin. Der Schlüssel ist ganz oben.
+572	Eier. Tausende Eier. Und der Schlüssel ganz oben im Nest.
+573	Eine Wand aus roten Blöcken versperrt den Weg. Wechsle die Farbe am Hebel.
+574	Mit dem Schlüssel in der Hand kann ich den Hebel nicht schlagen.
+575	Dann lass den Schlüssel los, schlag zu und nimm ihn wieder. Nicht alles löst man mit Eile.
+577	Der Eingang zum Feuerberg.
+578	Der Boden kocht, Hex. Und dieses blubbernde Loch?
+579	Ein Geysir. Er blubbert, bevor er Feuer spuckt. Warte, bis es vorbei ist, und renn.
+580	Wohnt der Scharlachrote Minotaurus hier drin?
+581	Im Herzen des Berges. Er hämmert die Lava. Er hütet das fünfte Fragment.
+583	Die Lava steigt und fällt wie die Flut.
+584	Die Lava steigt! Genau wie die Flut auf den Inseln!
+585	Der Berg atmet wie das Meer. Steig auf den Basalt: Er schwimmt.
+586	Alles in dieser Welt steigt und fällt. Sogar ich.
+587	Du steigst nur, Ossian. Dafür sorge ich.
+589	Geysirfelder, die im Rhythmus feuern.
+590	Eins, zwei, drei... sie feuern nacheinander.
+591	Wie ein Herz. Lern den Rhythmus und geh zwischen den Schlägen hindurch.
+592	Du kennst diesen Berg gut.
+593	Ich kenne alle Gefängnisse gut. Ich meine... alle Orte.

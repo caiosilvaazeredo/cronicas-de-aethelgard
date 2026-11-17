@@ -1,0 +1,139 @@
+595	Kobolde und Lavaminotauren, ohne Ende.
+596	Rote Minotauren! Sie stürmen wie wilde Stiere!
+597	Dann schieß, bevor sie da sind. Halte ANGRIFF.
+598	Wer hat so viele Lavastiere abgerichtet?
+599	Der Minotaurus richtet nicht ab: Er schmiedet. Jeder Soldat verlässt den Amboss und weiß schon, wen er beschützen soll.
+600	Vor mir beschützen?
+601	Vor dir. Vor mir. Im Grunde vor demselben.
+603	Platten aus schwarzem Stein, die in der Lava versinken.
+604	Schwarze Platten, die auf der Lava treiben. Und Kanonen!
+605	Obsidian sinkt, nachdem du draufgetreten bist. Bleib nicht stehen.
+606	Wer stellt Kanonen in eine Schmiede?
+607	Der Minotaurus mag keinen Besuch. Kein König mag das.
+609	Die Werkstatt des Schmieds, verschlossen hinter Goldfelsen.
+610	Eine Werkstatt. Ambosse, Werkzeug... ich kann mit diesen Dingen umgehen.
+611	Ach ja? Interessant. Nimm den Hammer für die Felsen und hol den Schlüssel.
+612	Ich hatte Schwielen an den Händen vom vielen Arbeiten. Ich erinnere mich.
+613	Knochen haben keine Schwielen, Ossian.
+615	Das Herz des Berges. Nichts kommt ohne Kampf hindurch.
+616	Die Wege schließen sich mit Feuer, bis ich alle besiegt habe.
+617	Der Minotaurus lässt niemanden ohne Kampf vorbei. Nach diesem Ort kommt er.
+618	Man spürt den Berg unter den Füßen schlagen.
+619	Das ist das Fragment. Sie pochen, wenn sich jemand nähert. Als hätten sie Angst.
+621	Der Wald der Schleudergnome.
+622	Riesige Bäume. Und jemand schießt mir Eicheln an den Kopf.
+623	Gnome. Klein, stur und treffsicher.
+624	Dieser Holzgeruch... den kenne ich.
+625	Jeder Wald riecht gleich, Ossian.
+627	Pilze, die jeden hochschleudern, der auf ihnen landet.
+628	Die Wände sind zu hoch zum Springen.
+629	Lande auf den roten Pilzen. Sie schleudern dich ganz nach oben.
+630	Und wenn ich einen esse?
+631	Du hast keinen Magen, Ossian.
+633	Der Boden verschwindet im Fluss. Der Weg führt oben entlang.
+634	Der Fluss hat den Weg verschluckt.
+635	Dann geh oben entlang, von Krone zu Krone. Schau nicht nach unten.
+636	Von dort oben sieht man blaue Dächer, weit, weit weg...
+637	Das ist nur der Himmel, der sich im Wasser spiegelt.
+639	Baumstämme treiben auf dem Fluss: Man kann darauf treten.
+640	Treibende Stämme. Jemand hat diese Bäume gefällt.
+641	Die Gnome werfen die Stämme in den Fluss, um sie ins Dorf zu bringen. Tritt drauf.
+642	Ich habe Holz gehackt. Hinter einem blauen Haus. Da bin ich mir sicher.
+643	Überquere den Fluss, Ossian.
+645	Schleudergnome überall.
+646	Ein Eichelregen!
+647	Antworte mit Knochen. Halte ANGRIFF.
+648	Warum verteidigen sie einen Wald so sehr?
+649	Weil sie dafür hier gepflanzt wurden. Ein Gnom fragt nicht; ein Gnom wacht.
+651	Moosbüschel, die Gnome verstecken.
+652	Das Moos hat gezittert. Genau wie das Gras in der Prärie.
+653	Moosgnome. Sie haben von den Gnollen gelernt.
+654	Oder jemand hat es beiden beigebracht.
+655	...Vorsicht vor den Stämmen.
+657	Das Gnomendorf. Niemand kommt ohne Kampf durch.
+658	Ein echtes Dorf. Häuser, Schornsteine, Wäscheleinen...
+659	Die Bewohner verteidigen den König. Jedes Gebiet öffnet sich erst, wenn alle gefallen sind.
+660	Ich habe in so einem Dorf gewohnt, oder?
+661	Du hast dort gewohnt, wo ich dich gefunden habe: am Strand.
+663	Der Gnomenkönig hütet das Fragment am Fuß des ältesten Baums.
+664	Ein Gnom so groß wie ein Haus. Mit lila Mütze.
+665	Er wirft Eicheln im Bogen, rollt Riesenstämme und schüttelt den Baum.
+666	Schon wieder Lila. Alle Könige tragen dein Lila, Hex.
+667	Es ist die Farbe der Könige. Sonst nichts. Geh.
+669	Die Minen der Goblins, voller Fackeln und Gold.
+670	So viel Gold! Und so viele brennende Fackeln.
+671	Die Goblins graben seit Jahrhunderten. Die Decke ist alt: Wenn Staub fällt, geh weg.
+672	Wozu graben sie? Gold kauft hier nichts. Das hast du selbst gesagt.
+673	Der Goblinkönig weiß das nicht. Und er muss es auch nicht wissen.
+675	Die Decke des Stollens stürzt ein.
+676	Die ganze Decke kommt herunter!
+677	Der Staub zeigt, wo der Stein fällt. Lauf dazwischen durch.
+678	Diese Balken sind morsch. Wie lange graben sie hier schon?
+679	Seit jemand befohlen hat, das Fragment ganz tief zu verstecken. Vor langer, langer Zeit.
+681	Die Fackeln sind erloschen.
+682	Wieder dunkel. Jemand hat die Fackeln absichtlich gelöscht.
+683	Zünde die Fackeln an. Die drei großen öffnen den Ausgang.
+684	Meine Schwester hatte Angst im Dunkeln. Ich ließ ihr eine Kerze brennen.
+685	...Deine Schwester. Hm. Zünde die Fackeln an, Ossian.
+687	Goldfelsen versperren die Stollen.
+688	Wieder Goldfelsen. Hammer drauf!
+689	In der Luft mit voller Kraft nach unten. Und bring den Schlüssel zur Tür.
+690	So viel Gold, und niemand nimmt es mit.
+691	Wohin denn? Es gibt keinen Markt außerhalb dieses Reichs. Es gibt kein Außerhalb.
+692	Du hast gesagt, das Gezeitentor führt nach draußen.
+693	Habe ich. Und das tut es. Für dich.
+695	Bergmannsgoblins werfen Bomben.
+696	Sie werfen Bomben!
+697	Bergleute. Sie sprengen den Fels und jeden in der Nähe. Weich dem Bogen aus.
+698	Wenn ich mit in die Luft fliege, holst du mich?
+699	Immer. In Stücken, wenn es sein muss. Ich verliere keinen von meinen.
+701	Das Wasser in der Mine steigt und fällt.
+702	Gezeiten in einer Mine? Das ergibt keinen Sinn.
+703	Das Wasser steigt von unten. Und sinkt wieder. Wie alles hier.
+704	Wie alles hier... es kommt zurück.
+705	Bleib oben, Ossian.
+707	Das Feuer der Tiefe ist blau.
+708	Blaues Feuer! Und die Goblins, die es tragen, rennen wie verrückt.
+709	Das ist das Feuer aus der Tiefe der Erde. Heißer als das rote. Lass es nicht an dich heran.
+710	Warum ist dieses Feuer blau?
+711	Es ist ein Feuer, das nicht wärmt. Die Goblins benutzen es, um zu sehen, ohne gesehen zu werden. Ich mag beides nicht.
+713	Der Schatz des Königs. Von allen bewacht.
+714	Berge aus Gold. Und Wachen in jeder Ecke.
+715	Jedes Gebiet öffnet sich erst, wenn alle gefallen sind. Danach der König.
+716	Wenn der König all das hat, warum will er dann noch das Fragment?
+717	Er WILL das Fragment nicht, Ossian. Er... vergiss es. Könige sind gierig, das ist alles.
+719	Der Fackelgoblin-König hütet das Fragment mitten im Gold.
+720	Der Goblinkönig. Schwarze Kapuze und rote Fackel.
+721	Er schlägt die Fackel auf den Boden und schickt Feuerwellen los: spring. Und er rennt von einer Seite zur anderen.
+722	Hex, wenn der letzte König fällt, was passiert dann mit dieser Welt?
+723	Nichts, was du sehen wirst, Ossian. Du wirst zu Hause sein.
+725	Stehendes Wasser, Moos und Echsen.
+726	So grünes Wasser. Und dieser Geruch nach faulen Blättern.
+727	Die Lagune der Echsen. Der Echsenkönig lebt mittendrin und schläft nie.
+728	Nie? Nicht mal ein Nickerchen?
+729	Wer ein Siegel bewacht... ich meine, ein Fragment... darf nicht schlafen.
+731	Riesenblätter, die beim Drauftreten sinken.
+732	Blätter so groß wie ein Tisch!
+733	Sie tragen ein Skelett einen Augenblick lang. Nur einen Augenblick.
+734	Diese Blumen öffnen sich nur, wenn ich vorbeigehe.
+735	Sie spüren Bewegung. Hier geht schon lange kaum noch etwas aufrecht.
+737	Das Sumpfwasser steigt und fällt.
+738	Hier steigt das Wasser auch. Sogar der Sumpf hat Gezeiten?
+739	Alles Wasser dieser Welt folgt demselben Rhythmus.
+740	Wessen Rhythmus?
+741	Steig auf die Stämme, Ossian.
+743	Dornen und lila Echsen, die Gift spucken.
+744	Lila Echsen. Lila wie du, Hex.
+745	Ihr Gift ist lila. Ich habe kein Gift.
+746	Bist du sicher?
+747	Weich den Dornen aus.
+749	Eine Moorkrabbe hat den Schlüssel genommen.
+750	Ein kleines Fischerhaus. Genau wie die in meinem... die ich gesehen habe.
+751	Eine Krabbe hat den Schlüssel genommen. Du weißt, was zu tun ist.
+752	Eine Echse beim Angeln. Sie wirkt friedlich.
+753	Der Frieden dessen, der nicht weiß, was er bewacht. Weck ihn nicht dafür auf; geh einfach vorbei.
+755	Am Grund der Lagune kommt nur eine Echse durch.
+756	Der Weg versinkt in der Lagune.
+757	Dort unten gebe ich dir die Gestalt einer Echse. Echsen schwimmen.
+758	Du brauchst gar keinen Gegenstand mehr, um mich zu verwandeln, oder?
+759	Je mehr Siegel fallen... ich meine, je mehr Fragmente du sammelst, desto mehr kann ich.

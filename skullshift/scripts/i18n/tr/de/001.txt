@@ -1,0 +1,142 @@
+140	Die Dorfglocke. Das Dorf an der... an der Brücke. Sie läutete sechsmal, und ich rannte nach Hause.
+141	Was war das? Du hast einen Namen gesagt. Welchen Namen hast du gesagt?
+142	Der König ist so groß wie mein Oberschenkelknochen und doppelt so wütend wie ich.
+143	Die Kleinen tragen den größten Groll. Geh.
+144	Schienen, Balken, Fackeln. Goblins mögen ein ordentliches Loch.
+145	Sie graben nach Gold. Gold! Als ob man damit den Ausgang kaufen könnte.
+146	Fackelgoblins in Reih und Glied. Jemand hat ihnen gesagt, dass ich komme.
+147	Der König zählt jedes Nugget und jeden Soldaten. Er wird merken, dass diese fehlen.
+148	Staub rieselt von der Decke. Gleich danach: die Decke.
+149	Eine Papierlaterne in meinen Händen. Ich habe einen Namen daraufgeschrieben. Wessen?
+150	Beeil dich. Diese Minen wurden nicht gebaut, um zu halten. Nur, um zu verstecken.
+151	Stockdunkel. Gut, dass Knochen im Dunkeln ein bisschen leuchten. Tun sie nicht? Schade.
+152	Folge den Fackeln. So tief gehe ich nicht hinunter. Ab hier bist du allein.
+153	Gold an der ganzen Wand. Und niemand hier wirkt deswegen glücklicher.
+154	Reichtum in einem Gefängnis bleibt ein Gefängnis. ...Ist ein Sprichwort. Vergiss es.
+155	Ein Fass mit Lunte. Meine Art von Lösung: schnell und laut.
+156	Feuerwerk, das am Himmel zerplatzt. Es war ein Fest. Eine kleine Hand zupfte an meinem Ärmel.
+157	Pass auf, was du mit so viel Lärm weckst.
+158	Die Mine ist geflutet. Die Goblins haben sogar ihre Brotdose treiben lassen.
+159	Wasser findet immer den Weg nach unten. Wie manche Seelen.
+160	Blaues Feuer. Kalt. Passt besser zu mir als das andere.
+161	Ein blauer Mantel hinter der Tür. Zu klein für mich. Ihrer.
+162	Wer ist „sie", Ossian? Du redest mit dir selbst.
+163	Ein Berg aus Gold. Und mittendrin ein leerer Thron, der wartet.
+164	Er ist herausgekommen, um dich zu empfangen. Ein Fragment ist mehr wert als all das zusammen.
+165	Der König hat die größte Fackel mitgebracht. Natürlich.
+166	Lösch sie. Mir gefällt nicht, wie sie die Dinge beleuchtet.
+167	Wolkeninseln. Darunter: nichts. Nicht hinsehen, nicht hinsehen, hingesehen.
+168	Von hier aus sehe ich dich gut. Am Himmel bewege ich mich am besten.
+169	Der ganze Himmel ist rot. Wie ein Abend, der nie endet.
+170	Abenddämmerung. „Komm vor Einbruch der Dunkelheit zurück!" Ich kam immer zurück. Immer. Außer einmal.
+171	Außer einmal was? Rede mit mir, Ossian.
+172	Der Wind trägt mich nach oben. Ich bin leicht. Der Vorteil, wenn man keine Füllung hat.
+173	Lass dich tragen. Nur steig nicht zu hoch: Dort oben ist ein Licht, das nicht für dich bestimmt ist.
+174	Es regnet brennende Steine. Ein Regenschirm hilft da nicht.
+175	Der Kobold wirft, was er hat. Er hat Angst. Das haben am Ende alle.
+176	Überall Kobolde, die lachen. Ich hasse Gegner, die lachen.
+177	Sie lachen, weil sie jung sind. Sie erinnern sich nicht, was sie bewachen.
+178	Heißer Wind nach oben, Feuer zur Seite. Ein Ofen mit Aussicht.
+179	Laternen steigen in der warmen Luft. Jede für jemanden, der gegangen ist. Ich habe eine losgelassen.
+180	Ein Schloss auf einer Wolke. Mutige Architektur.
+181	Von hier aus hat man lange die Insel in der Mitte bewacht. Jetzt ist es leer. Bestens.
+182	Flügel mitten in der Glut. Sie sollten nicht so weit weg von zu Hause sein.
+183	Niemand hier ist dort, wo er sein wollte. Das verbindet uns.
+184	Eine verschlossene Tür am Himmel. Um was draußen zu halten? Vögelchen?
+185	Um etwas drinnen zu halten, vielleicht. Nimm den Schlüssel.
+186	Der Riesenkobold. Er will den ganzen Himmel für sich.
+187	Der Himmel gehört dem, der zuerst da ist. Und ich war lange vor ihm da.
+188	Die Tore des feindlichen Reichs. Mein Verbündeter wollte nicht bis hierher mitkommen.
+189	Pakte sind nützlich, Ossian. Solange sie halten.
+190	Fliegen ist leicht. Schwer ist, sich daran zu erinnern, dass ich es eigentlich nicht können sollte.
+191	Feiner Regen im Gesicht. Nacht. Eine Stimme auf der anderen Seite der Brücke: „Ich habe Angst!"
+192	Riesige, leere Säle. Die Wachen fliegen im Kreis, ohne zu wissen, warum.
+193	Sie wachen aus Gewohnheit. Den Grund haben sie vergessen. Erinnere sie nicht daran.
+194	Donner, Blitz, Regen. Und ich mittendrin, aus leitfähigem Material.
+195	Starker Regen. Die Brücke ist rutschig. Ich rannte. Sie war auf der anderen Seite.
+196	Flieg tiefer. Und hör auf, in den Regen zu starren.
+197	Ein Schlüssel oben auf dem Turm. Immer oben. Nie auf dem Boden, neben der Tür.
+198	Was leicht zu öffnen ist, muss nicht bewacht werden.
+199	Gekreuzte Luftströmungen. Das ganze Reich will mich hinauspusten.
+200	Sollen sie pusten. Nur einer fehlt noch. Nur einer, Ossian, und...
+201	Es wird Nacht. Hier ist es noch nie Nacht geworden.
+202	Jemand auf der Brücke, in Lila. Die Hand ausgestreckt. „Komm. Ich bringe dich."
+203	...Der Himmel verdunkelt sich, wenn das Ende naht. Das ist natürlich. Weiter.
+204	Die ganze Garde des Königs in der Luft. Sie müssen ihn sehr mögen.
+205	Oder sie fürchten, was passiert, wenn er fällt. Für uns kommt es aufs Gleiche heraus.
+206	Das letzte Tor. Man hört riesige Flügel auf der anderen Seite.
+207	Eiskaltes Wasser. Dann eine Wolke. Und eine Stimme, viel zu ruhig: „Noch nicht."
+208	Du zitterst. Schädel zittern nicht. Geh hinein.
+209	Der König der Schwingen. Der Himmel wird klein, wenn er darin ist.
+210	Bring ihn zu Fall. Nach ihm ist die Rechnung fast beglichen.
+211	Eine endlose Treppe. Und zerbrochene Ketten auf jeder Stufe.
+212	Alter Zierrat. Stolpere nicht darüber.
+213	Neun Ketten, Hex. Ich habe sie gezählt.
+214	Eine Urne mitten im Saal. Und alles hier drin will sie zerbrechen.
+215	Ein Name. Jemand ruft am Flussufer einen Namen. Es war nicht „Ossian".
+216	Beschütze die Urne. Was darin ist, ist... wichtig für uns beide.
+217	Türen, die zu anderen Türen führen. Dieses Haus will nicht, dass ich ans Ende komme.
+218	Ich habe mich hier selbst verlaufen. Am Anfang. Ich hatte viel Zeit, es auswendig zu lernen.
+219	Bücher mit Namen auf dem Rücken. Alle durchgestrichen. Außer dem letzten.
+220	Lies nicht. Ossian, lies das nicht.
+221	Es ist leer. Hast du mir den Platz freigehalten?
+222	Kein Licht. Nur die Kerze in meiner Hand. Und deine Stimme.
+223	Ich erinnere mich. Meine Schwester auf der anderen Seite. Die Hand in Lila. Ich bin nicht ausgerutscht.
+224	Erinnerungen täuschen, Ossian. Komm. Der Thron ist gleich hinter der Tür.
+225	Hände. Ich habe wieder Hände. Dann benutzen wir sie.
+226	Ossian
+229	Wo der Schädel erwacht. Das erste Fragment der Krone leuchtet am Ende des Strandes.
+230	Wach auf. Langsam... die Flut hat dich wieder an den Strand gespült. Schon wieder.
+231	Schon wieder? Ich... erinnere mich an nichts. Nur an Lichter. Laternen, die über einem Fluss hängen.
+232	Laternen, ein Fluss... Reiseträume. Vergiss es. Wie heißt du?
+233	Ich... weiß es nicht. Ich hatte einen Namen. Er liegt mir auf der Zunge. Wenn ich eine Zunge hätte.
+234	Dann sollst du Ossian heißen. Ein guter Name. Er hat schon anderen gedient.
+235	Anderen?
+236	Hör zu: Die Krone der Knochen wurde in vier Teile zerbrochen. Ganz öffnet sie das Gezeitentor. Es ist dein Weg nach Hause.
+237	Ich leihe dir eine Gabe: Berühre den Gegenstand einer Kreatur, und du nimmst ihre Gestalt an. Und wenn du fällst, hole ich dich auf meiner Wolke.
+238	Und warum hilfst du mir?
+239	Weil ein Ratgeber das eben tut. Geh. Das erste Fragment liegt am Ende der Inseln.
+241	Steinstufen, dunkle Schächte und Netze an der Decke. Das zweite Fragment liegt ganz unten.
+242	Hex, als ich ins Wasser fiel... sah ich ein Licht. Warm. Jemand rief einen Namen. Ich glaube, es war meiner.
+243	Die Tiefe lügt, Ossian. Dort unten gibt es nichts für dich. Folge keinen Lichtern.
+244	Aber du warst da, bevor ich es erreicht habe. Du bist immer zuerst da.
+245	Ich bin schnell. Dafür ist eine Wolke da.
+246	In diesen Stein sind Namen geritzt. Dutzende. Alle mit einem Strich durchgestrichen.
+247	Reisende, die vor dir kamen. Sie haben den Weg aufgegeben.
+248	Dieser hier... die Schrift sieht aus wie meine. „Ossian". Durchgestrichen.
+249	Im Dunkeln sehen sich viele Schriften ähnlich. Vorsicht vor den Spinnen an der Decke. Weiter.
+251	Überall an der Decke hängen Spinnen. Man kommt durch, ohne alle zu besiegen.
+252	Noch mehr Netze. Und noch mehr. Die ganze Höhle sieht aus wie ein Kokon.
+253	Das Nest. Die Töchter der Königin hängen an der Decke. Schau nach oben, bevor du durchgehst.
+254	Muss ich sie alle besiegen?
+255	Nein. Geh an ihnen vorbei. Keine Spinne ist einen gebrochenen Knochen wert.
+256	Du kennst diesen Ort gut.
+257	Ich habe schon vieles durchquert, mit jemandem auf dem Rücken.
+259	Eier, dicke Netze und ganz hinten die Spinnenkönigin, die ein Fragment bewacht.
+260	Hex... das da hinten ist eine Spinne so groß wie ein Haus. Mit Krone.
+261	Die Königin des Baus. Sie bewacht ein Fragment zwischen den Eiern.
+262	Sie spuckt Netze. Wenn sie dich fängt, schlag zu und warte, bis du loskommst. Und schau zur Decke: Dort läuft sie herum.
+263	Und wenn ich falle?
+264	Ich hole dich. Sie kennt meine Wolke: Sie hat durch mich schon viele Beutetiere verloren.
+265	Beutetiere. Ist es das, was ich für euch beide bin?
+266	...Geh, Ossian. Sie wacht auf.
+268	Die Schmiede des Kobolds, der die Fragmente zu einer Krone nur für sich schmelzen will.
+269	Weiter gehe ich nicht. Das Feuer... erträgt mich nicht. Wenn du in die Lava fällst, muss ich warten, bis sich der Rauch legt.
+270	Du kannst nicht nah ans Feuer. Und nicht ans Ende des Weges. Warum?
+271	Jeder trägt seine eigenen Ketten, Ossian. Meine sind alt.
+272	Im Spiegelbild der Lava sah ich mich mit einem Gesicht. Haut, nasses Haar... und eine Laternenschnur am Handgelenk.
+273	Die Hitze täuscht die Augen. Du bist Knochen. Das warst du schon immer.
+274	Die Kreaturen hier fliehen nicht vor mir. Sie fliehen, wenn deine Wolke auftaucht.
+275	Sie kennen mich. Ich hole die, die fallen. Das ist mein Handwerk.
+276	„Hole"? Wohin?
+277	Hier hat jedes Gebiet eine Feuersperre. Sie erlischt erst, wenn niemand mehr steht.
+278	Und tief in der Schmiede lebt der Scharlachrote Minotaurus. Er fällt nicht mit einem einzigen Schlag.
+279	Nimm das Fragment. Der Kobold darf die Krone nicht vollenden.
+281	Ohne den Minotaurus ist der Berg erwacht. Die Lava kommt von hinten: Lauf ohne Halt.
+282	Der Boden bebt. Hex, die ganze Schmiede wacht auf!
+283	Der Minotaurus ist gefallen, und der Berg hat keinen Herrn mehr. Die Lava ist hinter dir her. Lauf!
+284	Wohin laufen?
+285	Nach vorn. Immer nach vorn. Und bleib nicht stehen: Sie tut es auch nicht.
+286	Du läufst nie vor irgendetwas weg, oder?
+287	Muss ich nicht. Ich schwebe.
+289	Das Heim des Schamanen. Das letzte Fragment wartet auf dem Altar, zwischen den verzauberten Wolken.

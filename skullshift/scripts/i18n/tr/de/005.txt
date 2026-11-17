@@ -1,0 +1,220 @@
+761	Echsen und Schiffbrüchige ohne Ende.
+762	Sie kommen von überall aus dem Wasser!
+763	Halte ANGRIFF und geh vorwärts.
+764	Sie greifen ohne Wut an. Es wirkt wie eine Pflicht.
+765	Es ist eine Pflicht. Die älteste, die sie haben.
+767	Wurzeln, Äste und umgestürzte Stämme über dem Wasser.
+768	Überall Wurzeln. Wie ein ertrunkener Wald.
+769	Es war ein Wald. Eines Tages stieg das Wasser und sank nie wieder.
+770	Wer hat das Wasser steigen lassen?
+771	Die Stämme rollen. Achtung.
+773	Das Echsendorf. Niemand kommt ohne Kampf durch.
+774	Ein Echsendorf. Sie haben Häuser, Hex. Familie.
+775	Und sie verteidigen den König. Jedes Gebiet öffnet sich erst, wenn alle gefallen sind.
+776	Ich kämpfe nicht gern gegen jemanden, der Familie hat.
+777	Sie sind nicht echt, Ossian. Nichts hier ist echt. Nur du.
+779	Der Echsenkönig schläft nie.
+780	Der Echsenkönig. Er sieht mich an... und dich, Hex.
+781	Er spuckt Gift, lässt die Zunge schnellen: tief, spring; hoch, duck dich. Und er springt, dass die Pfützen spritzen.
+782	Warum sieht er dich so hasserfüllt an?
+783	Alte Streitigkeiten. Bring ihn zu Fall, und es ist vorbei.
+785	Glutwolken, die beim Drauftreten zerfallen.
+786	Der Himmel ist rot. Wie eine Glut.
+787	Das ist der Himmel des Kobolds. Er hat die Wolken verbrannt, um den Himmel für sich allein zu haben.
+788	Und die Wolken tragen mein Gewicht?
+789	Einen Augenblick lang. Bleib nicht darauf stehen.
+791	Glühende Meteore, die vom Himmel fallen.
+792	Es regnet brennende Steine!
+793	Die Funken zeigen, wo es einschlägt. Halt dich fern.
+794	Der ganze Himmel fällt mir auf den Kopf!
+795	Nur die losen Teile. Was am Himmel zählt, bleibt fest an seinem Platz. Vorerst.
+797	Kobolde und Glutbienen ohne Ende.
+798	Rote Bienen und Kobolde überall!
+799	Halte ANGRIFF. Der Himmel verzeiht kein Zögern.
+800	Kleine Kobolde, ein Riesenkobold. Wo sind die mittelgroßen?
+801	Sie werden zu Riesen oder zu Asche. Hier oben gibt es kein Dazwischen.
+803	Heiße Windströmungen zwischen den Inseln.
+804	Der Wind hier ist heiß. Und aus den Steinen schießt Feuer.
+805	Tritt in den Wind, gleite und lande nicht auf den Strahlen.
+806	Geht es dir gut bei dieser Hitze?
+807	Ich halte mich fern. Feuer erinnert mich zu sehr an die Laternen.
+808	Welche Laternen?
+809	...Nur so dahingesagt. Steig mit dem Wind, los.
+811	Das Koboldschloss.
+812	Ein schwebendes Schloss. Rot, wie der Himmel.
+813	Das Koboldschloss. Nichts kommt ohne Kampf hindurch.
+814	Wie viele Schlösser hast du fallen sehen, Hex?
+815	Viele. Und alle haben sich wieder erhoben. Bis auf eines.
+817	Glutbienen und Schlosskanonen.
+818	Ein ganzer Schwarm! Und Kanonen!
+819	Die Glutbienen stoßen herab. Die Sturmbienen halten drei Treffer aus.
+820	Sie haben sich hierher verirrt, Hex.
+821	Wie du am Strand. Der Unterschied ist, dass du mich hast.
+823	Der Tresor der Kobolde.
+824	Ein Tresor mitten am Himmel. Mit einer Wand aus roten Blöcken.
+825	Lass den Schlüssel los, wechsle die Farbe, nimm ihn wieder. Du weißt ja.
+826	Du weißt immer, wie man alles öffnet, Hex. Tresore, Türen...
+827	...Und Gefängnisse. Geh, Ossian.
+829	Der Eingang ins Reich des Feindes deines Verbündeten.
+830	Das feindliche Reich meines Verbündeten. Voller summender Flügel.
+831	Du hast im Nest der Prinzen eine Seite gewählt. Jetzt will dich die ganze andere Seite loswerden.
+832	Mein Verbündeter sagt, ihr König sei der letzte Wächter.
+833	Das letzte Fragment. Nach ihm ist die Krone ganz.
+835	Ein Tagflug über den Himmel des Reichs.
+836	Wieder fliegen! Mein Verbündeter kennt den Weg.
+837	Halte den Schuss und weich allem aus. Die Route ist lang.
+838	Von hier oben sieht das Reich aus wie ein Rad. Alles dreht sich um deine Insel.
+839	Schönes Bild. Ist mir nie aufgefallen.
+840	Lügner.
+841	...Ein bisschen.
+843	Das Schloss des Reichs. Nichts kommt ohne Kampf hindurch.
+844	Überall Türme. Und in jedem Wachen.
+845	Jedes Gebiet öffnet sich erst, wenn alle gefallen sind.
+846	An der Wand ist für jeden König ein Thron gemalt. Neun.
+847	Alte Kunst. Aus der Zeit, als sie sich versammelten.
+848	Wozu?
+849	Um zu entscheiden, was mit mir geschehen soll. Ich meine: mit dem Reich.
+851	Ein Nachtflug mitten im Sturm.
+852	Blitze, Regen und Gegner. Alles auf einmal.
+853	Der Sturm ist alt. Er hat nie aufgehört, seit ich... seit es das Reich gibt.
+854	Ich mag keinen Regen. Ich weiß nicht, warum.
+855	Niemand mag ihn. Flieg schnell hindurch und denk nicht daran.
+857	Die königliche Kammer, verschlossen.
+858	Eine verschlossene Kammer oben im Turm.
+859	Federn und Leitern. Bring den Schlüssel zur Tür, ohne Eile.
+860	Noch ein Schlüssel. Ich habe schon so viele Türen für dich geöffnet, Hex.
+861	Für uns. Und diese ist fast die letzte.
+863	Windströmungen zwischen den Türmen.
+864	Zwischen den Türmen weht der Wind. Man kann bis auf die andere Seite gleiten.
+865	Tritt in den Wind, halte den Sprung. Und Vorsicht vor denen, die herabstoßen.
+866	Der Wind hier hat eine Stimme. Als würde jemand rufen.
+867	Es ist nur Wind. Wenn du einen Namen hörst, antworte nicht.
+869	Der letzte Tagflug vor der Nacht des Königs.
+870	Die Sonne geht unter. Ich erinnere mich an einen Sonnenuntergang über einem Fluss... mit Laternen.
+871	Hier gibt es keinen Fluss. Flieg, Ossian. Die Nacht des Königs kommt.
+872	Der Himmel über der Insel in der Mitte ist jetzt schwarz.
+873	Ein Zeichen, dass wir nah sind. Große Dinge werfen Schatten.
+875	Rennen und schießen auf den Mauern des Reichs.
+876	Die Mauern sind voller Wachen.
+877	Halte ANGRIFF und geh durch.
+878	Sie rufen etwas, bevor sie angreifen. Klingt wie „nicht loslassen".
+879	Sie rufen „nicht durchlassen". Du hast dich verhört.
+881	Die königliche Garde verteidigt die letzte Brücke.
+882	Die königliche Garde. Danach der König.
+883	Der letzte König, Ossian. Das letzte... Fragment.
+884	Hex, du zitterst.
+885	Das ist der Wind. Nur der Wind.
+887	Eine alte Filmrolle. Alles in Schwarz-Weiß, mit dem Rattern des Projektors.
+888	Hex? Warum ist alles grau? Und dieses Rattern?
+889	Du hast eine Filmrolle gefunden. Das ist eine sehr, sehr alte Erinnerung.
+890	Wessen Erinnerung?
+891	Meine. Von vor dem Boot. Aus der Zeit, als ich auch über solche Trickfilme gelacht habe.
+892	Du warst auch... lebendig?
+893	Schieß, Ossian. Der Film geht zu Ende.
+895	Ein leerer Pferch im Gras.
+896	Ein Pferch. Ohne ein einziges Schaf.
+897	Sie sind vor langer Zeit weggelaufen. Aber sie haben Geschenke dagelassen. Nimm sie.
+898	Eins von ihnen hatte ein schwarzes Ohr...
+899	Sie haben alle Ohren, Ossian. Weiter.
+901	Eine halb versunkene Hütte.
+902	Eine Hütte, die im Sumpf versinkt. Ist da jemand?
+903	Niemand. Nur, was übrig geblieben ist. Nimm, was glänzt.
+904	Kokons bis zur Decke.
+905	Überall Kokons. Und wenn sich einer bewegt?
+906	Die, die sich bewegen, sind nicht die, die Gold bergen. Wähle gut.
+908	Ein Tresor im schwarzen Glas.
+909	Ein Tresor im Vulkan. Wer schließt Gold im Feuer ein?
+910	Wer vergessen will, dass er es hat. So war der Minotaurus.
+912	Ein verzauberter Kreis.
+913	Die Gnome sagen, dieser Kreis ist verzaubert.
+914	Die Gnome sagen vieles. Spring auf die großen und tritt nicht auf die kleinen.
+916	Gold, das kein Goblin gefunden hat.
+917	Gold! Und kein Goblin in der Nähe.
+918	Noch nicht. Nimm es schnell.
+920	Ein riesiges Nest in der Glut.
+921	Ein Nest so groß wie ein Haus. Welcher Vogel baut so etwas?
+922	Einer, der schon fort ist. Fast alles hier ist schon fort.
+924	Ein vergessener Turm.
+925	Federn und Münzen. Die Wachen des Reichs waren eitel.
+926	Sie waren treu. Kommt aufs Gleiche raus. Nimm die Münzen.
+928	Ein riesiger Baum, der vorher nicht da war. Darin ein Schatz.
+929	Hex, dieser Baum war nicht da, als ich vorbeikam.
+930	Alte Bäume erscheinen denen, die weit genug gegangen sind. Dieser hütet Gold.
+931	Und wer hat Gold in einem Baum versteckt?
+932	Jemand, der zurückkommen wollte. Niemand kommt zurück. Nimm alles.
+934	Als das Fragment leuchtete, sah ich ein Haus. Blau, nah am Meer.
+935	Jemand drinnen rief zum Abendessen. Rief... mich?
+937	Ich hatte Hände. Echte Hände, mit Schwielen vom Holzhacken.
+938	Ich erinnere mich an den Geruch von geschnittenem Holz. Knochen riechen nicht.
+940	Ich habe Schafe gehütet. Und eine kleine Schwester, die Angst im Dunkeln hatte.
+941	Ich habe versprochen, immer vor Einbruch der Dunkelheit zurück zu sein.
+943	Das Dorf hieß Brückendorf. Eine alte Brücke führte über den Fluss.
+944	Hex hat nie von Flüssen gesprochen. Nur von Gezeiten.
+946	Beim Laternenfest ließ jeder ein Licht auf dem Fluss treiben, für die, die gegangen waren.
+947	Das warme Licht, das ich sehe, wenn ich falle... sieht aus wie sie.
+949	In jener Nacht regnete es. Die Brücke war rutschig.
+950	Meine Schwester war auf der anderen Seite. Ich ging sie holen.
+952	Jemand stand auf der Brücke. In Lila. Er streckte mir die Hand entgegen.
+953	Ich weiß nicht mehr, ob er mich festgehalten... oder gestoßen hat.
+955	Das Wasser war eiskalt. Dann eine Wolke.
+956	Und eine Stimme: „Noch nicht". Dieselbe Stimme wie immer.
+958	Mein Name... mein Name ist nicht Ossian. Er hat mir diesen Namen gegeben.
+959	Bald erinnere ich mich an alles.
+960	Die Krone ist ganz, Hex. Und jetzt? Wo ist das Gezeitentor?
+961	Es gibt kein Tor, Ossian. Es gab Siegel. Neun. Und du hast sie alle für mich gebrochen.
+962	Die Könige... haben sie keine Fragmente bewacht?
+963	Sie haben mein Gefängnis bewacht. Du warst der geduldigste Schlüssel, den ich je hatte.
+964	Und ich halte, was ich verspreche. Setz die Krone auf. Sie gibt dir zurück, was die Brücke genommen hat.
+965	...Meine Hände. Mein Gesicht. Ich bin... wieder ich. Ich erinnere mich an alles.
+966	Du warst es auf der Brücke. Du hast mir die Hand gereicht und mich fallen lassen.
+967	Ich brauchte jemanden ohne Angst vor dem Fallen. Ein Toter fürchtet nichts.
+968	Jetzt wähle. Ich öffne den Weg des Flusses, und du kehrst heim, zu deiner Schwester. Unversehrt.
+969	Diese Welt bleibt natürlich bei mir. Niemand wird sie vermissen.
+970	Und wenn ich Nein sage?
+971	Dann versuch, mich zu Fall zu bringen. Wenn es dir gelingt, kehren die Siegel zurück... und du wirst wieder zu Knochen. Für immer.
+973	Die Welt ist frei.
+974	Du... hast die Knochen... deinem Zuhause vorgezogen?
+975	Meine Schwester hat das ganze Dorf. Diese Welt hatte nur mich.
+976	Die Siegel kehren zurück. Ich gehe zurück ins Gefängnis. Und du...
+977	Ich werde wieder zu Knochen. Schon gut. Jetzt weiß ich, wer ich bin.
+978	Und wenn ich das nächste Mal falle, holt mich niemand zurück.
+979	Ich gehe durch das Licht, wenn es Zeit ist. Auf meine Weise.
+981	Du bist heimgekehrt.
+982	Ich will nach Hause.
+983	Weise Wahl. Der Fluss trägt dich. Schau nicht zurück.
+984	...Die Inseln färben sich lila. Die Könige, die Kreaturen. Alles.
+985	Das ist nicht mehr dein Problem. Geh. Deine Schwester wartet auf der Brücke.
+986	Ich war vor Einbruch der Dunkelheit da. Wie versprochen.
+987	Aber manchmal, wenn ich auf den Fluss schaue, sehe ich lila Wolken. Und jemanden, der darin lächelt.
+989	Die Krone ist ganz.
+990	Die Krone ist ganz. Das Tor hat sich geöffnet... und auf der anderen Seite ist ein Fluss. Und Laternen.
+991	Setz die Krone auf, Ossian. Mit ihr bringt dich niemand mehr zu Fall. Bleib. Herrsche mit mir über die Gezeiten.
+992	Das Licht ruft mich wieder. Bei meinem Namen. Dem echten.
+993	Wenn du hinübergehst, vergisst du alles: die Inseln, die Gestalten, mich. Keine Wolke wird dich mehr holen.
+994	Du hast mich nie gerettet, oder? Jedes Mal, wenn ich fiel, ging ich fort. Und du hast mich zurückgeholt.
+995	...Ich stand auch einmal auf dieser Seite des Lichts. Vor so langer Zeit, dass ich meinen Namen vergessen habe.
+996	Das also geschieht mit denen, die bleiben.
+997	Die Wahl liegt bei dir. Das tat sie immer. Ich habe es dir nur... nie gesagt.
+998	Noch nicht.
+999	Zurück. Immer zurück.
+1000	Schau nicht ins Licht.
+1001	Ich halte dich.
+1002	Es ist nicht deine Zeit... zu gehen.
+1003	Fast hätte ich dich verloren.
+1004	So ist es, Ossian! Du hast das Wesen einer anderen Kreatur berührt und ihre Gestalt angenommen.
+1005	Hex?! Wo kommst du her? Und warum habe ich... das?
+1006	Die Gabe, die ich dir geliehen habe. Deine Seele hat sich von den Knochen gelöst, darum passt sie in jede Gestalt.
+1007	Ein lebendiger Körper könnte das nie. ...Ich meine, ein gewöhnlicher Körper.
+1008	„Gelöst"? Was heißt gelöst?
+1009	Einzelheiten. Nimm den Gegenstand einer Kreatur, und du wirst zu ihr. Wenn du fällst, wirst du wieder zu Knochen, und ich hole dich. Geh!
+1010	Schuppen. Endlich eine Haut. Schade, dass es nicht meine ist.
+1011	Toll, jetzt habe ich Flöhe. Ich wusste nicht mal, dass Knochen Flöhe kriegen.
+1012	Ein aufrecht stehender Hai mit Harpune in der Hand. Ergibt total Sinn. Nichts hier ergibt Sinn.
+1013	Klein, grün und mit einem Speer. Ich fühle mich... völlig normal.
+1014	Acht Beine. Ich wusste kaum, was ich mit zweien anfangen soll.
+1015	Eine Fledermaus. Natürlich. Das Natürlichste für ein Skelett.
+1016	Eine Fackel mitten in der Höhle. Was für eine leuchtende Idee. Wortwörtlich.
+1017	Ich bin der Kobold geworden. Wenn ich mir begegne, verpasse ich mir eine.
+1018	Hörner, Muskeln, Stallgeruch. Zwei von drei ist nicht schlecht.
+1019	Summend und mit Stachel. Hätte ich Würde, wäre sie jetzt dahin.
+1020	Ein Schleudergnom. Trotzdem größer, als ich dachte.

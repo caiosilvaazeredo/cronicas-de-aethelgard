@@ -1,0 +1,133 @@
+290	Willkommen in meinem Heiligtum. Tritt nur auf die leuchtenden Wolken; die anderen tragen niemanden.
+291	Dieser Ort... auf dem Altar steht eine Reihe zerbrochener Kronen. Und eine Reihe erloschener Laternen.
+292	Andenken an jene, die hier vorbeikamen.
+293	Vorbei wohin, Hex? Niemand ist je nach Hause zurückgekehrt, oder?
+294	Zuhause ist dort, wo jemand auf dich wartet. Ich warte jedes Mal auf dich, wenn du fällst. Denk darüber nach.
+295	Wenn ich das letzte Fragment habe, öffnet sich das Tor. Du hast es geschworen.
+296	Ich habe geschworen, dass es sich öffnet. Nicht, in welche Richtung.
+297	...Was?
+298	Nichts. Altmännergerede. Geh, Ossian. Beende, was du begonnen hast.
+300	Riesige Lücken zwischen den Wolken. Nur der Wind trägt von einer Insel zur nächsten.
+301	Die Wolken sind zu Ende. Zwischen den Inseln gibt es nur noch Wind.
+302	Himmelsströmungen. Tritt in den Wind, und er trägt dich nach oben. Halte den Sprung und gleite.
+303	Und wenn der Wind aufhört?
+304	Er hört nicht auf. Er weht, seit ich hier angekommen bin. Seit langer Zeit.
+305	Wie lange?
+306	Länger, als du dich erinnerst, gelebt zu haben.
+308	Mit dem Fledermausprinzen durch die Nacht bis zum Bienenkönig.
+309	Der Prinz sagt, der Bienenkönig bewacht den Weg zur Gezeitentreppe.
+310	Das tut er. Und es wird ihm nicht gefallen, seinen Neffen besiegt zu sehen.
+311	Ich habe niemanden verraten. Ich habe eine Seite gewählt.
+312	Hier ist eine Seite zu wählen dasselbe. Flieg, Ossian. Die Nacht gehört der Fledermaus.
+313	Du hilfst mir in letzter Zeit ziemlich viel, Hex.
+314	...Wir sind nah am Ende. Ich will, dass du es erreichst.
+315	Wirklich?
+316	Mit dem Bienenprinzen durch die Nacht bis zum Fledermauskönig.
+317	Die Biene sagt, der Fledermauskönig will Rache für seinen Sohn.
+318	Und die Nacht gehört ihm. Jeder Schatten ist eine Fledermaus. Es werden viele sein, und stärkere.
+319	Und ich mit einem Knöchelchen nach dem anderen.
+320	Du wolltest den Prinzen stürzen. Jetzt stürze den Vater.
+322	Lose Inseln, die bis zum Gezeitentor aufsteigen. Nur wer rennt und in der Luft erneut springt, kommt durch.
+323	Die Krone liegt ganz in deinen Händen. Jetzt fehlt nur noch der Aufstieg über die Gezeitentreppe zum Tor.
+324	Treppe? Das sind lose Inseln, mit Meer darunter und riesigen Lücken dazwischen.
+325	Niemand erreicht das Tor zu Fuß. Du musst rennen, springen und in der Luft noch einmal springen. Alles auf einmal.
+326	Du redest wie jemand, der viele hat scheitern sehen.
+327	Viele. Die Lücken wurden mit jedem, der fiel, breiter.
+328	Und du hast sie alle auf deiner Wolke geholt.
+329	...Ich habe sie geholt. Bis zu dem Tag, an dem sie aufhörten zu fallen.
+330	Was ist mit ihnen passiert, Hex?
+331	Sie haben das Tor erreicht. Geh, Ossian. Diesmal bleibe ich hier und schaue zu.
+333	Das Tor führte nicht nach Hause. Es führte in ein Haus. Überall Türen, und fast alle lügen.
+334	Ich bin durch das Tor gegangen und... ist das ein Haus? Flure, überall Türen.
+335	Das Haus des Fährmanns. Mein altes Haus. Es spielt gern mit denen, die eintreten.
+336	Dein Haus? Du hast nie gesagt, dass du ein Haus hast.
+337	Du hast nie gefragt. Folge dem Mond, der auf die Türen gemalt ist: Er zeigt immer nach draußen.
+338	Und die anderen Türen?
+339	Die bringen dich zum Anfang zurück. Und hüte dich vor dem roten Mond. Er lügt auch.
+340	Wer sind diese durchscheinenden Skelette?
+341	Mieter. Knochen, die sich weigerten, dem Mond zu folgen. Bleib nicht stehen, um zu plaudern.
+343	Regale bis zur Decke, Brücken, die nur einen Augenblick lang existieren, und eine verschlossene Tür.
+344	Eine Bibliothek. Alle Bücher tragen denselben Titel auf dem Rücken: „Ossian".
+345	Zufall. Ein häufiger Name hier.
+346	Die Ausgangstür ist verschlossen.
+347	Der Schlüssel liegt oben auf den Regalen. Die Hebel wecken die Geisterbrücken, aber nur für einen Augenblick.
+348	In diesem Buch ist eine Seite markiert: „Der Fährmann, der das Ruder nicht losließ". Bist du das?
+349	...Leg das Buch weg, Ossian. Nimm den Schlüssel.
+351	Fast völlige Dunkelheit. Kerzen zum Anzünden und rissige Böden, die niemanden tragen.
+352	Ich sehe nichts. Hex? Hex!
+353	Ich bin hier. Das bin ich immer. Berühre die Kerzen: Mit dem Licht erscheint der Weg.
+354	Die Hälfte dieses Bodens ist falsch. Er reißt und bricht ein, wenn ich drauftrete.
+355	Wie die Versprechen dieses Hauses. Bleib nicht darauf stehen. Und zünde die drei großen Kerzen an: Nur mit ihnen öffnet sich die letzte Tür.
+356	Da hinten... ist das das Licht der Laternen? Das vom Fest, über dem Fluss?
+357	...Ja. Diesmal hole ich dich nicht, wenn du fällst. Und auch nicht, wenn du nicht fällst.
+359	Eine verlassene Werkstatt am Strand. Die Tür öffnet sich nur mit dem goldenen Schlüssel.
+360	Eine verschlossene Tür mitten am Strand? Wer schließt eine Tür ohne Wand ab?
+361	Jemand, der nur eine Art von Reisenden durchlassen wollte. Die, die tragen, was ihnen gehört.
+362	Deine Knochenhände halten jetzt Dinge. Nimm den Schlüssel und bring ihn zur Tür.
+363	Und diese bunten Geschenke überall?
+364	Andenken derer, die vor dir kamen. Nimm sie, wenn du willst. Sonst holt sie niemand mehr.
+366	Eine Prärie voller Plünderer. Halte ANGRIFF: Die Knochen fliegen als Salve.
+367	Sie hören nicht auf zu kommen, Hex!
+368	Dann hör nicht auf zu schießen. Halte den Schlag, und deine Knochen fliegen von selbst.
+369	Seit wann schieße ich Knochen?
+370	Seit jeher. Du hattest nur keinen Grund, dich daran zu erinnern.
+372	Rote und blaue Blöcke, die per Hebel erscheinen und verschwinden.
+373	Die Blöcke verschwinden, wenn ich den Hebel schlage. Rot, blau, rot...
+374	Es gibt immer nur eine Farbe. Wähle gut, welche Welt du stehen lässt.
+375	Geduckt springe ich jetzt höher. Handstand.
+376	Saltos auch. Ein leichter Körper kann Kunststücke, die ein lebendiger Körper nicht könnte.
+377	Du sprichst immer von diesem „lebendigen Körper".
+378	Das ist nur eine Redensart, Ossian.
+380	Goldfelsen versperren die Mine. Ein Hammer regelt das.
+381	Ich habe auf der Flucht einen Schmiedehammer mitgenommen. Er ist noch warm.
+382	In der Luft mit voller Kraft nach unten: Der Hammerschlag auf den Boden zerbricht die Goldfelsen.
+383	Gold, das den Durchgang versperrt. Welche Verschwendung.
+384	Gold kauft hier nichts. Nicht einmal einen Ausgang.
+386	Zwei Prinzen, ein Nest und ein Pakt, der den Himmel verändert.
+387	Hex, diese Höhle ist voller Flügel. Fledermäuse UND Bienen?
+388	Zwei Reiche, die sich hassen. Die Prinzen streiten seit Jahrhunderten um dieses Nest.
+389	Und ich muss mitten durch diesen Streit.
+390	Die Prinzen sprechen, Ossian. Etwas Seltenes hier. Hör dir an, was sie anbieten.
+391	Seit wann traust du denen, die sprechen?
+392	Tue ich nicht. Aber ein Prinz, der dir sein Leben schuldet... fliegt sehr gut.
+394	Auf dem Fledermausprinzen gegen den Riesenkobold.
+395	Der Kobold ist gewachsen? Er ist so groß wie eine Wolke!
+396	Er hat die Glut der Schmiede gefressen. Jetzt will er den Himmel. Dein neuer Verbündeter bringt dich zu ihm.
+397	Die Fledermaus schießt drei Knochen auf einmal und schreit auch noch. Ist das nicht geschummelt?
+398	Er ist ein Prinz. Der Schrei löscht Schüsse in der Nähe, und seine Flügel halten einen Treffer aus.
+399	Kommst du nicht mit?
+400	Von hier unten sehe ich besser. Schieß, bis seine Leiste leer ist.
+401	Auf dem Bienenprinzen gegen den Riesenkobold.
+402	Er hat die Glut der Schmiede gefressen. Jetzt will er den Himmel. Steig auf den Bienenprinzen und hol ihn runter.
+403	Er schießt nur ein Knöchelchen nach dem anderen, Hex.
+404	Du hast dich entschieden, die Fledermaus zu stürzen. Jetzt will ihr ganzes Reich deinen Kopf. Weich viel aus und schieß ohne Pause.
+405	Du wirkst... zufrieden.
+406	Ein schwacher Verbündeter braucht mich mehr. Das ist alles.
+408	Ein Wald mit einem Abgrund, einem Tor und einem sturen Schaf.
+409	Eine Axt? Im Heiligtum gab es nur Wolken.
+410	Habe ich irgendwo gefunden. Fälle den Baum in die richtige Richtung, und er wird zur Brücke.
+411	Und das Schaf?
+412	Stell es auf die Platte. Das Tor öffnet sich mit Gewicht. Wie fast alles in diesem Land.
+413	Fast alles?
+414	Du wiegst nichts, Ossian. Deshalb spürt die Platte deine Schritte nicht.
+416	Eine dunkle Mine voller Goblins, Spinnen und Fledermäuse.
+417	Mehr Schüsse. Mehr Knochen. Mehr Dinge, die aus der Dunkelheit kommen.
+418	Die Mine hütet Gold und hütet Angst. Schieß auf beides.
+419	Hex, wem gehört dieses Gold?
+420	Denen, die geblieben sind. Wer hinübergeht, nimmt nichts mit.
+422	Der Schlüssel liegt oben auf einem Steinturm.
+423	Der Schlüssel ist da oben. Es gibt keine Leiter.
+424	Du hast jetzt die Spitzhacke. Spring an die Wand und klettere.
+425	Aber mit dem Schlüssel in der Hand kann ich nicht klettern.
+426	Dann geh auf der anderen Seite hinunter. Nicht jeder Aufstieg braucht einen Rückweg.
+428	Eine Urne in der Mitte des Mausoleums und Geister, die von beiden Seiten kommen.
+429	Eine Urne. Mit deinem Namen darauf, Hex.
+430	Lass die Geister sie nicht berühren. Drei Berührungen, und sie zerbricht.
+431	Was ist darin?
+432	Was von einem Fährmann übrig ist. Beschütze sie, Ossian. Bitte.
+433	...Du hast noch nie „bitte" gesagt.
+435	Eine Krabbe ist mit dem Strandschlüssel abgehauen.
+436	Hex, die Krabbe da trägt einen Schlüssel auf dem Rücken!
+437	Krabben behalten alles, was glänzt. Triff sie: Der Schlüssel fällt.
+438	Und wenn sie ihn wieder schnappt?
+439	Dann triff sie noch mal. Hier gibt niemand ohne Kampf her, was ihm gehört.

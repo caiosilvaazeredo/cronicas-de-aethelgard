@@ -1,0 +1,129 @@
+441	La marea sale e scende da sola. Il terreno basso scompare sott'acqua.
+442	L'acqua sta salendo! E scendendo! E salendo di nuovo!
+443	La marea di queste isole respira. Quando arriva, sali in alto e aspetta.
+444	Chi la comanda?
+445	Il Re Squalo Arpione. Custodisce il primo frammento della corona.
+446	Uno squalo... con la corona?
+447	Ogni re custodisce un pezzo. Insieme, aprono la tua strada.
+449	I resti di una nave. Le assi staccate affondano subito dopo che ci sali.
+450	Una nave intera, fatta a pezzi.
+451	Non fermarti sulle assi. Affondano.
+452	Chi c'era su quella nave?
+453	Gente che voleva anche lei tornare a casa.
+454	...E ci sono tornati?
+455	Salta, Ossian.
+457	La nave dei goblin pirati. I cannoni spazzano il ponte.
+458	Pirati! E cannoni puntati contro di me!
+459	Le palle arrivano dritte. Salta o difenditi con lo scudo.
+460	Il capitano è sul cassero, in fondo.
+461	Lavora per il Re Squalo. Tutti in queste acque lavorano per lui.
+463	Una caverna intera sott'acqua. Solo uno squalo la attraversa.
+464	La caverna è tutta allagata, Hex. Affonderò.
+465	Non da squalo. Lì dentro, ti darò la sua forma.
+466	Puoi farlo senza che io prenda un arpione?
+467	Quaggiù posso più di quanto immagini.
+468	...Non l'avevi mai detto prima.
+469	Nuota. Le meduse non perdonano.
+471	Le leve aprono e chiudono le chiuse: alta marea o bassa marea, scegli tu.
+472	Leve! A cosa servono?
+473	Aprono e chiudono le chiuse del faro. Alta marea: le casse salgono. Bassa marea: compare il terreno.
+474	Allora comando io la marea, come il Re.
+475	Per ora. Approfittane finché puoi.
+477	Il ponte è sprofondato nel mezzo: la strada passa sui pennoni, lassù in alto.
+478	Il ponte si è spezzato a metà! Non si passa.
+479	Sì che si passa: da sopra. Sui pennoni e sulle coffe.
+480	Da quassù si vede il faro, la spiaggia... e una luce calda, lontano.
+481	Non guardare la luce. Guarda dove metti i piedi.
+483	Coralli di fuoco, meduse e la marea. L'ultimo passo prima del Re.
+484	I coralli qui bruciano!
+485	Corallo di fuoco. Non toccarlo. E la marea arriva ancora.
+486	Dopo la barriera, il Re Squalo.
+487	Dopo la barriera, il primo frammento. Pensa al frammento.
+489	Il Re Squalo Arpione comanda la marea. Con la bassa marea si arena.
+490	È lui. Il Re Squalo Arpione.
+491	Comanda la marea. Quando l'acqua cala, resta bloccato nella sabbia. Allora attacca.
+492	E quando la marea sale?
+493	Sali anche tu. Sulle rocce ai lati. I suoi arpioni restano conficcati in aria: usali come gradini.
+494	Hex... perché vuoi così tanto quel frammento?
+495	Io? È per te, Ossian. È sempre stato per te.
+497	La corona è intera. I sigilli sono caduti.
+499	L'ingresso della Prateria delle Ossa, terra degli Gnoll.
+500	Che odore è questo? Erba... e cane bagnato.
+501	Gnoll. La prateria è loro. I cacciatori lanciano ossa che curvano e tornano indietro.
+502	Ossa che tornano. Che ironia.
+503	Qui tutto torna, Ossian. Tranne chi va avanti.
+505	La mandria corre all'impazzata sul terreno basso.
+506	Il terreno trema!
+507	La mandria degli Gnoll. Quando arriva, sali su qualcosa di alto.
+508	E se resto giù?
+509	Allora verrò a prenderti di nuovo. Ma preferirei di no.
+511	Pendii di ossa antiche. Le rocce rotolano dall'alto.
+512	Quante ossa. Sono tutte di gnoll?
+513	Non tutte. Alcune sono di viaggiatori venuti a cercare una corona prima di te.
+514	...Prima di me? Quanti?
+515	Attento alle rocce. Rotolano senza avvisare.
+517	Pecore, piastre e cancelli. La chiave è in cima al fienile.
+518	Pecore! Io... badavo alle pecore. Credo.
+519	Metti le pecore sulle piastre. I cancelli si aprono con il peso.
+520	Perché mi ricordo delle pecore, Hex?
+521	Tutti si ricordano delle pecore. Prendi la chiave.
+523	Cespugli che tremano. Gnoll nascosti in attesa.
+524	Quel cespuglio si è mosso.
+525	Gnoll in agguato. Si nascondono nell'erba e saltano addosso a chi passa vicino.
+526	Almeno si vede il tremolio.
+527	Occhi aperti, Ossian. In questo mondo, quasi niente è ciò che sembra.
+529	La carovana non smette di mandare cacciatori.
+530	Un'intera carovana che viene verso di me.
+531	Tieni ATTACCA e non smettere di sparare.
+532	Cosa portano su quei carri?
+533	Ossa. Per il Re. Le colleziona.
+535	Vuoti larghi da attraversare con le correnti di vento.
+536	I vuoti sono enormi. Non posso saltarli.
+537	Entra nel vento. Ti solleverà. Poi tieni premuto il salto e plana.
+538	Da quassù vedo un ponte, lontano, oltre il mare.
+539	Non c'è nessun ponte. È un miraggio del vento.
+541	Il Re Gnoll custodisce il secondo frammento.
+542	È lui. Più grande di quanto pensassi. E con macchie viola...
+543	Il suo osso va e torna. Basso, salta; alto, accovacciati. Quando salta, togliti da sotto.
+544	Perché ha gli stessi colori tuoi, Hex?
+545	Coincidenza. Abbattilo, Ossian. Il frammento aspetta.
+547	Fili di ragnatela tesi sopra l'abisso. Si spezzano.
+548	Questo è un ponte? È un filo di ragnatela!
+549	Fili forti, ma non per sempre. Sali e corri.
+550	Chi ha tessuto ponti in mezzo alla caverna?
+551	La Regina. Le piace che le visite arrivino fino a lei.
+553	Buio pesto. Solo le torce mostrano la strada.
+554	Hex? Non vedo niente.
+555	Tocca le torce. Si accendono. Le tre grandi aprono l'uscita.
+556	Strano. Avevo paura del buio? No... era qualcun altro ad averne.
+557	Concentrati sulle torce, Ossian.
+559	Bozzoli appesi ai fili, che dondolano.
+560	Questi bozzoli... c'è qualcuno dentro?
+561	C'è il pranzo della Regina. Non toccarli, o diventi la cena.
+562	Che schifo.
+563	Che fame, direbbe lei.
+565	Ragni saltatori e pipistrelli vampiro, senza sosta.
+566	Saltano! I ragni verdi saltano!
+567	Allora non smettere di sparare. Tieni ATTACCA.
+568	E i pipistrelli rossi?
+569	Quelli si gettano in picchiata. Sparagli prima.
+571	Il nido della Regina. La chiave è lassù.
+572	Uova. Migliaia di uova. E la chiave in cima al nido.
+573	Un muro di blocchi rossi sbarra la strada. Cambia colore con la leva.
+574	Con la chiave in mano non posso colpire la leva.
+575	Allora lascia la chiave, colpisci e riprendila. Non tutto si risolve con la fretta.
+577	L'ingresso della montagna di fuoco.
+578	Il terreno ribolle, Hex. E quel buco che gorgoglia?
+579	Un geyser. Gorgoglia prima di sputare fuoco. Aspetta che passi e corri.
+580	Il Minotauro Scarlatto vive qui dentro?
+581	Nel cuore della montagna. Martella la lava. Custodisce il quinto frammento.
+583	La lava sale e scende come la marea.
+584	La lava sale! Proprio come la marea sulle isole!
+585	La montagna respira come il mare. Sali sul basalto: galleggia.
+586	In questo mondo tutto sale e scende. Perfino io.
+587	Tu sali soltanto, Ossian. Te lo garantisco.
+589	Campi di geyser che eruttano a ritmo.
+590	Uno, due, tre... eruttano in sequenza.
+591	Come un cuore. Impara il ritmo e passa tra i battiti.
+592	Conosci bene questa montagna.
+593	Conosco bene tutte le prigioni. Voglio dire... tutti i posti.

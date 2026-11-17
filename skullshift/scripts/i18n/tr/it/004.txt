@@ -1,0 +1,139 @@
+595	Diavoletti e minotauri di lava, senza sosta.
+596	Minotauri rossi! Caricano come tori infuriati!
+597	Allora spara prima che arrivino. Tieni ATTACCA.
+598	Chi ha addestrato tutti questi tori di lava?
+599	Il Minotauro non addestra: forgia. Ogni soldato esce dall'incudine sapendo già chi proteggere.
+600	Proteggere da me?
+601	Da te. Da me. In fondo, dalla stessa cosa.
+603	Lastre di pietra nera che affondano nella lava.
+604	Lastre nere che galleggiano sulla lava. E cannoni!
+605	L'ossidiana affonda dopo che ci sali. Non fermarti.
+606	Chi ha messo dei cannoni in una fucina?
+607	Al Minotauro non piacciono le visite. A nessun re piacciono.
+609	L'officina del fabbro, chiusa da rocce d'oro.
+610	Un'officina. Incudini, attrezzi... so usare queste cose.
+611	Ah sì? Interessante. Usa il martello sulle rocce e prendi la chiave.
+612	Avevo i calli sulle mani a forza di lavorare. Me lo ricordo.
+613	Le ossa non hanno calli, Ossian.
+615	Il cuore della montagna. Niente passa senza combattere.
+616	I sentieri si chiudono col fuoco finché non abbatto tutti.
+617	Il Minotauro non lascia passare nessuno senza combattere. Dopo di qui, c'è lui.
+618	Si sente la montagna battere sotto i piedi.
+619	È il frammento. Pulsano quando qualcuno si avvicina. Come se avessero paura.
+621	Il bosco degli gnomi con la fionda.
+622	Alberi enormi. E qualcuno che mi tira ghiande in testa.
+623	Gnomi. Piccoli, testardi e con una buona mira.
+624	Questo odore di legno... lo conosco.
+625	Tutti i boschi hanno lo stesso odore, Ossian.
+627	Funghi che lanciano chi ci cade sopra.
+628	Le pareti sono troppo alte da saltare.
+629	Cadi sui funghi rossi. Ti lanceranno lassù in alto.
+630	E se ne mangio uno?
+631	Non hai lo stomaco, Ossian.
+633	Il terreno sparisce nel fiume. La strada passa in alto.
+634	Il fiume ha inghiottito il sentiero.
+635	Allora passa in alto, di chioma in chioma. Non guardare giù.
+636	Da lassù si vedono tetti azzurri, lontano, lontanissimo...
+637	È solo il riflesso del cielo nell'acqua.
+639	Tronchi che galleggiano sul fiume: ci si può camminare sopra.
+640	Tronchi galleggianti. Qualcuno ha tagliato questi alberi.
+641	Gli gnomi buttano i tronchi nel fiume per portarli al villaggio. Camminaci sopra.
+642	Tagliavo la legna. Dietro una casa azzurra. Ne sono sicuro.
+643	Attraversa il fiume, Ossian.
+645	Gnomi con la fionda dappertutto.
+646	Una pioggia di ghiande!
+647	Rispondi con le ossa. Tieni ATTACCA.
+648	Perché difendono così tanto un bosco?
+649	Perché sono stati piantati qui per questo. Uno gnomo non chiede; uno gnomo sorveglia.
+651	Mucchi di muschio che nascondono gnomi.
+652	Quel muschio ha tremato. Proprio come l'erba della prateria.
+653	Gnomi del muschio. Hanno imparato dagli Gnoll.
+654	O qualcuno l'ha insegnato a tutti e due.
+655	...Attento ai tronchi.
+657	Il villaggio degli gnomi. Nessuno passa senza combattere.
+658	Un villaggio vero. Case, camini, panni stesi...
+659	Gli abitanti difendono il Re. Ogni area si apre solo quando cadono tutti.
+660	Io vivevo in un villaggio così, vero?
+661	Vivevi dove ti ho trovato: sulla spiaggia.
+663	Il Re Gnomo custodisce il frammento ai piedi dell'albero più vecchio.
+664	Uno gnomo grande come una casa. Con il cappello viola.
+665	Lancia ghiande ad arco, fa rotolare tronchi giganti e scuote l'albero.
+666	Viola, di nuovo. Tutti i re indossano il tuo viola, Hex.
+667	È il colore dei re. Tutto qui. Va'.
+669	Le miniere dei goblin, piene di torce e d'oro.
+670	Quanto oro! E quante torce accese.
+671	I goblin scavano da secoli. Il soffitto è vecchio: quando cade polvere, togliti da sotto.
+672	Scavano per cosa? Qui l'oro non compra niente. L'hai detto tu.
+673	Il Re Goblin non lo sa. E non ha bisogno di saperlo.
+675	Il soffitto della galleria sta crollando.
+676	Tutto il soffitto sta venendo giù!
+677	La polvere avvisa dove cade la pietra. Corri in mezzo.
+678	Queste travi sono marce. Da quanto tempo scavano qui?
+679	Da quando qualcuno ordinò di nascondere il frammento molto in profondità. Tanto, tanto tempo fa.
+681	Le torce si sono spente.
+682	Di nuovo buio. Qualcuno ha spento le torce apposta.
+683	Accendi le torce. Le tre grandi aprono l'uscita.
+684	Mia sorella aveva paura del buio. Le lasciavo una candela accesa.
+685	...Tua sorella. Mh. Accendi le torce, Ossian.
+687	Rocce d'oro chiudono le gallerie.
+688	Di nuovo rocce d'oro. Martellata!
+689	In aria, scendi con tutta la forza. E porta la chiave alla porta.
+690	Tanto oro e nessuno se lo porta via.
+691	Portarlo dove? Non c'è mercato fuori da questo regno. Non c'è un fuori.
+692	Hai detto che il Portale della Marea porta fuori.
+693	L'ho detto. E porta fuori. Per te.
+695	Goblin minatori lanciano bombe.
+696	Stanno lanciando bombe!
+697	Minatori. Fanno saltare la roccia e chiunque sia vicino. Schiva l'arco.
+698	Se salto in aria insieme alla roccia, vieni a prendermi?
+699	Sempre. A pezzi, se serve. Non perdo nessuno dei miei.
+701	L'acqua della miniera sale e scende.
+702	La marea dentro una miniera? Non ha senso.
+703	L'acqua sale da sotto. Poi riscende. Come tutto qui.
+704	Come tutto qui... ritorna.
+705	Resta in alto, Ossian.
+707	Il fuoco degli abissi è blu.
+708	Fuoco blu! E i goblin che lo portano corrono come matti.
+709	È il fuoco del fondo della terra. Più caldo di quello rosso. Non fartelo arrivare addosso.
+710	Perché questo fuoco è blu?
+711	È un fuoco che non scalda. I goblin lo usano per vedere senza essere visti. Non mi piace né l'una né l'altra cosa.
+713	Il tesoro del Re. Custodito da tutti.
+714	Montagne d'oro. E guardie in ogni angolo.
+715	Ogni area si apre solo quando cadono tutti. Poi, il Re.
+716	Se il re ha tutto questo, perché vuole ancora il frammento?
+717	Non VUOLE il frammento, Ossian. Lui... lascia stare. I re sono avidi, tutto qui.
+719	Il Re Goblin della Torcia custodisce il frammento in mezzo all'oro.
+720	Il Re Goblin. Cappuccio nero e torcia rossa.
+721	Batte la torcia a terra e lancia onde di fuoco: salta. E corre da una parte all'altra.
+722	Hex, quando cadrà l'ultimo re, cosa succederà a questo mondo?
+723	Niente che tu vedrai, Ossian. Sarai a casa.
+725	Acqua ferma, muschio e lucertole.
+726	Che acqua verde. E quest'odore di foglie marce.
+727	La laguna delle lucertole. Il Re Lucertola vive nel mezzo e non dorme mai.
+728	Mai? Neanche un pisolino?
+729	Chi custodisce un sigillo... voglio dire, un frammento... non può dormire.
+731	Foglie giganti che affondano quando ci sali.
+732	Foglie grandi come un tavolo!
+733	Reggono uno scheletro per un istante. Solo un istante.
+734	Questi fiori si aprono solo quando passo.
+735	Sentono il movimento. Qui da tempo ben poco cammina in piedi.
+737	L'acqua della palude sale e scende.
+738	Anche qui l'acqua sale. Perfino la palude ha la marea?
+739	Tutta l'acqua di questo mondo obbedisce allo stesso ritmo.
+740	Al ritmo di chi?
+741	Sali sui tronchi, Ossian.
+743	Spine e lucertole viola che sputano veleno.
+744	Lucertole viola. Viola come te, Hex.
+745	Il loro veleno è viola. Io non ho veleno.
+746	Sicuro?
+747	Schiva le spine.
+749	Un granchio dell'acquitrino ha preso la chiave.
+750	Una casetta da pescatore. Uguale a quelle del mio... a quelle che ho visto.
+751	Un granchio ha preso la chiave. Sai già cosa fare.
+752	Una lucertola che pesca. Sembra in pace.
+753	La pace di chi non sa cosa sorveglia. Non svegliarlo per questo; passa e basta.
+755	In fondo alla laguna, solo una lucertola può attraversare.
+756	Il sentiero sprofonda nella laguna.
+757	Laggiù ti darò la forma di una lucertola. Le lucertole nuotano.
+758	Non ti serve più nessun oggetto per trasformarmi, vero?
+759	Più sigilli cadono... voglio dire, più frammenti raccogli, più posso fare.

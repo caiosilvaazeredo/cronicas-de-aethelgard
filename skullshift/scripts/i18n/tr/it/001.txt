@@ -1,0 +1,142 @@
+140	La campana del villaggio. Il villaggio del... del Ponte. Suonava sei volte e io correvo a casa.
+141	Cos'è stato? Hai detto un nome. Che nome hai detto?
+142	Il re è grande quanto il mio femore e ha il doppio della mia rabbia.
+143	I piccoli covano i rancori più grandi. Va'.
+144	Binari, travi, torce. Ai goblin piace un buco in ordine.
+145	Scavano in cerca d'oro. Oro! Come se comprasse l'uscita.
+146	Goblin con le torce in fila. Qualcuno li ha avvisati che arrivavo.
+147	Il re conta ogni pepita e ogni soldato. Si accorgerà che mancano questi.
+148	Polvere che cade dal soffitto. Subito dopo, il soffitto.
+149	Una lanterna di carta tra le mani. Ci ho scritto un nome. Di chi?
+150	Svelto. Queste miniere non sono state fatte per durare. Solo per nascondere.
+151	Buio pesto. Meno male che le ossa brillano un po' al buio. Non brillano? Peccato.
+152	Segui le torce. Io così in fondo non scendo. Da qui in giù sei solo.
+153	Oro su tutta la parete. E nessuno qui sembra più felice per questo.
+154	La ricchezza in una prigione resta una prigione. ...È un detto. Lascia stare.
+155	Un barile con la miccia. Il mio tipo di soluzione: rapida e rumorosa.
+156	Fuochi d'artificio che scoppiano in cielo. Era festa. Una manina che mi tirava la manica.
+157	Attento a cosa svegli con tutto questo rumore.
+158	La miniera si è allagata. I goblin hanno lasciato perfino la gavetta a galleggiare.
+159	L'acqua trova sempre la strada verso il basso. Come certe anime.
+160	Fuoco blu. Freddo. Mi si addice più dell'altro.
+161	Un cappotto blu appeso dietro la porta. Troppo piccolo per me. Suo.
+162	Chi è "lei", Ossian? Stai parlando da solo.
+163	Una montagna d'oro. E nel mezzo, un trono vuoto che aspetta.
+164	È uscito ad accoglierti. Un frammento vale più di tutto questo messo insieme.
+165	Il re ha portato la torcia più grande. Ovviamente.
+166	Spegnila. Non mi piace come illumina le cose.
+167	Isole di nuvola. Sotto, il nulla. Non guardo, non guardo, ho guardato.
+168	Da qui ti vedo bene. È in cielo che mi muovo meglio.
+169	Tutto il cielo è rosso. Sembra un tramonto che non finisce mai.
+170	Tramonto. "Torna prima che faccia buio!" Tornavo sempre. Sempre. Tranne una volta.
+171	Tranne una volta cosa? Parlami, Ossian.
+172	Il vento mi porta in alto. Sono leggero. È il vantaggio di non avere imbottitura.
+173	Lasciati portare. Solo non salire troppo: lassù c'è una luce che non è per te.
+174	Piovono pietre infuocate. Un ombrello non basta.
+175	Il Diavoletto tira quello che ha. Ha paura. Ce l'hanno tutti, alla fine.
+176	Diavoletti dappertutto, che ridono. Odio i nemici che ridono.
+177	Ridono perché sono giovani. Non ricordano cosa custodiscono.
+178	Vento caldo verso l'alto, fuoco ai lati. Un forno con vista.
+179	Lanterne che salgono nell'aria calda. Ognuna per qualcuno che se n'è andato. Io ne ho lasciata andare una.
+180	Un castello sopra una nuvola. Architettura coraggiosa.
+181	Da qui hanno sorvegliato a lungo l'isola di mezzo. Ora è vuoto. Ottimo.
+182	Ali in mezzo alla brace. Non dovrebbero stare così lontane da casa.
+183	Nessuno qui è dove voleva essere. È ciò che ci unisce.
+184	Una porta chiusa a chiave nel cielo. Per tenere fuori cosa? Uccellini?
+185	Per tenere dentro qualcosa, forse. Prendi la chiave.
+186	Il Diavoletto Gigante. Vuole tutto il cielo per sé.
+187	Il cielo è di chi arriva per primo. E io sono arrivato molto prima di lui.
+188	I cancelli del regno nemico. Il mio alleato non ha voluto venire fin qui.
+189	I patti sono utili, Ossian. Finché durano.
+190	Volare è facile. Il difficile è ricordarsi che non dovrei saperlo fare.
+191	Pioggerella sul viso. Notte. Una voce dall'altra parte del ponte: "Ho paura!"
+192	Saloni enormi, vuoti. Le guardie volano in cerchio senza sapere perché.
+193	Sorvegliano per abitudine. Hanno dimenticato il motivo. Non ricordarglielo.
+194	Tuoni, fulmini, pioggia. E io nel mezzo, fatto di materiale conduttore.
+195	Pioggia forte. Il ponte che scivola. Ho corso. Lei era dall'altra parte.
+196	Vola più basso. E smettila di guardare la pioggia.
+197	Una chiave in cima alla torre. Sempre in cima. Mai per terra, accanto alla porta.
+198	Ciò che è facile da aprire non ha bisogno di essere custodito.
+199	Correnti d'aria incrociate. Tutto il regno vuole soffiarmi via.
+200	Che soffino. Ne manca solo uno. Uno solo, Ossian, e...
+201	Si sta facendo notte. Qui non era mai calata la notte.
+202	Qualcuno sul ponte, vestito di viola. La mano tesa. "Vieni. Ti porto io."
+203	...Il cielo si scurisce quando la fine si avvicina. È naturale. Continua.
+204	Tutta la guardia del re in volo. Devono volergli molto bene.
+205	O temono cosa succede se cade. Per noi fa lo stesso.
+206	L'ultimo cancello. Si sentono ali enormi dall'altra parte.
+207	Acqua gelida. Poi, una nuvola. E una voce, fin troppo calma: "Non ancora."
+208	Stai tremando. I teschi non tremano. Entra.
+209	Il re delle ali. Il cielo diventa piccolo con lui dentro.
+210	Abbattilo. Dopo di lui, i conti sono quasi chiusi.
+211	Una scalinata senza fine. E catene spezzate su ogni gradino.
+212	Vecchi ornamenti. Non inciamparci.
+213	Nove catene, Hex. Le ho contate.
+214	Un'urna in mezzo alla sala. E tutto qui dentro vuole romperla.
+215	Un nome. Qualcuno che grida un nome sulla riva del fiume. Non era "Ossian".
+216	Proteggi l'urna. Ciò che contiene è... importante per tutti e due.
+217	Porte che danno su altre porte. Questa casa non vuole che arrivi alla fine.
+218	Mi ci perdevo anch'io. All'inizio. Ho avuto molto tempo per impararla a memoria.
+219	Libri con nomi sul dorso. Tutti cancellati. Tranne l'ultimo.
+220	Non leggere. Ossian, non leggere quello.
+221	È bianco. Mi stavi tenendo il posto?
+222	Nessuna luce. Solo la candela nella mia mano. E la tua voce.
+223	Ricordo. Mia sorella dall'altra parte. La mano vestita di viola. Non sono scivolato.
+224	I ricordi ingannano, Ossian. Vieni. Il trono è appena oltre la porta.
+225	Mani. Ho di nuovo le mani. Allora usiamole.
+226	Ossian
+229	Dove si risveglia il teschio. Il primo frammento della corona brilla in fondo alla spiaggia.
+230	Svegliati. Piano... la marea ti ha riportato sulla spiaggia. Di nuovo.
+231	Di nuovo? Io... non ricordo niente. Solo luci. Lanterne appese sopra un fiume.
+232	Lanterne, un fiume... sogni di viaggio. Lascia stare. Come ti chiami?
+233	Io... non lo so. Avevo un nome. Ce l'ho sulla punta della lingua. Se avessi una lingua.
+234	Allora sarai Ossian. È un bel nome. È già servito ad altri.
+235	Ad altri?
+236	Ascolta: la Corona delle Ossa è stata spezzata in quattro. Intera, apre il Portale della Marea. È la tua strada verso casa.
+237	Ti presto un dono: tocca l'oggetto di una creatura e ne prenderai la forma. E se cadi, verrò a prenderti con la mia nuvola.
+238	E perché mi aiuti?
+239	Perché è ciò che fa un consigliere. Va'. Il primo frammento è in fondo alle isole.
+241	Gradini di pietra, pozzi bui e ragnatele sul soffitto. Il secondo frammento è laggiù in fondo.
+242	Hex, quando sono caduto in acqua... ho visto una luce. Calda. Qualcuno chiamava un nome. Credo fosse il mio.
+243	Gli abissi mentono, Ossian. Laggiù non c'è niente per te. Non seguire le luci.
+244	Ma tu sei arrivato prima che la raggiungessi. Arrivi sempre prima.
+245	Sono veloce. A questo serve una nuvola.
+246	Ci sono nomi graffiati su questa pietra. Decine. Tutti cancellati con una riga.
+247	Viaggiatori venuti prima. Hanno rinunciato al cammino.
+248	Questo qui... la grafia sembra la mia. "Ossian". Cancellato.
+249	Molte grafie si somigliano al buio. Attento ai ragni del soffitto. Avanti.
+251	Ragni appesi su tutto il soffitto. Si può passare senza sconfiggerli tutti.
+252	Altre ragnatele. E altre ancora. Tutta la grotta sembra un bozzolo.
+253	Il Nido. Le figlie della Regina vivono appese al soffitto. Guarda in alto prima di passare.
+254	Devo sconfiggerle tutte?
+255	No. Passa oltre. Nessun ragno vale un osso rotto.
+256	Conosci bene questo posto.
+257	Ho attraversato molte cose portando qualcuno sulle spalle.
+259	Uova, ragnatele spesse e, in fondo, la Regina Ragno che custodisce un frammento.
+260	Hex... quella cosa in fondo è un ragno grande come una casa. Con la corona.
+261	La Regina del Covo. Custodisce un frammento tra le uova.
+262	Sputa ragnatele. Se ti prende, colpisci e aspetta di liberarti. E guarda il soffitto: lei ci cammina sopra.
+263	E se cado?
+264	Verrò a prenderti. Conosce la mia nuvola: per colpa mia ha perso molte prede.
+265	Prede. È questo che sono per voi due?
+266	...Va', Ossian. Si sta svegliando.
+268	La fucina del Diavoletto, che cerca di fondere i frammenti in una corona tutta sua.
+269	Da qui non passo. Il fuoco... non mi sopporta. Se cadi nella lava, dovrò aspettare che il fumo si diradi.
+270	Non puoi avvicinarti al fuoco. Né alla fine del cammino. Perché?
+271	Ognuno porta le proprie catene, Ossian. Le mie sono vecchie.
+272	Nel riflesso della lava mi sono visto con un volto. Pelle, capelli bagnati... e un cordino da lanterna al polso.
+273	Il calore inganna gli occhi. Sei osso. Lo sei sempre stato.
+274	Le creature di qui non fuggono da me. Fuggono quando compare la tua nuvola.
+275	Mi conoscono. Io porto via chi cade. È il mio mestiere.
+276	"Porto via"? Dove?
+277	Qui ogni area ha una barriera di fuoco. Si spegne solo quando non resta più nessuno in piedi.
+278	E in fondo alla fucina vive il Minotauro Scarlatto. Non cade con un colpo solo.
+279	Prendi il frammento. Il Diavoletto non deve completare la corona.
+281	Senza il Minotauro, la montagna si è svegliata. La lava arriva da dietro: corri senza fermarti.
+282	Il terreno trema. Hex, tutta la fucina si sta svegliando!
+283	Il Minotauro è caduto e la montagna è rimasta senza padrone. La lava ti insegue. Corri!
+284	Correre dove?
+285	Avanti. Sempre avanti. E non fermarti: lei non si ferma.
+286	Tu non scappi mai da niente, vero?
+287	Non ne ho bisogno. Io fluttuo.
+289	La dimora dello Sciamano. L'ultimo frammento attende sull'altare, tra le nuvole incantate.

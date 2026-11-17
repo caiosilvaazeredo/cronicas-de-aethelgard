@@ -1,0 +1,140 @@
+0	Sabbia tra le ossa. Dev'essere orribile. Per fortuna non sento niente.
+1	Sale nel vento... conoscevo questo odore. Da una finestra. Al mattino.
+2	Così, Ossian. Un passo alla volta. Veglio su di te.
+3	Un granchio con una chiave sulla schiena. Questo mondo ha uno strano senso dell'umorismo.
+4	Qui tutto custodisce qualcosa, Ossian. Impara a vedere chi porta cosa.
+5	L'acqua sale, l'acqua scende. E io nel mezzo, senza saper nuotare.
+6	Qualcuno mi ha insegnato a galleggiare. Mani grandi sotto la schiena. "Fidati."
+7	La marea obbedisce a chi è paziente. Come tutto il resto.
+8	Una nave intera, ferma qui. Dove andava, Hex?
+9	Da nessuna parte. Nessuno lascia queste isole in nave. Né in altro modo.
+10	...Doveva essere una consolazione?
+11	Cannoni. Qualcuno aveva molta paura di ciò che veniva dal mare.
+12	O di ciò che veniva dall'isola di mezzo. Ma è storia vecchia. Avanti.
+13	Sono uno squalo. Oggi sono uno squalo. Va bene.
+14	Acqua scura sopra la testa. Fredda. Sono già stato quaggiù... senza branchie.
+15	Non pensarci. Nuota, Ossian. Nuota e basta.
+16	Chi ha costruito un faro così? Gli squali non hanno mani.
+17	Gente antica. Amavano avvisare gli altri di stare lontani. Mi sembrava esagerato.
+18	Da quassù si vede l'isola di mezzo. Lì il cielo è più scuro.
+19	È solo il tempo che cambia. Guarda avanti, non da quella parte.
+20	Il corallo taglia, la medusa brucia. Tutto il mare vuole che me ne vada.
+21	Una casa azzurra. Dal letto si sentiva il mare. Contavo le onde finché non mi addormentavo.
+22	Manca poco allo Squalo Arpione. Risparmia le forze.
+23	Quindi è lui. Più grande di quanto immaginassi. E lo immaginavo grande.
+24	Non ascoltare niente di quello che dice. I re mentono per tenersi ciò che è degli altri.
+25	Erba fino al ginocchio. Se avessi ginocchia vere, mi farebbe il solletico.
+26	Una campanella che suona lontano. Era ora di rientrare... rientrare cosa?
+27	Gli Gnoll cacciano in branco. Non lasciare che ti circondino.
+28	Chiave dorata, porta chiusa. Qui a qualcuno piacciono gli indovinelli.
+29	Le porte esistono per tenere le cose dentro, Ossian. O fuori. Dipende da chi ha la chiave.
+30	Il terreno trema. Non è mai un buon segno.
+31	Pecore. Contavo pecore vere. Una scappava sempre, quella con l'orecchio nero.
+32	Sali in alto e lascia passare la mandria. La fretta serve solo ai vivi.
+33	Non smettono di arrivare! Chi ha insegnato agli gnoll a fare la fila?
+34	Il loro re. Un branco è pericoloso solo quando ha qualcuno a cui obbedire.
+35	Ossa dappertutto. Cugini? Colleghi? Non so come salutare.
+36	Sono di chi è venuto prima. Non toccarle.
+37	Prima di chi, Hex? ...Hex?
+38	Una fattoria. Recinto, cancello, una pecora sulla piastra. Quasi normale.
+39	Profumo di pane. Un tavolo di legno. Qualcuno ha messo un piatto in più, per me.
+40	Sei silenzioso, Ossian. Cos'hai visto?
+41	L'erba si è mossa. L'erba non dovrebbe muoversi da sola.
+42	I cacciatori aspettano. È ciò che rispetto di più in loro: sanno aspettare.
+43	Carri abbandonati in mezzo alla strada. Sono scappati da qualcosa.
+44	Da tempi difficili. Sono passati. Quasi tutto passa.
+45	Un mulino che macina ossa. Farò finta di non aver letto il cartello.
+46	Una bambina che mi corre dietro. "Aspetta! Non lasciarmi al buio!"
+47	Il Re Gnoll è oltre la collina. Sei pronto?
+48	Ha una corona d'ossa in testa. Una vera. Intera.
+49	Un'imitazione. Quella vera è in pezzi, e lui ne ha uno. Abbattilo.
+50	Acqua verde, tiepida e ferma. Tutto ciò in cui non volevo mettere piede.
+51	La palude custodisce bene i segreti. Affondano piano, ma affondano.
+52	Foglie che affondano quando ti fermi. Alla palude non piacciono gli indecisi.
+53	Sassolini piatti che rimbalzano su un fiume. Tre, quattro rimbalzi. Qualcuno applaudiva.
+54	C'è la marea anche qui? Pensavo fosse una cosa delle isole.
+55	In questo regno tutto sale e scende attorno allo stesso centro, Ossian. Capirai.
+56	Veleno. Su uno scheletro. Vediamo chi rovina chi.
+57	Non scherzare. Puoi cadere quante volte vuoi; sono io quello che si stanca di venirti a prendere.
+58	Rete, amo, barca bucata. Una lucertola pescatrice. Mi è simpatica.
+59	Una canna da pesca più grande di me. Un vecchio che ride: "Niente pesci, solo rami!"
+60	...Hai appena sorriso? I teschi non dovrebbero riuscirci.
+61	Di nuovo sul fondo. Almeno stavolta ho denti da squalo.
+62	Non guardare la superficie. La luce lassù inganna.
+63	Coccodrilli in fila indiana. Educati, almeno.
+64	Il Re Lucertola sa già che stai arrivando. Non dorme mai: sorveglia.
+65	Radici dappertutto. Sembra una gabbia fatta d'albero.
+66	Gabbia è una parola forte. Rifugio. Chiamiamolo rifugio.
+67	Scegli le parole con molta cura, Hex.
+68	Un intero villaggio sull'acqua. Con i panni stesi, con i fornelli. Vivono qui.
+69	Un vecchio ponte di legno. Assi che scricchiolavano. Sapevo su quali non mettere piede.
+70	Non affezionarti al paesaggio. È il loro re che ci serve.
+71	Ha gli occhi aperti. Tutti e due. Senza sbattere le palpebre.
+72	Da molto tempo non li chiude. Fagli questo favore.
+73	Buio, umido, pieno di ragnatele. Il posto perfetto per qualcuno senza pelle.
+74	Parla piano qui dentro. Le pareti custodiscono nomi.
+75	C'è qualcosa scritto sulla pietra. Cancellato sopra. Molte volte.
+76	Scarabocchi di ragno. Non perdere tempo a leggerli.
+77	I ragni scrivono "Ossian", Hex?
+78	Un ponte che si spezza se mi fermo. Una volta i ponti mi piacevano di più.
+79	Pioggia su un ponte. Un'asse bagnata. Il piede che scivola. No, aspetta, non ancora...
+80	Corri, Ossian! Non restare lì a guardare in basso!
+81	Un'altra chiave, un'altra porta. Chi chiude così tanto una caverna?
+82	Chi ha paura di ciò che c'è sul fondo. O di ciò che c'è fuori. Fa lo stesso.
+83	Non vedo niente. Solo le torce. E degli occhi, laggiù in fondo.
+84	Una manina che stringe la mia. "Resta con me finché non mi addormento. L'hai promesso."
+85	Resta vicino alla luce. Ma non a quella luce calda che vedi quando cadi. Quella, mai.
+86	Bozzoli appesi. Grandi come una persona.
+87	La Regina tiene ciò che cattura. In questo, lo ammetto, io e lei ci somigliamo.
+88	Scendono dal soffitto senza sosta! Quante zampe entrano in una caverna?
+89	Più di quante tu riesca a contarne. Spara e non guardare in alto.
+90	Due principi. Uno con ali di cuoio, l'altro con ali di vetro. E litigano.
+91	Lasciali litigare. Chi sceglie una parte guadagna un amico. E un nemico.
+92	Uova. Centinaia. Cammino in punta dei piedi che non ho.
+93	Un cesto di uova al braccio. Uno si è rotto per strada. Mi hanno preso in giro per tutta la settimana.
+94	La Regina è proprio lì. Parlerà. Parlano sempre.
+95	Mi ha guardato con tutti i suoi occhi. E sembrava... dispiaciuta?
+96	È un trucco da ragno. Taglia i fili prima che ti avvolga nelle parole.
+97	Caldo. Dovrei sudare. Invece scricchiolo e basta.
+98	Un'ascia che sale e scende. Legna che si spacca. Un callo sulla mano. La mia mano.
+99	Io lì dentro con te non entro. Il fuoco e io non andiamo d'accordo.
+100	La lava mi insegue! Questo non è un livello, è uno sfratto!
+101	Corri! Se ci cadi dentro, ci metterò un po' a trovarti!
+102	Una miniera dentro il vulcano. Qualcuno ha scavato fin qui solo per chiudere una porta.
+103	Hanno scavato a fondo, sì. Pensavano che più era profondo, più era sicuro. Si sbagliavano.
+104	Pietra che galleggia sul fuoco. Il mio mezzo di trasporto preferito, ormai.
+105	La montagna respira. Sale quando gonfia il petto, scende quando lo svuota.
+106	Uno, due, FUOCO. Uno, due, FUOCO. Ho preso il ritmo.
+107	Un camino. Castagne che scoppiettano. Qualcuno che racconta storie di traghettatori.
+108	Traghettatori? ...Quali storie, Ossian? Cosa ti sei ricordato?
+109	Tori di lava lanciati alla carica. Oggi la fucina ha deciso di odiarmi in fila.
+110	Il Minotauro forgia i propri soldati. Lavoratore. Testardo.
+111	Vetro nero. Vedo il mio riflesso. Sono più bello da lontano.
+112	Un volto in una bacinella d'acqua. Occhi castani. Era il mio. Avevo un volto.
+113	Non restare a fissare i riflessi. Mostrano ciò che è stato.
+114	Colpi di martello. Da lontano sembrano un cuore che batte.
+115	Martella la stessa cosa da quando io... da sempre. Una catena. Voglio dire, una corona.
+116	Un fiume di magma. Niente ponte, niente barca. Solo il mio coraggio. Siamo perduti.
+117	Il cuore della montagna è vicino. Lo sento da qui. Brucia.
+118	Ha smesso di martellare. Mi sta guardando.
+119	Non lasciargli finire la frase. Ciò che forgia non è per te.
+120	Albero vecchio, ombra fresca. Il primo posto di questo mondo che non vuole uccidermi.
+121	Segatura nei capelli. Avevo dei capelli. E qualcuno soffiava per toglierla.
+122	Attento alle ghiande. Gli gnomi sparano prima e brontolano dopo.
+123	Un cancello che si apre solo con un peso sopra. Mi servirà aiuto... o una pecora.
+124	Gli gnomi costruiscono per durare. Niente di ciò che chiudono si apre da solo.
+125	Un fungo che ti lancia in aria. Finalmente una pianta dalla mia parte.
+126	Non mangiarne nessuno. ...È un modo di dire, lo so che non mangi.
+127	Dalle cime degli alberi si vede tutto. Tranne l'uscita da questo regno.
+128	Salivo sugli alberi per vedere il fiume. Da lassù il ponte sembrava un giocattolo.
+129	Non c'è un'uscita da vedere, Ossian. Non ancora. È per questo che raccogliamo la corona.
+130	Blocchi colorati, leve, cancello. Gli gnomi devono annoiarsi parecchio.
+131	Chi sorveglia la stessa cosa per secoli si inventa passatempi.
+132	Tronchi che scendono lungo il fiume. Saltare dall'uno all'altro. Cosa può andare storto?
+133	Un fiume largo, d'acqua scura. Lanterne di carta che scendono piano. Decine.
+134	Non guardare così tanto l'acqua. Guarda i tronchi.
+135	Pioggia di ghiande! Avevo detto che questo bosco non voleva uccidermi?
+136	Gli gnomi proteggono il re. Strano popolo: combattono per chi dà loro solo ordini.
+137	Il muschio mi ha fatto l'occhiolino. Il muschio non fa l'occhiolino.
+138	Qui tutto sorveglia. È per questo che è stato piantato questo bosco.
+139	Casette tra le radici, fumo dai camini. C'è perfino una campana.

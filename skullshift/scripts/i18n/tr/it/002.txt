@@ -1,0 +1,133 @@
+290	Benvenuto nel mio santuario. Calpesta solo le nuvole che brillano; le altre non reggono nessuno.
+291	Questo posto... sull'altare c'è una fila di corone spezzate. E una di lanterne spente.
+292	Ricordi di chi è passato di qui.
+293	Passato dove, Hex? Nessuno è mai tornato a casa, vero?
+294	Casa è dove qualcuno ti aspetta. Io ti aspetto ogni volta che cadi. Pensaci.
+295	Quando prenderò l'ultimo frammento, il portale si aprirà. L'hai giurato.
+296	Ho giurato che si sarebbe aperto. Non ho giurato da che parte.
+297	...Cosa?
+298	Niente. Cose da vecchio. Va', Ossian. Finisci ciò che hai cominciato.
+300	Vuoti enormi tra le nuvole. Solo il vento porta da un'isola all'altra.
+301	Le nuvole sono finite. Tra un'isola e l'altra c'è solo vento.
+302	Correnti del Cielo. Entra nel vento e ti porterà in alto. Tieni premuto il salto e plana.
+303	E se il vento si ferma?
+304	Non si ferma. Soffia da quando sono arrivato qui. Da molto tempo.
+305	Quanto tempo?
+306	Più di quanto ricordi di aver vissuto.
+308	Con il Principe dei Pipistrelli, nella notte, fino al Re delle Api.
+309	Il principe dice che il Re delle Api custodisce la via per la Scalinata della Marea.
+310	La custodisce. E non gli piacerà vedere suo nipote sconfitto.
+311	Non ho tradito nessuno. Ho scelto una parte.
+312	Qui scegliere una parte è la stessa cosa. Vola, Ossian. La notte è del pipistrello.
+313	Mi stai aiutando parecchio ultimamente, Hex.
+314	...Siamo vicini alla fine. Voglio che tu ci arrivi.
+315	Davvero?
+316	Con il Principe delle Api, nella notte, fino al Re dei Pipistrelli.
+317	L'ape ha detto che il Re dei Pipistrelli vuole vendetta per suo figlio.
+318	E la notte è sua. Ogni ombra è un pipistrello. Saranno tanti, e più forti.
+319	E io con un ossicino alla volta.
+320	Hai voluto abbattere il principe. Ora abbatti il padre.
+322	Isole sciolte che salgono fino al Portale della Marea. Passa solo chi corre e risalta in aria.
+323	La corona è intera nelle tue mani. Manca solo salire la Scalinata della Marea fino al Portale.
+324	Scalinata? Sono isole sciolte, col mare sotto e vuoti enormi tra l'una e l'altra.
+325	Nessuno arriva al portale camminando. Devi correre, saltare e saltare ancora in aria. Tutto insieme.
+326	Parli come chi ha visto molti provarci.
+327	Molti. I vuoti si sono allargati a ogni caduta.
+328	E tu li sei andati a prendere tutti con la tua nuvola.
+329	...Andavo a prenderli. Fino al giorno in cui smisero di cadere.
+330	Cosa ne è stato di loro, Hex?
+331	Sono arrivati al portale. Va', Ossian. Stavolta resto qui, a guardare.
+333	Il portale non portava a casa. Portava a una casa. Porte dappertutto, e quasi tutte mentono.
+334	Ho attraversato il portale e... è una casa? Corridoi, porte ovunque.
+335	La Casa del Traghettatore. La mia vecchia casa. Le piace giocare con chi entra.
+336	Casa tua? Non hai mai detto di avere una casa.
+337	Non l'hai mai chiesto. Segui la luna dipinta sulle porte: indica sempre l'uscita.
+338	E le altre porte?
+339	Ti riportano all'inizio. E attento alla luna rossa. Anche lei mente.
+340	Chi sono quegli scheletri trasparenti?
+341	Inquilini. Ossa che si sono rifiutate di seguire la luna. Non fermarti a chiacchierare.
+343	Scaffali fino al soffitto, ponti che esistono solo per un istante e una porta chiusa a chiave.
+344	Una biblioteca. Tutti i libri hanno lo stesso titolo sul dorso: "Ossian".
+345	Coincidenza. Da queste parti è un nome comune.
+346	La porta d'uscita è chiusa a chiave.
+347	La chiave è in cima agli scaffali. Le leve risvegliano i ponti fantasma, ma solo per un istante.
+348	Questo libro ha una pagina segnata: "Il traghettatore che non lasciò il remo". Sei tu?
+349	...Metti giù quel libro, Ossian. Prendi la chiave.
+351	Buio quasi totale. Candele da accendere e pavimenti crepati che non reggono nessuno.
+352	Non vedo niente. Hex? Hex!
+353	Sono qui. Ci sono sempre. Tocca le candele: il cammino appare con la luce.
+354	Metà di questo pavimento è falsa. Si crepa e cede quando ci metto piede.
+355	Come le promesse di questa casa. Non fermarti sopra. E accendi le tre candele grandi: l'ultima porta si apre solo con quelle.
+356	Laggiù in fondo... è la luce delle lanterne? Quella della fiera, sul fiume?
+357	...Sì. Stavolta non verrò a prenderti se cadi. Né se non cadi.
+359	Un'officina abbandonata sulla spiaggia. La porta si apre solo con la chiave dorata.
+360	Una porta chiusa a chiave in mezzo alla spiaggia? Chi chiude una porta senza muro?
+361	Qualcuno che voleva far passare un solo tipo di viaggiatore. Quelli che portano ciò che è loro.
+362	Le tue mani d'osso ora reggono le cose. Prendi la chiave e portala alla porta.
+363	E questi regali colorati sparsi in giro?
+364	Ricordi di chi è passato prima. Prendili, se vuoi. Nessun altro verrà a cercarli.
+366	Una prateria piena di predoni. Tieni ATTACCA: le ossa partono a raffica.
+367	Non smettono di arrivare, Hex!
+368	Allora non smettere di sparare. Tieni premuto il colpo e le tue ossa voleranno da sole.
+369	Da quando sparo ossa?
+370	Da sempre. Solo che non avevi motivo di ricordartelo.
+372	Blocchi rossi e blu che appaiono e spariscono con una leva.
+373	I blocchi spariscono quando colpisco la leva. Rosso, blu, rosso...
+374	Esiste un solo colore alla volta. Scegli bene quale mondo lasciare in piedi.
+375	Accovacciato ora salto più in alto. In verticale.
+376	Anche capriole. Un corpo leggero fa trucchi che un corpo vivo non farebbe.
+377	Parli sempre di questo "corpo vivo".
+378	È solo un modo di dire, Ossian.
+380	Rocce d'oro bloccano la miniera. Un martello risolve.
+381	Ho preso un martello da fabbro durante la fuga. È ancora caldo.
+382	In aria, scendi con tutta la forza: la martellata a terra rompe le rocce d'oro.
+383	Oro che sbarra il passaggio. Che spreco.
+384	Qui l'oro non compra niente. Nemmeno un'uscita.
+386	Due principi, un nido e un patto che cambia il cielo.
+387	Hex, questa caverna è piena di ali. Pipistrelli E api?
+388	Due regni che si odiano. I principi si contendono questo nido da secoli.
+389	E io dovrò passare in mezzo a questa lite.
+390	I principi parlano, Ossian. Cosa rara da queste parti. Ascolta cosa offrono.
+391	Da quando ti fidi di chi parla?
+392	Non mi fido. Ma un principe che ti deve la vita... vola molto bene.
+394	In groppa al Principe dei Pipistrelli, contro il Diavoletto Gigante.
+395	Il Diavoletto è cresciuto? È grande come una nuvola!
+396	Ha mangiato le braci della fucina. Ora vuole il cielo. Il tuo nuovo alleato ti porta da lui.
+397	Il pipistrello spara tre ossa alla volta e per di più urla. Non è barare?
+398	È un principe. L'urlo cancella i colpi vicini, e le sue ali reggono un colpo.
+399	Non vieni?
+400	Da quaggiù vedo meglio. Spara finché la sua barra non si svuota.
+401	In groppa al Principe delle Api, contro il Diavoletto Gigante.
+402	Ha mangiato le braci della fucina. Ora vuole il cielo. Monta sul Principe delle Api e abbattilo.
+403	Spara solo un ossicino alla volta, Hex.
+404	Hai scelto di abbattere il pipistrello. Ora tutto il suo regno vuole la tua testa. Schiva molto e spara sempre.
+405	Sembri... soddisfatto.
+406	Un alleato debole ha più bisogno di me. Tutto qui.
+408	Un bosco con un precipizio, un cancello e una pecora testarda.
+409	Un'ascia? Nel Santuario c'erano solo nuvole.
+410	L'ho trovata in giro. Abbatti l'albero nella direzione giusta e diventerà un ponte.
+411	E la pecora?
+412	Mettila sulla piastra. Il cancello si apre con il peso. Come quasi tutto in questa terra.
+413	Quasi tutto?
+414	Tu non pesi niente, Ossian. Per questo la piastra non sente i tuoi passi.
+416	Una miniera buia piena di goblin, ragni e pipistrelli.
+417	Altri colpi. Altre ossa. Altre cose che escono dal buio.
+418	La miniera custodisce oro e custodisce paura. Spara a entrambi.
+419	Hex, di chi è quest'oro?
+420	Di chi è rimasto. Chi attraversa non porta niente con sé.
+422	La chiave è in cima a una torre di pietra.
+423	La chiave è lassù. Non c'è una scala.
+424	Ora hai il piccone. Salta sulla parete e arrampicati.
+425	Ma con la chiave in mano non posso arrampicarmi.
+426	Allora scendi dall'altra parte. Non ogni salita ha bisogno di un ritorno.
+428	Un'urna al centro del mausoleo e fantasmi che arrivano da entrambi i lati.
+429	Un'urna. Con il tuo nome sopra, Hex.
+430	Non lasciare che i fantasmi la tocchino. Tre tocchi e si rompe.
+431	Cosa c'è dentro?
+432	Ciò che resta di un traghettatore. Proteggila, Ossian. Per favore.
+433	...Non avevi mai detto "per favore".
+435	Un granchio è scappato con la chiave della spiaggia.
+436	Hex, quel granchio ha una chiave sulla schiena!
+437	I granchi tengono tutto ciò che luccica. Colpiscilo: la chiave cade.
+438	E se la riprende?
+439	Allora colpiscilo di nuovo. Qui nessuno molla ciò che è suo senza lottare.

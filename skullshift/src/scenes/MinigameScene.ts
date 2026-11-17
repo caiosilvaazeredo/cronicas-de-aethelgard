@@ -1,3 +1,4 @@
+import { drawDock, drawHills, drawPlankWall, drawPond } from '../ui/props';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { addCoins, addStat, addXp, getLevel, getStat } from '../game/progress';
@@ -61,25 +62,48 @@ export class MinigameScene extends Phaser.Scene {
     const HH = this.HH;
     const gy = HH * 0.55;
     const g = this.add.graphics();
-    g.fillStyle(0x6fb86a, 1).fillRect(0, gy - 40, W, 60);
-    g.fillStyle(INK, 1).fillEllipse(W / 2 + 100, gy + 120, W * 0.95, 260);
-    g.fillStyle(0x2f9ad8, 1).fillEllipse(W / 2 + 100, gy + 120, W * 0.94, 250);
-    g.fillStyle(0x6cc6f5, 1).fillEllipse(W / 2 + 60, gy + 90, W * 0.7, 120);
+    // Morros com árvores ao fundo, grama na margem e o lago grande.
+    const hx = (o: number) => Array.from({ length: 6 }, (_, i) => i * 260 + o);
+    drawHills(g, hx(60), gy - 30, 420, 220, 0x6fb86a, 0x8fd07a);
+    drawHills(g, hx(190), gy - 10, 380, 160, 0x5aa257, 0x78bf68);
+    const tiles = Math.ceil(W / 64);
+    for (let i = 0; i < tiles; i++) {
+      this.add.image(i * 64, gy - 46, 'tilemap', 27 + (i === 0 ? 5 : i === tiles - 1 ? 7 : 6)).setOrigin(0);
+    }
+    // Campo plano na frente (o lago fica nele, sem o paredão de pedra).
+    const meadow = this.add.graphics();
+    meadow.fillStyle(0x6fbf52, 1).fillRect(0, gy + 14, W, HH);
+    meadow.fillStyle(0x5aa845, 1).fillRect(0, gy + 14, W, 10);
+    for (let i = 0; i < 40; i++) {
+      const tx = (i * 197) % W;
+      const ty = gy + 40 + ((i * 89) % Math.max(60, HH - gy - 60));
+      meadow.fillStyle(0x4f9a3c, 1).fillTriangle(tx - 4, ty, tx, ty - 10, tx + 4, ty).fillTriangle(tx + 2, ty, tx + 7, ty - 8, tx + 9, ty);
+    }
+    const pond = this.add.graphics();
+    drawPond(pond, W / 2 + 110, gy + 130, W * 0.9, 250, 3);
+    for (let i = 0; i < 4; i++) this.add.sprite(60 + i * 360, gy - 40, 'res_tree').setOrigin(0.5, 0.9).setScale(0.6).setDepth(-1).play({ key: 'res_tree', startFrame: i * 2 });
+    // Brilhos que piscam na água.
+    const glint = this.add.graphics();
+    glint.fillStyle(0xffffff, 0.8).fillRoundedRect(W / 2 + 200, gy + 150, 46, 4, 2).fillRoundedRect(W / 2 - 60, gy + 190, 30, 3, 1.5).fillRoundedRect(W / 2 + 420, gy + 110, 26, 3, 1.5);
+    this.tweens.add({ targets: glint, alpha: 0.15, duration: 1100, yoyo: true, repeat: -1 });
     // Píer e a caveira com a vara.
-    g.fillStyle(INK, 1).fillRect(80, gy - 14, 330, 22);
-    g.fillStyle(0x8a5a35, 1).fillRect(84, gy - 11, 322, 16);
-    for (const x of [120, 240, 360]) g.fillStyle(0x6a4428, 1).fillRect(x, gy + 5, 12, 70);
+    drawDock(this.add.graphics(), 80, gy - 12, 330, [120, 240, 360].map((x) => x - 80), 80);
     const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, 0.82).setScale(VIEW.portrait ? 1.6 : 0.9).play('skull_idle');
     const rod = this.add.graphics();
-    const bob = this.add.graphics();
+    const bob = this.add.container(0, 0);
     const bx = 760;
     const by = gy + 90;
     const drawLine = (y: number, out: boolean) => {
       rod.clear();
-      rod.lineStyle(5, 0x6a4428, 1).lineBetween(360, gy - 70, 470, gy - 150);
+      rod.lineStyle(9, INK, 1).lineBetween(360, gy - 70, 470, gy - 150);
+      rod.lineStyle(5, 0x8a5a35, 1).lineBetween(360, gy - 70, 470, gy - 150);
+      rod.lineStyle(2, 0xc89058, 1).lineBetween(362, gy - 74, 466, gy - 150);
+      rod.fillStyle(INK, 1).fillCircle(372, gy - 80, 8).fillStyle(0xb4aec0, 1).fillCircle(372, gy - 80, 5);
+      bob.removeAll(true);
       if (!out) return;
-      rod.lineStyle(2, 0xfff7dc, 0.9).lineBetween(470, gy - 150, bx, y);
-      bob.clear().fillStyle(INK, 1).fillCircle(bx, y, 11).fillStyle(0xff5a3a, 1).fillCircle(bx, y - 2, 8).fillStyle(0xffffff, 1).fillCircle(bx, y + 4, 5);
+      rod.lineStyle(2, 0xfff7dc, 0.9).lineBetween(470, gy - 150, bx, y - 14);
+      bob.add(this.add.image(bx, y, 'prop_bob').setOrigin(0.5, 0.6));
+      bob.add(this.add.ellipse(bx, y + 8, 40, 8).setStrokeStyle(2, 0xbfe9ff, 0.7));
     };
     drawLine(0, false);
     const bang = this.add.text(bx, by - 70, '!', { fontFamily: FONT, fontSize: '64px', color: '#ffe066', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setVisible(false);
@@ -150,7 +174,6 @@ export class MinigameScene extends Phaser.Scene {
       this.tweens.killTweensOf(bob);
       bob.y = 0;
       this.time.delayedCall(700, () => {
-        bob.clear();
         drawLine(0, false);
         hero.play('skull_idle');
         state = 'ready';
@@ -173,13 +196,14 @@ export class MinigameScene extends Phaser.Scene {
     const K = P ? 2.2 : 1;
     const bottom = P ? HH - 200 : HH - 40;
     const g = this.add.graphics();
-    g.fillStyle(0x8a5a35, 1).fillRoundedRect(40, top, W - 80, bottom - top, 18);
-    for (let y = top + 30; y < bottom; y += 42) g.fillStyle(0x7a4e2e, 1).fillRect(50, y, W - 100, 4);
+    drawPlankWall(g, 40, top, W - 80, bottom - top);
     let left = 30;
     const cross = this.add.graphics().setDepth(20);
     const cx = { x: W / 2, y: (top + bottom) / 2 };
     const drawCross = () => {
-      cross.clear().lineStyle(4, INK, 1).strokeCircle(cx.x, cx.y, 18).lineBetween(cx.x - 26, cx.y, cx.x + 26, cx.y).lineBetween(cx.x, cx.y - 26, cx.x, cx.y + 26);
+      cross.clear().lineStyle(8, INK, 1).strokeCircle(cx.x, cx.y, 18).lineBetween(cx.x - 28, cx.y, cx.x - 10, cx.y).lineBetween(cx.x + 10, cx.y, cx.x + 28, cx.y).lineBetween(cx.x, cx.y - 28, cx.x, cx.y - 10).lineBetween(cx.x, cx.y + 10, cx.x, cx.y + 28);
+      cross.lineStyle(4, 0xfff7dc, 1).strokeCircle(cx.x, cx.y, 18).lineBetween(cx.x - 26, cx.y, cx.x - 11, cx.y).lineBetween(cx.x + 11, cx.y, cx.x + 26, cx.y).lineBetween(cx.x, cx.y - 26, cx.x, cx.y - 11).lineBetween(cx.x, cx.y + 11, cx.x, cx.y + 26);
+      cross.fillStyle(0xe8463a, 1).fillCircle(cx.x, cx.y, 3);
     };
     drawCross();
     const live: Array<{ c: Phaser.GameObjects.Container; gold: boolean; r: number }> = [];
@@ -189,10 +213,7 @@ export class MinigameScene extends Phaser.Scene {
       const r = (gold ? 30 : Phaser.Math.Between(34, 48)) * K;
       const x = Phaser.Math.Between(60 + r, W - 60 - r);
       const y = Phaser.Math.Between(top + 20 + r, bottom - 20 - r);
-      const t = this.add.graphics();
-      const rings = gold ? [0xffe066, 0xffffff, 0xffb02e] : [0xe8463a, 0xffffff, 0xe8463a];
-      t.fillStyle(INK, 1).fillCircle(0, 0, r + 4);
-      rings.forEach((col, i) => t.fillStyle(col, 1).fillCircle(0, 0, r * (1 - i * 0.3)));
+      const t = this.add.image(0, 0, gold ? 'prop_target_gold' : 'prop_target').setScale((r + 4) / 64);
       const c = this.add.container(x, y, [t]).setSize(r * 2, r * 2).setScale(0).setDepth(10);
       c.setInteractive({ useHandCursor: true }).on('pointerdown', () => hit(entry));
       const entry = { c, gold, r };
@@ -262,11 +283,10 @@ export class MinigameScene extends Phaser.Scene {
     const gy = HH * (VIEW.portrait ? 0.62 : 0.8);
     // Morros e a cerca do pasto ao fundo.
     const bg = this.add.graphics();
-    for (let i = 0; i < 6; i++) bg.fillStyle(0x6fb86a, 1).fillEllipse(i * 260 + 60, gy + 10, 420, 260);
-    for (let i = 0; i < 6; i++) bg.fillStyle(0x5aa257, 1).fillEllipse(i * 260 + 190, gy + 40, 380, 190);
-    for (let x = 20; x < W; x += 34) bg.fillStyle(INK, 1).fillRect(x - 3, gy - 56, 10, 56).fillStyle(0xb07a45, 1).fillRect(x - 1, gy - 54, 6, 52);
-    bg.fillStyle(INK, 1).fillRect(0, gy - 44, W, 8).fillRect(0, gy - 22, W, 8);
-    bg.fillStyle(0xc89058, 1).fillRect(0, gy - 43, W, 5).fillRect(0, gy - 21, W, 5);
+    const hx = (o: number) => Array.from({ length: 6 }, (_, i) => i * 260 + o);
+    drawHills(bg, hx(60), gy + 10, 420, 260, 0x6fb86a, 0x8fd07a);
+    drawHills(bg, hx(190), gy + 40, 380, 190, 0x5aa257, 0x78bf68);
+    for (let x = -10; x < W; x += 64) this.add.image(x, gy + 4, 'prop_fence').setOrigin(0, 1);
     const n = Math.ceil(W / 64);
     for (let i = 0; i < n; i++) {
       this.add.image(i * 64, gy - 6, 'tilemap', 27 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);

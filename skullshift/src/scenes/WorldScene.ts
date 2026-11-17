@@ -495,13 +495,9 @@ export class WorldScene extends Phaser.Scene {
   /** Nuvem flutuante (áreas do céu), com o tom pedido. */
   /** Lago de lava em volta do pé do vulcão (como o lago da Lagoa, mas em brasa), com brilho e bolhas. */
   private drawLavaPool(cx: number, cy: number): void {
-    const g = this.add.graphics().setDepth(4.8);
-    g.fillStyle(INK, 1).fillEllipse(cx, cy, 262, 78);
-    g.fillStyle(0x9a2414, 1).fillEllipse(cx, cy, 254, 70);
-    g.fillStyle(0xe8461a, 1).fillEllipse(cx, cy - 3, 242, 58);
-    g.fillStyle(0xff8a2a, 1).fillEllipse(cx - 6, cy - 6, 200, 34);
+    this.add.image(cx, cy, 'prop_lava').setOrigin(150 / 300, 56 / 112).setDepth(4.8);
     const shine = this.add.graphics().setDepth(4.85);
-    shine.fillStyle(0xffd35a, 0.9).fillEllipse(cx - 70, cy - 8, 46, 7).fillEllipse(cx + 74, cy + 4, 36, 6).fillEllipse(cx - 20, cy + 14, 28, 5);
+    shine.fillStyle(0xfff1a8, 0.9).fillEllipse(cx - 40, cy + 2, 40, 5).fillEllipse(cx + 40, cy + 12, 30, 4).fillEllipse(cx - 10, cy + 18, 22, 3);
     this.tweens.add({ targets: shine, alpha: 0.35, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     // Brilho quente no ar acima do lago.
     const glow = this.add.graphics().setDepth(3.6);
@@ -610,16 +606,10 @@ export class WorldScene extends Phaser.Scene {
         const glow = this.add.graphics().setDepth(4.5);
         for (let k = 0; k < 4; k++) glow.fillStyle(0xff4a2a, 0.12).fillEllipse(x, y + 4, 150 - k * 30, 80 - k * 14);
         this.tweens.add({ targets: glow, alpha: 0.5, duration: 1100, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-        const cave = this.add.graphics().setDepth(5);
-        cave.fillStyle(INK, 1).fillEllipse(x, y + 10, 104, 74);
-        cave.fillStyle(0x5a3430, 1).fillEllipse(x, y + 10, 94, 64);
-        cave.fillStyle(0x2a0e0a, 1).fillEllipse(x, y + 18, 62, 44);
-        cave.fillStyle(0xff6a1a, 0.9).fillEllipse(x, y + 30, 44, 14);
-        cave.fillStyle(0xffd060, 0.9).fillEllipse(x, y + 31, 22, 6);
-        deco('stone3', -62, 34, 0.7);
-        deco('stone1', 60, 36, 0.6);
+        this.add.image(x, y + 46, 'prop_cave').setOrigin(92 / 182, 1).setScale(0.72).setDepth(5);
+        deco('stone3', -74, 44, 0.6);
         this.add
-          .particles(x, y + 20, 'spark', { x: { min: -20, max: 20 }, speedY: { min: -60, max: -30 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xffe066, 0xff7a1a], frequency: 140 })
+          .particles(x, y + 22, 'spark', { x: { min: -20, max: 20 }, speedY: { min: -60, max: -30 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xffe066, 0xff7a1a], frequency: 140 })
           .setDepth(6);
         // Setinha indicando que leva para outro mapa.
         const arrow = this.add.text(x + 70, y - 36, '▶', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
@@ -628,14 +618,12 @@ export class WorldScene extends Phaser.Scene {
       }
       case 'link-main': {
         // Ilhota com um arco de pedra azul: a volta ao continente.
-        const g = this.add.graphics().setDepth(5);
-        g.fillStyle(INK, 1).fillRoundedRect(x - 42, y - 70, 84, 100, { tl: 40, tr: 40, bl: 0, br: 0 });
-        g.fillStyle(0x6a6470, 1).fillRoundedRect(x - 36, y - 64, 72, 94, { tl: 34, tr: 34, bl: 0, br: 0 });
-        g.fillStyle(0x2f86e0, 1).fillRoundedRect(x - 24, y - 50, 48, 80, { tl: 24, tr: 24, bl: 0, br: 0 });
-        const sw = this.add.graphics().setDepth(5.1);
-        sw.fillStyle(0x8fd9ff, 0.7).fillEllipse(0, 0, 30, 54);
-        sw.setPosition(x, y - 8);
-        this.tweens.add({ targets: sw, scaleX: 0.7, alpha: 0.5, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        // Arco de pedra com o redemoinho azul girando dentro.
+        const spin = this.add.image(0, 0, 'prop_swirl_blue').setScale(0.36);
+        const sw = this.add.container(x, y - 6, [spin]).setScale(1, 1.5).setDepth(5.1);
+        this.tweens.add({ targets: spin, angle: 360, duration: 3600, repeat: -1 });
+        this.tweens.add({ targets: sw, alpha: 0.75, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+        this.add.image(x, y + 30, 'prop_arch_blue').setOrigin(60 / 120, 118 / 122).setDepth(5);
         const arrow = this.add.text(x - 62, y - 36, '◀', { fontFamily: FONT, fontSize: '30px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
         this.tweens.add({ targets: arrow, x: arrow.x - 8, duration: 500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
         break;

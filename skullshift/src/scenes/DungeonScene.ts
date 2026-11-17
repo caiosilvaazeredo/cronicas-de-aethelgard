@@ -214,9 +214,21 @@ export class DungeonScene extends Phaser.Scene {
     const t = areaTitle(a);
     playMusic(rn.area as Track, 'dungeon');
     // Fundo: pedra escura com a cor da área ao longe.
+    this.add.tileSprite(0, 0, W, HH, 'dn_floor').setOrigin(0);
     const g = this.add.graphics();
-    for (let k = 0; k < 6; k++) g.fillStyle(t.color, 0.05).fillEllipse(W / 2, HH / 2, W * (1.2 - k * 0.15), HH * (1.1 - k * 0.14));
-    for (let i = 0; i < 60; i++) g.fillStyle(0x1c2a3e, 0.6).fillCircle(Phaser.Math.Between(0, W), Phaser.Math.Between(0, HH), Phaser.Math.Between(2, 6));
+    for (let k = 0; k < 6; k++) g.fillStyle(t.color, 0.06).fillEllipse(W / 2, HH / 2, W * (1.2 - k * 0.15), HH * (1.1 - k * 0.14));
+    // Bordas escurecidas (vinheta) para o mapa ficar no centro da luz.
+    const edge = Math.max(W, HH);
+    for (let k = 0; k < 8; k++) g.lineStyle(edge * 0.08, 0x03060c, 0.14).strokeEllipse(W / 2, HH / 2, W * (1.15 + k * 0.1), HH * (1.15 + k * 0.1));
+    // Tochas nos cantos de cima.
+    const P0 = VIEW.portrait;
+    for (const tx of [P0 ? 70 : 46, P0 ? W - 70 : W - 46]) {
+      const ty = P0 ? 120 : 64;
+      const halo = this.add.ellipse(tx, ty - 10, 120, 120, 0xff8a2a, 0.12);
+      this.tweens.add({ targets: halo, scale: 1.15, alpha: 0.06, duration: 500 + tx % 200, yoyo: true, repeat: -1 });
+      this.add.image(tx, ty, 'torch_item').setScale(P0 ? 1.2 : 0.9);
+      this.add.particles(tx, ty - 26 * (P0 ? 1.2 : 0.9), 'spark', { speedY: { min: -50, max: -20 }, x: { min: -6, max: 6 }, lifespan: 500, scale: { start: 0.35, end: 0 }, tint: [0xffe066, 0xff7a1a], frequency: 70 });
+    }
     const P = VIEW.portrait;
     this.add
       .text(W / 2, P ? 150 : 34, `DUNGEON · ${t.name.toUpperCase()}`, { fontFamily: FONT, fontSize: P ? '48px' : '30px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 })
@@ -318,7 +330,11 @@ export class DungeonScene extends Phaser.Scene {
         const steps = Math.floor(Math.hypot(bx - ax, by - ay) / 16);
         for (let s = 1; s < steps; s++) {
           const u = s / steps;
-          lines.fillStyle(walked ? 0xffe066 : 0x5f6872, walked ? 0.9 : 0.7).fillCircle(ax + (bx - ax) * u, ay + (by - ay) * u, walked ? 4 : 3);
+          const px = ax + (bx - ax) * u;
+          const py = ay + (by - ay) * u;
+          lines.fillStyle(INK, 1).fillCircle(px, py, walked ? 6.5 : 5.5);
+          lines.fillStyle(walked ? 0xffe066 : 0x6f7884, 1).fillCircle(px, py, walked ? 4.5 : 3.5);
+          lines.fillStyle(0xffffff, walked ? 0.6 : 0.25).fillCircle(px - 1, py - 1.2, 1.4);
         }
       }
     }
@@ -326,11 +342,11 @@ export class DungeonScene extends Phaser.Scene {
     for (const n of rn.nodes) {
       const [x, y] = this.pos.get(n.id)!;
       const seen = rn.visited.includes(n.id);
-      const c = this.add.graphics();
-      c.fillStyle(INK, 1).fillCircle(x, y, R + 5);
-      c.fillStyle(seen ? 0x3a4656 : KIND_COLOR[n.kind], 1).fillCircle(x, y, R);
-      c.fillStyle(0xffffff, seen ? 0.06 : 0.18).fillCircle(x - R * 0.3, y - R * 0.35, R * 0.45);
-      items.push(c);
+      // Medalhão de pedra: disco tingido com a cor da sala, aro com rebites por cima.
+      const s = (R + 8) / 52;
+      items.push(this.add.ellipse(x + 3, y + R + 4, R * 2, R * 0.5, 0x000000, 0.3));
+      items.push(this.add.image(x, y, 'dn_disc').setScale(s).setTint(seen ? 0x3a4656 : KIND_COLOR[n.kind]));
+      items.push(this.add.image(x, y, 'dn_ring').setScale(s).setTint(seen ? 0x8a8a9a : 0xffffff));
       items.push(this.icon(n, x, y, R, seen));
       const zone = this.add.zone(x, y, R * 2.4, R * 2.4).setInteractive({ useHandCursor: true });
       zone.on('pointerdown', () => this.tapNode(n.id));

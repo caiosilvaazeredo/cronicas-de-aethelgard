@@ -1,3 +1,4 @@
+import { drawHills } from '../ui/props';
 import { SMITH, smithCost } from '../game/dungeon';
 import { noTr, tr, trf } from '../i18n';
 import Phaser from 'phaser';
@@ -145,8 +146,9 @@ export class VillageScene extends Phaser.Scene {
     sky.setDisplaySize(W, this.scale.height);
     // Morros ao fundo (parallax leve).
     const hills = this.add.graphics().setScrollFactor(0.4).setDepth(-5);
-    for (let i = 0; i < 9; i++) hills.fillStyle(0x6fb86a, 1).fillEllipse(i * 360 + 120, GY + 30, 520, 260);
-    for (let i = 0; i < 9; i++) hills.fillStyle(0x5aa257, 1).fillEllipse(i * 360 + 300, GY + 60, 460, 200);
+    const row = (o: number) => Array.from({ length: 9 }, (_, i) => i * 360 + o);
+    drawHills(hills, row(120), GY + 30, 520, 260, 0x6fb86a, 0x8fd07a);
+    drawHills(hills, row(300), GY + 60, 460, 200, 0x5aa257, 0x78bf68);
     for (let i = 0; i < 7; i++) {
       const c = this.add.image(Phaser.Math.Between(0, VW), Phaser.Math.Between(60, 220), `cloud_0${Phaser.Math.Between(1, 8)}`).setScrollFactor(0.2).setDepth(-6).setScale(0.5).setAlpha(0.9);
       this.tweens.add({ targets: c, x: c.x + 200, duration: 30000, yoyo: true, repeat: -1 });
@@ -184,13 +186,10 @@ export class VillageScene extends Phaser.Scene {
     this.addSpot(1060, 'MESTRE RUFO', () => this.trainer());
 
     // 4) Lago de pesca.
-    const pond = this.add.graphics().setDepth(2.6);
-    pond.fillStyle(INK, 1).fillEllipse(1400, GY + 26, 300, 66);
-    pond.fillStyle(0x2f9ad8, 1).fillEllipse(1400, GY + 26, 290, 58);
-    pond.fillStyle(0x6cc6f5, 1).fillEllipse(1390, GY + 20, 220, 30);
-    pond.fillStyle(0x8a5a35, 1).fillRect(1300, GY - 2, 80, 10);
+    this.add.image(1400, GY + 26, 'prop_pond').setOrigin(0.5, 80 / 130).setDepth(2.6);
+    this.add.image(1290, GY - 4, 'prop_dock').setOrigin(0, 0.12).setDepth(2.65);
     const shine = this.add.graphics().setDepth(2.7);
-    shine.fillStyle(0xffffff, 0.7).fillEllipse(1440, GY + 24, 40, 5).fillEllipse(1350, GY + 34, 26, 4);
+    shine.fillStyle(0xffffff, 0.7).fillEllipse(1450, GY + 30, 40, 4).fillEllipse(1380, GY + 40, 26, 3);
     this.tweens.add({ targets: shine, alpha: 0.2, duration: 1200, yoyo: true, repeat: -1 });
     this.npc(1310, 'villager', 0xa0c8ff, false);
     this.label(1400, 'LAGO');
@@ -211,10 +210,8 @@ export class VillageScene extends Phaser.Scene {
     this.addSpot(2340, 'TIRO AO ALVO', () => this.scene.start('minigame', { kind: 'targets' }));
 
     // 7) Curral das ovelhas.
-    const fence = this.add.graphics().setDepth(5);
-    for (let x = 2640; x <= 2900; x += 26) fence.fillStyle(INK, 1).fillRect(x - 3, GY - 46, 10, 46).fillStyle(0xb07a45, 1).fillRect(x - 1, GY - 44, 6, 42);
-    fence.fillStyle(INK, 1).fillRect(2636, GY - 36, 270, 8).fillRect(2636, GY - 18, 270, 8);
-    fence.fillStyle(0xc89058, 1).fillRect(2638, GY - 35, 266, 5).fillRect(2638, GY - 17, 266, 5);
+    for (let x = 2626; x < 2626 + 64 * 0.8 * 5; x += 64 * 0.8) this.add.image(x, GY + 4, 'prop_fence').setOrigin(0, 1).setScale(0.8).setDepth(5);
+    this.add.image(2626 + 64 * 0.8 * 5 + 3, GY + 4, 'prop_fencepost').setOrigin(0, 1).setScale(0.8).setDepth(5);
     for (const x of [2690, 2770, 2850]) {
       const sh = this.add.sprite(x, GY - 4, 'sheep_move').setOrigin(0.5, 0.8).setScale(0.95).setDepth(4.5).play('sheep_move');
       this.walkers.push({ spr: sh, min: 2660, max: 2880, dir: x % 2 ? 1 : -1 });
@@ -225,12 +222,12 @@ export class VillageScene extends Phaser.Scene {
 
     // 9) Ferreiro: melhorias permanentes para as dungeons (como a mansão do Rogue Legacy).
     stand(3640, 'bld_red_barracks', 240 / 256, 0.75);
-    const anvil = this.add.graphics().setDepth(5);
-    anvil.fillStyle(INK, 1).fillRect(3734, GY - 40, 64, 16).fillRect(3750, GY - 26, 32, 26);
-    anvil.fillStyle(0x6a6470, 1).fillRect(3737, GY - 37, 58, 11).fillRect(3753, GY - 24, 26, 22);
-    this.add.image(3790, GY - 46, 'tool_hammer').setScale(0.7).setAngle(-40).setDepth(5.1);
+    this.add.image(3766, GY + 4, 'prop_anvil').setOrigin(0.5, 1).setScale(0.62).setDepth(5);
+    const glow = this.add.ellipse(3766, GY - 58, 40, 18, 0xff8a2a, 0.35).setDepth(5.05);
+    this.tweens.add({ targets: glow, alpha: 0.1, duration: 700, yoyo: true, repeat: -1 });
+    this.add.image(3800, GY - 66, 'tool_hammer').setScale(0.6).setAngle(-40).setDepth(5.1);
     const smith = this.npc(3720, 'villager', 0x9a8070, true);
-    this.time.addEvent({ delay: 1400, loop: true, callback: () => smith.active && this.add.particles(3766, GY - 44, 'spark', { speed: { min: 60, max: 140 }, angle: { min: 220, max: 320 }, lifespan: 400, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff8a2a], quantity: 6, emitting: false }).setDepth(6).explode(6) });
+    this.time.addEvent({ delay: 1400, loop: true, callback: () => smith.active && this.add.particles(3770, GY - 60, 'spark', { speed: { min: 60, max: 140 }, angle: { min: 220, max: 320 }, lifespan: 400, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff8a2a], quantity: 6, emitting: false }).setDepth(6).explode(6) });
     this.label(3640, 'FERREIRO');
     this.addSpot(3700, 'FERREIRO', () => this.smith());
 
@@ -254,24 +251,18 @@ export class VillageScene extends Phaser.Scene {
   }
 
   private sign(x: number, text: string): void {
-    const g = this.add.graphics().setDepth(5);
-    g.fillStyle(INK, 1).fillRect(x - 6, GY - 70, 12, 70).fillRoundedRect(x - 62, GY - 112, 124, 52, 8);
-    g.fillStyle(0x8a5a35, 1).fillRect(x - 3, GY - 68, 6, 68);
-    g.fillStyle(0xc89058, 1).fillRoundedRect(x - 58, GY - 108, 116, 44, 6);
-    this.add.text(x, GY - 86, `${text}  ▶`, { fontFamily: FONT, fontSize: '18px', color: '#3a2412' }).setOrigin(0.5).setDepth(5.1);
+    this.add.image(x, GY + 4, 'prop_sign').setOrigin(0.5, 1).setDepth(5);
+    const t = this.add.text(x - 10, GY + 4 - 132 + 42, text, { fontFamily: FONT, fontSize: '20px', color: '#3a2412' }).setOrigin(0.5).setDepth(5.1);
+    if (t.width > 116) t.setScale(116 / t.width);
   }
 
   private portal(x: number): void {
-    const g = this.add.graphics().setDepth(4);
-    g.fillStyle(INK, 1).fillRoundedRect(x - 82, GY - 190, 164, 194, { tl: 80, tr: 80, bl: 0, br: 0 });
-    g.fillStyle(0x6a6470, 1).fillRoundedRect(x - 74, GY - 182, 148, 182, { tl: 74, tr: 74, bl: 0, br: 0 });
-    g.fillStyle(0x2a1640, 1).fillRoundedRect(x - 52, GY - 158, 104, 158, { tl: 52, tr: 52, bl: 0, br: 0 });
-    for (let k = 0; k < 7; k++) g.fillStyle(0x9a94a0, 1).fillRect(x - 74 + k * 24, GY - 8, 18, 8);
-    const swirl = this.add.graphics().setDepth(4.1);
-    swirl.fillStyle(0x9b6bf0, 0.55).fillEllipse(0, 0, 90, 130);
-    swirl.fillStyle(0xd8b8ff, 0.5).fillEllipse(0, 0, 50, 80);
-    swirl.setPosition(x, GY - 78);
-    this.tweens.add({ targets: swirl, scaleX: 0.85, alpha: 0.7, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Redemoinho dentro do arco: gira dentro de um contêiner achatado na vertical.
+    const spin = this.add.image(0, 0, 'prop_swirl').setScale(0.78);
+    const swirl = this.add.container(x, GY - 82, [spin]).setScale(1, 1.42).setDepth(4.1);
+    this.tweens.add({ targets: spin, angle: 360, duration: 4000, repeat: -1 });
+    this.tweens.add({ targets: swirl, alpha: 0.75, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.add.image(x, GY + 4, 'prop_portal').setOrigin(0.5, 236 / 240).setDepth(4);
     this.add
       .particles(x, GY - 80, 'spark', { x: { min: -40, max: 40 }, y: { min: -60, max: 60 }, speedY: { min: -30, max: -10 }, lifespan: 1200, scale: { start: 0.3, end: 0 }, tint: [0xd8b8ff, 0x9b6bf0], frequency: 140 })
       .setDepth(4.2);

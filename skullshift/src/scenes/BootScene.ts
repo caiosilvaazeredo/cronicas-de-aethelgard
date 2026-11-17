@@ -9,6 +9,7 @@ import { makeKingShark } from '../game/sharkking';
 import { makeGnollKing } from '../game/gnollking';
 import { makeKings } from '../game/kings';
 import { makeBossFx, makeCocoon, makeLavaWave, makePuzzleArt, makeHauntArt, makeHauntBackdrop, makeMapMansion, makeLavaTextures, makeMapVolcano, makeSmoke, makeTorch, makeVolcanoBackdrop } from '../ui/pixelart';
+import { makeProps } from '../ui/props';
 import { FONT, H, W } from '../config';
 import { loadingVignette, tipCard } from '../ui/loading';
 import { CHARS, type CharId } from '../game/characters';
@@ -670,6 +671,7 @@ export class BootScene extends Phaser.Scene {
     makeLavaTextures(this);
     this.anims.create({ key: 'lava_bubble', frames: [0, 1, 2, 3, 4, 5].map((frame) => ({ key: 'lava_bubble', frame })), frameRate: 11 });
     makeMapVolcano(this, 'map_volcano');
+    makeProps(this);
 
     const h = this.make.graphics({}, false);
     h.fillStyle(0x1d1a2b);

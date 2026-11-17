@@ -197,3 +197,8 @@ originais (extraídas com PIL do PNG).
 - **Ferreiro** (Vila, `SMITH` em `dungeon.ts`, níveis em `save.smith`): Coração de Ferro (+1 coração), Lâmina Afiada (−1 camada de armadura dos inimigos), Dado Viciado (+4%/dado), Fôlego (+1 coração por sala vencida), Bolsa Costurada (guarda 15% do ouro se cair). Preço = base × (nível+1).
 - **Run salva**: a dungeon em andamento fica em `localStorage` (`skullshift.run.<save>`); `getRun()` recarrega. Se a página fechar no meio de uma luta (`run.fighting`), a luta reabre obrigatória.
 - **Mapa-múndi em duas regiões** (estilo Super Mario World): o continente e as **Terras de Fogo** (`AreaDef.region = 'fire'`: Forja e Céu de Brasa). `WorldScene` recebe `region` (ou deduz pela área) e usa `this.list` (áreas da região + uma passagem `LINK_FIRE`/`LINK_BACK`). No continente, a fenda vermelha leva às Terras de Fogo; lá, o mar inteiro é lava (o mesmo `waves` tingido), grade `FIRE_LAND`, trilhas pontilhadas e o arco azul de volta. A corrente do Santuário vai até a passagem.
+
+## Objetos de cenário desenhados (src/ui/props.ts)
+- Estilo Tiny Swords: contorno de tinta grosso, três tons, brilho e detalhes. `makeProps` gera as texturas no carregamento (junto do vulcão do mapa).
+- Texturas: `prop_pond`, `prop_dock`, `prop_portal` + `prop_swirl` (redemoinho que gira num contêiner achatado), `prop_fence`/`prop_fencepost` (emendam a cada 64 px), `prop_sign`, `prop_anvil`, `prop_cave` e `prop_arch_blue` + `prop_swirl_blue` (passagens do mapa), `prop_lava`, `dn_floor` (lajotas que repetem), `dn_ring` + `dn_disc` (medalhão; o disco é cinza e a cena tinge com a cor da sala), `prop_target`/`prop_target_gold`, `prop_bob`.
+- Funções para tamanhos livres: `drawPond`, `drawDock`, `drawArch`, `drawPlankWall`, `drawHills`.

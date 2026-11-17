@@ -1,0 +1,220 @@
+1323	La tour cachait de l'or !
+1324	Une vieille bobine de film... Le crâne est entré dans un dessin animé de 1930 ! Maintenez ATTAQUER pour tirer.
+1325	FIN. (Le dessin animé perdu a été sauvé.)
+1326	Un crabe s'est enfui avec la clé ! Frappez-le pour la faire tomber et portez-la jusqu'à la porte.
+1327	La porte de la plage s'est ouverte !
+1328	Frappez le crabe : la clé tombe !
+1329	La marée monte et descend toute seule. Quand elle arrive, restez en hauteur !
+1330	Vous avez vaincu la marée !
+1331	La marée monte ! Restez en hauteur quand elle arrive.
+1332	Les planches détachées coulent juste après qu'on a marché dessus. Ne vous y arrêtez pas !
+1333	Vous avez traversé le naufrage !
+1334	Montez à bord ! Les canons balaient le pont : sautez les boulets ou gardez.
+1335	Le pont est à vous !
+1336	Boulets de canon : sautez ou gardez !
+1337	Sous l'eau, le crâne devient Requin ! ↑ (ou SAUTER) monte, ▼ descend. Attention aux méduses.
+1338	Vous avez traversé la caverne sous-marine !
+1339	↑ ou SAUTER monte · ▼ descend
+1340	Frappez les leviers : la marée haute fait monter les caisses ; la marée basse ouvre les chemins du bas.
+1341	Le phare a éclairé le chemin !
+1342	Levier : marée haute / marée basse
+1343	Le pont s'est effondré au milieu. Traversez par les vergues et les nids-de-pie, tout là-haut !
+1344	Vous avez maîtrisé les mâts !
+1345	Les coraux de feu brûlent, les méduses flottent et la marée ne s'arrête pas. Le dernier pas avant le Roi.
+1346	Le récif est derrière vous. Le Roi attend !
+1347	Le Roi Requin-Harpon commande la marée. À marée basse, il s'échoue : c'est votre chance !
+1348	Le Roi Requin-Harpon est tombé ! Fragment de la couronne récupéré !
+1349	Trône du Chaman
+1350	La couronne vous a rendu votre corps. Maintenant, le Chaman.
+1351	Le Chaman est tombé. Les sceaux sont revenus.
+1352	La prairie des Gnolls. Les chasseurs lancent des os qui reviennent comme des boomerangs !
+1353	Vous êtes arrivé dans la prairie !
+1354	Prairie des Os :\nterre des Gnolls.
+1355	Le troupeau charge au sol ! Quand vous entendez l'alerte, montez en hauteur.
+1356	Le troupeau est passé, et vous aussi !
+1357	Ruée du troupeau :\nmontez en hauteur !
+1358	Des rochers dévalent la pente. Sautez par-dessus ou brisez-les d'un coup !
+1359	Vous avez traversé le cimetière !
+1360	Placez les moutons sur les plaques pour ouvrir les portails et portez la clé jusqu'à la porte.
+1361	La porte de la ferme s'est ouverte !
+1362	Mouton sur la plaque :\nle portail s'ouvre.
+1363	Les buissons qui tremblent, ce n'est pas le vent : ce sont des Gnolls qui attendent que vous approchiez.
+1364	Aucun Gnoll ne vous a pris par surprise !
+1365	Dans les hautes herbes,\nquelque chose bouge...
+1366	Course et tir ! La caravane des Gnolls n'arrête pas d'envoyer des chasseurs.
+1367	La caravane s'est dispersée !
+1368	Le vent de la prairie soulève quiconque y entre. Maintenez SAUTER en l'air pour planer.
+1369	Le vent vous a porté jusqu'au bout de la prairie !
+1370	Entrez dans le vent pour monter.\nMaintenez SAUTER pour planer.
+1371	Le Roi Gnoll garde le deuxième fragment. Il bondit, hurle et lance un os de la taille d'un tronc !
+1372	Le Roi Gnoll est tombé ! Fragment de la couronne récupéré !
+1373	Les ponts sont des fils de toile : ils cèdent juste après qu'on a marché dessus. Ne vous arrêtez pas !
+1374	Vous avez traversé les ponts de toile !
+1375	Ponts de toile :\nne vous arrêtez pas dessus !
+1376	Noir complet. Touchez les torches pour les allumer ; les 3 grandes ouvrent la sortie.
+1377	Les torches ont révélé la sortie !
+1378	IL FAIT NOIR...\nTouchez les torches\npour les allumer.
+1379	La sortie ne s'ouvre qu'avec\nles 3 GRANDES TORCHES allumées.
+1380	Des cocons suspendus montent et descendent sur leurs fils. Les toucher, c'est finir en repas !
+1381	Vous avez traversé la salle des cocons !
+1382	Cocons qui se balancent :\nne les touchez pas !
+1383	Course et tir ! Araignées sauteuses et chauves-souris vampires arrivent par vagues.
+1384	La caverne a été nettoyée à coups de tir !
+1385	La clé est tout en haut du nid. Pour franchir le mur, changez la couleur des blocs.
+1386	La chambre des œufs s'est ouverte !
+1387	La clé est dans le nid,\ntout là-haut.
+1388	Lâchez la clé (PRENDRE),\nfrappez le levier\net reprenez-la.
+1389	La montagne de feu. Les geysers bouillonnent avant de lâcher leur colonne de feu : attendez qu'elle passe !
+1390	Vous avez franchi les portes de la forge !
+1391	Geyser qui bouillonne :\nattendez que le feu passe !
+1392	La lave monte et descend comme une marée. Quand elle arrive, restez en hauteur ou sur le basalte !
+1393	Vous avez vaincu la marée de lave !
+1394	La lave monte et descend.\nRestez en hauteur !
+1395	Les geysers jaillissent en séquence. Observez le rythme et passez entre les colonnes de feu.
+1396	Pas même roussi !
+1397	Course et tir ! Diablotins, minotaures de lave et lézards de magma arrivent sans fin.
+1398	La forge a été nettoyée à coups de tir !
+1399	Les dalles d'obsidienne coulent dans la lave juste après qu'on a marché dessus. Et les canons de la forge ne s'arrêtent pas.
+1400	Vous avez traversé le pont d'obsidienne !
+1401	Des rochers d'or bloquent l'atelier. Utilisez le MARTEAU (en l'air, ▼ + ATTAQUER) et portez la clé jusqu'à la porte.
+1402	La porte de l'atelier s'est ouverte !
+1403	En l'air : ▼ + ATTAQUER\nbrise les rochers.
+1404	Le cœur de la montagne. Chaque zone ne s'ouvre que lorsque tous ses ennemis sont tombés.
+1405	Le chemin vers le Minotaure est ouvert !
+1406	Le bois des gnomes. Ils tirent des glands au lance-pierre et font dévaler des rondins.
+1407	Vous êtes entré dans le bois !
+1408	Bois des Gnomes.\nAttention aux glands !
+1409	Des murs trop hauts pour sauter ? Retombez sur les champignons : ils vous propulsent tout en haut !
+1410	Quels sauts !
+1411	Retombez sur le champignon :\nil vous propulse en haut !
+1412	Le sol disparaît dans la rivière. Le chemin passe par en haut, de cime en cime.
+1413	Vous êtes passé par les cimes !
+1414	Des rondins flottent sur la rivière : on peut marcher dessus. Les planches détachées coulent.
+1415	Vous avez traversé la rivière de rondins !
+1416	Course et tir ! Des gnomes au lance-pierre partout.
+1417	Le bois a été nettoyé à coups de tir !
+1418	De petits tas de mousse tremblants cachent des gnomes. Et les rondins n'arrêtent pas de rouler.
+1419	Aucun gnome ne vous a eu !
+1420	La mousse qui tremble\nn'est pas de la mousse...
+1421	Le village des gnomes. Chaque zone ne s'ouvre que lorsque tous ses habitants sont tombés.
+1422	Le village s'est rendu !
+1423	Le Roi Gnome garde le fragment au pied du plus vieil arbre du bois.
+1424	Le Roi Gnome est tombé ! Fragment de la couronne récupéré !
+1425	Les mines des gobelins. Torches, or et pierres instables au plafond : surveillez la poussière qui tombe !
+1426	Vous êtes entré dans les mines !
+1427	De la poussière tombe du plafond :\nun rocher arrive !
+1428	Le plafond de la galerie s'effondre ! La poussière indique où la roche va tomber.
+1429	Vous avez échappé à l'éboulement !
+1430	Les torches de la galerie se sont éteintes. Rallumez-les ; les 3 grandes ouvrent la sortie.
+1431	La galerie s'est illuminée !
+1432	Des rochers d'or ferment les galeries. Un coup de marteau, puis portez la clé jusqu'à la porte.
+1433	Le filon d'or s'est ouvert !
+1434	Les gobelins mineurs lancent des bombes en cloche. Et les rochers roulent sur les rails.
+1435	Aucune explosion ne vous a eu !
+1436	L'eau de la mine monte et descend. Restez en hauteur, ou sur les caisses.
+1437	Vous avez traversé la mine inondée !
+1438	Ici, le feu est bleu et il vous poursuit. Et les geysers ne s'arrêtent pas.
+1439	Vous avez traversé le feu bleu !
+1440	Le trésor du Roi. Chaque zone ne s'ouvre que lorsque tous les gardes sont tombés.
+1441	Le chemin vers le Roi Gobelin est ouvert !
+1442	Le Roi Gobelin à la Torche compte chaque pépite. Et garde le fragment au milieu de l'or.
+1443	Le Roi Gobelin est tombé ! Fragment de la couronne récupéré !
+1444	La lagune des lézards. Eau stagnante, mousse et lézards qui crachent du poison.
+1445	Vous êtes arrivé à la lagune !
+1446	Lagune des Lézards.\nAttention au poison !
+1447	Des feuilles géantes flottent sur la lagune. Elles coulent juste après qu'on a marché dessus !
+1448	Vous avez traversé les nénuphars !
+1449	Les feuilles coulent :\nne vous arrêtez pas dessus !
+1450	L'eau du marais monte et descend. Restez en hauteur ou sur les rondins.
+1451	La crue est passée !
+1452	Des épines venimeuses au sol et des lézards violets qui crachent du poison de tous côtés.
+1453	Vous êtes sorti du marécage en un seul morceau !
+1454	La clé de la maison du pêcheur a disparu avec un crabe du marécage. Frappez-le et rapportez la clé !
+1455	La porte du pêcheur s'est ouverte !
+1456	Le crabe du marécage\na pris la clé !
+1457	Au fond de la lagune, le crâne devient Lézard et nage librement. ↑ (ou SAUTER) monte, ▼ descend.
+1458	Vous avez traversé le fond de la lagune !
+1459	Course et tir ! Lézards et naufragés sortent du marécage sans arrêt.
+1460	Le marécage a été nettoyé à coups de tir !
+1461	Racines et branches au-dessus de l'eau. Des rondins roulent sur les troncs tombés.
+1462	Vous avez traversé la mangrove !
+1463	Le village des lézards. Chaque zone ne s'ouvre que lorsque tous ses habitants sont tombés.
+1464	Le chemin vers le Roi Lézard est ouvert !
+1465	Le Roi Lézard ne dort jamais. Il crache du poison, projette sa langue et bondit en éclaboussant des flaques.
+1466	Le Roi Lézard est tombé ! Fragment de la couronne récupéré !
+1467	Les nuages de braise se défont juste après qu'on a marché dessus. Et tomber d'ici, c'est tomber dans le vide.
+1468	Vous avez traversé les nuages de braise !
+1469	Les nuages de braise\nse défont : courez !
+1470	Des météores incandescents tombent du ciel. Les étincelles indiquent où ils vont tomber.
+1471	Aucun météore ne vous a touché !
+1472	Course et tir dans les îles du ciel ! Diablotins et abeilles de braise sans fin.
+1473	Le ciel a été nettoyé à coups de tir !
+1474	Des courants de vent chaud entre les îles, et des jets de feu qui sortent des rochers.
+1475	Le vent chaud vous a porté jusqu'au bout !
+1476	Le château des diablotins. Chaque zone ne s'ouvre que lorsque tous les gardes sont tombés.
+1477	Le château dans les nuages est tombé !
+1478	Un essaim d'abeilles de braise, et les canons du château qui balaient les îles.
+1479	Vous avez traversé l'essaim !
+1480	Le coffre des diablotins. Portez la clé à travers les îles grâce aux ressorts et au levier de couleur.
+1481	Le coffre des nuages s'est ouvert !
+1482	L'entrée du royaume ennemi de votre allié. Les gardes volent et piquent.
+1483	Vous avez franchi le portail des ailes !
+1484	Le royaume ennemi\nde votre allié.
+1485	Vol de jour, sur le dos de votre allié, à travers le ciel du royaume ennemi.
+1486	La route du vent est derrière vous !
+1487	Le château du royaume. Chaque zone ne s'ouvre que lorsque tous les gardes sont tombés.
+1488	Le château des ailes est tombé !
+1489	Un vol de nuit en pleine tempête. Les vagues d'ennemis arrivent plus serrées.
+1490	Vous avez traversé la tempête !
+1491	La chambre royale. Portez la clé par les ressorts et les échelles jusqu'à la porte.
+1492	La chambre royale s'est ouverte !
+1493	Des courants de vent entre les tours du royaume, et des gardes qui piquent.
+1494	Le vent vous a porté jusqu'aux tours !
+1495	Le dernier vol de jour avant la nuit du roi. Beaucoup d'ennemis, et plus forts.
+1496	Le soleil s'est couché derrière vous !
+1497	Course et tir sur les remparts du royaume ! Les gardes n'arrêtent pas d'arriver.
+1498	Les remparts ont été nettoyés à coups de tir !
+1499	La garde royale défend le dernier pont avant le vol vers le roi.
+1500	La garde royale est tombée. Le roi attend dans le ciel nocturne !
+1501	URNE DU CHAMAN
+1502	Vague 0 sur {0}
+1503	L'URNE A SURVÉCU !
+1504	VAGUE {0}
+1505	Vague {0} sur {1}
+1506	BOUH !
+1507	Joueur {0}
+1508	Votre nom
+1509	ANNULER
+1510	PRINCE DES CHAUVES-SOURIS
+1511	PRINCE DES ABEILLES
+1512	OSSIAN
+1513	Seigneur du Nid
+1514	Un sac d'os dans mon nid ? Quel en-cas fade.
+1515	Je ne fais que passer. Laisse-moi passer et personne ne sera blessé.
+1516	Personne ne passe devant le Prince des Chauves-Souris !
+1517	Héritier de la Ruche
+1518	Cousin ! Je savais que tu ne viendrais pas à bout d'un squelette tout seul.
+1519	Ne te mêle pas de ça, faux-bourdon !
+1520	Et rater le spectacle ? Deux princes contre un petit os !
+1521	Génial. Maintenant, ils sont deux.
+1522	Attends ! Attends... ça suffit.
+1523	Épargne-moi, crâne. Bats le Prince des Abeilles et je serai ton plus grand allié : je volerai avec toi jusqu'au Roi des Abeilles.
+1524	N'écoute pas cette chauve-souris perfide ! Achève-la et c'est MOI qui volerai avec toi jusqu'au Roi des Chauves-Souris !
+1525	Hex dit toujours que tout pacte a un prix...
+1526	LE PACTE DU PRINCE DES CHAUVES-SOURIS
+1527	ACCEPTER : épargner la chauve-souris et battre l'abeille
+1528	REFUSER : battre la chauve-souris
+1529	Sage décision. À partir d'aujourd'hui, mes ailes sont les tiennes.
+1530	TRAÎTRES ! Je vais vous piquer tous les deux !
+1531	Pas de pacte avec qui a voulu me manger.
+1532	Hahaha ! Tu me plais, petit os. Je t'attends dehors.
+1533	Alors nous tomberons ensemble !
+1534	Le Prince des Abeilles vole maintenant avec vous !
+1535	Hah ! Beau travail, allié. Le Roi des Abeilles entendra parler de nous.
+1536	Le Prince des Chauves-Souris est maintenant votre allié !
+1537	Vous ne savez pas encore porter !
+1538	Il faut la HACHE
+1539	PONT !
+1540	LA CLÉ EST TOMBÉE !
+1541	LE CRABE A PRIS LA CLÉ !
+1542	CADEAU {0}/3

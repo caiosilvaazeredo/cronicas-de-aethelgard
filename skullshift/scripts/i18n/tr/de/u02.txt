@@ -1,0 +1,220 @@
+1323	Der Turm barg Gold!
+1324	Eine alte Filmrolle... Der Schädel ist in einen Trickfilm von 1930 geraten! Halte ANGRIFF zum Schießen.
+1325	ENDE. (Der verlorene Trickfilm ist gerettet.)
+1326	Eine Krabbe ist mit dem Schlüssel abgehauen! Triff sie, damit er fällt, und bring ihn zur Tür.
+1327	Die Strandtür ist offen!
+1328	Triff die Krabbe: Der Schlüssel fällt!
+1329	Die Flut kommt und geht von selbst. Wenn sie kommt, bleib oben!
+1330	Du hast die Flut besiegt!
+1331	Die Flut steigt! Bleib oben, wenn sie kommt.
+1332	Lose Bretter sinken, kaum dass man drauftritt. Bleib nicht darauf stehen!
+1333	Du hast das Wrack durchquert!
+1334	An Bord! Kanonen feuern übers Deck: Spring über die Kugeln oder deck dich.
+1335	Das Deck gehört dir!
+1336	Kanonenkugeln: springen oder decken!
+1337	Unter Wasser wird der Schädel zum Hai! ↑ (oder SPRINGEN) hoch, ▼ runter. Vorsicht vor den Quallen.
+1338	Du hast die Unterwasserhöhle durchquert!
+1339	↑ oder SPRINGEN hoch · ▼ runter
+1340	Schlag die Hebel: Flut lässt die Kisten steigen; Ebbe öffnet die unteren Wege.
+1341	Der Leuchtturm hat den Weg erhellt!
+1342	Hebel: Flut / Ebbe
+1343	Das Deck ist in der Mitte eingesunken. Überquere es über die Rahen und Ausgucke ganz oben!
+1344	Du hast die Masten bezwungen!
+1345	Feuerkorallen brennen, Quallen treiben, und die Flut hört nicht auf. Der letzte Schritt vor dem König.
+1346	Das Riff liegt hinter dir. Der König wartet!
+1347	Der Harpunenhai-König gebietet über die Gezeiten. Bei Ebbe strandet er: Das ist deine Chance!
+1348	Der Harpunenhai-König ist gefallen! Kronenfragment zurückgewonnen!
+1349	Thron des Schamanen
+1350	Die Krone hat dir deinen Körper zurückgegeben. Jetzt der Schamane.
+1351	Der Schamane ist gefallen. Die Siegel sind zurück.
+1352	Die Prärie der Gnolle. Die Jäger werfen Knochen, die wie Bumerangs zurückkommen!
+1353	Du hast die Prärie erreicht!
+1354	Knochenprärie:\nLand der Gnolle.
+1355	Die Herde stürmt über den Boden! Wenn du die Warnung hörst, klettere nach oben.
+1356	Die Herde ist vorbei – und du auch!
+1357	Stampede:\nnach oben klettern!
+1358	Felsen rollen den Hang hinab. Spring drüber oder zerschlag sie!
+1359	Du hast den Friedhof durchquert!
+1360	Stell die Schafe auf die Platten, um die Tore zu öffnen, und bring den Schlüssel zur Tür.
+1361	Die Hoftür ist offen!
+1362	Schaf auf der Platte:\ndas Tor geht auf.
+1363	Zitternde Büsche sind nicht der Wind: Es sind Gnolle, die darauf warten, dass du näher kommst.
+1364	Kein Gnoll hat dich überrascht!
+1365	Im hohen Gras\nbewegt sich etwas...
+1366	Rennen und schießen! Die Gnollkarawane schickt ohne Ende Jäger.
+1367	Die Karawane ist zersprengt!
+1368	Der Präriewind hebt jeden an, der hineintritt. Halte SPRINGEN in der Luft, um zu gleiten.
+1369	Der Wind hat dich ans Ende der Prärie getragen!
+1370	Tritt in den Wind, um aufzusteigen.\nHalte SPRINGEN, um zu gleiten.
+1371	Der Gnollkönig bewacht das zweite Fragment. Er springt, heult und wirft einen Knochen so groß wie ein Baumstamm!
+1372	Der Gnollkönig ist gefallen! Kronenfragment zurückgewonnen!
+1373	Die Brücken sind Netzfäden: Sie reißen, kaum dass man drauftritt. Bleib nicht stehen!
+1374	Du hast die Netzbrücken überquert!
+1375	Netzbrücken:\nnicht stehen bleiben!
+1376	Stockdunkel. Berühre die Fackeln, um sie anzuzünden; die 3 großen öffnen den Ausgang.
+1377	Die Fackeln haben den Ausgang gezeigt!
+1378	ES IST DUNKEL...\nBerühre die Fackeln,\num sie anzuzünden.
+1379	Der Ausgang öffnet sich nur, wenn\ndie 3 GROSSEN FACKELN brennen.
+1380	Hängende Kokons fahren an ihren Fäden auf und ab. Wer sie berührt, wird zur Mahlzeit!
+1381	Du hast die Kokonhalle durchquert!
+1382	Schwingende Kokons:\nnicht berühren!
+1383	Rennen und schießen! Springspinnen und Vampirfledermäuse kommen in Wellen.
+1384	Die Höhle ist leergeschossen!
+1385	Der Schlüssel liegt oben im Nest. Um durch die Wand zu kommen, wechsle die Farbe der Blöcke.
+1386	Die Eierkammer ist offen!
+1387	Der Schlüssel liegt im Nest,\nganz oben.
+1388	Lass den Schlüssel los (NEHMEN),\nschlag den Hebel\nund nimm ihn wieder.
+1389	Der Feuerberg. Geysire blubbern, bevor sie ihre Feuersäule ausstoßen: Warte, bis sie vorbei ist!
+1390	Du bist durch die Tore der Schmiede!
+1391	Blubbernder Geysir:\nwarte, bis das Feuer vorbei ist!
+1392	Die Lava steigt und fällt wie die Gezeiten. Wenn sie kommt, bleib oben oder auf dem Basalt!
+1393	Du hast die Lavaflut besiegt!
+1394	Die Lava steigt und fällt.\nBleib oben!
+1395	Die Geysire feuern nacheinander. Achte auf den Rhythmus und geh zwischen den Feuersäulen hindurch.
+1396	Nicht einmal angesengt!
+1397	Rennen und schießen! Kobolde, Lavaminotauren und Magmaechsen ohne Ende.
+1398	Die Schmiede ist leergeschossen!
+1399	Obsidianplatten versinken in der Lava, kaum dass man drauftritt. Und die Kanonen der Schmiede hören nicht auf.
+1400	Du hast die Obsidianbrücke überquert!
+1401	Goldfelsen versperren die Werkstatt. Nimm den HAMMER (in der Luft ▼ + ANGRIFF) und bring den Schlüssel zur Tür.
+1402	Die Werkstatttür ist offen!
+1403	In der Luft: ▼ + ANGRIFF\nzerbricht die Felsen.
+1404	Das Herz des Berges. Jedes Gebiet öffnet sich erst, wenn all seine Gegner gefallen sind.
+1405	Der Weg zum Minotaurus ist frei!
+1406	Der Wald der Gnome. Sie schießen Eicheln mit Schleudern und rollen Baumstämme den Hang hinab.
+1407	Du hast den Wald betreten!
+1408	Gnomenwald.\nVorsicht vor den Eicheln!
+1409	Wände zu hoch zum Springen? Lande auf den Pilzen: Sie schleudern dich ganz nach oben!
+1410	Was für Sprünge!
+1411	Lande auf dem Pilz:\ner schleudert dich hoch!
+1412	Der Boden verschwindet im Fluss. Der Weg führt oben entlang, von Krone zu Krone.
+1413	Du hast die Baumkronen überquert!
+1414	Baumstämme treiben auf dem Fluss: Man kann darauf treten. Lose Bretter sinken.
+1415	Du hast den Stammfluss überquert!
+1416	Rennen und schießen! Schleudergnome überall.
+1417	Der Wald ist leergeschossen!
+1418	Zitternde Moospolster verstecken Gnome. Und die Stämme rollen ohne Ende.
+1419	Kein Gnom hat dich erwischt!
+1420	Moos, das zittert,\nist kein Moos...
+1421	Das Gnomendorf. Jedes Gebiet öffnet sich erst, wenn alle Bewohner gefallen sind.
+1422	Das Dorf hat sich ergeben!
+1423	Der Gnomenkönig bewacht das Fragment am Fuß des ältesten Baums im Wald.
+1424	Der Gnomenkönig ist gefallen! Kronenfragment zurückgewonnen!
+1425	Die Goblinminen. Fackeln, Gold und lose Steine an der Decke: Achte auf rieselnden Staub!
+1426	Du hast die Minen betreten!
+1427	Staub rieselt von der Decke:\nda kommt ein Stein!
+1428	Die Decke des Stollens stürzt ein! Der Staub zeigt, wo der Fels fällt.
+1429	Du bist dem Einsturz entkommen!
+1430	Die Fackeln im Stollen sind erloschen. Zünde sie an; die 3 großen öffnen den Ausgang.
+1431	Der Stollen ist hell erleuchtet!
+1432	Goldfelsen versperren die Stollen. Hammer drauf und bring den Schlüssel zur Tür.
+1433	Die Goldader ist offen!
+1434	Bergmannsgoblins werfen Bomben im Bogen. Und Felsen rollen über die Schienen.
+1435	Keine Explosion hat dich erwischt!
+1436	Das Wasser in der Mine steigt und fällt. Bleib oben oder auf den Kisten.
+1437	Du hast die geflutete Mine durchquert!
+1438	Hier unten ist das Feuer blau und jagt dich. Und die Geysire hören nicht auf.
+1439	Du hast das blaue Feuer durchquert!
+1440	Der Schatz des Königs. Jedes Gebiet öffnet sich erst, wenn alle Wachen gefallen sind.
+1441	Der Weg zum Goblinkönig ist frei!
+1442	Der Fackelgoblin-König zählt jedes Nugget. Und hütet das Fragment mitten im Gold.
+1443	Der Goblinkönig ist gefallen! Kronenfragment zurückgewonnen!
+1444	Die Lagune der Echsen. Stehendes Wasser, Moos und Echsen, die Gift spucken.
+1445	Du hast die Lagune erreicht!
+1446	Echsenlagune.\nVorsicht vor dem Gift!
+1447	Riesige Blätter treiben auf der Lagune. Sie sinken, kaum dass man drauftritt!
+1448	Du hast die Seerosen überquert!
+1449	Blätter sinken:\nnicht stehen bleiben!
+1450	Das Sumpfwasser steigt und fällt. Bleib oben oder auf den Stämmen.
+1451	Die Flut ist vorbei!
+1452	Giftdornen am Boden und lila Echsen, die von überall Gift spucken.
+1453	Du bist heil aus dem Moor gekommen!
+1454	Der Schlüssel zum Fischerhaus ist mit einer Moorkrabbe verschwunden. Triff sie und hol den Schlüssel!
+1455	Die Tür des Fischers ist offen!
+1456	Die Moorkrabbe\nhat den Schlüssel!
+1457	Am Grund der Lagune wird der Schädel zur Echse und schwimmt frei. ↑ (oder SPRINGEN) hoch, ▼ runter.
+1458	Du hast den Grund der Lagune durchquert!
+1459	Rennen und schießen! Echsen und Schiffbrüchige kommen ohne Ende aus dem Moor.
+1460	Das Moor ist leergeschossen!
+1461	Wurzeln und Äste über dem Wasser. Stämme rollen über umgestürzte Bäume.
+1462	Du hast die Mangroven durchquert!
+1463	Das Echsendorf. Jedes Gebiet öffnet sich erst, wenn alle Bewohner gefallen sind.
+1464	Der Weg zum Echsenkönig ist frei!
+1465	Der Echsenkönig schläft nie. Er spuckt Gift, lässt die Zunge schnellen und springt, dass die Pfützen spritzen.
+1466	Der Echsenkönig ist gefallen! Kronenfragment zurückgewonnen!
+1467	Glutwolken zerfallen, kaum dass man drauftritt. Und wer von hier fällt, fällt ins Nichts.
+1468	Du hast die Glutwolken überquert!
+1469	Glutwolken\nzerfallen: lauf!
+1470	Glühende Meteore fallen vom Himmel. Funken zeigen, wo sie einschlagen.
+1471	Kein Meteor hat dich getroffen!
+1472	Rennen und schießen auf den Himmelsinseln! Kobolde und Glutbienen ohne Ende.
+1473	Der Himmel ist leergeschossen!
+1474	Heiße Windströmungen zwischen den Inseln und Feuerstrahlen aus den Felsen.
+1475	Der heiße Wind hat dich bis ans Ende getragen!
+1476	Das Koboldschloss. Jedes Gebiet öffnet sich erst, wenn alle Wachen gefallen sind.
+1477	Das Wolkenschloss ist gefallen!
+1478	Ein Schwarm Glutbienen, und die Schlosskanonen fegen über die Inseln.
+1479	Du hast den Schwarm durchquert!
+1480	Der Tresor der Kobolde. Trag den Schlüssel über die Inseln, mit Federn und dem Farbhebel.
+1481	Der Wolkentresor ist offen!
+1482	Der Eingang ins Reich des Feindes deines Verbündeten. Die Wachen fliegen und stoßen herab.
+1483	Du bist durch das Tor der Schwingen!
+1484	Das Reich des Feindes\ndeines Verbündeten.
+1485	Ein Tagflug auf deinem Verbündeten über den Himmel des feindlichen Reichs.
+1486	Die Windroute liegt hinter dir!
+1487	Das Schloss des Reichs. Jedes Gebiet öffnet sich erst, wenn alle Wachen gefallen sind.
+1488	Das Schloss der Schwingen ist gefallen!
+1489	Ein Nachtflug mitten im Sturm. Die Gegnerwellen kommen dichter.
+1490	Du hast den Sturm durchquert!
+1491	Die königliche Kammer. Trag den Schlüssel über Federn und Leitern zur Tür.
+1492	Die königliche Kammer ist offen!
+1493	Windströmungen zwischen den Türmen des Reichs und herabstoßende Wachen.
+1494	Der Wind hat dich zu den Türmen getragen!
+1495	Der letzte Tagflug vor der Nacht des Königs. Viele Gegner, und stärker.
+1496	Die Sonne ist hinter dir untergegangen!
+1497	Rennen und schießen auf den Mauern des Reichs! Die Wachen kommen ohne Ende.
+1498	Die Mauern sind leergeschossen!
+1499	Die königliche Garde verteidigt die letzte Brücke vor dem Flug zum König.
+1500	Die königliche Garde ist gefallen. Der König wartet am Nachthimmel!
+1501	URNE DES SCHAMANEN
+1502	Welle 0 von {0}
+1503	DIE URNE HAT ÜBERLEBT!
+1504	WELLE {0}
+1505	Welle {0} von {1}
+1506	BUH!
+1507	Spieler {0}
+1508	Dein Name
+1509	ABBRECHEN
+1510	FLEDERMAUSPRINZ
+1511	BIENENPRINZ
+1512	OSSIAN
+1513	Herr des Nests
+1514	Ein Sack Knochen in meinem Nest? Was für ein fader Happen.
+1515	Ich bin nur auf der Durchreise. Lass mich vorbei, und keiner wird verletzt.
+1516	Niemand kommt am Fledermausprinzen vorbei!
+1517	Erbe des Stocks
+1518	Vetter! Ich wusste, dass du allein nicht mit einem Skelett fertigwirst.
+1519	Halt dich da raus, Drohne!
+1520	Und den Spaß verpassen? Zwei Prinzen gegen ein Knöchelchen!
+1521	Toll. Jetzt sind es zwei.
+1522	Warte! Warte... genug.
+1523	Verschone mich, Schädel. Besiege den Bienenprinzen, und ich werde dein größter Verbündeter: Ich fliege mit dir bis zum Bienenkönig.
+1524	Hör nicht auf diese hinterhältige Fledermaus! Mach sie fertig, und ICH fliege mit dir bis zum Fledermauskönig!
+1525	Hex sagt immer, jeder Pakt hat seinen Preis...
+1526	DER PAKT DES FLEDERMAUSPRINZEN
+1527	ANNEHMEN: die Fledermaus verschonen und die Biene besiegen
+1528	ABLEHNEN: die Fledermaus besiegen
+1529	Weise Wahl. Von heute an gehören meine Flügel dir.
+1530	VERRÄTER! Ich steche euch beide!
+1531	Kein Pakt mit jemandem, der mich fressen wollte.
+1532	Hahaha! Ich mag dich, Knöchelchen. Ich warte draußen auf dich.
+1533	Dann fallen wir gemeinsam!
+1534	Der Bienenprinz fliegt jetzt mit dir!
+1535	Hah! Gute Arbeit, Verbündeter. Der Bienenkönig wird von uns hören.
+1536	Der Fledermausprinz ist jetzt dein Verbündeter!
+1537	Du kannst noch nichts tragen!
+1538	Braucht die AXT
+1539	BRÜCKE!
+1540	DER SCHLÜSSEL IST GEFALLEN!
+1541	DIE KRABBE HAT DEN SCHLÜSSEL!
+1542	GESCHENK {0}/3

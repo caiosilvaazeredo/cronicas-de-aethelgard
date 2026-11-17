@@ -1,0 +1,220 @@
+1323	¡La torre guardaba oro!
+1324	Un viejo rollo de película... ¡La calavera entró en un dibujo de 1930! Mantén ATACAR para disparar.
+1325	FIN. (El dibujo perdido se ha salvado.)
+1326	¡Un cangrejo huyó con la llave! Golpéalo para que suelte la llave y llévala a la puerta.
+1327	¡La puerta de la playa se abrió!
+1328	Golpea al cangrejo: ¡la llave cae!
+1329	La marea sube y baja sola. Cuando llegue, ¡quédate en lo alto!
+1330	¡Venciste a la marea!
+1331	¡La marea sube! Quédate en lo alto cuando llegue.
+1332	Las tablas sueltas se hunden justo después de pisarlas. ¡No te pares encima!
+1333	¡Cruzaste el naufragio!
+1334	¡Sube a bordo! Los cañones disparan por la cubierta: salta las balas o defiéndete.
+1335	¡La cubierta es tuya!
+1336	Balas de cañón: ¡salta o defiéndete!
+1337	¡Bajo el agua la calavera se vuelve Tiburón! ↑ (o SALTAR) sube, ▼ baja. Cuidado con las medusas.
+1338	¡Cruzaste la caverna submarina!
+1339	↑ o SALTAR sube · ▼ baja
+1340	Golpea las palancas: con marea alta suben las cajas; con marea baja se abren los caminos de abajo.
+1341	¡El faro iluminó el camino!
+1342	Palanca: marea alta / marea baja
+1343	La cubierta se hundió por el medio. ¡Cruza por las vergas y las cofas, allá arriba!
+1344	¡Dominaste los mástiles!
+1345	Los corales de fuego queman, las medusas flotan y la marea no para. El último paso antes del Rey.
+1346	El arrecife quedó atrás. ¡El Rey espera!
+1347	El Rey Tiburón Arponero manda en la marea. Con marea baja encalla: ¡es tu oportunidad!
+1348	¡El Rey Tiburón Arponero ha caído! ¡Fragmento de la corona recuperado!
+1349	Trono del Chamán
+1350	La corona te devolvió el cuerpo. Ahora, el Chamán.
+1351	El Chamán ha caído. Los sellos han vuelto.
+1352	La pradera de los Gnolls. ¡Los cazadores lanzan huesos que vuelven como bumeranes!
+1353	¡Llegaste a la pradera!
+1354	Pradera de los Huesos:\ntierra de los Gnolls.
+1355	¡La manada viene en estampida por el suelo! Cuando oigas el aviso, sube a lo alto.
+1356	¡La manada pasó, y tú también!
+1357	Estampida:\n¡sube a lo alto!
+1358	Las rocas ruedan cuesta abajo. ¡Sáltalas o rómpelas de un golpe!
+1359	¡Cruzaste el cementerio!
+1360	Pon las ovejas en las placas para abrir los portones y lleva la llave a la puerta.
+1361	¡La puerta de la granja se abrió!
+1362	Oveja en la placa:\nel portón se abre.
+1363	Los arbustos que tiemblan no son el viento: son Gnolls esperando a que te acerques.
+1364	¡Ningún Gnoll te pilló por sorpresa!
+1365	En la hierba alta,\nalgo se mueve...
+1366	¡Corre y dispara! La caravana de los Gnolls no para de enviar cazadores.
+1367	¡La caravana huyó en desbandada!
+1368	El viento de la pradera levanta a quien entra en él. Mantén SALTAR en el aire para planear.
+1369	¡El viento te llevó hasta el final de la pradera!
+1370	Entra en el viento para subir.\nMantén SALTAR para planear.
+1371	El Rey Gnoll guarda el segundo fragmento. ¡Salta, aúlla y lanza un hueso del tamaño de un tronco!
+1372	¡El Rey Gnoll ha caído! ¡Fragmento de la corona recuperado!
+1373	Los puentes son hilos de telaraña: se rompen justo después de pisarlos. ¡No te pares!
+1374	¡Cruzaste los puentes de telaraña!
+1375	Puentes de telaraña:\n¡no te pares encima!
+1376	Oscuridad total. Toca las antorchas para encenderlas; las 3 grandes abren la salida.
+1377	¡Las antorchas mostraron la salida!
+1378	ESTÁ OSCURO...\nToca las antorchas\npara encenderlas.
+1379	La salida solo se abre con\nlas 3 ANTORCHAS GRANDES encendidas.
+1380	Los capullos colgados suben y bajan por sus hilos. ¡Tocarlos es acabar de comida!
+1381	¡Pasaste por el salón de los capullos!
+1382	Capullos balanceándose:\n¡no los toques!
+1383	¡Corre y dispara! Arañas saltarinas y murciélagos vampiro llegan en oleadas.
+1384	¡La caverna quedó limpia a tiros!
+1385	La llave está en lo alto del nido. Para pasar el muro, cambia el color de los bloques.
+1386	¡La cámara de los huevos se abrió!
+1387	La llave está en el nido,\nallá arriba.
+1388	Suelta la llave (AGARRAR),\ngolpea la palanca\ny vuelve a agarrarla.
+1389	La montaña de fuego. Los géiseres burbujean antes de soltar su columna de fuego: ¡espera a que pase!
+1390	¡Cruzaste las puertas de la forja!
+1391	Géiser burbujeando:\n¡espera a que pase el fuego!
+1392	La lava sube y baja como la marea. Cuando llegue, ¡quédate en lo alto o sobre el basalto!
+1393	¡Venciste a la marea de lava!
+1394	La lava sube y baja.\n¡Quédate en lo alto!
+1395	Los géiseres disparan en secuencia. Observa el ritmo y pasa entre las columnas de fuego.
+1396	¡Ni una chamusquina!
+1397	¡Corre y dispara! Diablillos, minotauros de lava y lagartos de magma sin parar.
+1398	¡La forja quedó limpia a tiros!
+1399	Las losas de obsidiana se hunden en la lava justo después de pisarlas. Y los cañones de la forja no paran.
+1400	¡Cruzaste el puente de obsidiana!
+1401	Rocas de oro bloquean el taller. Usa el MARTILLO (en el aire, ▼ + ATACAR) y lleva la llave a la puerta.
+1402	¡La puerta del taller se abrió!
+1403	En el aire: ▼ + ATACAR\nrompe las rocas.
+1404	El corazón de la montaña. Cada área solo se abre cuando caen todos sus enemigos.
+1405	¡El camino hacia el Minotauro está abierto!
+1406	El bosque de los gnomos. Disparan bellotas con tirachinas y hacen rodar troncos cuesta abajo.
+1407	¡Entraste en el bosque!
+1408	Bosque de los Gnomos.\n¡Cuidado con las bellotas!
+1409	¿Paredes demasiado altas para saltar? Cae sobre las setas: ¡te lanzan muy alto!
+1410	¡Qué saltos!
+1411	Cae sobre la seta:\n¡te lanza muy alto!
+1412	El suelo desaparece en el río. El camino va por arriba, de copa en copa.
+1413	¡Cruzaste por las copas!
+1414	Los troncos flotan en el río: puedes pisarlos. Las tablas sueltas se hunden.
+1415	¡Cruzaste el río de troncos!
+1416	¡Corre y dispara! Gnomos con tirachinas por todas partes.
+1417	¡El bosque quedó limpio a tiros!
+1418	Montoncitos de musgo que tiemblan esconden gnomos. Y los troncos no paran de rodar.
+1419	¡Ningún gnomo te pilló!
+1420	El musgo que tiembla\nno es musgo...
+1421	La aldea de los gnomos. Cada área solo se abre cuando caen todos sus habitantes.
+1422	¡La aldea se rindió!
+1423	El Rey Gnomo guarda el fragmento al pie del árbol más viejo del bosque.
+1424	¡El Rey Gnomo ha caído! ¡Fragmento de la corona recuperado!
+1425	Las minas de los goblins. Antorchas, oro y rocas sueltas en el techo: ¡mira el polvo que cae!
+1426	¡Entraste en las minas!
+1427	Polvo cayendo del techo:\n¡ahí viene una roca!
+1428	¡El techo de la galería se derrumba! El polvo avisa dónde caerá la roca.
+1429	¡Escapaste del derrumbe!
+1430	Las antorchas de la galería se apagaron. Enciéndelas; las 3 grandes abren la salida.
+1431	¡La galería se iluminó!
+1432	Rocas de oro cierran las galerías. Dales con el martillo y lleva la llave a la puerta.
+1433	¡La veta de oro se abrió!
+1434	Los goblins mineros lanzan bombas en arco. Y las rocas ruedan por las vías.
+1435	¡Ninguna explosión te alcanzó!
+1436	El agua de la mina sube y baja. Quédate en lo alto o encima de las cajas.
+1437	¡Cruzaste la mina inundada!
+1438	Aquí abajo el fuego es azul y te persigue. Y los géiseres no paran.
+1439	¡Cruzaste el fuego azul!
+1440	El tesoro del Rey. Cada área solo se abre cuando caen todos los guardias.
+1441	¡El camino hacia el Rey Goblin está abierto!
+1442	El Rey Goblin de la Antorcha cuenta cada pepita. Y guarda el fragmento en medio del oro.
+1443	¡El Rey Goblin ha caído! ¡Fragmento de la corona recuperado!
+1444	La laguna de los lagartos. Agua quieta, musgo y lagartos que escupen veneno.
+1445	¡Llegaste a la laguna!
+1446	Laguna de los Lagartos.\n¡Cuidado con el veneno!
+1447	Hojas gigantes flotan en la laguna. ¡Se hunden justo después de pisarlas!
+1448	¡Cruzaste los nenúfares!
+1449	Las hojas se hunden:\n¡no te pares encima!
+1450	El agua del pantano sube y baja. Quédate en lo alto o encima de los troncos.
+1451	¡La crecida pasó!
+1452	Espinas venenosas en el suelo y lagartos morados escupiendo veneno por todos lados.
+1453	¡Saliste de la ciénaga de una pieza!
+1454	La llave de la casa del pescador desapareció con un cangrejo de la ciénaga. ¡Golpéalo y llévate la llave!
+1455	¡La puerta del pescador se abrió!
+1456	¡El cangrejo de la ciénaga\nse llevó la llave!
+1457	En el fondo de la laguna, la calavera se vuelve Lagarto y nada libre. ↑ (o SALTAR) sube, ▼ baja.
+1458	¡Cruzaste el fondo de la laguna!
+1459	¡Corre y dispara! Lagartos y náufragos salen de la ciénaga sin parar.
+1460	¡La ciénaga quedó limpia a tiros!
+1461	Raíces y ramas sobre el agua. Los troncos ruedan por los árboles caídos.
+1462	¡Cruzaste el manglar!
+1463	La aldea de los lagartos. Cada área solo se abre cuando caen todos sus habitantes.
+1464	¡El camino hacia el Rey Lagarto está abierto!
+1465	El Rey Lagarto nunca duerme. Escupe veneno, estira la lengua y salta salpicando charcos.
+1466	¡El Rey Lagarto ha caído! ¡Fragmento de la corona recuperado!
+1467	Las nubes de brasa se deshacen justo después de pisarlas. Y caer desde aquí es caer al vacío.
+1468	¡Cruzaste las nubes de brasa!
+1469	Las nubes de brasa\nse deshacen: ¡corre!
+1470	Meteoros en brasa caen del cielo. Las chispas avisan dónde van a caer.
+1471	¡Ningún meteoro te alcanzó!
+1472	¡Corre y dispara en las islas del cielo! Diablillos y abejas de brasa sin parar.
+1473	¡El cielo quedó limpio a tiros!
+1474	Corrientes de viento caliente entre las islas, y chorros de fuego saliendo de las rocas.
+1475	¡El viento caliente te llevó hasta el final!
+1476	El castillo de los diablillos. Cada área solo se abre cuando caen todos los guardias.
+1477	¡El castillo en las nubes ha caído!
+1478	Un enjambre de abejas de brasa, y los cañones del castillo barriendo las islas.
+1479	¡Cruzaste el enjambre!
+1480	El cofre de los diablillos. Lleva la llave por las islas usando los muelles y la palanca de color.
+1481	¡El cofre de las nubes se abrió!
+1482	La entrada al reino enemigo de tu aliado. Los guardias vuelan y se lanzan en picado.
+1483	¡Cruzaste el portal de las alas!
+1484	El reino enemigo\nde tu aliado.
+1485	Vuelo de día, montado en tu aliado, cruzando el cielo del reino enemigo.
+1486	¡La ruta del viento quedó atrás!
+1487	El castillo del reino. Cada área solo se abre cuando caen todos los guardias.
+1488	¡El castillo de las alas ha caído!
+1489	Un vuelo nocturno en plena tormenta. Las oleadas de enemigos vienen más juntas.
+1490	¡Cruzaste la tormenta!
+1491	La cámara real. Lleva la llave por los muelles y las escaleras hasta la puerta.
+1492	¡La cámara real se abrió!
+1493	Corrientes de viento entre las torres del reino, y guardias en picado.
+1494	¡El viento te llevó hasta las torres!
+1495	El último vuelo de día antes de la noche del rey. Muchos enemigos, y más fuertes.
+1496	¡El sol se puso a tu espalda!
+1497	¡Corre y dispara en las murallas del reino! Los guardias no paran de llegar.
+1498	¡Las murallas quedaron limpias a tiros!
+1499	La guardia real defiende el último puente antes del vuelo hasta el rey.
+1500	La guardia real ha caído. ¡El rey espera en el cielo nocturno!
+1501	URNA DEL CHAMÁN
+1502	Oleada 0 de {0}
+1503	¡LA URNA SOBREVIVIÓ!
+1504	OLEADA {0}
+1505	Oleada {0} de {1}
+1506	¡BUU!
+1507	Jugador {0}
+1508	Tu nombre
+1509	CANCELAR
+1510	PRÍNCIPE DE LOS MURCIÉLAGOS
+1511	PRÍNCIPE DE LAS ABEJAS
+1512	OSSIAN
+1513	Señor del Nido
+1514	¿Un saco de huesos en mi nido? Qué tentempié más soso.
+1515	Solo estoy de paso. Déjame pasar y nadie saldrá herido.
+1516	¡Nadie pasa ante el Príncipe de los Murciélagos!
+1517	Heredero de la Colmena
+1518	¡Primo! Sabía que no podrías con un esqueleto tú solo.
+1519	¡No te metas en esto, zángano!
+1520	¿Y perderme la diversión? ¡Dos príncipes contra un huesito!
+1521	Genial. Ahora son dos.
+1522	¡Espera! Espera... basta.
+1523	Perdóname la vida, calavera. Derrota al Príncipe de las Abejas y seré tu mayor aliado: volaré contigo hasta el Rey de las Abejas.
+1524	¡No escuches a ese murciélago traicionero! ¡Acaba con él y YO volaré contigo hasta el Rey de los Murciélagos!
+1525	Hex siempre dice que todo pacto tiene un precio...
+1526	EL PACTO DEL PRÍNCIPE DE LOS MURCIÉLAGOS
+1527	ACEPTAR: perdonar al murciélago y derrotar a la abeja
+1528	RECHAZAR: derrotar al murciélago
+1529	Sabia elección. Desde hoy, mis alas son tuyas.
+1530	¡TRAIDORES! ¡Os voy a picar a los dos!
+1531	Nada de pactos con quien intentó comerme.
+1532	¡Jajaja! Me caes bien, huesito. Te espero fuera.
+1533	¡Entonces caeremos juntos!
+1534	¡El Príncipe de las Abejas ahora vuela contigo!
+1535	¡Ja! Buen trabajo, aliado. El Rey de las Abejas oirá hablar de nosotros.
+1536	¡El Príncipe de los Murciélagos ahora es tu aliado!
+1537	¡Aún no sabes cargar cosas!
+1538	Necesitas el HACHA
+1539	¡PUENTE!
+1540	¡LA LLAVE CAYÓ!
+1541	¡EL CANGREJO AGARRÓ LA LLAVE!
+1542	REGALO {0}/3

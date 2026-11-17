@@ -1,0 +1,220 @@
+1323	La torre custodiva oro!
+1324	Una vecchia pellicola... Il teschio è entrato in un cartone del 1930! Tieni ATTACCA per sparare.
+1325	FINE. (Il cartone perduto è stato salvato.)
+1326	Un granchio è scappato con la chiave! Colpiscilo per farla cadere e portala alla porta.
+1327	La porta della spiaggia si è aperta!
+1328	Colpisci il granchio: la chiave cade!
+1329	La marea sale e scende da sola. Quando arriva, resta in alto!
+1330	Hai battuto la marea!
+1331	La marea sale! Resta in alto quando arriva.
+1332	Le assi staccate affondano subito dopo che ci sali. Non fermarti sopra!
+1333	Hai attraversato il naufragio!
+1334	Sali a bordo! I cannoni sparano sul ponte: salta le palle o difenditi.
+1335	Il ponte è tuo!
+1336	Palle di cannone: salta o difenditi!
+1337	Sott'acqua il teschio diventa Squalo! ↑ (o SALTA) sale, ▼ scende. Attento alle meduse.
+1338	Hai attraversato la caverna sottomarina!
+1339	↑ o SALTA sale · ▼ scende
+1340	Colpisci le leve: l'alta marea fa salire le casse; la bassa marea apre i passaggi in basso.
+1341	Il faro ha illuminato la via!
+1342	Leva: alta marea / bassa marea
+1343	Il ponte è sprofondato nel mezzo. Attraversa sui pennoni e sulle coffe, lassù in alto!
+1344	Hai domato gli alberi della nave!
+1345	I coralli di fuoco bruciano, le meduse galleggiano e la marea non si ferma. L'ultimo passo prima del Re.
+1346	La barriera è alle spalle. Il Re aspetta!
+1347	Il Re Squalo Arpione comanda la marea. Con la bassa marea si arena: è la tua occasione!
+1348	Il Re Squalo Arpione è caduto! Frammento della corona recuperato!
+1349	Trono dello Sciamano
+1350	La corona ti ha restituito il corpo. Ora, lo Sciamano.
+1351	Lo Sciamano è caduto. I sigilli sono tornati.
+1352	La prateria degli Gnoll. I cacciatori lanciano ossa che tornano indietro come boomerang!
+1353	Sei arrivato nella prateria!
+1354	Prateria delle Ossa:\nterra degli Gnoll.
+1355	La mandria carica sul terreno! Quando senti l'avviso, sali in alto.
+1356	La mandria è passata, e tu pure!
+1357	Carica della mandria:\nsali in alto!
+1358	Le rocce rotolano giù dal pendio. Saltale o spaccale con un colpo!
+1359	Hai attraversato il cimitero!
+1360	Metti le pecore sulle piastre per aprire i cancelli e porta la chiave alla porta.
+1361	La porta della fattoria si è aperta!
+1362	Pecora sulla piastra:\nil cancello si apre.
+1363	I cespugli che tremano non sono il vento: sono Gnoll che aspettano che ti avvicini.
+1364	Nessuno Gnoll ti ha colto di sorpresa!
+1365	Nell'erba alta,\nqualcosa si muove...
+1366	Corri e spara! La carovana degli Gnoll non smette di mandare cacciatori.
+1367	La carovana si è dispersa!
+1368	Il vento della prateria solleva chi ci entra. Tieni SALTA in aria per planare.
+1369	Il vento ti ha portato fino alla fine della prateria!
+1370	Entra nel vento per salire.\nTieni SALTA per planare.
+1371	Il Re Gnoll custodisce il secondo frammento. Salta, ulula e lancia un osso grande come un tronco!
+1372	Il Re Gnoll è caduto! Frammento della corona recuperato!
+1373	I ponti sono fili di ragnatela: si spezzano subito dopo che ci sali. Non fermarti!
+1374	Hai attraversato i ponti di ragnatela!
+1375	Ponti di ragnatela:\nnon fermarti sopra!
+1376	Buio pesto. Tocca le torce per accenderle; le 3 grandi aprono l'uscita.
+1377	Le torce hanno mostrato l'uscita!
+1378	È BUIO...\nTocca le torce\nper accenderle.
+1379	L'uscita si apre solo con\nle 3 TORCE GRANDI accese.
+1380	I bozzoli appesi salgono e scendono sui fili. Toccarli vuol dire diventare cibo!
+1381	Hai superato la sala dei bozzoli!
+1382	Bozzoli che oscillano:\nnon toccarli!
+1383	Corri e spara! Ragni saltatori e pipistrelli vampiro arrivano a ondate.
+1384	La caverna è stata ripulita a colpi!
+1385	La chiave è in cima al nido. Per superare il muro, cambia il colore dei blocchi.
+1386	La camera delle uova si è aperta!
+1387	La chiave è nel nido,\nlassù in alto.
+1388	Lascia la chiave (PRENDI),\ncolpisci la leva\ne riprendila.
+1389	La montagna di fuoco. I geyser ribollono prima di sputare la colonna di fuoco: aspetta che passi!
+1390	Hai superato i cancelli della fucina!
+1391	Geyser che ribolle:\naspetta che passi il fuoco!
+1392	La lava sale e scende come la marea. Quando arriva, resta in alto o sul basalto!
+1393	Hai battuto la marea di lava!
+1394	La lava sale e scende.\nResta in alto!
+1395	I geyser eruttano in sequenza. Osserva il ritmo e passa tra le colonne di fuoco.
+1396	Neanche una bruciatura!
+1397	Corri e spara! Diavoletti, minotauri di lava e lucertole di magma senza sosta.
+1398	La fucina è stata ripulita a colpi!
+1399	Le lastre di ossidiana affondano nella lava subito dopo che ci sali. E i cannoni della fucina non smettono.
+1400	Hai attraversato il ponte di ossidiana!
+1401	Rocce d'oro bloccano l'officina. Usa il MARTELLO (in aria, ▼ + ATTACCA) e porta la chiave alla porta.
+1402	La porta dell'officina si è aperta!
+1403	In aria: ▼ + ATTACCA\nrompe le rocce.
+1404	Il cuore della montagna. Ogni area si apre solo quando cadono tutti i suoi nemici.
+1405	La strada per il Minotauro è aperta!
+1406	Il bosco degli gnomi. Tirano ghiande con la fionda e fanno rotolare tronchi giù dal pendio.
+1407	Sei entrato nel bosco!
+1408	Bosco degli Gnomi.\nAttento alle ghiande!
+1409	Pareti troppo alte da saltare? Atterra sui funghi: ti lanciano lassù!
+1410	Che salti!
+1411	Atterra sul fungo:\nti lancia in alto!
+1412	Il terreno sparisce nel fiume. La strada passa in alto, di chioma in chioma.
+1413	Hai attraversato le chiome!
+1414	I tronchi galleggiano sul fiume: ci puoi camminare sopra. Le assi staccate affondano.
+1415	Hai attraversato il fiume di tronchi!
+1416	Corri e spara! Gnomi con la fionda ovunque.
+1417	Il bosco è stato ripulito a colpi!
+1418	Mucchietti di muschio che tremano nascondono gnomi. E i tronchi non smettono di rotolare.
+1419	Nessuno gnomo ti ha preso!
+1420	Il muschio che trema\nnon è muschio...
+1421	Il villaggio degli gnomi. Ogni area si apre solo quando cadono tutti gli abitanti.
+1422	Il villaggio si è arreso!
+1423	Il Re Gnomo custodisce il frammento ai piedi dell'albero più vecchio del bosco.
+1424	Il Re Gnomo è caduto! Frammento della corona recuperato!
+1425	Le miniere dei goblin. Torce, oro e sassi instabili sul soffitto: guarda la polvere che cade!
+1426	Sei entrato nelle miniere!
+1427	Polvere dal soffitto:\narriva un masso!
+1428	Il soffitto della galleria sta crollando! La polvere avvisa dove cadrà la roccia.
+1429	Sei sfuggito al crollo!
+1430	Le torce della galleria si sono spente. Accendile; le 3 grandi aprono l'uscita.
+1431	La galleria si è illuminata!
+1432	Rocce d'oro chiudono le gallerie. Dagli di martello e porta la chiave alla porta.
+1433	La vena d'oro si è aperta!
+1434	I goblin minatori lanciano bombe ad arco. E le rocce rotolano lungo i binari.
+1435	Nessuna esplosione ti ha preso!
+1436	L'acqua della miniera sale e scende. Resta in alto, o sopra le casse.
+1437	Hai attraversato la miniera allagata!
+1438	Quaggiù il fuoco è blu e ti insegue. E i geyser non smettono.
+1439	Hai attraversato il fuoco blu!
+1440	Il tesoro del Re. Ogni area si apre solo quando cadono tutte le guardie.
+1441	La strada per il Re Goblin è aperta!
+1442	Il Re Goblin della Torcia conta ogni pepita. E custodisce il frammento in mezzo all'oro.
+1443	Il Re Goblin è caduto! Frammento della corona recuperato!
+1444	La laguna delle lucertole. Acqua ferma, muschio e lucertole che sputano veleno.
+1445	Sei arrivato alla laguna!
+1446	Laguna delle Lucertole.\nAttento al veleno!
+1447	Foglie giganti galleggiano sulla laguna. Affondano subito dopo che ci sali!
+1448	Hai attraversato le ninfee!
+1449	Le foglie affondano:\nnon fermarti sopra!
+1450	L'acqua della palude sale e scende. Resta in alto o sopra i tronchi.
+1451	La piena è passata!
+1452	Spine velenose a terra e lucertole viola che sputano veleno da ogni parte.
+1453	Sei uscito dall'acquitrino tutto intero!
+1454	La chiave della casa del pescatore è sparita con un granchio dell'acquitrino. Colpiscilo e prendi la chiave!
+1455	La porta del pescatore si è aperta!
+1456	Il granchio dell'acquitrino\nha preso la chiave!
+1457	In fondo alla laguna il teschio diventa Lucertola e nuota libero. ↑ (o SALTA) sale, ▼ scende.
+1458	Hai attraversato il fondo della laguna!
+1459	Corri e spara! Lucertole e naufraghi escono dall'acquitrino senza sosta.
+1460	L'acquitrino è stato ripulito a colpi!
+1461	Radici e rami sopra l'acqua. I tronchi rotolano sugli alberi caduti.
+1462	Hai attraversato le mangrovie!
+1463	Il villaggio delle lucertole. Ogni area si apre solo quando cadono tutti gli abitanti.
+1464	La strada per il Re Lucertola è aperta!
+1465	Il Re Lucertola non dorme mai. Sputa veleno, allunga la lingua e salta schizzando pozzanghere.
+1466	Il Re Lucertola è caduto! Frammento della corona recuperato!
+1467	Le nuvole di brace si sfaldano subito dopo che ci sali. E cadere da qui vuol dire cadere nel vuoto.
+1468	Hai attraversato le nuvole di brace!
+1469	Le nuvole di brace\nsi sfaldano: corri!
+1470	Meteore incandescenti cadono dal cielo. Le scintille avvisano dove cadranno.
+1471	Nessuna meteora ti ha colpito!
+1472	Corri e spara sulle isole del cielo! Diavoletti e api di brace senza sosta.
+1473	Il cielo è stato ripulito a colpi!
+1474	Correnti di vento caldo tra le isole, e getti di fuoco che escono dalle rocce.
+1475	Il vento caldo ti ha portato fino in fondo!
+1476	Il castello dei diavoletti. Ogni area si apre solo quando cadono tutte le guardie.
+1477	Il castello tra le nuvole è caduto!
+1478	Uno sciame di api di brace, e i cannoni del castello che spazzano le isole.
+1479	Hai attraversato lo sciame!
+1480	Il forziere dei diavoletti. Porta la chiave tra le isole usando le molle e la leva dei colori.
+1481	Il forziere delle nuvole si è aperto!
+1482	L'ingresso del regno nemico del tuo alleato. Le guardie volano e piombano in picchiata.
+1483	Hai superato il portale delle ali!
+1484	Il regno nemico\ndel tuo alleato.
+1485	Volo di giorno, in groppa al tuo alleato, attraverso il cielo del regno nemico.
+1486	La rotta del vento è alle spalle!
+1487	Il castello del regno. Ogni area si apre solo quando cadono tutte le guardie.
+1488	Il castello delle ali è caduto!
+1489	Un volo notturno in piena tempesta. Le ondate di nemici arrivano più fitte.
+1490	Hai attraversato la tempesta!
+1491	La camera reale. Porta la chiave su molle e scale fino alla porta.
+1492	La camera reale si è aperta!
+1493	Correnti di vento tra le torri del regno, e guardie in picchiata.
+1494	Il vento ti ha portato fino alle torri!
+1495	L'ultimo volo di giorno prima della notte del re. Molti nemici, e più forti.
+1496	Il sole è tramontato alle tue spalle!
+1497	Corri e spara sulle mura del regno! Le guardie non smettono di arrivare.
+1498	Le mura sono state ripulite a colpi!
+1499	La guardia reale difende l'ultimo ponte prima del volo verso il re.
+1500	La guardia reale è caduta. Il re aspetta nel cielo notturno!
+1501	URNA DELLO SCIAMANO
+1502	Ondata 0 di {0}
+1503	L'URNA È SOPRAVVISSUTA!
+1504	ONDATA {0}
+1505	Ondata {0} di {1}
+1506	BUU!
+1507	Giocatore {0}
+1508	Il tuo nome
+1509	ANNULLA
+1510	PRINCIPE DEI PIPISTRELLI
+1511	PRINCIPE DELLE API
+1512	OSSIAN
+1513	Signore del Nido
+1514	Un sacco d'ossa nel mio nido? Che spuntino insipido.
+1515	Sono solo di passaggio. Lasciami passare e nessuno si fa male.
+1516	Nessuno passa davanti al Principe dei Pipistrelli!
+1517	Erede dell'Alveare
+1518	Cugino! Sapevo che da solo non ce l'avresti fatta contro uno scheletro.
+1519	Stanne fuori, fuco!
+1520	E perdermi il divertimento? Due principi contro un ossicino!
+1521	Fantastico. Adesso sono due.
+1522	Aspetta! Aspetta... basta.
+1523	Risparmiami, teschio. Sconfiggi il Principe delle Api e sarò il tuo più grande alleato: volerò con te fino al Re delle Api.
+1524	Non ascoltare quel pipistrello traditore! Fallo fuori e IO volerò con te fino al Re dei Pipistrelli!
+1525	Hex dice sempre che ogni patto ha un prezzo...
+1526	IL PATTO DEL PRINCIPE DEI PIPISTRELLI
+1527	ACCETTA: risparmia il pipistrello e sconfiggi l'ape
+1528	RIFIUTA: sconfiggi il pipistrello
+1529	Saggia scelta. Da oggi, le mie ali sono tue.
+1530	TRADITORI! Vi pungerò entrambi!
+1531	Niente patti con chi ha cercato di mangiarmi.
+1532	Ahahah! Mi piaci, ossicino. Ti aspetto fuori.
+1533	Allora cadremo insieme!
+1534	Il Principe delle Api ora vola con te!
+1535	Ah! Bel lavoro, alleato. Il Re delle Api sentirà parlare di noi.
+1536	Il Principe dei Pipistrelli ora è tuo alleato!
+1537	Non sai ancora portare oggetti!
+1538	Serve l'ASCIA
+1539	PONTE!
+1540	LA CHIAVE È CADUTA!
+1541	IL GRANCHIO HA PRESO LA CHIAVE!
+1542	REGALO {0}/3

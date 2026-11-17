@@ -1,0 +1,220 @@
+1323	Wieża skrywała złoto!
+1324	Stara rolka filmu... Czaszka weszła do kreskówki z 1930 roku! Przytrzymaj ATAK, by strzelać.
+1325	KONIEC. (Zaginiona kreskówka została ocalona.)
+1326	Krab uciekł z kluczem! Traf go, żeby klucz spadł, i zanieś klucz do drzwi.
+1327	Drzwi na plaży się otworzyły!
+1328	Traf kraba: klucz spada!
+1329	Przypływ sam wzbiera i opada. Gdy nadejdzie, stój wysoko!
+1330	Pokonałeś przypływ!
+1331	Przypływ wzbiera! Stój wysoko, gdy nadejdzie.
+1332	Luźne deski toną zaraz po nadepnięciu. Nie zatrzymuj się na nich!
+1333	Przeszedłeś przez wrak!
+1334	Na pokład! Armaty ostrzeliwują pokład: przeskakuj kule albo się broń.
+1335	Pokład jest twój!
+1336	Kule armatnie: skacz albo się broń!
+1337	Pod wodą czaszka zmienia się w Rekina! ↑ (lub SKOK) w górę, ▼ w dół. Uważaj na meduzy.
+1338	Przeszedłeś przez podwodną jaskinię!
+1339	↑ lub SKOK w górę · ▼ w dół
+1340	Uderzaj w dźwignie: przypływ unosi skrzynie, odpływ otwiera dolne przejścia.
+1341	Latarnia oświetliła drogę!
+1342	Dźwignia: przypływ / odpływ
+1343	Pokład zapadł się pośrodku. Przejdź górą, po rejach i bocianich gniazdach!
+1344	Opanowałeś maszty!
+1345	Ogniste koralowce parzą, meduzy dryfują, a przypływ nie ustaje. Ostatni krok przed Królem.
+1346	Rafa za tobą. Król czeka!
+1347	Król Rekin Harpunnik rządzi przypływem. Przy odpływie osiada na mieliźnie: to twoja szansa!
+1348	Król Rekin Harpunnik padł! Fragment korony odzyskany!
+1349	Tron Szamana
+1350	Korona oddała ci ciało. Teraz Szaman.
+1351	Szaman padł. Pieczęcie wróciły.
+1352	Preria Gnolli. Łowcy rzucają kości, które wracają jak bumerangi!
+1353	Dotarłeś na prerię!
+1354	Preria Kości:\nziemia Gnolli.
+1355	Stado pędzi po ziemi! Gdy usłyszysz ostrzeżenie, wejdź wysoko.
+1356	Stado przebiegło, a ty przetrwałeś!
+1357	Pęd stada:\nwejdź wysoko!
+1358	Skały toczą się w dół zbocza. Przeskocz je albo rozbij ciosem!
+1359	Przeszedłeś przez cmentarzysko!
+1360	Postaw owce na płytach, by otworzyć bramy, i zanieś klucz do drzwi.
+1361	Drzwi farmy się otworzyły!
+1362	Owca na płycie:\nbrama się otwiera.
+1363	Drżące krzaki to nie wiatr: to Gnolle czekające, aż podejdziesz.
+1364	Żaden Gnoll cię nie zaskoczył!
+1365	W wysokiej trawie\ncoś się rusza...
+1366	Bieg i strzelanie! Karawana Gnolli bez przerwy wysyła łowców.
+1367	Karawana pierzchła!
+1368	Wiatr prerii unosi każdego, kto w niego wejdzie. Przytrzymaj SKOK w powietrzu, by szybować.
+1369	Wiatr zaniósł cię na koniec prerii!
+1370	Wejdź w wiatr, by się wznieść.\nPrzytrzymaj SKOK, by szybować.
+1371	Król Gnolli strzeże drugiego fragmentu. Skacze, wyje i rzuca kością wielką jak pień!
+1372	Król Gnolli padł! Fragment korony odzyskany!
+1373	Mosty to nici pajęczyny: pękają zaraz po nadepnięciu. Nie zatrzymuj się!
+1374	Przeszedłeś po mostach z pajęczyny!
+1375	Mosty z pajęczyny:\nnie zatrzymuj się!
+1376	Kompletna ciemność. Dotykaj pochodni, by je zapalić; 3 duże otwierają wyjście.
+1377	Pochodnie pokazały wyjście!
+1378	JEST CIEMNO...\nDotknij pochodni,\nby je zapalić.
+1379	Wyjście otwiera się tylko, gdy\npłoną 3 DUŻE POCHODNIE.
+1380	Wiszące kokony jeżdżą w górę i w dół na niciach. Dotknięcie ich to zostanie posiłkiem!
+1381	Przeszedłeś przez salę kokonów!
+1382	Kołyszące się kokony:\nnie dotykaj!
+1383	Bieg i strzelanie! Skaczące pająki i nietoperze wampiry nadciągają falami.
+1384	Jaskinia oczyszczona ogniem!
+1385	Klucz jest na szczycie gniazda. Aby przejść przez ścianę, zmień kolor bloków.
+1386	Komnata jaj się otworzyła!
+1387	Klucz jest w gnieździe,\ntam na górze.
+1388	Puść klucz (WEŹ),\nuderz w dźwignię\ni weź go ponownie.
+1389	Ognista góra. Gejzery bulgoczą, zanim wyrzucą słup ognia: poczekaj, aż minie!
+1390	Przeszedłeś przez bramy kuźni!
+1391	Bulgoczący gejzer:\npoczekaj, aż ogień minie!
+1392	Lawa wzbiera i opada jak przypływ. Gdy nadejdzie, stój wysoko albo na bazalcie!
+1393	Pokonałeś przypływ lawy!
+1394	Lawa wzbiera i opada.\nStój wysoko!
+1395	Gejzery wybuchają po kolei. Złap rytm i przejdź między słupami ognia.
+1396	Ani jednego przypalenia!
+1397	Bieg i strzelanie! Chochliki, minotaury z lawy i magmowe jaszczury bez końca.
+1398	Kuźnia oczyszczona ogniem!
+1399	Obsydianowe płyty toną w lawie zaraz po nadepnięciu. A armaty kuźni nie milkną.
+1400	Przeszedłeś przez obsydianowy most!
+1401	Złote skały blokują warsztat. Użyj MŁOTA (w powietrzu ▼ + ATAK) i zanieś klucz do drzwi.
+1402	Drzwi warsztatu się otworzyły!
+1403	W powietrzu: ▼ + ATAK\nrozbija skały.
+1404	Serce góry. Każdy obszar otwiera się dopiero, gdy padną wszyscy jego wrogowie.
+1405	Droga do Minotaura jest otwarta!
+1406	Las gnomów. Strzelają żołędziami z proc i toczą kłody w dół zbocza.
+1407	Wszedłeś do lasu!
+1408	Las Gnomów.\nUważaj na żołędzie!
+1409	Ściany za wysokie, by przeskoczyć? Wyląduj na grzybach: wyrzucą cię wysoko w górę!
+1410	Co za skoki!
+1411	Wyląduj na grzybie:\nwyrzuci cię wysoko!
+1412	Ziemia znika w rzece. Droga prowadzi górą, z korony na koronę.
+1413	Przeszedłeś koronami drzew!
+1414	Kłody pływają po rzece: można po nich chodzić. Luźne deski toną.
+1415	Przeszedłeś rzekę kłód!
+1416	Bieg i strzelanie! Gnomy z procami wszędzie.
+1417	Las oczyszczony ogniem!
+1418	Drżące kopczyki mchu kryją gnomy. A kłody toczą się bez przerwy.
+1419	Żaden gnom cię nie dopadł!
+1420	Mech, który drży,\nto nie mech...
+1421	Wioska gnomów. Każdy obszar otwiera się dopiero, gdy padną wszyscy mieszkańcy.
+1422	Wioska się poddała!
+1423	Król Gnomów strzeże fragmentu u stóp najstarszego drzewa w lesie.
+1424	Król Gnomów padł! Fragment korony odzyskany!
+1425	Kopalnie goblinów. Pochodnie, złoto i luźne kamienie w stropie: patrz, gdzie sypie się pył!
+1426	Wszedłeś do kopalni!
+1427	Z sufitu sypie się pył:\nleci kamień!
+1428	Strop chodnika się wali! Pył ostrzega, gdzie spadnie skała.
+1429	Uciekłeś przed zawałem!
+1430	Pochodnie w chodniku zgasły. Zapal je; 3 duże otwierają wyjście.
+1431	Chodnik się rozświetlił!
+1432	Złote skały zamykają chodniki. Uderz młotem i zanieś klucz do drzwi.
+1433	Żyła złota się otworzyła!
+1434	Gobliny górnicy rzucają bomby łukiem. A skały toczą się po torach.
+1435	Żaden wybuch cię nie dosięgnął!
+1436	Woda w kopalni wzbiera i opada. Stój wysoko albo na skrzyniach.
+1437	Przeszedłeś przez zalaną kopalnię!
+1438	Tu, na dole, ogień jest błękitny i goni cię. A gejzery nie ustają.
+1439	Przeszedłeś przez błękitny ogień!
+1440	Skarbiec Króla. Każdy obszar otwiera się dopiero, gdy padną wszyscy strażnicy.
+1441	Droga do Króla Goblinów jest otwarta!
+1442	Król Goblinów z Pochodnią liczy każdy samorodek. I trzyma fragment pośród złota.
+1443	Król Goblinów padł! Fragment korony odzyskany!
+1444	Laguna jaszczurów. Stojąca woda, mech i jaszczury plujące jadem.
+1445	Dotarłeś do laguny!
+1446	Laguna Jaszczurów.\nUważaj na jad!
+1447	Olbrzymie liście pływają po lagunie. Toną zaraz po nadepnięciu!
+1448	Przeszedłeś po liliach wodnych!
+1449	Liście toną:\nnie zatrzymuj się!
+1450	Woda w bagnie wzbiera i opada. Stój wysoko albo na kłodach.
+1451	Woda opadła!
+1452	Jadowite kolce na ziemi i fioletowe jaszczury plujące jadem ze wszystkich stron.
+1453	Wyszedłeś z mokradeł w jednym kawałku!
+1454	Klucz do domu rybaka zniknął razem z krabem z mokradeł. Traf go i zabierz klucz!
+1455	Drzwi rybaka się otworzyły!
+1456	Krab z mokradeł\nzabrał klucz!
+1457	Na dnie laguny czaszka zmienia się w Jaszczura i pływa swobodnie. ↑ (lub SKOK) w górę, ▼ w dół.
+1458	Przeszedłeś przez dno laguny!
+1459	Bieg i strzelanie! Jaszczury i rozbitkowie wychodzą z mokradeł bez końca.
+1460	Mokradła oczyszczone ogniem!
+1461	Korzenie i gałęzie nad wodą. Kłody toczą się po zwalonych pniach.
+1462	Przeszedłeś przez namorzyny!
+1463	Wioska jaszczurów. Każdy obszar otwiera się dopiero, gdy padną wszyscy mieszkańcy.
+1464	Droga do Króla Jaszczurów jest otwarta!
+1465	Król Jaszczurów nigdy nie śpi. Pluje jadem, wystrzeliwuje język i skacze, rozchlapując kałuże.
+1466	Król Jaszczurów padł! Fragment korony odzyskany!
+1467	Chmury żaru rozpadają się zaraz po nadepnięciu. A upadek stąd to upadek w pustkę.
+1468	Przeszedłeś po chmurach żaru!
+1469	Chmury żaru\nsię rozpadają: biegnij!
+1470	Rozżarzone meteory spadają z nieba. Iskry ostrzegają, gdzie spadną.
+1471	Żaden meteor cię nie trafił!
+1472	Bieg i strzelanie na niebiańskich wyspach! Chochliki i pszczoły żaru bez końca.
+1473	Niebo oczyszczone ogniem!
+1474	Prądy gorącego wiatru między wyspami i strumienie ognia ze skał.
+1475	Gorący wiatr zaniósł cię aż na koniec!
+1476	Zamek chochlików. Każdy obszar otwiera się dopiero, gdy padną wszyscy strażnicy.
+1477	Zamek w chmurach padł!
+1478	Rój pszczół żaru i zamkowe armaty ostrzeliwujące wyspy.
+1479	Przeszedłeś przez rój!
+1480	Skarbiec chochlików. Zanieś klucz przez wyspy, używając sprężyn i kolorowej dźwigni.
+1481	Skarbiec chmur się otworzył!
+1482	Wejście do królestwa wroga twojego sojusznika. Strażnicy latają i pikują.
+1483	Przeszedłeś przez Bramę Skrzydeł!
+1484	Królestwo wroga\ntwojego sojusznika.
+1485	Dzienny lot na grzbiecie sojusznika przez niebo wrogiego królestwa.
+1486	Szlak wiatru za tobą!
+1487	Zamek królestwa. Każdy obszar otwiera się dopiero, gdy padną wszyscy strażnicy.
+1488	Zamek Skrzydeł padł!
+1489	Nocny lot w samym środku burzy. Fale wrogów nadciągają gęściej.
+1490	Przeleciałeś przez burzę!
+1491	Komnata królewska. Zanieś klucz po sprężynach i drabinach do drzwi.
+1492	Komnata królewska się otworzyła!
+1493	Prądy wiatru między wieżami królestwa i pikujący strażnicy.
+1494	Wiatr zaniósł cię do wież!
+1495	Ostatni dzienny lot przed nocą króla. Wielu wrogów, i silniejszych.
+1496	Słońce zaszło za twoimi plecami!
+1497	Bieg i strzelanie na murach królestwa! Strażnicy nadchodzą bez końca.
+1498	Mury oczyszczone ogniem!
+1499	Gwardia królewska broni ostatniego mostu przed lotem do króla.
+1500	Gwardia królewska padła. Król czeka na nocnym niebie!
+1501	URNA SZAMANA
+1502	Fala 0 z {0}
+1503	URNA PRZETRWAŁA!
+1504	FALA {0}
+1505	Fala {0} z {1}
+1506	BUU!
+1507	Gracz {0}
+1508	Twoje imię
+1509	ANULUJ
+1510	KSIĄŻĘ NIETOPERZY
+1511	KSIĄŻĘ PSZCZÓŁ
+1512	OSSIAN
+1513	Pan Gniazda
+1514	Worek kości w moim gnieździe? Cóż za mdła przekąska.
+1515	Jestem tylko przejazdem. Przepuść mnie, a nikt nie ucierpi.
+1516	Nikt nie przejdzie obok Księcia Nietoperzy!
+1517	Dziedzic Ula
+1518	Kuzynie! Wiedziałem, że sam nie poradzisz sobie ze szkieletem.
+1519	Nie mieszaj się, trutniu!
+1520	I przegapić zabawę? Dwóch książąt na jedną kosteczkę!
+1521	Świetnie. Teraz jest ich dwóch.
+1522	Czekaj! Czekaj... dość.
+1523	Oszczędź mnie, czaszko. Pokonaj Księcia Pszczół, a zostanę twoim największym sojusznikiem: polecę z tobą aż do Króla Pszczół.
+1524	Nie słuchaj tego zdradzieckiego nietoperza! Wykończ go, a to JA polecę z tobą aż do Króla Nietoperzy!
+1525	Hex zawsze mówi, że każdy pakt ma swoją cenę...
+1526	PAKT KSIĘCIA NIETOPERZY
+1527	PRZYJMIJ: oszczędź nietoperza i pokonaj pszczołę
+1528	ODRZUĆ: pokonaj nietoperza
+1529	Mądry wybór. Od dziś moje skrzydła są twoje.
+1530	ZDRAJCY! Użądlę was obu!
+1531	Żadnych paktów z kimś, kto chciał mnie zjeść.
+1532	Hahaha! Lubię cię, kosteczko. Czekam na zewnątrz.
+1533	W takim razie upadniemy razem!
+1534	Książę Pszczół lata teraz z tobą!
+1535	Ha! Dobra robota, sojuszniku. Król Pszczół jeszcze o nas usłyszy.
+1536	Książę Nietoperzy jest teraz twoim sojusznikiem!
+1537	Jeszcze nie umiesz nosić!
+1538	Potrzebny TOPÓR
+1539	MOST!
+1540	KLUCZ SPADŁ!
+1541	KRAB ZABRAŁ KLUCZ!
+1542	PREZENT {0}/3

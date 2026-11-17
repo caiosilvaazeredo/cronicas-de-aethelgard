@@ -1,0 +1,220 @@
+1323	Kule altın saklıyordu!
+1324	Eski bir film makarası... Kurukafa 1930 yapımı bir çizgi filme girdi! Ateş etmek için SALDIR'ı basılı tut.
+1325	SON. (Kayıp çizgi film kurtarıldı.)
+1326	Bir yengeç anahtarla kaçtı! Anahtarı düşürmek için ona vur ve anahtarı kapıya götür.
+1327	Kumsal kapısı açıldı!
+1328	Yengece vur: anahtar düşer!
+1329	Gelgit kendiliğinden yükselip alçalır. Geldiğinde yüksekte dur!
+1330	Gelgiti yendin!
+1331	Gelgit yükseliyor! Geldiğinde yüksekte dur.
+1332	Gevşek tahtalar basar basmaz batar. Üstlerinde durma!
+1333	Batığı geçtin!
+1334	Güverteye çık! Toplar güverteyi tarıyor: gülleleri atla ya da savun.
+1335	Güverte senin!
+1336	Top gülleleri: zıpla ya da savun!
+1337	Suyun altında kurukafa Köpekbalığı olur! ↑ (ya da ZIPLA) yukarı, ▼ aşağı. Denizanalarına dikkat.
+1338	Sualtı mağarasını geçtin!
+1339	↑ ya da ZIPLA yukarı · ▼ aşağı
+1340	Kollara vur: yüksek gelgit sandıkları kaldırır; alçak gelgit alt yolları açar.
+1341	Fener yolu aydınlattı!
+1342	Kol: yüksek gelgit / alçak gelgit
+1343	Güverte ortasından çöktü. Yukarıdan, serenlerin ve gözcü sepetlerinin üstünden geç!
+1344	Direklerin hakkından geldin!
+1345	Ateş mercanları yakar, denizanaları süzülür ve gelgit durmaz. Kral'dan önceki son adım.
+1346	Resif geride kaldı. Kral bekliyor!
+1347	Zıpkıncı Köpekbalığı Kral gelgite hükmeder. Alçak gelgitte karaya oturur: işte fırsatın!
+1348	Zıpkıncı Köpekbalığı Kral düştü! Taç parçası geri alındı!
+1349	Şamanın Tahtı
+1350	Taç sana bedenini geri verdi. Şimdi sıra Şaman'da.
+1351	Şaman düştü. Mühürler geri döndü.
+1352	Gnoll'ların çayırı. Avcılar bumerang gibi geri dönen kemikler fırlatır!
+1353	Çayıra vardın!
+1354	Kemik Çayırı:\nGnoll'ların yurdu.
+1355	Sürü yerde dörtnala geliyor! Uyarıyı duyunca yükseğe çık.
+1356	Sürü geçti, sen de!
+1357	Sürü izdihamı:\nyükseğe çık!
+1358	Kayalar yokuştan yuvarlanıyor. Üstünden atla ya da bir darbeyle kır!
+1359	Mezarlığı geçtin!
+1360	Kapıları açmak için koyunları plakalara koy ve anahtarı kapıya götür.
+1361	Çiftlik kapısı açıldı!
+1362	Plakada koyun:\nkapı açılır.
+1363	Titreyen çalılar rüzgâr değil: yaklaşmanı bekleyen Gnoll'lar.
+1364	Hiçbir Gnoll seni gafil avlamadı!
+1365	Uzun otların arasında\nbir şey kıpırdıyor...
+1366	Koş ve ateş et! Gnoll kervanı durmadan avcı yolluyor.
+1367	Kervan dağıldı!
+1368	Çayır rüzgârı içine gireni havaya kaldırır. Süzülmek için havada ZIPLA'yı basılı tut.
+1369	Rüzgâr seni çayırın sonuna taşıdı!
+1370	Yükselmek için rüzgâra gir.\nSüzülmek için ZIPLA'yı basılı tut.
+1371	Gnoll Kral ikinci parçayı koruyor. Zıplar, uluyor ve kütük büyüklüğünde bir kemik fırlatır!
+1372	Gnoll Kral düştü! Taç parçası geri alındı!
+1373	Köprüler ağ ipliğinden: basar basmaz kopar. Durma!
+1374	Ağ köprülerini geçtin!
+1375	Ağ köprüleri:\nüstlerinde durma!
+1376	Zifiri karanlık. Yakmak için meşalelere dokun; 3 büyük meşale çıkışı açar.
+1377	Meşaleler çıkışı gösterdi!
+1378	KARANLIK...\nYakmak için\nmeşalelere dokun.
+1379	Çıkış ancak 3 BÜYÜK MEŞALE\nyanınca açılır.
+1380	Asılı kozalar ipliklerinde inip çıkar. Onlara değen yem olur!
+1381	Kozalar salonunu geçtin!
+1382	Sallanan kozalar:\ndokunma!
+1383	Koş ve ateş et! Zıplayan örümcekler ve vampir yarasalar dalga dalga geliyor.
+1384	Mağara ateşle temizlendi!
+1385	Anahtar yuvanın tepesinde. Duvarı geçmek için blokların rengini değiştir.
+1386	Yumurta odası açıldı!
+1387	Anahtar yuvada,\nyukarıda.
+1388	Anahtarı bırak (AL),\nkola vur\nve yeniden al.
+1389	Ateş dağı. Gayzerler ateş sütununu fışkırtmadan önce fokurdar: geçmesini bekle!
+1390	Demirhane kapılarından geçtin!
+1391	Fokurdayan gayzer:\nateşin geçmesini bekle!
+1392	Lav gelgit gibi yükselip alçalır. Geldiğinde yüksekte ya da bazaltın üstünde dur!
+1393	Lav gelgitini yendin!
+1394	Lav yükselir ve alçalır.\nYüksekte dur!
+1395	Gayzerler sırayla fışkırır. Ritmi izle ve ateş sütunlarının arasından geç.
+1396	Tek bir yanık bile yok!
+1397	Koş ve ateş et! İblisler, lav minotorları ve magma kertenkeleleri durmadan geliyor.
+1398	Demirhane ateşle temizlendi!
+1399	Obsidyen levhalar basar basmaz lava gömülür. Ve demirhanenin topları susmaz.
+1400	Obsidyen köprüyü geçtin!
+1401	Altın kayalar atölyeyi kapatıyor. ÇEKİÇ'i kullan (havada ▼ + SALDIR) ve anahtarı kapıya götür.
+1402	Atölye kapısı açıldı!
+1403	Havada: ▼ + SALDIR\nkayaları kırar.
+1404	Dağın kalbi. Her alan ancak içindeki bütün düşmanlar düşünce açılır.
+1405	Minotor'a giden yol açık!
+1406	Cücelerin korusu. Sapanla palamut atar, yokuştan kütük yuvarlarlar.
+1407	Koruya girdin!
+1408	Cüceler Korusu.\nPalamutlara dikkat!
+1409	Duvarlar zıplanamayacak kadar mı yüksek? Mantarların üstüne düş: seni yukarılara fırlatırlar!
+1410	Ne zıplayışlar!
+1411	Mantarın üstüne düş:\nseni yukarı fırlatır!
+1412	Zemin nehirde kayboluyor. Yol yukarıdan, ağaç tepesinden ağaç tepesine.
+1413	Ağaç tepelerinden geçtin!
+1414	Kütükler nehirde yüzüyor: üstlerine basabilirsin. Gevşek tahtalar batar.
+1415	Kütük nehrini geçtin!
+1416	Koş ve ateş et! Her yerde sapanlı cüceler.
+1417	Koru ateşle temizlendi!
+1418	Titreyen küçük yosun yığınları cüce saklıyor. Ve kütükler yuvarlanmayı bırakmıyor.
+1419	Hiçbir cüce seni yakalayamadı!
+1420	Titreyen yosun\nyosun değildir...
+1421	Cüceler köyü. Her alan ancak bütün köylüler düşünce açılır.
+1422	Köy teslim oldu!
+1423	Cüce Kral parçayı korudaki en yaşlı ağacın dibinde saklıyor.
+1424	Cüce Kral düştü! Taç parçası geri alındı!
+1425	Goblin madenleri. Meşaleler, altın ve tavanda gevşek taşlar: dökülen toza dikkat!
+1426	Madenlere girdin!
+1427	Tavandan toz dökülüyor:\ntaş geliyor!
+1428	Galerinin tavanı çöküyor! Toz, kayanın nereye düşeceğini haber verir.
+1429	Göçükten kurtuldun!
+1430	Galerinin meşaleleri söndü. Onları yak; 3 büyük meşale çıkışı açar.
+1431	Galeri aydınlandı!
+1432	Altın kayalar galerileri kapatıyor. Çekiçle vur ve anahtarı kapıya götür.
+1433	Altın damarı açıldı!
+1434	Madenci goblinler yay çizerek bomba atar. Ve kayalar raylarda yuvarlanır.
+1435	Hiçbir patlama seni yakalayamadı!
+1436	Madendeki su yükselip alçalıyor. Yüksekte ya da sandıkların üstünde dur.
+1437	Su basmış madeni geçtin!
+1438	Aşağıda ateş mavi ve peşinden geliyor. Ve gayzerler durmuyor.
+1439	Mavi ateşi geçtin!
+1440	Kral'ın hazinesi. Her alan ancak bütün muhafızlar düşünce açılır.
+1441	Goblin Kral'a giden yol açık!
+1442	Meşaleli Goblin Kral her külçeyi sayar. Ve parçayı altının ortasında saklar.
+1443	Goblin Kral düştü! Taç parçası geri alındı!
+1444	Kertenkelelerin lagünü. Durgun su, yosun ve zehir tüküren kertenkeleler.
+1445	Lagüne vardın!
+1446	Kertenkele Lagünü.\nZehre dikkat!
+1447	Lagünde dev yapraklar yüzüyor. Basar basmaz batarlar!
+1448	Nilüferleri geçtin!
+1449	Yapraklar batar:\nüstlerinde durma!
+1450	Bataklık suyu yükselip alçalıyor. Yüksekte ya da kütüklerin üstünde dur.
+1451	Taşkın geçti!
+1452	Yerde zehirli dikenler ve her yandan zehir tüküren mor kertenkeleler.
+1453	Sazlıktan sapasağlam çıktın!
+1454	Balıkçının evinin anahtarı bir sazlık yengeciyle kayboldu. Ona vur ve anahtarı al!
+1455	Balıkçının kapısı açıldı!
+1456	Sazlık yengeci\nanahtarı aldı!
+1457	Lagünün dibinde kurukafa Kertenkele olur ve serbestçe yüzer. ↑ (ya da ZIPLA) yukarı, ▼ aşağı.
+1458	Lagünün dibini geçtin!
+1459	Koş ve ateş et! Kertenkeleler ve kazazedeler sazlıktan durmadan çıkıyor.
+1460	Sazlık ateşle temizlendi!
+1461	Suyun üstünde kökler ve dallar. Kütükler devrik gövdelerin üstünde yuvarlanıyor.
+1462	Mangrovu geçtin!
+1463	Kertenkelelerin köyü. Her alan ancak bütün köylüler düşünce açılır.
+1464	Kertenkele Kral'a giden yol açık!
+1465	Kertenkele Kral hiç uyumaz. Zehir tükürür, dilini fırlatır ve su birikintileri saçarak zıplar.
+1466	Kertenkele Kral düştü! Taç parçası geri alındı!
+1467	Kor bulutları basar basmaz dağılır. Ve buradan düşmek boşluğa düşmektir.
+1468	Kor bulutlarını geçtin!
+1469	Kor bulutları\ndağılıyor: koş!
+1470	Kızgın meteorlar gökten düşüyor. Kıvılcımlar nereye düşeceklerini haber verir.
+1471	Hiçbir meteor sana çarpmadı!
+1472	Gök adalarında koş ve ateş et! İblisler ve kor arıları durmadan geliyor.
+1473	Gökyüzü ateşle temizlendi!
+1474	Adalar arasında sıcak rüzgâr akıntıları ve kayalardan fışkıran ateş jetleri.
+1475	Sıcak rüzgâr seni sonuna kadar taşıdı!
+1476	İblislerin kalesi. Her alan ancak bütün muhafızlar düşünce açılır.
+1477	Bulutlardaki kale düştü!
+1478	Bir kor arısı sürüsü ve adaları tarayan kale topları.
+1479	Sürüyü geçtin!
+1480	İblislerin kasası. Yayları ve renk kolunu kullanarak anahtarı adaların üstünden taşı.
+1481	Bulut kasası açıldı!
+1482	Müttefikinin düşmanının krallığına giriş. Muhafızlar uçar ve pike yapar.
+1483	Kanatlar kapısından geçtin!
+1484	Müttefikinin\ndüşmanının krallığı.
+1485	Gündüz uçuşu: müttefikinin sırtında, düşman krallığın göğünde.
+1486	Rüzgâr rotası geride kaldı!
+1487	Krallığın kalesi. Her alan ancak bütün muhafızlar düşünce açılır.
+1488	Kanatlar kalesi düştü!
+1489	Fırtınanın ortasında bir gece uçuşu. Düşman dalgaları daha sık geliyor.
+1490	Fırtınayı geçtin!
+1491	Kraliyet odası. Anahtarı yaylar ve merdivenler üzerinden kapıya götür.
+1492	Kraliyet odası açıldı!
+1493	Krallığın kuleleri arasında rüzgâr akıntıları ve pike yapan muhafızlar.
+1494	Rüzgâr seni kulelere taşıdı!
+1495	Kral'ın gecesinden önceki son gündüz uçuşu. Çok sayıda ve daha güçlü düşman.
+1496	Güneş arkanda battı!
+1497	Krallığın surlarında koş ve ateş et! Muhafızların ardı arkası kesilmiyor.
+1498	Surlar ateşle temizlendi!
+1499	Kraliyet muhafızları kral'a uçuştan önceki son köprüyü savunuyor.
+1500	Kraliyet muhafızları düştü. Kral gece göğünde bekliyor!
+1501	ŞAMANIN VAZOSU
+1502	Dalga 0 / {0}
+1503	VAZO KURTULDU!
+1504	DALGA {0}
+1505	Dalga {0} / {1}
+1506	BÖ!
+1507	Oyuncu {0}
+1508	Adın
+1509	İPTAL
+1510	YARASALARIN PRENSİ
+1511	ARILARIN PRENSİ
+1512	OSSIAN
+1513	Yuvanın Efendisi
+1514	Yuvamda bir torba kemik mi? Ne yavan bir atıştırmalık.
+1515	Sadece geçiyorum. Bırak geçeyim, kimse incinmesin.
+1516	Yarasaların Prensi'nin önünden kimse geçemez!
+1517	Kovanın Varisi
+1518	Kuzen! Bir iskeletle tek başına baş edemeyeceğini biliyordum.
+1519	Sen karışma, erkek arı!
+1520	Ve eğlenceyi kaçırmak mı? İki prens bir kemikçiğe karşı!
+1521	Harika. Şimdi iki tane oldular.
+1522	Dur! Dur... yeter.
+1523	Canımı bağışla, kurukafa. Arıların Prensi'ni yen, sana en büyük müttefikin olayım: seninle Arıların Kralı'na kadar uçarım.
+1524	O hain yarasayı dinleme! İşini bitir, seninle Yarasaların Kralı'na kadar BEN uçarım!
+1525	Hex hep her anlaşmanın bir bedeli olduğunu söyler...
+1526	YARASALARIN PRENSİ'NİN ANLAŞMASI
+1527	KABUL ET: yarasayı bağışla ve arıyı yen
+1528	REDDET: yarasayı yen
+1529	Akıllıca seçim. Bugünden itibaren kanatlarım senin.
+1530	HAİNLER! İkinizi de sokacağım!
+1531	Beni yemeye kalkanla anlaşma yok.
+1532	Hahaha! Sevdim seni, kemikçik. Dışarıda bekliyorum.
+1533	O zaman birlikte düşeriz!
+1534	Arıların Prensi artık seninle uçuyor!
+1535	Hah! İyi iş, müttefik. Arıların Kralı bizden haberdar olacak.
+1536	Yarasaların Prensi artık müttefikin!
+1537	Henüz bir şey taşıyamıyorsun!
+1538	BALTA gerekli
+1539	KÖPRÜ!
+1540	ANAHTAR DÜŞTÜ!
+1541	YENGEÇ ANAHTARI ALDI!
+1542	HEDİYE {0}/3

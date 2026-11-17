@@ -5,7 +5,9 @@ import { chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
 import { currentSlot, getPact, giftsOf, hasPact, hasSecret, isDone, isFreePlay, isSecretDone } from '../game/progress';
 import { LEVELS, type LevelDef } from '../game/level';
-import { AREAS, AREA_GOAL, areaById, areaCleared, areaOfLevel, areaTitle, levelIndex, levelUnlocked, type AreaDef } from '../game/areas';
+import { AREAS, AREA_GOAL, CENTER, areaById, areaCleared, areaOfLevel, areaTitle, kingSealed, levelIndex, levelUnlocked, recommendedLevel, type AreaDef } from '../game/areas';
+import { getRun, startRun } from '../game/dungeon';
+import { getLevel, isDungeonDone } from '../game/progress';
 import { unlockedBy } from '../game/abilities';
 import { pillButton } from '../ui/devices';
 
@@ -147,6 +149,7 @@ export class MapScene extends Phaser.Scene {
     );
     ui(pillButton(this, MW - 170, MH - 70 + offY, 'ENTRAR  ▶', () => this.enter(), 240, 0xffe066).setDepth(30)).y -= offY;
     ui(pillButton(this, 110, 40 + offY, '◀ MUNDO', () => this.toWorld(), 170).setScale(0.75).setDepth(30)).y -= offY;
+    if (this.area !== CENTER) ui(pillButton(this, MW - 170, 100 + offY, this.dungeonLabel(), () => this.enterDungeon(), 330, 0xc8a8ff).setScale(0.75).setDepth(30)).y -= offY;
     this.updateInfo();
 
     const kb = this.input.keyboard!;
@@ -199,6 +202,7 @@ export class MapScene extends Phaser.Scene {
     this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
     this.add.text(MW / 2, 175 + top, this.headerText(), { fontFamily: FONT, fontSize: '52px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
     pillButton(this, 150, 80 + top, '◀ MUNDO', () => this.toWorld(), 200).setScale(1.1);
+    if (this.area !== CENTER) pillButton(this, MW - 250, 80 + top, this.dungeonLabel(), () => this.enterDungeon(), 360, 0xc8a8ff).setScale(1.1);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
     const g = this.add.graphics();
@@ -623,7 +627,18 @@ export class MapScene extends Phaser.Scene {
         ['meat', 'wood', 'gold'].forEach((tex, k) => items.push(this.add.image(-22 + k * 22, 66, tex).setScale(k === 2 ? 0.2 : 0.32).setAlpha(got.includes(k) ? 1 : 0.25)));
       }
       const node = this.add.container(x, y, items).setDepth(10).setSize(70, 70);
-      node.setInteractive({ useHandCursor: !locked }).on('pointerdown', () => {
+      // Selo de área: o rei espera atrás de correntes roxas até a dungeon cair.
+      const sealed = kingSealed(this.area, i) && i === this.unlocked + 1 && this.sealAhead();
+      if (sealed) {
+        const ring = this.add.graphics();
+        ring.lineStyle(6, 0x10223a, 1).strokeCircle(0, 0, 38);
+        ring.lineStyle(3, 0xb48aff, 1).strokeCircle(0, 0, 38);
+        for (let k = 0; k < 8; k++) ring.fillStyle(0xb48aff, 1).fillCircle(Math.cos((k / 8) * Math.PI * 2) * 38, Math.sin((k / 8) * Math.PI * 2) * 38, 4);
+        node.add(ring);
+        this.tweens.add({ targets: ring, angle: 360, duration: 9000, repeat: -1 });
+      }
+      node.setInteractive({ useHandCursor: !locked || sealed }).on('pointerdown', () => {
+        if (sealed) return this.sealedKing();
         if (locked) return;
         // Segundo clique na fase para onde já está indo: o esqueleto acelera.
         if (this.walking && i === this.walkTarget) this.hurry();
@@ -756,6 +771,7 @@ export class MapScene extends Phaser.Scene {
 
   private step(dir: number): void {
     if (this.popupOpen) return;
+    if (dir > 0 && !this.walking && this.current === this.unlocked && this.sealAhead()) return this.sealedKing();
     const to = Phaser.Math.Clamp(this.current + dir, 0, this.unlocked);
     if (to !== this.current) this.walkTo(to);
   }
@@ -825,6 +841,33 @@ export class MapScene extends Phaser.Scene {
     const ch = chapterFor(this.levelAt(this.current));
     this.infoTitle.setText(`FASE ${this.current + 1}/${this.MAIN.length} · ${ch.title.toUpperCase()}`);
     this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo`);
+    if (this.current === this.unlocked && this.sealAhead())
+      this.info.setText(`${ch.blurb}   O rei está selado: limpe a DUNGEON desta área para enfrentá-lo.`);
+  }
+
+  /** A próxima fase é a do rei e ele ainda está selado (a dungeon da área não foi limpa). */
+  private sealAhead(): boolean {
+    const next = this.unlocked + 1;
+    return next < this.built && kingSealed(this.area, next) && isDone(this.area.levels[this.unlocked]);
+  }
+
+  private dungeonLabel(): string {
+    const done = isDungeonDone(this.area.id);
+    return `DUNGEON · NV ${recommendedLevel(this.area)}${done ? ' ✓' : ''}`;
+  }
+
+  /** Bateu no selo: treme, avisa e oferece a dungeon. */
+  private sealedKing(): void {
+    this.cameras.main.shake(160, 0.004);
+    this.infoTitle.setText('SELO DO REI');
+    this.info.setText(`Correntes roxas prendem o caminho. Limpe a DUNGEON desta área (nível sugerido ${recommendedLevel(this.area)}, o seu é ${getLevel()}) e o selo se abre.`);
+  }
+
+  private enterDungeon(): void {
+    if (this.popupOpen || this.walking) return;
+    const rn = getRun();
+    if (!rn || rn.area !== this.area.id) startRun(this.area.id, 'map', isDungeonDone(this.area.id));
+    this.scene.start('dungeon', {});
   }
 
   private enter(): void {

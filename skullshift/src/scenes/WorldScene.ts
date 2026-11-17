@@ -385,6 +385,26 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /** Nuvem flutuante (áreas do céu), com o tom pedido. */
+  /** Lago de lava em volta do pé do vulcão (como o lago da Lagoa, mas em brasa), com brilho e bolhas. */
+  private drawLavaPool(cx: number, cy: number): void {
+    const g = this.add.graphics().setDepth(4.8);
+    g.fillStyle(INK, 1).fillEllipse(cx, cy, 262, 78);
+    g.fillStyle(0x9a2414, 1).fillEllipse(cx, cy, 254, 70);
+    g.fillStyle(0xe8461a, 1).fillEllipse(cx, cy - 3, 242, 58);
+    g.fillStyle(0xff8a2a, 1).fillEllipse(cx - 6, cy - 6, 200, 34);
+    const shine = this.add.graphics().setDepth(4.85);
+    shine.fillStyle(0xffd35a, 0.9).fillEllipse(cx - 70, cy - 8, 46, 7).fillEllipse(cx + 74, cy + 4, 36, 6).fillEllipse(cx - 20, cy + 14, 28, 5);
+    this.tweens.add({ targets: shine, alpha: 0.35, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Brilho quente no ar acima do lago.
+    const glow = this.add.graphics().setDepth(3.6);
+    for (let k = 0; k < 4; k++) glow.fillStyle(0xff5a1a, 0.07).fillEllipse(cx, cy - 10, 330 - k * 50, 130 - k * 20);
+    this.tweens.add({ targets: glow, alpha: 0.6, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    // Bolhas que estouram na superfície.
+    this.add
+      .particles(cx, cy, 'spark', { x: { min: -105, max: 105 }, y: { min: -14, max: 14 }, speedY: { min: -26, max: -12 }, lifespan: 700, scale: { start: 0.22, end: 0 }, tint: [0xffe066, 0xff8a2a], frequency: 220 })
+      .setDepth(4.9);
+  }
+
   private cloudIsland(cx: number, cy: number, rim: number, top: number): Phaser.GameObjects.Graphics {
     const c = this.add.graphics().setDepth(4);
     c.fillStyle(INK, 1).fillRoundedRect(cx - 104, cy - 30, 208, 70, 26);
@@ -435,10 +455,8 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'forja':
+        this.drawLavaPool(x + 10, y + 24);
         this.add.image(x + 10, y + 30, 'map_volcano').setOrigin(0.5, 1).setScale(0.4).setDepth(5);
-        this.add
-          .particles(x + 14, y - 50, 'map_smoke', { speedY: { min: -22, max: -12 }, speedX: { min: 4, max: 12 }, lifespan: 3000, scale: { start: 0.35, end: 0.8 }, alpha: { start: 0.9, end: 0 }, frequency: 800 })
-          .setDepth(6);
         deco('stone3', -80, 30, 0.7);
         break;
       case 'bosque':

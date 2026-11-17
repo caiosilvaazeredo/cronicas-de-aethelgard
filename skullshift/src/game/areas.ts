@@ -116,7 +116,8 @@ export const AREAS: AreaDef[] = [
     kingAnim: 'imp_idle',
     color: 0xd84a3a,
     levels: ['sky', 'emberclouds', 'winds', 'meteor', 'embergun', 'firewinds', 'cloudcastle', 'emberbees', 'skykey', 'plane'],
-    pos: [900, 128],
+    // Flutua logo acima do vulcão da Forja: a região de fogo do mapa.
+    pos: [892, 335],
     unlock: 'after-pradaria',
   },
   {

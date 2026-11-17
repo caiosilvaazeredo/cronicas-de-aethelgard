@@ -42,11 +42,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     },
     async cauteloso(st) {
       if (st && Math.abs(st.near) < 170) {
-        // Inimigo perto: toca para trás (contra), defende um pouco e contra-ataca.
-        const away = st.near > 0 ? 'a' : 'd';
+        // Inimigo perto: defende um pouco e tenta o CONTRA (um toque isolado de ataque na hora do golpe).
         await kb.up('d');
-        await kb.press(away); await kb.down('q'); await sleep(220); await kb.up('q');
+        await kb.down('q'); await sleep(220); await kb.up('q');
+        await sleep(120);
         await kb.press('j');
+        await sleep(320);
       } else {
         await kb.down('d'); await sleep(260); await kb.up('d');
         if (Math.random() < 0.25) await kb.press('w');

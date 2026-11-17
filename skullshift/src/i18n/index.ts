@@ -186,29 +186,42 @@ export function tr(s: string, depth = 0): string {
   }
   if (out === undefined) {
     // Textos montados por partes ("Área 3 — Nome", "A · B", "Rótulo: valor"): traduz cada pedaço.
-    const parts = s.split(/( — | · |: |, |\n)/);
-    if (parts.length > 1 || /\s\d+$/.test(s) || /^\d+\s/.test(s)) {
-      let any = false;
-      const done = parts.map((part, i) => {
-        if (i % 2) return part;
-        const num = /^(.*\S)(\s+\d+)$/.exec(part);
-        const pre = /^(\d+\s+)(\S.*)$/.exec(part);
-        if (pre) {
-          const tp = one(pre[2], depth);
-          if (tp !== undefined) {
-            any = true;
-            return pre[1] + tp;
-          }
+    // Primeiro em pedaços grandes (· — e quebras de linha); só o que não sair inteiro é cortado
+    // de novo em ": " e ", " (assim uma frase com vírgula, ao lado de "· 5/6 fases", continua inteira).
+    const piece = (part: string): string | undefined => {
+      const num = /^(.*\S)(\s+\d+)$/.exec(part);
+      const pre = /^(\d+\s+)(\S.*)$/.exec(part);
+      if (pre) {
+        const tp = one(pre[2], depth);
+        if (tp !== undefined) return pre[1] + tp;
+      }
+      const whole = one(part, depth);
+      if (whole !== undefined) return whole;
+      const t = num ? one(num[1], depth) : undefined;
+      return t === undefined ? undefined : t + num![2];
+    };
+    // Cada nível só corta o que o anterior não traduziu inteiro.
+    const LEVELS_SPLIT = [/( — | · |\n)/, /(: )/, /(, )/];
+    let any = false;
+    const split = (text: string, lv: number): string => {
+      if (lv > 0) {
+        const t = piece(text);
+        if (t !== undefined) {
+          any = true;
+          return t;
         }
-        const t = one(part, depth) ?? (num ? one(num[1], depth) : undefined);
-        if (t === undefined) {
-          if (current !== 'pt-PT' && /\p{L}{3,}/u.test(part) && missing.size < 5000) missing.add(part);
-          return part;
-        }
-        any = true;
-        return num && one(part, depth) === undefined ? t + num[2] : t;
-      });
-      if (any) out = done.join('');
+      }
+      if (lv >= LEVELS_SPLIT.length) {
+        if (current !== 'pt-PT' && /\p{L}{3,}/u.test(text) && missing.size < 5000) missing.add(text);
+        return text;
+      }
+      const parts = text.split(LEVELS_SPLIT[lv]);
+      if (parts.length === 1) return split(text, lv + 1);
+      return parts.map((part, i) => (i % 2 ? part : split(part, lv + 1))).join('');
+    };
+    if (/( — | · |\n|: |, )/.test(s) || /\s\d+$/.test(s) || /^\d+\s/.test(s)) {
+      const joined = split(s, 0);
+      if (any) out = joined;
     }
   }
   if (out === undefined) {

@@ -81,7 +81,7 @@ originais (extraídas com PIL do PNG).
   e a Biblioteca (pontes-fantasma de alavanca, que o verificador não simula). Rode depois de mexer em fases.
 - Fundos por área em parallax (`Level.areaBackdrop`, escolhido pelo tileset).
 - Defesa sem escudo: **meia-lua** (`guard_arc`, `BootScene.makeGuardArc`) que só protege a frente.
-  **Contra-golpe**: tocar para trás até 170 ms antes do golpe (`Fighter.parries`, `PARRY_MS`) quebra a
+  **Contra-golpe**: apertar ATAQUE até 170 ms antes do golpe (`Fighter.parries`, `PARRY_MS`) quebra a
   defesa do atacante corpo a corpo (`GameScene.resolveMelee` → `guardBreak`) e devolve projéteis
   (laço de projéteis em `GameScene`). Efeito em `GameScene.parryFx`. Placa de dica na fase 1.
 - **Caixa de reserva** (como no Mario): `GameScene.reserves/dropReserve/updateReserve`, HUD em `Hud.setReserve`
@@ -102,8 +102,9 @@ originais (extraídas com PIL do PNG).
   flamenco, cadência andaluza — clima de Gerudo Valley) e 'calm' (dedilhado). Cada fase tem a sua música
   (`variantOf` pelo id). **Troca sem corte**: um relógio só; `playMusic` agenda a música nova para o próximo
   compasso e o andamento desliza (nunca reinicia). `jingle`/`duckMusic` só abaixam a música, não param.
-- **Defesa**: só no botão (o jogador NÃO defende andando para trás; a IA sim). Contra: toque NOVO para trás
-  no tempo certo (`Fighter.parries`, `moveStartAt`); quem já segurava a direção precisa soltar e tocar de novo.
+- **Defesa**: só no botão (o jogador NÃO defende andando para trás; a IA sim). Contra: toque NOVO de ATAQUE
+  no tempo certo (`Fighter.parries`, `attackPressAt`, janela `PARRY_MS` + aprimoramento). Recuar ou defender não conta;
+  apertar sem parar (toques a menos de 0,3 s) não abre a janela. Nas fases de tiro, `noteAttack` registra o disparo.
 - **Versus** (`GameScene.updateChaos`): itens caem do céu a cada ~10 s; eventos aleatórios a cada 20–30 s
   (VENTANIA, CHUVA DE OSSOS com sombra no chão, CHUVA DE ITENS, GRAVIDADE BAIXA, AJUDANTES); orbe roxo
   chama um ajudante (criatura do time de quem pegou, 12 s, `summonAssist`). P1 (WASD) também pula no Espaço.
@@ -160,7 +161,7 @@ originais (extraídas com PIL do PNG).
 
 ## Robôs de teste (scripts/bots)
 - `node scripts/bots/bot.cjs <perfil> <segundos> <offset> [quantas] [tag]` com o servidor `npx vite --port 5173` no ar.
-  Perfis: agressivo, cauteloso (contra com toque para trás), explorador (pulo duplo, itens, reserva), caotico (teclas aleatórias), retrato (iPhone em pé).
+  Perfis: agressivo, cauteloso (defende e tenta o contra com um ataque isolado), explorador (pulo duplo, itens, reserva), caotico (teclas aleatórias), retrato (iPhone em pé).
 - `scripts/bots/run.sh` roda os 5 em duas levas (no máx. 3 navegadores juntos: cada um usa ~1,6 GB). `python3 scripts/bots/resumo.py` junta os `rel_*.json`.
 - Nas fases de voo o "progresso" sai 0 e "parado" alto: o robô lê `players[0]`, mas quem voa é o `shmup` (artefato da medição, não trava).
 - Achado da rodada: nas fases de voo densas dava para morrer no primeiro segundo; agora o voo começa com 2 s de invencibilidade.
@@ -177,3 +178,8 @@ originais (extraídas com PIL do PNG).
 
 - `src/ui/transition.ts`: todo `this.scene.start(...)` passa por uma cortina (cena `fade`, sempre por cima). Ela escurece (170 ms), a próxima tela é criada por trás e a cortina só abre (280 ms) depois de 3 quadros desenhados — o "tranco" de montar a tela fica escondido. Se a tela de origem já escureceu a própria câmera, a cortina assume na mesma cor. Pedido duplo no meio da troca é ignorado (vale o primeiro); redirecionamento feito pela tela que está abrindo segue com a cortina fechada. `game.scene.start` (do SceneManager, usado pelos scripts de teste) não passa pela cortina.
 - `BootScene.create` gera as artes em etapas (`runTasks`, ~12 ms por quadro), e a barra mostra 75% download + 25% preparo. Variantes, agachados e nado dos tubarões são uma etapa por personagem (`variantTasks`, `crouchTasks`). Antes era um bloco único de ~2 s que congelava a animação.
+
+## Fim de fase e tradução por partes
+
+- Fases que terminam no fim do mapa (modo história): a nuvem do Hex espera em `level.width - 240` (`GameScene.makeGoalCloud`). Perto dela, `goalFinale` congela a fase, some com inimigos próximos, faz a caveira comemorar, andar, subir na nuvem e sair voando com o Hex; só então chama `storyWin(..., quiet)`. Chefes, portas/chaves, mausoléu, casas e voos seguem com a vitória própria.
+- `tr()` traduz textos montados por partes em níveis: primeiro corta em ` — `, ` · ` e quebras de linha; o que não sair inteiro é cortado em `: ` e, por último, em `, `. Assim uma frase com vírgula ao lado de "· 5/6 fases" continua inteira.

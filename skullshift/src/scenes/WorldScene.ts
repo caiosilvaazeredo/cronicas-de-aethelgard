@@ -454,7 +454,8 @@ export class WorldScene extends Phaser.Scene {
         cave.fillStyle(INK, 1).fillEllipse(x - 10, y + 26, 66, 52);
         cave.fillStyle(0x1a1208, 1).fillEllipse(x - 10, y + 30, 54, 42);
         deco('gold_stone_big', 70, 34, 0.42);
-        deco('bld_black_tower', -92, 30, 0.4);
+        // Torre de vigia em cima do planalto, atrás da entrada da mina.
+        deco('bld_black_tower', -62, -30, 0.32);
         this.add.sprite(x + 30, y + 10, 'torch_item_anim', 0).setDepth(6.5).play('torch_flame');
         break;
       }
@@ -485,10 +486,10 @@ export class WorldScene extends Phaser.Scene {
             this.add.image(x + dx, y + dy, 'cloud_03').setScale(sc).setTint(0x2a1a40).setDepth(8.6).setAlpha(0.95);
           break;
         }
-        deco('bld_purple_monastery', 10, 20, 0.6);
-        deco('bld_purple_tower', -90, 34, 0.45);
-        deco('bld_purple_tower', 110, 34, 0.45);
-        this.add.sprite(x - 60, y + 30, 'shaman_idle').setScale(0.6).setDepth(7).play('shaman_idle');
+        // Ilhota pequena: o mosteiro no meio e uma torre logo atrás, tudo dentro da terra.
+        deco('bld_purple_tower', 52, 4, 0.36);
+        deco('bld_purple_monastery', -6, 26, 0.55);
+        this.add.sprite(x - 62, y + 32, 'shaman_idle').setScale(0.6).setDepth(7).play('shaman_idle');
         break;
     }
     // Rei da área (silhueta enquanto trancada).

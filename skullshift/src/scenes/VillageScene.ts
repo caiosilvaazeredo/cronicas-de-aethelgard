@@ -1,3 +1,4 @@
+import { noTr, tr, trf } from '../i18n';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaTitle, areaUnlocked, recommendedLevel } from '../game/areas';
@@ -303,9 +304,9 @@ export class VillageScene extends Phaser.Scene {
     g.fillStyle(0x2a3a52, 1).fillRoundedRect(bx + 100 * k, top - 6 * k, 210 * k, 16 * k, 6);
     g.fillStyle(0x9b6bf0, 1).fillRoundedRect(bx + 100 * k, top - 6 * k, Math.max(8, 210 * k * lp.frac), 16 * k, 6);
     this.add.text(bx, top, `NÍVEL ${lp.level}`, { fontFamily: FONT, fontSize: `${Math.round(20 * k)}px`, color: '#ffe066' }).setOrigin(0, 0.5);
-    this.add
-      .text(bx + 100 * k, top - 16 * k, lp.need ? `${lp.into}/${lp.need} XP` : 'NÍVEL MÁXIMO', { fontFamily: BODY_FONT, fontSize: `${Math.round(13 * k)}px`, color: '#d8b8ff' })
-      .setOrigin(0, 0.5);
+    noTr(this.add
+      .text(bx + 100 * k, top - 16 * k, lp.need ? trf('{0}/{1} XP', lp.into, lp.need) : tr('NÍVEL MÁXIMO'), { fontFamily: BODY_FONT, fontSize: `${Math.round(13 * k)}px`, color: '#d8b8ff' })
+      .setOrigin(0, 0.5));
     this.add.text(bx, top + 40 * k, `Ouro: ${getCoins()}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5);
     if (P) this.touchPad(HH);
     else this.add

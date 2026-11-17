@@ -12,7 +12,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const go = (key, data) => p.evaluate(([key, data]) => { const g = window.__skullshift; g.scene.getScenes(false).forEach((s) => s.scene.key !== key && (s.scene.isActive() || s.scene.isPaused()) && s.scene.stop()); g.scene.start(key, data); }, [key, data]);
   let n = 0; const snap = async (name) => { if (shots) await p.screenshot({ path: `${shots}/${String(n++).padStart(2, '0')}_${name}.jpg`, type: 'jpeg', quality: 80 }); };
   await sleep(1500); await snap('menu');
-  for (const [key, data] of [['language'], ['settings', { from: 'menu' }], ['slots'], ['controls', { mode: 'story' }], ['howto', { mode: 'versus', devices: ['kb-left', 'kb-right'] }], ['loadout', { devices: ['kb-left', 'kb-right'] }], ['world'], ['map', { area: 'mare' }], ['shop', { devices: ['kb-full'] }], ['journal'], ['credits', { next: 'menu', data: {} }], ['memory', { index: 0 }], ['vn', { level: 0 }]]) {
+  for (const [key, data] of [['language'], ['settings', { from: 'menu' }], ['slots'], ['controls', { mode: 'story' }], ['howto', { mode: 'versus', devices: ['kb-left', 'kb-right'] }], ['loadout', { devices: ['kb-left', 'kb-right'] }], ['world'], ['map', { area: 'mare' }], ['shop', { devices: ['kb-full'] }], ['journal'], ['credits', { next: 'menu', data: {} }], ['memory', { index: 0 }], ['vn', { level: 0 }], ['village'], ['minigame', { kind: 'fish' }], ['minigame', { kind: 'targets' }], ['minigame', { kind: 'sheep' }], ['dungeon']]) {
+    if (key === 'dungeon') await p.evaluate(async () => (await import('/src/game/dungeon.ts')).startRun('pradaria', 'map', false));
     await go(key, data); await sleep(1300); await snap(key);
     if (key === 'journal') { await p.keyboard.press('ArrowRight'); await sleep(500); await snap('journal2'); }
   }

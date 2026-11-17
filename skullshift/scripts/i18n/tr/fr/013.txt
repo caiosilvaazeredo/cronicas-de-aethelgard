@@ -1,0 +1,190 @@
+1908	Donjon
+1909	Salle de Combat
+1910	Salle d'Élite
+1911	Antre du Gardien
+1912	Autel d'Os
+1913	Un autel couvert de bougies éteintes. Quelqu'un prie encore ici.
+1914	Prier
+1915	Les bougies s'allument toutes seules. Cœur bonus !
+1916	Une douce chaleur. Vous récupérez un cœur.
+1917	Une douce chaleur, mais vous étiez déjà en pleine forme.
+1918	Les bougies soufflent une fumée froide. Vous perdez un cœur.
+1919	Passer son chemin
+1920	Mieux vaut ne pas toucher à l'inconnu.
+1921	Marchand Encapuchonné
+1922	Une silhouette tend une fiole rouge. « Pour ceux qui ont encore de la peau... ou des os. »
+1923	Acheter une potion
+1924	Vous buvez la potion. Cœurs récupérés.
+1925	Vous buvez la potion, sans effet.
+1926	La silhouette disparaît dans le noir en grommelant.
+1927	Puits aux Souhaits
+1928	Des pièces brillent au fond d'un puits. On dit qu'il rend le double.
+1929	Jeter des pièces
+1930	Plic. Rien ne se passe.
+1931	Le puits a rendu de l'or : {0}
+1932	Vous gardez vos pièces.
+1933	Voyageur Blessé
+1934	Un aventurier à terre demande de l'aide. Il semble bien connaître ces salles.
+1935	Aider
+1936	Il vous montre raccourcis et secrets. Beaucoup d'expérience !
+1937	Il vous remercie et raconte des histoires. Vous gagnez de l'expérience.
+1938	Vous laissez le voyageur derrière vous.
+1939	Livre Interdit
+1940	Un livre enchaîné à un pupitre. Les lettres bougent quand on le regarde.
+1941	Lire
+1942	Les lettres mordent. Vous perdez un cœur.
+1943	Vous avez tout compris ! Beaucoup d'expérience.
+1944	Vous avez compris la moitié. Vous gagnez de l'expérience.
+1945	Certains livres sont mieux fermés.
+1946	Pont Fissuré
+1947	Un vieux pont au-dessus d'un gouffre sans fond. De l'autre côté, un sac d'or.
+1948	Traverser
+1949	Le pont a cédé ! Vous perdez un cœur.
+1950	Vous prenez l'or : {0}
+1951	L'or reste pour le prochain courageux.
+1952	Entrée
+1953	Combat
+1954	Élite
+1955	Coffre
+1956	Événement
+1957	Piège
+1958	Campement
+1959	Sanctuaire
+1960	Gardien
+1961	DONJON · {0}
+1962	Niveau conseillé : {0}  ·  Votre niveau : {1}
+1963	ABANDONNER
+1964	Choisissez la salle suivante : flèches ou toucher · Entrée pour y aller
+1965	Or de l'expédition : {0}   ·   XP de l'expédition : {1}
+1966	Vigueur
+1967	Furie
+1968	Chance
+1969	Bénédictions : {0}
+1970	{0} · niveau {1}
+1971	Attention : ici chaque coup retire 2 cœurs.
+1972	Les ennemis sont au-dessus de votre niveau (plus résistants).
+1973	Vous êtes bien au-dessus de cette salle : vos coups comptent double.
+1974	Un combat équitable.
+1975	LE GARDIEN
+1976	SALLE D'ÉLITE
+1977	SALLE DE COMBAT
+1978	Niveau de la salle : {0}  ·  Votre niveau : {1}\n{2}
+1979	AU COMBAT !
+1980	COFFRE
+1981	Un vieux coffre à la serrure rouillée. Il peut contenir de l'or... ou des dents.
+1982	C'était un coffre-mimique ! Il vous a mordu : vous perdez un cœur.
+1983	Or trouvé : {0}
+1984	PIÈGE !
+1985	Le sol craque. Des lames jaillissent des murs !
+1986	Vous ne les avez pas toutes esquivées : cœurs perdus ({0}).
+1987	Vous avez tout esquivé !
+1988	CAMPEMENT
+1989	Un feu de camp encore chaud. Un bon endroit pour se reposer.
+1990	Vous vous reposez et récupérez des cœurs ({0}).
+1991	Vous vous reposez un peu. Vous étiez déjà en pleine forme.
+1992	SANCTUAIRE
+1993	Une statue du Chaman, bras ouverts. Choisissez une bénédiction pour le reste du donjon.
+1994	VIGUEUR (+1 cœur)
+1995	FURIE (coups plus forts)
+1996	CHANCE (meilleurs dés)
+1997	{0} ({1} or)
+1998	Cœur bonus !
+1999	Vos coups deviennent plus forts.
+2000	Les dés vont vous sourire.
+2001	{0}\n\nChance par dé : {1} %
+2002	LANCER LES DÉS
+2003	RÉSULTAT
+2004	DONJON NETTOYÉ !
+2005	Le gardien est tombé. Le sceau du roi de cette zone est ouvert.\n\nExpérience : +{0}\nOr : +{1}
+2006	RETOUR
+2007	Or perdu : {0}\nExpérience perdue : {1}
+2008	VOUS ÊTES TOMBÉ DANS LE DONJON
+2009	Le Chaman vous a ramené, mais tout ce que vous aviez trouvé est resté en bas.\n\n{0}
+2010	ABANDONNER LE DONJON ?
+2011	Vous rentrez maintenant, mais vous perdez tout ce que vous avez amassé dans ce donjon.
+2012	CONTINUER L'EXPLORATION
+2013	LE DONJON VOUS A VAINCU
+2014	{0}   ·   +{1} XP
+2015	GARDIEN VAINCU !
+2016	SALLE NETTOYÉE !
+2017	+{0} XP pour l'expédition
+2018	{0}   Le roi est scellé : nettoyez le DONJON de cette zone pour l'affronter.
+2019	DONJON · NIV {0}{1}
+2020	SCEAU DU ROI
+2021	Des chaînes violettes barrent le chemin. Nettoyez le DONJON de cette zone (niveau conseillé {0}, le vôtre est {1}) et le sceau s'ouvrira.
+2022	PÊCHE AU LAC
+2023	TIR À LA CIBLE
+2024	ATTRAPE-MOUTONS
+2025	◀ VILLAGE
+2026	Goujon
+2027	Tilapia
+2028	Poisson-Os
+2029	Vieille botte
+2030	Appuyez (Espace / toucher) pour lancer
+2031	Attendez la touche... ne vous pressez pas !
+2032	Lancers : {0}   ·   Poissons : {1}\n{2}
+2033	Il s'est échappé !
+2034	Trop tôt ! Le poisson a fui.
+2035	Une vieille botte...
+2036	{0} ! ({1} or)
+2037	Pêché : {0}
+2038	Points : {0}
+2040	Temps : {0}   ·   Points : {1}\nCliquez/touchez les cibles (ou visez avec les flèches et Espace). La dorée vaut 3.
+2042	Moutons attrapés : {0}
+2043	Temps : {0}   ·   Moutons : {1}\nTouchez les moutons ! Flèches pour marcher, ↑/Espace pour sauter (ou touchez le pré).
+2044	\n(Récompense réduite : vous avez déjà joué {0} fois aujourd'hui.)
+2045	FIN DE PARTIE !
+2046	{0}\nOr : +{1}   ·   XP : +{2}{3}
+2047	ENCORE
+2048	VILLAGE
+2049	ABANDONNER LE DONJON
+2050	Mère Marguerite
+2051	Bonjour, l'osseux ! Le village est bien calme depuis ton arrivée.
+2052	On dit que les donjons changent chaque fois que quelqu'un y entre. Moi, je ne vérifierai pas.
+2053	Ceux qui s'entraînent avec Maître Rufus montent vite de niveau. Ou tombent vite.
+2054	Pipo, le petit gnome
+2055	T'es un vrai squelette ? Je peux compter tes côtes ?
+2056	J'ai touché trois cibles d'affilée au stand de Grillon ! Je parie que t'y arrives pas.
+2057	Les moutons te fuient parce que t'es trop maigre. C'est ma mère qui l'a dit.
+2058	Théodore le Barde
+2059	Chaque donjon a un gardien au bout. Chaque chanson aussi.
+2060	Abandonner un donjon n'a rien de honteux. Tout perdre dedans, c'est juste... coûteux.
+2061	Les campements des donjons sont les meilleurs endroits pour composer. Et pour ne pas mourir.
+2062	Père Joaquim
+2063	Là-bas dans la Prairie, les gnolls sont devenus plus forts. Ou c'est moi qui ai vieilli.
+2064	Dans les donjons, les dés décident beaucoup. La chance sourit à ceux qui ont du niveau.
+2065	Besoin d'or ? Pêche dans le lac. Les poissons d'ici sont bien dodus.
+2067	MONDE
+2068	CARTE DU MONDE
+2069	ENTRAÎNEMENT
+2070	MAÎTRE RUFUS
+2071	LAC
+2072	PÊCHER
+2073	PORTAIL DES DONJONS
+2074	PORTAIL
+2075	CIBLES
+2076	ENCLOS
+2077	AUBERGE
+2078	PARLER
+2079	LE VILLAGE
+2080	NIVEAU {0}
+2081	{0}/{1} XP
+2082	NIVEAU MAX
+2083	Or : {0}
+2084	◀ ▶ marcher · ↑/W sauter · E utiliser/parler · touchez pour y aller
+2085	UTILISER
+2086	Touchez le décor pour marcher jusqu'à un endroit
+2087	Encore {0} XP pour le niveau {1}.
+2088	Vous avez atteint le niveau maximum !
+2089	Maître Rufus
+2090	Niveau {0}. {1}\nDans les donjons, vous entrez avec {2} cœurs (+1 tous les 3 niveaux). Sous le niveau conseillé, les ennemis encaissent plus de coups ; bien au-dessus, vous frappez deux fois plus fort.\nL'XP vient des niveaux, des donjons et même des jeux du village.
+2091	CONTINUER LE DONJON
+2092	{0} · NIV {1}{2}
+2093	Portail des Donjons
+2094	\nVous avez un donjon en cours.
+2095	Votre niveau : {0}. Choisissez un donjon (le nombre est le niveau conseillé). Vous pouvez entrer au-dessus de votre niveau, mais ça va faire mal.{1}
+2096	VILLAGE · {0} or
+2097	VILLAGE · {0}
+2098	{0} · NIVEAU {1} · FRAGMENTS {2}/{3}
+2099	NIVEAU SUPÉRIEUR !  NIVEAU {0}
+2100	Plus de cœurs et plus de force dans les donjons.

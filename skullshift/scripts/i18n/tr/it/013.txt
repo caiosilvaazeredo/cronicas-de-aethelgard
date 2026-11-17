@@ -1,0 +1,190 @@
+1908	Dungeon
+1909	Sala di Combattimento
+1910	Sala d'Élite
+1911	Tana del Guardiano
+1912	Altare d'Ossa
+1913	Un altare coperto di candele spente. Qualcuno prega ancora qui.
+1914	Pregare
+1915	Le candele si accendono da sole. Cuore extra!
+1916	Un tepore leggero. Hai recuperato un cuore.
+1917	Un tepore leggero, ma eri già intero.
+1918	Le candele soffiano fumo freddo. Hai perso un cuore.
+1919	Proseguire
+1920	Meglio non immischiarsi con l'ignoto.
+1921	Mercante Incappucciato
+1922	Una figura offre una boccetta rossa. «Per chi ha ancora la pelle... o le ossa.»
+1923	Comprare pozione
+1924	Hai bevuto la pozione. Cuori recuperati.
+1925	Hai bevuto la pozione, ma non ha fatto effetto.
+1926	La figura svanisce nel buio, brontolando.
+1927	Pozzo dei Desideri
+1928	Monete luccicano in fondo a un pozzo. Dicono che restituisca il doppio.
+1929	Lanciare monete
+1930	Plin. Non è successo nulla.
+1931	Il pozzo ha restituito oro: {0}
+1932	Ti tieni le monete.
+1933	Viandante Ferito
+1934	Un avventuriero caduto chiede aiuto. Sembra conoscere bene queste sale.
+1935	Aiutare
+1936	Ti mostra scorciatoie e segreti. Tanta esperienza!
+1937	Ti ringrazia e racconta storie. Hai guadagnato esperienza.
+1938	Lasci indietro il viandante.
+1939	Libro Proibito
+1940	Un libro incatenato a un leggio. Le lettere si muovono quando lo guardi.
+1941	Leggere
+1942	Le lettere mordono. Hai perso un cuore.
+1943	Hai capito tutto! Tanta esperienza.
+1944	Hai capito metà. Hai guadagnato esperienza.
+1945	Certi libri è meglio lasciarli chiusi.
+1946	Ponte Crepato
+1947	Un vecchio ponte su un baratro senza fondo. Dall'altra parte, un sacco d'oro.
+1948	Attraversare
+1949	Il ponte ha ceduto! Hai perso un cuore.
+1950	Hai preso l'oro: {0}
+1951	L'oro resta per il prossimo coraggioso.
+1952	Ingresso
+1953	Combattimento
+1954	Élite
+1955	Forziere
+1956	Evento
+1957	Trappola
+1958	Accampamento
+1959	Santuario
+1960	Guardiano
+1961	DUNGEON · {0}
+1962	Livello consigliato: {0}  ·  Il tuo livello: {1}
+1963	ARRENDERSI
+1964	Scegli la prossima sala: frecce o tocco · Invio per andare
+1965	Oro della spedizione: {0}   ·   XP della spedizione: {1}
+1966	Vigore
+1967	Furia
+1968	Fortuna
+1969	Benedizioni: {0}
+1970	{0} · livello {1}
+1971	Attenzione: qui ogni colpo toglie 2 cuori.
+1972	I nemici sono sopra il tuo livello (più resistenti).
+1973	Sei molto sopra questa sala: i tuoi colpi valgono doppio.
+1974	Uno scontro equo.
+1975	IL GUARDIANO
+1976	SALA D'ÉLITE
+1977	SALA DI COMBATTIMENTO
+1978	Livello della sala: {0}  ·  Il tuo livello: {1}\n{2}
+1979	COMBATTI!
+1980	FORZIERE
+1981	Un vecchio forziere con la serratura arrugginita. Può contenere oro... o denti.
+1982	Era un forziere-mimic! Ti ha morso: hai perso un cuore.
+1983	Oro trovato: {0}
+1984	TRAPPOLA!
+1985	Il pavimento scatta. Lame escono dalle pareti!
+1986	Non le hai schivate tutte: cuori persi ({0}).
+1987	Hai schivato tutto!
+1988	ACCAMPAMENTO
+1989	Un falò ancora caldo. Un buon posto per riposare.
+1990	Ti sei riposato e hai recuperato cuori ({0}).
+1991	Ti sei riposato un po'. Eri già intero.
+1992	SANTUARIO
+1993	Una statua dello Sciamano a braccia aperte. Scegli una benedizione per il resto del dungeon.
+1994	VIGORE (+1 cuore)
+1995	FURIA (colpi più forti)
+1996	FORTUNA (dadi migliori)
+1997	{0} ({1} oro)
+1998	Cuore extra!
+1999	I tuoi colpi diventano più forti.
+2000	I dadi ti sorrideranno.
+2001	{0}\n\nProbabilità per dado: {1}%
+2002	TIRA I DADI
+2003	RISULTATO
+2004	DUNGEON COMPLETATO!
+2005	Il guardiano è caduto. Il sigillo del re di quest'area è aperto.\n\nEsperienza: +{0}\nOro: +{1}
+2006	INDIETRO
+2007	Oro perso: {0}\nEsperienza persa: {1}
+2008	SEI CADUTO NEL DUNGEON
+2009	Lo Sciamano ti ha riportato indietro, ma tutto ciò che avevi trovato è rimasto laggiù.\n\n{0}
+2010	ABBANDONARE IL DUNGEON?
+2011	Torni ora, ma perdi tutto ciò che hai raccolto in questo dungeon.
+2012	CONTINUA A ESPLORARE
+2013	IL DUNGEON TI HA SCONFITTO
+2014	{0}   ·   +{1} XP
+2015	GUARDIANO SCONFITTO!
+2016	SALA LIBERATA!
+2017	+{0} XP per la spedizione
+2018	{0}   Il re è sigillato: completa il DUNGEON di quest'area per affrontarlo.
+2019	DUNGEON · LV {0}{1}
+2020	SIGILLO DEL RE
+2021	Catene viola sbarrano il cammino. Completa il DUNGEON di quest'area (livello consigliato {0}, il tuo è {1}) e il sigillo si apre.
+2022	PESCA AL LAGO
+2023	TIRO AL BERSAGLIO
+2024	ACCHIAPPA-PECORE
+2025	◀ VILLAGGIO
+2026	Alborella
+2027	Tilapia
+2028	Pesce-Osso
+2029	Vecchio stivale
+2030	Premi (Spazio / tocco) per lanciare
+2031	Aspetta che abbocchi... senza fretta!
+2032	Lanci: {0}   ·   Pesci: {1}\n{2}
+2033	È scappato!
+2034	Troppo presto! Il pesce è fuggito.
+2035	Un vecchio stivale...
+2036	{0}! ({1} oro)
+2037	Pescato: {0}
+2038	Punti: {0}
+2040	Tempo: {0}   ·   Punti: {1}\nClicca/tocca i bersagli (o mira con le frecce e Spazio). Il dorato vale 3.
+2042	Pecore prese: {0}
+2043	Tempo: {0}   ·   Pecore: {1}\nTocca le pecore! Frecce per camminare, ↑/Spazio salta (o tocca il prato).
+2044	\n(Ricompensa ridotta: hai già giocato {0} volte oggi.)
+2045	FINE PARTITA!
+2046	{0}\nOro: +{1}   ·   XP: +{2}{3}
+2047	ANCORA
+2048	VILLAGGIO
+2049	ABBANDONA IL DUNGEON
+2050	Nonna Margherita
+2051	Buongiorno, ossicino! Il villaggio è tranquillo da quando sei arrivato.
+2052	Dicono che i dungeon cambino ogni volta che qualcuno ci entra. Io non vado a controllare.
+2053	Chi si allena con Mastro Rufo sale di livello in fretta. O cade in fretta.
+2054	Pipo, lo gnometto
+2055	Sei uno scheletro vero? Posso contarti le costole?
+2056	Ho colpito tre bersagli di fila al banco di Grillo! Scommetto che tu no.
+2057	Le pecore scappano da te perché sei troppo magro. L'ha detto la mia mamma.
+2058	Teodoro il Bardo
+2059	Ogni dungeon ha un guardiano alla fine. Anche ogni canzone.
+2060	Abbandonare un dungeon non è una vergogna. Perdere tutto lì dentro è solo... costoso.
+2061	Gli accampamenti dei dungeon sono i posti migliori per comporre. E per non morire.
+2062	Nonno Gioacchino
+2063	Là nella Prateria gli gnoll sono diventati più forti. O io più vecchio.
+2064	Nei dungeon i dadi decidono molto. La fortuna aiuta chi ha livello.
+2065	Ti serve oro? Pesca nel lago. I pesci qui sono belli paffuti.
+2067	MONDO
+2068	MAPPA DEL MONDO
+2069	ALLENAMENTO
+2070	MASTRO RUFO
+2071	LAGO
+2072	PESCARE
+2073	PORTALE DEI DUNGEON
+2074	PORTALE
+2075	BERSAGLI
+2076	RECINTO
+2077	LOCANDA
+2078	PARLA
+2079	IL VILLAGGIO
+2080	LIVELLO {0}
+2081	{0}/{1} XP
+2082	LIVELLO MASSIMO
+2083	Oro: {0}
+2084	◀ ▶ cammina · ↑/W salta · E usa/parla · tocca per andarci
+2085	USA
+2086	Tocca lo scenario per camminare fino a un luogo
+2087	Mancano {0} XP al livello {1}.
+2088	Hai raggiunto il livello massimo!
+2089	Mastro Rufo
+2090	Livello {0}. {1}\nNei dungeon entri con {2} cuori (+1 ogni 3 livelli). Sotto il livello consigliato, i nemici reggono più colpi; molto sopra, colpisci il doppio.\nL'XP arriva dai livelli, dai dungeon e perfino dai giochi del villaggio.
+2091	CONTINUA IL DUNGEON
+2092	{0} · LV {1}{2}
+2093	Portale dei Dungeon
+2094	\nHai un dungeon in corso.
+2095	Il tuo livello: {0}. Scegli un dungeon (il numero è il livello consigliato). Puoi entrare sopra il tuo livello, ma farà male.{1}
+2096	VILLAGGIO · {0} oro
+2097	VILLAGGIO · {0}
+2098	{0} · LIVELLO {1} · FRAMMENTI {2}/{3}
+2099	LIVELLO SUPERIORE!  LIVELLO {0}
+2100	Più cuori e più forza nei dungeon.

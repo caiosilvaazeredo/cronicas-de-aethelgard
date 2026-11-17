@@ -82,6 +82,11 @@ function esc(s: string): string {
 }
 
 /** Marca um Text que recebe texto já traduzido aos poucos (efeito de máquina de escrever). */
+/** Traduz um modelo com {0}, {1}... e preenche (para textos curtos que os moldes não pegam). */
+export function trf(template: string, ...args: Array<string | number>): string {
+  return tr(template).replace(/\{(\d+)\}/g, (_, k) => String(args[Number(k)] ?? ''));
+}
+
 export function noTr<T extends Phaser.GameObjects.Text>(t: T): T {
   (t as T & { __noTr?: boolean }).__noTr = true;
   return t;
@@ -109,7 +114,7 @@ export async function initI18n(): Promise<void> {
     lower[pt.toLowerCase()] = t;
     if (!/\{\d+\}/.test(pt)) continue;
     const literal = pt.replace(/\{\d+\}/g, '');
-    if (literal.replace(/[^\p{L}]/gu, '').length < 3) continue;
+    if (literal.replace(/[^\p{L}]/gu, '').length < 2) continue;
     const order: number[] = [];
     const src = pt
       .split(/(\{\d+\})/)

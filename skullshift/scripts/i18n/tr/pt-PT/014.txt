@@ -1,0 +1,33 @@
+1917	Um calor leve, mas já estavas inteiro.
+1932	Guardas as moedas.
+1938	Deixas o viajante para trás.
+1940	Um livro acorrentado a um púlpito. As letras mexem-se quando olhas.
+1943	Percebeste tudo! Muita experiência.
+1944	Percebeste metade. Ganhaste experiência.
+1962	Nível sugerido: {0}  ·  O teu nível: {1}
+1972	Os inimigos estão acima do teu nível (mais resistentes).
+1973	Estás bem acima desta sala: os teus golpes valem a dobrar.
+1978	Nível da sala: {0}  ·  O teu nível: {1}\n{2}
+2000	Os dados vão sorrir-te.
+2009	O Xamã trouxe-te de volta, mas tudo o que encontraste ficou lá em baixo.\n\n{0}
+2011	Voltas agora, mas perdes tudo o que juntaste nesta dungeon.
+2021	Correntes roxas prendem o caminho. Limpa a DUNGEON desta área (nível sugerido {0}, o teu é {1}) e o selo abre-se.
+2044	\n(Recompensa reduzida: já jogaste {0}x hoje.)
+2051	Bom dia, ossudinho! A vila anda tranquila desde que chegaste.
+2055	És um esqueleto a sério? Posso contar-te as costelas?
+2056	Acertei três alvos seguidos na barraca do Grilo! Duvido que consigas.
+2057	As ovelhas fogem de ti porque és muito magro. A minha mãe disse.
+2062	Senhor Joaquim
+2088	Chegaste ao nível máximo!
+2090	Nível {0}. {1}\nNas dungeons entras com {2} corações (+1 a cada 3 níveis). Abaixo do nível sugerido, os inimigos aguentam mais golpes; bem acima, bates a dobrar.\nO XP vem dos níveis, das dungeons e até dos jogos da vila.
+2094	\nTens uma dungeon em curso.
+2095	O teu nível: {0}. Escolhe uma dungeon (o número é o nível sugerido). Dá para entrar acima do teu nível, mas vai doer.{1}
+1964	Escolhe a próxima sala: setas ou toque · Enter para avançar
+1930	Plim. Não aconteceu nada.
+2030	Carrega em (Espaço / toque) para lançar
+2031	Espera pela fisgada... sem pressas!
+2086	Toca no cenário para andar até um lugar
+2084	◀ ▶ andar · ↑/W saltar · E usar/conversar · toca para ir até lá
+2043	Tempo: {0}   ·   Ovelhas: {1}\nEncosta-te às ovelhas! Setas para andar, ↑/Espaço salta (ou toca no pasto).
+2040	Tempo: {0}   ·   Pontos: {1}\nClica/toca nos alvos (ou aponta com as setas e Espaço). O dourado vale 3.
+2042	Ovelhas apanhadas: {0}

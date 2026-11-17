@@ -227,3 +227,16 @@
 1892	NÍVEL {0}
 1896	 · JOGO GUARDADO {0}
 1898	{0}/{1} níveis
+1906	DEFESA: segura o botão.\nATAQUE bem na hora\ndo golpe: CONTRA!
+1907	DEFESA no botão (Q, K, B). ATAQUE bem na hora do golpe: CONTRA! Sobre o item de outro personagem, carrega em APANHAR para te transformares.
+1940	Um livro acorrentado a um púlpito. As letras mexe-sem quando você olha.
+1964	Escolhe a próxima sala: setas ou toque · Enter para ir
+1993	Uma estátua do Xamã, de braços abertos. Escolhe uma bênção para o resto da dungeon.
+2024	APANHA-OVELHA
+2030	Carrega em (Espaço / toque) para lançar
+2043	Tempo: {0}   ·   Ovelhas: {1}\nEncosta-te nas ovelhas! Setas para andar, ↑/Espaço pula (ou toque no pasto).
+2057	As ovelhas fogem de ti porque você é muito magro. Minha mãe disse.
+2084	◀ ▶ andar · ↑/W saltar · E usar/conversar · toque para ir até lá
+2088	Chegaste ao nível máximo!
+2090	Nível {0}. {1}\nNas dungeons você entra com {2} corações (+1 a cada 3 níveis). Abaixo do nível sugerido, os inimigos aguentam mais golpes; bem acima, você bate em dobro.\nXP vem dos níveis, das dungeons e até dos jogos da vila.
+2095	Seu nível: {0}. Escolhe uma dungeon (o número é o nível sugerido). Dá para entrar acima do seu nível, mas vai doer.{1}

@@ -1,0 +1,190 @@
+1908	Mazmorra
+1909	Sala de Combate
+1910	Sala de Élite
+1911	Guarida del Guardián
+1912	Altar de Huesos
+1913	Un altar cubierto de velas apagadas. Alguien todavía reza aquí.
+1914	Rezar
+1915	Las velas se encienden solas. ¡Corazón extra!
+1916	Un calor suave. Recuperaste un corazón.
+1917	Un calor suave, pero ya estabas entero.
+1918	Las velas soplan humo frío. Perdiste un corazón.
+1919	Seguir adelante
+1920	Mejor no meterse con lo desconocido.
+1921	Mercader Encapuchado
+1922	Una figura ofrece un frasco rojo. «Para quien aún tiene piel... o hueso.»
+1923	Comprar poción
+1924	Bebiste la poción. Recuperaste corazones.
+1925	Bebiste la poción, pero no hizo efecto.
+1926	La figura desaparece en la oscuridad, refunfuñando.
+1927	Pozo de los Deseos
+1928	Unas monedas brillan en el fondo de un pozo. Dicen que devuelve el doble.
+1929	Tirar monedas
+1930	Plin. No pasó nada.
+1931	El pozo devolvió oro: {0}
+1932	Te guardas las monedas.
+1933	Viajero Herido
+1934	Un aventurero caído pide ayuda. Parece conocer bien estas salas.
+1935	Ayudar
+1936	Te enseña atajos y secretos. ¡Mucha experiencia!
+1937	Te da las gracias y cuenta historias. Ganaste experiencia.
+1938	Dejas atrás al viajero.
+1939	Libro Prohibido
+1940	Un libro encadenado a un atril. Las letras se mueven cuando lo miras.
+1941	Leer
+1942	Las letras muerden. Perdiste un corazón.
+1943	¡Lo entendiste todo! Mucha experiencia.
+1944	Entendiste la mitad. Ganaste experiencia.
+1945	Algunos libros es mejor dejarlos cerrados.
+1946	Puente Agrietado
+1947	Un puente viejo sobre un abismo sin fondo. Al otro lado, una bolsa de oro.
+1948	Cruzar
+1949	¡El puente cedió! Perdiste un corazón.
+1950	Tomaste el oro: {0}
+1951	El oro queda para el próximo valiente.
+1952	Entrada
+1953	Combate
+1954	Élite
+1955	Cofre
+1956	Evento
+1957	Trampa
+1958	Campamento
+1959	Santuario
+1960	Guardián
+1961	MAZMORRA · {0}
+1962	Nivel sugerido: {0}  ·  Tu nivel: {1}
+1963	RENDIRSE
+1964	Elige la siguiente sala: flechas o toque · Enter para ir
+1965	Oro de la incursión: {0}   ·   XP de la incursión: {1}
+1966	Vigor
+1967	Furia
+1968	Suerte
+1969	Bendiciones: {0}
+1970	{0} · nivel {1}
+1971	Cuidado: aquí cada golpe quita 2 corazones.
+1972	Los enemigos están por encima de tu nivel (más resistentes).
+1973	Estás muy por encima de esta sala: tus golpes valen el doble.
+1974	Una pelea justa.
+1975	EL GUARDIÁN
+1976	SALA DE ÉLITE
+1977	SALA DE COMBATE
+1978	Nivel de la sala: {0}  ·  Tu nivel: {1}\n{2}
+1979	¡A PELEAR!
+1980	COFRE
+1981	Un cofre viejo con la cerradura oxidada. Puede tener oro... o dientes.
+1982	¡Era un cofre-mímico! Te mordió: perdiste un corazón.
+1983	Oro encontrado: {0}
+1984	¡TRAMPA!
+1985	El suelo cruje. ¡Salen cuchillas de las paredes!
+1986	No esquivaste todas: perdiste corazones ({0}).
+1987	¡Esquivaste todo!
+1988	CAMPAMENTO
+1989	Una hoguera todavía caliente. Un buen lugar para descansar.
+1990	Descansaste y recuperaste corazones ({0}).
+1991	Descansaste un poco. Ya estabas entero.
+1992	SANTUARIO
+1993	Una estatua del Chamán con los brazos abiertos. Elige una bendición para el resto de la mazmorra.
+1994	VIGOR (+1 corazón)
+1995	FURIA (golpes más fuertes)
+1996	SUERTE (mejores dados)
+1997	{0} ({1} de oro)
+1998	¡Corazón extra!
+1999	Tus golpes se vuelven más fuertes.
+2000	Los dados te sonreirán.
+2001	{0}\n\nProbabilidad de cada dado: {1}%
+2002	TIRAR LOS DADOS
+2003	RESULTADO
+2004	¡MAZMORRA DESPEJADA!
+2005	El guardián cayó. El sello del rey de esta zona está abierto.\n\nExperiencia: +{0}\nOro: +{1}
+2006	VOLVER
+2007	Oro perdido: {0}\nExperiencia perdida: {1}
+2008	CAÍSTE EN LA MAZMORRA
+2009	El Chamán te trajo de vuelta, pero todo lo que encontraste se quedó allí abajo.\n\n{0}
+2010	¿ABANDONAR LA MAZMORRA?
+2011	Vuelves ahora, pero pierdes todo lo que reuniste en esta mazmorra.
+2012	SEGUIR EXPLORANDO
+2013	LA MAZMORRA TE DERROTÓ
+2014	{0}   ·   +{1} XP
+2015	¡GUARDIÁN DERROTADO!
+2016	¡SALA DESPEJADA!
+2017	+{0} XP para la incursión
+2018	{0}   El rey está sellado: despeja la MAZMORRA de esta zona para enfrentarlo.
+2019	MAZMORRA · NV {0}{1}
+2020	SELLO DEL REY
+2021	Cadenas moradas cierran el camino. Despeja la MAZMORRA de esta zona (nivel sugerido {0}, el tuyo es {1}) y el sello se abre.
+2022	PESCA EN EL LAGO
+2023	TIRO AL BLANCO
+2024	ATRAPA OVEJAS
+2025	◀ ALDEA
+2026	Sardinita
+2027	Tilapia
+2028	Pez-Hueso
+2029	Bota vieja
+2030	Pulsa (Espacio / toque) para lanzar
+2031	Espera a que piquen... ¡sin prisa!
+2032	Lanzamientos: {0}   ·   Peces: {1}\n{2}
+2033	¡Se escapó!
+2034	¡Demasiado pronto! El pez huyó.
+2035	Una bota vieja...
+2036	¡{0}! ({1} de oro)
+2037	Pescaste: {0}
+2038	Puntos: {0}
+2040	Tiempo: {0}   ·   Puntos: {1}\nHaz clic/toca los blancos (o apunta con las flechas y Espacio). El dorado vale 3.
+2042	Ovejas atrapadas: {0}
+2043	Tiempo: {0}   ·   Ovejas: {1}\n¡Toca a las ovejas! Flechas para andar, ↑/Espacio salta (o toca el prado).
+2044	\n(Recompensa reducida: ya jugaste {0} veces hoy.)
+2045	¡FIN DEL JUEGO!
+2046	{0}\nOro: +{1}   ·   XP: +{2}{3}
+2047	OTRA VEZ
+2048	ALDEA
+2049	ABANDONAR LA MAZMORRA
+2050	Doña Margarita
+2051	¡Buenos días, huesudito! La aldea está tranquila desde que llegaste.
+2052	Dicen que las mazmorras cambian cada vez que alguien entra. Yo no pienso comprobarlo.
+2053	Quien entrena con el Maestro Rufo sube de nivel rapidito. O se cae rapidito.
+2054	Pipo, el gnomito
+2055	¿Eres un esqueleto de verdad? ¿Puedo contarte las costillas?
+2056	¡Acerté tres blancos seguidos en el puesto de Grillo! A que tú no.
+2057	Las ovejas huyen de ti porque estás muy flaco. Lo dijo mi mamá.
+2058	Teodoro el Bardo
+2059	Toda mazmorra tiene un guardián al final. Toda canción también.
+2060	Abandonar una mazmorra no es una vergüenza. Perderlo todo dentro es solo... caro.
+2061	Los campamentos de las mazmorras son los mejores lugares para componer. Y para no morir.
+2062	Don Joaquín
+2063	Allá en la Pradera los gnolls se hicieron más fuertes. O yo me hice más viejo.
+2064	En las mazmorras, los dados deciden mucho. La suerte ayuda a quien tiene nivel.
+2065	¿Necesitas oro? Pesca en el lago. Los peces de aquí son gorditos.
+2067	MUNDO
+2068	MAPA DEL MUNDO
+2069	ENTRENAMIENTO
+2070	MAESTRO RUFO
+2071	LAGO
+2072	PESCAR
+2073	PORTAL DE LAS MAZMORRAS
+2074	PORTAL
+2075	BLANCOS
+2076	CORRAL
+2077	POSADA
+2078	HABLAR
+2079	LA ALDEA
+2080	NIVEL {0}
+2081	{0}/{1} XP
+2082	NIVEL MÁXIMO
+2083	Oro: {0}
+2084	◀ ▶ andar · ↑/W saltar · E usar/hablar · toca para ir allí
+2085	USAR
+2086	Toca el escenario para caminar hasta un lugar
+2087	Faltan {0} XP para el nivel {1}.
+2088	¡Llegaste al nivel máximo!
+2089	Maestro Rufo
+2090	Nivel {0}. {1}\nEn las mazmorras entras con {2} corazones (+1 cada 3 niveles). Por debajo del nivel sugerido, los enemigos aguantan más golpes; muy por encima, golpeas el doble.\nLa XP viene de las fases, las mazmorras e incluso de los juegos de la aldea.
+2091	CONTINUAR LA MAZMORRA
+2092	{0} · NV {1}{2}
+2093	Portal de las Mazmorras
+2094	\nTienes una mazmorra en curso.
+2095	Tu nivel: {0}. Elige una mazmorra (el número es el nivel sugerido). Puedes entrar por encima de tu nivel, pero dolerá.{1}
+2096	ALDEA · {0} de oro
+2097	ALDEA · {0}
+2098	{0} · NIVEL {1} · FRAGMENTOS {2}/{3}
+2099	¡SUBISTE DE NIVEL!  NIVEL {0}
+2100	Más corazones y más fuerza en las mazmorras.

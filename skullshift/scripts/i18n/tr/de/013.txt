@@ -1,0 +1,190 @@
+1908	Verlies
+1909	Kampfraum
+1910	Eliteraum
+1911	Hort des Wächters
+1912	Knochenaltar
+1913	Ein Altar voller erloschener Kerzen. Hier betet noch jemand.
+1914	Beten
+1915	Die Kerzen entzünden sich von selbst. Extraherz!
+1916	Eine sanfte Wärme. Du erhältst ein Herz zurück.
+1917	Eine sanfte Wärme, aber du warst schon heil.
+1918	Die Kerzen blasen kalten Rauch. Du verlierst ein Herz.
+1919	Weitergehen
+1920	Lieber nicht mit dem Unbekannten anlegen.
+1921	Vermummter Händler
+1922	Eine Gestalt bietet ein rotes Fläschchen an. „Für alle, die noch Haut haben ... oder Knochen.“
+1923	Trank kaufen
+1924	Du trinkst den Trank. Herzen zurückerhalten.
+1925	Du trinkst den Trank, aber er wirkt nicht.
+1926	Die Gestalt verschwindet murrend im Dunkeln.
+1927	Wunschbrunnen
+1928	Münzen glitzern am Grund eines Brunnens. Man sagt, er gibt das Doppelte zurück.
+1929	Münzen werfen
+1930	Plink. Nichts passiert.
+1931	Der Brunnen gab Gold zurück: {0}
+1932	Du behältst deine Münzen.
+1933	Verletzter Reisender
+1934	Ein gestürzter Abenteurer bittet um Hilfe. Er scheint diese Räume gut zu kennen.
+1935	Helfen
+1936	Er zeigt dir Abkürzungen und Geheimnisse. Viel Erfahrung!
+1937	Er bedankt sich und erzählt Geschichten. Du gewinnst Erfahrung.
+1938	Du lässt den Reisenden zurück.
+1939	Verbotenes Buch
+1940	Ein an ein Pult gekettetes Buch. Die Buchstaben bewegen sich, wenn man hinsieht.
+1941	Lesen
+1942	Die Buchstaben beißen. Du verlierst ein Herz.
+1943	Du hast alles verstanden! Viel Erfahrung.
+1944	Du hast die Hälfte verstanden. Du gewinnst Erfahrung.
+1945	Manche Bücher bleiben besser zu.
+1946	Rissige Brücke
+1947	Eine alte Brücke über einem bodenlosen Abgrund. Auf der anderen Seite ein Sack Gold.
+1948	Überqueren
+1949	Die Brücke gab nach! Du verlierst ein Herz.
+1950	Du nimmst das Gold: {0}
+1951	Das Gold bleibt für den nächsten Mutigen.
+1952	Eingang
+1953	Kampf
+1954	Elite
+1955	Truhe
+1956	Ereignis
+1957	Falle
+1958	Lager
+1959	Schrein
+1960	Wächter
+1961	VERLIES · {0}
+1962	Empfohlene Stufe: {0}  ·  Deine Stufe: {1}
+1963	AUFGEBEN
+1964	Wähle den nächsten Raum: Pfeile oder Tippen · Enter zum Gehen
+1965	Gold des Streifzugs: {0}   ·   EP des Streifzugs: {1}
+1966	Vitalität
+1967	Wut
+1968	Glück
+1969	Segen: {0}
+1970	{0} · Stufe {1}
+1971	Vorsicht: Hier kostet jeder Treffer 2 Herzen.
+1972	Die Gegner sind über deiner Stufe (zäher).
+1973	Du bist weit über diesem Raum: Deine Schläge zählen doppelt.
+1974	Ein fairer Kampf.
+1975	DER WÄCHTER
+1976	ELITERAUM
+1977	KAMPFRAUM
+1978	Raumstufe: {0}  ·  Deine Stufe: {1}\n{2}
+1979	KÄMPFEN!
+1980	TRUHE
+1981	Eine alte Truhe mit rostigem Schloss. Sie kann Gold enthalten ... oder Zähne.
+1982	Es war ein Mimic! Er hat zugebissen: Du verlierst ein Herz.
+1983	Gold gefunden: {0}
+1984	FALLE!
+1985	Der Boden klickt. Klingen schießen aus den Wänden!
+1986	Du bist nicht allen ausgewichen: Herzen verloren ({0}).
+1987	Allem ausgewichen!
+1988	LAGER
+1989	Ein noch warmes Lagerfeuer. Ein guter Ort zum Ausruhen.
+1990	Du ruhst dich aus und erhältst Herzen zurück ({0}).
+1991	Du ruhst dich etwas aus. Du warst schon heil.
+1992	SCHREIN
+1993	Eine Statue des Schamanen mit offenen Armen. Wähle einen Segen für den Rest des Verlieses.
+1994	VITALITÄT (+1 Herz)
+1995	WUT (stärkere Schläge)
+1996	GLÜCK (bessere Würfel)
+1997	{0} ({1} Gold)
+1998	Extraherz!
+1999	Deine Schläge werden stärker.
+2000	Die Würfel werden dir zulächeln.
+2001	{0}\n\nChance pro Würfel: {1} %
+2002	WÜRFELN
+2003	ERGEBNIS
+2004	VERLIES GESÄUBERT!
+2005	Der Wächter ist gefallen. Das Siegel des Königs dieses Gebiets ist offen.\n\nErfahrung: +{0}\nGold: +{1}
+2006	ZURÜCK
+2007	Verlorenes Gold: {0}\nVerlorene Erfahrung: {1}
+2008	DU BIST IM VERLIES GEFALLEN
+2009	Der Schamane hat dich zurückgeholt, aber alles, was du gefunden hast, ist dort unten geblieben.\n\n{0}
+2010	VERLIES AUFGEBEN?
+2011	Du kehrst jetzt zurück, verlierst aber alles, was du in diesem Verlies gesammelt hast.
+2012	WEITER ERKUNDEN
+2013	DAS VERLIES HAT DICH BESIEGT
+2014	{0}   ·   +{1} EP
+2015	WÄCHTER BESIEGT!
+2016	RAUM GESÄUBERT!
+2017	+{0} EP für den Streifzug
+2018	{0}   Der König ist versiegelt: Säubere das VERLIES dieses Gebiets, um ihn herauszufordern.
+2019	VERLIES · ST {0}{1}
+2020	SIEGEL DES KÖNIGS
+2021	Lila Ketten versperren den Weg. Säubere das VERLIES dieses Gebiets (empfohlene Stufe {0}, deine ist {1}) und das Siegel öffnet sich.
+2022	ANGELN AM SEE
+2023	ZIELSCHIESSEN
+2024	SCHAFE FANGEN
+2025	◀ DORF
+2026	Weißfisch
+2027	Tilapia
+2028	Knochenfisch
+2029	Alter Stiefel
+2030	Drücke (Leertaste / Tippen) zum Auswerfen
+2031	Warte auf den Biss ... nicht hetzen!
+2032	Würfe: {0}   ·   Fische: {1}\n{2}
+2033	Entwischt!
+2034	Zu früh! Der Fisch ist geflohen.
+2035	Ein alter Stiefel ...
+2036	{0}! ({1} Gold)
+2037	Gefangen: {0}
+2038	Punkte: {0}
+2040	Zeit: {0}   ·   Punkte: {1}\nKlicke/tippe auf die Ziele (oder ziele mit den Pfeilen und Leertaste). Gold zählt 3.
+2042	Gefangene Schafe: {0}
+2043	Zeit: {0}   ·   Schafe: {1}\nBerühre die Schafe! Pfeile zum Gehen, ↑/Leertaste springt (oder tippe auf die Weide).
+2044	\n(Belohnung reduziert: Du hast heute schon {0}× gespielt.)
+2045	SPIEL VORBEI!
+2046	{0}\nGold: +{1}   ·   EP: +{2}{3}
+2047	NOCHMAL
+2048	DORF
+2049	VERLIES AUFGEBEN
+2050	Oma Margarete
+2051	Guten Morgen, Knöchelchen! Seit du da bist, ist es ruhig im Dorf.
+2052	Man sagt, die Verliese verändern sich jedes Mal, wenn jemand hineingeht. Ich prüfe das nicht nach.
+2053	Wer mit Meister Rufus trainiert, steigt schnell auf. Oder fällt schnell hin.
+2054	Pipo, der kleine Gnom
+2055	Bist du ein echtes Skelett? Darf ich deine Rippen zählen?
+2056	Ich habe am Stand von Grille drei Ziele in Folge getroffen! Wetten, du schaffst das nicht?
+2057	Die Schafe laufen vor dir weg, weil du zu dünn bist. Hat meine Mama gesagt.
+2058	Theodor der Barde
+2059	Jedes Verlies hat am Ende einen Wächter. Jedes Lied auch.
+2060	Ein Verlies aufzugeben ist keine Schande. Drinnen alles zu verlieren ist nur ... teuer.
+2061	Die Lager in den Verliesen sind die besten Orte zum Komponieren. Und zum Nicht-Sterben.
+2062	Opa Joaquim
+2063	Draußen in der Prärie sind die Gnolle stärker geworden. Oder ich älter.
+2064	In den Verliesen entscheiden die Würfel viel. Das Glück hilft denen mit Stufe.
+2065	Brauchst du Gold? Angle im See. Die Fische hier sind schön rund.
+2067	WELT
+2068	WELTKARTE
+2069	TRAINING
+2070	MEISTER RUFUS
+2071	SEE
+2072	ANGELN
+2073	VERLIES-PORTAL
+2074	PORTAL
+2075	ZIELE
+2076	PFERCH
+2077	GASTHAUS
+2078	REDEN
+2079	DAS DORF
+2080	STUFE {0}
+2081	{0}/{1} EP
+2082	HÖCHSTSTUFE
+2083	Gold: {0}
+2084	◀ ▶ gehen · ↑/W springen · E benutzen/reden · tippen, um hinzugehen
+2085	BENUTZEN
+2086	Tippe auf die Umgebung, um irgendwohin zu gehen
+2087	Noch {0} EP bis Stufe {1}.
+2088	Du hast die Höchststufe erreicht!
+2089	Meister Rufus
+2090	Stufe {0}. {1}\nIn den Verliesen startest du mit {2} Herzen (+1 alle 3 Stufen). Unter der empfohlenen Stufe halten Gegner mehr Treffer aus; weit darüber schlägst du doppelt so hart.\nEP gibt es von Levels, Verliesen und sogar den Dorfspielen.
+2091	VERLIES FORTSETZEN
+2092	{0} · ST {1}{2}
+2093	Verlies-Portal
+2094	\nDu hast ein laufendes Verlies.
+2095	Deine Stufe: {0}. Wähle ein Verlies (die Zahl ist die empfohlene Stufe). Du kannst über deiner Stufe hinein, aber es wird wehtun.{1}
+2096	DORF · {0} Gold
+2097	DORF · {0}
+2098	{0} · STUFE {1} · FRAGMENTE {2}/{3}
+2099	STUFE AUFGESTIEGEN!  STUFE {0}
+2100	Mehr Herzen und mehr Kraft in den Verliesen.

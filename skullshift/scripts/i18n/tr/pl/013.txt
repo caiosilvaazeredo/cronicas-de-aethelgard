@@ -1,0 +1,190 @@
+1908	Loch
+1909	Sala Walki
+1910	Sala Elity
+1911	Legowisko Strażnika
+1912	Ołtarz z Kości
+1913	Ołtarz pokryty zgaszonymi świecami. Ktoś wciąż się tu modli.
+1914	Pomodlić się
+1915	Świece zapalają się same. Dodatkowe serce!
+1916	Delikatne ciepło. Odzyskujesz serce.
+1917	Delikatne ciepło, ale byłeś już cały.
+1918	Świece dmuchają zimnym dymem. Tracisz serce.
+1919	Iść dalej
+1920	Lepiej nie zadzierać z nieznanym.
+1921	Zakapturzony Kupiec
+1922	Postać oferuje czerwoną fiolkę. „Dla tych, co mają jeszcze skórę... albo kości.”
+1923	Kup miksturę
+1924	Wypijasz miksturę. Serca odzyskane.
+1925	Wypijasz miksturę, ale nic się nie zmienia.
+1926	Postać znika w ciemności, mrucząc.
+1927	Studnia Życzeń
+1928	Na dnie studni lśnią monety. Mówią, że oddaje podwójnie.
+1929	Wrzuć monety
+1930	Plum. Nic się nie stało.
+1931	Studnia oddała złoto: {0}
+1932	Zatrzymujesz monety.
+1933	Ranny Podróżnik
+1934	Upadły poszukiwacz przygód prosi o pomoc. Chyba dobrze zna te sale.
+1935	Pomóż
+1936	Pokazuje ci skróty i sekrety. Mnóstwo doświadczenia!
+1937	Dziękuje i opowiada historie. Zdobywasz doświadczenie.
+1938	Zostawiasz podróżnika.
+1939	Zakazana Księga
+1940	Księga przykuta łańcuchem do pulpitu. Litery ruszają się, gdy na nie patrzysz.
+1941	Czytaj
+1942	Litery gryzą. Tracisz serce.
+1943	Zrozumiałeś wszystko! Mnóstwo doświadczenia.
+1944	Zrozumiałeś połowę. Zdobywasz doświadczenie.
+1945	Niektóre księgi lepiej zostawić zamknięte.
+1946	Pęknięty Most
+1947	Stary most nad bezdenną przepaścią. Po drugiej stronie worek złota.
+1948	Przejdź
+1949	Most się zawalił! Tracisz serce.
+1950	Bierzesz złoto: {0}
+1951	Złoto zostaje dla następnego śmiałka.
+1952	Wejście
+1953	Walka
+1954	Elita
+1955	Skrzynia
+1956	Wydarzenie
+1957	Pułapka
+1958	Obóz
+1959	Kapliczka
+1960	Strażnik
+1961	LOCH · {0}
+1962	Sugerowany poziom: {0}  ·  Twój poziom: {1}
+1963	PODDAJ SIĘ
+1964	Wybierz następną salę: strzałki lub dotyk · Enter, by iść
+1965	Złoto wyprawy: {0}   ·   PD wyprawy: {1}
+1966	Wigor
+1967	Furia
+1968	Szczęście
+1969	Błogosławieństwa: {0}
+1970	{0} · poziom {1}
+1971	Uwaga: tu każdy cios zabiera 2 serca.
+1972	Wrogowie są powyżej twojego poziomu (twardsi).
+1973	Jesteś dużo silniejszy niż ta sala: twoje ciosy liczą się podwójnie.
+1974	Uczciwa walka.
+1975	STRAŻNIK
+1976	SALA ELITY
+1977	SALA WALKI
+1978	Poziom sali: {0}  ·  Twój poziom: {1}\n{2}
+1979	DO WALKI!
+1980	SKRZYNIA
+1981	Stara skrzynia z zardzewiałym zamkiem. Może kryć złoto... albo zęby.
+1982	To był mimik! Ugryzł cię: tracisz serce.
+1983	Znalezione złoto: {0}
+1984	PUŁAPKA!
+1985	Podłoga trzeszczy. Ze ścian wysuwają się ostrza!
+1986	Nie uniknąłeś wszystkich: stracone serca ({0}).
+1987	Uniknąłeś wszystkiego!
+1988	OBÓZ
+1989	Wciąż ciepłe ognisko. Dobre miejsce na odpoczynek.
+1990	Odpocząłeś i odzyskałeś serca ({0}).
+1991	Trochę odpocząłeś. Byłeś już cały.
+1992	KAPLICZKA
+1993	Posąg Szamana z otwartymi ramionami. Wybierz błogosławieństwo na resztę lochu.
+1994	WIGOR (+1 serce)
+1995	FURIA (mocniejsze ciosy)
+1996	SZCZĘŚCIE (lepsze kości)
+1997	{0} ({1} złota)
+1998	Dodatkowe serce!
+1999	Twoje ciosy stają się mocniejsze.
+2000	Kości się do ciebie uśmiechną.
+2001	{0}\n\nSzansa na każdej kości: {1}%
+2002	RZUĆ KOŚĆMI
+2003	WYNIK
+2004	LOCH OCZYSZCZONY!
+2005	Strażnik upadł. Pieczęć króla tego obszaru jest otwarta.\n\nDoświadczenie: +{0}\nZłoto: +{1}
+2006	WRÓĆ
+2007	Stracone złoto: {0}\nStracone doświadczenie: {1}
+2008	UPADŁEŚ W LOCHU
+2009	Szaman cię sprowadził z powrotem, ale wszystko, co znalazłeś, zostało na dole.\n\n{0}
+2010	PORZUCIĆ LOCH?
+2011	Wracasz teraz, ale tracisz wszystko, co zebrałeś w tym lochu.
+2012	EKSPLORUJ DALEJ
+2013	LOCH CIĘ POKONAŁ
+2014	{0}   ·   +{1} PD
+2015	STRAŻNIK POKONANY!
+2016	SALA OCZYSZCZONA!
+2017	+{0} PD dla wyprawy
+2018	{0}   Król jest zapieczętowany: oczyść LOCH tego obszaru, by z nim walczyć.
+2019	LOCH · POZ {0}{1}
+2020	PIECZĘĆ KRÓLA
+2021	Fioletowe łańcuchy zagradzają drogę. Oczyść LOCH tego obszaru (sugerowany poziom {0}, twój to {1}), a pieczęć się otworzy.
+2022	ŁOWIENIE NAD JEZIOREM
+2023	STRZELANIE DO TARCZ
+2024	ŁAP OWCE
+2025	◀ WIOSKA
+2026	Ukleja
+2027	Tilapia
+2028	Kościoryba
+2029	Stary but
+2030	Naciśnij (Spacja / dotyk), by zarzucić
+2031	Czekaj na branie... bez pośpiechu!
+2032	Rzuty: {0}   ·   Ryby: {1}\n{2}
+2033	Uciekła!
+2034	Za wcześnie! Ryba uciekła.
+2035	Stary but...
+2036	{0}! ({1} złota)
+2037	Złowiono: {0}
+2038	Punkty: {0}
+2040	Czas: {0}   ·   Punkty: {1}\nKlikaj/dotykaj tarcz (albo celuj strzałkami i Spacją). Złota warta 3.
+2042	Złapane owce: {0}
+2043	Czas: {0}   ·   Owce: {1}\nDotknij owiec! Strzałki do chodzenia, ↑/Spacja skacze (albo dotknij pastwiska).
+2044	\n(Mniejsza nagroda: grałeś już dziś {0} razy.)
+2045	KONIEC GRY!
+2046	{0}\nZłoto: +{1}   ·   PD: +{2}{3}
+2047	JESZCZE RAZ
+2048	WIOSKA
+2049	PORZUĆ LOCH
+2050	Babcia Małgorzata
+2051	Dzień dobry, kościotrupku! W wiosce jest spokojnie, odkąd przyszedłeś.
+2052	Mówią, że lochy zmieniają się za każdym razem, gdy ktoś wchodzi. Ja tego nie sprawdzę.
+2053	Kto trenuje z Mistrzem Rufusem, szybko awansuje. Albo szybko pada.
+2054	Pipo, mały gnom
+2055	Jesteś prawdziwym szkieletem? Mogę policzyć ci żebra?
+2056	Trafiłem trzy tarcze z rzędu na stoisku Świerszcza! Założę się, że ty nie dasz rady.
+2057	Owce uciekają przed tobą, bo jesteś za chudy. Mama tak powiedziała.
+2058	Bard Teodor
+2059	Każdy loch ma na końcu strażnika. Każda piosenka też.
+2060	Porzucenie lochu to nie wstyd. Stracić wszystko w środku to tylko... drogo.
+2061	Obozy w lochach to najlepsze miejsca do komponowania. I do nieumierania.
+2062	Dziadek Joaquim
+2063	Na Prerii gnolle zrobiły się silniejsze. Albo ja się zestarzałem.
+2064	W lochach kości decydują o wielu rzeczach. Szczęście sprzyja tym z poziomem.
+2065	Potrzebujesz złota? Łów ryby w jeziorze. Tutejsze są pulchniutkie.
+2067	ŚWIAT
+2068	MAPA ŚWIATA
+2069	TRENING
+2070	MISTRZ RUFUS
+2071	JEZIORO
+2072	ŁÓW
+2073	PORTAL LOCHÓW
+2074	PORTAL
+2075	TARCZE
+2076	ZAGRODA
+2077	GOSPODA
+2078	ROZMAWIAJ
+2079	WIOSKA
+2080	POZIOM {0}
+2081	{0}/{1} PD
+2082	MAKS. POZIOM
+2083	Złoto: {0}
+2084	◀ ▶ idź · ↑/W skok · E użyj/rozmawiaj · dotknij, by tam pójść
+2085	UŻYJ
+2086	Dotknij scenerii, by tam podejść
+2087	Brakuje {0} PD do poziomu {1}.
+2088	Osiągnąłeś maksymalny poziom!
+2089	Mistrz Rufus
+2090	Poziom {0}. {1}\nW lochach zaczynasz z {2} sercami (+1 co 3 poziomy). Poniżej sugerowanego poziomu wrogowie znoszą więcej ciosów; dużo powyżej bijesz dwa razy mocniej.\nPD dają etapy, lochy, a nawet gry w wiosce.
+2091	KONTYNUUJ LOCH
+2092	{0} · POZ {1}{2}
+2093	Portal Lochów
+2094	\nMasz rozpoczęty loch.
+2095	Twój poziom: {0}. Wybierz loch (liczba to sugerowany poziom). Możesz wejść powyżej swojego poziomu, ale zaboli.{1}
+2096	WIOSKA · {0} złota
+2097	WIOSKA · {0}
+2098	{0} · POZIOM {1} · FRAGMENTY {2}/{3}
+2099	NOWY POZIOM!  POZIOM {0}
+2100	Więcej serc i więcej siły w lochach.

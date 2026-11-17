@@ -1,0 +1,190 @@
+1908	Zindan
+1909	Savaş Odası
+1910	Seçkin Oda
+1911	Muhafızın İni
+1912	Kemik Sunağı
+1913	Sönmüş mumlarla kaplı bir sunak. Biri hâlâ burada dua ediyor.
+1914	Dua et
+1915	Mumlar kendiliğinden yanıyor. Ekstra kalp!
+1916	Hafif bir sıcaklık. Bir kalp geri kazandın.
+1917	Hafif bir sıcaklık, ama zaten tamdın.
+1918	Mumlar soğuk duman üflüyor. Bir kalp kaybettin.
+1919	Yoluna devam et
+1920	Bilinmeyene bulaşmamak en iyisi.
+1921	Kukuletalı Tüccar
+1922	Bir gölge kırmızı bir şişe uzatıyor. "Hâlâ derisi olanlar için... ya da kemiği."
+1923	İksir al
+1924	İksiri içtin. Kalpler geri geldi.
+1925	İksiri içtin ama işe yaramadı.
+1926	Gölge homurdanarak karanlıkta kayboluyor.
+1927	Dilek Kuyusu
+1928	Bir kuyunun dibinde paralar parlıyor. İki katını geri verdiği söylenir.
+1929	Para at
+1930	Tıngır. Hiçbir şey olmadı.
+1931	Kuyu altın geri verdi: {0}
+1932	Paralarını saklıyorsun.
+1933	Yaralı Gezgin
+1934	Düşmüş bir maceracı yardım istiyor. Bu odaları iyi tanıyor gibi.
+1935	Yardım et
+1936	Sana kestirme yollar ve sırlar gösteriyor. Bolca tecrübe!
+1937	Teşekkür edip hikâyeler anlatıyor. Tecrübe kazandın.
+1938	Gezgini geride bırakıyorsun.
+1939	Yasak Kitap
+1940	Bir kürsüye zincirlenmiş bir kitap. Baktıkça harfler kıpırdıyor.
+1941	Oku
+1942	Harfler ısırıyor. Bir kalp kaybettin.
+1943	Her şeyi anladın! Bolca tecrübe.
+1944	Yarısını anladın. Tecrübe kazandın.
+1945	Bazı kitaplar kapalı kalsa daha iyi.
+1946	Çatlak Köprü
+1947	Dipsiz bir uçurumun üstünde eski bir köprü. Karşıda bir kese altın.
+1948	Geç
+1949	Köprü çöktü! Bir kalp kaybettin.
+1950	Altını aldın: {0}
+1951	Altın bir sonraki cesura kalsın.
+1952	Giriş
+1953	Savaş
+1954	Seçkin
+1955	Sandık
+1956	Olay
+1957	Tuzak
+1958	Kamp
+1959	Tapınak
+1960	Muhafız
+1961	ZİNDAN · {0}
+1962	Önerilen seviye: {0}  ·  Senin seviyen: {1}
+1963	VAZGEÇ
+1964	Sıradaki odayı seç: oklar veya dokunma · gitmek için Enter
+1965	Seferin altını: {0}   ·   Seferin TP'si: {1}
+1966	Dinçlik
+1967	Öfke
+1968	Şans
+1969	Kutsamalar: {0}
+1970	{0} · seviye {1}
+1971	Dikkat: burada her darbe 2 kalp götürür.
+1972	Düşmanlar senin seviyenin üstünde (daha dayanıklı).
+1973	Bu odanın çok üstündesin: darbelerin iki kat sayılır.
+1974	Adil bir dövüş.
+1975	MUHAFIZ
+1976	SEÇKİN ODA
+1977	SAVAŞ ODASI
+1978	Oda seviyesi: {0}  ·  Senin seviyen: {1}\n{2}
+1979	SAVAŞ!
+1980	SANDIK
+1981	Paslı kilitli eski bir sandık. İçinde altın olabilir... ya da diş.
+1982	Taklitçi sandıkmış! Seni ısırdı: bir kalp kaybettin.
+1983	Bulunan altın: {0}
+1984	TUZAK!
+1985	Zemin tıkırdıyor. Duvarlardan bıçaklar fırlıyor!
+1986	Hepsinden kaçamadın: kaybedilen kalp ({0}).
+1987	Hepsinden kaçtın!
+1988	KAMP
+1989	Hâlâ sıcak bir kamp ateşi. Dinlenmek için iyi bir yer.
+1990	Dinlendin ve kalp kazandın ({0}).
+1991	Biraz dinlendin. Zaten tamdın.
+1992	TAPINAK
+1993	Kollarını açmış bir Şaman heykeli. Zindanın geri kalanı için bir kutsama seç.
+1994	DİNÇLİK (+1 kalp)
+1995	ÖFKE (daha güçlü darbeler)
+1996	ŞANS (daha iyi zarlar)
+1997	{0} ({1} altın)
+1998	Ekstra kalp!
+1999	Darbelerin güçleniyor.
+2000	Zarlar sana gülümseyecek.
+2001	{0}\n\nHer zarın şansı: %{1}
+2002	ZARLARI AT
+2003	SONUÇ
+2004	ZİNDAN TEMİZLENDİ!
+2005	Muhafız düştü. Bu bölgenin kralının mührü açıldı.\n\nTecrübe: +{0}\nAltın: +{1}
+2006	GERİ
+2007	Kaybedilen altın: {0}\nKaybedilen tecrübe: {1}
+2008	ZİNDANDA DÜŞTÜN
+2009	Şaman seni geri getirdi ama bulduğun her şey aşağıda kaldı.\n\n{0}
+2010	ZİNDANDAN VAZGEÇİLSİN Mİ?
+2011	Şimdi dönersin ama bu zindanda topladığın her şeyi kaybedersin.
+2012	KEŞFE DEVAM
+2013	ZİNDAN SENİ YENDİ
+2014	{0}   ·   +{1} TP
+2015	MUHAFIZ YENİLDİ!
+2016	ODA TEMİZLENDİ!
+2017	Sefer için +{0} TP
+2018	{0}   Kral mühürlü: onunla yüzleşmek için bu bölgenin ZİNDANINI temizle.
+2019	ZİNDAN · SV {0}{1}
+2020	KRALIN MÜHRÜ
+2021	Mor zincirler yolu kapatıyor. Bu bölgenin ZİNDANINI temizle (önerilen seviye {0}, seninki {1}) ve mühür açılsın.
+2022	GÖLDE BALIK
+2023	HEDEF ATIŞI
+2024	KOYUN KOVALA
+2025	◀ KÖY
+2026	Gümüş balığı
+2027	Tilapya
+2028	Kemik Balığı
+2029	Eski çizme
+2030	Atmak için (Boşluk / dokun)
+2031	Oltanın çekilmesini bekle... acele etme!
+2032	Atış: {0}   ·   Balık: {1}\n{2}
+2033	Kaçtı!
+2034	Çok erken! Balık kaçtı.
+2035	Eski bir çizme...
+2036	{0}! ({1} altın)
+2037	Tutulan: {0}
+2038	Puan: {0}
+2040	Süre: {0}   ·   Puan: {1}\nHedeflere tıkla/dokun (ya da oklar ve Boşluk ile nişan al). Altın olan 3 puan.
+2042	Yakalanan koyun: {0}
+2043	Süre: {0}   ·   Koyun: {1}\nKoyunlara dokun! Yürümek için oklar, ↑/Boşluk zıplar (ya da çayıra dokun).
+2044	\n(Ödül azaldı: bugün zaten {0} kez oynadın.)
+2045	OYUN BİTTİ!
+2046	{0}\nAltın: +{1}   ·   TP: +{2}{3}
+2047	TEKRAR
+2048	KÖY
+2049	ZİNDANDAN VAZGEÇ
+2050	Margarida Nine
+2051	Günaydın, kemikçik! Sen geldiğinden beri köy çok sakin.
+2052	Zindanların her girişte değiştiğini söylüyorlar. Ben kontrol etmeye gitmem.
+2053	Usta Rufus'la çalışan hızlı seviye atlar. Ya da hızlı düşer.
+2054	Pipo, küçük cüce
+2055	Gerçek bir iskelet misin? Kaburgalarını sayabilir miyim?
+2056	Cırcır'ın tezgâhında arka arkaya üç hedef vurdum! Bahse girerim sen yapamazsın.
+2057	Koyunlar senden kaçıyor çünkü çok zayıfsın. Annem öyle dedi.
+2058	Ozan Teodor
+2059	Her zindanın sonunda bir muhafız vardır. Her şarkının da.
+2060	Bir zindandan vazgeçmek ayıp değil. İçeride her şeyi kaybetmek sadece... pahalı.
+2061	Zindan kampları beste yapmak için en iyi yerler. Ve ölmemek için.
+2062	Joaquim Amca
+2063	Kırlarda gnollar güçlendi. Ya da ben yaşlandım.
+2064	Zindanlarda zarlar çok şeye karar verir. Şans, seviyesi olana yardım eder.
+2065	Altına mı ihtiyacın var? Gölde balık tut. Buranın balıkları tombiktir.
+2067	DÜNYA
+2068	DÜNYA HARİTASI
+2069	ANTRENMAN
+2070	USTA RUFUS
+2071	GÖL
+2072	BALIK TUT
+2073	ZİNDAN GEÇİDİ
+2074	GEÇİT
+2075	HEDEFLER
+2076	AĞIL
+2077	HAN
+2078	KONUŞ
+2079	KÖY
+2080	SEVİYE {0}
+2081	{0}/{1} TP
+2082	MAKS. SEVİYE
+2083	Altın: {0}
+2084	◀ ▶ yürü · ↑/W zıpla · E kullan/konuş · gitmek için dokun
+2085	KULLAN
+2086	Bir yere yürümek için sahneye dokun
+2087	Seviye {1} için {0} TP kaldı.
+2088	En yüksek seviyeye ulaştın!
+2089	Usta Rufus
+2090	Seviye {0}. {1}\nZindanlara {2} kalple girersin (her 3 seviyede +1). Önerilen seviyenin altında düşmanlar daha çok darbe kaldırır; çok üstündeyken iki kat sert vurursun.\nTP bölümlerden, zindanlardan ve hatta köy oyunlarından gelir.
+2091	ZİNDANA DEVAM
+2092	{0} · SV {1}{2}
+2093	Zindan Geçidi
+2094	\nDevam eden bir zindanın var.
+2095	Seviyen: {0}. Bir zindan seç (sayı önerilen seviyedir). Seviyenin üstüne girebilirsin ama acıtır.{1}
+2096	KÖY · {0} altın
+2097	KÖY · {0}
+2098	{0} · SEVİYE {1} · PARÇALAR {2}/{3}
+2099	SEVİYE ATLADIN!  SEVİYE {0}
+2100	Zindanlarda daha çok kalp ve daha çok güç.

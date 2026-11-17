@@ -1,0 +1,190 @@
+1908	Dungeon
+1909	Battle Room
+1910	Elite Room
+1911	Guardian's Lair
+1912	Altar of Bones
+1913	An altar covered in snuffed-out candles. Someone still prays here.
+1914	Pray
+1915	The candles light up on their own. Extra heart!
+1916	A gentle warmth. You recovered a heart.
+1917	A gentle warmth, but you were already whole.
+1918	The candles blow cold smoke. You lost a heart.
+1919	Move on
+1920	Better not meddle with the unknown.
+1921	Hooded Merchant
+1922	A figure offers a red flask. "For those who still have skin... or bone."
+1923	Buy potion
+1924	You drank the potion. Hearts recovered.
+1925	You drank the potion, but it made no difference.
+1926	The figure vanishes into the dark, grumbling.
+1927	Wishing Well
+1928	Coins glitter at the bottom of a well. They say it pays back double.
+1929	Toss coins
+1930	Plink. Nothing happened.
+1931	The well paid back gold: {0}
+1932	You keep your coins.
+1933	Wounded Traveler
+1934	A fallen adventurer asks for help. He seems to know these rooms well.
+1935	Help
+1936	He shows you shortcuts and secrets. Lots of experience!
+1937	He thanks you and tells stories. You gained experience.
+1938	You leave the traveler behind.
+1939	Forbidden Book
+1940	A book chained to a lectern. The letters move when you look at them.
+1941	Read
+1942	The letters bite. You lost a heart.
+1943	You understood everything! Lots of experience.
+1944	You understood half of it. You gained experience.
+1945	Some books are better left closed.
+1946	Cracked Bridge
+1947	An old bridge over a bottomless pit. On the other side, a bag of gold.
+1948	Cross
+1949	The bridge gave way! You lost a heart.
+1950	You grabbed the gold: {0}
+1951	The gold stays for the next brave soul.
+1952	Entrance
+1953	Battle
+1954	Elite
+1955	Chest
+1956	Event
+1957	Trap
+1958	Camp
+1959	Shrine
+1960	Guardian
+1961	DUNGEON · {0}
+1962	Suggested level: {0}  ·  Your level: {1}
+1963	GIVE UP
+1964	Choose the next room: arrows or tap · Enter to go
+1965	Run gold: {0}   ·   Run XP: {1}
+1966	Vigor
+1967	Fury
+1968	Luck
+1969	Blessings: {0}
+1970	{0} · level {1}
+1971	Careful: here each hit takes 2 hearts.
+1972	The enemies are above your level (tougher).
+1973	You're well above this room: your hits count double.
+1974	A fair fight.
+1975	THE GUARDIAN
+1976	ELITE ROOM
+1977	BATTLE ROOM
+1978	Room level: {0}  ·  Your level: {1}\n{2}
+1979	FIGHT!
+1980	CHEST
+1981	An old chest with a rusty lock. It may hold gold... or teeth.
+1982	It was a mimic! It bit you: you lost a heart.
+1983	Gold found: {0}
+1984	TRAP!
+1985	The floor clicks. Blades shoot out of the walls!
+1986	You didn't dodge them all: hearts lost ({0}).
+1987	You dodged everything!
+1988	CAMP
+1989	A campfire, still warm. A good place to rest.
+1990	You rested and recovered hearts ({0}).
+1991	You rested a bit. You were already whole.
+1992	SHRINE
+1993	A statue of the Shaman with open arms. Choose a blessing for the rest of the dungeon.
+1994	VIGOR (+1 heart)
+1995	FURY (stronger hits)
+1996	LUCK (better dice)
+1997	{0} ({1} gold)
+1998	Extra heart!
+1999	Your hits grow stronger.
+2000	The dice will smile on you.
+2001	{0}\n\nChance per die: {1}%
+2002	ROLL THE DICE
+2003	RESULT
+2004	DUNGEON CLEARED!
+2005	The guardian has fallen. The seal of this area's king is open.\n\nExperience: +{0}\nGold: +{1}
+2006	BACK
+2007	Gold lost: {0}\nExperience lost: {1}
+2008	YOU FELL IN THE DUNGEON
+2009	The Shaman brought you back, but everything you found stayed down there.\n\n{0}
+2010	GIVE UP THE DUNGEON?
+2011	You go back now, but lose everything you gathered in this dungeon.
+2012	KEEP EXPLORING
+2013	THE DUNGEON DEFEATED YOU
+2014	{0}   ·   +{1} XP
+2015	GUARDIAN DEFEATED!
+2016	ROOM CLEARED!
+2017	+{0} XP for the run
+2018	{0}   The king is sealed: clear this area's DUNGEON to face him.
+2019	DUNGEON · LV {0}{1}
+2020	KING'S SEAL
+2021	Purple chains block the path. Clear this area's DUNGEON (suggested level {0}, yours is {1}) and the seal opens.
+2022	FISHING AT THE LAKE
+2023	TARGET PRACTICE
+2024	SHEEP CHASE
+2025	◀ VILLAGE
+2026	Minnow
+2027	Tilapia
+2028	Bonefish
+2029	Old boot
+2030	Press (Space / tap) to cast
+2031	Wait for the bite... don't rush!
+2032	Casts: {0}   ·   Fish: {1}\n{2}
+2033	It got away!
+2034	Too soon! The fish fled.
+2035	An old boot...
+2036	{0}! ({1} gold)
+2037	Caught: {0}
+2038	Points: {0}
+2040	Time: {0}   ·   Points: {1}\nClick/tap the targets (or aim with the arrows and Space). Gold is worth 3.
+2042	Sheep caught: {0}
+2043	Time: {0}   ·   Sheep: {1}\nTouch the sheep! Arrows to walk, ↑/Space jumps (or tap the pasture).
+2044	\n(Reduced reward: you've played {0}x today.)
+2045	GAME OVER!
+2046	{0}\nGold: +{1}   ·   XP: +{2}{3}
+2047	AGAIN
+2048	VILLAGE
+2049	GIVE UP THE DUNGEON
+2050	Granny Daisy
+2051	Good morning, bony! The village has been calm since you arrived.
+2052	They say the dungeons change every time someone goes in. I'm not checking.
+2053	Whoever trains with Master Rufus levels up fast. Or falls down fast.
+2054	Pipo, the little gnome
+2055	Are you a real skeleton? Can I count your ribs?
+2056	I hit three targets in a row at Cricket's stall! Bet you can't.
+2057	The sheep run from you because you're too skinny. My mom said so.
+2058	Theodore the Bard
+2059	Every dungeon has a guardian at the end. Every song does too.
+2060	Giving up on a dungeon is no shame. Losing everything inside is just... pricey.
+2061	Dungeon camps are the best places to compose. And to not die.
+2062	Old Joaquim
+2063	Out on the Prairie the gnolls got stronger. Or I got older.
+2064	In the dungeons, the dice decide a lot. Luck favors those with levels.
+2065	Need gold? Fish in the lake. The fish here are nice and chubby.
+2067	WORLD
+2068	WORLD MAP
+2069	TRAINING
+2070	MASTER RUFUS
+2071	LAKE
+2072	FISH
+2073	DUNGEON PORTAL
+2074	PORTAL
+2075	TARGETS
+2076	PEN
+2077	INN
+2078	TALK
+2079	THE VILLAGE
+2080	LEVEL {0}
+2081	{0}/{1} XP
+2082	MAX LEVEL
+2083	Gold: {0}
+2084	◀ ▶ walk · ↑/W jump · E use/talk · tap to go there
+2085	USE
+2086	Tap the scenery to walk somewhere
+2087	{0} XP left to level {1}.
+2088	You reached the max level!
+2089	Master Rufus
+2090	Level {0}. {1}\nIn the dungeons you start with {2} hearts (+1 every 3 levels). Below the suggested level, enemies take more hits; well above it, you hit twice as hard.\nXP comes from levels, dungeons and even the village games.
+2091	CONTINUE THE DUNGEON
+2092	{0} · LV {1}{2}
+2093	Dungeon Portal
+2094	\nYou have a dungeon in progress.
+2095	Your level: {0}. Choose a dungeon (the number is the suggested level). You can go in above your level, but it'll hurt.{1}
+2096	VILLAGE · {0} gold
+2097	VILLAGE · {0}
+2098	{0} · LEVEL {1} · FRAGMENTS {2}/{3}
+2099	LEVEL UP!  LEVEL {0}
+2100	More hearts and more strength in the dungeons.

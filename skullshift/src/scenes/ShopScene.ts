@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BODY_FONT, FONT, H, W } from '../config';
+import { BODY_FONT, FONT, H, PORTRAIT, VIEW, W } from '../config';
 import type { DeviceId } from '../game/controls';
 import { getCoins } from '../game/progress';
 import { sfx } from '../game/settings';
@@ -34,9 +34,13 @@ export class ShopScene extends Phaser.Scene {
     this.prevPad = { l: true, r: true, u: true, d: true, a: true, b: true };
   }
 
+  /** Escala de cada cartão (em pé os cartões ficam maiores, em grade). */
+  private cardScale = 1;
+
   create(): void {
     playMusic('pradaria', 'emporio');
     const HH = this.scale.height;
+    if (VIEW.portrait) return this.createPortrait(HH);
     const oy = Math.max(0, (HH - H) / 2);
     // Fim de tarde na pradaria: céu, colina, a loja e a dona.
     this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, HH);
@@ -72,29 +76,101 @@ export class ShopScene extends Phaser.Scene {
     const cw = Math.min(190, Math.floor((W - 40) / UPGRADES.length) - 12);
     const x0 = W / 2 - ((UPGRADES.length - 1) * (cw + 12)) / 2;
     const cy = gy + 190;
-    UPGRADES.forEach((u, i) => {
-      const x = x0 + i * (cw + 12);
+    this.cardScale = 1;
+    UPGRADES.forEach((u, i) => this.card(i, x0 + i * (cw + 12), cy, cw));
+    this.descPanel(gy + 190 + 150);
+    this.finishCreate();
+  }
+
+  /** Cartão de um aprimoramento na prateleira. */
+  private card(i: number, x: number, cy: number, cw: number): void {
+    const u = UPGRADES[i];
+    {
+      // Em pé as letras são maiores: ícone e prateleira sobem para o nome caber em 2 linhas.
+      const P = VIEW.portrait;
       const frame = this.add.rectangle(0, 0, cw, 170, 0xf4e3bf).setStrokeStyle(5, 0x10223a);
-      const shelf = this.add.rectangle(0, 20, cw - 24, 8, 0x8a5a2b).setStrokeStyle(2, 0x10223a);
-      const icon = this.add.image(0, -22, u.icon, 0);
+      const shelf = this.add.rectangle(0, P ? 12 : 20, cw - 24, 8, 0x8a5a2b).setStrokeStyle(2, 0x10223a);
+      const icon = this.add.image(0, P ? -28 : -22, u.icon, 0);
       // Alguns desenhos têm muita margem transparente: aumenta para encher o cartão.
       const boost: Record<string, number> = { gold: 3.2, skull_avatar: 1.7, cloud_05: 1.5, bone: 1.3, tool_sword: 2.6 };
-      icon.setScale(Math.min(74 / icon.width, 74 / icon.height) * (boost[u.icon] ?? 1));
+      icon.setScale(Math.min((P ? 64 : 74) / icon.width, (P ? 64 : 74) / icon.height) * (boost[u.icon] ?? 1));
       if (u.icon === 'guard_arc') icon.setTint(0x6fb8ff);
-      const name = this.add.text(0, 44, u.name, { fontFamily: FONT, fontSize: '16px', color: '#10223a', align: 'center', wordWrap: { width: cw - 12 } }).setOrigin(0.5);
-      const tag = this.add.text(0, 70, '', { fontFamily: FONT, fontSize: '18px', color: '#8a5a00' }).setOrigin(0.5);
-      const box = this.add.container(x, cy, [frame, shelf, icon, name, tag]);
+      const name = this.add.text(0, P ? 37 : 44, u.name, { fontFamily: FONT, fontSize: P ? '19px' : '16px', color: '#10223a', align: 'center', wordWrap: { width: cw - 12 }, lineSpacing: P ? -4 : 0 }).setOrigin(0.5);
+      const tag = this.add.text(0, P ? 72 : 70, '', { fontFamily: FONT, fontSize: P ? '21px' : '18px', color: '#8a5a00' }).setOrigin(0.5);
+      const box = this.add.container(x, cy, [frame, shelf, icon, name, tag]).setScale(this.cardScale);
       frame.setInteractive({ useHandCursor: true }).on('pointerdown', () => (this.sel === i ? this.buy() : this.select(i)));
       this.cards.push({ box, frame, tag });
-    });
-    // Painel de descrição.
-    const py = cy + 150;
+    }
+  }
+
+  /** Painel com o nome, o que faz e o botão de comprar. */
+  private descPanel(py: number): void {
     this.add.rectangle(W / 2, py, 1000, 96, 0x10223a, 0.92).setStrokeStyle(3, 0xfff7dc, 0.8);
     this.nameText = this.add.text(W / 2 - 480, py - 34, '', { fontFamily: FONT, fontSize: '24px', color: '#ffe066' });
     this.howText = this.add.text(W / 2 - 480, py - 4, '', { fontFamily: BODY_FONT, fontSize: '18px', color: '#fff7dc', wordWrap: { width: 760 } });
     pillButton(this, W / 2 + 390, py, 'COMPRAR', () => this.buy(), 190, 0xffe066).setScale(0.85);
     this.add.text(W / 2, py + 70, '← → escolher  ·  Enter / A comprar  ·  Esc / B voltar', { fontFamily: BODY_FONT, fontSize: '16px', color: '#bfd0e0' }).setOrigin(0.5);
+  }
 
+  /**
+   * Em pé: a loja e a dona em cima, maiores; os aprimoramentos em grade de 4 colunas; o painel
+   * de compra largo embaixo, com o botão COMPRAR grande.
+   */
+  private createPortrait(HH: number): void {
+    const tp = PORTRAIT.topPad;
+    this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, HH);
+    this.add.rectangle(0, 0, W, HH, 0xffc98a, 0.18).setOrigin(0);
+    this.add.image(60, tp + 200, 'cloud_02').setOrigin(0).setScale(1.1);
+    this.add.image(760, tp + 160, 'cloud_04').setOrigin(0).setScale(1);
+    // Sobra de altura: espalha um pouco entre a cena e a prateleira.
+    const extra = Math.max(0, HH - tp - 2050);
+    const gy = tp + 620 + extra * 0.25;
+    for (let i = 0; i < 20; i++) {
+      const col = i === 0 ? 5 : i === 19 ? 7 : 6;
+      this.add.image(i * 64, gy, 'tilemap', 27 + col).setOrigin(0);
+    }
+    this.add.rectangle(0, gy + 60, W, HH - gy - 60, 0x18304a).setOrigin(0);
+    const feet = gy + 40;
+    this.add.ellipse(300, feet, 420, 40, 0x10223a, 0.25);
+    this.add.image(300, feet, 'bld_yellow_house2').setOrigin(0.5, 178 / 192).setScale(2.3);
+    if (this.textures.exists('res_tree')) this.add.sprite(70, feet, 'res_tree').setOrigin(0.5, 0.9).setScale(1.3).play('res_tree');
+    this.board(W / 2, tp + 210, 760, 90, 'EMPÓRIO DA ORELHA-PRETA', 40);
+    this.add.ellipse(640, feet, 120, 22, 0x10223a, 0.25);
+    this.sheep = this.add.sprite(640, feet - 54, 'sheep_idle').setScale(1.5).play('sheep_idle').setFlipX(true);
+    this.add.ellipse(618, feet - 69, 18, 12, 0x1d1a2b).setAngle(-20);
+    this.add.rectangle(960, feet - 40, 14, 110, 0x6b4423).setStrokeStyle(3, 0x10223a);
+    this.board(960, feet - 170, 520, 150, '', 30);
+    this.signText = this.add.text(960, feet - 170, '', { fontFamily: BODY_FONT, fontSize: '32px', color: '#3a2412', align: 'center', wordWrap: { width: 480 } }).setOrigin(0.5);
+    // Ouro e voltar, no alto.
+    this.add.image(W - 330, tp + 80, 'gold').setScale(2.4);
+    this.coinText = this.add.text(W - 290, tp + 80, '', { fontFamily: FONT, fontSize: '60px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0, 0.5);
+    pillButton(this, 170, tp + 80, this.lastData.from === 'village' ? '◀ VILA' : '◀ MAPA', () => this.back(), 180).setScale(1.5);
+    // Prateleira em grade: 4 por linha.
+    this.cardScale = 1.62;
+    const cols = 4;
+    const cw = 180;
+    const step = cw * this.cardScale + 16;
+    const rowH = 170 * this.cardScale + 40;
+    const top = gy + 120 + (170 * this.cardScale) / 2;
+    UPGRADES.forEach((_, i) => {
+      const r = Math.floor(i / cols);
+      const inRow = Math.min(cols, UPGRADES.length - r * cols);
+      const c = i % cols;
+      const x = W / 2 + (c - (inRow - 1) / 2) * step;
+      this.card(i, x, top + r * rowH, cw);
+    });
+    const rows = Math.ceil(UPGRADES.length / cols);
+    const py = top + (rows - 1) * rowH + 170 * this.cardScale / 2 + 60 + extra * 0.35;
+    const pw = W - 80;
+    this.add.rectangle(W / 2, py + 170, pw, 340, 0x10223a, 0.92).setStrokeStyle(4, 0xfff7dc, 0.8);
+    this.nameText = this.add.text(W / 2 - pw / 2 + 36, py + 30, '', { fontFamily: FONT, fontSize: '46px', color: '#ffe066' });
+    this.howText = this.add.text(W / 2 - pw / 2 + 36, py + 92, '', { fontFamily: BODY_FONT, fontSize: '34px', color: '#fff7dc', wordWrap: { width: pw - 72 }, lineSpacing: 4 });
+    pillButton(this, W / 2, py + 280, 'COMPRAR', () => this.buy(), 190, 0xffe066).setScale(1.7);
+    this.finishCreate();
+  }
+
+  /** Teclado, controle e o primeiro estado (comum aos dois layouts). */
+  private finishCreate(): void {
     const kb = this.input.keyboard!;
     for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.select(this.sel - 1));
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.select(this.sel + 1));
@@ -126,7 +202,7 @@ export class ShopScene extends Phaser.Scene {
       const own = hasUpgrade(u.id);
       c.frame.setStrokeStyle(k === this.sel ? 8 : 5, k === this.sel ? 0xffb000 : 0x10223a).setFillStyle(own ? 0xcfe8c0 : 0xf4e3bf);
       c.tag.setText(own ? 'COMPRADO' : `${u.price} ouro`).setColor(own ? '#2e7d32' : coins >= u.price ? '#8a5a00' : '#b03030');
-      c.box.setScale(k === this.sel ? 1.08 : 1).setDepth(k === this.sel ? 2 : 1);
+      c.box.setScale((k === this.sel ? 1.08 : 1) * this.cardScale).setDepth(k === this.sel ? 2 : 1);
     });
     const u = UPGRADES[this.sel];
     this.nameText.setText(u.name);

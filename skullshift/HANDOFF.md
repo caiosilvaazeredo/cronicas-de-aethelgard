@@ -211,3 +211,4 @@ originais (extraídas com PIL do PNG).
 - Estilo Tiny Swords: contorno de tinta grosso, três tons, brilho e detalhes. `makeProps` gera as texturas no carregamento (junto do vulcão do mapa).
 - Texturas: `prop_pond`, `prop_dock`, `prop_portal` + `prop_swirl` (redemoinho que gira num contêiner achatado), `prop_fence`/`prop_fencepost` (emendam a cada 64 px), `prop_sign`, `prop_anvil`, `prop_cave` e `prop_arch_blue` + `prop_swirl_blue` (passagens do mapa), `prop_lava`, `dn_floor` (lajotas que repetem), `dn_ring` + `dn_disc` (medalhão; o disco é cinza e a cena tinge com a cor da sala).
 - Funções para tamanhos livres: `drawPond`, `drawDock`, `drawArch`, `drawHills`, `drawMountains`.
+- **Empório em pé** (`ShopScene.createPortrait`): cena maior no alto, cartões em grade de 4 colunas (escala 1,62, ícone e prateleira mais altos) e painel largo com COMPRAR grande. Deitado continua igual.

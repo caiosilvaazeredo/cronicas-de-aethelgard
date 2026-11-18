@@ -1,7 +1,8 @@
 import { CHARS } from '../game/characters';
-import { drawDock, drawHills, drawPlankWall, drawPond } from '../ui/props';
+import { drawDock, drawHills, drawMountains, drawPlankWall, drawPond } from '../ui/props';
+import { TouchPad } from '../game/touch';
 import Phaser from 'phaser';
-import { BODY_FONT, FONT, VIEW, W } from '../config';
+import { BODY_FONT, FONT, PORTRAIT, VIEW, W, portraitPanelTop } from '../config';
 import { addCoins, addStat, addXp, getLevel, getStat } from '../game/progress';
 import { sfx } from '../game/settings';
 import { pillButton } from '../ui/devices';
@@ -38,30 +39,95 @@ export class MinigameScene extends Phaser.Scene {
     this.kind = data.kind ?? 'fish';
     this.score = 0;
     this.done = false;
+    this.uiCam = undefined;
+    this.uiMode = true;
+  }
+
+  /**
+   * Em pé, pesca e ovelhas usam uma câmera com zoom só para o jogo (como a vila e as fases) e
+   * outra para a interface. Cada objeto novo vai para uma das duas conforme o modo atual.
+   */
+  private uiCam?: Phaser.Cameras.Scene2D.Camera;
+  private uiMode = true;
+  private route = (go: Phaser.GameObjects.GameObject): void => {
+    if (!this.uiCam) return;
+    if (this.uiMode) this.cameras.main.ignore(go);
+    else this.uiCam.ignore(go);
+  };
+
+  private ui<T>(fn: () => T): T {
+    const m = this.uiMode;
+    this.uiMode = true;
+    try {
+      return fn();
+    } finally {
+      this.uiMode = m;
+    }
+  }
+
+  private world<T>(fn: () => T): T {
+    const m = this.uiMode;
+    this.uiMode = false;
+    try {
+      return fn();
+    } finally {
+      this.uiMode = m;
+    }
+  }
+
+  /** Topo da área do jogo em pé (abaixo do título e das instruções). */
+  private get playTop(): number {
+    return 470 + PORTRAIT.topPad;
   }
 
   create(): void {
     this.HH = this.scale.height;
-    this.add.image(0, 0, 'sky').setOrigin(0).setDisplaySize(W, this.HH);
     const P = VIEW.portrait;
+    this.events.on(Phaser.Scenes.Events.ADDED_TO_SCENE, this.route);
+    this.events.once('shutdown', () => this.events.off(Phaser.Scenes.Events.ADDED_TO_SCENE, this.route));
+    const camMode = P && this.kind !== 'targets';
+    if (camMode) this.uiCam = this.cameras.add(0, 0, W, this.HH);
+    this.world(() => this.add.image(0, 0, 'sky').setOrigin(0).setScrollFactor(0).setDisplaySize(W, this.HH));
+    const tp = P ? PORTRAIT.topPad : 0;
+    if (camMode) this.add.rectangle(0, 0, W, this.playTop, INK).setOrigin(0);
     const titles: Record<Kind, string> = { fish: 'PESCARIA NO LAGO', targets: 'TIRO AO ALVO', sheep: 'PEGA-OVELHA' };
-    this.add.text(W / 2, P ? 230 : 40, titles[this.kind], { fontFamily: FONT, fontSize: P ? '84px' : '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setDepth(50);
+    this.add.text(W / 2, P ? 230 + tp : 40, titles[this.kind], { fontFamily: FONT, fontSize: P ? '84px' : '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setDepth(50);
     this.info = this.add
-      .text(W / 2, P ? 300 : 84, '', { fontFamily: FONT, fontSize: P ? '44px' : '20px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: W - 80 } })
+      .text(W / 2, P ? 300 + tp : 84, '', { fontFamily: FONT, fontSize: P ? '44px' : '20px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: W - 80 } })
       .setOrigin(0.5, P ? 0 : 0.5)
       .setDepth(50);
-    pillButton(this, P ? 180 : 100, P ? 110 : 36, '◀ VILA', () => this.scene.start('village', {}), 170).setScale(P ? 1.8 : 0.75).setDepth(50);
+    pillButton(this, P ? 180 : 100, P ? 110 + tp : 36, '◀ VILA', () => this.scene.start('village', {}), 170).setScale(P ? 1.8 : 0.75).setDepth(50);
     this.input.keyboard?.on('keydown-ESC', () => this.scene.start('village', {}));
-    if (this.kind === 'fish') this.fish();
-    else if (this.kind === 'targets') this.targets();
-    else this.sheep();
+    this.world(() => {
+      if (this.kind === 'fish') this.fish();
+      else if (this.kind === 'targets') this.targets();
+      else this.sheep();
+    });
   }
 
   // ---------- pesca ----------
 
   private fish(): void {
     const HH = this.HH;
-    const gy = HH * 0.55;
+    const P = VIEW.portrait;
+    // Deitado: o desenho de sempre. Em pé: câmera com zoom e um lago mais fundo, perto da caveira.
+    let L = { gy: HH * 0.55, vw: W, dockX: 80, dockW: 330, legs: [40, 160, 280], heroX: 330, rA: [360, -70], rB: [470, -150], bx: 760, pond: [W / 2 + 110, HH * 0.55 + 130, W * 0.9, 250] };
+    if (P) {
+      const top = this.playTop;
+      const h = HH - top - 30;
+      const gy = 400;
+      const bottom = gy + 450;
+      const zoom = Math.min(h / bottom, W / 460);
+      const vw = W / zoom;
+      const visH = h / zoom;
+      const cam = this.cameras.main.setViewport(0, top, W, h).setZoom(zoom);
+      cam.setBounds(0, bottom - visH, W, visH);
+      cam.centerOn(vw / 2, bottom - visH / 2);
+      L = { gy, vw, dockX: 10, dockW: 230, legs: [30, 120, 200], heroX: 200, rA: [230, -70], rB: [340, -150], bx: vw * 0.72, pond: [vw * 0.6, gy + 200, vw * 1.05, 360] };
+    }
+    const { gy } = L;
+    const [pcx, pcy, pw, ph] = L.pond;
+    drawMountains(this.add.graphics(), -100, W + 100, gy - 40, 17);
     const g = this.add.graphics();
     // Morros com árvores ao fundo, grama na margem e o lago grande.
     const hx = (o: number) => Array.from({ length: 6 }, (_, i) => i * 260 + o);
@@ -81,30 +147,34 @@ export class MinigameScene extends Phaser.Scene {
       meadow.fillStyle(0x4f9a3c, 1).fillTriangle(tx - 4, ty, tx, ty - 10, tx + 4, ty).fillTriangle(tx + 2, ty, tx + 7, ty - 8, tx + 9, ty);
     }
     const pond = this.add.graphics();
-    drawPond(pond, W / 2 + 110, gy + 130, W * 0.9, 250, 3);
+    drawPond(pond, pcx, pcy, pw, ph, 3);
     for (let i = 0; i < 4; i++) this.add.sprite(60 + i * 360, gy - 40, 'res_tree').setOrigin(0.5, 0.9).setScale(0.6).setDepth(-1).play({ key: 'res_tree', startFrame: i * 2 });
     // Brilhos que piscam na água.
     const glint = this.add.graphics();
-    glint.fillStyle(0xffffff, 0.8).fillRoundedRect(W / 2 + 200, gy + 150, 46, 4, 2).fillRoundedRect(W / 2 - 60, gy + 190, 30, 3, 1.5).fillRoundedRect(W / 2 + 420, gy + 110, 26, 3, 1.5);
+    glint.fillStyle(0xffffff, 0.8).fillRoundedRect(pcx + 90, pcy + 20, 46, 4, 2).fillRoundedRect(pcx - 170, pcy + 60, 30, 3, 1.5).fillRoundedRect(pcx + pw * 0.27, pcy - 20, 26, 3, 1.5);
     this.tweens.add({ targets: glint, alpha: 0.15, duration: 1100, yoyo: true, repeat: -1 });
     // Píer e a caveira com a vara.
-    drawDock(this.add.graphics(), 80, gy - 12, 330, [120, 240, 360].map((x) => x - 80), 80);
-    const hero = this.add.sprite(330, gy - 12, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(VIEW.portrait ? 1.6 : 0.9).play('skull_idle');
+    drawDock(this.add.graphics(), L.dockX, gy - 12, L.dockW, L.legs, 80);
+    const hero = this.add.sprite(L.heroX, gy - 12, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(0.9).play('skull_idle');
     const rod = this.add.graphics();
     const bob = this.add.container(0, 0);
-    const bx = 760;
-    const by = gy + 90;
+    const bx = L.bx;
+    const by = P ? pcy - 30 : gy + 90;
+    const [ax, ay] = [L.rA[0], gy + L.rA[1]];
+    const [tx2, ty2] = [L.rB[0], gy + L.rB[1]];
     const drawLine = (y: number, out: boolean) => {
       rod.clear();
-      rod.lineStyle(9, INK, 1).lineBetween(360, gy - 70, 470, gy - 150);
-      rod.lineStyle(5, 0x8a5a35, 1).lineBetween(360, gy - 70, 470, gy - 150);
-      rod.lineStyle(2, 0xc89058, 1).lineBetween(362, gy - 74, 466, gy - 150);
-      rod.fillStyle(INK, 1).fillCircle(372, gy - 80, 8).fillStyle(0xb4aec0, 1).fillCircle(372, gy - 80, 5);
+      rod.lineStyle(9, INK, 1).lineBetween(ax, ay, tx2, ty2);
+      rod.lineStyle(5, 0x8a5a35, 1).lineBetween(ax, ay, tx2, ty2);
+      rod.lineStyle(2, 0xc89058, 1).lineBetween(ax + 2, ay - 4, tx2 - 4, ty2);
+      rod.fillStyle(INK, 1).fillCircle(ax + 12, ay - 10, 8).fillStyle(0xb4aec0, 1).fillCircle(ax + 12, ay - 10, 5);
       bob.removeAll(true);
       if (!out) return;
-      rod.lineStyle(2, 0xfff7dc, 0.9).lineBetween(470, gy - 150, bx, y - 14);
-      bob.add(this.add.image(bx, y, 'prop_bob').setOrigin(0.5, 0.6));
-      bob.add(this.add.ellipse(bx, y + 8, 40, 8).setStrokeStyle(2, 0xbfe9ff, 0.7));
+      rod.lineStyle(2, 0xfff7dc, 0.9).lineBetween(tx2, ty2, bx, y - 14);
+      this.world(() => {
+        bob.add(this.add.image(bx, y, 'prop_bob').setOrigin(0.5, 0.6));
+        bob.add(this.add.ellipse(bx, y + 8, 40, 8).setStrokeStyle(2, 0xbfe9ff, 0.7));
+      });
     };
     drawLine(0, false);
     const bang = this.add.text(bx, by - 70, '!', { fontFamily: FONT, fontSize: '64px', color: '#ffe066', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setVisible(false);
@@ -164,7 +234,7 @@ export class MinigameScene extends Phaser.Scene {
         caught.push(current.name);
         this.score += current.gold;
         sfx('pick');
-        const fishImg = this.add.text(bx, by, current.name === 'Bota velha' ? 'Uma bota velha...' : `${current.name}! (${current.gold} ouro)`, { fontFamily: FONT, fontSize: '28px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5);
+        const fishImg = this.world(() => this.add.text(bx, by, current.name === 'Bota velha' ? 'Uma bota velha...' : `${current.name}! (${current.gold} ouro)`, { fontFamily: FONT, fontSize: '28px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5));
         this.tweens.add({ targets: fishImg, y: by - 140, alpha: 0, duration: 1400, onComplete: () => fishImg.destroy() });
         void biteAt;
         reel();
@@ -201,10 +271,13 @@ export class MinigameScene extends Phaser.Scene {
     let left = 30;
     const cross = this.add.graphics().setDepth(20);
     const cx = { x: W / 2, y: (top + bottom) / 2 };
+    // Mira desenhada uma vez em (0,0); depois só muda de lugar (maior em pé).
+    cross.lineStyle(8, INK, 1).strokeCircle(0, 0, 18).lineBetween(-28, 0, -10, 0).lineBetween(10, 0, 28, 0).lineBetween(0, -28, 0, -10).lineBetween(0, 10, 0, 28);
+    cross.lineStyle(4, 0xfff7dc, 1).strokeCircle(0, 0, 18).lineBetween(-26, 0, -11, 0).lineBetween(11, 0, 26, 0).lineBetween(0, -26, 0, -11).lineBetween(0, 11, 0, 26);
+    cross.fillStyle(0xe8463a, 1).fillCircle(0, 0, 3);
+    cross.setScale(K);
     const drawCross = () => {
-      cross.clear().lineStyle(8, INK, 1).strokeCircle(cx.x, cx.y, 18).lineBetween(cx.x - 28, cx.y, cx.x - 10, cx.y).lineBetween(cx.x + 10, cx.y, cx.x + 28, cx.y).lineBetween(cx.x, cx.y - 28, cx.x, cx.y - 10).lineBetween(cx.x, cx.y + 10, cx.x, cx.y + 28);
-      cross.lineStyle(4, 0xfff7dc, 1).strokeCircle(cx.x, cx.y, 18).lineBetween(cx.x - 26, cx.y, cx.x - 11, cx.y).lineBetween(cx.x + 11, cx.y, cx.x + 26, cx.y).lineBetween(cx.x, cx.y - 26, cx.x, cx.y - 11).lineBetween(cx.x, cx.y + 11, cx.x, cx.y + 26);
-      cross.fillStyle(0xe8463a, 1).fillCircle(cx.x, cx.y, 3);
+      cross.setPosition(cx.x, cx.y);
     };
     drawCross();
     const live: Array<{ c: Phaser.GameObjects.Container; gold: boolean; r: number }> = [];
@@ -281,7 +354,25 @@ export class MinigameScene extends Phaser.Scene {
 
   private sheep(): void {
     const HH = this.HH;
-    const gy = HH * (VIEW.portrait ? 0.62 : 0.8);
+    const P = VIEW.portrait;
+    const gy = P ? 576 : HH * 0.8;
+    const cam = this.cameras.main;
+    let pad: TouchPad | undefined;
+    if (P) {
+      // Em pé: a câmera segue a caveira (como nas fases) e os botões ficam no painel de baixo.
+      const top = this.playTop;
+      const panel = portraitPanelTop();
+      const h = panel - top;
+      const zoom = Math.min(h / 620, W / 560);
+      const visH = h / zoom;
+      cam.setViewport(0, top, W, h).setZoom(zoom).setBounds(0, 700 - visH, W, visH);
+      this.ui(() => {
+        this.add.rectangle(0, panel, W, VIEW.h - panel, 0x16304d).setOrigin(0);
+        this.add.rectangle(0, panel, W, 8, 0x0b1626).setOrigin(0);
+        pad = new TouchPad(this, 'full', 0xfff7dc, undefined, false, false, false, 'walk-jump');
+      });
+    } else if (this.sys.game.device.input.touch) pad = this.ui(() => new TouchPad(this, 'full', 0xfff7dc, undefined, false, false, false, 'walk-jump'));
+    drawMountains(this.add.graphics(), -100, W + 100, gy - 20, 23);
     // Morros e a cerca do pasto ao fundo.
     const bg = this.add.graphics();
     const hx = (o: number) => Array.from({ length: 6 }, (_, i) => i * 260 + o);
@@ -293,9 +384,10 @@ export class MinigameScene extends Phaser.Scene {
       this.add.image(i * 64, gy - 6, 'tilemap', 27 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
       this.add.image(i * 64, gy + 58, 'tilemap', 45 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
     }
-    // Em pé tudo fica maior (a tela é bem mais alta que larga).
-    const K = VIEW.portrait ? 2.2 : 1;
+    // Em pé a câmera já dá o zoom: tudo no tamanho normal.
+    const K = 1;
     const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(K).play('skull_idle').setDepth(5);
+    if (P) cam.startFollow(hero, true, 0.15, 0.15);
     let vy = 0;
     let ground = true;
     let left = 40;
@@ -318,9 +410,11 @@ export class MinigameScene extends Phaser.Scene {
     kb.on('keydown-W', jump);
     kb.on('keydown-SPACE', jump);
     this.input.on('pointerdown', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
-      if (over.length) return;
-      if (p.y < hero.y - 140) jump();
-      target = p.x;
+      if (over.length || this.done || pad?.hits(p.x, p.y)) return;
+      if (P && (p.y < cam.y || p.y > cam.y + cam.height)) return;
+      const wp = cam.getWorldPoint(p.x, p.y);
+      if (wp.y < hero.y - 140) jump();
+      target = wp.x;
     });
     const clock = this.time.addEvent({
       delay: 1000,
@@ -339,6 +433,12 @@ export class MinigameScene extends Phaser.Scene {
       let move = 0;
       if (keys.LEFT.isDown || keys.A.isDown) move -= 1;
       if (keys.RIGHT.isDown || keys.D.isDown) move += 1;
+      if (pad) {
+        const t = pad.read();
+        if (t.left) move = -1;
+        if (t.right) move = 1;
+        if (t.jumpPressed) jump();
+      }
       if (move) target = null;
       else if (target !== null) {
         const d = target - hero.x;
@@ -380,7 +480,7 @@ export class MinigameScene extends Phaser.Scene {
         if (Math.abs(f.s.x - hero.x) < 40 * K && Math.abs(f.s.y - hero.y) < 50 * K && f.s.visible) {
           this.score++;
           sfx('pick');
-          const t = this.add.text(f.s.x, f.s.y - 80, '+1', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
+          const t = this.world(() => this.add.text(f.s.x, f.s.y - 80, '+1', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5));
           this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 600, onComplete: () => t.destroy() });
           f.s.setVisible(false);
           this.time.delayedCall(900, () => {
@@ -402,13 +502,17 @@ export class MinigameScene extends Phaser.Scene {
   // ---------- fim ----------
 
   private flash(text: string, color: string): void {
-    const t = this.add.text(W / 2, this.HH * 0.4, text, { fontFamily: FONT, fontSize: '32px', color, stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5).setDepth(40);
+    const t = this.ui(() => this.add.text(W / 2, this.HH * 0.4, text, { fontFamily: FONT, fontSize: '32px', color, stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5).setDepth(40));
     this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 1200, onComplete: () => t.destroy() });
   }
 
   /** Recompensa: ouro e um pouco de XP, cada vez menos se jogar muitas vezes no mesmo dia. */
   private finish(points: number, summary: string): void {
     if (this.done) return;
+    this.ui(() => this.finishPanel(points, summary));
+  }
+
+  private finishPanel(points: number, summary: string): void {
     this.done = true;
     const key = todayKey(this.kind);
     const plays = getStat(key);
@@ -425,19 +529,19 @@ export class MinigameScene extends Phaser.Scene {
     const P = VIEW.portrait;
     const HH = this.HH;
     const pw = P ? W - 120 : 640;
-    const ph = P ? 520 : 330;
+    const ph = P ? 680 : 330;
     const g = this.add.graphics().setDepth(60);
     g.fillStyle(0x000000, 0.5).fillRect(0, 0, W, HH);
     g.fillStyle(INK, 1).fillRoundedRect(W / 2 - pw / 2 - 6, HH / 2 - ph / 2 - 6, pw + 12, ph + 12, 22);
     g.fillStyle(0xfff7dc, 1).fillRoundedRect(W / 2 - pw / 2, HH / 2 - ph / 2, pw, ph, 18);
     const note = k < 1 ? `\n(Recompensa reduzida: você já jogou ${plays}x hoje.)` : '';
-    this.add.text(W / 2, HH / 2 - ph / 2 + 50, 'FIM DE JOGO!', { fontFamily: FONT, fontSize: P ? '50px' : '32px', color: '#7a3ad0' }).setOrigin(0.5).setDepth(61);
+    this.add.text(W / 2, HH / 2 - ph / 2 + 50, 'FIM DE JOGO!', { fontFamily: FONT, fontSize: P ? '76px' : '32px', color: '#7a3ad0' }).setOrigin(0.5).setDepth(61);
     this.add
-      .text(W / 2, HH / 2 - ph / 2 + (P ? 120 : 90), `${summary}\nOuro: +${gold}   ·   XP: +${xp}${note}`, { fontFamily: BODY_FONT, fontSize: P ? '30px' : '20px', color: '#10223a', align: 'center', wordWrap: { width: pw - 60 } })
+      .text(W / 2, HH / 2 - ph / 2 + (P ? 150 : 90), `${summary}\nOuro: +${gold}   ·   XP: +${xp}${note}`, { fontFamily: BODY_FONT, fontSize: P ? '46px' : '20px', color: '#10223a', align: 'center', wordWrap: { width: pw - 60 } })
       .setOrigin(0.5, 0)
       .setDepth(61);
-    pillButton(this, W / 2 - (P ? 230 : 160), HH / 2 + ph / 2 - (P ? 80 : 54), 'DE NOVO', () => this.scene.restart({ kind: this.kind }), 240, 0xbfe9ff).setScale(P ? 1.3 : 1).setDepth(62);
-    pillButton(this, W / 2 + (P ? 230 : 160), HH / 2 + ph / 2 - (P ? 80 : 54), 'VILA', () => this.scene.start('village', {}), 240, 0xffe066).setScale(P ? 1.3 : 1).setDepth(62);
+    pillButton(this, W / 2 - (P ? 260 : 160), HH / 2 + ph / 2 - (P ? 100 : 54), 'DE NOVO', () => this.scene.restart({ kind: this.kind }), 240, 0xbfe9ff).setScale(P ? 1.8 : 1).setDepth(62);
+    pillButton(this, W / 2 + (P ? 260 : 160), HH / 2 + ph / 2 - (P ? 100 : 54), 'VILA', () => this.scene.start('village', {}), 240, 0xffe066).setScale(P ? 1.8 : 1).setDepth(62);
     this.input.keyboard?.once('keydown-ENTER', () => this.scene.start('village', {}));
     if (ups > 0) levelUpBanner(this, getLevel(), 400);
   }

@@ -1,3 +1,4 @@
+import { TouchPad } from '../game/touch';
 import { CHARS, type CharId } from '../game/characters';
 import { drawHills, drawMountains } from '../ui/props';
 import { SMITH, smithCost } from '../game/dungeon';
@@ -110,8 +111,10 @@ export class VillageScene extends Phaser.Scene {
       // Em pé: a vila ocupa todo o espaço entre o cabeçalho e os botões; mostra ~720 px de rua
       // de largura e, se sobrar altura, mais céu por cima.
       const HH = this.scale.height;
-      const top = 300 + PORTRAIT.topPad;
-      const h = HH - top - 480;
+      // Mesma divisão das fases: cabeçalho, faixa do mundo e painel de botões embaixo.
+      const top = PORTRAIT.hudH;
+      const h = PORTRAIT.worldH;
+      void HH;
       const zoom = Phaser.Math.Clamp(W / 560, 1, h / (VH - 330));
       cam.setViewport(0, top, W, h).setZoom(zoom);
       this.skyTop = Math.min(0, VH - h / zoom);
@@ -137,7 +140,8 @@ export class VillageScene extends Phaser.Scene {
     // Toque/clique: anda até o ponto (e usa o lugar, se tocou num).
     this.input.on('pointerdown', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
       if (this.dialog || over.length) return;
-      if (VIEW.portrait && p.y < cam.y) return;
+      if (VIEW.portrait && (p.y < cam.y || p.y > cam.y + cam.height)) return;
+      if (this.pad?.hits(p.x, p.y)) return;
       const wp = cam.getWorldPoint(p.x, p.y);
       const spot = this.spots.find((s) => Math.abs(s.x - wp.x) < 90);
       this.targetX = spot ? spot.x : wp.x;
@@ -310,8 +314,9 @@ export class VillageScene extends Phaser.Scene {
     const HH = this.scale.height;
     const k = P ? 2 : 1;
     const top = P ? 80 + PORTRAIT.topPad : 36;
-    if (P) this.add.rectangle(0, 0, W, 300 + PORTRAIT.topPad, INK).setOrigin(0);
-    this.add.text(W / 2, P ? 245 + PORTRAIT.topPad : 34, 'A VILA', { fontFamily: FONT, fontSize: P ? '56px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
+    if (P) this.add.rectangle(0, 0, W, PORTRAIT.hudH, INK).setOrigin(0);
+    const title = this.add.text(P ? 432 : W / 2, P ? 80 + PORTRAIT.topPad : 34, 'A VILA', { fontFamily: FONT, fontSize: P ? '50px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
+    if (P && title.width > 260) title.setScale(260 / title.width);
     pillButton(this, P ? 150 : 100, top, '◀ MUNDO', () => this.toWorld(), 180).setScale(0.75 * k);
     // Nível e barra de XP, e o ouro.
     const lp = levelProgress();
@@ -325,36 +330,27 @@ export class VillageScene extends Phaser.Scene {
       .text(bx + 100 * k, top - 16 * k, lp.need ? trf('{0}/{1} XP', lp.into, lp.need) : tr('NÍVEL MÁXIMO'), { fontFamily: BODY_FONT, fontSize: `${Math.round(13 * k)}px`, color: '#d8b8ff' })
       .setOrigin(0, 0.5));
     this.goldText = this.add.text(bx, top + 40 * k, `Ouro: ${getCoins()}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5);
-    if (P) this.touchPad(HH);
-    else this.add
+    const touch = P || this.sys.game.device.input.touch;
+    if (touch) this.touchPad();
+    if (!touch) this.add
       .text(W / 2, VH - 20, '◀ ▶ andar · ↑/W pular · E usar/conversar · toque para ir até lá', { fontFamily: BODY_FONT, fontSize: P ? '26px' : '15px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 4 })
       .setOrigin(0.5, 1);
     this.uiObjs = this.children.list.slice(first);
     this.fixUI(this.uiObjs);
   }
 
-  /** Em pé: botões grandes embaixo (segurar ◀ ▶ anda; PULAR; USAR). */
-  private touchMove = 0;
+  /** Controle de toque igual ao das fases (◀ ▶ PULA USAR), no painel de baixo quando em pé. */
+  private pad?: TouchPad;
 
-  private touchPad(HH: number): void {
-    const y = HH - 330;
-    const hold = (x: number, label: string, dir: number) => {
-      const g = this.add.graphics();
-      g.fillStyle(INK, 1).fillRoundedRect(x - 130, y - 110, 260, 220, 40);
-      g.fillStyle(0xbfe9ff, 1).fillRoundedRect(x - 122, y - 102, 244, 204, 34);
-      this.add.text(x, y, label, { fontFamily: FONT, fontSize: '96px', color: '#10223a' }).setOrigin(0.5);
-      this.add
-        .zone(x, y, 260, 220)
-        .setInteractive()
-        .on('pointerdown', () => (this.touchMove = dir))
-        .on('pointerup', () => this.touchMove === dir && (this.touchMove = 0))
-        .on('pointerout', () => this.touchMove === dir && (this.touchMove = 0));
-    };
-    hold(180, '◀', -1);
-    hold(470, '▶', 1);
-    pillButton(this, W - 300, y - 58, 'PULAR', () => this.jump(), 300, 0xffe066).setScale(1.4);
-    pillButton(this, W - 300, y + 62, 'USAR', () => this.action(), 300, 0xc8a8ff).setScale(1.4);
-    this.add.text(W / 2, HH - 120, 'Toque no cenário para andar até um lugar', { fontFamily: BODY_FONT, fontSize: '30px', color: '#bfd0e0' }).setOrigin(0.5);
+  private touchPad(): void {
+    const P = VIEW.portrait;
+    if (P) {
+      const top = PORTRAIT.hudH + PORTRAIT.worldH;
+      this.add.rectangle(0, top, W, VIEW.h - top, 0x16304d).setOrigin(0);
+      this.add.rectangle(0, top, W, 8, 0x0b1626).setOrigin(0);
+      this.add.text(W / 2, VIEW.h - 70 - PORTRAIT.topPad * 0.3, 'Toque no cenário para andar até um lugar', { fontFamily: BODY_FONT, fontSize: '28px', color: '#9fb4c8' }).setOrigin(0.5);
+    }
+    this.pad = new TouchPad(this, 'full', 0xfff7dc, undefined, false, false, false, 'walk');
   }
 
   /** Objetos de interface: presos na tela (deitado) ou só na câmera da interface (em pé). */
@@ -532,7 +528,13 @@ export class VillageScene extends Phaser.Scene {
     if (!this.dialog) {
       if (k.LEFT.isDown || k.A.isDown) move -= 1;
       if (k.RIGHT.isDown || k.D.isDown) move += 1;
-      if (this.touchMove) move = this.touchMove;
+      if (this.pad) {
+        const t = this.pad.read();
+        if (t.left) move = -1;
+        if (t.right) move = 1;
+        if (t.jumpPressed) this.jump();
+        if (t.pickPressed) this.action();
+      }
       const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
       if (pad) {
         const ax = pad.axes[0]?.getValue() ?? 0;

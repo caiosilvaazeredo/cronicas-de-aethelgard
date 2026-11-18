@@ -94,6 +94,20 @@ const PORTRAIT_HALF: Spec[] = [
   ['pick', 0.4, 0.18, 0.05, ''],
 ];
 
+/** Vila e minijogos: só andar, pular e usar (mesmo visual das fases). */
+const WALK_LANDSCAPE: Spec[] = [
+  ['left', 80, 600, 56, ''],
+  ['right', 240, 600, 56, ''],
+  ['pick', 1060, 640, 50, ''],
+  ['jump', 1180, 560, 58, ''],
+];
+const WALK_PORTRAIT: Spec[] = [
+  ['left', 0.13, 0.45, 0.1, ''],
+  ['right', 0.37, 0.45, 0.1, ''],
+  ['pick', 0.64, 0.62, 0.085, ''],
+  ['jump', 0.85, 0.36, 0.1, ''],
+];
+
 /**
  * Controle virtual na tela (multitoque), fixo na tela.
  * side: 'full' (1 jogador) ou 'left'/'right' (versus: uma metade para cada jogador).
@@ -118,9 +132,18 @@ export class TouchPad {
     flight = false,
     /** Voo com o Príncipe dos Morcegos: botão extra do grito sônico. */
     special = false,
+    /** 'walk': só ◀ ▶ PULA e USAR (vila e minijogos); sem 'pick' fica só ◀ ▶ PULA. */
+    preset?: 'walk' | 'walk-jump',
   ) {
     const specs: Array<[ButtonId, number, number, number]> = [];
-    if (flight) {
+    if (preset) {
+      const keep = (id: ButtonId) => preset === 'walk' || id !== 'pick';
+      if (VIEW.portrait) {
+        const top = area?.top ?? portraitPanelTop();
+        const h = area?.h ?? VIEW.h - top;
+        for (const [id, u, v, r] of WALK_PORTRAIT) if (keep(id)) specs.push([id, u * W, top + v * h, r * W]);
+      } else for (const [id, x, y, r] of WALK_LANDSCAPE) if (keep(id)) specs.push([id, x, y, r]);
+    } else if (flight) {
       // Voo: só o manche e o tiro (1 jogador).
       if (VIEW.portrait) {
         const top = area?.top ?? portraitPanelTop();
@@ -161,7 +184,7 @@ export class TouchPad {
     const size = [0.82, 1, 1.15][st.touchSize] ?? 1;
     for (const [id, x, y, r0] of specs) {
       const r = r0 * size;
-      const text = flight && id === 'attack' ? 'TIRO' : flight && id === 'pick' ? 'GRITO' : LABELS[id];
+      const text = flight && id === 'attack' ? 'TIRO' : flight && id === 'pick' ? 'GRITO' : preset && id === 'pick' ? 'USAR' : LABELS[id];
       const bg = scene.add
         .circle(x, y, r, 0x10223a, 0.42 * op)
         .setStrokeStyle(Math.max(4, r * 0.07), tint, 0.8 * op)
@@ -201,6 +224,16 @@ export class TouchPad {
       b.label.setVisible(v);
     }
     this.knob?.setVisible(v);
+  }
+
+  /** Algum botão sob este ponto da tela? (para o toque não virar "andar até lá"). */
+  hits(x: number, y: number): boolean {
+    return this.visible && this.buttons.some((b) => Phaser.Math.Distance.Between(x, y, b.x, b.y) <= b.r * 1.25);
+  }
+
+  /** Objetos desenhados (para câmeras separadas de interface). */
+  objects(): Phaser.GameObjects.GameObject[] {
+    return [...this.buttons.flatMap((b) => [b.bg, b.label]), ...(this.knob ? [this.knob] : [])];
   }
 
   /** Lê todos os dedos na tela e devolve o estado dos botões. */

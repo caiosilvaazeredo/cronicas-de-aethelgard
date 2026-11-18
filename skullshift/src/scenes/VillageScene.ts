@@ -1,3 +1,5 @@
+import { prepareVillageGame, takeVillageResult, type VillageGame } from '../game/villagegames';
+import { soloDevices } from '../game/controls';
 import { TouchPad } from '../game/touch';
 import { CHARS, type CharId } from '../game/characters';
 import { drawHills, drawMountains } from '../ui/props';
@@ -88,7 +90,10 @@ export class VillageScene extends Phaser.Scene {
     super('village');
   }
 
-  init(): void {
+  private from?: string;
+
+  init(data: { from?: string } = {}): void {
+    this.from = data.from;
     this.vy = 0;
     this.onGround = true;
     this.targetX = null;
@@ -121,7 +126,8 @@ export class VillageScene extends Phaser.Scene {
     }
     cam.setBounds(0, this.skyTop, VW, VH - this.skyTop);
     this.drawWorld();
-    this.hero = this.add.sprite(420, GY, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(0.75).setDepth(10).play('skull_idle');
+    const back: Record<string, number> = { arena: 1060, race: 2340, sheep: 2900 };
+    this.hero = this.add.sprite(back[this.from ?? ''] ?? 420, GY, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(0.75).setDepth(10).play('skull_idle');
     cam.startFollow(this.hero, true, 0.12, 0.12);
     this.prompt = this.add
       .text(0, 0, '', { fontFamily: FONT, fontSize: '18px', color: '#10223a', backgroundColor: '#fff7dc', padding: { x: 10, y: 5 } })
@@ -129,6 +135,9 @@ export class VillageScene extends Phaser.Scene {
       .setDepth(30)
       .setVisible(false);
     this.createUI();
+    // Voltando de um jogo da vila: mostra o prêmio.
+    const res = takeVillageResult();
+    if (res) this.time.delayedCall(250, () => this.openDialog(res.title, res.text));
 
     const kb = this.input.keyboard!;
     this.keys = kb.addKeys('LEFT,RIGHT,A,D,UP,W,SPACE,E,ENTER,F,ESC') as Record<string, Phaser.Input.Keyboard.Key>;
@@ -175,9 +184,10 @@ export class VillageScene extends Phaser.Scene {
     const n = Math.ceil(VW / 64);
     for (let i = 0; i < n; i++) {
       const col = i === 0 ? 5 : i === n - 1 ? 7 : 6;
-      this.add.image(i * 64, GY - 6, 'tilemap', 27 + col).setOrigin(0).setDepth(2);
-      this.add.image(i * 64, GY + 58, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
-      this.add.image(i * 64, GY + 122, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
+      // A grama começa acima da linha dos pés: casas e gente ficam EM CIMA do gramado
+      // (não pousadas na borda de cima, contra os morros).
+      this.add.image(i * 64, GY - 30, 'tilemap', 27 + col).setOrigin(0).setDepth(2);
+      for (let r = 0; r < 3; r++) this.add.image(i * 64, GY + 34 + r * 64, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
     }
     const tree = (x: number, s = 0.8) => this.add.sprite(x, GY, 'res_tree').setOrigin(0.5, 0.9).setScale(s).setDepth(3).play({ key: 'res_tree', startFrame: (x >> 4) % 8 });
     for (const x of [60, 820, 1180, 1600, 2050, 2480, 2950, 3420, 3940]) tree(x, Phaser.Math.FloatBetween(0.7, 0.95));
@@ -203,15 +213,15 @@ export class VillageScene extends Phaser.Scene {
     this.label(1000, 'TREINO');
     this.addSpot(1060, 'MESTRE RUFO', () => this.trainer());
 
-    // 4) Lago de pesca.
-    this.add.image(1400, GY + 26, 'prop_pond').setOrigin(0.5, 80 / 130).setDepth(2.6);
-    this.add.image(1290, GY - 4, 'prop_dock').setOrigin(0, 0.12).setDepth(2.65);
+    // 4) Lago (só enfeite: a pesca saiu, não fazia sentido no jogo).
+    // Lago achatado no gramado, atrás de quem passa pela rua.
+    this.add.image(1400, GY - 8, 'prop_pond').setOrigin(0.5, 80 / 130).setScale(1, 0.62).setDepth(2.6);
+    this.add.image(1292, GY - 18, 'prop_dock').setOrigin(0, 0.12).setScale(0.9, 0.7).setDepth(2.65);
     const shine = this.add.graphics().setDepth(2.7);
-    shine.fillStyle(0xffffff, 0.7).fillEllipse(1450, GY + 30, 40, 4).fillEllipse(1380, GY + 40, 26, 3);
+    shine.fillStyle(0xffffff, 0.7).fillEllipse(1450, GY - 4, 40, 3).fillEllipse(1380, GY + 4, 26, 3);
     this.tweens.add({ targets: shine, alpha: 0.2, duration: 1200, yoyo: true, repeat: -1 });
     this.npc(1310, 'villager', 0xa0c8ff, false);
     this.label(1400, 'LAGO');
-    this.addSpot(1360, 'PESCAR', () => this.scene.start('minigame', { kind: 'fish' }));
 
     // 5) Portal das dungeons, com o Xamã cuidando dele.
     this.portal(1840);
@@ -224,8 +234,8 @@ export class VillageScene extends Phaser.Scene {
     // 6) Barraca de alvos.
     stand(2290, 'bld_yellow_archery', 240 / 256, 0.75);
     this.npc(2380, 'goblin', undefined, true);
-    this.label(2290, 'ALVOS');
-    this.addSpot(2340, 'TIRO AO ALVO', () => this.scene.start('minigame', { kind: 'targets' }));
+    this.label(2290, 'CORRIDA');
+    this.addSpot(2340, 'CORRIDA DO GOBLIN', () => this.raceDesk());
 
     // 7) Curral das ovelhas.
     for (let x = 2626; x < 2626 + 64 * 0.8 * 5; x += 64 * 0.8) this.add.image(x, GY + 4, 'prop_fence').setOrigin(0, 1).setScale(0.8).setDepth(5);
@@ -432,7 +442,24 @@ export class VillageScene extends Phaser.Scene {
     this.openDialog(
       'Mestre Rufo',
       `Nível ${lp.level}. ${next}\nNas dungeons você entra com ${hearts} corações (+1 a cada 3 níveis). Abaixo do nível sugerido, os inimigos aguentam mais golpes; bem acima, você bate em dobro.\nXP vem das fases, das dungeons e até dos jogos da vila.`,
+      [
+        { label: 'LUTAR NA ARENA', act: () => this.playGame('arena') },
+        { label: 'SAIR', act: () => this.closeDialog() },
+      ],
     );
+  }
+
+  /** Barraca do Goblin: a corrida contra o relógio. */
+  private raceDesk(): void {
+    this.openDialog('Goblin da Barraca', 'Um percurso de buracos e plataformas. Chegue ao fim o mais rápido que puder: quanto menos tempo, mais ouro. Cair encerra a corrida.', [
+      { label: 'CORRER', act: () => this.playGame('race') },
+      { label: 'SAIR', act: () => this.closeDialog() },
+    ]);
+  }
+
+  /** Jogos da vila são fases de verdade (mesmo combate e mesmos pulos das áreas). */
+  private playGame(kind: VillageGame): void {
+    this.scene.start('loading', { next: 'game', data: { mode: 'story', devices: soloDevices(this), level: prepareVillageGame(kind) } });
   }
 
   private dungeonList(): void {

@@ -1,0 +1,22 @@
+2125	Arena di Mastro Rufo
+2126	Corsa del Goblin
+2127	Ripulisci le tre schermate! Ogni nemico vale oro.
+2128	Arriva alla fine il più in fretta possibile!
+2129	\nArena ripulita!
+2130	Nemici sconfitti: {0}{1}
+2131	Tempo: {0}s
+2132	Non sei arrivato alla fine.
+2133	GOBLIN DELLA BANCARELLA
+2134	Tocca la stanza successiva per scegliere
+2135	ARENA RIPULITA!
+2136	CE L'HAI FATTA!
+2137	TENTATIVO FINITO
+2138	+{0} oro · +{1} XP
+2139	CORSA
+2140	CORSA DEL GOBLIN
+2141	COMBATTI NELL'ARENA
+2142	Goblin della Bancarella
+2143	Un percorso di buche e piattaforme. Arriva alla fine il più in fretta possibile: meno tempo, più oro. Cadere chiude la corsa.
+2144	CORRI
+2145	Nemici sconfitti: {0}\nArena ripulita!
+2146	Nemici sconfitti: {0}

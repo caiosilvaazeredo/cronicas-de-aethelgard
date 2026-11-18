@@ -1,0 +1,22 @@
+2125	Arena do Mestre Rufo
+2126	Corrida do Goblin
+2127	Limpa os três ecrãs! Cada inimigo vale ouro.
+2128	Chega ao fim o mais depressa que conseguires!
+2129	\nArena limpa!
+2130	Inimigos derrotados: {0}{1}
+2131	Tempo: {0}s
+2132	Não chegou ao fim.
+2133	GOBLIN DA BANCA
+2134	Toca na próxima sala para escolher
+2135	ARENA LIMPA!
+2136	CHEGASTE!
+2137	FIM DA TENTATIVA
+2138	+{0} ouro · +{1} XP
+2139	CORRIDA
+2140	CORRIDA DO GOBLIN
+2141	LUTAR NA ARENA
+2142	Goblin da Banca
+2143	Um percurso de buracos e plataformas. Chega ao fim o mais depressa que conseguires: quanto menos tempo, mais ouro. Cair acaba com a corrida.
+2144	CORRER
+2145	Inimigos derrotados: {0}\nArena limpa!
+2146	Inimigos derrotados: {0}

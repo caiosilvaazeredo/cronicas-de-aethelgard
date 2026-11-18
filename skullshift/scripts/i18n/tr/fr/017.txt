@@ -1,0 +1,22 @@
+2125	Arène de Maître Rufo
+2126	Course du Gobelin
+2127	Nettoie les trois écrans ! Chaque ennemi vaut de l'or.
+2128	Atteins la fin le plus vite possible !
+2129	\nArène nettoyée !
+2130	Ennemis vaincus : {0}{1}
+2131	Temps : {0}s
+2132	N'a pas atteint la fin.
+2133	GOBELIN DU STAND
+2134	Touche la salle suivante pour choisir
+2135	ARÈNE NETTOYÉE !
+2136	ARRIVÉ !
+2137	FIN DE LA TENTATIVE
+2138	+{0} or · +{1} XP
+2139	COURSE
+2140	COURSE DU GOBELIN
+2141	COMBATTRE DANS L'ARÈNE
+2142	Gobelin du Stand
+2143	Un parcours de trous et de plateformes. Atteins la fin le plus vite possible : moins de temps, plus d'or. Tomber termine la course.
+2144	COURIR
+2145	Ennemis vaincus : {0}\nArène nettoyée !
+2146	Ennemis vaincus : {0}

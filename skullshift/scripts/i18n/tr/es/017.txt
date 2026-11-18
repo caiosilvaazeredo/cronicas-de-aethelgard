@@ -1,0 +1,22 @@
+2125	Arena del Maestro Rufo
+2126	Carrera del Goblin
+2127	¡Limpia las tres pantallas! Cada enemigo vale oro.
+2128	¡Llega al final lo más rápido que puedas!
+2129	\n¡Arena limpia!
+2130	Enemigos derrotados: {0}{1}
+2131	Tiempo: {0}s
+2132	No llegó al final.
+2133	GOBLIN DEL PUESTO
+2134	Toca la siguiente sala para elegir
+2135	¡ARENA LIMPIA!
+2136	¡LLEGASTE!
+2137	FIN DEL INTENTO
+2138	+{0} oro · +{1} XP
+2139	CARRERA
+2140	CARRERA DEL GOBLIN
+2141	LUCHAR EN LA ARENA
+2142	Goblin del Puesto
+2143	Un recorrido de fosos y plataformas. Llega al final lo más rápido que puedas: cuanto menos tiempo, más oro. Caer termina la carrera.
+2144	CORRER
+2145	Enemigos derrotados: {0}\n¡Arena limpia!
+2146	Enemigos derrotados: {0}

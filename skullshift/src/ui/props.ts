@@ -297,49 +297,6 @@ function swirl(g: G, size: number, pal: number[]): void {
   g.fillStyle(0xffffff, 0.6).fillCircle(c, c, c * 0.12);
 }
 
-/** Parede de tábuas com moldura (barraca de tiro ao alvo). */
-export function drawPlankWall(g: G, x: number, y: number, w: number, h: number, seed = 5): void {
-  const R = rng(seed);
-  g.fillStyle(INK).fillRoundedRect(x - 4, y - 4, w + 8, h + 8, 16);
-  g.fillStyle(0x3a2414).fillRect(x + 14, y + 14, w - 28, h - 28);
-  const ph = 44;
-  for (let py = y + 16, i = 0; py < y + h - 18; py += ph, i++) {
-    const hh = Math.min(ph - 3, y + h - 16 - py);
-    g.fillStyle(i % 2 ? 0x9a6438 : 0x8a5a32).fillRect(x + 16, py, w - 32, hh);
-    g.fillStyle(0xb47a48).fillRect(x + 16, py, w - 32, 4);
-    g.fillStyle(0x6a4224).fillRect(x + 16, py + hh - 5, w - 32, 5);
-    for (let j = 0; j < w / 70; j++) {
-      const gx = x + 30 + R() * (w - 80);
-      const gy = py + 10 + R() * (hh - 22);
-      g.lineStyle(2, 0x7a4e2e).lineBetween(gx, gy, gx + 20 + R() * 40, gy + (R() - 0.5) * 3);
-    }
-    if (R() < 0.6) {
-      const kx = x + 60 + R() * (w - 140);
-      g.fillStyle(0x6a4224).fillEllipse(kx, py + hh / 2, 16, 9);
-      g.fillStyle(0x4e2e18).fillEllipse(kx, py + hh / 2, 7, 4);
-    }
-    for (const nx of [x + 30, x + w / 2, x + w - 30]) {
-      g.fillStyle(INK).fillCircle(nx, py + hh / 2, 3.5);
-      g.fillStyle(0xc4beca).fillCircle(nx - 0.5, py + hh / 2 - 0.5, 2);
-    }
-  }
-  // Moldura de vigas.
-  const beam = (bx: number, by: number, bw: number, bh: number) => {
-    g.fillStyle(INK).fillRect(bx - 2, by - 2, bw + 4, bh + 4);
-    g.fillStyle(0x6a4224).fillRect(bx, by, bw, bh);
-    g.fillStyle(0x8a5a32).fillRect(bx, by, bw, 4);
-    g.fillStyle(0x8a5a32).fillRect(bx, by, 4, bh);
-  };
-  beam(x, y, w, 14);
-  beam(x, y + h - 14, w, 14);
-  beam(x, y, 14, h);
-  beam(x + w - 14, y, 14, h);
-  for (const [bx, by] of [[x + 7, y + 7], [x + w - 7, y + 7], [x + 7, y + h - 7], [x + w - 7, y + h - 7]]) {
-    g.fillStyle(INK).fillCircle(bx, by, 5);
-    g.fillStyle(0xc4beca).fillCircle(bx - 1, by - 1, 3);
-  }
-}
-
 /** Morros ao fundo com contorno só na silhueta e luz no alto. */
 export function drawHills(g: G, xs: number[], y: number, w: number, h: number, fill: number, lightC: number): void {
   for (const x of xs) g.fillStyle(INK).fillEllipse(x, y, w + 8, h + 8);
@@ -560,43 +517,6 @@ export function makeProps(scene: Phaser.Scene): void {
   g.fillStyle(0xc8c8c8).fillCircle(38, 37, 32);
   g.fillStyle(0xf0f0f0).fillCircle(35, 32, 21);
   done('dn_disc', 80, 80);
-
-  // ---------- Minigames ----------
-  // Alvo de palha com aro de madeira (normal e dourado).
-  const target = (key: string, rings: number[], rim: number[]) => {
-    g.fillStyle(INK).fillCircle(66, 66, 64);
-    g.fillStyle(rim[0]).fillCircle(66, 66, 60);
-    g.lineStyle(4, rim[1]).beginPath().arc(66, 66, 57, Math.PI * 0.95, Math.PI * 1.75).strokePath();
-    g.lineStyle(4, rim[2]).beginPath().arc(66, 66, 57, Math.PI * 0.05, Math.PI * 0.8).strokePath();
-    g.fillStyle(INK).fillCircle(66, 66, 52);
-    rings.forEach((c, i) => {
-      const r = 50 - i * 10;
-      g.fillStyle(c).fillCircle(66, 66, r);
-      if (i) g.lineStyle(2, INK, 0.45).strokeCircle(66, 66, r);
-    });
-    g.lineStyle(7, 0x000000, 0.14).beginPath().arc(66, 66, 45, Math.PI * 0.0, Math.PI * 0.75).strokePath();
-    g.fillStyle(0xffffff, 0.45).fillEllipse(48, 44, 30, 12);
-    for (let i = 0; i < 8; i++) {
-      const a = (i / 8) * Math.PI * 2;
-      g.fillStyle(INK).fillCircle(66 + Math.cos(a) * 57, 66 + Math.sin(a) * 57, 2.6);
-    }
-  };
-  target('prop_target', [0xfff3d6, 0xe8463a, 0xfff3d6, 0xe8463a, 0xffd23a], [0x9a6438, 0xc89058, 0x6a4224]);
-  done('prop_target', 132, 132);
-  target('prop_target_gold', [0xfff7dc, 0xffb02e, 0xfff7dc, 0xffb02e, 0xffffff], [0xd8a530, 0xffe88a, 0x9a6a1a]);
-  for (const [sx, sy, s] of [[30, 26, 9], [104, 100, 7]]) {
-    g.fillStyle(0xffffff).fillTriangle(sx - s, sy, sx + s, sy, sx, sy - s * 0.25).fillTriangle(sx, sy - s, sx, sy + s, sx + s * 0.25, sy);
-    g.fillStyle(0xffffff).fillTriangle(sx - s, sy, sx + s, sy, sx, sy + s * 0.25).fillTriangle(sx, sy - s, sx, sy + s, sx - s * 0.25, sy);
-  }
-  done('prop_target_gold', 132, 132);
-
-  // Boia de pesca.
-  g.fillStyle(INK).fillCircle(14, 18, 12).fillRect(12, 0, 4, 10);
-  g.fillStyle(0xfff7dc).fillRect(13.5, 1, 1.5, 8);
-  g.fillStyle(0xffffff).fillCircle(14, 18, 9);
-  g.fillStyle(0xe8463a).slice(14, 18, 9, Math.PI, 0, false).fillPath();
-  g.fillStyle(0xffb0a0).fillCircle(10, 13, 2.5);
-  done('prop_bob', 28, 30);
 
   g.destroy();
 }

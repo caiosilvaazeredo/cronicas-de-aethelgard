@@ -1,0 +1,22 @@
+2125	Arena Mistrza Rufo
+2126	Wyścig Goblina
+2127	Oczyść wszystkie trzy ekrany! Każdy wróg jest wart złota.
+2128	Dotrzyj do końca jak najszybciej!
+2129	\nArena oczyszczona!
+2130	Pokonani wrogowie: {0}{1}
+2131	Czas: {0}s
+2132	Nie dotarłeś do końca.
+2133	GOBLIN ZE STRAGANU
+2134	Dotknij następnej sali, by wybrać
+2135	ARENA OCZYSZCZONA!
+2136	UDAŁO SIĘ!
+2137	KONIEC PRÓBY
+2138	+{0} złota · +{1} PD
+2139	WYŚCIG
+2140	WYŚCIG GOBLINA
+2141	WALCZ NA ARENIE
+2142	Goblin ze Straganu
+2143	Trasa pełna dziur i platform. Dotrzyj do końca jak najszybciej: im krótszy czas, tym więcej złota. Upadek kończy wyścig.
+2144	BIEGNIJ
+2145	Pokonani wrogowie: {0}\nArena oczyszczona!
+2146	Pokonani wrogowie: {0}

@@ -181,6 +181,8 @@ export interface LevelDef {
   versusStart: [p1Tile: number, p2Tile: number];
   /** Sala de luta de uma dungeon (gerada): armadura extra dos inimigos, corações por golpe, força da caveira e XP. */
   dungeon?: { kind: string; armor: number; dmg: number; power: number; xp: number };
+  /** Jogo da vila (arena do Mestre Rufo ou corrida do Goblin): sem vidas; volta para a vila no fim. */
+  village?: { kind: 'arena' | 'race' };
 }
 
 export const SCREEN_TILES = W / TILE; // 20

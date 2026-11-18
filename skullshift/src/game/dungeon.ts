@@ -270,13 +270,13 @@ export function clearReward(rn: DungeonRun): { xp: number; gold: number } {
 // ---------- salas de luta (fase gerada) ----------
 
 /** Fase-base da área: cenário (tileset, tema, água) para as salas. */
-function baseLevel(a: AreaDef): LevelDef {
+export function baseLevel(a: AreaDef): LevelDef {
   const defs = a.levels.map((id) => LEVELS.find((l) => l.id === id)!).filter(Boolean);
   return defs.find((l) => !l.shmup && !l.undersea && !l.haunt && !l.boss && !l.puzzle && !l.chase && !l.mausoleum) ?? defs[0] ?? LEVELS[0];
 }
 
 /** Inimigos que aparecem nas fases da área (comuns e elites). */
-function enemyPools(a: AreaDef): { normal: EnemyId[]; elite: EnemyId[] } {
+export function enemyPools(a: AreaDef): { normal: EnemyId[]; elite: EnemyId[] } {
   const normal = new Set<EnemyId>();
   const elite = new Set<EnemyId>();
   for (const id of a.levels) {
@@ -296,7 +296,7 @@ const DECO: Record<string, DecoKind[]> = {
 };
 
 /** Um cenário (20 tiles) de chão gerado: trechos com buracos curtos e degraus de 1 tile. */
-function genScreen(r: () => number, theme: string, enemies: EnemyId[], first: boolean): ScreenDef {
+export function genScreen(r: () => number, theme: string, enemies: EnemyId[], first: boolean): ScreenDef {
   const segments: Segment[] = [];
   const floats: Segment[] = [];
   let t = 0;

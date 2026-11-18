@@ -190,7 +190,12 @@ originais (extraídas com PIL do PNG).
 - **Dungeons** (`game/dungeon.ts` + `scenes/DungeonScene.ts`), estilo For the King: mapa de colunas com caminhos (luta, elite, baú, evento com dados, armadilha, acampamento, santuário com bênçãos Vigor/Fúria/Sorte, guardião). As salas de luta são fases geradas na hora (`prepareRoom`) com tileset/tema e inimigos da própria área, escritas em `LEVELS[DUNGEON_SLOT]` (marcada `secret` e `dungeon`). Dificuldade: nível sugerido da área `1 + 2×ordem` (+1 a cada 3 colunas); diferença para o nível do jogador vira armadura extra dos inimigos (`ceil(gap/3)`, até 4), 2 corações por golpe se gap ≥ 6 e golpes que tiram 2 camadas se o jogador estiver 6+ níveis acima (ou com Fúria). Corações da run: `5 + nível/3`; cada sala de luta vencida devolve 1 coração. Robô de calibração: `node scripts/bots/dungeon-bot.cjs mare,pradaria,forja 50` (joga abaixo, no e acima do nível sugerido). Morrer zera a run (perde ouro e XP juntados); vencer o guardião entrega tudo + bônus e marca `dungeons` no save. A run fica só na memória (fechar a página = perder a run).
 - **Selo de área** (`areas.kingSealed`): a última fase (rei) de cada área só abre com a dungeon da área limpa; saves com o rei já vencido ficam livres. No mapa da área: correntes roxas no medalhão, aviso e botão `DUNGEON · NV n`.
 - **Vila** (`scenes/VillageScene.ts`): andável (setas/pulo/E; no toque, botões grandes e toque-para-ir). Placa do mundo, Empório (`shop` com `from: 'village'`), Mestre Rufo (nível/XP/corações), Portal das Dungeons (lista as áreas abertas mais próximas do nível), lago, alvos, curral, estalagem e moradores. No mapa-múndi o Empório virou a Vila; depois da 1ª fase o modo história começa nela.
-- **Minigames** (`scenes/MinigameScene.ts`): pesca, tiro ao alvo e pega-ovelha; recompensa cai 25% a cada partida do mesmo jogo no mesmo dia (contador `mg_<tipo>_<data>` em stats).
+- **Jogos da vila**: fazem parte do jogo de verdade.
+  - **Arena do Mestre Rufo** (no Treino) e **Corrida do Goblin** (na barraca): fases geradas como as salas da dungeon (`game/villagegames.ts`, `LevelDef.village`, mesmo espaço `DUNGEON_SLOT`). Sem vidas: morrer encerra a tentativa. A arena paga por inimigo derrotado (`GameScene.kills`) e a corrida pelo tempo. `finishVillageGame` paga, e a vila mostra o resultado ao voltar (`takeVillageResult`).
+  - **Pega-ovelha** (`scenes/MinigameScene.ts`), no curral.
+  - A recompensa cai 25% a cada partida do mesmo jogo no mesmo dia (contador `mg_<tipo>_<data>` nas estatísticas).
+  - Em pé, o pega-ovelha usa uma câmera com zoom e outra para a interface. Os botões de toque são o `TouchPad` das fases com o preset `walk`/`walk-jump`.
+- **Dispositivo fora do menu de controles**: `soloDevices(scene)` (controle, toque ou teclado), usado ao entrar numa sala de dungeon ou num jogo da vila.
 - Verificador de alcance com salas geradas: `DUNGEON=90 node scripts/check-reach.cjs`.
 - Tradução: moldes com pelo menos 2 letras fixas (antes 3) para pegar "{0}/{1} XP" e "NV {0}"; `trf(modelo, ...)` traduz e preenche direto.
 
@@ -200,5 +205,5 @@ originais (extraídas com PIL do PNG).
 
 ## Objetos de cenário desenhados (src/ui/props.ts)
 - Estilo Tiny Swords: contorno de tinta grosso, três tons, brilho e detalhes. `makeProps` gera as texturas no carregamento (junto do vulcão do mapa).
-- Texturas: `prop_pond`, `prop_dock`, `prop_portal` + `prop_swirl` (redemoinho que gira num contêiner achatado), `prop_fence`/`prop_fencepost` (emendam a cada 64 px), `prop_sign`, `prop_anvil`, `prop_cave` e `prop_arch_blue` + `prop_swirl_blue` (passagens do mapa), `prop_lava`, `dn_floor` (lajotas que repetem), `dn_ring` + `dn_disc` (medalhão; o disco é cinza e a cena tinge com a cor da sala), `prop_target`/`prop_target_gold`, `prop_bob`.
-- Funções para tamanhos livres: `drawPond`, `drawDock`, `drawArch`, `drawPlankWall`, `drawHills`.
+- Texturas: `prop_pond`, `prop_dock`, `prop_portal` + `prop_swirl` (redemoinho que gira num contêiner achatado), `prop_fence`/`prop_fencepost` (emendam a cada 64 px), `prop_sign`, `prop_anvil`, `prop_cave` e `prop_arch_blue` + `prop_swirl_blue` (passagens do mapa), `prop_lava`, `dn_floor` (lajotas que repetem), `dn_ring` + `dn_disc` (medalhão; o disco é cinza e a cena tinge com a cor da sala).
+- Funções para tamanhos livres: `drawPond`, `drawDock`, `drawArch`, `drawHills`, `drawMountains`.

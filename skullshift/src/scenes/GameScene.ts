@@ -1,3 +1,5 @@
+import { trf } from '../i18n';
+import { finishVillageGame } from '../game/villagegames';
 import Phaser from 'phaser';
 import { duckMusic, jingle, playMusic, type Track } from '../game/music';
 import { BEATS, type Beat } from '../data/beats';
@@ -158,6 +160,8 @@ export class GameScene extends Phaser.Scene {
   private checkpointX = 0;
   private deaths = 0;
   private startTime = 0;
+  /** Inimigos derrotados nesta partida (prêmio da arena da vila). */
+  private kills = 0;
   ended = false;
   private winner?: Fighter;
   /** Recorta o que estiver abaixo da superfície da água (personagem afundando). */
@@ -251,6 +255,7 @@ export class GameScene extends Phaser.Scene {
     // Trilha: tema da área (voo tem o seu; versus, o duelo).
     if (this.mode !== 'story') playMusic('versus');
     else if (def.shmup) playMusic('flight', def.id);
+    else if (def.village) playMusic('pradaria' as Track, def.village.kind === 'arena' ? 'dungeon' : 'vila');
     else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
@@ -417,11 +422,11 @@ export class GameScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scene.stop('ui'));
     const dRun = def.dungeon ? getRun() : undefined;
     if (dRun) this.time.delayedCall(0, () => this.ui?.setHearts(dRun.hearts, dRun.maxHearts));
-    else if (this.mode === 'story') {
+    else if (this.mode === 'story' && !def.village) {
       const limit = deathLimit(this.levelIndex);
       this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
     }
-    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? `${this.levelTag()} — ${def.name}` : `VERSUS · ${def.name}`, 1600, def.intro));
+    this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? (def.dungeon || def.village ? def.name : `${this.levelTag()} — ${def.name}`) : `VERSUS · ${def.name}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
     kb.on('keydown-R', () => this.ended && this.restartMatch());
@@ -432,6 +437,7 @@ export class GameScene extends Phaser.Scene {
     });
 
     this.startTime = this.time.now;
+    this.kills = 0;
   }
 
   // ---------- câmera / orientação ----------
@@ -1391,6 +1397,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     const story = this.mode === 'story';
+    if (!this.players.includes(victim)) this.kills++;
     // Osso Teimoso (Empório): transformado, o golpe fatal só desfaz a forma e a caveira segue de pé.
     if (story && cause === 'hit' && this.players.includes(victim) && victim.def.id !== 'skull' && victim.def.id !== 'villager' && !LEVELS[this.levelIndex].undersea && !victim.shiftHide && this.hasPerk(this.players.indexOf(victim), 'stubborn')) {
       victim.knockback(dir, 380);
@@ -2293,6 +2300,13 @@ export class GameScene extends Phaser.Scene {
    * (a fase recomeça do início, sem a visual novel).
    */
   countStoryDeath(delay = 700): boolean {
+    if (LEVELS[this.levelIndex].village) {
+      // Jogo da vila: sem vidas, a tentativa acaba e o prêmio é o que já se fez.
+      if (this.ended) return true;
+      this.ended = true;
+      this.time.delayedCall(delay, () => this.villageEnd(false));
+      return true;
+    }
     const dd = LEVELS[this.levelIndex].dungeon;
     const rn = dd ? getRun() : undefined;
     if (dd && rn) {
@@ -2830,6 +2844,11 @@ export class GameScene extends Phaser.Scene {
   /** Vitória no modo história (fim do mapa, porta de saída ou chefe derrotado). */
   private storyWin(sub: string, quiet = false): void {
     if (LEVELS[this.levelIndex].dungeon) return this.dungeonRoomWin();
+    if (LEVELS[this.levelIndex].village) {
+      if (this.ended) return;
+      this.ended = true;
+      return this.villageEnd(true);
+    }
     if (!this.ended && !quiet) jingle('win');
     if (this.ended) return;
     const secs = ((this.time.now - this.startTime) / 1000).toFixed(1);
@@ -2869,7 +2888,7 @@ export class GameScene extends Phaser.Scene {
     if (this.puzzle || this.mausoleum) return; // chave e porta / mausoléu: vitória própria
     const end = this.level.width - 70;
     const [p1, p2] = this.players;
-    if (this.mode === 'story' && LEVELS[this.levelIndex].dungeon) {
+    if (this.mode === 'story' && (LEVELS[this.levelIndex].dungeon || LEVELS[this.levelIndex].village)) {
       if (p1.alive && p1.x >= end - 20) this.storyWin('');
       return;
     }
@@ -2884,6 +2903,18 @@ export class GameScene extends Phaser.Scene {
     } else if (p2 && p2.alive && p2.x <= 70) {
       this.victory(1, `${playerName(1).toUpperCase()} VENCEU!`, 'Chegou ao fim do lado oposto');
     }
+  }
+
+  /** Fim de um jogo da vila: paga o prêmio e volta para a vila (que mostra o resultado). */
+  private villageEnd(won: boolean): void {
+    const v = LEVELS[this.levelIndex].village!;
+    const secs = (this.time.now - this.startTime) / 1000;
+    const r = finishVillageGame(v.kind, won, { secs, kills: this.kills });
+    if (won) jingle('win');
+    const title = won ? (v.kind === 'arena' ? 'ARENA LIMPA!' : 'CHEGOU!') : 'FIM DA TENTATIVA';
+    this.ui?.banner(title, 1600, trf('+{0} ouro · +{1} XP', r.gold, r.xp));
+    if (r.ups > 0) levelUpBanner(this.ui ?? this, getLevel(), 600);
+    this.time.delayedCall(2000, () => this.scene.start('village', { from: v.kind }));
   }
 
   /** Dungeon: armadura extra dos inimigos conforme a diferença de nível. */

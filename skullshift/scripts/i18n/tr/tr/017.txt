@@ -1,0 +1,22 @@
+2125	Usta Rufo'nun Arenası
+2126	Goblin Yarışı
+2127	Üç ekranı da temizle! Her düşman altın değerinde.
+2128	Sona olabildiğince hızlı ulaş!
+2129	\nArena temizlendi!
+2130	Yenilen düşman: {0}{1}
+2131	Süre: {0}sn
+2132	Sona ulaşamadın.
+2133	TEZGÂH GOBLİNİ
+2134	Seçmek için sonraki odaya dokun
+2135	ARENA TEMİZLENDİ!
+2136	BAŞARDIN!
+2137	DENEME BİTTİ
+2138	+{0} altın · +{1} TP
+2139	YARIŞ
+2140	GOBLİN YARIŞI
+2141	ARENADA DÖVÜŞ
+2142	Tezgâh Goblini
+2143	Çukurlar ve platformlarla dolu bir parkur. Sona olabildiğince hızlı ulaş: süre ne kadar kısaysa o kadar altın. Düşersen yarış biter.
+2144	KOŞ
+2145	Yenilen düşman: {0}\nArena temizlendi!
+2146	Yenilen düşman: {0}

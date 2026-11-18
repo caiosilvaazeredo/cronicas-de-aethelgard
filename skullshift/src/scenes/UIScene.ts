@@ -280,6 +280,8 @@ export class UIScene extends Phaser.Scene {
       { label: 'REINICIAR FASE', act: () => g.restartMatch() },
       { label: story ? 'SAIR PARA O MAPA' : 'SAIR PARA O MENU', act: () => (story ? g.scene.start('map', { devices: g.devices, level: g.levelIndex }) : g.scene.start('menu', { stage: 'modes' })) },
     ];
+    // Jogo da vila: sair volta para a vila (sem prêmio).
+    if (LEVELS[g.levelIndex]?.village) this.pauseRows[3] = { label: '◀ VILA', act: () => g.scene.start('village', {}) };
     // Sala de dungeon: sair é desistir da dungeon (perde o que a run juntou).
     const run = LEVELS[g.levelIndex]?.dungeon ? getRun() : undefined;
     if (run) {

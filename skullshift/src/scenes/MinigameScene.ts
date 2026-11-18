@@ -1,5 +1,5 @@
 import { CHARS } from '../game/characters';
-import { drawDock, drawHills, drawMountains, drawPlankWall, drawPond } from '../ui/props';
+import { drawHills, drawMountains } from '../ui/props';
 import { TouchPad } from '../game/touch';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW, W, portraitPanelTop } from '../config';
@@ -9,7 +9,7 @@ import { pillButton } from '../ui/devices';
 import { levelUpBanner } from '../ui/levelup';
 
 const INK = 0x10223a;
-type Kind = 'fish' | 'targets' | 'sheep';
+type Kind = 'sheep';
 
 /** Contador do dia (para as recompensas caírem quando se joga muitas vezes seguidas). */
 function todayKey(kind: Kind): string {
@@ -18,14 +18,12 @@ function todayKey(kind: Kind): string {
 }
 
 /**
- * Jogos da vila:
- * - Pesca: lança a linha, espera a fisgada e aperta na hora do "!" (peixes grandes dão menos tempo).
- * - Tiro ao alvo: 30 segundos de alvos surgindo; clique/toque neles (ou mire com as setas e Espaço).
- * - Pega-ovelha: 40 segundos para encostar em ovelhas que fogem pelo pasto.
- * Rendem ouro e um pouco de XP (cada vez menos se jogar muitas vezes no mesmo dia).
+ * Pega-ovelha (jogo do curral da vila): 40 segundos para encostar nas ovelhas que fogem pelo pasto.
+ * Os outros jogos da vila (arena e corrida) são fases de verdade: veja game/villagegames.ts.
+ * Rende ouro e um pouco de XP (cada vez menos se jogar muitas vezes no mesmo dia).
  */
 export class MinigameScene extends Phaser.Scene {
-  private kind: Kind = 'fish';
+  private kind: Kind = 'sheep';
   private score = 0;
   private done = false;
   private info!: Phaser.GameObjects.Text;
@@ -36,7 +34,7 @@ export class MinigameScene extends Phaser.Scene {
   }
 
   init(data: { kind?: Kind }): void {
-    this.kind = data.kind ?? 'fish';
+    this.kind = data.kind ?? 'sheep';
     this.score = 0;
     this.done = false;
     this.uiCam = undefined;
@@ -85,269 +83,20 @@ export class MinigameScene extends Phaser.Scene {
     const P = VIEW.portrait;
     this.events.on(Phaser.Scenes.Events.ADDED_TO_SCENE, this.route);
     this.events.once('shutdown', () => this.events.off(Phaser.Scenes.Events.ADDED_TO_SCENE, this.route));
-    const camMode = P && this.kind !== 'targets';
+    const camMode = P;
     if (camMode) this.uiCam = this.cameras.add(0, 0, W, this.HH);
     this.world(() => this.add.image(0, 0, 'sky').setOrigin(0).setScrollFactor(0).setDisplaySize(W, this.HH));
     const tp = P ? PORTRAIT.topPad : 0;
     if (camMode) this.add.rectangle(0, 0, W, this.playTop, INK).setOrigin(0);
-    const titles: Record<Kind, string> = { fish: 'PESCARIA NO LAGO', targets: 'TIRO AO ALVO', sheep: 'PEGA-OVELHA' };
+    const titles: Record<Kind, string> = { sheep: 'PEGA-OVELHA' };
     this.add.text(W / 2, P ? 230 + tp : 40, titles[this.kind], { fontFamily: FONT, fontSize: P ? '84px' : '34px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setDepth(50);
     this.info = this.add
       .text(W / 2, P ? 300 + tp : 84, '', { fontFamily: FONT, fontSize: P ? '44px' : '20px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6, align: 'center', wordWrap: { width: W - 80 } })
       .setOrigin(0.5, P ? 0 : 0.5)
       .setDepth(50);
-    pillButton(this, P ? 180 : 100, P ? 110 + tp : 36, '◀ VILA', () => this.scene.start('village', {}), 170).setScale(P ? 1.8 : 0.75).setDepth(50);
-    this.input.keyboard?.on('keydown-ESC', () => this.scene.start('village', {}));
-    this.world(() => {
-      if (this.kind === 'fish') this.fish();
-      else if (this.kind === 'targets') this.targets();
-      else this.sheep();
-    });
-  }
-
-  // ---------- pesca ----------
-
-  private fish(): void {
-    const HH = this.HH;
-    const P = VIEW.portrait;
-    // Deitado: o desenho de sempre. Em pé: câmera com zoom e um lago mais fundo, perto da caveira.
-    let L = { gy: HH * 0.55, vw: W, dockX: 80, dockW: 330, legs: [40, 160, 280], heroX: 330, rA: [360, -70], rB: [470, -150], bx: 760, pond: [W / 2 + 110, HH * 0.55 + 130, W * 0.9, 250] };
-    if (P) {
-      const top = this.playTop;
-      const h = HH - top - 30;
-      const gy = 400;
-      const bottom = gy + 450;
-      const zoom = Math.min(h / bottom, W / 460);
-      const vw = W / zoom;
-      const visH = h / zoom;
-      const cam = this.cameras.main.setViewport(0, top, W, h).setZoom(zoom);
-      cam.setBounds(0, bottom - visH, W, visH);
-      cam.centerOn(vw / 2, bottom - visH / 2);
-      L = { gy, vw, dockX: 10, dockW: 230, legs: [30, 120, 200], heroX: 200, rA: [230, -70], rB: [340, -150], bx: vw * 0.72, pond: [vw * 0.6, gy + 200, vw * 1.05, 360] };
-    }
-    const { gy } = L;
-    const [pcx, pcy, pw, ph] = L.pond;
-    drawMountains(this.add.graphics(), -100, W + 100, gy - 40, 17);
-    const g = this.add.graphics();
-    // Morros com árvores ao fundo, grama na margem e o lago grande.
-    const hx = (o: number) => Array.from({ length: 6 }, (_, i) => i * 260 + o);
-    drawHills(g, hx(60), gy - 30, 420, 220, 0x6fb86a, 0x8fd07a);
-    drawHills(g, hx(190), gy - 10, 380, 160, 0x5aa257, 0x78bf68);
-    const tiles = Math.ceil(W / 64);
-    for (let i = 0; i < tiles; i++) {
-      this.add.image(i * 64, gy - 46, 'tilemap', 27 + (i === 0 ? 5 : i === tiles - 1 ? 7 : 6)).setOrigin(0);
-    }
-    // Campo plano na frente (o lago fica nele, sem o paredão de pedra).
-    const meadow = this.add.graphics();
-    meadow.fillStyle(0x6fbf52, 1).fillRect(0, gy + 14, W, HH);
-    meadow.fillStyle(0x5aa845, 1).fillRect(0, gy + 14, W, 10);
-    for (let i = 0; i < 40; i++) {
-      const tx = (i * 197) % W;
-      const ty = gy + 40 + ((i * 89) % Math.max(60, HH - gy - 60));
-      meadow.fillStyle(0x4f9a3c, 1).fillTriangle(tx - 4, ty, tx, ty - 10, tx + 4, ty).fillTriangle(tx + 2, ty, tx + 7, ty - 8, tx + 9, ty);
-    }
-    const pond = this.add.graphics();
-    drawPond(pond, pcx, pcy, pw, ph, 3);
-    for (let i = 0; i < 4; i++) this.add.sprite(60 + i * 360, gy - 40, 'res_tree').setOrigin(0.5, 0.9).setScale(0.6).setDepth(-1).play({ key: 'res_tree', startFrame: i * 2 });
-    // Brilhos que piscam na água.
-    const glint = this.add.graphics();
-    glint.fillStyle(0xffffff, 0.8).fillRoundedRect(pcx + 90, pcy + 20, 46, 4, 2).fillRoundedRect(pcx - 170, pcy + 60, 30, 3, 1.5).fillRoundedRect(pcx + pw * 0.27, pcy - 20, 26, 3, 1.5);
-    this.tweens.add({ targets: glint, alpha: 0.15, duration: 1100, yoyo: true, repeat: -1 });
-    // Píer e a caveira com a vara.
-    drawDock(this.add.graphics(), L.dockX, gy - 12, L.dockW, L.legs, 80);
-    const hero = this.add.sprite(L.heroX, gy - 12, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(0.9).play('skull_idle');
-    const rod = this.add.graphics();
-    const bob = this.add.container(0, 0);
-    const bx = L.bx;
-    const by = P ? pcy - 30 : gy + 90;
-    const [ax, ay] = [L.rA[0], gy + L.rA[1]];
-    const [tx2, ty2] = [L.rB[0], gy + L.rB[1]];
-    const drawLine = (y: number, out: boolean) => {
-      rod.clear();
-      rod.lineStyle(9, INK, 1).lineBetween(ax, ay, tx2, ty2);
-      rod.lineStyle(5, 0x8a5a35, 1).lineBetween(ax, ay, tx2, ty2);
-      rod.lineStyle(2, 0xc89058, 1).lineBetween(ax + 2, ay - 4, tx2 - 4, ty2);
-      rod.fillStyle(INK, 1).fillCircle(ax + 12, ay - 10, 8).fillStyle(0xb4aec0, 1).fillCircle(ax + 12, ay - 10, 5);
-      bob.removeAll(true);
-      if (!out) return;
-      rod.lineStyle(2, 0xfff7dc, 0.9).lineBetween(tx2, ty2, bx, y - 14);
-      this.world(() => {
-        bob.add(this.add.image(bx, y, 'prop_bob').setOrigin(0.5, 0.6));
-        bob.add(this.add.ellipse(bx, y + 8, 40, 8).setStrokeStyle(2, 0xbfe9ff, 0.7));
-      });
-    };
-    drawLine(0, false);
-    const bang = this.add.text(bx, by - 70, '!', { fontFamily: FONT, fontSize: '64px', color: '#ffe066', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5).setVisible(false);
-    const FISH = [
-      { name: 'Lambari', gold: 3, window: 700, w: 5 },
-      { name: 'Tilápia', gold: 6, window: 520, w: 4 },
-      { name: 'Peixe-Osso', gold: 12, window: 380, w: 2 },
-      { name: 'Bota velha', gold: 0, window: 800, w: 1 },
-    ];
-    let casts = 5;
-    let state: 'ready' | 'wait' | 'bite' | 'pause' = 'ready';
-    let biteAt = 0;
-    let current = FISH[0];
-    const caught: string[] = [];
-    const say = () => this.info.setText(`Lançamentos: ${casts}   ·   Peixes: ${caught.filter((c) => c !== 'Bota velha').length}\n${state === 'ready' ? 'Aperte (Espaço / toque) para lançar' : state === 'wait' ? 'Espere a fisgada... não apresse!' : ''}`);
-    say();
-    const pickFish = () => {
-      const total = FISH.reduce((s, f) => s + f.w, 0);
-      let x = Math.random() * total;
-      for (const f of FISH) if ((x -= f.w) < 0) return f;
-      return FISH[0];
-    };
-    let waitEv: Phaser.Time.TimerEvent | undefined;
-    const press = () => {
-      if (this.done) return;
-      if (state === 'ready') {
-        if (casts <= 0) return;
-        casts--;
-        state = 'wait';
-        sfx('jump');
-        hero.play('skull_attack');
-        drawLine(by, true);
-        this.tweens.add({ targets: bob, y: 4, duration: 500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-        current = pickFish();
-        waitEv = this.time.delayedCall(Phaser.Math.Between(1200, 3600), () => {
-          state = 'bite';
-          biteAt = this.time.now;
-          bang.setVisible(true).setScale(0.4);
-          this.tweens.add({ targets: bang, scale: 1, duration: 120 });
-          sfx('select');
-          this.time.delayedCall(current.window, () => {
-            if (state !== 'bite') return;
-            state = 'pause';
-            bang.setVisible(false);
-            this.flash('Escapou!', '#ff9a8a');
-            reel();
-          });
-        });
-      } else if (state === 'wait') {
-        waitEv?.remove();
-        state = 'pause';
-        this.flash('Cedo demais! O peixe fugiu.', '#ff9a8a');
-        reel();
-      } else if (state === 'bite') {
-        state = 'pause';
-        bang.setVisible(false);
-        caught.push(current.name);
-        this.score += current.gold;
-        sfx('pick');
-        const fishImg = this.world(() => this.add.text(bx, by, current.name === 'Bota velha' ? 'Uma bota velha...' : `${current.name}! (${current.gold} ouro)`, { fontFamily: FONT, fontSize: '28px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 7 }).setOrigin(0.5));
-        this.tweens.add({ targets: fishImg, y: by - 140, alpha: 0, duration: 1400, onComplete: () => fishImg.destroy() });
-        void biteAt;
-        reel();
-      }
-      say();
-    };
-    const reel = () => {
-      this.tweens.killTweensOf(bob);
-      bob.y = 0;
-      this.time.delayedCall(700, () => {
-        drawLine(0, false);
-        hero.play('skull_idle');
-        state = 'ready';
-        say();
-        if (casts <= 0) this.finish(caught.length, `Pescou: ${caught.join(', ') || 'nada'}`);
-      });
-    };
-    this.input.keyboard?.on('keydown-SPACE', press);
-    this.input.keyboard?.on('keydown-ENTER', press);
-    this.input.keyboard?.on('keydown-E', press);
-    this.input.on('pointerdown', (_p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => !over.length && press());
-  }
-
-  // ---------- alvos ----------
-
-  private targets(): void {
-    const HH = this.HH;
-    const P = VIEW.portrait;
-    const top = P ? 560 : 130;
-    const K = P ? 2.2 : 1;
-    const bottom = P ? HH - 200 : HH - 40;
-    const g = this.add.graphics();
-    drawPlankWall(g, 40, top, W - 80, bottom - top);
-    let left = 30;
-    const cross = this.add.graphics().setDepth(20);
-    const cx = { x: W / 2, y: (top + bottom) / 2 };
-    // Mira desenhada uma vez em (0,0); depois só muda de lugar (maior em pé).
-    cross.lineStyle(8, INK, 1).strokeCircle(0, 0, 18).lineBetween(-28, 0, -10, 0).lineBetween(10, 0, 28, 0).lineBetween(0, -28, 0, -10).lineBetween(0, 10, 0, 28);
-    cross.lineStyle(4, 0xfff7dc, 1).strokeCircle(0, 0, 18).lineBetween(-26, 0, -11, 0).lineBetween(11, 0, 26, 0).lineBetween(0, -26, 0, -11).lineBetween(0, 11, 0, 26);
-    cross.fillStyle(0xe8463a, 1).fillCircle(0, 0, 3);
-    cross.setScale(K);
-    const drawCross = () => {
-      cross.setPosition(cx.x, cx.y);
-    };
-    drawCross();
-    const live: Array<{ c: Phaser.GameObjects.Container; gold: boolean; r: number }> = [];
-    const spawn = () => {
-      if (this.done) return;
-      const gold = Math.random() < 0.15;
-      const r = (gold ? 30 : Phaser.Math.Between(34, 48)) * K;
-      const x = Phaser.Math.Between(60 + r, W - 60 - r);
-      const y = Phaser.Math.Between(top + 20 + r, bottom - 20 - r);
-      const t = this.add.image(0, 0, gold ? 'prop_target_gold' : 'prop_target').setScale((r + 4) / 64);
-      const c = this.add.container(x, y, [t]).setSize(r * 2, r * 2).setScale(0).setDepth(10);
-      c.setInteractive({ useHandCursor: true }).on('pointerdown', () => hit(entry));
-      const entry = { c, gold, r };
-      live.push(entry);
-      this.tweens.add({ targets: c, scale: 1, duration: 140, ease: 'Back.easeOut' });
-      const life = Math.max(700, 1500 - (30 - left) * 25);
-      this.time.delayedCall(life, () => {
-        if (!c.active) return;
-        live.splice(live.indexOf(entry), 1);
-        this.tweens.add({ targets: c, scale: 0, duration: 120, onComplete: () => c.destroy() });
-      });
-    };
-    const hit = (e: { c: Phaser.GameObjects.Container; gold: boolean }) => {
-      if (this.done || !e.c.active) return;
-      live.splice(live.indexOf(e as never), 1);
-      this.score += e.gold ? 3 : 1;
-      sfx('hit');
-      const t = this.add.text(e.c.x, e.c.y, e.gold ? '+3' : '+1', { fontFamily: FONT, fontSize: '30px', color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(30);
-      this.tweens.add({ targets: t, y: t.y - 50, alpha: 0, duration: 600, onComplete: () => t.destroy() });
-      this.tweens.add({ targets: e.c, scale: 1.4, alpha: 0, duration: 160, onComplete: () => e.c.destroy() });
-    };
-    const shoot = () => {
-      const e = live.find((t) => Math.hypot(t.c.x - cx.x, t.c.y - cx.y) <= t.r + 6);
-      if (e) hit(e);
-      else sfx('select');
-    };
-    const timer = this.time.addEvent({ delay: 650, loop: true, callback: spawn });
-    const clock = this.time.addEvent({
-      delay: 1000,
-      loop: true,
-      callback: () => {
-        left--;
-        if (left <= 0) {
-          timer.remove();
-          clock.remove();
-          live.forEach((e) => e.c.destroy());
-          this.finish(this.score, `Pontos: ${this.score}`);
-        }
-      },
-    });
-    const kb = this.input.keyboard!;
-    const keys = kb.addKeys('LEFT,RIGHT,UP,DOWN,A,D,W,S') as Record<string, Phaser.Input.Keyboard.Key>;
-    kb.on('keydown-SPACE', shoot);
-    kb.on('keydown-ENTER', shoot);
-    this.onUpdate((_t: number, dt: number) => {
-      if (this.done) return;
-      const v = 0.6 * dt;
-      if (keys.LEFT.isDown || keys.A.isDown) cx.x -= v;
-      if (keys.RIGHT.isDown || keys.D.isDown) cx.x += v;
-      if (keys.UP.isDown || keys.W.isDown) cx.y -= v;
-      if (keys.DOWN.isDown || keys.S.isDown) cx.y += v;
-      cx.x = Phaser.Math.Clamp(cx.x, 60, W - 60);
-      cx.y = Phaser.Math.Clamp(cx.y, top + 20, bottom - 20);
-      drawCross();
-      this.info.setText(`Tempo: ${left}   ·   Pontos: ${this.score}\nClique/toque nos alvos (ou mire com as setas e Espaço). Dourado vale 3.`);
-    });
-    this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
-      cx.x = p.x;
-      cx.y = p.y;
-    });
+    pillButton(this, P ? 180 : 100, P ? 110 + tp : 36, '◀ VILA', () => this.scene.start('village', { from: 'sheep' }), 170).setScale(P ? 1.8 : 0.75).setDepth(50);
+    this.input.keyboard?.on('keydown-ESC', () => this.scene.start('village', { from: 'sheep' }));
+    this.world(() => this.sheep());
   }
 
   // ---------- ovelhas ----------
@@ -381,8 +130,9 @@ export class MinigameScene extends Phaser.Scene {
     for (let x = -10; x < W; x += 64) this.add.image(x, gy + 4, 'prop_fence').setOrigin(0, 1);
     const n = Math.ceil(W / 64);
     for (let i = 0; i < n; i++) {
-      this.add.image(i * 64, gy - 6, 'tilemap', 27 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
-      this.add.image(i * 64, gy + 58, 'tilemap', 45 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
+      // Grama acima da linha dos pés (como na vila): a caveira e as ovelhas pisam no gramado.
+      this.add.image(i * 64, gy - 30, 'tilemap', 27 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
+      for (let r = 0; r < 3; r++) this.add.image(i * 64, gy + 34 + r * 64, 'tilemap', 45 + (i === 0 ? 5 : i === n - 1 ? 7 : 6)).setOrigin(0);
     }
     // Em pé a câmera já dá o zoom: tudo no tamanho normal.
     const K = 1;
@@ -518,10 +268,9 @@ export class MinigameScene extends Phaser.Scene {
     const plays = getStat(key);
     addStat(key);
     const k = Math.max(0.25, 1 - plays * 0.25);
-    const per = this.kind === 'fish' ? { xp: 6, gold: 1 } : this.kind === 'targets' ? { xp: 2, gold: 1 } : { xp: 5, gold: 4 };
-    // Na pesca a pontuação já é o ouro dos peixes; o XP conta os peixes.
-    const goldBase = this.kind === 'fish' ? this.score : points * per.gold;
-    const xpBase = (this.kind === 'fish' ? points : points) * per.xp;
+    const per = { xp: 5, gold: 4 };
+    const goldBase = points * per.gold;
+    const xpBase = points * per.xp;
     const gold = Math.round(goldBase * k);
     const xp = Math.round(xpBase * k);
     addCoins(gold);
@@ -541,8 +290,8 @@ export class MinigameScene extends Phaser.Scene {
       .setOrigin(0.5, 0)
       .setDepth(61);
     pillButton(this, W / 2 - (P ? 260 : 160), HH / 2 + ph / 2 - (P ? 100 : 54), 'DE NOVO', () => this.scene.restart({ kind: this.kind }), 240, 0xbfe9ff).setScale(P ? 1.8 : 1).setDepth(62);
-    pillButton(this, W / 2 + (P ? 260 : 160), HH / 2 + ph / 2 - (P ? 100 : 54), 'VILA', () => this.scene.start('village', {}), 240, 0xffe066).setScale(P ? 1.8 : 1).setDepth(62);
-    this.input.keyboard?.once('keydown-ENTER', () => this.scene.start('village', {}));
+    pillButton(this, W / 2 + (P ? 260 : 160), HH / 2 + ph / 2 - (P ? 100 : 54), 'VILA', () => this.scene.start('village', { from: 'sheep' }), 240, 0xffe066).setScale(P ? 1.8 : 1).setDepth(62);
+    this.input.keyboard?.once('keydown-ENTER', () => this.scene.start('village', { from: 'sheep' }));
     if (ups > 0) levelUpBanner(this, getLevel(), 400);
   }
 }

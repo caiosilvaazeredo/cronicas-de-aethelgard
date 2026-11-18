@@ -1,0 +1,22 @@
+2125	Master Rufo's Arena
+2126	Goblin Race
+2127	Clear all three screens! Every enemy is worth gold.
+2128	Reach the end as fast as you can!
+2129	\nArena cleared!
+2130	Enemies defeated: {0}{1}
+2131	Time: {0}s
+2132	Didn't reach the end.
+2133	STALL GOBLIN
+2134	Tap the next room to choose
+2135	ARENA CLEARED!
+2136	MADE IT!
+2137	ATTEMPT OVER
+2138	+{0} gold · +{1} XP
+2139	RACE
+2140	GOBLIN RACE
+2141	FIGHT IN THE ARENA
+2142	Stall Goblin
+2143	A course of pits and platforms. Reach the end as fast as you can: the less time, the more gold. Falling ends the race.
+2144	RUN
+2145	Enemies defeated: {0}\nArena cleared!
+2146	Enemies defeated: {0}

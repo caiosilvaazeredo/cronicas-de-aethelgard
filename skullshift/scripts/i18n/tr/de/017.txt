@@ -1,0 +1,22 @@
+2125	Meister Rufos Arena
+2126	Goblin-Rennen
+2127	Räume alle drei Bildschirme! Jeder Gegner bringt Gold.
+2128	Erreiche so schnell wie möglich das Ziel!
+2129	\nArena geräumt!
+2130	Besiegte Gegner: {0}{1}
+2131	Zeit: {0}s
+2132	Das Ziel nicht erreicht.
+2133	STAND-GOBLIN
+2134	Tippe auf den nächsten Raum
+2135	ARENA GERÄUMT!
+2136	GESCHAFFT!
+2137	VERSUCH VORBEI
+2138	+{0} Gold · +{1} EP
+2139	RENNEN
+2140	GOBLIN-RENNEN
+2141	IN DER ARENA KÄMPFEN
+2142	Stand-Goblin
+2143	Eine Strecke voller Gruben und Plattformen. Erreiche so schnell wie möglich das Ziel: je weniger Zeit, desto mehr Gold. Wer fällt, scheidet aus.
+2144	LAUFEN
+2145	Besiegte Gegner: {0}\nArena geräumt!
+2146	Besiegte Gegner: {0}

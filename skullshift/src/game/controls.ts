@@ -1,3 +1,4 @@
+import { wantsTouchControls } from '../config';
 import Phaser from 'phaser';
 import { GestureInput } from './gesture';
 import { settings } from './settings';
@@ -262,3 +263,8 @@ export const GUARD_LABEL: Record<DeviceId, string> = {
   touch: 'DEF',
   gesture: '2 DEDOS',
 };
+
+/** Dispositivo de quem joga sozinho fora do menu de controles (dungeon, jogos da vila). */
+export function soloDevices(scene: Phaser.Scene): DeviceId[] {
+  return [connectedPads(scene).length > 0 ? 'pad0' : wantsTouchControls() ? 'touch' : 'kb-full'];
+}

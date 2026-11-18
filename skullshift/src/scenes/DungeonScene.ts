@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { BODY_FONT, FONT, VIEW, W } from '../config';
+import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
+import { soloDevices } from '../game/controls';
 import { areaById, areaTitle } from '../game/areas';
 import { playMusic, type Track } from '../game/music';
 import { addCoins, addXp, getLevel, markDungeonDone, smithLevel } from '../game/progress';
@@ -231,12 +232,12 @@ export class DungeonScene extends Phaser.Scene {
     }
     const P = VIEW.portrait;
     this.add
-      .text(W / 2, P ? 150 : 34, `DUNGEON · ${t.name.toUpperCase()}`, { fontFamily: FONT, fontSize: P ? '48px' : '30px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 })
+      .text(W / 2, P ? 150 + PORTRAIT.topPad : 34, `DUNGEON · ${t.name.toUpperCase()}`, { fontFamily: FONT, fontSize: P ? '62px' : '30px', align: 'center', wordWrap: { width: W - 80 }, color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 })
       .setOrigin(0.5);
     const gapNow = rn.rec - getLevel();
     const levelInfo = `Nível sugerido: ${rn.rec}  ·  Seu nível: ${getLevel()}`;
     this.add
-      .text(W / 2, P ? 210 : 70, levelInfo, { fontFamily: BODY_FONT, fontSize: P ? '30px' : '18px', color: gapNow > 0 ? '#ff9a8a' : '#bfe9ff' })
+      .text(W / 2, P ? 228 + PORTRAIT.topPad : 70, levelInfo, { fontFamily: BODY_FONT, fontSize: P ? '40px' : '18px', color: gapNow > 0 ? '#ff9a8a' : '#bfe9ff' })
       .setOrigin(0.5);
     this.drawHud();
     this.drawMap();
@@ -266,9 +267,9 @@ export class DungeonScene extends Phaser.Scene {
       this.time.delayedCall(300, () => this.resolve(rn.nodes[rn.at]));
     }
 
-    pillButton(this, P ? W / 2 : 150, P ? HH - 140 : HH - 40, 'DESISTIR', () => this.askAbandon(), 200, 0xe7eef2).setScale(P ? 1.4 : 0.8);
+    pillButton(this, P ? W / 2 : 150, P ? HH - 150 : HH - 40, 'DESISTIR', () => this.askAbandon(), 200, 0xe7eef2).setScale(P ? 1.9 : 0.8);
     this.add
-      .text(W / 2, P ? HH - 240 : HH - 40, 'Escolha a próxima sala: setas ou toque · Enter para ir', { fontFamily: BODY_FONT, fontSize: P ? '26px' : '16px', color: '#9fb4c8' })
+      .text(W / 2, P ? HH - 280 : HH - 40, P ? 'Toque na próxima sala para escolher' : 'Escolha a próxima sala: setas ou toque · Enter para ir', { fontFamily: BODY_FONT, fontSize: P ? '38px' : '16px', color: '#9fb4c8' })
       .setOrigin(0.5);
     this.highlight();
   }
@@ -279,7 +280,7 @@ export class DungeonScene extends Phaser.Scene {
     const rn = getRun()!;
     this.hud?.destroy();
     const P = VIEW.portrait;
-    const k = P ? 1.5 : 1;
+    const k = P ? 2.1 : 1;
     const items: Phaser.GameObjects.GameObject[] = [];
     const g = this.add.graphics();
     const r = 9 * k;
@@ -290,15 +291,17 @@ export class DungeonScene extends Phaser.Scene {
       g.fillStyle(on ? 0xe8463a : 0x445566, 1).fillCircle(x - r * 0.62, -r * 0.2, r).fillCircle(x + r * 0.62, -r * 0.2, r).fillTriangle(x - r * 1.45, 0, x + r * 1.45, 0, x, r * 1.75);
     }
     items.push(g);
-    const tx = rn.maxHearts * 30 * k + 10;
-    items.push(this.add.text(tx, -2, `Ouro da run: ${rn.gold}   ·   XP da run: ${rn.xp}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5));
+    // Em pé: ouro e XP na linha de baixo (a tela é estreita).
+    const tx = P ? -r * 1.6 : rn.maxHearts * 30 * k + 10;
+    const ty = P ? 48 * k : -2;
+    items.push(this.add.text(tx, ty, `Ouro da run: ${rn.gold}   ·   XP da run: ${rn.xp}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5));
     if (rn.blessings.length) {
       const names: Record<Blessing, string> = { heart: 'Vigor', fury: 'Fúria', luck: 'Sorte' };
       items.push(
-        this.add.text(tx, 26 * k, `Bênçãos: ${rn.blessings.map((b) => names[b]).join(', ')}`, { fontFamily: BODY_FONT, fontSize: `${Math.round(15 * k)}px`, color: '#d8b8ff' }).setOrigin(0, 0.5),
+        this.add.text(tx, ty + 30 * k, `Bênçãos: ${rn.blessings.map((b) => names[b]).join(', ')}`, { fontFamily: BODY_FONT, fontSize: `${Math.round(15 * k)}px`, color: '#d8b8ff' }).setOrigin(0, 0.5),
       );
     }
-    this.hud = this.add.container(P ? 60 : 40, P ? 290 : 112, items).setDepth(20);
+    this.hud = this.add.container(P ? 80 : 40, P ? 330 + PORTRAIT.topPad : 112, items).setDepth(20);
   }
 
   private drawMap(): void {
@@ -311,8 +314,8 @@ export class DungeonScene extends Phaser.Scene {
     // Em pé: o mapa desce (colunas viram linhas, de cima para baixo).
     const x0 = P ? 140 : 110;
     const x1 = P ? W - 140 : W - 110;
-    const top = P ? 380 : 170;
-    const bottom = P ? HH - 330 : HH - 110;
+    const top = P ? 560 + PORTRAIT.topPad : 170;
+    const bottom = P ? HH - 420 : HH - 110;
     for (const n of rn.nodes) {
       const along = cols === 1 ? 0.5 : n.col / (cols - 1);
       const across = (n.row + 1) / (n.rows + 1);
@@ -338,7 +341,7 @@ export class DungeonScene extends Phaser.Scene {
         }
       }
     }
-    const R = P ? 46 : 32;
+    const R = P ? 60 : 32;
     for (const n of rn.nodes) {
       const [x, y] = this.pos.get(n.id)!;
       const seen = rn.visited.includes(n.id);
@@ -355,7 +358,7 @@ export class DungeonScene extends Phaser.Scene {
     this.layer = this.add.container(0, 0, items);
     const [sx, sy] = this.pos.get(rn.at)!;
     this.token?.destroy();
-    this.token = this.add.image(sx, sy - R - 18, 'skull_avatar').setScale(P ? 0.3 : 0.2).setDepth(15);
+    this.token = this.add.image(sx, sy - R - 18, 'skull_avatar').setScale(P ? 0.4 : 0.2).setDepth(15);
     this.tweens.add({ targets: this.token, y: this.token.y - 8, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 
@@ -401,7 +404,7 @@ export class DungeonScene extends Phaser.Scene {
     this.ring?.destroy();
     if (!opts.length) return;
     const P = VIEW.portrait;
-    const R = (P ? 46 : 32) + 12;
+    const R = (P ? 60 : 32) + 12;
     this.ring = this.add.graphics().setDepth(14);
     opts.forEach((id, i) => {
       const [x, y] = this.pos.get(id)!;
@@ -416,7 +419,7 @@ export class DungeonScene extends Phaser.Scene {
     const fightish = n.kind === 'fight' || n.kind === 'elite' || n.kind === 'boss';
     const label = fightish ? `${KIND_NAME[n.kind]} · nível ${roomLevel(rn, n)}` : KIND_NAME[n.kind];
     this.tip = this.add
-      .text(x, y + R + 18, label, { fontFamily: FONT, fontSize: P ? '28px' : '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6, backgroundColor: '#10223acc', padding: { x: 8, y: 3 } })
+      .text(x, y + R + 18, label, { fontFamily: FONT, fontSize: P ? '38px' : '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6, backgroundColor: '#10223acc', padding: { x: 8, y: 3 } })
       .setOrigin(0.5, 0)
       .setDepth(16);
   }
@@ -557,7 +560,7 @@ export class DungeonScene extends Phaser.Scene {
     const rn = getRun()!;
     const idx = prepareRoom(rn, n);
     this.closeModal();
-    this.scene.start('loading', { next: 'game', data: { mode: 'story', devices: ['kb-full'], level: idx } });
+    this.scene.start('loading', { next: 'game', data: { mode: 'story', devices: soloDevices(this), level: idx } });
   }
 
   // ---------- painéis ----------
@@ -566,27 +569,28 @@ export class DungeonScene extends Phaser.Scene {
     this.closeModal();
     const P = VIEW.portrait;
     const HH = this.scale.height;
-    const pw = P ? W - 120 : 760;
-    const ph = (P ? 360 : 220) + choices.length * (P ? 110 : 70);
+    const pw = P ? W - 100 : 760;
+    const step = P ? 140 : 70;
     const items: Phaser.GameObjects.GameObject[] = [];
     const shade = this.add.rectangle(0, 0, W, HH, 0x000000, 0.55).setOrigin(0).setInteractive();
     items.push(shade);
     const g = this.add.graphics();
+    // Altura pelo texto (em pé as letras são grandes e o texto quebra em mais linhas).
+    const body = this.add.text(W / 2, 0, text, { fontFamily: BODY_FONT, fontSize: P ? '40px' : '19px', color: '#fff7dc', align: 'center', wordWrap: { width: pw - 80 }, lineSpacing: 6 }).setOrigin(0.5, 0);
+    const head = P ? 150 : 80;
+    const ph = Math.max(P ? 420 : 220, head + body.height + 30 + choices.length * step + (P ? 40 : 20));
     const x = W / 2 - pw / 2;
     const y = HH / 2 - ph / 2;
+    body.setY(y + head);
     g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 24);
     g.fillStyle(0x1b2e4a, 1).fillRoundedRect(x, y, pw, ph, 20);
     g.lineStyle(3, 0xfff7dc, 0.6).strokeRoundedRect(x, y, pw, ph, 20);
     items.push(g);
-    items.push(this.add.text(W / 2, y + (P ? 60 : 40), title, { fontFamily: FONT, fontSize: P ? '48px' : '30px', color: '#ffe066' }).setOrigin(0.5));
-    items.push(
-      this.add
-        .text(W / 2, y + (P ? 120 : 80), text, { fontFamily: BODY_FONT, fontSize: P ? '30px' : '19px', color: '#fff7dc', align: 'center', wordWrap: { width: pw - 80 }, lineSpacing: 6 })
-        .setOrigin(0.5, 0),
-    );
-    const by = y + ph - (P ? 90 : 60) - (choices.length - 1) * (P ? 110 : 70);
+    items.push(this.add.text(W / 2, y + (P ? 75 : 40), title, { fontFamily: FONT, fontSize: P ? '62px' : '30px', color: '#ffe066', align: 'center', wordWrap: { width: pw - 60 } }).setOrigin(0.5));
+    items.push(body);
+    const by = y + ph - (P ? 100 : 60) - (choices.length - 1) * step;
     choices.forEach((c, i) => {
-      const b = pillButton(this, W / 2, by + i * (P ? 110 : 70), c.label, () => !c.disabled && c.act(), P ? 560 : 420, c.disabled ? 0x8a95a3 : i === 0 ? 0xffe066 : 0xe7eef2).setScale(P ? 1.3 : 1);
+      const b = pillButton(this, W / 2, by + i * step, c.label, () => !c.disabled && c.act(), P ? 560 : 420, c.disabled ? 0x8a95a3 : i === 0 ? 0xffe066 : 0xe7eef2).setScale(P ? 1.75 : 1);
       if (c.disabled) b.setAlpha(0.6);
       items.push(b);
     });

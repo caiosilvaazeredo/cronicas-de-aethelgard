@@ -940,6 +940,7 @@
 "Inimigos derrotados: {0}": "Enemies defeated: {0}",
 "Inimigos derrotados: {0}\nArena limpa!": "Enemies defeated: {0}\nArena cleared!",
 "Inimigos derrotados: {0}{1}": "Enemies defeated: {0}{1}",
+"Inimigos: {0}/{1}": "Enemies: {0}/{1}",
 "Inquilinos. Ossos que se recusaram a seguir a lua. Não pares para conversar.": "Tenants. Bones that refused to follow the moon. Don't stop to chat.",
 "Inspirações": "Inspirations",
 "Instrumentos": "Instruments",

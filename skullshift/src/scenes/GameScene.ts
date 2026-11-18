@@ -426,6 +426,17 @@ export class GameScene extends Phaser.Scene {
       const limit = deathLimit(this.levelIndex);
       this.time.delayedCall(0, () => this.ui?.setLives(limit === Infinity ? null : limit - 1, limit - 1));
     }
+    if (def.village) {
+      // Placar no topo: inimigos derrotados na arena, cronômetro na corrida.
+      const total = def.screens.reduce((n, sc) => n + (sc.enemies?.length ?? 0), 0);
+      const kind = def.village.kind;
+      const tick = () => {
+        if (this.ended) return;
+        const txt = kind === 'arena' ? trf('Inimigos: {0}/{1}', Math.min(this.kills, total), total) : trf('Tempo: {0}s', ((this.time.now - this.startTime) / 1000).toFixed(1));
+        this.ui?.setVillageInfo(txt);
+      };
+      this.time.addEvent({ delay: 100, loop: true, callback: tick });
+    }
     this.time.delayedCall(0, () => this.ui?.banner(this.mode === 'story' ? (def.dungeon || def.village ? def.name : `${this.levelTag()} — ${def.name}`) : `VERSUS · ${def.name}`, 1600, def.intro));
 
     const kb = this.input.keyboard!;
@@ -465,7 +476,7 @@ export class GameScene extends Phaser.Scene {
         this.cameras.remove(this.cam2);
         this.cam2 = undefined;
       }
-      if (VIEW.portrait) cam.setViewport(0, PORTRAIT.hudH, W, PORTRAIT.worldH).setZoom(PORTRAIT.zoom);
+      if (VIEW.portrait) cam.setViewport(0, PORTRAIT.hudH, W, PORTRAIT.worldH).setZoom(this.viewZoom);
       // (zoom em pé: a faixa mostra ~680 px de altura do mundo, do céu até a água)
       else cam.setViewport(0, 0, W, H).setZoom(1);
     }
@@ -473,7 +484,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   private get viewZoom(): number {
-    return this.split ? SPLIT.zoom : VIEW.portrait ? PORTRAIT.zoom : 1;
+    // Jogos da vila em pé: um pouco mais afastado, para ver mais da arena e do percurso.
+    const village = VIEW.portrait && LEVELS[this.levelIndex]?.village ? 0.8 : 1;
+    return this.split ? SPLIT.zoom : VIEW.portrait ? PORTRAIT.zoom * village : 1;
   }
 
   private get halfView(): number {

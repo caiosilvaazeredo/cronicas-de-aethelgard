@@ -938,6 +938,7 @@
 "Inimigos derrotados: {0}": "Yenilen düşman: {0}",
 "Inimigos derrotados: {0}\nArena limpa!": "Yenilen düşman: {0}\nArena temizlendi!",
 "Inimigos derrotados: {0}{1}": "Yenilen düşman: {0}{1}",
+"Inimigos: {0}/{1}": "Düşman: {0}/{1}",
 "Inquilinos. Ossos que se recusaram a seguir a lua. Não pares para conversar.": "Kiracılar. Ayı izlemeyi reddetmiş kemikler. Sohbet için durma.",
 "Inspirações": "İlham kaynakları",
 "Instrumentos": "Çalgılar",

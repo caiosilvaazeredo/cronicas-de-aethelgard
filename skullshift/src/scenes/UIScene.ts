@@ -1,3 +1,4 @@
+import { noTr } from '../i18n';
 import { endRun, getRun } from '../game/dungeon';
 import Phaser from 'phaser';
 import { RESERVE_LABEL } from '../game/controls';
@@ -34,6 +35,7 @@ export class UIScene extends Phaser.Scene {
   }
 
   init(data: { game: GameScene }): void {
+    this.infoText = undefined;
     this.g = data.game;
     this.pads = [];
     this.hud = undefined;
@@ -163,29 +165,31 @@ export class UIScene extends Phaser.Scene {
     if (sub) {
       // Frase de abertura (a narrativa da fase), embaixo do nome.
       const st = this.add
-        .text(W / 2, this.worldMidY - 176, sub, {
+        .text(W / 2, this.worldMidY - (VIEW.portrait ? 150 : 176), sub, {
           fontFamily: BODY_FONT,
-          fontSize: '24px',
+          // Em pé a tela é estreita e o texto fica minúsculo: letra maior.
+          fontSize: VIEW.portrait ? '40px' : '24px',
           color: '#ffffff',
           stroke: '#10223a',
           strokeThickness: 6,
           align: 'center',
-          wordWrap: { width: 1000 },
+          wordWrap: { width: VIEW.portrait ? W - 120 : 1000 },
         })
         .setOrigin(0.5)
         .setDepth(DEPTH.hud);
       this.tweens.add({ targets: st, alpha: 0, delay: ms + 1400, duration: 600, onComplete: () => st.destroy() });
     }
     const t = this.add
-      .text(W / 2, this.worldMidY - 230, text, {
+      .text(W / 2, this.worldMidY - (VIEW.portrait ? 240 : 230), text, {
         fontFamily: FONT,
-        fontSize: '46px',
+        fontSize: VIEW.portrait ? '70px' : '46px',
         color: '#fff7dc',
         stroke: '#10223a',
         strokeThickness: 10,
       })
       .setOrigin(0.5)
       .setDepth(DEPTH.hud);
+    if (t.width > W - 60) t.setScale((W - 60) / t.width);
     this.tweens.add({ targets: t, alpha: 0, delay: ms, duration: 500, onComplete: () => t.destroy() });
   }
 
@@ -559,6 +563,20 @@ export class UIScene extends Phaser.Scene {
   }
 
   private livesBox?: Phaser.GameObjects.Container;
+  private infoText?: Phaser.GameObjects.Text;
+
+  /** Placar dos jogos da vila (inimigos da arena, tempo da corrida), no canto das vidas. */
+  setVillageInfo(text: string): void {
+    if (!this.infoText) {
+      const P = VIEW.portrait;
+      this.infoText = this.add
+        .text(W - (P ? 40 : 30), P ? PORTRAIT.topPad + 62 : 30, '', { fontFamily: FONT, fontSize: P ? '46px' : '26px', color: '#ffe066', stroke: '#10223a', strokeThickness: P ? 9 : 6 })
+        .setOrigin(1, 0.5)
+        .setDepth(DEPTH.hud + 2);
+      noTr(this.infoText);
+    }
+    this.infoText.setText(text);
+  }
 
   /** Vidas da fase (modo história): caveirinhas no canto; null = infinitas (∞). */
   setLives(left: number | null, max: number): void {

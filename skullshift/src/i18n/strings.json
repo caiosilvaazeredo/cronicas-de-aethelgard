@@ -2145,5 +2145,6 @@
 "Um percurso de buracos e plataformas. Chegue ao fim o mais rápido que puder: quanto menos tempo, mais ouro. Cair encerra a corrida.",
 "CORRER",
 "Inimigos derrotados: {0}\nArena limpa!",
-"Inimigos derrotados: {0}"
+"Inimigos derrotados: {0}",
+"Inimigos: {0}/{1}"
 ]

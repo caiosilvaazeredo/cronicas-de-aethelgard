@@ -195,6 +195,9 @@ originais (extraídas com PIL do PNG).
   - **Pega-ovelha** (`scenes/MinigameScene.ts`), no curral.
   - A recompensa cai 25% a cada partida do mesmo jogo no mesmo dia (contador `mg_<tipo>_<data>` nas estatísticas).
   - Em pé, o pega-ovelha usa uma câmera com zoom e outra para a interface. Os botões de toque são o `TouchPad` das fases com o preset `walk`/`walk-jump`.
+  - No topo aparece um placar (`UIScene.setVillageInfo`): inimigos derrotados/total na arena e o cronômetro na corrida.
+  - Em pé, a câmera desses jogos fica 20% mais afastada (`GameScene.viewZoom`) para mostrar mais da arena e do percurso.
+- **Faixa de abertura em pé** (`UIScene.bannerFace`): letras maiores, texto quebrado na largura da tela e título reduzido se não couber.
 - **Dispositivo fora do menu de controles**: `soloDevices(scene)` (controle, toque ou teclado), usado ao entrar numa sala de dungeon ou num jogo da vila.
 - Verificador de alcance com salas geradas: `DUNGEON=90 node scripts/check-reach.cjs`.
 - Tradução: moldes com pelo menos 2 letras fixas (antes 3) para pegar "{0}/{1} XP" e "NV {0}"; `trf(modelo, ...)` traduz e preenche direto.

@@ -1,0 +1,1 @@
+2148	Süre: {0}   ·   Koyun: {1}\nKoyunlara dokun! Yürümek için ◀ ▶, zıplamak için ZIPLA (ya da meraya dokun).

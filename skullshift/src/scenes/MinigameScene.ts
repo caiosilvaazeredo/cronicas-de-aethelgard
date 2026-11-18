@@ -104,6 +104,8 @@ export class MinigameScene extends Phaser.Scene {
   private sheep(): void {
     const HH = this.HH;
     const P = VIEW.portrait;
+    // Em pé o pasto é mais estreito (a tela também é): as ovelhas não somem longe da câmera.
+    const FW = P ? 760 : W;
     const gy = P ? 576 : HH * 0.8;
     const cam = this.cameras.main;
     let pad: TouchPad | undefined;
@@ -112,9 +114,9 @@ export class MinigameScene extends Phaser.Scene {
       const top = this.playTop;
       const panel = portraitPanelTop();
       const h = panel - top;
-      const zoom = Math.min(h / 620, W / 560);
+      const zoom = Math.min(h / 440, W / 460);
       const visH = h / zoom;
-      cam.setViewport(0, top, W, h).setZoom(zoom).setBounds(0, 700 - visH, W, visH);
+      cam.setViewport(0, top, W, h).setZoom(zoom).setBounds(0, 700 - visH, FW, visH);
       this.ui(() => {
         this.add.rectangle(0, panel, W, VIEW.h - panel, 0x16304d).setOrigin(0);
         this.add.rectangle(0, panel, W, 8, 0x0b1626).setOrigin(0);
@@ -136,7 +138,7 @@ export class MinigameScene extends Phaser.Scene {
     }
     // Em pé a câmera já dá o zoom: tudo no tamanho normal.
     const K = 1;
-    const hero = this.add.sprite(W / 2, gy, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(K).play('skull_idle').setDepth(5);
+    const hero = this.add.sprite(FW / 2, gy, 'skull_idle').setOrigin(0.5, CHARS.skull.feetY / CHARS.skull.frame).setScale(K).play('skull_idle').setDepth(5);
     if (P) cam.startFollow(hero, true, 0.15, 0.15);
     let vy = 0;
     let ground = true;
@@ -144,7 +146,7 @@ export class MinigameScene extends Phaser.Scene {
     let target: number | null = null;
     const flock: Array<{ s: Phaser.GameObjects.Sprite; v: number; vy: number; until: number }> = [];
     const addSheep = () => {
-      const s = this.add.sprite(Phaser.Math.Between(60, W - 60), gy, 'sheep_move').setOrigin(0.5, 0.66).setScale(1.1 * K).play('sheep_move').setDepth(4);
+      const s = this.add.sprite(Phaser.Math.Between(60, FW - 60), gy, 'sheep_move').setOrigin(0.5, 0.66).setScale(1.1 * K).play('sheep_move').setDepth(4);
       flock.push({ s, v: (Math.random() < 0.5 ? -1 : 1) * Phaser.Math.Between(90, 170), vy: 0, until: 0 });
     };
     for (let i = 0; i < 5; i++) addSheep();
@@ -195,7 +197,7 @@ export class MinigameScene extends Phaser.Scene {
         if (Math.abs(d) < 10) target = null;
         else move = Math.sign(d);
       }
-      hero.x = Phaser.Math.Clamp(hero.x + move * 330 * (K > 1 ? 1.5 : 1) * dt, 30, W - 30);
+      hero.x = Phaser.Math.Clamp(hero.x + move * 330 * (K > 1 ? 1.5 : 1) * dt, 30, FW - 30);
       if (move) hero.setFlipX(move < 0);
       if (!ground) {
         vy += 1700 * dt;
@@ -217,9 +219,9 @@ export class MinigameScene extends Phaser.Scene {
           if (Math.random() < 0.3 && f.s.y >= gy) f.vy = -420;
         }
         f.s.x += f.v * dt;
-        if (f.s.x < 40 || f.s.x > W - 40) {
+        if (f.s.x < 40 || f.s.x > FW - 40) {
           f.v = -f.v;
-          f.s.x = Phaser.Math.Clamp(f.s.x, 40, W - 40);
+          f.s.x = Phaser.Math.Clamp(f.s.x, 40, FW - 40);
         }
         if (f.vy || f.s.y < gy) {
           f.vy += 1500 * dt;
@@ -235,11 +237,15 @@ export class MinigameScene extends Phaser.Scene {
           f.s.setVisible(false);
           this.time.delayedCall(900, () => {
             if (!f.s.active) return;
-            f.s.setPosition(hero.x < W / 2 ? W - 60 : 60, gy).setVisible(true);
+            f.s.setPosition(hero.x < FW / 2 ? FW - 60 : 60, gy).setVisible(true);
           });
         }
       }
-      this.info.setText(`Tempo: ${left}   ·   Ovelhas: ${this.score}\nEncoste nas ovelhas! Setas para andar, ↑/Espaço pula (ou toque no pasto).`);
+      this.info.setText(
+        pad
+          ? `Tempo: ${left}   ·   Ovelhas: ${this.score}\nEncoste nas ovelhas! ◀ ▶ para andar, PULA para pular (ou toque no pasto).`
+          : `Tempo: ${left}   ·   Ovelhas: ${this.score}\nEncoste nas ovelhas! Setas para andar, ↑/Espaço pula (ou toque no pasto).`,
+      );
     });
   }
 

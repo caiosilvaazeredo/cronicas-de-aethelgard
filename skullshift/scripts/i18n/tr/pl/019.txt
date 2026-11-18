@@ -1,0 +1,1 @@
+2148	Czas: {0}   ·   Owce: {1}\nDotknij owiec! ◀ ▶ by iść, SKOK by skoczyć (albo dotknij pastwiska).

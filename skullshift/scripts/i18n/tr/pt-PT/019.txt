@@ -1,0 +1,1 @@
+2148	Tempo: {0}   ·   Ovelhas: {1}\nToca nas ovelhas! ◀ ▶ para andar, SALTA para saltar (ou toca no pasto).

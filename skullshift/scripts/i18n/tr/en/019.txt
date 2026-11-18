@@ -1,0 +1,1 @@
+2148	Time: {0}   ·   Sheep: {1}\nTouch the sheep! ◀ ▶ to walk, JUMP to jump (or tap the pasture).

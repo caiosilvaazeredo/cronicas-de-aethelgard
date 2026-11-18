@@ -1,0 +1,1 @@
+2148	Zeit: {0}   ·   Schafe: {1}\nBerühre die Schafe! ◀ ▶ zum Laufen, SPRUNG zum Springen (oder tippe auf die Weide).

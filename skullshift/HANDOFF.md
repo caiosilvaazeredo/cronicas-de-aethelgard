@@ -195,6 +195,7 @@ originais (extraídas com PIL do PNG).
   - **Pega-ovelha** (`scenes/MinigameScene.ts`), no curral.
   - A recompensa cai 25% a cada partida do mesmo jogo no mesmo dia (contador `mg_<tipo>_<data>` nas estatísticas).
   - Em pé, o pega-ovelha usa uma câmera com zoom e outra para a interface. Os botões de toque são o `TouchPad` das fases com o preset `walk`/`walk-jump`.
+  - Pega-ovelha em pé: o pasto tem 760 px de largura em vez de 1280. A câmera fica mais próxima (cerca de 460 px de mundo visíveis) e segue a caveira. Com os botões na tela, as instruções falam dos botões e não do teclado.
   - No topo aparece um placar (`UIScene.setVillageInfo`): inimigos derrotados/total na arena e o cronômetro na corrida.
   - Em pé, a câmera desses jogos fica 20% mais afastada (`GameScene.viewZoom`) para mostrar mais da arena e do percurso.
 - **Faixa de abertura em pé** (`UIScene.bannerFace`): letras maiores, texto quebrado na largura da tela e título reduzido se não couber.

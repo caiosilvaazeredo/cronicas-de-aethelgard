@@ -1,0 +1,1 @@
+2148	Tempo: {0}   ·   Pecore: {1}\nTocca le pecore! ◀ ▶ per camminare, SALTA per saltare (o tocca il pascolo).

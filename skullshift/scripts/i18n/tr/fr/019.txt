@@ -1,0 +1,1 @@
+2148	Temps : {0}   ·   Moutons : {1}\nTouche les moutons ! ◀ ▶ pour marcher, SAUT pour sauter (ou touche le pré).

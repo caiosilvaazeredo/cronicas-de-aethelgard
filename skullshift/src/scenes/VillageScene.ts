@@ -142,8 +142,10 @@ export class VillageScene extends Phaser.Scene {
     const kb = this.input.keyboard!;
     this.keys = kb.addKeys('LEFT,RIGHT,A,D,UP,W,SPACE,E,ENTER,F,ESC') as Record<string, Phaser.Input.Keyboard.Key>;
     for (const k of ['E', 'ENTER', 'F']) kb.on(`keydown-${k}`, () => this.action());
-    kb.on('keydown-UP', () => (this.near ? this.action() : this.jump()));
-    kb.on('keydown-W', () => this.jump());
+    kb.on('keydown-UP', () => (this.dialogNav ? this.dialogNav(-1) : this.near ? this.action() : this.jump()));
+    kb.on('keydown-DOWN', () => this.dialogNav?.(1));
+    kb.on('keydown-W', () => (this.dialogNav ? this.dialogNav(-1) : this.jump()));
+    kb.on('keydown-S', () => this.dialogNav?.(1));
     kb.on('keydown-SPACE', () => (this.dialog ? this.action() : this.jump()));
     kb.on('keydown-ESC', () => (this.dialog ? this.closeDialog() : this.toWorld()));
     // Toque/clique: anda até o ponto (e usa o lugar, se tocou num).
@@ -415,6 +417,8 @@ export class VillageScene extends Phaser.Scene {
     this.dialog = this.add.container(0, 0, objs as Phaser.GameObjects.GameObject[]);
     this.fixUI([this.dialog]);
     this.dialogFirst = list[0].act;
+    // Os botões de toque somem enquanto a janela está aberta (não ficam por cima dela).
+    this.pad?.setVisible(false);
     sfx('select');
   }
 
@@ -424,6 +428,8 @@ export class VillageScene extends Phaser.Scene {
     this.dialog?.destroy(true);
     this.dialog = undefined;
     this.dialogFirst = undefined;
+    this.dialogNav = undefined;
+    this.pad?.setVisible(true);
   }
 
   // ---------- lugares ----------
@@ -491,30 +497,89 @@ export class VillageScene extends Phaser.Scene {
   private goldText?: Phaser.GameObjects.Text;
 
   /** Ferreiro: lista as melhorias com nível e preço; comprar reabre a lista atualizada. */
-  private smith(): void {
-    const choices = SMITH.map((u) => {
+  /**
+   * Ferreiro: painel próprio, uma linha por melhoria (nome, nível em bolinhas, o que faz e o
+   * botão com o preço). Em pé tudo fica maior e as linhas, mais altas.
+   * Teclado: ↑ ↓ escolhem, Enter compra, Esc fecha.
+   */
+  private smith(sel = 0): void {
+    this.closeDialog();
+    const P = VIEW.portrait;
+    const HH = this.scale.height;
+    const k = P ? 2.5 : 1;
+    const pw = P ? W - 60 : 1000;
+    const head = P ? 250 : 96;
+    const foot = P ? 190 : 74;
+    // Em pé as linhas crescem até ocupar a altura livre abaixo do cabeçalho.
+    const rowH = P ? Phaser.Math.Clamp((HH - PORTRAIT.hudH - 60 - head - foot) / SMITH.length, 250, 300) : 92;
+    const ph = head + SMITH.length * rowH + foot;
+    const x = W / 2 - pw / 2;
+    const y = P ? Math.max(PORTRAIT.hudH + 20, (HH - ph) / 2) : Math.max(8, (VH - ph) / 2);
+    const coins = getCoins();
+    const first = this.children.list.length;
+    const g = this.add.graphics();
+    g.fillStyle(0x000000, 0.45).fillRect(0, 0, W, HH);
+    g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 22);
+    g.fillStyle(0xfff7dc, 1).fillRoundedRect(x, y, pw, ph, 18);
+    this.add.text(x + 28, y + 20 * k, 'Ferreiro Bruno', { fontFamily: FONT, fontSize: `${Math.round(26 * k)}px`, color: '#7a3ad0' });
+    this.add.text(x + pw - 28, y + 24 * k, `Ouro: ${coins}`, { fontFamily: FONT, fontSize: `${Math.round(21 * k)}px`, color: '#8a5a00' }).setOrigin(1, 0);
+    this.add.text(x + 28, y + (P ? 140 : 58), 'Melhorias que ficam para sempre, em toda dungeon.', { fontFamily: BODY_FONT, fontSize: `${Math.round(17 * k)}px`, color: '#3a2412', wordWrap: { width: pw - 56 } });
+    const btnS = P ? 1.55 : 0.8;
+    const btnW = 240 * btnS;
+    SMITH.forEach((u, i) => {
       const lvl = smithLevel(u.id);
       const maxed = lvl >= u.max;
       const cost = smithCost(u.id, lvl);
-      return {
-        // Montado já traduzido (o nome tem espaços e o molde "{0} {1}/{2}" cortaria no lugar errado).
-        label: maxed ? trf('{0} · MÁX', tr(u.name)) : trf('{0} {1}/{2} · {3} ouro', tr(u.name), lvl + 1, u.max, cost),
-        raw: true,
-        act: () => {
-          if (maxed) return;
-          if (!buySmith(u.id, cost)) {
-            this.cameras.main.shake(120, 0.004);
-            return;
-          }
-          sfx('pick');
-          this.goldText?.setText(`Ouro: ${getCoins()}`);
-          this.smith();
-        },
-      };
+      const ry = y + head + i * rowH;
+      const on = i === sel;
+      g.fillStyle(on ? 0xffe9a8 : 0xf4e3bf, 1).fillRoundedRect(x + 16, ry + 4, pw - 32, rowH - 8, 14);
+      if (on) g.lineStyle(4, 0xffb000, 1).strokeRoundedRect(x + 16, ry + 4, pw - 32, rowH - 8, 14);
+      // Já traduzidos (sem o encaixe automático na largura do texto original, que encolhia a letra).
+      noTr(this.add.text(x + 36, ry + (P ? 22 : 12), '', { fontFamily: FONT, fontSize: `${Math.round(20 * k)}px`, color: '#10223a' })).setText(tr(u.name));
+      // Nível: uma bolinha por estágio (cheia = já comprada).
+      const r = 7 * k;
+      for (let n = 0; n < u.max; n++) {
+        const cx = x + 36 + r + n * r * 2.8;
+        const cy = ry + (P ? 112 : 50);
+        g.fillStyle(INK, 1).fillCircle(cx, cy, r + 2);
+        g.fillStyle(n < lvl ? 0xe8463a : 0xd8c8a0, 1).fillCircle(cx, cy, r);
+      }
+      noTr(this.add.text(x + 36, ry + (P ? 148 : 64), '', { fontFamily: BODY_FONT, fontSize: `${Math.round(16 * k)}px`, color: '#3a2412', wordWrap: { width: pw - 72 - btnW - 30 }, lineSpacing: P ? 2 : 0 })).setText(tr(u.desc));
+      const color = maxed ? 0xcfe8c0 : coins >= cost ? 0xffe066 : 0xe7eef2;
+      const btn = pillButton(this, x + pw - 36 - btnW / 2, ry + rowH / 2, maxed ? 'MÁX' : '', () => this.buyUpgradeAt(i), 240, color).setScale(btnS);
+      if (!maxed) noTr(btn.list[1] as Phaser.GameObjects.Text).setText(trf('{0} ouro', cost));
+      // Tocar na linha escolhe; tocar no botão compra.
+      this.add
+        .zone(x + 16 + (pw - 32 - btnW - 40) / 2, ry + rowH / 2, pw - 32 - btnW - 40, rowH - 8)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => i !== sel && this.smith(i));
     });
-    const lines = SMITH.map((u) => `${u.name}: ${u.desc}`).join('\n');
-    this.openDialog('Ferreiro Bruno', `Ouro: ${getCoins()}. Melhorias que ficam para sempre, em toda dungeon:\n${lines}`, [...choices, { label: 'SAIR', act: () => this.closeDialog() }]);
+    pillButton(this, W / 2, y + ph - foot / 2, 'SAIR', () => this.closeDialog(), 240, 0xe7eef2).setScale(P ? 1.7 : 0.85);
+    const objs = this.children.list.slice(first);
+    this.fixUI(objs);
+    this.dialog = this.add.container(0, 0, objs as Phaser.GameObjects.GameObject[]);
+    this.fixUI([this.dialog]);
+    this.pad?.setVisible(false);
+    this.dialogFirst = () => this.buyUpgradeAt(sel);
+    this.dialogNav = (d) => this.smith(Phaser.Math.Wrap(sel + d, 0, SMITH.length));
   }
+
+  private buyUpgradeAt(i: number): void {
+    const u = SMITH[i];
+    const lvl = smithLevel(u.id);
+    if (lvl >= u.max) return;
+    if (!buySmith(u.id, smithCost(u.id, lvl))) {
+      sfx('hit');
+      this.cameras.main.shake(120, 0.004);
+      return;
+    }
+    sfx('pick');
+    this.goldText?.setText(`Ouro: ${getCoins()}`);
+    this.smith(i);
+  }
+
+  /** ↑ ↓ dentro de um painel com lista (o do Ferreiro). */
+  private dialogNav?: (d: number) => void;
 
   private toWorld(): void {
     this.scene.start('world', { devices: ['kb-full'] });

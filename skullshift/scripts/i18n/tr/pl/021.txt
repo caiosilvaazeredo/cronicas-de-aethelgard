@@ -1,0 +1,5 @@
+2151	Masz loch w toku.
+2152	Zalecany poziom: {0} · pokonany
+2153	Zalecany poziom: {0}
+2154	Poziom {0}
+2155	Twój poziom: {0}. Możesz wejść powyżej swojego poziomu, ale zaboli.

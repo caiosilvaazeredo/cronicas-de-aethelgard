@@ -1,0 +1,5 @@
+2151	Hai un dungeon in corso.
+2152	Livello consigliato: {0} · superato
+2153	Livello consigliato: {0}
+2154	Livello {0}
+2155	Il tuo livello: {0}. Puoi entrare sopra il tuo livello, ma farà male.

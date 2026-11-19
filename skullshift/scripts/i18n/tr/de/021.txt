@@ -1,0 +1,5 @@
+2151	Du hast einen laufenden Dungeon.
+2152	Empfohlene Stufe: {0} · geschafft
+2153	Empfohlene Stufe: {0}
+2154	Stufe {0}
+2155	Deine Stufe: {0}. Du kannst über deiner Stufe hinein, aber es wird wehtun.

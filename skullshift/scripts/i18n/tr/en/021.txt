@@ -1,0 +1,5 @@
+2151	You have a dungeon in progress.
+2152	Suggested level: {0} · cleared
+2153	Suggested level: {0}
+2154	Level {0}
+2155	Your level: {0}. You can enter above your level, but it'll hurt.

@@ -1,0 +1,5 @@
+2151	Tu as un donjon en cours.
+2152	Niveau conseillé : {0} · vaincu
+2153	Niveau conseillé : {0}
+2154	Niveau {0}
+2155	Ton niveau : {0}. Tu peux entrer au-dessus de ton niveau, mais ça va faire mal.

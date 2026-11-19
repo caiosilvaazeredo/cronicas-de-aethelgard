@@ -69,6 +69,16 @@ const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
  * treinador (nível e XP), o lago de pesca, o portal das dungeons, a barraca de alvos, o curral
  * das ovelhas e moradores para conversar.
  */
+/** Linha de um painel de lista (textos já traduzidos). */
+interface PanelRow {
+  name: string;
+  pips?: { on: number; max: number };
+  desc: string;
+  btn: string;
+  color: number;
+  act: () => void;
+}
+
 export class VillageScene extends Phaser.Scene {
   private hero!: Phaser.GameObjects.Sprite;
   private vy = 0;
@@ -468,91 +478,143 @@ export class VillageScene extends Phaser.Scene {
     this.scene.start('loading', { next: 'game', data: { mode: 'story', devices: soloDevices(this), level: prepareVillageGame(kind) } });
   }
 
-  private dungeonList(): void {
+  /**
+   * Portal: uma linha por dungeon (nome, nível sugerido, se já foi vencida) e o botão ENTRAR,
+   * colorido pela dificuldade em relação ao seu nível. A dungeon em andamento vem primeiro.
+   */
+  private dungeonList(sel = 0): void {
     const run = getRun();
-    const open = AREAS.filter((a) => a.levels.length && areaUnlocked(a));
-    const choices: Array<{ label: string; act: () => void }> = [];
-    if (run) choices.push({ label: 'CONTINUAR A DUNGEON', act: () => this.scene.start('dungeon', {}) });
-    // As 4 mais próximas do nível do jogador (para caber no painel).
     const L = getLevel();
-    const best = [...open].sort((a, b) => Math.abs(recommendedLevel(a) - L) - Math.abs(recommendedLevel(b) - L)).slice(0, run ? 3 : 4);
+    const rows: PanelRow[] = [];
+    if (run) {
+      const ra = AREAS.find((a) => a.id === run.area);
+      rows.push({
+        name: ra ? tr(areaTitle(ra).name) : tr('Dungeon'),
+        desc: tr('Você tem uma dungeon em andamento.'),
+        btn: tr('CONTINUAR'),
+        color: 0xffe066,
+        act: () => this.scene.start('dungeon', {}),
+      });
+    }
+    // As mais próximas do seu nível (quantas couberem), em ordem de dificuldade.
+    const open = AREAS.filter((a) => a.levels.length && areaUnlocked(a));
+    const fit = (VIEW.portrait ? 6 : 5) - rows.length;
+    const best = [...open].sort((a, b) => Math.abs(recommendedLevel(a) - L) - Math.abs(recommendedLevel(b) - L)).slice(0, fit);
     best.sort((a, b) => recommendedLevel(a) - recommendedLevel(b));
     for (const a of best) {
       const done = isDungeonDone(a.id);
-      choices.push({
-        label: `${areaTitle(a).name} · NV ${recommendedLevel(a)}${done ? ' ✓' : ''}`,
+      const rec = recommendedLevel(a);
+      const gap = rec - L;
+      rows.push({
+        name: tr(areaTitle(a).name),
+        desc: done ? trf('Nível sugerido: {0} · já vencida', rec) : trf('Nível sugerido: {0}', rec),
+        btn: tr('ENTRAR'),
+        // Amarelo: no seu nível; laranja: um pouco acima; vermelho: vai doer.
+        color: gap <= 0 ? 0xffe066 : gap <= 3 ? 0xffb46a : 0xff8a7a,
         act: () => {
           startRun(a.id, 'village', done);
           this.scene.start('dungeon', {});
         },
       });
     }
-    this.openDialog(
-      'Portal das Dungeons',
-      `Seu nível: ${L}. Escolha uma dungeon (o número é o nível sugerido). Dá para entrar acima do seu nível, mas vai doer.${run ? '\nVocê tem uma dungeon em andamento.' : ''}`,
-      choices,
-    );
+    this.listPanel({
+      title: tr('Portal das Dungeons'),
+      right: trf('Nível {0}', L),
+      sub: trf('Seu nível: {0}. Dá para entrar acima do seu nível, mas vai doer.', L),
+      rows,
+      sel,
+      rowMinP: 210,
+      reopen: (n) => this.dungeonList(n),
+    });
   }
 
   private goldText?: Phaser.GameObjects.Text;
 
-  /** Ferreiro: lista as melhorias com nível e preço; comprar reabre a lista atualizada. */
-  /**
-   * Ferreiro: painel próprio, uma linha por melhoria (nome, nível em bolinhas, o que faz e o
-   * botão com o preço). Em pé tudo fica maior e as linhas, mais altas.
-   * Teclado: ↑ ↓ escolhem, Enter compra, Esc fecha.
-   */
+  /** Ferreiro: uma linha por melhoria (nome, nível em bolinhas, o que faz e o botão com o preço). */
   private smith(sel = 0): void {
+    const coins = getCoins();
+    const rows: PanelRow[] = SMITH.map((u, i) => {
+      const lvl = smithLevel(u.id);
+      const maxed = lvl >= u.max;
+      const cost = smithCost(u.id, lvl);
+      return {
+        name: tr(u.name),
+        pips: { on: lvl, max: u.max },
+        desc: tr(u.desc),
+        btn: maxed ? tr('MÁX') : trf('{0} ouro', cost),
+        color: maxed ? 0xcfe8c0 : coins >= cost ? 0xffe066 : 0xe7eef2,
+        act: () => this.buyUpgradeAt(i),
+      };
+    });
+    this.listPanel({
+      title: tr('Ferreiro Bruno'),
+      right: trf('Ouro: {0}', coins),
+      sub: tr('Melhorias que ficam para sempre, em toda dungeon.'),
+      rows,
+      sel,
+      rowMinP: 250,
+      reopen: (n) => this.smith(n),
+    });
+  }
+
+  /**
+   * Painel de lista (Ferreiro, Portal): título, um texto, linhas com nome, bolinhas opcionais,
+   * descrição e um botão; SAIR embaixo. Em pé tudo cresce e as linhas ocupam a altura livre.
+   * Teclado: ↑ ↓ escolhem a linha, Enter aperta o botão dela, Esc fecha. Os textos já vêm traduzidos.
+   */
+  private listPanel(o: { title: string; right?: string; sub: string; rows: PanelRow[]; sel: number; rowMinP: number; reopen: (sel: number) => void }): void {
     this.closeDialog();
     const P = VIEW.portrait;
     const HH = this.scale.height;
     const k = P ? 2.5 : 1;
+    const n = o.rows.length;
+    const sel = Phaser.Math.Clamp(o.sel, 0, Math.max(0, n - 1));
     const pw = P ? W - 60 : 1000;
     const head = P ? 250 : 96;
     const foot = P ? 190 : 74;
-    // Em pé as linhas crescem até ocupar a altura livre abaixo do cabeçalho.
-    const rowH = P ? Phaser.Math.Clamp((HH - PORTRAIT.hudH - 60 - head - foot) / SMITH.length, 250, 300) : 92;
-    const ph = head + SMITH.length * rowH + foot;
+    const rowH = P ? Phaser.Math.Clamp((HH - PORTRAIT.hudH - 60 - head - foot) / Math.max(1, n), o.rowMinP, 300) : Math.min(92, (VH - 16 - head - foot) / Math.max(1, n));
+    const ph = head + n * rowH + foot;
     const x = W / 2 - pw / 2;
     const y = P ? Math.max(PORTRAIT.hudH + 20, (HH - ph) / 2) : Math.max(8, (VH - ph) / 2);
-    const coins = getCoins();
     const first = this.children.list.length;
     const g = this.add.graphics();
     g.fillStyle(0x000000, 0.45).fillRect(0, 0, W, HH);
     g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 22);
     g.fillStyle(0xfff7dc, 1).fillRoundedRect(x, y, pw, ph, 18);
-    this.add.text(x + 28, y + 20 * k, 'Ferreiro Bruno', { fontFamily: FONT, fontSize: `${Math.round(26 * k)}px`, color: '#7a3ad0' });
-    this.add.text(x + pw - 28, y + 24 * k, `Ouro: ${coins}`, { fontFamily: FONT, fontSize: `${Math.round(21 * k)}px`, color: '#8a5a00' }).setOrigin(1, 0);
-    this.add.text(x + 28, y + (P ? 140 : 58), 'Melhorias que ficam para sempre, em toda dungeon.', { fontFamily: BODY_FONT, fontSize: `${Math.round(17 * k)}px`, color: '#3a2412', wordWrap: { width: pw - 56 } });
+    const txt = (tx: number, ty: number, value: string, style: Phaser.Types.GameObjects.Text.TextStyle) => noTr(this.add.text(tx, ty, '', style)).setText(value);
+    txt(x + 28, y + 20 * k, o.title, { fontFamily: FONT, fontSize: `${Math.round(26 * k)}px`, color: '#7a3ad0' });
+    if (o.right) txt(x + pw - 28, y + 24 * k, o.right, { fontFamily: FONT, fontSize: `${Math.round(21 * k)}px`, color: '#8a5a00' }).setOrigin(1, 0);
+    txt(x + 28, y + (P ? 140 : 58), o.sub, { fontFamily: BODY_FONT, fontSize: `${Math.round(17 * k)}px`, color: '#3a2412', wordWrap: { width: pw - 56 } });
     const btnS = P ? 1.55 : 0.8;
     const btnW = 240 * btnS;
-    SMITH.forEach((u, i) => {
-      const lvl = smithLevel(u.id);
-      const maxed = lvl >= u.max;
-      const cost = smithCost(u.id, lvl);
+    o.rows.forEach((row, i) => {
       const ry = y + head + i * rowH;
       const on = i === sel;
       g.fillStyle(on ? 0xffe9a8 : 0xf4e3bf, 1).fillRoundedRect(x + 16, ry + 4, pw - 32, rowH - 8, 14);
       if (on) g.lineStyle(4, 0xffb000, 1).strokeRoundedRect(x + 16, ry + 4, pw - 32, rowH - 8, 14);
-      // Já traduzidos (sem o encaixe automático na largura do texto original, que encolhia a letra).
-      noTr(this.add.text(x + 36, ry + (P ? 22 : 12), '', { fontFamily: FONT, fontSize: `${Math.round(20 * k)}px`, color: '#10223a' })).setText(tr(u.name));
-      // Nível: uma bolinha por estágio (cheia = já comprada).
-      const r = 7 * k;
-      for (let n = 0; n < u.max; n++) {
-        const cx = x + 36 + r + n * r * 2.8;
-        const cy = ry + (P ? 112 : 50);
-        g.fillStyle(INK, 1).fillCircle(cx, cy, r + 2);
-        g.fillStyle(n < lvl ? 0xe8463a : 0xd8c8a0, 1).fillCircle(cx, cy, r);
+      const textW = pw - 72 - btnW - 30;
+      const nameT = txt(x + 36, ry + (P ? 22 : 12), row.name, { fontFamily: FONT, fontSize: `${Math.round(20 * k)}px`, color: '#10223a' });
+      if (nameT.width > textW) nameT.setScale(textW / nameT.width);
+      let descY = ry + (P ? 100 : 44);
+      if (row.pips) {
+        // Nível: uma bolinha por estágio (cheia = já comprada).
+        const r = 7 * k;
+        for (let p = 0; p < row.pips.max; p++) {
+          const cx = x + 36 + r + p * r * 2.8;
+          const cy = ry + (P ? 112 : 50);
+          g.fillStyle(INK, 1).fillCircle(cx, cy, r + 2);
+          g.fillStyle(p < row.pips.on ? 0xe8463a : 0xd8c8a0, 1).fillCircle(cx, cy, r);
+        }
+        descY = ry + (P ? 148 : 64);
       }
-      noTr(this.add.text(x + 36, ry + (P ? 148 : 64), '', { fontFamily: BODY_FONT, fontSize: `${Math.round(16 * k)}px`, color: '#3a2412', wordWrap: { width: pw - 72 - btnW - 30 }, lineSpacing: P ? 2 : 0 })).setText(tr(u.desc));
-      const color = maxed ? 0xcfe8c0 : coins >= cost ? 0xffe066 : 0xe7eef2;
-      const btn = pillButton(this, x + pw - 36 - btnW / 2, ry + rowH / 2, maxed ? 'MÁX' : '', () => this.buyUpgradeAt(i), 240, color).setScale(btnS);
-      if (!maxed) noTr(btn.list[1] as Phaser.GameObjects.Text).setText(trf('{0} ouro', cost));
-      // Tocar na linha escolhe; tocar no botão compra.
+      txt(x + 36, descY, row.desc, { fontFamily: BODY_FONT, fontSize: `${Math.round(16 * k)}px`, color: '#3a2412', wordWrap: { width: textW }, lineSpacing: P ? 2 : 0 });
+      const btn = pillButton(this, x + pw - 36 - btnW / 2, ry + rowH / 2, '', () => row.act(), 240, row.color).setScale(btnS);
+      noTr(btn.list[1] as Phaser.GameObjects.Text).setText(row.btn);
+      // Tocar na linha escolhe; tocar no botão age.
       this.add
         .zone(x + 16 + (pw - 32 - btnW - 40) / 2, ry + rowH / 2, pw - 32 - btnW - 40, rowH - 8)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => i !== sel && this.smith(i));
+        .on('pointerdown', () => i !== sel && o.reopen(i));
     });
     pillButton(this, W / 2, y + ph - foot / 2, 'SAIR', () => this.closeDialog(), 240, 0xe7eef2).setScale(P ? 1.7 : 0.85);
     const objs = this.children.list.slice(first);
@@ -560,8 +622,8 @@ export class VillageScene extends Phaser.Scene {
     this.dialog = this.add.container(0, 0, objs as Phaser.GameObjects.GameObject[]);
     this.fixUI([this.dialog]);
     this.pad?.setVisible(false);
-    this.dialogFirst = () => this.buyUpgradeAt(sel);
-    this.dialogNav = (d) => this.smith(Phaser.Math.Wrap(sel + d, 0, SMITH.length));
+    this.dialogFirst = () => o.rows[sel]?.act();
+    this.dialogNav = (d) => o.reopen(Phaser.Math.Wrap(sel + d, 0, n));
   }
 
   private buyUpgradeAt(i: number): void {
@@ -578,7 +640,7 @@ export class VillageScene extends Phaser.Scene {
     this.smith(i);
   }
 
-  /** ↑ ↓ dentro de um painel com lista (o do Ferreiro). */
+  /** ↑ ↓ dentro de um painel de lista (Ferreiro, Portal). */
   private dialogNav?: (d: number) => void;
 
   private toWorld(): void {

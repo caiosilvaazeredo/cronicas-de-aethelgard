@@ -1,0 +1,5 @@
+2151	Tens uma dungeon em curso.
+2152	Nível sugerido: {0} · já vencida
+2153	Nível sugerido: {0}
+2154	Nível {0}
+2155	O teu nível: {0}. Dá para entrar acima do teu nível, mas vai doer.

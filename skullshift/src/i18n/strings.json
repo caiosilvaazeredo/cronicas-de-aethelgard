@@ -2149,5 +2149,10 @@
 "Inimigos: {0}/{1}",
 "Tempo: {0}   ·   Ovelhas: {1}\nEncoste nas ovelhas! ◀ ▶ para andar, PULA para pular (ou toque no pasto).",
 "Melhorias que ficam para sempre, em toda dungeon.",
-"MÁX"
+"MÁX",
+"Você tem uma dungeon em andamento.",
+"Nível sugerido: {0} · já vencida",
+"Nível sugerido: {0}",
+"Nível {0}",
+"Seu nível: {0}. Dá para entrar acima do seu nível, mas vai doer."
 ]

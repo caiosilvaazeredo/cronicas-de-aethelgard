@@ -1,0 +1,5 @@
+2151	Devam eden bir zindanın var.
+2152	Önerilen seviye: {0} · geçildi
+2153	Önerilen seviye: {0}
+2154	Seviye {0}
+2155	Seviyen: {0}. Seviyenin üstüne girebilirsin ama acıtır.

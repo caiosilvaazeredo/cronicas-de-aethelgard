@@ -1,0 +1,5 @@
+2151	Tienes una mazmorra en curso.
+2152	Nivel sugerido: {0} · superada
+2153	Nivel sugerido: {0}
+2154	Nivel {0}
+2155	Tu nivel: {0}. Puedes entrar por encima de tu nivel, pero dolerá.

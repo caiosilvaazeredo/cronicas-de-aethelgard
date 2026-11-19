@@ -89,9 +89,10 @@ export class WorldScene extends Phaser.Scene {
     cam.setBackgroundColor('#39b5fd');
     const P = VIEW.portrait;
     if (P) {
+      // Mapa entre o cabeçalho e o painel de baixo (~680 px para informação e botões).
       const top = 250 + PORTRAIT.topPad;
-      const band = Math.max(MH, this.scale.height - top - 760);
-      const zoom = Phaser.Math.Clamp(band / MH, 1, 1.5);
+      const band = Math.max(MH, this.scale.height - top - 680);
+      const zoom = Phaser.Math.Clamp(band / MH, 1, 1.8);
       cam.setViewport(0, top, MW, MH * zoom).setZoom(zoom);
     }
     cam.setBounds(0, 0, MW, MH);
@@ -209,22 +210,28 @@ export class WorldScene extends Phaser.Scene {
     const first = this.children.list.length;
     const top = PORTRAIT.topPad;
     this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
-    this.add.text(MW / 2, 175 + top, this.header(), { fontFamily: FONT, fontSize: '46px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
-    pillButton(this, 150, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.1);
-    pillButton(this, MW - 250, 80 + top, `VILA · ${getCoins()}`, () => this.village(), 400, 0xffd84a).setScale(1.1);
-    pillButton(this, MW / 2 + 40, 80 + top, 'DIÁRIO', () => this.journal(), 220, 0xd9b478).setScale(1.1);
+    const head = this.add.text(MW / 2, 185 + top, this.header(), { fontFamily: FONT, fontSize: '54px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
+    if (head.width > MW - 60) head.setScale((MW - 60) / head.width);
+    // Três botões no alto sem se sobrepor: MENU, DIÁRIO e VILA (com o ouro).
+    pillButton(this, 160, 80 + top, '◀ MENU', () => this.scene.start('menu', { stage: 'modes' }), 200).setScale(1.25);
+    pillButton(this, 470, 80 + top, 'DIÁRIO', () => this.journal(), 220, 0xd9b478).setScale(1.25);
+    pillButton(this, MW - 280, 80 + top, `VILA · ${getCoins()}`, () => this.village(), 400, 0xffd84a).setScale(1.25);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
+    // A sobra de altura vira espaço entre o mapa, o painel e os botões.
+    const spare = Math.max(0, H - mapBottom - 680);
+    const py = mapBottom + 30 + spare * 0.25;
+    const ph = 340;
     const g = this.add.graphics();
-    g.fillStyle(0x1b3a78, 1).fillRoundedRect(40, mapBottom + 30, MW - 80, 280, 22);
-    g.lineStyle(4, 0xfff7dc, 0.8).strokeRoundedRect(40, mapBottom + 30, MW - 80, 280, 22);
-    this.infoTitle = this.add.text(76, mapBottom + 56, '', { fontFamily: FONT, fontSize: '40px', color: '#ffe066' });
-    this.info = this.add.text(76, mapBottom + 116, '', { fontFamily: BODY_FONT, fontSize: '28px', color: '#fff7dc', wordWrap: { width: MW - 160 }, lineSpacing: 6 });
-    const by = mapBottom + 430;
-    pillButton(this, 190, by, '◀', () => this.cycle(-1), 200, 0xbfe9ff).setScale(1.6);
-    pillButton(this, MW / 2, by, 'ENTRAR', () => this.enter(), 300, 0xffe066).setScale(1.6);
-    pillButton(this, MW - 190, by, '▶', () => this.cycle(1), 200, 0xbfe9ff).setScale(1.6);
-    this.add.text(MW / 2, by + 130, 'Toque numa área para escolher · toque de novo para entrar', { fontFamily: BODY_FONT, fontSize: '26px', color: '#bfd0e0' }).setOrigin(0.5);
+    g.fillStyle(0x1b3a78, 1).fillRoundedRect(40, py, MW - 80, ph, 22);
+    g.lineStyle(4, 0xfff7dc, 0.8).strokeRoundedRect(40, py, MW - 80, ph, 22);
+    this.infoTitle = this.add.text(76, py + 26, '', { fontFamily: FONT, fontSize: '46px', color: '#ffe066' });
+    this.info = this.add.text(76, py + 96, '', { fontFamily: BODY_FONT, fontSize: '34px', color: '#fff7dc', wordWrap: { width: MW - 160 }, lineSpacing: 6 });
+    const by = py + ph + 100 + spare * 0.3;
+    pillButton(this, 150, by, '◀', () => this.cycle(-1), 140, 0xbfe9ff).setScale(1.7);
+    pillButton(this, MW / 2, by, 'ENTRAR', () => this.enter(), 300, 0xffe066).setScale(1.7);
+    pillButton(this, MW - 150, by, '▶', () => this.cycle(1), 140, 0xbfe9ff).setScale(1.7);
+    this.add.text(MW / 2, by + 125, 'Toque numa área para escolher · toque de novo para entrar', { fontFamily: BODY_FONT, fontSize: '32px', color: '#bfd0e0', align: 'center', wordWrap: { width: MW - 80 } }).setOrigin(0.5, 0);
     this.cameras.main.ignore(this.children.list.slice(first));
   }
 

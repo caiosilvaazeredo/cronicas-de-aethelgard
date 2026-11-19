@@ -220,3 +220,4 @@ originais (extraídas com PIL do PNG).
 - **Configurações em pé** (`SettingsScene`): abas maiores (3 + 2, nome traduzido sem o encaixe automático na largura do original), setas ◀ ▶ sempre dentro do painel e botões RESTAURAR/VOLTAR maiores.
 - **Tela de controles em pé** (`ControlsScene.layout`): painéis (1 ou 2 empilhados), dica e bandeja de dispositivos centralizados entre o título e os botões. A escala garante que as setas ◀ ▶ fiquem dentro da tela.
 - **Saves em pé** (`SlotsScene`): fichas largas com letra e botões maiores, sem a dica de teclado (mais altura para as fichas), título "SAVE n" traduzido sem encolher.
+- **Menu inicial em pé** (`MenuScene`): CRÉDITOS, idioma e AJUSTES numa linha só no topo, abaixo da folga do celular; JOGAR, as opções de modo e o texto de ajuda maiores. O nome do idioma vai em maiúsculas, porque a fonte do título não tem minúsculas.

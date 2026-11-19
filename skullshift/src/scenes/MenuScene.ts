@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { langInfo } from '../i18n';
+import { langInfo, noTr } from '../i18n';
 import { playMusic } from '../game/music';
-import { BODY_FONT, FONT, H, VIEW, W } from '../config';
+import { BODY_FONT, FONT, H, PORTRAIT, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
 import { CHARS, type CharId } from '../game/characters';
 import { SHAMAN_ORB_OFFSET } from '../game/sheets';
@@ -202,17 +202,22 @@ export class MenuScene extends Phaser.Scene {
           .text(W / 2, P ? 500 : 180, 'SKULLSHIFT', { fontFamily: FONT, fontSize: P ? '128px' : '96px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 14 })
           .setOrigin(0.5);
       }
-      const play = pillButton(this, W / 2, P ? (gy + 140 + HH) / 2 - 60 : 618, 'JOGAR', () => this.toModes(), 300, 0xffe066).setScale(P ? 2 : 1.3);
+      const play = pillButton(this, W / 2, P ? (gy + 140 + HH) / 2 - 60 : 618, 'JOGAR', () => this.toModes(), 300, 0xffe066).setScale(P ? 2.5 : 1.3);
+      // Em pé: botões do topo maiores, abaixo da folga do topo (entalhe/câmera do celular).
+      const tp = P ? PORTRAIT.topPad : 0;
       // Engrenagem: configurações direto da tela inicial.
-      pillButton(this, P ? W - 170 : W - 120, P ? 120 : 50, '⚙ AJUSTES', () => this.scene.start('settings', { from: 'menu' }), 190).setScale(P ? 1.4 : 0.85);
-      // Idioma: o botão mostra o nome da língua atual (sem bandeira).
-      pillButton(this, P ? W / 2 : 172, P ? 200 : 104, langInfo().name, () => this.scene.start('language'), 330).setScale(P ? 1.2 : 0.85);
-      pillButton(this, P ? 170 : 120, P ? 120 : 50, 'CRÉDITOS', () => this.scene.start('credits', { next: 'menu', data: {} }), 190).setScale(P ? 1.4 : 0.85);
+      pillButton(this, P ? W - 190 : W - 120, P ? 110 + tp : 50, '⚙ AJUSTES', () => this.scene.start('settings', { from: 'menu' }), 190).setScale(P ? 1.75 : 0.85);
+      // Idioma: o botão mostra o nome da língua atual (sem bandeira, sem tradução nem encolher).
+      const langBtn = pillButton(this, P ? W / 2 : 172, P ? 110 + tp : 104, '', () => this.scene.start('language'), 330).setScale(P ? 1.45 : 0.85);
+      // Em maiúsculas: a fonte do título não tem minúsculas ("Deutsch" saía miúdo, na fonte de reserva).
+      const langT = noTr(langBtn.list[1] as Phaser.GameObjects.Text).setText(langInfo().name.toUpperCase());
+      if (langT.width > 300) langT.setScale(300 / langT.width);
+      pillButton(this, P ? 190 : 120, P ? 110 + tp : 50, 'CRÉDITOS', () => this.scene.start('credits', { next: 'menu', data: {} }), 190).setScale(P ? 1.75 : 0.85);
       this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.add
-        .text(W / 2, P ? (gy + 140 + HH) / 2 + 110 : 690, 'Enter · Espaço · botão A · toque', {
+        .text(W / 2, P ? (gy + 140 + HH) / 2 + 130 : 690, 'Enter · Espaço · botão A · toque', {
           fontFamily: BODY_FONT,
-          fontSize: P ? '34px' : '18px',
+          fontSize: P ? '40px' : '18px',
           color: '#0b2236',
         })
         .setOrigin(0.5);
@@ -231,9 +236,9 @@ export class MenuScene extends Phaser.Scene {
     }
     OPTIONS.forEach((o, i) => {
       const t = this.add
-        .text(W / 2, P ? 660 + i * 120 : 270 + i * 46, o.label, {
+        .text(W / 2, P ? 660 + i * 130 : 270 + i * 46, o.label, {
           fontFamily: FONT,
-          fontSize: P ? '58px' : '36px',
+          fontSize: P ? '68px' : '36px',
           color: '#fff7dc',
           stroke: '#10223a',
           strokeThickness: P ? 12 : 8,
@@ -247,7 +252,7 @@ export class MenuScene extends Phaser.Scene {
     });
 
     // Escolha da fase: ◀ FASE 1 · ILHAS DA MARÉ ▶
-    const ly = P ? 1170 : 470;
+    const ly = P ? 1190 : 470;
     this.levelText = this.add
       .text(W / 2, ly, '', { fontFamily: FONT, fontSize: P ? '44px' : '26px', color: '#bfe9ff', stroke: '#10223a', strokeThickness: P ? 10 : 7 })
       .setOrigin(0.5);
@@ -274,11 +279,11 @@ export class MenuScene extends Phaser.Scene {
         ].join('\n'),
         {
           fontFamily: BODY_FONT,
-          fontSize: P ? '36px' : '19px',
+          fontSize: P ? '42px' : '19px',
           color: '#0b2236',
           align: 'center',
           lineSpacing: P ? 16 : 8,
-          wordWrap: { width: P ? 1100 : 1240 },
+          wordWrap: { width: P ? W - 80 : 1240 },
         },
       )
       .setOrigin(0.5);

@@ -1,0 +1,12 @@
+2161	Baa.\n(The menu was delicious. Come back when you have more.)
+2162	Baa.\n(Ten minutes standing still? I got hungry.)
+2163	Baa.\n(I don't accept conversation. But I accept menus.)
+2164	Baa.\n(The buttons tasted like gold.)
+2165	Tap or press any key to get the menu back
+2166	Vibration
+2167	Short phone vibration when hitting, taking damage and picking up items.
+2168	Motion effects
+2169	Stretch and squash when jumping, and the trail when running.
+2170	Simple transition
+2171	Screens change by just fading to dark, without the themed transitions.
+2172	Baa. (Munch. Your sign was great.)

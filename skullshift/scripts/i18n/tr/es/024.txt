@@ -1,0 +1,12 @@
+2161	Bee.\n(El menú estaba delicioso. Vuelve cuando tengas más.)
+2162	Bee.\n(¿Diez minutos quieto? Me dio hambre.)
+2163	Bee.\n(No acepto conversación. Pero acepto menú.)
+2164	Bee.\n(Los botones sabían a oro.)
+2165	Toca o pulsa cualquier tecla para recuperar el menú
+2166	Vibración
+2167	Vibración corta en el móvil al golpear, recibir daño y recoger objetos.
+2168	Efectos de movimiento
+2169	Estirar y aplastar al saltar y la estela al correr.
+2170	Transición simple
+2171	El cambio de pantalla solo oscurece, sin las transiciones temáticas.
+2172	Bee. (Ñam. Tu letrero estaba buenísimo.)

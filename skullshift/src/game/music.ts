@@ -275,6 +275,29 @@ function setup(a: AudioContext): void {
     });
 }
 
+/** Notas já agendadas (para a cena "tocar junto": o bardo, o martelo do ferreiro...). */
+const played: Array<{ t: number; midi: number; inst: string }> = [];
+
+/**
+ * Notas que soaram desde 'since' (segundos do relógio de áudio) até agora, e o "agora".
+ * Uso: guardar o 'now' devolvido e passar de novo na próxima chamada.
+ */
+export function musicNotesSince(since: number): { now: number; notes: Array<{ midi: number; inst: string }> } {
+  const a = audio();
+  if (!a || !ready) return { now: since, notes: [] };
+  const now = a.currentTime;
+  return { now, notes: played.filter((n) => n.t > since && n.t <= now) };
+}
+
+/** Tempo (batida) da música: índice da batida desde o compasso atual e a fração dentro dela. */
+export function musicBeat(): { beat: number; frac: number } | null {
+  const a = audio();
+  if (!a || !ready || !current) return null;
+  const b = 60 / bpm;
+  const e = (a.currentTime - barStart) / b;
+  return { beat: barIdx * 64 + Math.floor(e), frac: e - Math.floor(e) };
+}
+
 function eighth(): number {
   return 60 / bpm / 2;
 }
@@ -300,8 +323,11 @@ function schedule(): void {
       const ev = bar.events[evIdx];
       const t = barStart + ev.at * e8;
       if (t > horizon) return;
-      if (t >= a.currentTime - 0.02)
+      if (t >= a.currentTime - 0.02) {
         inst[ev.inst]?.start({ note: ev.midi, time: t, duration: ev.len * e8, velocity: ev.vel, decayTime: ev.inst === 'flute' ? 0.12 : 0.4 });
+        played.push({ t, midi: ev.midi, inst: ev.inst });
+        if (played.length > 64) played.shift();
+      }
       evIdx++;
     }
     const end = barStart + bar.size * e8;

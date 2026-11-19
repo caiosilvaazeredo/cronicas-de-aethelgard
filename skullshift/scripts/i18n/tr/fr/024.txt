@@ -1,0 +1,12 @@
+2161	Bêê.\n(Le menu était délicieux. Reviens quand tu en auras d'autres.)
+2162	Bêê.\n(Dix minutes sans bouger ? J'ai eu faim.)
+2163	Bêê.\n(Je n'accepte pas la conversation. Mais j'accepte les menus.)
+2164	Bêê.\n(Les boutons avaient un goût d'or.)
+2165	Touche ou appuie sur une touche pour récupérer le menu
+2166	Vibration
+2167	Courte vibration du téléphone en frappant, en prenant des dégâts et en ramassant des objets.
+2168	Effets de mouvement
+2169	Étirer et écraser en sautant, et la traînée en courant.
+2170	Transition simple
+2171	Changement d'écran par simple fondu au noir, sans les transitions thématiques.
+2172	Bêê. (Miam. Ta pancarte était excellente.)

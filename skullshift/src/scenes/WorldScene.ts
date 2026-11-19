@@ -129,6 +129,7 @@ export class WorldScene extends Phaser.Scene {
     this.hero.setPosition(hx, hy);
     cam.centerOn(hx, MH / 2);
     if (P) cam.startFollow(this.hero, true, 0.1, 0.1);
+    this.shootingStars();
 
     const worldObjs = [...this.children.list];
     if (P) this.createPortraitUI(worldObjs);
@@ -199,6 +200,46 @@ export class WorldScene extends Phaser.Scene {
     // Empório da Orelha-Preta: loja de aprimoramentos (tecla B).
     fix(pillButton(this, MW - 170, 36, `VILA · ${getCoins()} ouro`, () => this.village(), 400, 0xffd84a).setScale(0.75).setDepth(30));
     fix(pillButton(this, MW - 170, 84, 'DIÁRIO', () => this.journal(), 200, 0xd9b478).setScale(0.75).setDepth(30));
+  }
+
+  /** Segredo: de vez em quando (raro), uma estrela cadente risca o céu do mapa. */
+  private shootingStars(): void {
+    this.time.addEvent({
+      delay: 20000,
+      loop: true,
+      callback: () => {
+        if (Math.random() > 0.3) return;
+        const v = this.cameras.main.worldView;
+        const dir = Math.random() < 0.5 ? 1 : -1;
+        const x0 = v.centerX - dir * v.width * Phaser.Math.FloatBetween(0.1, 0.45);
+        const y0 = v.y + v.height * Phaser.Math.FloatBetween(0.05, 0.3);
+        const len = Math.min(v.width, v.height) * 0.6;
+        const tail = this.add.graphics().setDepth(19);
+        const head = this.add.image(x0, y0, 'spark').setScale(0.5).setTint(0xfff7dc).setDepth(19.5);
+        this.uiCam?.ignore([tail, head]);
+        sfx('pick', 1.8);
+        const o = { t: 0 };
+        this.tweens.add({
+          targets: o,
+          t: 1,
+          duration: 900,
+          ease: 'Sine.easeIn',
+          onUpdate: () => {
+            const hx = x0 + dir * len * o.t;
+            const hy = y0 + len * 0.45 * o.t;
+            head.setPosition(hx, hy).setAngle(o.t * 720);
+            tail.clear();
+            for (let i = 0; i < 10; i++) {
+              const k = i / 10;
+              tail.fillStyle(0xfff7dc, (1 - k) * 0.7 * (1 - o.t * 0.5)).fillCircle(hx - dir * len * 0.25 * k, hy - len * 0.11 * k, 6 * (1 - k) + 1);
+            }
+          },
+          onComplete: () => {
+            this.tweens.add({ targets: [tail, head], alpha: 0, duration: 300, onComplete: () => (tail.destroy(), head.destroy()) });
+          },
+        });
+      },
+    });
   }
 
   /** Em pé: título e MENU em cima, painel e botões grandes embaixo (câmera própria). */

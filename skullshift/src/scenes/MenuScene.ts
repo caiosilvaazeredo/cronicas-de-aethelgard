@@ -46,6 +46,7 @@ export class MenuScene extends Phaser.Scene {
     playMusic('menu');
     this.texts = [];
     this.levelRow = [];
+    this.setupMunch();
     const P = VIEW.portrait;
     const HH = this.scale.height;
     // Linha do chão: deitado como no jogo; em pé, um pouco abaixo do meio.
@@ -309,7 +310,151 @@ export class MenuScene extends Phaser.Scene {
     this.scene.restart({ stage: 'modes' });
   }
 
+  // ---------- segredo: a ovelha come o menu ----------
+
+  /** Tempo parado no menu até a ovelha aparecer (10 min) e quanto ela leva comendo (1 min). */
+  static IDLE_MS = 10 * 60 * 1000;
+  static EAT_MS = 60 * 1000;
+  private idleTimer?: Phaser.Time.TimerEvent;
+  private munching = false;
+
+  /** Qualquer toque, tecla ou botão do controle zera a contagem (ou interrompe a ovelha). */
+  private setupMunch(): void {
+    this.munching = false;
+    const poke = () => {
+      if (this.munching) {
+        // Pegou a ovelha no flagra: ela foge e o menu volta inteiro.
+        this.munching = false;
+        this.scene.restart({ stage: this.stage, level: this.level });
+        return;
+      }
+      this.idleTimer?.remove();
+      this.idleTimer = this.time.delayedCall(MenuScene.IDLE_MS, () => this.munch());
+    };
+    poke();
+    this.input.keyboard?.on('keydown', poke);
+    this.input.on('pointerdown', poke);
+    this.input.gamepad?.on('down', poke);
+  }
+
+  /**
+   * A ovelha entra, come a tela inteira em mordidas (1 minuto), a câmera dá um super zoom na
+   * cara dela e aparece um dizer. Qualquer comando devolve o menu.
+   */
+  munch(): void {
+    if (this.munching) return;
+    this.munching = true;
+    const HH = this.scale.height;
+    const P = VIEW.portrait;
+    // Daqui em diante, qualquer comando só traz o menu de volta (nada de começar o jogo sem querer).
+    const back = () => this.scene.restart({ stage: this.stage, level: this.level });
+    this.input.keyboard?.removeAllListeners();
+    this.input.removeAllListeners('pointerdown');
+    this.input.gamepad?.removeAllListeners('down');
+    this.input.keyboard?.once('keydown', back);
+    this.input.gamepad?.once('down', back);
+    this.add.zone(0, 0, W * 3, HH * 3).setOrigin(0.3).setDepth(8999).setInteractive().once('pointerdown', back);
+    const sx = W / 2;
+    const sy = P ? HH * 0.62 : 560;
+    const s = P ? 2.6 : 1.8;
+    void this.cameras.main;
+    const eaten = this.add.graphics().setDepth(9000);
+    const sheep = this.add.sprite(-120, sy, 'sheep_move').setOrigin(0.5, 0.66).setScale(s).setDepth(9050).play('sheep_move');
+    this.tweens.add({
+      targets: sheep,
+      x: sx,
+      duration: 2600,
+      onComplete: () => {
+        sheep.play('sheep_idle');
+        const t0 = this.time.now;
+        const maxR = Math.hypot(W, HH);
+        // Mordidas cada vez mais longe, com farelos e "nhac"; a ovelha vira de um lado para o outro.
+        const ev = this.time.addEvent({
+          delay: 180,
+          loop: true,
+          callback: () => {
+            if (!this.munching) return ev.remove();
+            const k = Math.min(1, (this.time.now - t0) / MenuScene.EAT_MS);
+            const reach = 120 + k * maxR;
+            for (let i = 0; i < 5; i++) {
+              const a = Math.random() * Math.PI * 2;
+              const d = Math.random() * reach;
+              const bx = sx + Math.cos(a) * d;
+              const by = sy + Math.sin(a) * d * 1.2;
+              const r = 40 + Math.random() * 70 + k * 80;
+              eaten.fillStyle(0x0b1422, 1).fillCircle(bx, by, r);
+              // Borda da mordida, com a marquinha dos dentes.
+              eaten.fillStyle(0x0b1422, 1).fillCircle(bx + r * 0.7, by, r * 0.35).fillCircle(bx - r * 0.7, by, r * 0.35);
+            }
+            if (Math.random() < 0.5) {
+              sfx('clack', 0.55 + Math.random() * 0.2);
+              sheep.setFlipX(!sheep.flipX);
+              this.tweens.add({ targets: sheep, angle: { from: 0, to: sheep.flipX ? 10 : -10 }, duration: 120, yoyo: true });
+              this.add
+                .particles(sx + (sheep.flipX ? -40 : 40) * s, sy - 10 * s, 'spark', { speed: { min: 60, max: 180 }, angle: { min: 200, max: 340 }, gravityY: 500, lifespan: 700, scale: { start: 0.35, end: 0.1 }, tint: [0xffe066, 0x9fe0ff, 0xfff7dc, 0x7fcf6a], emitting: false })
+                .setDepth(9060)
+                .explode(8);
+            }
+            if (k >= 1) {
+              ev.remove();
+              eaten.fillStyle(0x0b1422, 1).fillRect(-100, -100, W + 200, HH + 200);
+              this.munchEnd(sheep, s);
+            }
+          },
+        });
+      },
+    });
+  }
+
+  /** Fim: barriga cheia, super zoom na cara da ovelha e o dizer. */
+  private munchEnd(sheep: Phaser.GameObjects.Sprite, s: number): void {
+    const cam = this.cameras.main;
+    sheep.setFlipX(false).play('sheep_idle');
+    sfx('pick', 0.5);
+    // A cara da ovelha fica à direita do centro do sprite (ela olha para a direita).
+    const fx = sheep.x + 14 * s;
+    const fy = sheep.y - 18 * s;
+    cam.pan(fx, fy, 1800, 'Cubic.easeInOut');
+    cam.zoomTo(7, 1800, 'Cubic.easeInOut');
+    // O dizer vem numa câmera à parte (sem zoom).
+    const HH = this.scale.height;
+    const P = VIEW.portrait;
+    const sayings = [
+      'Béé.\n(O menu estava delicioso. Volte quando tiver mais.)',
+      'Béé.\n(Dez minutos parado? Eu fiquei com fome.)',
+      'Béé.\n(Não aceito conversa. Mas aceito menu.)',
+      'Béé.\n(Os botões tinham gosto de ouro.)',
+    ];
+    const text = this.add
+      .text(W / 2, P ? HH - 420 : HH - 150, sayings[Math.floor(Math.random() * sayings.length)], {
+        fontFamily: FONT,
+        fontSize: P ? '56px' : '34px',
+        color: '#fff7dc',
+        stroke: '#10223a',
+        strokeThickness: P ? 12 : 8,
+        align: 'center',
+        wordWrap: { width: W - 120 },
+      })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setAlpha(0);
+    const hint = this.add
+      .text(W / 2, text.y + (P ? 160 : 90), 'Toque ou aperte qualquer tecla para pegar o menu de volta', { fontFamily: BODY_FONT, fontSize: P ? '30px' : '18px', color: '#9fb4c8', align: 'center', wordWrap: { width: W - 120 } })
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setAlpha(0);
+    const top = this.cameras.add(0, 0, W, HH);
+    top.ignore(this.children.list.filter((o) => o !== text && o !== hint));
+    cam.ignore([text, hint]);
+    this.time.delayedCall(1900, () => {
+      sfx('boss', 2.2);
+      this.tweens.add({ targets: [text, hint], alpha: 1, duration: 500 });
+      this.tweens.add({ targets: text, scale: { from: 0.6, to: 1 }, duration: 500, ease: 'Back.easeOut' });
+    });
+  }
+
   update(): void {
+    if (this.munching) return;
     const pad = this.input.gamepad?.gamepads.find(Boolean);
     if (!pad) return;
     if (this.stage === 'title') {

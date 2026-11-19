@@ -46,6 +46,7 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
       { key: 'doubleTapSprint', label: 'Correr com toque duplo', help: 'Tocar 2× na direção e segurar para correr.', kind: 'toggle' },
       { key: 'touchSize', label: 'Botões de toque: tamanho', help: 'Tamanho dos botões na tela do celular.', kind: 'choice', options: ['PEQUENO', 'MÉDIO', 'GRANDE'] },
       { key: 'touchOpacity', label: 'Botões de toque: opacidade', help: 'Quanto os botões de toque aparecem.', kind: 'slider', min: 2, max: 10, fmt: (v) => `${v * 10}%` },
+      { key: 'vibrate', label: 'Vibração', help: 'Vibração curta no celular ao acertar, levar dano e pegar itens.', kind: 'toggle' },
     ],
   },
   {
@@ -53,6 +54,8 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
     rows: [
       { key: 'colorblind', label: 'Cores para daltonismo', help: 'Jogador 2 em laranja em vez de vermelho.', kind: 'toggle' },
       { key: 'flashes', label: 'Clarões na tela', help: 'Desligue para evitar flashes (relâmpagos, explosões).', kind: 'toggle' },
+      { key: 'motionFx', label: 'Efeitos de movimento', help: 'Esticar e achatar ao pular e o rastro na corrida.', kind: 'toggle' },
+      { key: 'simpleTransition', label: 'Transição simples', help: 'Troca de tela só escurecendo, sem as transições temáticas.', kind: 'toggle' },
     ],
   },
 ];
@@ -210,7 +213,8 @@ export class SettingsScene extends Phaser.Scene {
     // Em pé: as linhas crescem para ocupar a altura livre (até os botões de baixo), e tudo
     // dentro delas cresce junto (k), na mesma proporção para todas as abas.
     const free = this.scale.height - 300 - py - 30;
-    const rowH = P ? Phaser.Math.Clamp(free / tab.rows.length, 250, 460) : 150;
+    // Deitado: até 3 opções com folga; com 4, as linhas encolhem para caber acima dos botões.
+    const rowH = P ? Phaser.Math.Clamp(free / tab.rows.length, 250, 460) : Math.min(150, 440 / tab.rows.length);
     // Sobrou espaço (abas com poucas opções): o painel fica no meio do vão.
     const top = P ? py + Math.max(0, (free - tab.rows.length * rowH) / 2) : py;
     const k = P ? rowH / 250 : 1;
@@ -234,8 +238,8 @@ export class SettingsScene extends Phaser.Scene {
       });
       items.push(hit);
       items.push(this.add.text(30, y + 14, r.label, { fontFamily: FONT, fontSize: P ? fs(40) : '24px', color: on ? '#ffe066' : '#fff7dc' }));
-      items.push(this.add.text(30, y + (P ? 64 * k : 44), r.help, { fontFamily: BODY_FONT, fontSize: P ? fs(28) : '16px', color: '#bfd0e0', wordWrap: { width: pw - 60 } }));
-      const cy = y + (P ? 170 * k : 104);
+      items.push(this.add.text(30, y + (P ? 64 * k : 44 * (rowH / 150)), r.help, { fontFamily: BODY_FONT, fontSize: P ? fs(28) : '16px', color: '#bfd0e0', wordWrap: { width: pw - 60 } }));
+      const cy = y + (P ? 170 * k : 104 * (rowH / 150));
       const v = this.value(r);
       if (r.kind === 'toggle' || r.kind === 'fullscreen') {
         // DESLIGADO | LIGADO

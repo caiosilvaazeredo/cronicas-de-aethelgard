@@ -1,0 +1,12 @@
+2161	Mee.\n(Menü çok lezzetliydi. Daha fazlası olunca gel.)
+2162	Mee.\n(On dakika kıpırdamadan mı? Acıktım.)
+2163	Mee.\n(Sohbet kabul etmem. Ama menü kabul ederim.)
+2164	Mee.\n(Düğmelerin tadı altın gibiydi.)
+2165	Menüyü geri almak için dokun ya da bir tuşa bas
+2166	Titreşim
+2167	Vurduğunda, hasar aldığında ve eşya aldığında kısa telefon titreşimi.
+2168	Hareket efektleri
+2169	Zıplarken esneme ve basılma, koşarken iz.
+2170	Basit geçiş
+2171	Ekran değişimi sadece kararır, temalı geçişler olmadan.
+2172	Mee. (Hap. Tabelan harikaydı.)

@@ -1,0 +1,12 @@
+2161	Beee.\n(Il menu era delizioso. Torna quando ne hai altri.)
+2162	Beee.\n(Dieci minuti fermo? Mi è venuta fame.)
+2163	Beee.\n(Non accetto conversazione. Ma accetto menu.)
+2164	Beee.\n(I pulsanti sapevano d'oro.)
+2165	Tocca o premi un tasto per riavere il menu
+2166	Vibrazione
+2167	Breve vibrazione del telefono quando colpisci, subisci danni e raccogli oggetti.
+2168	Effetti di movimento
+2169	Allungare e schiacciare nel salto e la scia nella corsa.
+2170	Transizione semplice
+2171	Il cambio schermata si limita a scurire, senza le transizioni a tema.
+2172	Beee. (Gnam. Il tuo cartello era ottimo.)

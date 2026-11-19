@@ -1,3 +1,4 @@
+import { flyCoins, rollNumber } from '../ui/juice';
 import { noTr } from '../i18n';
 import { endRun, getRun } from '../game/dungeon';
 import Phaser from 'phaser';
@@ -36,6 +37,9 @@ export class UIScene extends Phaser.Scene {
 
   init(data: { game: GameScene }): void {
     this.infoText = undefined;
+    this.prevHearts = undefined;
+    this.coinBox = undefined;
+    this.coinText = undefined;
     this.g = data.game;
     this.pads = [];
     this.hud = undefined;
@@ -600,25 +604,83 @@ export class UIScene extends Phaser.Scene {
   }
 
   /** Corações da dungeon (no lugar das vidas): cheios, vazios e um tremor quando cai um. */
+  private prevHearts?: number;
+  private coinBox?: Phaser.GameObjects.Container;
+  private coinText?: Phaser.GameObjects.Text;
+  private coinShown = 0;
+
+  /** Onde as moedas chegam (canto de cima, embaixo das vidas). */
+  coinTarget(): [number, number] {
+    const P = VIEW.portrait;
+    return [W - (P ? 210 : 150), P ? PORTRAIT.topPad + 130 : 76];
+  }
+
+  /**
+   * Moedas ganhas na fase: saltam do inimigo, voam até o contador de ouro (que aparece, rola o
+   * número e dá um pulinho a cada moeda) e somem depois de um tempo parado.
+   */
+  flyCoins(sx: number, sy: number, n: number, total: number): void {
+    const [tx, ty] = this.coinTarget();
+    const P = VIEW.portrait;
+    if (!this.coinBox) {
+      const icon = this.add.image(0, 0, 'gold').setScale(P ? 0.55 : 0.4);
+      this.coinText = noTr(this.add.text(P ? 34 : 24, 0, '', { fontFamily: FONT, fontSize: P ? '40px' : '28px', color: '#ffd84a', stroke: '#10223a', strokeThickness: P ? 8 : 6 }).setOrigin(0, 0.5));
+      this.coinBox = this.add.container(tx, ty, [icon, this.coinText]).setDepth(DEPTH.hud + 2).setAlpha(0);
+      this.coinShown = Math.max(0, total - n);
+      this.coinText.setText(String(this.coinShown));
+    }
+    const box = this.coinBox;
+    const txt = this.coinText!;
+    this.tweens.killTweensOf(box);
+    box.setAlpha(1);
+    const count = Math.min(6, Math.max(1, n));
+    flyCoins(this, sx, sy, tx, ty, n, (i) => {
+      if (!box.active) return;
+      const from = this.coinShown;
+      this.coinShown = i === count - 1 ? total : Math.min(total, from + Math.ceil(n / count));
+      rollNumber(this, txt, from, this.coinShown, String, 120);
+      this.tweens.add({ targets: box.list[0], scale: { from: (P ? 0.55 : 0.4) * 1.4, to: P ? 0.55 : 0.4 }, duration: 160 });
+      if (i === count - 1) this.tweens.add({ targets: box, alpha: 0, delay: 2600, duration: 500 });
+    }, DEPTH.hud + 4);
+  }
+
   setHearts(left: number, max: number): void {
     this.livesBox?.destroy();
     const P = VIEW.portrait;
     const k = P ? 1.4 : 1;
-    const g = this.add.graphics();
-    const heart = (x: number, on: boolean) => {
-      const r = 8 * k;
-      g.fillStyle(0x10223a, 1).fillCircle(x - r * 0.62, -r * 0.2, r + 3).fillCircle(x + r * 0.62, -r * 0.2, r + 3);
-      g.fillTriangle(x - r * 1.75, 0, x + r * 1.75, 0, x, r * 2.1);
-      g.fillStyle(on ? 0xe8463a : 0x445566, 1).fillCircle(x - r * 0.62, -r * 0.2, r).fillCircle(x + r * 0.62, -r * 0.2, r);
-      g.fillTriangle(x - r * 1.45, 0, x + r * 1.45, 0, x, r * 1.75);
-      if (on) g.fillStyle(0xffb0a0, 1).fillCircle(x - r * 0.8, -r * 0.5, r * 0.3);
+    const r = 8 * k;
+    const heart = (on: boolean, cracked = false): Phaser.GameObjects.Graphics => {
+      const g = this.add.graphics();
+      g.fillStyle(0x10223a, 1).fillCircle(-r * 0.62, -r * 0.2, r + 3).fillCircle(r * 0.62, -r * 0.2, r + 3);
+      g.fillTriangle(-r * 1.75, 0, r * 1.75, 0, 0, r * 2.1);
+      g.fillStyle(on ? 0xe8463a : 0x445566, 1).fillCircle(-r * 0.62, -r * 0.2, r).fillCircle(r * 0.62, -r * 0.2, r);
+      g.fillTriangle(-r * 1.45, 0, r * 1.45, 0, 0, r * 1.75);
+      if (on) g.fillStyle(0xffb0a0, 1).fillCircle(-r * 0.8, -r * 0.5, r * 0.3);
+      if (cracked) g.lineStyle(3, 0x10223a, 1).lineBetween(0, -r * 0.9, -r * 0.3, -r * 0.2).lineBetween(-r * 0.3, -r * 0.2, r * 0.25, r * 0.4).lineBetween(r * 0.25, r * 0.4, 0, r * 1.5);
+      return g;
     };
     const step = 34 * k;
-    for (let i = 0; i < max; i++) heart(-i * step, i < max - left ? false : true);
+    const items: Phaser.GameObjects.GameObject[] = [];
+    const prev = this.prevHearts;
+    for (let i = 0; i < max; i++) {
+      const on = i >= max - left;
+      const g = heart(on).setPosition(-i * step, 0);
+      items.push(g);
+      // O último coração pulsa como batimento (só sobrou ele).
+      if (on && left === 1) this.tweens.add({ targets: g, scale: 1.25, duration: 160, yoyo: true, repeat: -1, repeatDelay: 520, ease: 'Sine.easeOut' });
+    }
     const x = W - (P ? 50 : 36);
     const y = P ? PORTRAIT.topPad + 60 : 32;
-    this.livesBox = this.add.container(x, y, [g]).setDepth(DEPTH.hud + 2);
-    this.tweens.add({ targets: this.livesBox, scale: { from: 1.2, to: 1 }, duration: 300, ease: 'Back.easeOut' });
+    this.livesBox = this.add.container(x, y, items).setDepth(DEPTH.hud + 2);
+    if (prev !== undefined && left < prev) {
+      // Coração perdido: racha, salta e cai girando.
+      for (let i = max - prev; i < max - left; i++) {
+        const piece = heart(true, true).setPosition(x - i * step, y).setDepth(DEPTH.hud + 3);
+        this.tweens.add({ targets: piece, y: y + 160, x: piece.x + (i % 2 ? 30 : -30), angle: i % 2 ? 80 : -80, alpha: 0, duration: 700, ease: 'Quad.easeIn', onComplete: () => piece.destroy() });
+      }
+      this.tweens.add({ targets: this.livesBox, x: { from: x - 6, to: x }, duration: 260, ease: 'Elastic.easeOut' });
+    } else this.tweens.add({ targets: this.livesBox, scale: { from: 1.2, to: 1 }, duration: 300, ease: 'Back.easeOut' });
+    this.prevHearts = left;
   }
 
   /** Parte de tela da vitória: confete, fogos, avatar, faixa e botões. */

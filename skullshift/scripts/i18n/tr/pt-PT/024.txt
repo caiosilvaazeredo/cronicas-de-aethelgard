@@ -1,0 +1,12 @@
+2161	Béé.\n(O menu estava delicioso. Volta quando tiveres mais.)
+2162	Béé.\n(Dez minutos parado? Fiquei com fome.)
+2163	Béé.\n(Não aceito conversa. Mas aceito menu.)
+2164	Béé.\n(Os botões sabiam a ouro.)
+2165	Toca ou carrega em qualquer tecla para recuperar o menu
+2166	Vibração
+2167	Vibração curta no telemóvel ao acertar, sofrer dano e apanhar itens.
+2168	Efeitos de movimento
+2169	Esticar e achatar ao saltar e o rasto na corrida.
+2170	Transição simples
+2171	A troca de ecrã só escurece, sem as transições temáticas.
+2172	Béé. (Nham. A tua placa estava ótima.)

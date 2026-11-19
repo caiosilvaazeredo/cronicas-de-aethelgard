@@ -25,6 +25,12 @@ export interface Settings {
   /** Opacidade dos botões de toque, 2 a 10. */
   touchOpacity: number;
   colorblind: boolean;
+  /** Vibração curta no celular (golpe, dano, contra, item). */
+  vibrate: boolean;
+  /** Esticar/achatar e rastros (desligue se enjoar com movimento). */
+  motionFx: boolean;
+  /** Transição simples (só escurecer) em vez das temáticas. */
+  simpleTransition: boolean;
 }
 
 export const DEFAULTS: Settings = {
@@ -40,6 +46,9 @@ export const DEFAULTS: Settings = {
   touchSize: 1,
   touchOpacity: 10,
   colorblind: false,
+  vibrate: true,
+  motionFx: true,
+  simpleTransition: false,
 };
 
 const KEY = 'skullshift.settings.v1';
@@ -129,10 +138,25 @@ export function audio(): AudioContext | null {
   return ctx;
 }
 
-export type Sfx = 'jump' | 'attack' | 'hit' | 'death' | 'pick' | 'door' | 'boom' | 'select' | 'boss';
+export type Sfx = 'jump' | 'attack' | 'hit' | 'death' | 'pick' | 'door' | 'boom' | 'select' | 'boss' | 'click' | 'clack' | 'coin' | 'step';
 
 /** Toca um efeito curto de chiptune (onda quadrada/ruído), no volume das configurações. */
-export function sfx(kind: Sfx): void {
+/** Vibração curta no celular (se o aparelho tiver e a opção estiver ligada). */
+export function buzz(ms: number | number[]): void {
+  if (!current.vibrate) return;
+  try {
+    navigator.vibrate?.(ms);
+  } catch {
+    /* sem vibração */
+  }
+}
+
+/**
+ * pitch: multiplica a altura (combo que sobe de tom). Cada repetição já varia um pouquinho
+ * (±4%), para o mesmo som não soar mecânico.
+ */
+export function sfx(kind: Sfx, pitch = 1): void {
+  pitch *= 0.96 + Math.random() * 0.08;
   const vol = (current.master / 10) * (current.sfx / 10);
   if (vol <= 0) return;
   const a = audio();
@@ -144,8 +168,8 @@ export function sfx(kind: Sfx): void {
   const tone = (type: OscillatorType, f0: number, f1: number, dur: number, v = 0.12) => {
     const o = a.createOscillator();
     o.type = type;
-    o.frequency.setValueAtTime(f0, t);
-    o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+    o.frequency.setValueAtTime(f0 * pitch, t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(30, f1 * pitch), t + dur);
     const g = a.createGain();
     g.gain.setValueAtTime(v * vol, t);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
@@ -194,6 +218,22 @@ export function sfx(kind: Sfx): void {
       break;
     case 'select':
       tone('square', 880, 880, 0.05, 0.06);
+      break;
+    case 'click':
+      // Clique macio de botão.
+      tone('triangle', 1300, 900, 0.035, 0.05);
+      break;
+    case 'clack':
+      // Mandíbula batendo: dois estalos secos de osso.
+      tone('square', 1800, 1200, 0.02, 0.05);
+      noise(0.025, 0.06);
+      break;
+    case 'coin':
+      tone('square', 988, 988, 0.05, 0.05);
+      tone('square', 1319, 1319, 0.12, 0.04);
+      break;
+    case 'step':
+      noise(0.03, 0.025);
       break;
   }
 }

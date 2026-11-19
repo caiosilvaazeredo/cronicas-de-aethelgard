@@ -1,0 +1,12 @@
+2161	Bee.\n(Menu było pyszne. Wróć, gdy będziesz mieć więcej.)
+2162	Bee.\n(Dziesięć minut bez ruchu? Zgłodniałam.)
+2163	Bee.\n(Nie przyjmuję rozmów. Ale menu przyjmuję.)
+2164	Bee.\n(Przyciski smakowały jak złoto.)
+2165	Dotknij lub naciśnij dowolny klawisz, aby odzyskać menu
+2166	Wibracje
+2167	Krótka wibracja telefonu przy trafieniu, obrażeniach i podnoszeniu przedmiotów.
+2168	Efekty ruchu
+2169	Rozciąganie i spłaszczanie przy skoku oraz smuga podczas biegu.
+2170	Prosta zmiana ekranu
+2171	Zmiana ekranu tylko przez ściemnienie, bez tematycznych przejść.
+2172	Bee. (Mniam. Twój szyld był świetny.)

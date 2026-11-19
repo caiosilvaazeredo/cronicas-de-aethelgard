@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { CROUCH_SCALE } from './crouch';
-import { sfx } from './settings';
+import { settings, sfx } from './settings';
 import { DEPTH, FONT, GUARD_WALK_SPEED, INVULN_TIME, JUMP_V } from '../config';
 import { CHARS, type CharDef, type CharId } from './characters';
 import { emptyIntent, type Intent } from './controls';
@@ -120,6 +120,20 @@ export class Fighter {
   pounding = false;
   onPound?: (f: Fighter) => void;
   private lastTurnAt = -9999;
+  /** Esticar/achatar (só visual): escala de partida e quando começou. */
+  private sqFrom: [number, number] = [1, 1];
+  private sqT0 = 0;
+  private sqDur = 0;
+  /** Para detectar o pouso: estava no chão e a velocidade de queda no quadro anterior. */
+  private wasGrounded = true;
+  private lastVy = 0;
+  private lastStep = 0;
+  /** Efeitos de passo/pouso/derrapada (a fase escolhe poeira, faísca ou respingo). */
+  onStep?: (f: Fighter, kind: 'step' | 'skid' | 'land', power: number) => void;
+  /** Dano levado (para o ossinho solto da caveira). */
+  onHurt?: (f: Fighter) => void;
+  /** Espadada (o mundo reage ao vento do golpe). */
+  onSwing?: (f: Fighter) => void;
   private lastMoveSign = 0;
   private moveStartAt = -9999;
   /** Quando ATAQUE foi apertado pela última vez (toque novo), para o contra-golpe. */
@@ -288,6 +302,41 @@ export class Fighter {
   knockback(dir: number, power = 320): void {
     this.knockT = 0.16;
     this.knockV = dir * power;
+    if (this.isPlayer) {
+      this.squash(1.2, 0.82, 220);
+      this.onHurt?.(this);
+    }
+  }
+
+  /**
+   * Esticar/achatar: começa em (sx, sy) e volta a 1 com um quique. Só visual (os pés ficam no
+   * mesmo lugar) e só nos jogadores; desliga com "Efeitos de movimento".
+   */
+  squash(sx: number, sy: number, dur: number): void {
+    if (!this.isPlayer || !settings().motionFx || this.crouching || this.swimming) return;
+    this.sqFrom = [sx, sy];
+    this.sqT0 = this.scene.time.now;
+    this.sqDur = dur;
+  }
+
+  private applySquash(now: number): void {
+    if (!this.sqDur) return;
+    const t = Math.min(1, (now - this.sqT0) / this.sqDur);
+    // Volta a 1 passando um pouquinho do ponto (quique).
+    const k = t >= 1 ? 0 : Math.pow(1 - t, 2) * Math.cos(t * Math.PI * 1.6);
+    const sx = 1 + (this.sqFrom[0] - 1) * k;
+    const sy = 1 + (this.sqFrom[1] - 1) * k;
+    if (t >= 1) this.sqDur = 0;
+    if (this.crouching || this.swimming) return void (this.sqDur = 0);
+    // A física já andou neste quadro (o corpo está na posição nova) e, logo depois, vai somar ao
+    // desenho o mesmo deslocamento (dy). Então o desenho fica em "pés novos − dy": depois da soma,
+    // os pés caem exatamente no chão. O corpo não é mexido (só a escala muda o tamanho dele no
+    // próximo passo, sempre a partir dos pés).
+    const b = this.body as unknown as { bottom: number; position: Phaser.Math.Vector2; prevFrame: Phaser.Math.Vector2 };
+    const dy = b.position.y - b.prevFrame.y;
+    const target = b.bottom - sy * (this.def.feetY - this.def.frame / 2);
+    this.sprite.setScale(sx, sy);
+    this.sprite.y = target - dy;
   }
 
   /** Defesa quebrada: fica tonto por um tempo, sem poder agir nem defender. */
@@ -316,6 +365,16 @@ export class Fighter {
     const now = this.scene.time.now;
     this.cooldown = Math.max(0, this.cooldown - dt);
     const grounded = this.onGround;
+    // Pouso: achata (mais quanto maior a queda), poeira e, numa queda grande, a mandíbula bate.
+    if (grounded && !this.wasGrounded && this.lastVy > 250 && this.isPlayer) {
+      const p = Math.min(1, (this.lastVy - 250) / 900);
+      this.squash(1 + 0.12 + p * 0.22, 1 - 0.1 - p * 0.22, 200 + p * 120);
+      this.onStep?.(this, 'land', p);
+      if (p > 0.45) sfx('clack', 0.9 + Math.random() * 0.2);
+    }
+    this.wasGrounded = grounded;
+    this.lastVy = this.body.velocity.y;
+    this.applySquash(now);
     if (grounded && this.body.velocity.y >= 0) {
       this.jumps = 0;
       if (d.fly) this.flightLeft = d.fly;
@@ -406,12 +465,18 @@ export class Fighter {
             if (trick) {
               this.scene.tweens.add({ targets: this.sprite, angle: { from: 0, to: 360 * this.facing * trick }, duration: 460, ease: 'Cubic.easeOut', onComplete: () => this.sprite.setAngle(0) });
             }
-            if (this.isPlayer) sfx('jump');
+            if (this.isPlayer) {
+              sfx('jump');
+              // Estica no impulso e a mandíbula dá um "clac".
+              this.squash(0.8, 1.24, 260);
+              if (this.def.id === 'skull') this.scene.time.delayedCall(60, () => sfx('clack', 1.1));
+            }
           } else if (this.jumps < 2 && !d.fly && !this.swimming) {
             // Pulo duplo: um segundo impulso no ar, com uma cambalhota.
             this.body.setVelocityY(-JUMP_V * DOUBLE_JUMP);
             this.jumps = 2;
-            if (this.isPlayer) sfx('jump');
+            if (this.isPlayer) sfx('jump', 1.25);
+            this.squash(0.85, 1.18, 220);
             this.onDoubleJump?.(this);
             this.scene.tweens.add({
               targets: this.sprite,
@@ -458,6 +523,30 @@ export class Fighter {
           }
         }
         this.setState(guarding ? 'guard' : it.move !== 0 ? 'run' : 'idle');
+        if (this.isPlayer && grounded && it.move !== 0 && !dashing) {
+          // Derrapada ao virar de repente; passos com poeirinha ao andar.
+          if (now - this.lastTurnAt < 40 && now - this.lastStep > 120) {
+            this.lastStep = now;
+            this.onStep?.(this, 'skid', 1);
+            this.squash(1.12, 0.9, 160);
+          } else if (now - this.lastStep > (sprinting ? 170 : 300)) {
+            this.lastStep = now;
+            this.onStep?.(this, 'step', sprinting ? 1 : 0.5);
+          }
+        }
+        // Rastro translúcido na corrida rápida.
+        if (this.isPlayer && sprinting && it.move !== 0 && !dashing && settings().motionFx && now - this.lastGhost > 70) {
+          this.lastGhost = now;
+          const g = this.scene.add
+            .image(this.sprite.x, this.sprite.y, this.sprite.texture.key, this.sprite.frame.name)
+            .setFlipX(this.sprite.flipX)
+            .setScale(this.sprite.scaleX, this.sprite.scaleY)
+            .setAngle(this.sprite.angle)
+            .setDepth(DEPTH.fighters - 0.5)
+            .setTintFill(this.ghostTint)
+            .setAlpha(0.3);
+          this.scene.tweens.add({ targets: g, alpha: 0, duration: 200, onComplete: () => g.destroy() });
+        }
         if (sprinting) {
           this.sprite.anims.timeScale = 1.6;
           // Poeira saindo dos pés.
@@ -673,7 +762,10 @@ export class Fighter {
     this.released = false;
     this.attackHits.clear();
     this.attackId++;
-    if (this.isPlayer) sfx('attack');
+    if (this.isPlayer) {
+      sfx('attack');
+      this.onSwing?.(this);
+    }
     // Nadando (nado livre), o ataque também é deitado.
     const swimAtk = `${this.def.id}_swim_attack`;
     if (this.freeSwim && this.scene.anims.exists(swimAtk)) this.sprite.play(swimAtk);

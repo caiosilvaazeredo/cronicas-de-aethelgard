@@ -221,3 +221,28 @@ originais (extraídas com PIL do PNG).
 - **Tela de controles em pé** (`ControlsScene.layout`): painéis (1 ou 2 empilhados), dica e bandeja de dispositivos centralizados entre o título e os botões. A escala garante que as setas ◀ ▶ fiquem dentro da tela.
 - **Saves em pé** (`SlotsScene`): fichas largas com letra e botões maiores, sem a dica de teclado (mais altura para as fichas), título "SAVE n" traduzido sem encolher.
 - **Menu inicial em pé** (`MenuScene`): CRÉDITOS, idioma e AJUSTES numa linha só no topo, abaixo da folga do celular; JOGAR, as opções de modo e o texto de ajuda maiores. O nome do idioma vai em maiúsculas, porque a fonte do título não tem minúsculas.
+
+## Juice e plussing (sensação, sem mudar regras)
+- **Opções** (`settings.ts`): `vibrate` (aba Controles), `motionFx` e `simpleTransition` (aba Acessibilidade). `buzz(ms)` faz a vibração do celular; `sfx(kind, pitch)` aceita uma altura, e cada som varia ±4% sozinho. Sons novos: `click`, `clack`, `coin` e `step`.
+- **Interface**:
+  - `pillButton` afunda e achata ao apertar e volta com um quique e um clique.
+  - Transição em íris de caveira (`transition.ts`, textura `iris_skull` feita em canvas em `props.ts`, máscara invertida; só com WebGL).
+  - Corações da dungeon (`UIScene.setHearts`): o coração perdido racha e cai, e o último pulsa.
+  - Contadores que rolam (`ui/juice.ts`: `rollNumber`, `flyCoins`). Nas fases, as moedas voam até um contador de ouro (`UIScene.flyCoins`, chamado em `GameScene.earn`).
+- **Movimento** (`Fighter`):
+  - `squash(sx, sy, ms)` para esticar e achatar, só no visual e só nos jogadores.
+  - Cuidado: a física move o desenho depois do `update`, então `applySquash` põe o sprite em "pés − dy" e não mexe no corpo. Mexer no corpo fazia a caveira afundar no chão.
+  - Ganchos `onStep` (passo, derrapada, pouso), `onHurt` e `onSwing`, ligados em `GameScene.addPlayer`.
+  - Rastro na corrida e "clac" da mandíbula no pulo e nas quedas grandes.
+- **Combate** (`GameScene`):
+  - `swingWind`: o vento da espadada empurra as partículas vivas por perto, balança arbustos, árvores e tochas e solta folhas.
+  - `comboPitch`: golpes seguidos (até 1,2 s entre eles) sobem pela escala maior.
+  - `hurtFx`: um ossinho solto quica no chão.
+- **Mundo**:
+  - Na vila (`VillageScene.plussing`): moradores e ovelhas olham para a caveira, pássaros levantam voo, tufos de grama se abrem e as tochas inclinam quando ela passa correndo.
+  - O bardo solta uma nota (♪) para cada nota do violão da música, e o ferreiro martela nas notas graves (`music.ts`: `musicNotesSince`).
+- **Segredos**:
+  - Cochilo depois de 20 s parada (fase e vila).
+  - A ovelha do Empório morde a placa depois de 25 s parado (`ShopScene.biteSign`).
+  - Estrela cadente rara no mapa (`WorldScene.shootingStars`).
+  - Depois de 10 min parado no menu inicial, a ovelha come o menu inteiro em 1 min, a câmera dá um super zoom na cara dela e aparece um dizer. Qualquer comando devolve o menu (`MenuScene.munch`; `MenuScene.IDLE_MS`/`EAT_MS`).

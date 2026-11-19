@@ -396,6 +396,34 @@ export function makeProps(scene: Phaser.Scene): void {
   g.fillStyle(0xffe066).fillRoundedRect(56, 7, 22, 3, 1.5);
   done('prop_anvil', 120, 104);
 
+  // Passarinho pousado e voando (corpo, asa, bico, olho; contorno de tinta).
+  const bird = (wingUp: boolean) => {
+    g.fillStyle(INK).fillEllipse(20, 22, 26, 20).fillCircle(30, 15, 9);
+    g.fillStyle(0x6a4a8a).fillEllipse(20, 22, 22, 16);
+    g.fillStyle(0x8a6ab0).fillCircle(30, 15, 6.5);
+    g.fillStyle(0xf0e0c0).fillEllipse(22, 26, 12, 7);
+    g.fillStyle(INK).fillTriangle(35, 13, 42, 16, 35, 18);
+    g.fillStyle(0xffb02e).fillTriangle(36, 14, 40, 16, 36, 17);
+    g.fillStyle(INK).fillCircle(31, 13, 1.8);
+    g.fillStyle(INK).fillTriangle(6, 18, 0, 14, 4, 24);
+    if (wingUp) {
+      g.fillStyle(INK).fillTriangle(12, 18, 22, 18, 10, 0);
+      g.fillStyle(0x4a3270).fillTriangle(14, 17, 21, 17, 12, 3);
+    } else {
+      g.fillStyle(INK).fillEllipse(17, 21, 16, 10);
+      g.fillStyle(0x4a3270).fillEllipse(17, 21, 12, 7);
+      g.lineStyle(2, INK).lineBetween(18, 31, 17, 35).lineBetween(23, 31, 23, 35);
+    }
+  };
+  bird(false);
+  done('prop_bird', 44, 38);
+  bird(true);
+  done('prop_bird_fly', 44, 38);
+
+  // Tufo de grama solto (balança quando alguém passa).
+  tuft(g, 16, 30, 1.1);
+  done('prop_tuft', 32, 32);
+
   // ---------- Mapa do mundo ----------
   // Boca de caverna vulcânica (leva às Terras de Fogo).
   {
@@ -519,6 +547,37 @@ export function makeProps(scene: Phaser.Scene): void {
   done('dn_disc', 80, 80);
 
   g.destroy();
+
+  // Silhueta de caveira para a transição em íris: crânio e mandíbula cheios, olhos e nariz vazados
+  // (pela máscara, a tela nova aparece dentro da caveira e os olhos ficam escuros).
+  const cv = scene.textures.createCanvas('iris_skull', 256, 256);
+  const c = cv?.getContext();
+  if (cv && c) {
+    c.fillStyle = '#fff';
+    c.beginPath();
+    c.arc(128, 112, 96, Math.PI * 0.82, Math.PI * 2.18);
+    c.lineTo(186, 196);
+    c.quadraticCurveTo(186, 236, 150, 238);
+    c.lineTo(106, 238);
+    c.quadraticCurveTo(70, 236, 70, 196);
+    c.closePath();
+    c.fill();
+    c.globalCompositeOperation = 'destination-out';
+    c.beginPath();
+    c.ellipse(92, 128, 26, 30, -0.15, 0, Math.PI * 2);
+    c.ellipse(164, 128, 26, 30, 0.15, 0, Math.PI * 2);
+    c.fill();
+    c.beginPath();
+    c.moveTo(128, 160);
+    c.lineTo(116, 186);
+    c.lineTo(140, 186);
+    c.closePath();
+    c.fill();
+    // Dentes: frestas na mandíbula.
+    for (const x of [102, 120, 136, 154]) c.fillRect(x, 212, 4, 26);
+    c.globalCompositeOperation = 'source-over';
+    cv.refresh();
+  }
 }
 
 /** Cordilheira distante: picos com contorno, face iluminada à esquerda e neve no topo. */

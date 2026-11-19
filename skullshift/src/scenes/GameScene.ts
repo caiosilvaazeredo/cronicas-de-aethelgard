@@ -1,3 +1,5 @@
+import { getCoins } from '../game/progress';
+import { buzz } from '../game/settings';
 import { trf } from '../i18n';
 import { finishVillageGame } from '../game/villagegames';
 import Phaser from 'phaser';
@@ -449,6 +451,9 @@ export class GameScene extends Phaser.Scene {
 
     this.startTime = this.time.now;
     this.kills = 0;
+    this.idleSince = -1;
+    this.napping = undefined;
+    this.comboN = 0;
   }
 
   // ---------- câmera / orientação ----------
@@ -524,6 +529,9 @@ export class GameScene extends Phaser.Scene {
     f.sprite.setCollideWorldBounds(true);
     f.onProjectile = (s) => this.spawnProjectile(s);
     f.onDoubleJump = (ff) => this.fx('dust', ff.x, ff.feet - 4, 1.3, ff.color);
+    f.onStep = (ff, kind, power) => this.stepFx(ff, kind, power);
+    f.onHurt = (ff) => this.hurtFx(ff);
+    f.onSwing = (ff) => this.swingWind(ff);
     this.setupSwim(f);
     this.physics.add.collider(f.sprite, this.level.ground);
     const i = this.players.length;
@@ -576,6 +584,7 @@ export class GameScene extends Phaser.Scene {
 
     this.players.forEach((p, i) => {
       p.intent = p.alive ? this.controllers[i].read() : emptyIntent();
+      if (i === 0) this.napCheck(p, this.time.now);
       // Corrida e tiro: ATACAR dispara ossos em vez do golpe corpo a corpo.
       if (i === 0 && this.mode === 'story' && LEVELS[this.levelIndex].gun) {
         p.noteAttack(p.intent.attack);
@@ -820,6 +829,7 @@ export class GameScene extends Phaser.Scene {
     this.sparks(f.x + dir * 30, f.feet - f.def.head * 0.5);
     sfx('select');
     this.popText(f.x, f.feet - f.labelHeight - 40, 'CONTRA!', '#ffe066');
+    buzz([20, 30, 40]);
     // Um instante de câmera lenta para o momento ficar claro.
     this.physics.world.timeScale = 2.5;
     this.time.delayedCall(90, () => (this.physics.world.timeScale = 1));
@@ -854,12 +864,176 @@ export class GameScene extends Phaser.Scene {
     this.popText(b.x, b.feet - 120, 'QUEBROU!', '#ffe066');
   }
 
+  /** Cochilo: parada 20 s, a caveira cochila soltando "Z"s; qualquer comando acorda com um susto. */
+  private idleSince = 0;
+  private napping?: Phaser.Time.TimerEvent;
+
+  private napCheck(p: Fighter, time: number): void {
+    const it = p.intent;
+    const busy = it.move !== 0 || it.jump || it.attack || it.guard || it.crouch || it.pick || it.sprint || !p.alive || this.mode !== 'story' || !p.onGround || p.def.id !== 'skull';
+    if (busy) {
+      if (this.napping && p.alive) {
+        // Acordou assustada: "!" e um pulinho.
+        this.napping.remove();
+        this.napping = undefined;
+        this.popText(p.x, p.feet - p.def.head - 40, '!', '#ffe066');
+        sfx('clack', 1.2);
+        p.squash(0.8, 1.25, 260);
+      }
+      this.idleSince = time;
+      return;
+    }
+    if (this.idleSince < 0) this.idleSince = time;
+    if (this.napping || time - this.idleSince < 20000) return;
+    this.napping = this.time.addEvent({
+      delay: 900,
+      loop: true,
+      callback: () => {
+        if (!p.alive) return;
+        const z = this.add.text(p.x + p.facing * 10, p.feet - p.def.head - 10, 'z', { fontFamily: FONT, fontSize: '22px', color: '#ffffff', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0.5).setDepth(DEPTH.fx);
+        noTr(z);
+        this.tweens.add({ targets: z, x: z.x + 40, y: z.y - 70, scale: 1.8, alpha: 0, duration: 1600, ease: 'Sine.easeOut', onComplete: () => z.destroy() });
+        // Respira devagar enquanto dorme.
+        p.squash(1.04, 0.95, 850);
+      },
+    });
+  }
+
+  private comboN = 0;
+  private comboAt = -9999;
+
+  /** Golpes seguidos (até 1,2 s entre eles) sobem o tom do acerto, como uma escala musical. */
+  private comboPitch(killer: Fighter | null): number {
+    if (!killer || !this.players.includes(killer)) return 1;
+    const now = this.time.now;
+    this.comboN = now - this.comboAt < 1200 ? this.comboN + 1 : 0;
+    this.comboAt = now;
+    buzz(15);
+    // Escala maior: dó, ré, mi, fá, sol, lá, si, dó.
+    const steps = [0, 2, 4, 5, 7, 9, 11, 12];
+    return Math.pow(2, steps[Math.min(this.comboN, steps.length - 1)] / 12);
+  }
+
+  /** Passos, derrapadas e pousos: poeira; faíscas em lava; respingos no brejo. */
+  private stepFx(f: Fighter, kind: 'step' | 'skid' | 'land', power: number): void {
+    const def = LEVELS[this.levelIndex];
+    const scale = kind === 'step' ? 0.35 + power * 0.25 : kind === 'skid' ? 0.9 : 0.7 + power * 1.1;
+    const x = kind === 'skid' ? f.x + f.facing * 14 : f.x - (kind === 'step' ? f.facing * 12 : 0);
+    const tint = def.swamp ? 0x9fd8ff : undefined;
+    const d = this.add.sprite(x, f.feet - 6 * scale, 'dust').setDepth(DEPTH.fighters - 1).setScale(scale).setAlpha(kind === 'step' ? 0.7 : 1).play('dust');
+    if (tint !== undefined) d.setTint(tint);
+    if (kind === 'skid') d.setFlipX(f.facing < 0);
+    d.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => d.destroy());
+    if (kind === 'land' && power > 0.4) {
+      // Queda grande: mais uma nuvem para cada lado.
+      for (const s of [-1, 1]) {
+        const side = this.add.sprite(f.x + s * 26, f.feet - 8, 'dust').setDepth(DEPTH.fighters - 1).setScale(0.7).setFlipX(s < 0).play('dust');
+        side.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => side.destroy());
+      }
+    }
+    if (def.ember || this.level.isLava) {
+      const n = kind === 'step' ? 2 : 6;
+      this.add
+        .particles(x, f.feet - 4, 'spark', { speed: { min: 40, max: 140 }, angle: { min: 200, max: 340 }, lifespan: 360, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff7a1a], gravityY: 300, emitting: false })
+        .setDepth(DEPTH.fx)
+        .explode(n);
+    }
+    if (kind === 'step') sfx('step', 0.9 + Math.random() * 0.3);
+  }
+
+  /** Dano na caveira: um ossinho se solta, quica no chão e some (só visual). */
+  private hurtFx(f: Fighter): void {
+    buzz(40);
+    if (f.def.id !== 'skull' || !this.textures.exists('bone')) return;
+    const b = this.add.image(f.x, f.feet - f.def.head * 0.6, 'bone', 0).setScale(0.45).setDepth(DEPTH.fighters + 1);
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    const ground = this.level.landingY(f.x + dir * 70, f.feet - 40, f.feet + 200) ?? f.feet;
+    this.tweens.add({ targets: b, x: f.x + dir * 70, duration: 620, ease: 'Linear' });
+    this.tweens.add({ targets: b, angle: dir * 540, duration: 620 });
+    this.tweens.add({
+      targets: b,
+      y: { from: b.y, to: b.y - 70 },
+      duration: 220,
+      ease: 'Quad.easeOut',
+      onComplete: () =>
+        this.tweens.add({
+          targets: b,
+          y: ground - 8,
+          duration: 260,
+          ease: 'Bounce.easeOut',
+          onComplete: () => {
+            sfx('clack', 1.3);
+            this.tweens.add({ targets: b, alpha: 0, delay: 500, duration: 400, onComplete: () => b.destroy() });
+          },
+        }),
+    });
+  }
+
+  /**
+   * Vento da espadada: fumaça, brasas, folhas e bolhas por perto são empurradas no sentido do
+   * golpe, arbustos e árvores balançam para esse lado (e soltam folhas), e riscos de vento passam.
+   */
+  private swingWind(f: Fighter): void {
+    const dir = f.facing;
+    const cx = f.x + dir * 50;
+    const cy = f.feet - f.def.head * 0.5;
+    const R = 260;
+    for (const o of this.children.list) {
+      if (o instanceof Phaser.GameObjects.Particles.ParticleEmitter) {
+        o.forEachAlive((p) => {
+          const px = p.x + o.x;
+          const py = p.y + o.y;
+          const dx = px - cx;
+          const dy = py - cy;
+          const d = Math.hypot(dx, dy);
+          // Só o que está à frente do golpe (ou bem perto) e dentro do alcance.
+          if (d > R || (dx * dir < -40 && d > 60)) return;
+          const k = 1 - d / R;
+          p.velocityX += dir * 420 * k;
+          p.velocityY += (dy / (d || 1)) * 160 * k - 60 * k;
+        }, this);
+        continue;
+      }
+      if (!(o instanceof Phaser.GameObjects.Sprite || o instanceof Phaser.GameObjects.Image)) continue;
+      const key = o.texture.key;
+      if (key === 'torch_item_anim') {
+        // Chama de tocha: tremula e deita com o vento do golpe.
+        if (Math.abs(o.x - cx) < R && !this.tweens.isTweening(o)) this.tweens.add({ targets: o, angle: { from: dir * 28, to: 0 }, duration: 600, ease: 'Elastic.easeOut' });
+        continue;
+      }
+      if (!(key.startsWith('bush') || key === 'tree' || key === 'res_tree' || key === 'dead_tree')) continue;
+      const dx = o.x - cx;
+      if (Math.abs(dx) > R || dx * dir < -60 || Math.abs(o.y - f.feet) > 220) continue;
+      if (this.tweens.isTweening(o)) continue;
+      const k = 1 - Math.abs(dx) / R;
+      const tree = key !== 'bush' && !key.startsWith('bush');
+      this.tweens.add({ targets: o, angle: { from: dir * (tree ? 4 : 12) * k, to: 0 }, duration: 700, ease: 'Elastic.easeOut' });
+      if (this.textures.exists('leaf') && Math.random() < 0.7) {
+        this.add
+          .particles(o.x, o.y - (tree ? 90 : 30), 'leaf', { speedX: { min: dir * 120, max: dir * 260 }, speedY: { min: -120, max: -40 }, gravityY: 220, rotate: { min: 0, max: 360 }, lifespan: 900, scale: { start: 0.5, end: 0.3 }, alpha: { start: 1, end: 0 }, emitting: false })
+          .setDepth(DEPTH.fx)
+          .explode(tree ? 2 : 3);
+      }
+    }
+    // Riscos de vento saindo do golpe.
+    for (let i = 0; i < 3; i++) {
+      const y = cy - 30 + i * 26 + Phaser.Math.Between(-6, 6);
+      const line = this.add.rectangle(cx, y, 40, 3, 0xffffff, 0.5).setDepth(DEPTH.fx);
+      this.tweens.add({ targets: line, x: cx + dir * 120, width: 10, alpha: 0, duration: 260, delay: i * 30, ease: 'Quad.easeOut', onComplete: () => line.destroy() });
+    }
+  }
+
   /** Ganha ouro (para o Empório), com um "+N" dourado subindo. */
   private earn(n: number, x: number, y: number): void {
     // Na dungeon o ouro fica com a run (só é entregue se o guardião cair).
     const rn = LEVELS[this.levelIndex].dungeon ? getRun() : undefined;
     if (rn) rn.gold += n;
     else addCoins(n);
+    // As moedas voam até o contador de ouro (na interface, em coordenadas de tela).
+    const cam = this.cameras.main;
+    const sx = (x - cam.worldView.x) * cam.zoom + cam.x;
+    const sy = (y - cam.worldView.y) * cam.zoom + cam.y;
+    if (this.mode === 'story') this.ui?.flyCoins(sx, sy, n, rn ? rn.gold : getCoins());
     const t = this.add.text(x, y, `+${n}`, { fontFamily: FONT, fontSize: '20px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx + 2);
     const c = this.add.image(x - 22, y, 'gold').setScale(0.28).setDepth(DEPTH.fx + 2);
     this.tweens.add({ targets: [t, c], y: y - 34, alpha: 0, duration: 800, ease: 'Quad.easeOut', onComplete: () => (t.destroy(), c.destroy()) });
@@ -1042,6 +1216,7 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(260, () => f.sprite.active && f.sprite.clearTint());
     this.smokeBurst(x, p.feet, 0xb46bff, 1);
     sfx('pick');
+    buzz(15);
     const tag = this.add.text(x, p.feet - 120, `AJUDANTE DE ${p.label}`, { fontFamily: FONT, fontSize: '16px', color: PLAYER_HEX[pi], stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(DEPTH.fx);
     const follow = () => (f.alive ? tag.setPosition(f.x, f.feet - f.labelHeight - 30) : tag.setVisible(false));
     this.events.on('update', follow);
@@ -1401,7 +1576,7 @@ export class GameScene extends Phaser.Scene {
         victim.armor = 0;
         return this.killFighter(victim, killer, cause);
       }
-      sfx('hit');
+      sfx('hit', this.comboPitch(killer));
       victim.knockback(dir, 420);
       victim.sprite.setTintFill(0xffffff);
       this.time.delayedCall(90, () => victim.sprite.active && victim.sprite.clearTint());
@@ -1426,7 +1601,8 @@ export class GameScene extends Phaser.Scene {
     // No final (o aldeão) ninguém deixa item: o corpo não troca mais de forma.
     const dropped = cause === 'hit' && !LEVELS[this.levelIndex].finale ? victim.def.drops : undefined;
     const x = victim.x;
-    sfx(victim.isPlayer ? 'death' : 'hit');
+    sfx(victim.isPlayer ? 'death' : 'hit', victim.isPlayer ? 1 : this.comboPitch(killer));
+    if (victim.isPlayer) buzz([40, 30, 60]);
     victim.kill(cause === 'water' ? 'water' : 'hit', dir);
 
     if (cause === 'water' && this.level.isLava) {
@@ -2055,6 +2231,7 @@ export class GameScene extends Phaser.Scene {
           this.setReserve(i, it.kind);
           this.popText(p.x, p.feet - 110, 'GUARDADO!', '#9fe8ff');
           sfx('pick');
+          buzz(15);
           it.active = false;
           it.sprite.setVisible(false);
           it.glow.setVisible(false);
@@ -2184,6 +2361,7 @@ export class GameScene extends Phaser.Scene {
     if (this.mode === 'story' && pi === 0 && char !== 'skull') this.stat('shifts');
     const p = this.players[pi];
     sfx('pick');
+    buzz(15);
     // Magia do Xamã: o corpo gira cada vez mais rápido, raios roxos sobem em espiral e,
     // no clarão do meio, quem está girando já é a outra criatura.
     this.shiftSpin(p, () => {
@@ -2433,6 +2611,7 @@ export class GameScene extends Phaser.Scene {
         ev.remove();
         findSecret(sec.id);
         sfx('pick');
+        buzz(15);
         reel.destroy();
         this.popText(x, y - 60, 'ROLO DE FILME!', '#ffe066');
         this.time.delayedCall(700, () => this.popText(p.x, p.feet - 200, 'Uma fase secreta apareceu no mapa...', '#d8d0c0'));

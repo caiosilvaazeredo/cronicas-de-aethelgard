@@ -1,0 +1,12 @@
+2161	Määh.\n(Das Menü war köstlich. Komm wieder, wenn du mehr hast.)
+2162	Määh.\n(Zehn Minuten stillgestanden? Ich hab Hunger bekommen.)
+2163	Määh.\n(Gespräche nehme ich nicht an. Menüs schon.)
+2164	Määh.\n(Die Knöpfe schmeckten nach Gold.)
+2165	Tippe oder drücke eine Taste, um das Menü zurückzuholen
+2166	Vibration
+2167	Kurze Handy-Vibration beim Treffen, bei Schaden und beim Aufheben.
+2168	Bewegungseffekte
+2169	Strecken und Stauchen beim Springen und die Spur beim Rennen.
+2170	Einfacher Übergang
+2171	Bildschirmwechsel nur durch Abdunkeln, ohne die thematischen Übergänge.
+2172	Määh. (Mampf. Dein Schild war super.)

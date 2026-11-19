@@ -9,9 +9,10 @@ import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaTitle, areaUnlocked, recommendedLevel } from '../game/areas';
 import { getRun, heartsFor, startRun } from '../game/dungeon';
-import { playMusic } from '../game/music';
+import { musicNotesSince, playMusic } from '../game/music';
 import { buySmith, getCoins, getLevel, isDungeonDone, levelProgress, smithLevel } from '../game/progress';
-import { sfx } from '../game/settings';
+import { buzz, sfx } from '../game/settings';
+import { rollNumber } from '../ui/juice';
 import { pillButton } from '../ui/devices';
 
 const INK = 0x10223a;
@@ -114,6 +115,15 @@ export class VillageScene extends Phaser.Scene {
     this.walkers = [];
     this.uiCam = undefined;
     this.uiObjs = [];
+    this.lookers = [];
+    this.birds = [];
+    this.tufts = [];
+    this.torches = [];
+    this.bard = undefined;
+    this.hammer = undefined;
+    this.noteClock = 0;
+    this.idleSince = -1;
+    this.napEv = undefined;
     this.prevPad = { a: true, b: true };
   }
 
@@ -215,7 +225,8 @@ export class VillageScene extends Phaser.Scene {
     // 2) Empório da Orelha-Preta.
     stand(600, 'bld_yellow_house2', 178 / 192, 0.9);
     this.npc(690, 'villager', 0xffd0a0, false);
-    this.add.sprite(520, GY, 'sheep_idle').setOrigin(0.5, 0.66).setScale(0.95).setDepth(6).play('sheep_idle');
+    const shopSheep = this.add.sprite(520, GY, 'sheep_idle').setOrigin(0.5, 0.66).setScale(0.95).setDepth(6).play('sheep_idle');
+    this.lookers.push({ spr: shopSheep, flip: false });
     this.label(600, 'EMPÓRIO');
     this.addSpot(640, 'EMPÓRIO', () => this.scene.start('shop', { devices: ['kb-full'], from: 'village' }));
 
@@ -265,16 +276,16 @@ export class VillageScene extends Phaser.Scene {
     this.add.image(3766, GY + 4, 'prop_anvil').setOrigin(0.5, 1).setScale(0.62).setDepth(5);
     const glow = this.add.ellipse(3766, GY - 58, 40, 18, 0xff8a2a, 0.35).setDepth(5.05);
     this.tweens.add({ targets: glow, alpha: 0.1, duration: 700, yoyo: true, repeat: -1 });
-    this.add.image(3800, GY - 66, 'tool_hammer').setScale(0.6).setAngle(-40).setDepth(5.1);
-    const smith = this.npc(3720, 'villager', 0x9a8070, true);
-    this.time.addEvent({ delay: 1400, loop: true, callback: () => smith.active && this.add.particles(3770, GY - 60, 'spark', { speed: { min: 60, max: 140 }, angle: { min: 220, max: 320 }, lifespan: 400, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff8a2a], quantity: 6, emitting: false }).setDepth(6).explode(6) });
+    // O martelo bate no tempo da música (veja strike); o cabo fica preso pela ponta.
+    this.hammer = this.add.image(3790, GY - 50, 'tool_hammer').setOrigin(0.8, 0.8).setScale(0.6).setAngle(-40).setDepth(5.1);
+    this.npc(3720, 'villager', 0x9a8070, true);
     this.label(3640, 'FERREIRO');
     this.addSpot(3700, 'FERREIRO', () => this.smith());
 
     // 8) Estalagem e moradores.
     stand(3260, 'bld_red_house1', 173 / 192, 0.9);
     this.label(3260, 'ESTALAGEM');
-    this.talker(3160, 'bard', 'villager', 0xe0b0ff);
+    this.bard = this.talker(3160, 'bard', 'villager', 0xe0b0ff);
     this.talker(3360, 'kid', 'sgnome', undefined);
     this.talker(780, 'farmer', 'villager', 0xffe0a0);
     // Morador que passeia pela rua.
@@ -282,6 +293,7 @@ export class VillageScene extends Phaser.Scene {
     w.play('villager_run');
     this.walkers.push({ spr: w, min: 2000, max: 2600, dir: 1 });
     this.addSpot(2100, 'CONVERSAR', () => this.talk('walker'), () => w.x);
+    this.dressStreet();
   }
 
   private label(x: number, text: string): void {
@@ -312,12 +324,170 @@ export class VillageScene extends Phaser.Scene {
   private npc(x: number, id: string, tint: number | undefined, flip: boolean): Phaser.GameObjects.Sprite {
     const s = this.add.sprite(x, GY, `${id}_idle`).setOrigin(0.5, CHARS[id as CharId].feetY / CHARS[id as CharId].frame).setScale(0.62).setDepth(6).setFlipX(flip).play(`${id}_idle`);
     if (tint !== undefined) s.setTint(tint);
+    this.lookers.push({ spr: s, flip });
     return s;
   }
 
-  private talker(x: number, who: string, id: string, tint?: number): void {
-    this.npc(x, id, tint, x > 2000);
+  private talker(x: number, who: string, id: string, tint?: number): Phaser.GameObjects.Sprite {
+    const s = this.npc(x, id, tint, x > 2000);
     this.addSpot(x, 'CONVERSAR', () => this.talk(who));
+    return s;
+  }
+
+  // ---------- plussing: o mundo repara na caveira ----------
+
+  /** Quem vira a cabeça para a caveira quando ela passa perto (e o lado de antes). */
+  private lookers: Array<{ spr: Phaser.GameObjects.Sprite; flip: boolean }> = [];
+  private birds: Array<{ spr: Phaser.GameObjects.Image; home: [number, number]; away: boolean }> = [];
+  private tufts: Phaser.GameObjects.Image[] = [];
+  private torches: Phaser.GameObjects.Sprite[] = [];
+  private bard?: Phaser.GameObjects.Sprite;
+  private hammer?: Phaser.GameObjects.Image;
+  private noteClock = 0;
+  private heroVx = 0;
+
+  /** Pássaros, tufos de grama e tochas espalhados pela rua. */
+  private dressStreet(): void {
+    // Tufos de grama que se abrem quando a caveira passa.
+    for (let x = 140; x < VW - 100; x += Phaser.Math.Between(70, 130)) {
+      this.tufts.push(this.add.image(x, GY + 2, 'prop_tuft').setOrigin(0.5, 0.95).setDepth(6.5).setScale(Phaser.Math.FloatBetween(0.9, 1.3)));
+    }
+    // Passarinhos no chão e nos telhados: levantam voo quando a caveira chega perto.
+    for (const [x, y] of [[420, GY - 2], [900, GY - 2], [1700, GY - 2], [2470, GY - 2], [3020, GY - 2], [600, GY - 150], [3260, GY - 175]] as Array<[number, number]>) {
+      const b = this.add.image(x, y, 'prop_bird').setOrigin(0.5, 1).setScale(0.8).setDepth(6.6).setFlipX(Math.random() < 0.5);
+      this.birds.push({ spr: b, home: [x, y], away: false });
+      // Bica o chão de vez em quando.
+      this.tweens.add({ targets: b, angle: { from: 0, to: b.flipX ? -18 : 18 }, duration: 140, yoyo: true, repeat: -1, repeatDelay: Phaser.Math.Between(900, 2400) });
+    }
+    // Tochas na porta da estalagem e na forja.
+    for (const x of [3175, 3345, 3600]) {
+      this.add.rectangle(x, GY, 8, 56, 0x6a4428).setOrigin(0.5, 1).setStrokeStyle(2, INK).setDepth(4.9);
+      const t = this.add.sprite(x, GY - 52, 'torch_item_anim').setOrigin(0.5, 0.95).setScale(1.3).setDepth(5).play('torch_flame');
+      this.torches.push(t);
+    }
+  }
+
+  /** O mundo reage: olhares, pássaros, grama, tochas, o bardo e o martelo no ritmo da música. */
+  private plussing(dt: number): void {
+    const hx = this.hero.x;
+    const fast = Math.abs(this.heroVx) > 150;
+    // Olhares: perto, vira para a caveira; longe, volta para onde olhava.
+    for (const l of this.lookers) {
+      if (this.walkers.some((w) => w.spr === l.spr)) continue;
+      const near = Math.abs(l.spr.x - hx) < 240;
+      l.spr.setFlipX(near ? hx < l.spr.x : l.flip);
+    }
+    // Pássaros: voam para longe da caveira e voltam um tempo depois.
+    for (const b of this.birds) {
+      if (b.away || Math.abs(b.spr.x - hx) > 150 || Math.abs(b.home[1] - this.hero.y) > 220) continue;
+      b.away = true;
+      const dir = b.spr.x >= hx ? 1 : -1;
+      this.tweens.killTweensOf(b.spr);
+      b.spr.setTexture('prop_bird_fly').setFlipX(dir < 0).setAngle(0);
+      sfx('click', 1.6);
+      const flap = this.tweens.add({ targets: b.spr, scaleY: { from: 0.8, to: 0.45 }, duration: 90, yoyo: true, repeat: -1 });
+      this.tweens.add({
+        targets: b.spr,
+        x: b.spr.x + dir * 520,
+        y: b.home[1] - 420,
+        duration: 1600,
+        ease: 'Sine.easeIn',
+        onComplete: () => {
+          flap.remove();
+          b.spr.setVisible(false);
+          this.time.delayedCall(Phaser.Math.Between(6000, 11000), () => {
+            if (!b.spr.active) return;
+            b.spr.setTexture('prop_bird').setScale(0.8).setPosition(b.home[0], b.home[1]).setVisible(true).setAlpha(0);
+            this.tweens.add({ targets: b.spr, alpha: 1, duration: 400, onComplete: () => (b.away = false) });
+          });
+        },
+      });
+    }
+    // Grama: abre para os lados dos pés da caveira e volta balançando.
+    for (const t of this.tufts) {
+      const dx = t.x - hx;
+      if (Math.abs(dx) < 34 && this.onGround) {
+        const want = (dx < 0 ? -1 : 1) * 32;
+        if (!this.tweens.isTweening(t)) this.tweens.add({ targets: t, angle: want, duration: 90, onComplete: () => this.tweens.add({ targets: t, angle: 0, duration: 900, ease: 'Elastic.easeOut' }) });
+      }
+    }
+    // Tochas: a chama inclina para trás quando a caveira passa correndo.
+    for (const t of this.torches) {
+      const near = Math.abs(t.x - hx) < 130;
+      const lean = near && fast ? -Math.sign(this.heroVx) * 22 : Math.sin(this.time.now / 300 + t.x) * 3;
+      t.angle += (lean - t.angle) * Math.min(1, dt * 8);
+    }
+    // Música tocada de verdade: cada nota do violão sai do alaúde do bardo, e o baixo
+    // (as notas graves) é a martelada do ferreiro.
+    const { now, notes } = musicNotesSince(this.noteClock);
+    // Primeira leitura: só marca o relógio (sem despejar as notas antigas de uma vez).
+    if (!this.noteClock) notes.length = 0;
+    this.noteClock = now;
+    for (const n of notes) {
+      if (n.inst === 'guitar' && n.midi < 52) this.strike();
+      else if (this.bard && Math.random() < 0.6) this.note(n.midi);
+    }
+  }
+
+  /** Cochilo: 20 s parada, a caveira solta "z"s; ao se mexer, acorda com um susto. */
+  private idleSince = 0;
+  private napEv?: Phaser.Time.TimerEvent;
+
+  private napCheck(busy: boolean): void {
+    const now = this.time.now;
+    if (busy) {
+      if (this.napEv) {
+        this.napEv.remove();
+        this.napEv = undefined;
+        sfx('clack', 1.2);
+        const t = this.worldAdd(noTr(this.add.text(this.hero.x, this.hero.y - 130, '!', { fontFamily: FONT, fontSize: '40px', color: '#ffe066', stroke: '#10223a', strokeThickness: 8 }).setOrigin(0.5).setDepth(12)));
+        this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 700, onComplete: () => t.destroy() });
+      }
+      this.idleSince = now;
+      return;
+    }
+    // Primeiro quadro: começa a contar daqui (o relógio da cena ainda não andou antes).
+    if (this.idleSince < 0) this.idleSince = now;
+    if (this.napEv || now - this.idleSince < 20000) return;
+    this.napEv = this.time.addEvent({
+      delay: 900,
+      loop: true,
+      callback: () => {
+        const z = this.worldAdd(noTr(this.add.text(this.hero.x + 10, this.hero.y - 90, 'z', { fontFamily: FONT, fontSize: '22px', color: '#ffffff', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0.5).setDepth(12)));
+        this.tweens.add({ targets: z, x: z.x + 40, y: z.y - 70, scale: 1.8, alpha: 0, duration: 1600, ease: 'Sine.easeOut', onComplete: () => z.destroy() });
+      },
+    });
+  }
+
+  private lastNoteAt = 0;
+
+  /** Uma nota (♪) sai do alaúde do bardo: mais aguda = sobe mais. */
+  private note(midi: number): void {
+    const b = this.bard!;
+    if (this.time.now - this.lastNoteAt < 120 || Math.abs(b.x - this.hero.x) > 900) return;
+    this.lastNoteAt = this.time.now;
+    const hue = Phaser.Display.Color.HSVToRGB(((midi * 37) % 360) / 360, 0.5, 1) as Phaser.Types.Display.ColorObject;
+    const t = this.worldAdd(noTr(this.add.text(b.x + (b.flipX ? -18 : 18), b.y - 70, midi % 2 ? '♪' : '♫', { fontFamily: 'Arial, sans-serif', fontSize: '26px', color: Phaser.Display.Color.RGBToString(hue.r, hue.g, hue.b), stroke: '#10223a', strokeThickness: 4 }).setOrigin(0.5).setDepth(9)));
+    const rise = 60 + (midi - 50) * 4;
+    this.tweens.add({ targets: t, y: t.y - rise, x: t.x + Phaser.Math.Between(-20, 20), alpha: 0, duration: 1300, ease: 'Sine.easeOut', onComplete: () => t.destroy() });
+    // O bardo balança junto com a nota.
+    this.tweens.add({ targets: b, angle: { from: b.flipX ? 5 : -5, to: 0 }, duration: 220 });
+  }
+
+  /** Martelada do ferreiro no tempo da música: o martelo cai, faíscas saltam da bigorna. */
+  private strike(): void {
+    const h = this.hammer;
+    if (!h || this.tweens.isTweening(h) || Math.abs(h.x - this.hero.x) > 900) return;
+    this.tweens.add({
+      targets: h,
+      angle: { from: -80, to: -20 },
+      duration: 110,
+      ease: 'Quad.easeIn',
+      onComplete: () => {
+        this.worldAdd(this.add.particles(3770, GY - 60, 'spark', { speed: { min: 60, max: 160 }, angle: { min: 210, max: 330 }, lifespan: 380, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff8a2a], emitting: false }).setDepth(6)).explode(5);
+        this.tweens.add({ targets: h, angle: -40, duration: 220, ease: 'Sine.easeOut' });
+      },
+    });
   }
 
   private dynamicX = new Map<Spot, () => number>();
@@ -351,7 +521,7 @@ export class VillageScene extends Phaser.Scene {
     noTr(this.add
       .text(bx + 100 * k, top - 16 * k, lp.need ? trf('{0}/{1} XP', lp.into, lp.need) : tr('NÍVEL MÁXIMO'), { fontFamily: BODY_FONT, fontSize: `${Math.round(13 * k)}px`, color: '#d8b8ff' })
       .setOrigin(0, 0.5));
-    this.goldText = this.add.text(bx, top + 40 * k, `Ouro: ${getCoins()}`, { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5);
+    this.goldText = noTr(this.add.text(bx, top + 40 * k, '', { fontFamily: FONT, fontSize: `${Math.round(18 * k)}px`, color: '#ffd84a', stroke: '#10223a', strokeThickness: 5 }).setOrigin(0, 0.5)).setText(trf('Ouro: {0}', getCoins()));
     const touch = P || this.sys.game.device.input.touch;
     if (touch) this.touchPad();
     if (!touch) this.add
@@ -637,7 +807,9 @@ export class VillageScene extends Phaser.Scene {
       return;
     }
     sfx('pick');
-    this.goldText?.setText(`Ouro: ${getCoins()}`);
+    buzz(20);
+    // O ouro do canto desce rolando até o valor novo.
+    if (this.goldText) rollNumber(this, this.goldText, getCoins() + smithCost(u.id, lvl), getCoins(), (v) => trf('Ouro: {0}', v));
     this.smith(i);
   }
 
@@ -738,6 +910,10 @@ export class VillageScene extends Phaser.Scene {
     }
     const anim = move ? 'skull_run' : 'skull_idle';
     if (this.hero.anims.currentAnim?.key !== anim) this.hero.play(anim);
+
+    this.heroVx = move * 300;
+    this.plussing(dt);
+    this.napCheck(move !== 0 || !this.onGround || !!this.dialog);
 
     // Quem passeia pela rua.
     for (const w of this.walkers) {

@@ -1,3 +1,4 @@
+import { buzz, sfx } from '../game/settings';
 import Phaser from 'phaser';
 import { FONT } from '../config';
 
@@ -191,15 +192,33 @@ export function pillButton(
     .text(0, 0, label, { fontFamily: FONT, fontSize: '26px', color: '#10223a' })
     .setOrigin(0.5);
   const c = scene.add.container(x, y, [g, t]).setSize(w, h + 10);
+  // Botão "de verdade": afunda e achata ao apertar, volta com um quique e um clique macio.
+  let base = 1;
+  let down = false;
+  const release = (bounce: boolean) => {
+    if (!down) return;
+    down = false;
+    scene.tweens.killTweensOf(c);
+    c.y = y;
+    if (bounce) {
+      c.setScale(base * 0.94, base * 1.08);
+      scene.tweens.add({ targets: c, scaleX: base, scaleY: base, duration: 260, ease: 'Back.easeOut' });
+    } else c.setScale(base);
+  };
   c.setInteractive({ useHandCursor: true })
     .on('pointerdown', () => {
+      if (down) return;
+      down = true;
+      base = c.scaleY;
+      scene.tweens.killTweensOf(c);
       c.y = y + 4;
+      c.setScale(base * 1.06, base * 0.9);
+      sfx('click');
+      buzz(8);
     })
-    .on('pointerout', () => {
-      c.y = y;
-    })
+    .on('pointerout', () => release(false))
     .on('pointerup', () => {
-      c.y = y;
+      release(true);
       onClick();
     });
   return c;

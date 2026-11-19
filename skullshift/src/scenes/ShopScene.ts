@@ -22,6 +22,10 @@ export class ShopScene extends Phaser.Scene {
   private nameText!: Phaser.GameObjects.Text;
   private howText!: Phaser.GameObjects.Text;
   private sheep!: Phaser.GameObjects.Sprite;
+  private signBox?: { x: number; y: number; w: number; h: number; feet: number };
+  /** Segredo: parado um tempo no Empório, a ovelha dá uma mordida na placa. */
+  private idleAt = 0;
+  private bitten = false;
   private prevPad = { l: true, r: true, u: true, d: true, a: true, b: true };
 
   constructor() {
@@ -29,6 +33,8 @@ export class ShopScene extends Phaser.Scene {
   }
 
   init(data: { devices?: DeviceId[]; area?: string; from?: string }): void {
+    this.idleAt = 0;
+    this.bitten = false;
     this.lastData = data;
     this.cards = [];
     this.prevPad = { l: true, r: true, u: true, d: true, a: true, b: true };
@@ -65,6 +71,7 @@ export class ShopScene extends Phaser.Scene {
     this.add.ellipse(455, feet - 46, 12, 8, 0x1d1a2b).setAngle(-20); // a orelha preta
     this.add.rectangle(700, feet - 20, 10, 70, 0x6b4423).setStrokeStyle(2, 0x10223a);
     this.board(700, feet - 84, 420, 76, '', 18);
+    this.signBox = { x: 700, y: feet - 84, w: 420, h: 76, feet };
     this.signText = this.add.text(700, feet - 84, '', { fontFamily: BODY_FONT, fontSize: '19px', color: '#3a2412', align: 'center', wordWrap: { width: 390 } }).setOrigin(0.5);
     // Ouro.
     this.add.image(W - 400, oy + 44, 'gold').setScale(1.6);
@@ -140,6 +147,7 @@ export class ShopScene extends Phaser.Scene {
     this.add.ellipse(618, feet - 69, 18, 12, 0x1d1a2b).setAngle(-20);
     this.add.rectangle(960, feet - 40, 14, 110, 0x6b4423).setStrokeStyle(3, 0x10223a);
     this.board(960, feet - 170, 520, 150, '', 30);
+    this.signBox = { x: 960, y: feet - 170, w: 520, h: 150, feet };
     this.signText = this.add.text(960, feet - 170, '', { fontFamily: BODY_FONT, fontSize: '32px', color: '#3a2412', align: 'center', wordWrap: { width: 480 } }).setOrigin(0.5);
     // Ouro e voltar, no alto.
     this.add.image(W - 330, tp + 80, 'gold').setScale(2.4);
@@ -176,6 +184,10 @@ export class ShopScene extends Phaser.Scene {
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.select(this.sel + 1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.buy());
     kb.on('keydown-ESC', () => this.back());
+    // Qualquer toque ou tecla conta como "mexer" (adia a mordida da ovelha).
+    this.idleAt = -1;
+    kb.on('keydown', () => (this.idleAt = this.time.now));
+    this.input.on('pointerdown', () => (this.idleAt = this.time.now));
     this.say('Béé. (Aceito ouro. Não aceito conversa.)');
     this.select(this.sel);
     this.cameras.main.fadeIn(250, 14, 26, 43);
@@ -234,7 +246,46 @@ export class ShopScene extends Phaser.Scene {
     this.scene.start('world', { devices: this.lastData.devices, area: this.lastData.area });
   }
 
+  /** A ovelha vai até a placa, dá três mordidas no canto e volta (só uma vez por visita). */
+  biteSign(): void {
+    const b = this.signBox;
+    if (!b || this.bitten) return;
+    this.bitten = true;
+    const sheep = this.sheep;
+    const home = sheep.x;
+    const P = VIEW.portrait;
+    const cx = b.x - b.w / 2 + 6;
+    const cy = b.y + b.h / 2 - 6;
+    sheep.setFlipX(false).play('sheep_move');
+    this.tweens.add({
+      targets: sheep,
+      x: cx - (P ? 90 : 60),
+      duration: 1200,
+      onComplete: () => {
+        sheep.play('sheep_idle');
+        const bite = this.add.graphics().setDepth(5);
+        [0, 1, 2].forEach((i) => {
+          this.time.delayedCall(i * 450, () => {
+            sfx('clack', 0.6 + i * 0.05);
+            this.tweens.add({ targets: sheep, angle: { from: 0, to: -12 }, duration: 110, yoyo: true });
+            // Marca de mordida (meia-lua do céu) e farelos de madeira caindo.
+            const r = (P ? 26 : 16) - i * 3;
+            bite.fillStyle(0x7fcbd8, 1).fillCircle(cx + i * r * 0.9, cy - i * r * 0.5, r);
+            this.add.particles(cx + i * r, cy, 'spark', { speed: { min: 40, max: 120 }, angle: { min: 60, max: 120 }, gravityY: 400, lifespan: 600, scale: { start: 0.25, end: 0.1 }, tint: 0xc89858, emitting: false }).setDepth(6).explode(6);
+          });
+        });
+        this.time.delayedCall(1500, () => {
+          this.say('Béé. (Nhac. Sua placa estava ótima.)');
+          sheep.setFlipX(true).play('sheep_move');
+          this.tweens.add({ targets: sheep, x: home, duration: 1200, onComplete: () => sheep.play('sheep_idle') });
+        });
+      },
+    });
+  }
+
   update(): void {
+    if (this.idleAt < 0) this.idleAt = this.time.now;
+    if (!this.bitten && this.time.now - this.idleAt > 25000) this.biteSign();
     const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
     if (!pad) return;
     const ax = pad.axes[0]?.getValue() ?? 0;

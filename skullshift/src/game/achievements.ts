@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BODY_FONT, FONT, W } from '../config';
+import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaCleared } from './areas';
 import { LEVELS } from './level';
 import { MEMORIES } from '../data/lore';
@@ -55,20 +55,38 @@ export function announceAchievements(scene: Phaser.Scene): void {
   checkAchievements().forEach((a, i) => scene.time.delayedCall(i * 2600, () => toast(scene, a)));
 }
 
-function toast(scene: Phaser.Scene, a: Achievement): void {
+/** Aviso de conquista no alto da tela (exportado para testes). */
+export function toast(scene: Phaser.Scene, a: Achievement): void {
   if (!scene.sys.isActive()) return;
   const cam = scene.cameras.main;
+  // Em pé a tela é estreita: tudo dobra de tamanho. A caixa cresce com o texto (sem vazar).
+  const P = VIEW.portrait;
+  const k = P ? 2 : 1;
+  const maxW = (P ? W - 60 : 900) / k;
+  const t1 = scene.add.text(0, 0, `CONQUISTA · ${a.name.toUpperCase()}`, { fontFamily: FONT, fontSize: '19px', color: '#3a2412' }).setOrigin(0, 0.5);
+  const t2 = scene.add.text(0, 0, a.desc, { fontFamily: BODY_FONT, fontSize: '15px', color: '#5a3a1c', wordWrap: { width: maxW - 110 } }).setOrigin(0, 0.5);
+  if (t1.width > maxW - 110) t1.setScale((maxW - 110) / t1.width);
+  const bw = Math.max(486, Math.min(maxW, Math.max(t1.displayWidth, t2.width) + 110));
+  const bh = Math.max(76, 30 + 24 + t2.height);
+  const left = -bw / 2;
+  t1.setPosition(left + 76, -bh / 2 + 27);
+  t2.setPosition(left + 76, -bh / 2 + 42 + t2.height / 2);
   const g = scene.add.graphics();
-  g.fillStyle(0x10223a, 1).fillRoundedRect(-243, -38, 486, 76, 14);
-  g.fillStyle(0xc89858, 1).fillRoundedRect(-240, -35, 480, 70, 12);
-  g.fillStyle(0xdcb06e, 1).fillRoundedRect(-234, -29, 468, 58, 10);
-  const star = scene.add.image(-200, 0, 'spark').setTint(0xffe066).setScale(1.1);
-  const t1 = scene.add.text(-170, -12, `CONQUISTA · ${a.name.toUpperCase()}`, { fontFamily: FONT, fontSize: '19px', color: '#3a2412' }).setOrigin(0, 0.5);
-  const t2 = scene.add.text(-170, 13, a.desc, { fontFamily: BODY_FONT, fontSize: '15px', color: '#5a3a1c' }).setOrigin(0, 0.5);
-  const box = scene.add.container(W / 2, -60, [g, star, t1, t2]).setScrollFactor(0).setDepth(9999);
-  if (cam.zoom !== 1) box.setScale(1 / cam.zoom);
+  g.fillStyle(0x10223a, 1).fillRoundedRect(left - 3, -bh / 2 - 3, bw + 6, bh + 6, 14);
+  g.fillStyle(0xc89858, 1).fillRoundedRect(left, -bh / 2, bw, bh, 12);
+  g.fillStyle(0xdcb06e, 1).fillRoundedRect(left + 6, -bh / 2 + 6, bw - 12, bh - 12, 10);
+  const star = scene.add.image(left + 40, 0, 'spark').setTint(0xffe066).setScale(1.1);
+  const box = scene.add.container(W / 2, -60 * k, [g, star, t1, t2]).setScrollFactor(0).setDepth(9999);
+  // Cena com câmera de interface separada (a última, sem zoom): só ela mostra o aviso.
+  const cams = scene.cameras.cameras;
+  if (cams.length > 1) {
+    for (const c of cams.slice(0, -1)) c.ignore(box);
+    box.setScale(k / cams[cams.length - 1].zoom);
+  } else box.setScale(k / cam.zoom);
+  // Em pé, logo abaixo do cabeçalho (fora dos botões do topo).
+  const y = P ? PORTRAIT.topPad + 330 + (bh * k) / 2 : 120;
   sfx('pick');
   scene.tweens.add({ targets: star, angle: 360, duration: 2000 });
-  scene.tweens.add({ targets: box, y: 120, duration: 380, ease: 'Back.easeOut' });
-  scene.tweens.add({ targets: box, y: -60, delay: 2200, duration: 300, ease: 'Quad.easeIn', onComplete: () => box.destroy() });
+  scene.tweens.add({ targets: box, y, duration: 380, ease: 'Back.easeOut' });
+  scene.tweens.add({ targets: box, y: -60 * k - bh * k, delay: 2200, duration: 300, ease: 'Quad.easeIn', onComplete: () => box.destroy() });
 }

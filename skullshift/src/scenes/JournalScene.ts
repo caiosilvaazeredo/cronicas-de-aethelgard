@@ -146,7 +146,7 @@ export class JournalScene extends Phaser.Scene {
     const y0 = P ? 280 : 124;
     // Em pé os cartões dividem a altura livre (até o rodapé com os botões).
     const rows = Math.ceil(ACHIEVEMENTS.length / cols);
-    const ch = P ? Phaser.Math.Clamp((HH - y0 - 240) / rows - 8, 96, 150) : 52;
+    const ch = P ? Phaser.Math.Clamp((HH - y0 - 240) / rows - 8, 110, 190) : 52;
     const x0 = W / 2 - (cols * (cw + 12) - 12) / 2;
     const got = ACHIEVEMENTS.filter((a) => hasAch(a.id)).length;
     this.add.text(W / 2, y0 - (P ? 44 : 14), `${got}/${ACHIEVEMENTS.length} conquistadas`, { fontFamily: FONT, fontSize: `${Math.round((P ? 16 : 18) * s)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
@@ -159,9 +159,9 @@ export class JournalScene extends Phaser.Scene {
       g.fillStyle(on ? 0xdcb06e : 0x243246, 1).fillRoundedRect(x, y, cw, ch, 8);
       this.add.image(x + (P ? 34 : 24), y + ch / 2, 'spark').setTint(on ? 0xffe066 : 0x4a586a).setScale(P ? 1.2 : 0.6);
       const tx = x + (P ? 68 : 48);
-      const nm = this.add.text(tx, y + ch * 0.3, on ? a.name.toUpperCase() : '???', { fontFamily: FONT, fontSize: `${Math.round((P ? 14 : 14) * s)}px`, color: on ? '#3a2412' : '#6a7888' }).setOrigin(0, 0.5);
+      const nm = this.add.text(tx, y + ch * 0.3, on ? a.name.toUpperCase() : '???', { fontFamily: FONT, fontSize: `${Math.round((P ? 16 : 14) * s)}px`, color: on ? '#3a2412' : '#6a7888' }).setOrigin(0, 0.5);
       if (nm.width > cw - (tx - x) - 12) nm.setScale((cw - (tx - x) - 12) / nm.width);
-      this.add.text(tx, y + ch * 0.68, a.desc, { fontFamily: BODY_FONT, fontSize: `${Math.round((P ? 13 : 12) * s)}px`, color: on ? '#5a3a1c' : '#7f8ea0', wordWrap: { width: cw - (tx - x) - 12 } }).setOrigin(0, 0.5);
+      this.add.text(tx, y + ch * 0.68, a.desc, { fontFamily: BODY_FONT, fontSize: `${Math.round((P ? 14.5 : 12) * s)}px`, color: on ? '#5a3a1c' : '#7f8ea0', wordWrap: { width: cw - (tx - x) - 12 } }).setOrigin(0, 0.5);
     });
     void HH;
   }

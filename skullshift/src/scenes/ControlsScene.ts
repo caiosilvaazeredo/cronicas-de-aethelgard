@@ -94,18 +94,18 @@ export class ControlsScene extends Phaser.Scene {
     const P = VIEW.portrait;
     const HH = this.scale.height;
     this.add
-      .text(W / 2, P ? 1560 * (HH / 2770) : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.  ·  Nome: ◀ ▶ ou ✎ (teclas N / M)', {
+      .text(W / 2, P ? this.layout().help : 512, 'Controle não aparece? Conecte e aperte qualquer botão nele.  ·  Nome: ◀ ▶ ou ✎ (teclas N / M)', {
         fontFamily: BODY_FONT,
-        fontSize: P ? '30px' : '18px',
+        fontSize: P ? '34px' : '18px',
         color: '#fff7dc',
-        wordWrap: { width: 1100 },
+        wordWrap: { width: P ? W - 100 : 1100 },
         align: 'center',
       })
       .setOrigin(0.5);
 
     if (P) {
-      pillButton(this, W / 2 - 290, HH - 150, '◀  VOLTAR', () => this.back(), 230).setScale(1.6);
-      pillButton(this, W / 2 + 270, HH - 150, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066).setScale(1.6);
+      pillButton(this, W / 2 - 290, HH - 150, '◀  VOLTAR', () => this.back(), 230).setScale(1.7);
+      pillButton(this, W / 2 + 270, HH - 150, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066).setScale(1.7);
     } else {
       pillButton(this, 160, 668, '◀  VOLTAR', () => this.back(), 230);
       pillButton(this, W - 170, 668, 'CONFIRMAR  ▶', () => this.confirm(), 250, 0xffe066);
@@ -165,6 +165,28 @@ export class ControlsScene extends Phaser.Scene {
     this.refresh();
   }
 
+  /**
+   * Em pé: painéis (1 ou 2), a dica e a bandeja de dispositivos, centralizados no espaço entre o
+   * título e os botões de baixo. A escala dos painéis deixa as setas ◀ ▶ dentro da tela.
+   */
+  private layout(): { sc: number; col: (i: number) => number; help: number; tray: number } {
+    const HH = this.scale.height;
+    const top = 250;
+    const bottom = HH - 260;
+    // Dois jogadores: os dois painéis empilhados cabem na altura livre (descontando dica e bandeja).
+    const sc = Math.min(1.95, (W - 40) / 630, this.players === 1 ? 9 : (bottom - top - 420 - 50) / (2 * 340));
+    const colH = 340 * sc;
+    const gapCols = 50;
+    const colsH = this.players * colH + (this.players - 1) * gapCols;
+    const helpH = 120;
+    const trayH = 112 * 1.6;
+    const gap = 60;
+    const total = colsH + gap + helpH + gap + trayH;
+    const start = top + Math.max(0, (bottom - top - total) / 2);
+    const help = start + colsH + gap + helpH / 2;
+    return { sc, col: (i) => start + colH / 2 + i * (colH + gapCols), help, tray: help + helpH / 2 + gap + trayH / 2 };
+  }
+
   private refresh(): void {
     this.columns.forEach((c) => c.destroy());
     this.columns = [];
@@ -179,9 +201,9 @@ export class ControlsScene extends Phaser.Scene {
     const cy = 0;
     const P = VIEW.portrait;
     const px = P ? W / 2 : this.players === 1 ? W / 2 : i === 0 ? W / 2 - 300 : W / 2 + 300;
-    const k = this.scale.height / 2770;
-    const py = P ? (this.players === 1 ? 800 : 580 + i * 620) * k : 300;
-    const sc = P ? (this.players === 1 ? 2.1 : 1.65) * Math.min(1, k * 1.1) : 1;
+    const L = P ? this.layout() : undefined;
+    const py = L ? L.col(i) : 300;
+    const sc = L ? L.sc : 1;
     const d = this.choice[i];
     const info = DEVICES[d];
     const items: Phaser.GameObjects.GameObject[] = [panel(this, cx, cy, 500, 340)];
@@ -295,8 +317,7 @@ export class ControlsScene extends Phaser.Scene {
       const owners = this.choice.map((c, i) => (s.ids.includes(c) ? i : -1)).filter((i) => i >= 0);
       owners.forEach((o, n) => items.push(playerBadge(this, x - 40 + n * 26 + (owners.length === 1 ? 14 : 0), cy - 44, o + 1, 11)));
     });
-    const k = this.scale.height / 2770;
-    return this.add.container(W / 2, P ? 1780 * k : 584, items).setScale(P ? 1.6 * Math.min(1, k * 1.1) : 0.9);
+    return this.add.container(W / 2, P ? this.layout().tray : 584, items).setScale(P ? 1.6 : 0.9);
   }
 
   /** ◀ ▶ no nome: padrão → Steam (se houver) → novo (abre a caixa para digitar). */

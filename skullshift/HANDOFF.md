@@ -218,3 +218,4 @@ originais (extraídas com PIL do PNG).
 - **Diário em pé** (`JournalScene`): letras 2x, memórias em cartões maiores, cada mundo em duas linhas (nome e números) com a altura dividida pela tela, conquistas com cartões que ocupam a altura e CONQUISTAS/MAPA lado a lado no rodapé. Nada de "✓" no Diário (palavras no lugar).
 - **Aviso de conquista** (`achievements.ts`, `toast`): a caixa cresce com o texto, dobra de tamanho em pé e fica logo abaixo do cabeçalho. Em cenas com câmera de interface separada (como o mapa em pé), só a última câmera mostra o aviso.
 - **Configurações em pé** (`SettingsScene`): abas maiores (3 + 2, nome traduzido sem o encaixe automático na largura do original), setas ◀ ▶ sempre dentro do painel e botões RESTAURAR/VOLTAR maiores.
+- **Tela de controles em pé** (`ControlsScene.layout`): painéis (1 ou 2 empilhados), dica e bandeja de dispositivos centralizados entre o título e os botões. A escala garante que as setas ◀ ▶ fiquem dentro da tela.

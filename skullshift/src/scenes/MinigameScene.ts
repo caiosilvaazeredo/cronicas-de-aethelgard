@@ -42,7 +42,7 @@ export class MinigameScene extends Phaser.Scene {
   }
 
   /**
-   * Em pé, pesca e ovelhas usam uma câmera com zoom só para o jogo (como a vila e as fases) e
+   * Em pé, o pega-ovelha usa uma câmera com zoom só para o jogo (como a vila e as fases) e
    * outra para a interface. Cada objeto novo vai para uma das duas conforme o modo atual.
    */
   private uiCam?: Phaser.Cameras.Scene2D.Camera;

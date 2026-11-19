@@ -41,7 +41,7 @@ const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
     name: 'Pipo, o gnominho',
     lines: [
       'Você é um esqueleto de verdade? Posso contar suas costelas?',
-      'Eu acertei três alvos seguidos na barraca do Grilo! Duvido você.',
+      'Fiz a Corrida do Goblin em menos de vinte segundos! Duvido você.',
       'As ovelhas fogem de você porque você é muito magro. Minha mãe disse.',
     ],
   },
@@ -58,7 +58,7 @@ const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
     lines: [
       'Lá na Pradaria os gnolls ficaram mais fortes. Ou eu fiquei mais velho.',
       'Nas dungeons, os dados decidem muita coisa. A sorte ajuda quem tem nível.',
-      'Precisando de ouro? Pesque no lago. Os peixes daqui são gordinhos.',
+      'Precisando de ouro? O Mestre Rufo paga por inimigo derrubado na arena.',
     ],
   },
 };
@@ -66,8 +66,8 @@ const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
 /**
  * A Vila: um lugar pacífico, andável, entre as aventuras. A caveira anda pela rua (setas/A-D,
  * pulo, E para usar; no toque, toca onde quer ir) e encontra: a placa do mapa, o Empório, o
- * treinador (nível e XP), o lago de pesca, o portal das dungeons, a barraca de alvos, o curral
- * das ovelhas e moradores para conversar.
+ * treinador (nível, XP e a arena), o lago, o portal das dungeons, a barraca da corrida do Goblin,
+ * o curral das ovelhas, a estalagem, o ferreiro e moradores para conversar.
  */
 /** Linha de um painel de lista (textos já traduzidos). */
 interface PanelRow {
@@ -243,7 +243,7 @@ export class VillageScene extends Phaser.Scene {
     this.label(1840, 'PORTAL DAS DUNGEONS');
     this.addSpot(1860, 'PORTAL', () => this.dungeonList());
 
-    // 6) Barraca de alvos.
+    // 6) Barraca do Goblin (a corrida).
     stand(2290, 'bld_yellow_archery', 240 / 256, 0.75);
     this.npc(2380, 'goblin', undefined, true);
     this.label(2290, 'CORRIDA');
@@ -400,8 +400,9 @@ export class VillageScene extends Phaser.Scene {
     this.closeDialog();
     const P = VIEW.portrait;
     const HH = this.scale.height;
-    const k = P ? 2 : 1;
-    const pw = P ? W - 80 : 980;
+    // Em pé: letra bem maior (a tela tem 1280 de largura virtual, mas o celular é estreito).
+    const k = P ? 2.6 : 1;
+    const pw = P ? W - 60 : 980;
     const x = W / 2 - pw / 2;
     const first = this.children.list.length;
     const g = this.add.graphics();
@@ -412,7 +413,7 @@ export class VillageScene extends Phaser.Scene {
     const textH = 62 * k + body.height + 22 * k;
     // Em pé a tela é estreita: os botões sempre vão embaixo do texto.
     const ph = choices.length && !P ? Math.max(textH, (40 + rows * 64) * k) : P ? textH + (rows * 64 + 10) * k : textH + 70 * k;
-    const y = (P ? HH - 140 : VH - 40) - ph;
+    const y = (P ? HH - 120 : VH - 40) - ph;
     title.setY(y + 22 * k);
     body.setY(y + 62 * k);
     g.fillStyle(INK, 1).fillRoundedRect(x - 6, y - 6, pw + 12, ph + 12, 22);

@@ -1,0 +1,3 @@
+2158	bonus fatto
+2159	re sconfitto
+2160	{0}/{1} livelli  ·  {2}/{3} regali

@@ -1,0 +1,3 @@
+2158	bonus done
+2159	king defeated
+2160	{0}/{1} levels  ·  {2}/{3} gifts

@@ -1,0 +1,3 @@
+2158	bonus fait
+2159	roi vaincu
+2160	{0}/{1} niveaux  ·  {2}/{3} cadeaux

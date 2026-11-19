@@ -1,0 +1,3 @@
+2158	bonus zaliczony
+2159	król pokonany
+2160	{0}/{1} poziomów  ·  {2}/{3} prezentów

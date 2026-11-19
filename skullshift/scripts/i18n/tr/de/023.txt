@@ -1,0 +1,3 @@
+2158	Bonus geschafft
+2159	König besiegt
+2160	{0}/{1} Level  ·  {2}/{3} Geschenke

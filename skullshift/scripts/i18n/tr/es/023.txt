@@ -1,0 +1,3 @@
+2158	extra hecho
+2159	rey vencido
+2160	{0}/{1} fases  ·  {2}/{3} regalos

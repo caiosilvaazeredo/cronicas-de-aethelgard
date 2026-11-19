@@ -1,0 +1,3 @@
+2158	bonus tamam
+2159	kral yenildi
+2160	{0}/{1} bölüm  ·  {2}/{3} hediye

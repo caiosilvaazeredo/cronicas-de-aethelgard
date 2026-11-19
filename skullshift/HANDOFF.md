@@ -219,3 +219,4 @@ originais (extraídas com PIL do PNG).
 - **Aviso de conquista** (`achievements.ts`, `toast`): a caixa cresce com o texto, dobra de tamanho em pé e fica logo abaixo do cabeçalho. Em cenas com câmera de interface separada (como o mapa em pé), só a última câmera mostra o aviso.
 - **Configurações em pé** (`SettingsScene`): abas maiores (3 + 2, nome traduzido sem o encaixe automático na largura do original), setas ◀ ▶ sempre dentro do painel e botões RESTAURAR/VOLTAR maiores.
 - **Tela de controles em pé** (`ControlsScene.layout`): painéis (1 ou 2 empilhados), dica e bandeja de dispositivos centralizados entre o título e os botões. A escala garante que as setas ◀ ▶ fiquem dentro da tela.
+- **Saves em pé** (`SlotsScene`): fichas largas com letra e botões maiores, sem a dica de teclado (mais altura para as fichas), título "SAVE n" traduzido sem encolher.

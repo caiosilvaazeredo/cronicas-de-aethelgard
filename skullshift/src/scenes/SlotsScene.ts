@@ -5,6 +5,7 @@ import { CHAPTERS } from '../data/lore';
 import { SLOT_COUNT, deleteSlot, loadSlot, newSlot, useSlot, type Difficulty } from '../game/progress';
 import { backdrop } from '../ui/backdrop';
 import { panel, pillButton } from '../ui/devices';
+import { noTr, trf } from '../i18n';
 
 const INK = 0x1d1a2b;
 
@@ -16,7 +17,7 @@ const CARD_W = 370;
 const CARD_H = 400;
 /** Em pé: cartões largos e baixos (botões lado a lado), para ocupar a largura da tela. */
 const WIDE_W = 600;
-const WIDE_H = 290;
+const WIDE_H = 310;
 /** Dificuldades: id, nome no botão, regra, cor do botão e cor do texto no save. */
 const DIFFS: Array<[Difficulty, string, string, number, string]> = [
   ['easy', 'FÁCIL', 'recomeça a fase após 9 mortes', 0xb8f0b0, '#2e7d32'],
@@ -45,9 +46,10 @@ export class SlotsScene extends Phaser.Scene {
     backdrop(this, 'ESCOLHA O SAVE');
     const P = VIEW.portrait;
     const HH = this.scale.height;
-    pillButton(this, P ? W / 2 : 160, P ? HH - 120 : 668, '◀  VOLTAR', () => this.back(), 230).setScale(P ? 1.6 : 1);
-    this.add
-      .text(W / 2, P ? HH - 225 : 612, '◀ ▶ escolher  ·  Enter / A: jogar  ·  Delete / X: apagar  ·  Esc / B: voltar', {
+    pillButton(this, P ? W / 2 : 160, P ? HH - 120 : 668, '◀  VOLTAR', () => this.back(), 230).setScale(P ? 1.8 : 1);
+    // A dica de teclado só deitado (em pé, tudo é por toque).
+    if (!P) this.add
+      .text(W / 2, 612, '◀ ▶ escolher  ·  Enter / A: jogar  ·  Delete / X: apagar  ·  Esc / B: voltar', {
         fontFamily: BODY_FONT,
         fontSize: P ? '28px' : '17px',
         color: '#fff7dc',
@@ -92,7 +94,7 @@ export class SlotsScene extends Phaser.Scene {
     // na maior escala que couber (sem encostar um no outro).
     const HH = this.scale.height;
     const top = 260;
-    const bottom = HH - 290;
+    const bottom = HH - 230;
     const gap = 26;
     const sc = Math.min((bottom - top) / (SLOT_COUNT * (WIDE_H + gap)), (W - 70) / (WIDE_W + 20));
     for (let i = 0; i < SLOT_COUNT; i++) {
@@ -119,8 +121,10 @@ export class SlotsScene extends Phaser.Scene {
     }
     items.push(panel(this, 0, 0, w, h));
     const title = wide
-      ? this.add.text(-w / 2 + 30, -h / 2 + 36, `SAVE ${n}`, { fontFamily: FONT, fontSize: '32px', color: '#10223a' }).setOrigin(0, 0.5)
-      : this.add.text(0, -h / 2 + 36, `SAVE ${n}`, { fontFamily: FONT, fontSize: '34px', color: '#10223a' }).setOrigin(0.5);
+      ? this.add.text(-w / 2 + 30, -h / 2 + 38, '', { fontFamily: FONT, fontSize: '38px', color: '#10223a' }).setOrigin(0, 0.5)
+      : this.add.text(0, -h / 2 + 36, '', { fontFamily: FONT, fontSize: '34px', color: '#10223a' }).setOrigin(0.5);
+    // Já traduzido (sem o encaixe na largura de "SAVE 1", que encolhia "SPIELSTAND 1").
+    noTr(title).setText(trf('SAVE {0}', n));
     items.push(title);
     const hit = this.add.zone(0, 0, w, h).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
       if (this.sel !== i) {
@@ -133,13 +137,13 @@ export class SlotsScene extends Phaser.Scene {
 
     if (!data) {
       if (wide) {
-        items.push(this.add.text(title.x + title.width + 18, title.y, 'VAZIO', { fontFamily: FONT, fontSize: '26px', color: '#8a95a3' }).setOrigin(0, 0.5));
-        items.push(this.add.text(0, -62, 'Novo jogo — escolha a dificuldade:', { fontFamily: BODY_FONT, fontSize: '19px', color: '#3c5368' }).setOrigin(0.5));
+        items.push(this.add.text(title.x + title.width + 18, title.y, 'VAZIO', { fontFamily: FONT, fontSize: '30px', color: '#8a95a3' }).setOrigin(0, 0.5));
+        items.push(this.add.text(0, -66, 'Novo jogo — escolha a dificuldade:', { fontFamily: BODY_FONT, fontSize: '23px', color: '#3c5368' }).setOrigin(0.5));
         // Três botões lado a lado, cada um com a regra embaixo.
         DIFFS.forEach(([d, label, note, color], k) => {
-          const x = (k - 1) * 190;
-          items.push(pillButton(this, x, 4, label, () => this.start(n, d), 176, color).setScale(0.95));
-          items.push(this.add.text(x, 44, note, { fontFamily: BODY_FONT, fontSize: '15px', color: '#3c5368', align: 'center', wordWrap: { width: 170 } }).setOrigin(0.5, 0));
+          const x = (k - 1) * 192;
+          items.push(pillButton(this, x, 4, label, () => this.start(n, d), 180, color).setScale(1));
+          items.push(this.add.text(x, 46, note, { fontFamily: BODY_FONT, fontSize: '18px', color: '#3c5368', align: 'center', wordWrap: { width: 180 } }).setOrigin(0.5, 0));
         });
         return this.add.container(0, 0, items);
       }
@@ -181,13 +185,15 @@ export class SlotsScene extends Phaser.Scene {
     if (wide) {
       items.push(this.add.image(-w / 2 + 70, 10, 'skull_avatar').setScale(0.3));
       const left = -w / 2 + 130;
-      items.push(this.add.text(left, -66, where, { fontFamily: FONT, fontSize: '21px', color: '#10223a' }).setOrigin(0, 0.5));
-      items.push(medals(left + 200, -16, 380));
-      const dt = this.add.text(left, 30, diff[1], { fontFamily: FONT, fontSize: '20px', color: diff[4] }).setOrigin(0, 0.5);
+      const wt = this.add.text(left, -70, where, { fontFamily: FONT, fontSize: '25px', color: '#10223a' }).setOrigin(0, 0.5);
+      if (wt.width > w / 2 - 30 - left) wt.setScale((w / 2 - 30 - left) / wt.width);
+      items.push(wt);
+      items.push(medals(left + 200, -20, 380));
+      const dt = this.add.text(left, 28, diff[1], { fontFamily: FONT, fontSize: '24px', color: diff[4] }).setOrigin(0, 0.5);
       items.push(dt);
-      items.push(this.add.text(dt.x + dt.width + 14, 30, `último jogo: ${date}`, { fontFamily: BODY_FONT, fontSize: '16px', color: '#3c5368' }).setOrigin(0, 0.5));
-      items.push(pillButton(this, -40, 96, done >= total ? 'REVER  ▶' : 'CONTINUAR  ▶', () => this.continue(n), 260, 0xffe066));
-      items.push(pillButton(this, 200, 96, confirm ? 'APAGAR MESMO?' : 'APAGAR', () => this.erase(i), confirm ? 230 : 170, confirm ? 0xff6b5a : 0xe7eef2).setScale(0.8));
+      items.push(this.add.text(dt.x + dt.width + 14, 28, `último jogo: ${date}`, { fontFamily: BODY_FONT, fontSize: '19px', color: '#3c5368' }).setOrigin(0, 0.5));
+      items.push(pillButton(this, -50, 104, done >= total ? 'REVER  ▶' : 'CONTINUAR  ▶', () => this.continue(n), 270, 0xffe066).setScale(1.05));
+      items.push(pillButton(this, 205, 104, confirm ? 'APAGAR MESMO?' : 'APAGAR', () => this.erase(i), confirm ? 220 : 170, confirm ? 0xff6b5a : 0xe7eef2).setScale(0.9));
       return this.add.container(0, 0, items);
     }
 

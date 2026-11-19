@@ -85,16 +85,17 @@ export class MenuScene extends Phaser.Scene {
     const bs = P ? 1.5 : 1;
     // Assentadas na grama: a base do desenho na linha do chão, com sombra embaixo.
     const base = gy + 30;
-    const stand = (x: number, key: string, foot: number, sc: number) => {
-      const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(3);
+    const stand = (x: number, key: string, foot: number, sc: number, flip = false) => {
+      const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(3).setFlipX(flip);
       this.add.ellipse(x, base - 2, img.displayWidth * 0.82, 20 * bs, 0x10223a, 0.25).setDepth(2.5);
     };
     // Uma vila de casinhas (sem castelos), em três tons do mesmo reino.
-    const HOUSES: Array<[number, string, number, number]> = P
-      ? [[200, 'bld_blue_house1', 173, 0.9], [560, 'bld_blue_house2', 178, 0.85], [920, 'bld_blue_house1', 173, 0.9]]
-      : [[150, 'bld_blue_house1', 173, 0.95], [330, 'bld_blue_house2', 178, 0.85], [600, 'bld_blue_house1', 173, 0.8], [880, 'bld_blue_house2', 178, 0.85], [1130, 'bld_blue_house1', 173, 0.95]];
-    // (house3 é casa de palafita: sobre a grama parece flutuar, então fica de fora.)
-    for (const [x, key, foot, sc] of HOUSES) stand(x, key, foot / 192, sc);
+    // Só a casa de frente (house1): a house2 é desenhada na diagonal e parecia voar torta na
+    // fileira reta; a house3 é de palafita e parecia flutuar. A variedade vem de espelhar e do tamanho.
+    const HOUSES: Array<[number, number, boolean]> = P
+      ? [[200, 0.9, false], [560, 0.8, true], [920, 0.9, false]]
+      : [[150, 0.95, false], [330, 0.8, true], [600, 0.85, false], [880, 0.8, true], [1130, 0.95, false]];
+    for (const [x, sc, flip] of HOUSES) stand(x, 'bld_blue_house1', 173 / 192, sc, flip);
     for (const [x, sc] of (P ? [[40, 0.9], [380, 0.8], [760, 0.85], [1240, 0.95]] : [[30, 0.9], [470, 0.75], [740, 0.8], [1010, 0.8], [1250, 0.95]]) as Array<[number, number]>) {
       if (!this.textures.exists('res_tree')) continue;
       this.add.ellipse(x, base - 2, 70 * sc * bs, 14 * bs, 0x10223a, 0.25).setDepth(2.5);

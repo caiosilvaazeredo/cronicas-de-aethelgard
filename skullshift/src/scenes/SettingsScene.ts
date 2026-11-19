@@ -3,8 +3,12 @@ import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { DEFAULTS, resetSettings, setSetting, settings, sfx, type Settings } from '../game/settings';
 import { backdrop } from '../ui/backdrop';
 import { pillButton } from '../ui/devices';
+import { noTr, tr } from '../i18n';
 
 const INK = 0x1d1a2b;
+/** Em pé: altura da primeira linha de abas e distância entre as linhas. */
+const TAB_Y = 270;
+const TAB_STEP = 140;
 
 type Row =
   | { key: keyof Settings; label: string; help: string; kind: 'slider'; min: number; max: number; fmt?: (v: number) => string }
@@ -89,18 +93,22 @@ export class SettingsScene extends Phaser.Scene {
       const perRow = 3;
       const line = Math.floor(i / perRow);
       const inLine = Math.min(perRow, TABS.length - line * perRow);
-      const x = P ? W / 2 + ((i % perRow) - (inLine - 1) / 2) * 384 : 170;
-      const y = P ? 250 + line * 118 : 150 + i * 72;
+      const x = P ? W / 2 + ((i % perRow) - (inLine - 1) / 2) * 400 : 170;
+      const y = P ? TAB_Y + line * TAB_STEP : 150 + i * 72;
       const c = this.add.container(x, y);
       const g = this.add.graphics();
-      const txt = this.add.text(0, 0, t.name, { fontFamily: FONT, fontSize: P ? '36px' : '22px', color: '#fff7dc' }).setOrigin(0.5);
+      // Já traduzido (sem o encaixe automático na largura da palavra original, que encolhia "ANZEIGE").
+      const txt = noTr(this.add.text(0, 0, '', { fontFamily: FONT, fontSize: P ? '42px' : '22px', color: '#fff7dc' }).setOrigin(0.5)).setText(tr(t.name));
+      // Nome longo (outros idiomas): encolhe só o necessário para caber na aba.
+      const maxW = (P ? 380 : 250) - 28;
+      if (txt.width > maxW) txt.setScale(maxW / txt.width);
       c.add([g, txt]);
-      c.setSize(P ? 360 : 250, P ? 96 : 56).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.setTab(i));
+      c.setSize(P ? 380 : 250, P ? 116 : 56).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.setTab(i));
       this.tabs.push(c);
     });
     const by = P ? HH - 150 : 668;
-    pillButton(this, P ? 340 : 400, by, 'RESTAURAR PADRÃO', () => this.reset(), 300, 0xe7eef2).setScale(P ? 1.5 : 0.85);
-    pillButton(this, P ? 960 : W - 170, by, '◀  VOLTAR', () => this.back(), 230, 0xffe066).setScale(P ? 1.5 : 1);
+    pillButton(this, P ? 330 : 400, by, 'RESTAURAR PADRÃO', () => this.reset(), 300, 0xe7eef2).setScale(P ? 1.7 : 0.85);
+    pillButton(this, P ? 960 : W - 170, by, '◀  VOLTAR', () => this.back(), 230, 0xffe066).setScale(P ? 1.7 : 1);
     // A dica de teclado só faz sentido deitado (no celular em pé, tudo é por toque).
     if (!P) this.add
       .text(820, 612, '↑ ↓ opção  ·  ← → ajustar  ·  Q / E (LB / RB) aba  ·  Esc / B voltar', {
@@ -154,8 +162,8 @@ export class SettingsScene extends Phaser.Scene {
       const g = c.list[0] as Phaser.GameObjects.Graphics;
       const t = c.list[1] as Phaser.GameObjects.Text;
       const on = k === this.tab;
-      const w = P ? 360 : 250;
-      const h = P ? 96 : 56;
+      const w = P ? 380 : 250;
+      const h = P ? 116 : 56;
       g.clear();
       g.fillStyle(INK, 1).fillRoundedRect(-w / 2 - 4, -h / 2 - 4, w + 8, h + 8, 18);
       g.fillStyle(on ? 0xffe066 : 0x10223a, 1).fillRoundedRect(-w / 2, -h / 2, w, h, 14);
@@ -196,7 +204,7 @@ export class SettingsScene extends Phaser.Scene {
     this.panel?.destroy();
     const P = VIEW.portrait;
     const px = P ? 50 : 330;
-    const py = P ? 250 + Math.ceil(TABS.length / 3) * 118 - 10 : 110;
+    const py = P ? TAB_Y + Math.ceil(TABS.length / 3) * TAB_STEP - 20 : 110;
     const pw = P ? W - 100 : W - 380;
     const tab = TABS[this.tab];
     // Em pé: as linhas crescem para ocupar a altura livre (até os botões de baixo), e tudo
@@ -278,7 +286,7 @@ export class SettingsScene extends Phaser.Scene {
         for (const dx of [-1, 1]) {
           items.push(
             this.add
-              .text(pw / 2 + dx * (P ? 330 * k : 170), cy, dx < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? fs(48) : '28px', color: '#fff7dc' })
+              .text(pw / 2 + dx * (P ? Math.min(330 * k, pw / 2 - 70) : 170), cy, dx < 0 ? '◀' : '▶', { fontFamily: FONT, fontSize: P ? fs(48) : '28px', color: '#fff7dc' })
               .setOrigin(0.5)
               .setPadding(12)
               .setInteractive({ useHandCursor: true })

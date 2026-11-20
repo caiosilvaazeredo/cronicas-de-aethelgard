@@ -1,3 +1,4 @@
+import { drawMountains } from '../ui/props';
 import Phaser from 'phaser';
 import { langInfo, noTr } from '../i18n';
 import { playMusic } from '../game/music';
@@ -82,22 +83,45 @@ export class MenuScene extends Phaser.Scene {
       foam.tilePositionY = Math.round(Math.sin(t / 560) * 1.5) * 2;
     });
     // Construções do reino ao fundo (atrás da grama).
-    const bs = P ? 1.5 : 1;
+    // Em pé a largura virtual é 1280, mas a tela é estreita: a vila fica bem maior (e com menos coisas).
+    const bs = P ? 2.2 : 1;
     // Assentadas na grama: a base do desenho na linha do chão, com sombra embaixo.
     const base = gy + 30;
-    const stand = (x: number, key: string, foot: number, sc: number, flip = false) => {
-      const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(3).setFlipX(flip);
-      this.add.ellipse(x, base - 2, img.displayWidth * 0.82, 20 * bs, 0x10223a, 0.25).setDepth(2.5);
+    // Ao longe: montanhas de outra ilha e um castelo pequeno no horizonte (dá profundidade).
+    const far = this.add.graphics().setDepth(1.2).setAlpha(0.55);
+    drawMountains(far, -120, W + 120, gy + 40, P ? 29 : 31, [0x6f9fc8, 0x9cc4e4, 0x527aa6]);
+    if (!P && this.textures.exists('bld_blue_castle')) this.add.image(1010, gy + 34, 'bld_blue_castle').setOrigin(0.5, 1).setScale(0.32 * bs).setDepth(1.3).setTint(0x9cbcdc).setAlpha(0.8);
+    /** Partes do gramado ocupadas por construções (arbustos e árvores não entram na frente delas). */
+    const taken: Array<[number, number]> = [];
+    const stand = (x: number, key: string, foot: number, sc: number, flip = false, depth = 3) => {
+      if (!this.textures.exists(key)) return;
+      const img = this.add.image(x, base, key).setOrigin(0.5, foot).setScale(sc * bs).setDepth(depth).setFlipX(flip);
+      this.add.ellipse(x, base - 2, img.displayWidth * 0.82, 20 * bs, 0x10223a, 0.25).setDepth(depth - 0.5);
+      taken.push([x - img.displayWidth * 0.45, x + img.displayWidth * 0.45]);
     };
-    // Uma vila de casinhas (sem castelos), em três tons do mesmo reino.
-    // Só a casa de frente (house1): a house2 é desenhada na diagonal e parecia voar torta na
-    // fileira reta; a house3 é de palafita e parecia flutuar. A variedade vem de espelhar e do tamanho.
-    const HOUSES: Array<[number, number, boolean]> = P
-      ? [[200, 0.9, false], [560, 0.8, true], [920, 0.9, false]]
-      : [[150, 0.95, false], [330, 0.8, true], [600, 0.85, false], [880, 0.8, true], [1130, 0.95, false]];
-    for (const [x, sc, flip] of HOUSES) stand(x, 'bld_blue_house1', 173 / 192, sc, flip);
-    for (const [x, sc] of (P ? [[40, 0.9], [380, 0.8], [760, 0.85], [1240, 0.95]] : [[30, 0.9], [470, 0.75], [740, 0.8], [1010, 0.8], [1250, 0.95]]) as Array<[number, number]>) {
-      if (!this.textures.exists('res_tree')) continue;
+    // Uma vila variada: casas de cores diferentes, uma torre ao fundo e uma ovelha no quintal.
+    // (Só desenhos de frente: house2 e a arquearia são em diagonal e pareciam tortos.)
+    type Bld = [x: number, key: string, foot: number, sc: number, flip: boolean, depth?: number];
+    const BLD: Bld[] = P
+      ? [
+          [190, 'bld_blue_house1', 173 / 192, 0.85, false],
+          [420, 'bld_blue_tower', 230 / 256, 0.58, false, 2.8],
+          [700, 'bld_red_house1', 173 / 192, 0.78, true],
+          [1100, 'bld_yellow_house1', 173 / 192, 0.85, false],
+        ]
+      : [
+          [150, 'bld_blue_house1', 173 / 192, 0.95, false],
+          [330, 'bld_blue_tower', 230 / 256, 0.62, false, 2.8],
+          [560, 'bld_red_house1', 173 / 192, 0.8, true],
+          [845, 'bld_yellow_house1', 173 / 192, 0.85, false],
+          [1130, 'bld_purple_house1', 173 / 192, 0.92, true],
+        ];
+    for (const [x, key, foot, sc, flip, depth] of BLD) stand(x, key, foot, sc, flip, depth);
+    const free = (x: number, half: number) => !taken.some(([a, b]) => x + half > a && x - half < b);
+    // Árvores de tamanhos diferentes nos vãos.
+    const TREES: Array<[number, number]> = P ? [[20, 0.9], [560, 0.7], [1270, 0.85]] : [[30, 0.9], [440, 0.7], [700, 0.95], [985, 0.75], [1255, 0.9]];
+    for (const [x, sc] of TREES) {
+      if (!this.textures.exists('res_tree') || !free(x, 30 * sc * bs)) continue;
       this.add.ellipse(x, base - 2, 70 * sc * bs, 14 * bs, 0x10223a, 0.25).setDepth(2.5);
       this.add.sprite(x, base, 'res_tree').setOrigin(0.5, 0.9).setScale(sc * bs).setDepth(3).play({ key: 'res_tree', startFrame: (x >> 5) % 8 });
     }
@@ -106,10 +130,27 @@ export class MenuScene extends Phaser.Scene {
       this.add.image(i * 64, gy, 'tilemap', 27 + col).setOrigin(0).setDepth(2);
       this.add.image(i * 64, gy + 64, 'tilemap', 45 + col).setOrigin(0).setDepth(2);
     }
-    for (const [x, k] of [[330, 'bush1'], [700, 'bush2'], [1020, 'bush3']] as const) {
-      if (!this.textures.exists(k)) continue;
+    // Arbustos só nos vãos (antes um ficava bem na frente de uma casa).
+    const BUSH: Array<[number, string]> = P ? [[330, 'bush1'], [565, 'bush3'], [1240, 'bush2']] : [[245, 'bush1'], [445, 'bush3'], [700, 'bush2'], [985, 'bush4'], [1215, 'bush1']];
+    for (const [x, k] of BUSH) {
+      if (!this.textures.exists(k) || !free(x, 30 * bs)) continue;
       if (!this.anims.exists(`menu_${k}`)) this.anims.create({ key: `menu_${k}`, frames: this.anims.generateFrameNumbers(k, { start: 0, end: 7 }), frameRate: 8, repeat: -1 });
-      this.add.sprite(x, gy + 44, k).setOrigin(0.5, 0.78).setScale(0.8 * bs).setDepth(3).play(`menu_${k}`);
+      this.add.sprite(x, gy + 44, k).setOrigin(0.5, 0.78).setScale(0.7 * bs).setDepth(3.2).play({ key: `menu_${k}`, startFrame: x % 8 });
+    }
+    // Ovelha pastando num quintal com cerquinha.
+    const sheepX = P ? 920 : 1000;
+    if (this.textures.exists('prop_fence') && free(sheepX, 60 * bs)) {
+      for (let k = -1; k <= 0; k++) this.add.image(sheepX + k * 64 * 0.7 * bs - 20, base + 4, 'prop_fence').setOrigin(0, 1).setScale(0.7 * bs).setDepth(3.1);
+      this.add.sprite(sheepX - 10, base, 'sheep_idle').setOrigin(0.5, 0.66).setScale(0.75 * bs).setDepth(3.3).play('sheep_idle');
+    }
+    // Tufos de grama espalhados (sem padrão fixo).
+    if (this.textures.exists('prop_tuft')) for (let x = 60; x < W; x += 70 + ((x * 37) % 60)) this.add.image(x, base + 4, 'prop_tuft').setOrigin(0.5, 0.95).setScale((0.8 + ((x * 13) % 5) / 10) * bs * 0.8).setDepth(3.4);
+    // Pedras no mar, com espuma.
+    for (const [x, dy, k] of (P ? [[150, 220, 2], [1080, 380, 1]] : [[90, 150, 2], [1190, 120, 3]]) as Array<[number, number, number]>) {
+      if (!this.textures.exists(`stone${k}`)) continue;
+      const st = this.add.image(x, gy + 68 + dy, `stone${k}`).setScale(0.7 * bs).setDepth(5);
+      this.add.ellipse(x, st.y + st.displayHeight * 0.3, st.displayWidth * 1.2, 10 * bs, 0xffffff, 0.45).setDepth(5.1);
+      this.tweens.add({ targets: st, y: st.y + 3, duration: 1600 + x, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     // Gente da vila andando pelo gramado. O Xamã, lá de cima, escolhe um de vez em quando e o
     // transforma de longe: um raio roxo desce até ele, raios giram em volta e, no clarão, o

@@ -425,6 +425,12 @@ export class UIScene extends Phaser.Scene {
     );
     const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 70 : 74;
     this.bossBox = this.add.container(W / 2, y, items).setDepth(DEPTH.hud + 3);
+    // Vida implícita: a barra não aparece. Fica só o nome do chefe por uns segundos, como
+    // apresentação; o quanto ele aguenta se percebe pelos golpes (clarão, recuo, faíscas).
+    g.setVisible(false);
+    this.bossCells.forEach((c) => c.setAlpha(0));
+    const box = this.bossBox;
+    this.tweens.add({ targets: box, alpha: 0, delay: 2600, duration: 600 });
   }
 
   setBossHp(frac: number): void {
@@ -468,7 +474,10 @@ export class UIScene extends Phaser.Scene {
     );
     const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 10 : 124;
     this.bossBox2 = this.add.container(W / 2 - (P ? 120 : 110), y, items).setDepth(DEPTH.hud + 3).setAlpha(0);
-    this.tweens.add({ targets: this.bossBox2, alpha: 1, duration: 300 });
+    // Vida implícita (como na primeira barra): só o nome aparece e some.
+    g.setVisible(false);
+    this.bossCells2.forEach((c) => c.setAlpha(0));
+    this.tweens.add({ targets: this.bossBox2, alpha: 1, duration: 300, yoyo: true, hold: 2400 });
   }
 
   setBossHp2(frac: number): void {

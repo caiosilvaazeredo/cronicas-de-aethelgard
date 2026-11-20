@@ -4015,6 +4015,33 @@ export class Level {
     s.add.container(x, ground, [g, label]).setDepth(DEPTH.deco);
   }
 
+  /**
+   * Segunda camada de piso, atrás do chão jogável (inacessível): um patamar mais escuro sob a
+   * construção, do tamanho dela, que desce até a água. Assim nada fica "flutuando" quando o
+   * prédio é mais largo que o trecho de chão em que está.
+   */
+  private backLedge(x: number, w: number, ground: number, lift = 0): void {
+    const s = this.scene;
+    const key = this.def.tiles;
+    if (!key || this.def.theme === 'sky' || this.def.theme === 'haunted' || !s.textures.exists(key)) return;
+    const COLS = 9;
+    const t0 = Math.floor((x - w / 2 - 12) / TILE);
+    const t1 = Math.ceil((x + w / 2 + 12) / TILE);
+    const n = t1 - t0;
+    // Mesma altura do chão da frente (o desenho do topo começa 40 px acima da linha da grama).
+    const top = ground - 40;
+    const rows = Math.max(1, Math.round((FLOOR_Y - ground) / TILE) + 1);
+    void lift;
+    // Mais escuro: lê como um patamar ao fundo, atrás do chão da frente.
+    const tint = Phaser.Display.Color.ValueToColor(this.rockTint).darken(28).color;
+    for (let i = 0; i < n; i++) {
+      const col = n === 1 ? 8 : i === 0 ? 5 : i === n - 1 ? 7 : 6;
+      const px = (t0 + i) * TILE;
+      s.add.image(px, top, key, 3 * COLS + col).setOrigin(0).setDepth(DEPTH.terrain - 0.5).setTint(tint);
+      for (let r = 1; r <= rows; r++) s.add.image(px, top + r * TILE, key, (r === rows ? 5 : 4) * COLS + col).setOrigin(0).setDepth(DEPTH.terrain - 0.5).setTint(tint);
+    }
+  }
+
   private addDeco(x: number, kind: DecoKind, seed: number, ground: number): void {
     const s = this.scene;
     const base = ground - 6; // um pouco atrás da linha dos pés
@@ -4053,10 +4080,18 @@ export class Level {
         // Construções do Free Pack ao fundo, na cor do reino da área, assentadas no chão
         // (a base do desenho fica na linha da grama, com uma sombra embaixo).
         const color = BUILDING_COLOR[this.def.tiles ?? 'tilemap'] ?? 'blue';
-        const name = kind === 'house' || kind === 'hut' ? `house${1 + (seed % 3)}` : kind;
+        // Só a casa de frente: a house2 é desenhada na diagonal (parecia torta) e a house3 é de
+        // palafita (parecia flutuar).
+        const name = kind === 'house' || kind === 'hut' ? 'house1' : kind;
         const img = s.add.image(x, 0, `bld_${kind === 'tower' && color === 'blue' ? 'black' : color}_${name}`);
         const foot = BUILDING_FOOT[name] ?? 0.9;
         const sc = kind === 'castle' ? 0.95 : 0.85;
+        // Com maré: o patamar de fundo sobe acima da água mais alta, e o prédio fica em cima dele.
+        const high = this.def.sea?.tide?.high ?? 0;
+        const limit = DEATH_Y - high - 24;
+        const lift = high && ground > limit ? Math.ceil((ground - limit) / TILE) * TILE : 0;
+        ground -= lift;
+        this.backLedge(x, img.width * sc, ground, lift);
         s.add.ellipse(x, ground + 2, img.width * sc * 0.8, 18, 0x10223a, 0.22).setDepth(DEPTH.deco - 0.25);
         img.setOrigin(0.5, foot).setPosition(x, ground + 6).setScale(sc).setDepth(DEPTH.deco - 0.2).setTint(tint);
         break;

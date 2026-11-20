@@ -1,3 +1,4 @@
+import { DEATH_Y } from '../config';
 import { getCoins } from '../game/progress';
 import { buzz } from '../game/settings';
 import { trf } from '../i18n';
@@ -21,7 +22,7 @@ import { SharkKingBoss } from '../game/sharkking';
 import { ShamanBoss } from '../game/shamanboss';
 import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
-import { accessoryOffset, baseOf, variantOf, type Accessory } from '../game/variants';
+import { accessoryOffset, baseOf, variantColor, variantOf, variantTexture, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTier, areaTitle } from '../game/areas';
 import { levelUpBanner } from '../ui/levelup';
 import { smithLevel, addCoins, addStat, addXp, completeLevel, isDone, isSecretDone, getLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
@@ -55,6 +56,8 @@ interface Item {
   respawnAt: number;
   /** Itens que caíram de arremessos somem depois de um tempo (0 = não somem). */
   expireAt: number;
+  /** Forma exata (variante: lagarto azul, gnoll caçador...); sem isso, a forma base do item. */
+  form?: CharId;
 }
 
 interface Projectile {
@@ -413,8 +416,14 @@ export class GameScene extends Phaser.Scene {
       });
     }
     def.screens.forEach((s, si) => {
-      for (const t of s.hangers ?? []) this.addHanger(this.level.tileX(si, t));
+      // Aranha pendurada colada no início: vai um pouco mais para frente.
+      for (const t of s.hangers ?? []) {
+        let hx = this.level.tileX(si, t);
+        if (this.mode === 'story' && this.players[0] && Math.abs(hx - this.players[0].x) < 260) hx = this.players[0].x + 260;
+        this.addHanger(hx);
+      }
     });
+    if (this.mode === 'story') this.clearSpawnArea();
 
     this.camX = this.cameraTarget();
     this.setupCamera();
@@ -595,7 +604,9 @@ export class GameScene extends Phaser.Scene {
       p.faceTarget = this.nearestFoe(p)?.x ?? null;
     });
     for (const e of this.enemies) {
-      const active = e.f.alive && !this.transitioning && this.level.screenOf(e.f.x) === this.screen;
+      // Nos 2 primeiros segundos da fase os inimigos ainda não agem (dá tempo de se situar).
+      const awake = this.mode !== 'story' || this.time.now - this.startTime > 2000;
+      const active = awake && e.f.alive && !this.transitioning && this.level.screenOf(e.f.x) === this.screen;
       const hanging = this.hangers.some((h) => h.f === e.f && h.state !== 'free');
       e.f.intent = active && !hanging ? e.ai.read() : emptyIntent();
     }
@@ -1378,7 +1389,7 @@ export class GameScene extends Phaser.Scene {
         const char = ITEM_TO_CHAR[f.kind];
         if (p.def.id === char) this.setReserve(f.pi, f.kind); // mesma forma: volta para a caixa
         else {
-          const had = CHAR_TO_ITEM[p.def.id];
+          const had = CHAR_TO_ITEM[p.def.base ?? p.def.id];
           if (had) this.setReserve(f.pi, had);
           this.transform(f.pi, char);
         }
@@ -1520,7 +1531,7 @@ export class GameScene extends Phaser.Scene {
       if (swatted) continue;
       for (const b of this.fighters) {
         if (!b.alive || b.team === p.owner.team || b.invulnerable) continue;
-        if (!overlap(projBox(p), bodyBox(b))) continue;
+        if (!overlap(projBox(p), shotBox(b))) continue;
         // Contra-golpe: o tiro volta para quem atirou.
         if (b.parries(b.x - Math.sign(p.vx) * 10)) {
           this.parryFx(b, p.sprite.x);
@@ -1566,6 +1577,8 @@ export class GameScene extends Phaser.Scene {
 
   private killFighter(victim: Fighter, killer: Fighter | null, cause: 'hit' | 'water' | 'fall' | 'eaten'): void {
     if (!victim.alive) return;
+    // Recém-revivido: 1 s imune a tudo (inclusive água, lava e quedas).
+    if (this.players.includes(victim) && this.time.now < victim.reviveGraceUntil) return;
     const dir = killer ? Math.sign(victim.x - killer.x) || 1 : 1;
     // Elite: o golpe tira uma "camada" de armadura em vez de derrubar.
     if (cause === 'hit' && victim.armor > 0) {
@@ -1581,7 +1594,10 @@ export class GameScene extends Phaser.Scene {
       victim.sprite.setTintFill(0xffffff);
       this.time.delayedCall(90, () => victim.sprite.active && victim.sprite.clearTint());
       this.sparks(victim.x, victim.feet - victim.def.head * 0.5);
-      this.popText(victim.x, victim.feet - victim.def.head - 30, victim.armor ? `${victim.armor + 1}` : '!', '#ffe066');
+      // Vida implícita: sem número dos golpes que faltam. Quanto menos falta, mais o inimigo
+      // treme e mais forte é o clarão vermelho do golpe.
+      victim.sprite.setTintFill(victim.armor ? 0xffffff : 0xff6a5a);
+      if (!victim.armor) this.cameras.main.shake(80, 0.004);
       return;
     }
     const story = this.mode === 'story';
@@ -1620,7 +1636,7 @@ export class GameScene extends Phaser.Scene {
       this.cameras.main.shake(120, 0.006);
     }
     const dropY = this.level.landingY(x, victim.feet - 40, victim.feet + 4);
-    if (dropped && dropY !== null) this.spawnItem(x, dropped, false, 0, undefined, dropY);
+    if (dropped && dropY !== null) this.spawnItem(x, dropped, false, 0, undefined, dropY, victim.def.base ? victim.def.id : undefined);
 
     const pi = this.players.indexOf(victim);
     if (pi === -1) {
@@ -1711,13 +1727,55 @@ export class GameScene extends Phaser.Scene {
    * pista que resgata o piloto), conjura, o corpo inteiro se forma no chão e ele vai embora
    * flutuando devagar.
    */
+  /**
+   * Fases com maré: renasce sempre em terra firme, num chão que fica acima da água mesmo com a
+   * maré no ponto mais alto. Procura o mais perto no mesmo cenário (e, se não houver, na fase).
+   */
+  /**
+   * Começo da fase justo: nenhum inimigo nasce colado na caveira (eles iam derrubá-la antes de o
+   * jogador agir). Quem está a menos de 300 px vai para o chão mais próximo além disso, à frente.
+   * E a caveira entra com o mesmo 1 s de proteção de quando revive.
+   */
+  private clearSpawnArea(): void {
+    const p = this.players[0];
+    if (!p) return;
+    const min = 300;
+    for (const e of this.enemies) {
+      const f = e.f;
+      if (!f.alive || Math.abs(f.x - p.x) >= min) continue;
+      const want = p.x + min + 20;
+      const x = this.level.nearestGround(want, 1, want, this.level.width - 48);
+      const feet = this.level.groundY(x) ?? f.feet;
+      f.body.reset(x, feet - (f.def.feetY - f.def.frame / 2));
+    }
+    p.reviveGraceUntil = this.time.now + 1000;
+  }
+
+  private safeSpawnX(x: number): number {
+    const tide = LEVELS[this.levelIndex].sea?.tide;
+    if (!tide) return x;
+    const limit = DEATH_Y - tide.high - 12;
+    const dry = (cx: number) => {
+      const gy = this.level.groundY(cx);
+      return gy !== null && gy < limit;
+    };
+    if (dry(x)) return x;
+    const pick = (a: number, b: number) => {
+      let best: number | undefined;
+      for (let cx = a; cx <= b; cx += 16) if (dry(cx) && (best === undefined || Math.abs(cx - x) < Math.abs(best - x))) best = cx;
+      return best;
+    };
+    const a = Math.floor(x / W) * W;
+    return pick(a + 48, a + W - 48) ?? pick(48, this.level.width - 48) ?? x;
+  }
+
   private revive(pi: number, spawnX: () => number): void {
     const p = this.players[pi];
     if (p.reviving || p.alive) return;
     p.reviving = true;
     const color = PLAYER_TINT[pi];
     const from = p.team === 0 ? -1 : 1; // chega por trás de quem vai renascer
-    const x = spawnX();
+    const x = this.safeSpawnX(spawnX());
     const floor = this.level.groundY(x) ?? FLOOR_Y;
     const hoverY = floor - 190;
     const d = CHARS[p.baseChar];
@@ -1861,7 +1919,7 @@ export class GameScene extends Phaser.Scene {
   /** A aranha nunca cai: no ar sem chão embaixo, o sentido aranha dispara. */
   private updateSpiderSense(): void {
     for (const f of this.fighters) {
-      if (f.def.id !== 'spider' || !f.alive || f.zipping || !f.body.moves) continue;
+      if ((f.def.base ?? f.def.id) !== 'spider' || !f.alive || f.zipping || !f.body.moves) continue;
       if (f.onGround || f.body.velocity.y <= 0) continue;
       if (this.level.landingY(f.x, f.feet, 5000) !== null) continue;
       this.spiderSense(f);
@@ -1972,7 +2030,7 @@ export class GameScene extends Phaser.Scene {
   /** Morcego que encosta numa teia do teto gruda nela, e uma aranha desce para comê-lo. */
   private updateWebTraps(): void {
     for (const f of this.players) {
-      if (f.def.id !== 'bat' || !f.alive || f.zipping || f.invulnerable) continue;
+      if ((f.def.base ?? f.def.id) !== 'bat' || !f.alive || f.zipping || f.invulnerable) continue;
       const web = this.webs.find((w) => Phaser.Geom.Rectangle.Overlaps(w, new Phaser.Geom.Rectangle(f.body.x, f.body.y, f.body.width, f.body.height)));
       if (web) this.webEat(f, web);
     }
@@ -2166,7 +2224,7 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- itens / transformação ----------
 
-  private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0, h?: number, floorY?: number): void {
+  private spawnItem(x: number, kind: ItemId, home: boolean, ttl = 0, h?: number, floorY?: number, form?: CharId): void {
     const floor = floorY ?? (h !== undefined ? FLOOR_Y - h * 64 : this.level.groundY(x) ?? FLOOR_Y);
     const y = floor - 24;
     const glow = this.add.ellipse(x, floor - 2, 46, 12, 0xfff7a8, 0.45).setDepth(DEPTH.items);
@@ -2188,7 +2246,14 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 1)
       .setVisible(false));
-    this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0 });
+    // Item de variante: na cor dela (o "leque" do lagarto azul sai azul).
+    const tint = form ? variantColor(form) : undefined;
+    if (form && tint !== undefined) {
+      sprite.anims.stop();
+      sprite.setTexture(variantTexture(this, ITEM_TEXTURE[kind], form, 0));
+      glow.setFillStyle(tint, 0.45);
+    }
+    this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0, form });
   }
 
   /**
@@ -2219,7 +2284,7 @@ export class GameScene extends Phaser.Scene {
           continue;
         }
       }
-      const char = ITEM_TO_CHAR[it.kind];
+      const char = it.form ?? ITEM_TO_CHAR[it.kind];
       let shown = false;
       for (let i = 0; i < this.players.length; i++) {
         const p = this.players[i];
@@ -2243,7 +2308,7 @@ export class GameScene extends Phaser.Scene {
         }
         if (p.intent.pick) {
           // Já transformado e caixa vazia: a forma atual vai para a reserva (como a flor no Mario).
-          const had = CHAR_TO_ITEM[p.def.id];
+          const had = CHAR_TO_ITEM[p.def.base ?? p.def.id];
           if (had && this.reserveOn && !this.reserves[i]) this.setReserve(i, had);
           this.transform(i, char);
           it.active = false;
@@ -2284,7 +2349,7 @@ export class GameScene extends Phaser.Scene {
     }
     if (hasSeen(`shift-${char}`) || !settings().quips) return;
     markSeen(`shift-${char}`);
-    const text = SHIFT_QUIPS[char];
+    const text = SHIFT_QUIPS[char] ?? SHIFT_QUIPS[CHARS[char].base ?? char];
     if (!text) return;
     this.quip?.close();
     const b = new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.labelHeight - 56 }), text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
@@ -3343,6 +3408,17 @@ export class GameScene extends Phaser.Scene {
 function bodyBox(f: Fighter): HitBox {
   const b = f.body;
   return { x1: b.left, x2: b.right, y1: b.top, y2: b.bottom };
+}
+
+/**
+ * Alvo dos tiros: a caixa de colisão (50 px) é mais baixa que o desenho, e o osso, que sai em
+ * arco, passava por cima da cabeça (do lagarto, por exemplo) sem acertar. Para tiros, a altura é
+ * a do corpo desenhado (até a cabeça); agachado, continua baixa (dá para escapar por baixo).
+ */
+function shotBox(f: Fighter): HitBox {
+  const b = f.body;
+  const tall = f.crouching ? b.height : Math.max(b.height, f.def.head * 0.85);
+  return { x1: b.left - 4, x2: b.right + 4, y1: b.bottom - tall, y2: b.bottom };
 }
 
 function projBox(p: Projectile): HitBox {

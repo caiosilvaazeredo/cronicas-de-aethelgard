@@ -45,6 +45,13 @@ interface Crab {
   carrying: boolean;
   stunUntil: number;
   hitBy: number;
+  /** Ataque: anda, prepara (garras para cima, piscando) e avança de lado com as pinças. */
+  atk?: 'wind' | 'dash';
+  atkUntil?: number;
+  atkDir?: number;
+  atkReady?: number;
+  /** Estrelinhas girando enquanto está de barriga para cima. */
+  stars?: Phaser.GameObjects.Image[];
 }
 
 /** Caranguejo em pixel art (2 quadros de passinho). */
@@ -119,6 +126,7 @@ export class PuzzleSystem {
   private sheep: Phaser.Physics.Arcade.Sprite[] = [];
   private held?: Phaser.Physics.Arcade.Sprite;
   private door: Phaser.GameObjects.Image;
+  private lock?: Phaser.GameObjects.Graphics;
   private doorX: number;
   private doorFloor: number;
   private prompt: Phaser.GameObjects.Text;
@@ -160,8 +168,19 @@ export class PuzzleSystem {
     this.doorX = X(ds, dt);
     this.doorFloor = topOf(dh);
     this.door = s.add.image(this.doorX, this.doorFloor + 2, 'door_exit').setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.5);
-    const lock = s.add.image(this.doorX, this.doorFloor - 56, 'key_item').setScale(0.7).setAlpha(0.35).setDepth(DEPTH.deco + 0.6);
-    s.tweens.add({ targets: lock, alpha: 0.7, duration: 700, yoyo: true, repeat: -1 });
+    // Cadeado na porta (antes era uma chave translúcida, que parecia uma segunda chave por cima
+    // da verdadeira quando a caveira chegava com ela). Abre e cai quando a porta destranca.
+    const lock = s.add.graphics().setDepth(DEPTH.deco + 0.6);
+    const INKC = 0x1d1a2b;
+    lock.lineStyle(9, INKC, 1).beginPath().arc(0, -6, 11, Math.PI, 0).strokePath();
+    lock.lineStyle(5, 0xc4beca, 1).beginPath().arc(0, -6, 11, Math.PI, 0).strokePath();
+    lock.fillStyle(INKC, 1).fillRoundedRect(-17, -9, 34, 28, 6);
+    lock.fillStyle(0xd8a530, 1).fillRoundedRect(-14, -6, 28, 22, 5);
+    lock.fillStyle(0xffe066, 1).fillRect(-12, -4, 24, 4);
+    lock.fillStyle(INKC, 1).fillCircle(0, 3, 3.5).fillRect(-1.5, 3, 3, 8);
+    lock.setPosition(this.doorX, this.doorFloor - 50);
+    s.tweens.add({ targets: lock, angle: { from: -6, to: 6 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.lock = lock;
     this.prompt = s.add
       .text(this.doorX, this.doorFloor - 160, '', { fontFamily: BODY_FONT, fontSize: '16px', color: '#ffffff', backgroundColor: `${INK}cc`, padding: { x: 8, y: 4 } })
       .setOrigin(0.5)
@@ -546,18 +565,127 @@ export class PuzzleSystem {
     (this.key.body as Phaser.Physics.Arcade.Body).enable = false;
   }
 
+  /**
+   * Derrubada: o golpe joga o caranguejo para o alto girando; ele cai de barriga para cima,
+   * quica, levanta poeira e fica com as perninhas sacudindo e estrelas na cabeça.
+   */
+  private crabKnockDown(c: Crab, dir: number): void {
+    const s = this.host.scene;
+    const sp = c.sprite;
+    sp.anims.stop();
+    s.tweens.killTweensOf(sp);
+    const x = Phaser.Math.Clamp(sp.x + dir * 40, c.x0 - 40, c.x1 + 40);
+    s.tweens.add({ targets: sp, x, duration: 520, ease: 'Sine.easeOut' });
+    s.tweens.add({ targets: sp, angle: dir * 180, duration: 420, ease: 'Sine.easeInOut', onComplete: () => sp.setAngle(0).setFlipY(true) });
+    s.tweens.add({
+      targets: sp,
+      y: c.floor - 90,
+      duration: 220,
+      ease: 'Quad.easeOut',
+      onComplete: () =>
+        s.tweens.add({
+          targets: sp,
+          y: c.floor,
+          duration: 300,
+          ease: 'Bounce.easeOut',
+          onComplete: () => {
+            const d = s.add.sprite(sp.x, c.floor - 6, 'dust').setDepth(DEPTH.fx).setScale(0.9).play('dust');
+            d.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => d.destroy());
+            s.cameras.main.shake(90, 0.004);
+            c.stars?.forEach((st) => st.destroy());
+            c.stars = [0, 1, 2].map(() => s.add.image(sp.x, c.floor - 40, 'star').setDepth(DEPTH.fx).setTint(0xffe066).setScale(0.8));
+          },
+        }),
+    });
+  }
+
+  /** Fim do atordoamento: um pulinho girando e volta a andar. */
+  private crabRecover(c: Crab): void {
+    const s = this.host.scene;
+    const sp = c.sprite;
+    c.stars?.forEach((st) => st.destroy());
+    c.stars = undefined;
+    sp.setScale(1);
+    s.tweens.killTweensOf(sp);
+    s.tweens.add({
+      targets: sp,
+      y: c.floor - 40,
+      angle: 180,
+      duration: 160,
+      ease: 'Quad.easeOut',
+      onComplete: () => {
+        sp.setFlipY(false).setAngle(0);
+        s.tweens.add({ targets: sp, y: c.floor, duration: 160, ease: 'Quad.easeIn', onComplete: () => sp.play('crab') });
+      },
+    });
+  }
+
+  /**
+   * Ataque do caranguejo: com a caveira perto no mesmo chão, ele para, levanta as garras e pisca
+   * vermelho (aviso), e então avança de lado com as pinças abertas. Depois descansa um pouco.
+   */
+  private crabAttack(c: Crab, time: number, p: Fighter): void {
+    const s = this.host.scene;
+    const sp = c.sprite;
+    if (c.atk === 'wind' && time >= c.atkUntil!) {
+      c.atk = 'dash';
+      c.atkUntil = time + 340;
+      sp.clearTint().play('crab');
+      sp.anims.timeScale = 3;
+      sfx('clack', 0.7);
+      return;
+    }
+    if (c.atk === 'dash' && time >= c.atkUntil!) {
+      c.atk = undefined;
+      c.atkReady = time + 1800;
+      sp.anims.timeScale = 1;
+      return;
+    }
+    if (c.atk || time < (c.atkReady ?? 0) || !p.alive) return;
+    const dx = p.x - sp.x;
+    if (Math.abs(dx) > 170 || Math.abs(dx) < 20 || Math.abs(p.feet - c.floor) > 24) return;
+    c.atk = 'wind';
+    c.atkUntil = time + 480;
+    c.atkDir = Math.sign(dx);
+    sp.anims.stop();
+    sp.setFrame(1);
+    // Garras para cima piscando.
+    s.tweens.add({ targets: sp, y: c.floor - 6, duration: 120, yoyo: true, repeat: 1 });
+    sp.setTint(0xff6a5a);
+    s.time.delayedCall(120, () => sp.active && c.atk === 'wind' && sp.clearTint());
+    s.time.delayedCall(240, () => sp.active && c.atk === 'wind' && sp.setTint(0xff6a5a));
+    s.time.delayedCall(360, () => sp.active && c.atk === 'wind' && sp.clearTint());
+    this.host.popText(sp.x, c.floor - 70, '!', '#ff9a8a');
+  }
+
   private updateCrabs(time: number, dt: number, p: Fighter): void {
     const hb = p.alive ? p.activeHitBox() : null;
     for (const c of this.crabs) {
       const sp = c.sprite;
       const stunned = time < c.stunUntil;
-      if (!stunned) {
-        if (sp.flipY) {
-          sp.setFlipY(false).play('crab');
+      if (stunned) {
+        // De barriga para cima: perninhas sacudindo e estrelas girando.
+        sp.setScale(1 + Math.sin(time / 40) * 0.06, 1);
+        c.stars?.forEach((st, i) => {
+          const a = time / 170 + (i * Math.PI * 2) / 3;
+          st.setPosition(sp.x + Math.cos(a) * 26, c.floor - 40 + Math.sin(a) * 7).setAngle(time / 3);
+        });
+        // Perto de acabar: dá um pulo e se desvira.
+        if (c.stunUntil - time < 260 && sp.flipY && !this.host.scene.tweens.isTweening(sp)) this.crabRecover(c);
+      } else {
+        const busy = this.host.scene.tweens.isTweening(sp);
+        if (sp.flipY && !busy) this.crabRecover(c);
+        // Fora de pulos e quiques, sempre com as patas na areia.
+        if (!busy) sp.y = c.floor;
+        if (!busy || c.atk) this.crabAttack(c, time, p);
+        const speed = c.atk === 'dash' ? 430 : c.atk === 'wind' ? 0 : c.carrying ? 70 : 95;
+        const dir = c.atk === 'dash' ? c.atkDir! : c.dir;
+        sp.x += dir * speed * dt;
+        if (c.atk === 'dash') sp.x = Phaser.Math.Clamp(sp.x, c.x0 - 60, c.x1 + 60);
+        else {
+          if (sp.x > c.x1) c.dir = -1;
+          if (sp.x < c.x0) c.dir = 1;
         }
-        sp.x += c.dir * (c.carrying ? 70 : 95) * dt;
-        if (sp.x > c.x1) c.dir = -1;
-        if (sp.x < c.x0) c.dir = 1;
       }
       // Leva a chave nas costas.
       if (c.carrying) this.key.setPosition(sp.x, c.floor - 52 + Math.sin(time / 90) * 2).setAngle(Math.sin(time / 200) * 8);
@@ -567,7 +695,9 @@ export class PuzzleSystem {
         if (hb.x1 < box.x2 && hb.x2 > box.x1 && hb.y1 < box.y2 && hb.y2 > box.y1) {
           c.hitBy = p.attackId;
           c.stunUntil = time + 2600;
-          sp.setFlipY(true).anims.stop();
+          c.atk = undefined;
+          sp.clearTint();
+          this.crabKnockDown(c, p.facing);
           sfx('hit');
           if (c.carrying) {
             c.carrying = false;
@@ -626,6 +756,12 @@ export class PuzzleSystem {
     this.door.setTexture('door_open');
     sfx('door');
     const s = this.host.scene;
+    // O cadeado abre e cai girando.
+    const lk = this.lock;
+    if (lk) {
+      s.tweens.killTweensOf(lk);
+      s.tweens.add({ targets: lk, y: lk.y + 90, angle: 160, alpha: 0, duration: 600, ease: 'Quad.easeIn', onComplete: () => lk.destroy() });
+    }
     s.tweens.add({ targets: p.sprite, x: this.doorX, alpha: 0, duration: 500, delay: 150 });
     s.time.delayedCall(800, () => {
       p.sprite.setAlpha(1);

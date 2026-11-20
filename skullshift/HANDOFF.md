@@ -246,3 +246,24 @@ originais (extraídas com PIL do PNG).
   - A ovelha do Empório morde a placa depois de 25 s parado (`ShopScene.biteSign`).
   - Estrela cadente rara no mapa (`WorldScene.shootingStars`).
   - Depois de 10 min parado no menu inicial, a ovelha come o menu inteiro em 1 min, a câmera dá um super zoom na cara dela e aparece um dizer. Qualquer comando devolve o menu (`MenuScene.munch`; `MenuScene.IDLE_MS`/`EAT_MS`).
+
+## Correções de jogabilidade (rodada de bugs)
+- **Porta trancada** (`puzzle.ts`): cadeado desenhado no lugar da chave translúcida, que parecia uma segunda chave por cima da verdadeira. O cadeado abre e cai quando a porta destranca.
+- **Caranguejo** (`puzzle.ts`):
+  - `crabKnockDown`: o golpe joga o caranguejo para o alto girando; ele cai de barriga para cima com poeira e estrelas, e `crabRecover` o desvira com um pulo.
+  - `crabAttack`: com a caveira perto no mesmo chão, ele levanta as garras piscando vermelho (aviso) e avança de lado.
+  - Fora de pulos e quiques, o y do caranguejo é sempre o do chão (antes ele podia ficar flutuando).
+- **Maré**: `GameScene.safeSpawnX` faz a caveira renascer num chão que fica acima da água mesmo com a maré no máximo. Nessas fases, as construções ficam sobre um patamar de fundo acima da maré (`Level.backLedge`, com `lift`).
+- **Segunda camada de piso**: toda construção ganha `backLedge`, um patamar mais escuro atrás do chão jogável e inacessível, do tamanho do prédio, para nada ficar flutuando. Casas só usam `house1`.
+- **Tiros**: `shotBox` usa a altura do corpo desenhado (antes, a caixa de 50 px fazia o osso em arco passar por cima do lagarto).
+- **Reviver**: `Fighter.reviveGraceUntil` dá 1 s imune a tudo, e `killFighter` também respeita esse tempo. No início da fase, `clearSpawnArea` afasta inimigos e aranhas penduradas colados na caveira, e os inimigos só agem depois de 2 s.
+- **Vida implícita**: as barras dos chefes não aparecem (só o nome, que some depois de alguns segundos), e o número de golpes que faltam nos inimigos de elite saiu. No último golpe, o clarão do acerto é vermelho.
+- **Variantes**:
+  - Soltam o item do personagem base recolorido no tom delas (`variantTexture`, troca de matiz em canvas; `variantColor`).
+  - Pegar o item transforma a caveira na própria variante (`Item.form`), com o ataque dela (o lagarto azul cospe água, por exemplo).
+  - O retrato do HUD também é recolorido.
+  - As passivas de aranha e morcego valem para as variantes delas (`def.base`).
+- **Menu inicial**:
+  - A vila tem casas de quatro cores, uma torre, montanhas e um castelo ao longe, uma ovelha num quintal com cerca, tufos de grama e pedras no mar.
+  - Árvores e arbustos só entram nos vãos entre as construções (`taken`/`free`).
+  - Em pé, a escala é 2,2.

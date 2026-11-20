@@ -178,8 +178,10 @@ export class Fighter {
   get onGround(): boolean {
     return this.body.blocked.down || this.body.touching.down;
   }
+  /** Depois de reviver: 1 s em que nada (golpe, tiro, água, espinho, queda) derruba. */
+  reviveGraceUntil = 0;
   get invulnerable(): boolean {
-    return this.buried || this.scene.time.now < this.invulnUntil;
+    return this.buried || this.scene.time.now < this.invulnUntil || this.scene.time.now < this.reviveGraceUntil;
   }
   get isGuarding(): boolean {
     return this.state === 'guard';
@@ -846,6 +848,7 @@ export class Fighter {
     this.applyChar(this.baseChar, feetY);
     this.body.setVelocity(0, 0);
     this.invulnUntil = this.scene.time.now + INVULN_TIME;
+    this.reviveGraceUntil = this.scene.time.now + 1000;
     this.setMarkersVisible(true);
     this.updateMarkers();
   }

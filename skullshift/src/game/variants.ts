@@ -265,6 +265,48 @@ function makeArt(scene: Phaser.Scene): void {
 }
 
 /** Cria as folhas, as animações e as fichas (CHARS) de todas as variantes. */
+/** Cor principal de uma variante (a primeira cor trocada na paleta), para tingir o item que ela solta. */
+export function variantColor(id: string): number | undefined {
+  const v = variantOf(id);
+  const pal = v?.palette;
+  return pal ? Object.values(pal)[0] : undefined;
+}
+
+/**
+ * Cópia de uma textura com as cores trocadas para o tom da variante (mesmo brilho, outra cor):
+ * o item e o retrato do lagarto azul ficam azuis de verdade, não escurecidos por um tingimento.
+ * Devolve a chave da cópia (feita uma vez e guardada).
+ */
+export function variantTexture(scene: Phaser.Scene, src: string, id: string, frame: string | number = 0): string {
+  const color = variantColor(id);
+  if (color === undefined || !scene.textures.exists(src)) return src;
+  const key = `${src}__${id}__${frame}`;
+  if (scene.textures.exists(key)) return key;
+  const fr = scene.textures.getFrame(src, frame);
+  const cv = document.createElement('canvas');
+  cv.width = fr.cutWidth;
+  cv.height = fr.cutHeight;
+  const ctx = cv.getContext('2d', { willReadFrequently: true })!;
+  ctx.drawImage(fr.source.image as CanvasImageSource, fr.cutX, fr.cutY, fr.cutWidth, fr.cutHeight, 0, 0, fr.cutWidth, fr.cutHeight);
+  const img = ctx.getImageData(0, 0, cv.width, cv.height);
+  const target = Phaser.Display.Color.ValueToColor(color);
+  const th = Phaser.Display.Color.RGBToHSV(target.red, target.green, target.blue).h;
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i + 3] === 0) continue;
+    const hsv = Phaser.Display.Color.RGBToHSV(d[i], d[i + 1], d[i + 2]);
+    // Só as partes coloridas (contorno escuro e brilhos brancos ficam como estão).
+    if (hsv.s < 0.22 || hsv.v < 0.18) continue;
+    const c = Phaser.Display.Color.HSVToRGB(th, Math.min(1, hsv.s * 1.05), hsv.v) as Phaser.Types.Display.ColorObject;
+    d[i] = c.r;
+    d[i + 1] = c.g;
+    d[i + 2] = c.b;
+  }
+  ctx.putImageData(img, 0, 0);
+  scene.textures.addCanvas(key, cv);
+  return key;
+}
+
 export function makeVariants(scene: Phaser.Scene): void {
   for (const t of variantTasks(scene)) t();
 }
@@ -298,7 +340,8 @@ function makeVariant(scene: Phaser.Scene, v: (typeof VARIANTS)[number]): void {
       name: v.name,
       head: Math.round(b.head * k),
       speed: Math.round(b.speed * (v.speedMul ?? 1)),
-      // Variantes não viram transformação do jogador (soltam o item do personagem base).
+      // Soltam o item do personagem base, tingido na cor da variante; pegando, a caveira vira a
+      // própria variante (cor e ataque dela).
       drops: b.drops,
     };
     if (b.melee) def.melee = { ...b.melee, reach: Math.round(b.melee.reach * k), back: Math.round(b.melee.back * k) };

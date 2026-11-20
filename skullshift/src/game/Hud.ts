@@ -1,3 +1,5 @@
+import { CHARS } from './characters';
+import { variantTexture } from './variants';
 import Phaser from 'phaser';
 import { DEPTH, FONT, H, PORTRAIT, W } from '../config';
 
@@ -160,7 +162,10 @@ export class Hud {
     const slot = this.slots[player];
     if (!slot || slot.current === char) return;
     slot.current = char;
-    slot.avatar.setTexture(`${char}_avatar`);
+    // Variante: o retrato do personagem base recolorido no tom dela.
+    const base = CHARS[char]?.base;
+    const own = this.scene.textures.exists(`${char}_avatar`);
+    slot.avatar.setTexture(own || !base ? `${char}_avatar` : variantTexture(this.scene, `${base}_avatar`, char, 0));
     this.scene.tweens.add({
       targets: slot.avatar,
       scale: { from: slot.baseScale * 1.4, to: slot.baseScale },

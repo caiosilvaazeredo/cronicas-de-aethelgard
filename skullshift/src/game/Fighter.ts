@@ -87,6 +87,12 @@ export class Fighter {
   onSwimFx?: (f: Fighter, kind: 'enter' | 'exit' | 'wake' | 'bubble') => void;
   private lastWake = 0;
   private released = false;
+  /**
+   * Forma de aranha: ▼ + ATACAR no chão lança teia (prende o inimigo) em vez do golpe.
+   * Fica ligado durante esse ataque; a cena usa para escolher o projétil.
+   */
+  webShot = false;
+  private webReadyAt = 0;
   private shield: Phaser.GameObjects.Image;
   /** Alvos já atingidos/bloqueados neste golpe. */
   readonly attackHits = new Set<Fighter>();
@@ -255,7 +261,7 @@ export class Fighter {
   /** Caixa de acerto do golpe corpo a corpo, se estiver nos quadros ativos. */
   activeHitBox(): HitBox | null {
     const m = this.def.melee;
-    if (!m || this.state !== 'attack') return null;
+    if (!m || this.state !== 'attack' || this.webShot) return null;
     const frame = this.attackFrame();
     if (frame < m.from || frame > m.to) return null;
     const front = this.x + this.facing * m.reach;
@@ -399,7 +405,7 @@ export class Fighter {
     if (this.state === 'attack') {
       this.attackT += dt;
       const frame = this.attackFrame();
-      if (d.projectile && !this.released && frame >= d.projectile.release) {
+      if ((d.projectile || this.webShot) && !this.released && frame >= (this.webShot ? 4 : d.projectile!.release)) {
         this.released = true;
         this.onProjectile?.(this);
       }
@@ -762,6 +768,10 @@ export class Fighter {
     this.attackT = 0;
     this.attackLow = this.crouching;
     this.released = false;
+    // Aranha (e variantes) do jogador: abaixado, o ataque vira teia (com recarga).
+    const now = this.scene.time.now;
+    this.webShot = this.isPlayer && (this.def.base ?? this.def.id) === 'spider' && this.crouching && now >= this.webReadyAt;
+    if (this.webShot) this.webReadyAt = now + 900;
     this.attackHits.clear();
     this.attackId++;
     if (this.isPlayer) {

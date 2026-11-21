@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { stageOf, stagePool } from './boss';
 import { DEPTH, FONT } from '../config';
 import type { Intent } from './controls';
 import { sfx } from './settings';
@@ -361,11 +362,14 @@ export class ShmupSystem {
     b.sprite.y = (this.host.top + this.host.bottom) / 2 + Math.sin(b.t * 1.3) * 150;
     b.sprite.setAlpha(time < b.hurt ? 0.6 : 1);
     b.crown?.setPosition(b.sprite.x - 8, b.sprite.y - 30 * b.def.scale);
-    // Padrões em sequência (mais rápidos com metade da vida).
+    // Padrões por parte da vida (barra em 3): parte I e II têm ataques próprios; na III, todos e
+    // mais rápidos.
     if (time >= b.next && b.dashing <= 0 && this.alive) {
-      const angry = b.hp <= b.max / 2;
+      const stage = stageOf(b.hp, b.max);
+      const angry = stage >= 2;
       b.next = time + (angry ? 1500 : 2200) * (this.hard ? 0.85 : 1);
-      const k = b.k++ % b.def.patterns;
+      const pool = stagePool(b.def.patterns, stage);
+      const k = pool[b.k++ % pool.length];
       const shoot = (a: number, speed: number) => {
         const o = s.add.image(b.sprite.x - 80, b.sprite.y, 'spark').setTint(b.def.shot).setScale(1.1).setDepth(DEPTH.projectiles);
         this.shots.push({ obj: o, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: 14, enemy: true });
@@ -397,8 +401,18 @@ export class ShmupSystem {
       if (sh.enemy || sh.r < 0) continue;
       if (Phaser.Math.Distance.Between(sh.obj.x, sh.obj.y, b.sprite.x, b.sprite.y) < 50 * b.def.scale) {
         sh.r = -1;
+        const before = stageOf(b.hp, b.max);
         b.hp--;
         b.hurt = time + 90;
+        // Acabou uma parte da barra: clarão vermelho, tremor e uma pausa antes dos ataques novos.
+        if (b.hp > 0 && stageOf(b.hp, b.max) !== before) {
+          b.sprite.setTintFill(0xff5c5c);
+          s.time.delayedCall(240, () => b.sprite.active && b.sprite.clearTint());
+          s.cameras.main.shake(400, 0.008);
+          sfx('boss');
+          b.next = Math.max(b.next, time + 1200);
+          b.k = 0;
+        }
         this.host.bar?.()?.setBossHp(b.hp / b.max);
         if (b.hp <= 0) return this.bossDown();
       }

@@ -10,7 +10,7 @@ import { announceAchievements } from '../game/achievements';
 import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game/finale';
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
-import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
+import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ProjectileDef, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
@@ -78,6 +78,8 @@ interface Projectile {
 }
 
 const ITEM_RESPAWN = 8000;
+/** Teia lançada pela caveira-aranha (▼ + ATACAR): reta, cai devagar. */
+const PLAYER_WEB: ProjectileDef = { release: 4, tex: 'web_ball', speed: 620, angle: 0, spin: false, arc: { vy: -60, g: 220 } };
 /** Caverna Submarina: quanto a água sobe (a superfície fica lá no alto). */
 const UNDERSEA_TIDE = 400;
 /** Aranha pendurada: altura dos pés enquanto está na teia. */
@@ -1417,7 +1419,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnProjectile(f: Fighter): void {
-    const pd = f.def.projectile;
+    // Forma de aranha do jogador: ▼ + ATACAR lança teia (prende em vez de derrubar).
+    const pd = f.webShot ? PLAYER_WEB : f.def.projectile;
     if (!pd) return;
     // Altura do peito: quem está agachado escapa por baixo.
     const s = this.add.sprite(f.x + f.facing * 30, f.feet - 42, pd.tex).setDepth(DEPTH.projectiles);
@@ -1543,7 +1546,11 @@ export class GameScene extends Phaser.Scene {
           p.sprite.setFlipX(!p.sprite.flipX).setTint(b.color ?? 0xffe066);
           break;
         }
-        if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
+        if (p.effect === 'net' && this.players.includes(p.owner)) {
+          // Teia da caveira-aranha: gruda até no escudo; o alvo fica enrolado num casulo, parado.
+          this.webWrap(b);
+          p.life = 0;
+        } else if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
           this.sparks(p.sprite.x, p.sprite.y);
           this.deflect(p);
         } else if (p.effect === 'net' && b === this.players[0] && this.mode === 'story') {
@@ -1565,6 +1572,28 @@ export class GameScene extends Phaser.Scene {
       p.sprite.destroy();
       p.glow?.destroy();
       return false;
+    });
+  }
+
+  /** Enrola o alvo na teia: fica tonto ~2,6 s dentro de um casulo que treme e se desfaz. */
+  private webWrap(b: Fighter): void {
+    const ms = 2600;
+    b.stun(ms);
+    b.body.setVelocityX(0);
+    sfx('pick');
+    const head = b.def.head;
+    const c = this.add.image(b.x, b.feet - head * 0.45, 'web_ball').setScale(0.4).setAlpha(0.9).setDepth(DEPTH.fighters + 0.4);
+    this.tweens.add({ targets: c, scale: Math.max(1.6, head / 45), duration: 160, ease: 'Back.easeOut' });
+    this.popText(b.x, b.feet - head - 30, 'PRESO NA TEIA!', '#eef6f8');
+    const follow = () => {
+      if (!b.alive || !b.sprite.active) return void c.destroy();
+      c.setPosition(b.x, b.feet - head * 0.45);
+    };
+    this.events.on('update', follow);
+    this.time.delayedCall(ms, () => {
+      this.events.off('update', follow);
+      if (!c.active) return;
+      this.tweens.add({ targets: c, alpha: 0, scale: c.scale * 1.3, duration: 220, onComplete: () => c.destroy() });
     });
   }
 
@@ -1743,6 +1772,8 @@ export class GameScene extends Phaser.Scene {
     for (const e of this.enemies) {
       const f = e.f;
       if (!f.alive || Math.abs(f.x - p.x) >= min) continue;
+      // Aranha pendurada no teto fica onde está (já nasce longe do início).
+      if (this.hangers.some((h) => h.f === f)) continue;
       const want = p.x + min + 20;
       const x = this.level.nearestGround(want, 1, want, this.level.width - 48);
       const feet = this.level.groundY(x) ?? f.feet;
@@ -2014,7 +2045,10 @@ export class GameScene extends Phaser.Scene {
     const f = new Fighter(this, x, HANG_FEET, 'spider', 2, 'enemy');
     f.body.setAllowGravity(false);
     f.body.moves = false;
+    // De cabeça para baixo, o desenho do corpo fica mais para cima no quadro: o corpo físico (onde
+    // o golpe acerta) acompanha, senão a aranha "pulava" ao soltar do fio ou ao ser acertada.
     f.sprite.setFlipY(true);
+    f.body.setOffset(f.body.offset.x, f.def.frame - f.def.feetY);
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
     // Teia no teto e o fio até a aranha.
@@ -2025,6 +2059,20 @@ export class GameScene extends Phaser.Scene {
     const ai = new EnemyAI(f, () => this.nearestPlayer(f), this.level);
     this.enemies.push({ f, ai });
     this.hangers.push({ f, state: 'hang', thread, bob });
+  }
+
+  /**
+   * Aranha pendurada desvira para cair: corpo físico de volta ao normal, sem o desenho pular
+   * (o corpo dela fica no mesmo lugar da tela) e com um esticão de susto.
+   */
+  private unflipHanger(f: Fighter): void {
+    const d = f.def;
+    const shift = 2 * d.feetY - d.frame - f.body.height;
+    f.sprite.setFlipY(false);
+    f.body.setOffset(f.body.offset.x, d.feetY - f.body.height);
+    f.body.reset(f.sprite.x, f.sprite.y - shift);
+    // Esticão de susto ao soltar do fio (só visual).
+    this.tweens.add({ targets: f.sprite, scaleX: { from: 0.8, to: 1 }, scaleY: { from: 1.2, to: 1 }, duration: 200, ease: 'Back.easeOut' });
   }
 
   /** Morcego que encosta numa teia do teto gruda nela, e uma aranha desce para comê-lo. */
@@ -2205,7 +2253,7 @@ export class GameScene extends Phaser.Scene {
         if (target) {
           h.state = 'drop';
           h.bob?.stop();
-          f.sprite.setFlipY(false);
+          this.unflipHanger(f);
           f.body.moves = true;
           f.body.setAllowGravity(true);
           f.body.setVelocity(Math.sign(target.x - f.x) * 140, 120);
@@ -2341,6 +2389,14 @@ export class GameScene extends Phaser.Scene {
 
   /** Primeira transformação: o Xamã explica. Depois, cada forma nova ganha um comentário. */
   private firstShift(p: Fighter, char: CharId): void {
+    // Aranha: lembra o segundo poder (teia) a cada transformação.
+    if ((CHARS[char]?.base ?? char) === 'spider') {
+      const t = this.add
+        .text(p.x, p.feet - p.labelHeight - 20, '▼ + ATAQUE: TEIA', { fontFamily: FONT, fontSize: '22px', color: '#eef6f8', stroke: '#10223a', strokeThickness: 6 })
+        .setOrigin(0.5)
+        .setDepth(DEPTH.fx + 2);
+      this.tweens.add({ targets: t, y: t.y - 40, alpha: { from: 1, to: 0 }, delay: 1800, duration: 900, onComplete: () => t.destroy() });
+    }
     if (!hasSeen('first-shift')) {
       markSeen('first-shift');
       markSeen(`shift-${char}`);

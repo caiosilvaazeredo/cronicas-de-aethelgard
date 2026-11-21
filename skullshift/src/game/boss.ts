@@ -38,7 +38,8 @@ export interface BossHost {
 
 /** Barra de vida do chefe (na interface). */
 export interface BossBar {
-  showBossBar(name: string, title: string, color: number): void;
+  /** parts: em quantas partes a barra se divide (padrão 3, uma por fase da luta). */
+  showBossBar(name: string, title: string, color: number, parts?: number): void;
   setBossHp(frac: number): void;
   hideBossBar(): void;
   bossWarning(): void;
@@ -62,7 +63,24 @@ interface Hazard {
   dead?: boolean;
 }
 
-const SEGMENTS = 28;
+const SEGMENTS = 30;
+
+/**
+ * Quais padrões cada parte da vida usa (n = total de padrões do chefe). Parte I: a primeira
+ * metade dos padrões; parte II: a segunda metade (ataques novos); parte III: todos, mais rápidos
+ * e combinados.
+ */
+export function stagePool(n: number, stage: number): number[] {
+  const all = Array.from({ length: n }, (_, i) => i);
+  if (n <= 1 || stage >= 2) return all;
+  const half = Math.ceil(n / 2);
+  return stage === 0 ? all.slice(0, half) : all.slice(n - half);
+}
+
+/** Parte da vida (0, 1 ou 2): cada terço da barra é uma fase da luta. */
+export function stageOf(hp: number, max: number): number {
+  return hp > (max * 2) / 3 ? 0 : hp > max / 3 ? 1 : 2;
+}
 const GRAV = 2200;
 
 /**
@@ -118,8 +136,13 @@ export abstract class Boss {
   get player(): Fighter {
     return this.host.player();
   }
+  /** Parte da vida em que a luta está (0, 1 ou 2): a barra é dividida em 3. */
+  get stage(): number {
+    return stageOf(this.hp, this.maxHp);
+  }
+  /** Última parte: ataques mais rápidos e combinados. */
   get phase2(): boolean {
-    return this.hp <= this.maxHp / 2;
+    return this.stage >= 2;
   }
   get hurtBox(): Phaser.Geom.Rectangle {
     return new Phaser.Geom.Rectangle(this.x - this.hurtW / 2, this.feet - this.hurtH, this.hurtW, this.hurtH);
@@ -198,15 +221,38 @@ export abstract class Boss {
   private async loop(): Promise<void> {
     const token = this.gen;
     let last = -1;
+    let stage = this.stage;
     while (this.ok(token)) {
       await this.wait(this.phase2 ? 380 : 650);
       if (!this.ok(token)) return;
-      const n = this.patternCount();
-      let k = Phaser.Math.Between(0, n - 1);
-      if (k === last) k = (k + 1) % n;
+      // Mudou de parte na barra: ruge e passa a usar os ataques da parte nova.
+      if (this.stage !== stage) {
+        stage = this.stage;
+        await this.stageRoar(token);
+        if (!this.ok(token)) return;
+        last = -1;
+      }
+      const pool = this.stagePatterns(stage);
+      let k = Phaser.Math.RND.pick(pool);
+      if (k === last && pool.length > 1) k = pool[(pool.indexOf(k) + 1) % pool.length];
       last = k;
       await this.pattern(k, token);
     }
+  }
+
+  /** Padrões de cada parte da vida (os chefes podem trocar a divisão padrão). */
+  protected stagePatterns(stage: number): number[] {
+    return stagePool(this.patternCount(), stage);
+  }
+
+  /** Entre uma parte e outra: pausa curta, rugido e tremor (aviso de ataques novos). */
+  protected async stageRoar(token: number): Promise<void> {
+    this.vx = 0;
+    this.play(this.roarAnim);
+    this.scene.cameras.main.shake(500, 0.008);
+    sfx('boss');
+    await this.wait(700);
+    if (this.ok(token)) this.play(this.idleAnim);
   }
 
   protected abstract get idleAnim(): string;
@@ -322,11 +368,12 @@ export abstract class Boss {
     this.host.bar()?.setBossHp(this.hp / this.maxHp);
     this.scene.cameras.main.shake(90, 0.004);
     this.sparkAt(this.x, this.feet - this.hurtH * 0.55);
-    if (this.hp === Math.floor(this.maxHp / 2)) this.enrage();
+    // Acabou uma parte da barra: pisca em vermelho (os ataques mudam no próximo padrão).
+    if (this.hp > 0 && stageOf(this.hp, this.maxHp) !== stageOf(this.hp + 1, this.maxHp)) this.enrage();
     if (this.hp <= 0) void this.defeat();
   }
 
-  /** Metade da vida: pisca em vermelho e fica mais rápido. */
+  /** Fim de uma parte da vida: pisca em vermelho. */
   protected enrage(): void {
     const s = this.scene;
     s.cameras.main.flash(220, 255, 60, 40);

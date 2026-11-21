@@ -53,7 +53,7 @@ export class MausoleumSystem {
     this.hearts = s.add.graphics().setDepth(DEPTH.fx + 2);
     this.drawHearts();
     this.between = s.time.now + 2200;
-    host.bar()?.showBossBar('URNA DO XAMÃ', `Onda 0 de ${host.waves}`, 0x9b6bf0);
+    host.bar()?.showBossBar('URNA DO XAMÃ', `Onda 0 de ${host.waves}`, 0x9b6bf0, 1);
     host.bar()?.setBossHp(0);
   }
 
@@ -87,7 +87,7 @@ export class MausoleumSystem {
       this.toSpawn = 3 + this.wave * 2;
       this.nextSpawn = time + 600;
       this.host.popText(this.urn.x, this.urn.y - 230, `ONDA ${this.wave}`, '#d8ccff');
-      this.host.bar()?.showBossBar('URNA DO XAMÃ', `Onda ${this.wave} de ${this.host.waves}`, 0x9b6bf0);
+      this.host.bar()?.showBossBar('URNA DO XAMÃ', `Onda ${this.wave} de ${this.host.waves}`, 0x9b6bf0, 1);
       this.host.bar()?.setBossHp(this.wave / this.host.waves);
     }
     if (this.toSpawn > 0 && time >= this.nextSpawn && p.alive) {

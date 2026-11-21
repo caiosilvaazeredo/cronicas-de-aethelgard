@@ -278,3 +278,26 @@ originais (extraídas com PIL do PNG).
 - **Mapa, Praia dos Caranguejos**:
   - Só uma chave: a decoração genérica de fase de porta trancada já desenha uma.
   - O quadrado preto era a textura `crab` faltando, porque ela só era criada dentro da fase. Agora o mapa chama `makeCrabArt`.
+
+## Chefes em 3 partes, teia da aranha, aranha pendurada
+- **Barra dos chefes visível** (`UIScene.showBossBar`):
+  - Fica no alto da tela: em pé, logo abaixo do HUD; deitado, em y=88.
+  - São 30 gomos em 3 partes (I, II, III). A última parte fica vermelha.
+  - Quando uma parte acaba, os gomos dela caem num clarão e a barra treme.
+  - O parâmetro `parts` (padrão 3) muda a divisão; a Urna do Mausoléu usa 1, porque conta ondas.
+  - A segunda barra (Príncipe Abelha) também aparece, abaixo da primeira.
+  - Os inimigos de elite continuam com vida implícita.
+- **Ataques por parte** (`boss.ts`):
+  - `stageOf(hp, max)` dá a parte da vida (0/1/2).
+  - `stagePool(n, stage)`: a parte I usa a primeira metade dos padrões, a parte II a segunda metade (ataques novos), e a parte III todos, mais rápidos e combinados (`phase2` agora é a parte III).
+  - Ao mudar de parte, o chefe pisca vermelho (`enrage`) e, antes do próximo padrão, para e ruge (`stageRoar`).
+  - O chefe das fases de voo (`shmup.ts`) segue a mesma divisão.
+  - Para trocar a divisão de um chefe, sobrescreva `stagePatterns(stage)`.
+- **Forma de aranha com 2 poderes**:
+  - ATAQUE é o golpe; ▼ + ATAQUE no chão lança teia (`Fighter.webShot`, recarga de 0,9 s, projétil `PLAYER_WEB`).
+  - A teia gruda até no escudo: o alvo fica tonto 2,6 s num casulo (`GameScene.webWrap`), sem morrer.
+  - Vale também para as variantes da aranha. A dica "▼ + ATAQUE: TEIA" aparece a cada transformação.
+- **Aranha pendurada** (`addHanger`/`unflipHanger`):
+  - De cabeça para baixo, o corpo físico agora acompanha o desenho virado (antes ficava ~70 px abaixo).
+  - Ao soltar do fio, desvira sem o desenho pular. Era o "teletransporte" ao bater nela.
+  - `clearSpawnArea` não mexe mais nas aranhas penduradas (antes podia jogá-las para o chão).

@@ -399,43 +399,86 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({ targets: c, alpha: { from: 0, to: 1 }, duration: 160, yoyo: true, hold: 120, repeat: 3, onComplete: () => c.destroy() });
   }
 
-  /** Barra de vida do chefe em gomos (enche na entrada, esvazia a cada golpe). */
-  showBossBar(name: string, title: string, color: number): void {
+  /**
+   * Barra de vida do chefe no alto, dividida em 3 partes (cada parte é uma fase da luta, com
+   * ataques próprios). Os gomos enchem na entrada e se apagam a cada golpe; quando uma parte
+   * acaba, ela racha com um clarão.
+   */
+  showBossBar(name: string, title: string, color: number, parts = 3): void {
     this.bossBox?.destroy();
     this.bossCells = [];
+    this.bossParts = parts;
+    this.bossColor = color;
+    this.bossLastOn = -1;
     const P = VIEW.portrait;
-    const n = 28;
-    const cw = P ? 30 : 18;
+    const n = 30;
+    const per = n / parts;
+    const cw = P ? 26 : 18;
     const gap = 4;
-    const w = n * (cw + gap) + 16;
+    const partGap = P ? 18 : 14;
+    const ch = P ? 34 : 24;
+    const w = n * (cw + gap) - gap + (parts - 1) * partGap + 16;
     const items: Phaser.GameObjects.GameObject[] = [];
     const g = this.add.graphics();
-    g.fillStyle(0x1d1a2b, 0.92).fillRect(-w / 2 - 4, -8, w + 8, (P ? 50 : 34) + 12);
-    g.fillStyle(0x3a2a44, 1).fillRect(-w / 2, -4, w, (P ? 50 : 34) + 4);
+    g.fillStyle(0x1d1a2b, 0.92).fillRoundedRect(-w / 2 - 6, -8, w + 12, ch + 16, 8);
+    // Fundo de cada parte (o "trilho" vazio).
+    const xOf = (i: number) => -w / 2 + 8 + i * (cw + gap) + Math.floor(i / per) * (partGap - gap);
+    for (let k = 0; k < parts; k++) {
+      const x0 = xOf(k * per) - 3;
+      const x1 = xOf((k + 1) * per - 1) + cw + 3;
+      g.fillStyle(0x3a2a44, 1).fillRoundedRect(x0, -3, x1 - x0, ch + 6, 5);
+    }
     items.push(g);
     for (let i = 0; i < n; i++) {
-      const cell = this.add.rectangle(-w / 2 + 8 + i * (cw + gap), 2, cw, P ? 40 : 26, color).setOrigin(0, 0).setVisible(false);
+      const cell = this.add.rectangle(xOf(i), 0, cw, ch, color).setOrigin(0, 0).setVisible(false);
       this.bossCells.push(cell);
       items.push(cell);
     }
+    // Marcas das partes (I, II, III) embaixo.
+    if (parts > 1)
+      for (let k = 0; k < parts; k++) {
+        const cx = (xOf(k * per) + xOf((k + 1) * per - 1) + cw) / 2;
+        items.push(
+          noTr(this.add.text(cx, ch + 10, ['I', 'II', 'III', 'IV'][k] ?? `${k + 1}`, { fontFamily: FONT, fontSize: P ? '22px' : '17px', color: '#d8ccff', stroke: '#1d1a2b', strokeThickness: 4 }).setOrigin(0.5, 0)),
+        );
+      }
     items.push(
       this.add
-        .text(-w / 2, -14, `${name}  ·  ${title}`, { fontFamily: FONT, fontSize: P ? '30px' : '20px', color: '#fff7dc', stroke: '#1d1a2b', strokeThickness: 6 })
+        .text(-w / 2, -14, `${name}  ·  ${title}`, { fontFamily: FONT, fontSize: P ? '28px' : '20px', color: '#fff7dc', stroke: '#1d1a2b', strokeThickness: 6 })
         .setOrigin(0, 1),
     );
-    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 70 : 74;
-    this.bossBox = this.add.container(W / 2, y, items).setDepth(DEPTH.hud + 3);
-    // Vida implícita: a barra não aparece. Fica só o nome do chefe por uns segundos, como
-    // apresentação; o quanto ele aguenta se percebe pelos golpes (clarão, recuo, faíscas).
-    g.setVisible(false);
-    this.bossCells.forEach((c) => c.setAlpha(0));
-    const box = this.bossBox;
-    this.tweens.add({ targets: box, alpha: 0, delay: 2600, duration: 600 });
+    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH + 56 : 88;
+    this.bossBox = this.add.container(W / 2, y, items).setDepth(DEPTH.hud + 3).setAlpha(0);
+    this.tweens.add({ targets: this.bossBox, alpha: 1, duration: 250 });
   }
 
+  private bossParts = 3;
+  private bossColor = 0xffffff;
+  private bossLastOn = -1;
+
   setBossHp(frac: number): void {
-    const on = Math.ceil(frac * this.bossCells.length);
+    const n = this.bossCells.length;
+    if (!n) return;
+    const on = Math.max(0, Math.ceil(frac * n - 1e-6));
     this.bossCells.forEach((c, i) => c.setVisible(i < on));
+    // Uma parte inteira acabou de se apagar: racha com clarão e treme a barra.
+    const per = n / this.bossParts;
+    const prev = this.bossLastOn;
+    this.bossLastOn = on;
+    if (prev > on && this.bossBox && Math.ceil(prev / per) > Math.ceil(on / per) && on > 0) {
+      const k = Math.ceil(on / per); // primeira parte que sumiu: k (0-based)
+      for (let i = k * per; i < (k + 1) * per; i++) {
+        const c = this.bossCells[i];
+        const ghost = this.add.rectangle(c.x, c.y, c.width, c.height, 0xffffff).setOrigin(0, 0);
+        this.bossBox.add(ghost);
+        this.tweens.add({ targets: ghost, alpha: 0, y: c.y + 14, duration: 520, delay: (i - k * per) * 18, onComplete: () => ghost.destroy() });
+      }
+      const box = this.bossBox;
+      this.tweens.add({ targets: box, x: { from: W / 2 - 8, to: W / 2 }, duration: 260, ease: 'Bounce.easeOut' });
+    }
+    // Última parte: os gomos que sobram ficam vermelhos.
+    const low = on <= per && on > 0;
+    this.bossCells.forEach((c, i) => c.setFillStyle(low && i < on ? 0xff6a5a : this.bossColor));
   }
 
   hideBossBar(): void {
@@ -443,6 +486,7 @@ export class UIScene extends Phaser.Scene {
     if (!b) return;
     this.tweens.add({ targets: b, alpha: 0, duration: 600, delay: 900, onComplete: () => b.destroy() });
     this.bossBox = undefined;
+    this.bossCells = [];
   }
 
   private bossBox2?: Phaser.GameObjects.Container;
@@ -472,12 +516,9 @@ export class UIScene extends Phaser.Scene {
         .text(w / 2 + 12, hh / 2, `${name}  ·  ${title}`, { fontFamily: FONT, fontSize: P ? '24px' : '16px', color: '#fff7dc', stroke: '#1d1a2b', strokeThickness: 5 })
         .setOrigin(0, 0.5),
     );
-    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH - 10 : 124;
+    const y = P ? PORTRAIT.topPad + PORTRAIT.hudH + 150 : 158;
     this.bossBox2 = this.add.container(W / 2 - (P ? 120 : 110), y, items).setDepth(DEPTH.hud + 3).setAlpha(0);
-    // Vida implícita (como na primeira barra): só o nome aparece e some.
-    g.setVisible(false);
-    this.bossCells2.forEach((c) => c.setAlpha(0));
-    this.tweens.add({ targets: this.bossBox2, alpha: 1, duration: 300, yoyo: true, hold: 2400 });
+    this.tweens.add({ targets: this.bossBox2, alpha: 1, duration: 300 });
   }
 
   setBossHp2(frac: number): void {

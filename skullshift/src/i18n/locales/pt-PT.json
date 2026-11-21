@@ -358,6 +358,9 @@
 "Hex? Por que está tudo cinza? E esse chiado?": "Hex? Porque é que está tudo cinzento? E este chiar?",
 "Hex?! De onde você saiu? E por que eu tenho... isto?": "Hex?! De onde é que saíste? E porque é que eu tenho... isto?",
 "Há quem diga que a caveira já teve rosto. E casa. E alguém esperando por ela.": "Há quem diga que a caveira já teve rosto. E casa. E alguém à espera dela.",
+"II": "II",
+"III": "III",
+"IV": "IV",
 "Ilhas soltas subindo até o Portão da Maré. Só passa quem corre e salta de novo no ar.": "Ilhas soltas a subir até ao Portão da Maré. Só passa quem corre e salta de novo no ar.",
 "Inimigos derrotados, presentes e fases vencidas dão ouro. Gaste no Empório da Orelha-Preta, no mapa do mundo (tecla B).": "Inimigos derrotados, presentes e níveis vencidos dão ouro. Gasta-o no Empório da Orelha-Preta, no mapa do mundo (tecla B).",
 "Inimigos derrotados: {0}": "Inimigos derrotados: {0}",
@@ -834,5 +837,6 @@
 "↑ ou PULAR sobe · ▼ desce": "↑ ou SALTAR sobe · ▼ desce",
 "↑ ↓ ← →  voar  ·  segure ATACAR (TIRO) para atirar  ·  PEGAR / DEFENDER (GRITO): grito sônico": "↑ ↓ ← →  voar  ·  segura ATACAR (TIRO) para atirar  ·  APANHAR / DEFENDER (GRITO): grito sônico",
 "↑ ↓ ← →  voar  ·  segure ATACAR (ou TIRO) para atirar": "↑ ↓ ← →  voar  ·  segura ATACAR (ou TIRO) para atirar",
+"▼ + ATAQUE: TEIA": "▼ + ATAQUE: TEIA",
 "◀ ▶ andar · ↑/W pular · E usar/conversar · toque para ir até lá": "◀ ▶ andar · ↑/W saltar · E usar/conversar · toca para ir até lá"
 }

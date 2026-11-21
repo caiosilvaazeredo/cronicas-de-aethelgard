@@ -10,6 +10,7 @@ import { getRun, startRun } from '../game/dungeon';
 import { getLevel, isDungeonDone } from '../game/progress';
 import { unlockedBy } from '../game/abilities';
 import { pillButton } from '../ui/devices';
+import { makeCrabArt } from '../game/puzzle';
 
 const MW = 1280;
 const MH = 720;
@@ -500,9 +501,10 @@ export class MapScene extends Phaser.Scene {
     }
     // Ilhas da Maré.
     if (l.id === 'crabs') {
+      // O desenho do caranguejo nasce na fase; sem ele o mapa mostrava o quadrado de textura faltando.
+      makeCrabArt(this);
       const c = this.add.sprite(x - 40, y - 10, 'crab').setOrigin(0.5, 1).setScale(0.8).setDepth(6).play('crab');
       this.tweens.add({ targets: c, x: x + 40, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-      deco('key_item', -40, -44, 0.8);
     }
     if (l.id === 'hightide' || l.id === 'reef' || l.id === 'floodgates') {
       const w = this.add.graphics().setDepth(5);

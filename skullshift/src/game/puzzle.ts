@@ -55,7 +55,7 @@ interface Crab {
 }
 
 /** Caranguejo em pixel art (2 quadros de passinho). */
-function makeCrabArt(scene: Phaser.Scene): void {
+export function makeCrabArt(scene: Phaser.Scene): void {
   if (scene.textures.exists('crab')) return;
   const INK_C = 0x1d1a2b;
   const frame = (k: number) => {

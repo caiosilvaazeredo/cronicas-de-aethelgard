@@ -267,3 +267,14 @@ originais (extraídas com PIL do PNG).
   - A vila tem casas de quatro cores, uma torre, montanhas e um castelo ao longe, uma ovelha num quintal com cerca, tufos de grama e pedras no mar.
   - Árvores e arbustos só entram nos vãos entre as construções (`taken`/`free`).
   - Em pé, a escala é 2,2.
+
+## Toque e mapa (correções)
+- **Leitura dos dedos** (`touch.ts`): `TouchPad` lê os dedos direto dos eventos do navegador (`liveTouches`, a partir de `TouchEvent.touches`) e não mais do `isDown` dos ponteiros do Phaser, que podia ficar preso.
+  - Um "soltar" perdido (dedo que sai da página, gesto do sistema, app em segundo plano) se corrige no toque seguinte.
+  - Ao perder o foco (`blur`/`visibilitychange`), a lista de dedos é limpa.
+  - O mouse só conta enquanto não houve toque de dedo.
+- **Um botão por dedo**: cada dedo aperta só o botão mais próximo. Antes, um dedo entre PULA e ATQ apertava os dois.
+- **Botões sem sobreposição**: `fitRadii` encolhe os pares de botões que se sobreporiam (tela baixa com botões grandes).
+- **Mapa, Praia dos Caranguejos**:
+  - Só uma chave: a decoração genérica de fase de porta trancada já desenha uma.
+  - O quadrado preto era a textura `crab` faltando, porque ela só era criada dentro da fase. Agora o mapa chama `makeCrabArt`.

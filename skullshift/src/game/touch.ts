@@ -109,6 +109,51 @@ const WALK_PORTRAIT: Spec[] = [
 ];
 
 /**
+ * Dedos na tela lidos direto dos eventos do navegador. `TouchEvent.touches` traz sempre a lista
+ * completa dos dedos encostados, então um "soltar" perdido (dedo que sai da página, gesto do
+ * sistema, app em segundo plano) se corrige no toque seguinte. Antes o botão podia ficar preso.
+ */
+const liveTouches = new Map<number, { px: number; py: number }>();
+let touchTrackerOn = false;
+/** Já houve toque de dedo: daí em diante o mouse (cliques simulados pelo celular) é ignorado. */
+let sawTouch = false;
+function trackTouches(): void {
+  if (touchTrackerOn || typeof window === 'undefined') return;
+  touchTrackerOn = true;
+  const sync = (e: TouchEvent) => {
+    sawTouch = true;
+    liveTouches.clear();
+    for (let i = 0; i < e.touches.length; i++) {
+      const t = e.touches[i];
+      liveTouches.set(t.identifier, { px: t.pageX, py: t.pageY });
+    }
+  };
+  const opts = { capture: true, passive: true } as const;
+  for (const ev of ['touchstart', 'touchmove', 'touchend', 'touchcancel'] as const) window.addEventListener(ev, sync, opts);
+  const clear = () => liveTouches.clear();
+  window.addEventListener('blur', clear);
+  document.addEventListener('visibilitychange', clear);
+}
+
+/** Separa botões que se sobrepõem (tela baixa ou botões grandes): encolhe os dois do par. */
+function fitRadii(specs: Array<[ButtonId, number, number, number]>, gap: number): void {
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = 0; i < specs.length; i++) {
+      for (let j = i + 1; j < specs.length; j++) {
+        const a = specs[i];
+        const b = specs[j];
+        const d = Math.hypot(a[1] - b[1], a[2] - b[2]);
+        const k = (d - gap) / (a[3] + b[3]);
+        if (k < 1) {
+          a[3] *= Math.max(0.5, k);
+          b[3] *= Math.max(0.5, k);
+        }
+      }
+    }
+  }
+}
+
+/**
  * Controle virtual na tela (multitoque), fixo na tela.
  * side: 'full' (1 jogador) ou 'left'/'right' (versus: uma metade para cada jogador).
  */
@@ -179,11 +224,14 @@ export class TouchPad {
         sp[2] = VIEW.h - sp[2];
       }
     }
+    trackTouches();
     const st = settings();
     const op = st.touchOpacity / 10;
     const size = [0.82, 1, 1.15][st.touchSize] ?? 1;
-    for (const [id, x, y, r0] of specs) {
-      const r = r0 * size;
+    for (const sp of specs) sp[3] *= size;
+    // Telas baixas: nenhum botão por cima de outro (o PULA cobria o ATQ e um travava o outro).
+    fitRadii(specs, 14);
+    for (const [id, x, y, r] of specs) {
       const text = flight && id === 'attack' ? 'TIRO' : flight && id === 'pick' ? 'GRITO' : preset && id === 'pick' ? 'USAR' : LABELS[id];
       const bg = scene.add
         .circle(x, y, r, 0x10223a, 0.42 * op)
@@ -236,27 +284,42 @@ export class TouchPad {
     return [...this.buttons.flatMap((b) => [b.bg, b.label]), ...(this.knob ? [this.knob] : [])];
   }
 
+  /** Pontos (no canvas do jogo) que estão apertando agora: dedos reais e, sem toque, o mouse. */
+  private fingers(): Array<[number, number]> {
+    const out: Array<[number, number]> = [];
+    const sc = this.scene.scale;
+    for (const t of liveTouches.values()) out.push([sc.transformX(t.px), sc.transformY(t.py)]);
+    const mouse = this.scene.input.manager.mousePointer;
+    if (!sawTouch && mouse?.isDown && !mouse.wasTouch) out.push([mouse.x, mouse.y]);
+    return out;
+  }
+
   /** Lê todos os dedos na tela e devolve o estado dos botões. */
   read(): TouchState {
     for (const b of this.buttons) b.down = false;
     this.stickDir = { x: 0, y: 0 };
     if (this.visible) {
-      for (const p of this.scene.input.manager.pointers) {
-        if (!p || !p.isDown) continue;
+      for (const [x, y] of this.fingers()) {
+        // Cada dedo aperta um botão só: o mais perto (relativo ao tamanho), dentro de uma área
+        // um pouco maior que o desenho. Antes um dedo entre dois botões apertava os dois.
+        let best: Button | undefined;
+        let bestD = Infinity;
         for (const b of this.buttons) {
-          if (b.id === 'stick') {
-            // Manche: a posição do dedo em relação ao centro dá a direção (8 direções).
-            const dx = p.x - b.x;
-            const dy = p.y - b.y;
-            const d = Math.hypot(dx, dy);
-            if (d > b.r * 1.7) continue;
-            b.down = true;
-            const k = Math.min(1, d / (b.r * 0.6));
-            this.stickDir = { x: d ? (dx / d) * k : 0, y: d ? (dy / d) * k : 0 };
-            continue;
+          const d = Math.hypot(x - b.x, y - b.y) / b.r;
+          if (d <= (b.id === 'stick' ? 1.7 : 1.25) && d < bestD) {
+            best = b;
+            bestD = d;
           }
-          // Área de toque um pouco maior que o desenho.
-          if (Phaser.Math.Distance.Between(p.x, p.y, b.x, b.y) <= b.r * 1.25) b.down = true;
+        }
+        if (!best) continue;
+        best.down = true;
+        if (best.id === 'stick') {
+          // Manche: a posição do dedo em relação ao centro dá a direção (8 direções).
+          const dx = x - best.x;
+          const dy = y - best.y;
+          const d = Math.hypot(dx, dy);
+          const k = Math.min(1, d / (best.r * 0.6));
+          this.stickDir = { x: d ? (dx / d) * k : 0, y: d ? (dy / d) * k : 0 };
         }
       }
     }

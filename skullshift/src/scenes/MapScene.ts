@@ -62,7 +62,7 @@ export class MapScene extends Phaser.Scene {
   private info!: Phaser.GameObjects.Text;
   private infoTitle!: Phaser.GameObjects.Text;
   private nodes: Phaser.GameObjects.Container[] = [];
-  private prevPad = { l: false, r: false, a: true, b: true };
+  private prevPad = { u: false, d: false, l: false, r: false, a: true, b: true };
   lastData: { devices?: DeviceId[]; justCompleted?: number; area?: string; level?: number } = {};
 
   constructor() {
@@ -95,7 +95,9 @@ export class MapScene extends Phaser.Scene {
     this.closePopup = undefined;
     this.uiCam = undefined;
     this.nodes = [];
-    this.prevPad = { l: false, r: false, a: true, b: true };
+    this.prevPad = { u: false, d: false, l: false, r: false, a: true, b: true };
+    this.bonusSpots = [];
+    this.atBonus = undefined;
   }
 
   create(): void {
@@ -157,6 +159,8 @@ export class MapScene extends Phaser.Scene {
     for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.step(-1));
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.step(1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
+    for (const k of ['UP', 'W']) kb.on(`keydown-${k}`, () => this.vertical(-1));
+    for (const k of ['DOWN', 'S']) kb.on(`keydown-${k}`, () => this.vertical(1));
     kb.on('keydown-ESC', () => this.toWorld());
 
     // Acabou de concluir uma fase: a seguinte se abre e o esqueleto vai até ela.
@@ -240,6 +244,8 @@ export class MapScene extends Phaser.Scene {
     for (const k of ['LEFT', 'A']) kb.on(`keydown-${k}`, () => this.step(-1));
     for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.step(1));
     for (const k of ['ENTER', 'SPACE', 'F']) kb.on(`keydown-${k}`, () => this.enter());
+    for (const k of ['UP', 'W']) kb.on(`keydown-${k}`, () => this.vertical(-1));
+    for (const k of ['DOWN', 'S']) kb.on(`keydown-${k}`, () => this.vertical(1));
     kb.on('keydown-ESC', () => this.toWorld());
     this.afterCompletion();
   }
@@ -248,12 +254,17 @@ export class MapScene extends Phaser.Scene {
     const pad = this.input.gamepad?.gamepads.find((p) => p && p.connected);
     if (!pad) return;
     const ax = pad.axes[0]?.getValue() ?? 0;
+    const ay = pad.axes[1]?.getValue() ?? 0;
     const st = {
+      u: !!pad.buttons[12]?.pressed || ay < -0.5,
+      d: !!pad.buttons[13]?.pressed || ay > 0.5,
       l: !!pad.buttons[14]?.pressed || ax < -0.5,
       r: !!pad.buttons[15]?.pressed || ax > 0.5,
       a: !!pad.buttons[0]?.pressed,
       b: !!pad.buttons[1]?.pressed,
     };
+    if (st.u && !this.prevPad.u) this.vertical(-1);
+    if (st.d && !this.prevPad.d) this.vertical(1);
     if (st.l && !this.prevPad.l) this.step(-1);
     if (st.r && !this.prevPad.r) this.step(1);
     if (st.a && !this.prevPad.a) {
@@ -674,9 +685,22 @@ export class MapScene extends Phaser.Scene {
       this.tweens.add({ targets: mark, scaleY: bn.scale * 1.04, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       node.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
         if (this.walking) return;
-        this.scene.start('loading', { next: isFreePlay() ? 'game' : 'vn', data: { mode: 'story', devices: this.devices, level: idx } });
+        this.enterBonus(idx);
       });
+      // Seta na fase de onde sai a trilha: mostra (e leva) até a área bônus.
+      const up = y < hy;
+      const ang = Math.atan2(y - hy, x - hx);
+      const arrow = this.add
+        .text(hx + Math.cos(ang) * 80, hy + Math.sin(ang) * 80 - 10, up ? '▲' : '▼', { fontFamily: FONT, fontSize: '54px', color: '#ffd84a', stroke: '#10223a', strokeThickness: 10 })
+        .setOrigin(0.5)
+        .setDepth(21)
+        .setVisible(false)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => this.goBonus());
+      this.tweens.add({ targets: arrow, y: arrow.y + (up ? -8 : 8), duration: 450, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.bonusSpots.push({ hi, x, y, idx, up, name: lv.name, arrow });
     });
+    this.refreshBonusArrows();
     // Nó secreto (em preto e branco), ligado à caverna por uma trilha cinza.
     const sec = LEVELS.findIndex((l) => l.secret);
     if (sec >= 0 && hasSecret(LEVELS[sec].id) && this.area.levels.includes('cave')) {
@@ -771,8 +795,82 @@ export class MapScene extends Phaser.Scene {
     this.heroAura.setPosition(x, y - 44);
   }
 
+  // ---------- áreas bônus no mapa ----------
+
+  private bonusSpots: Array<{ hi: number; x: number; y: number; idx: number; up: boolean; name: string; arrow: Phaser.GameObjects.Text }> = [];
+  /** Área bônus onde o esqueleto está parado (fora da trilha principal). */
+  private atBonus?: { hi: number; x: number; y: number; idx: number; up: boolean; name: string };
+
+  private bonusHere() {
+    return this.bonusSpots.find((b) => b.hi === this.current);
+  }
+
+  private refreshBonusArrows(): void {
+    for (const b of this.bonusSpots) b.arrow.setVisible(!this.walking && !this.atBonus && b.hi === this.current);
+  }
+
+  /** Anda pela trilha dourada até a área bônus da fase atual. */
+  private goBonus(): void {
+    const b = this.bonusHere();
+    if (!b || this.walking || this.atBonus || this.popupOpen) return;
+    this.walking = true;
+    this.refreshBonusArrows();
+    this.hero.play('skull_run').setFlipX(b.x < this.hero.x);
+    this.tweens.add({
+      targets: [this.hero, this.heroAura],
+      x: b.x,
+      y: (t: Phaser.GameObjects.GameObject) => (t === this.hero ? b.y - 34 : b.y - 44),
+      duration: 520,
+      onComplete: () => {
+        this.walking = false;
+        this.atBonus = b;
+        this.hero.play('skull_idle');
+        this.updateInfo();
+      },
+    });
+  }
+
+  /** Volta da área bônus para a fase de onde saiu a trilha. */
+  private leaveBonus(then?: () => void): void {
+    const b = this.atBonus;
+    if (!b || this.walking) return;
+    this.walking = true;
+    const [x, y] = this.spot(this.current);
+    this.hero.play('skull_run').setFlipX(x < this.hero.x);
+    this.tweens.add({
+      targets: [this.hero, this.heroAura],
+      x,
+      y: (t: Phaser.GameObjects.GameObject) => (t === this.hero ? y - 34 : y - 44),
+      duration: 520,
+      onComplete: () => {
+        this.walking = false;
+        this.atBonus = undefined;
+        this.hero.play('skull_idle');
+        this.updateInfo();
+        this.refreshBonusArrows();
+        then?.();
+      },
+    });
+  }
+
+  /** ▲/▼: vai até a área bônus (na direção dela) ou volta para a trilha. */
+  private vertical(dir: -1 | 1): void {
+    if (this.popupOpen || this.walking) return;
+    if (this.atBonus) {
+      if ((dir < 0) !== this.atBonus.up) this.leaveBonus();
+      return;
+    }
+    const b = this.bonusHere();
+    if (b && (dir < 0) === b.up) this.goBonus();
+  }
+
+  private enterBonus(idx: number): void {
+    this.scene.start('loading', { next: isFreePlay() ? 'game' : 'vn', data: { mode: 'story', devices: this.devices, level: idx } });
+  }
+
   private step(dir: number): void {
     if (this.popupOpen) return;
+    if (this.atBonus) return this.leaveBonus(() => this.step(dir));
     if (dir > 0 && !this.walking && this.current === this.unlocked && this.sealAhead()) return this.sealedKing();
     const to = Phaser.Math.Clamp(this.current + dir, 0, this.unlocked);
     if (to !== this.current) this.walkTo(to);
@@ -794,6 +892,7 @@ export class MapScene extends Phaser.Scene {
   private walkTo(to: number): void {
     if (this.walking || to === this.current) return;
     this.walking = true;
+    this.refreshBonusArrows();
     this.walkTarget = to;
     this.fast = false;
     const a = this.NODE_AT[this.current];
@@ -812,6 +911,7 @@ export class MapScene extends Phaser.Scene {
         this.current = to;
         this.hero.play('skull_idle');
         this.updateInfo();
+        this.refreshBonusArrows();
         return;
       }
       const [x, y] = pts[k];
@@ -840,9 +940,16 @@ export class MapScene extends Phaser.Scene {
   }
 
   private updateInfo(): void {
+    if (this.atBonus) {
+      this.infoTitle.setText(`${this.atBonus.name.toUpperCase()} · BÔNUS`);
+      this.info.setText(`Área bônus: chave, porta e 3 presentes que valem ouro.   ${this.atBonus.up ? '▼' : '▲'} voltar · Enter / A / toque: entrar`);
+      return;
+    }
     const ch = chapterFor(this.levelAt(this.current));
     this.infoTitle.setText(`FASE ${this.current + 1}/${this.MAIN.length} · ${ch.title.toUpperCase()}`);
-    this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo`);
+    const bn = this.bonusHere();
+    if (bn) this.info.setText(`${ch.blurb}   ${bn.up ? '▲' : '▼'} ${bn.name} · ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo`);
+    else this.info.setText(`${ch.blurb}   ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo`);
     if (this.current === this.unlocked && this.sealAhead())
       this.info.setText(`${ch.blurb}   O rei está selado: limpe a DUNGEON desta área para enfrentá-lo.`);
   }
@@ -876,6 +983,7 @@ export class MapScene extends Phaser.Scene {
     if (this.popupOpen) return;
     // Enter / A durante a caminhada: acelera em vez de entrar.
     if (this.walking) return this.hurry();
+    if (this.atBonus) return this.enterBonus(this.atBonus.idx);
     // Modo livre (testes): direto para a fase, sem a visual novel.
     const level = this.levelAt(this.current);
     if (level < 0) return;

@@ -17,6 +17,7 @@ export interface Intent {
   attackHeld?: boolean; // segurando ataque (tiro contínuo nas fases de corrida e tiro)
   up?: boolean; // para cima (voo): ↑/W, analógico ou manche de toque
   reserve?: boolean; // apertou agora: soltar o item da reserva
+  climb?: boolean; // segurando para cima (subir escada): ↑/W, direcional/analógico ou o botão ▲ do toque
 }
 
 export const emptyIntent = (): Intent => ({ move: 0, jump: false, guard: false, attack: false, pick: false, crouch: false, jumpHeld: false, sprint: false });
@@ -37,6 +38,8 @@ export interface KeyLayout {
   crouch: number[];
   sprint?: number[];
   reserve?: number[];
+  /** Para cima (subir escada). Perto de uma escada, estas teclas sobem em vez de pular. */
+  up?: number[];
 }
 
 /** Dispositivos que um jogador pode escolher na tela de controles. */
@@ -70,6 +73,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     crouch: [KC.S, KC.DOWN],
     sprint: [KC.SHIFT],
     reserve: [KC.R, KC.TAB],
+    up: [KC.W, KC.UP],
   },
   'kb-left': {
     left: [KC.A],
@@ -80,6 +84,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     pick: [KC.E],
     crouch: [KC.S],
     reserve: [KC.R],
+    up: [KC.W],
   },
   'kb-right': {
     left: [KC.LEFT],
@@ -90,6 +95,7 @@ export const KEY_LAYOUTS: Partial<Record<DeviceId, KeyLayout>> = {
     pick: [KC.PERIOD, KC.NUMPAD_ONE],
     crouch: [KC.DOWN],
     reserve: [KC.COMMA, KC.NUMPAD_THREE],
+    up: [KC.UP],
   },
 };
 
@@ -138,6 +144,7 @@ export class PlayerController implements Controller {
         crouch: mk(layout.crouch),
         sprint: mk(layout.sprint ?? []),
         reserve: mk(layout.reserve ?? []),
+        up: mk(layout.up ?? []),
       };
     }
     this.padIndex = padOrdinal(device);
@@ -155,6 +162,7 @@ export class PlayerController implements Controller {
     let attackHeld = false;
     let up = false;
     let reserve = false;
+    let climb = false;
 
     if (this.keys) {
       const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
@@ -169,6 +177,7 @@ export class PlayerController implements Controller {
       attackHeld = down(this.keys.attack);
       up = down(this.keys.jump);
       reserve = just(this.keys.reserve);
+      climb = down(this.keys.up);
     }
 
     const pad = this.padIndex === null ? undefined : connectedPads(this.scene)[this.padIndex];
@@ -192,6 +201,7 @@ export class PlayerController implements Controller {
       if (padAttack && !this.prevPadAttack) attack = true;
       if (padAttack) attackHeld = true;
       if (b(12) || ay < -0.5) up = true;
+      if (b(12) || ay < -0.5) climb = true;
       this.prevPadJump = padJump;
       this.prevPadAttack = padAttack;
       if (b(1) || b(4) || b(5) || b(6) || b(7)) guard = true;
@@ -210,11 +220,12 @@ export class PlayerController implements Controller {
       jumpHeld = t.jumpHeld;
       attackHeld = t.attackHeld;
       up = t.up;
+      climb = t.climb;
     }
     if (this.gesture) {
       const g = this.gesture.read();
       this.prevMove = g.move;
-      return { move: g.move, jump: g.jump, guard: g.guard, attack: g.attack, pick: g.pick, crouch: g.crouch, jumpHeld: g.jumpHeld, sprint: g.move !== 0 && g.sprint, attackHeld: g.attack || g.guard, up: g.up };
+      return { move: g.move, jump: g.jump, guard: g.guard, attack: g.attack, pick: g.pick, crouch: g.crouch, jumpHeld: g.jumpHeld, sprint: g.move !== 0 && g.sprint, attackHeld: g.attack || g.guard, up: g.up, climb: g.up };
     }
     // Pique: tocar duas vezes na mesma direção (rápido) e segurar.
     const now = this.scene.time.now;
@@ -227,7 +238,7 @@ export class PlayerController implements Controller {
     this.prevMove = move;
     const held = !!this.keys?.sprint.some((k) => k.isDown);
     const sprint = move !== 0 && (this.sprinting || held);
-    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint, attackHeld, up, reserve };
+    return { move, jump, guard, attack, pick, crouch, jumpHeld, sprint, attackHeld, up, reserve, climb };
   }
 }
 

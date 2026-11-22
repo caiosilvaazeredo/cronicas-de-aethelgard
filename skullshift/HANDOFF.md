@@ -306,3 +306,19 @@ originais (extraídas com PIL do PNG).
   - Senão, procura só no cenário atual: o chão seco mais perto, com andar para a frente custando o dobro de voltar. Sem chão seco, usa o chão mais alto do cenário.
   - Antes a busca ia para a fase inteira e jogava a caveira até ~400 px para a frente sem precisar.
 - **`updateCheckpoint`**: em fase de maré, o checkpoint só avança para chão que fica seco com a maré cheia.
+
+## Escadas, mapa até a área bônus, Maré Alta sem arquearia
+- A cabana de arquearia saiu da fase Maré Alta (`EXTRA_BUILDINGS`).
+- **Subir escada é uma ação própria**, separada do pulo:
+  - Novo `Intent.climb`: ↑/W no teclado (`KeyLayout.up`), direcional para cima ou analógico no controle, e o botão ▲ do toque.
+  - O botão ▲ (`TouchPad.showClimb`) só aparece perto de uma escada.
+  - Perto de uma escada, ↑/W não pula: o `GameScene` zera o pulo desse quadro. Longe dela, ↑/W continua pulando, e ESPAÇO e PULA sempre pulam.
+- **Na escada** (`puzzle.ts`):
+  - `ladderFor(p)` diz se dá para subir (no pé) ou descer (no alto), e uma seta ▲/▼ amarela pisca sobre a escada.
+  - Agarrada, a caveira só sai no pé, no alto ou pulando: apertar para o lado não solta mais no meio.
+  - No alto, ela procura a plataforma mais perto (até 180 px de cada lado) e passa para ela num passo em arco animado. Antes caía no vão da Árvore Oca.
+- **Mapa** (`MapScene`):
+  - Na fase de onde sai a trilha dourada da área bônus aparece uma seta grande (▲/▼), que se pode tocar.
+  - ↑/↓ (W/S, direcional) levam o esqueleto até a área bônus e de volta; ENTRAR entra nela.
+  - ◀ ▶ a partir da área bônus voltam à trilha principal.
+  - O painel mostra o nome da área bônus.

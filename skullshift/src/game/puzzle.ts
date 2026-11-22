@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BODY_FONT, DEPTH, FLOOR_Y, TILE } from '../config';
+import { BODY_FONT, DEPTH, FLOOR_Y, FONT, TILE } from '../config';
 import type { Fighter } from './Fighter';
 import type { Level } from './level';
 import { sfx } from './settings';
@@ -324,50 +324,118 @@ export class PuzzleSystem {
 
   // ---------- escadas ----------
 
+  /** Seta que aparece sobre a escada quando dá para subir (▲) ou descer (▼). */
+  private ladderHint?: Phaser.GameObjects.Text;
+
+  /** Escada que a caveira pode usar agora (ao pé dela ou no alto dela), se houver. */
+  ladderFor(p: Fighter): { x: number; top: number; bottom: number; dir: 'up' | 'down' } | undefined {
+    if (!p.alive || this.held) return undefined;
+    for (const l of this.ladders) {
+      if (Math.abs(p.x - l.x) > 40) continue;
+      if (p.feet > l.top + 6 && p.feet <= l.bottom + 6) return { ...l, dir: 'up' };
+      if (Math.abs(p.feet - l.top) < 12) return { ...l, dir: 'down' };
+    }
+    return undefined;
+  }
+
+  get isClimbing(): boolean {
+    return !!this.climbing;
+  }
+
+  /**
+   * Escadas: subir é uma ação própria (▲, ↑/W, direcional para cima), separada do pulo.
+   * Agarrada na escada, a caveira só sai no pé, no alto ou pulando (o lado não solta no meio).
+   */
   private updateLadders(p: Fighter, dt: number): void {
     const it = p.intent;
-    const up = it.jumpHeld;
+    const up = !!it.climb;
     const down = it.crouch;
+    const s = this.host.scene;
     if (this.climbing) {
       const l = this.climbing;
+      this.ladderHint?.setVisible(false);
       if (!p.alive) {
         this.climbing = undefined;
         return;
       }
       let feet = p.feet;
-      feet += ((down ? 1 : 0) - (up ? 1 : 0)) * 220 * dt;
-      const leave = it.move !== 0 || (feet <= l.top && up) || (feet >= l.bottom && down);
+      feet += ((down ? 1 : 0) - (up ? 1 : 0)) * 240 * dt;
       feet = Phaser.Math.Clamp(feet, l.top, l.bottom);
+      const atTop = feet <= l.top + 1;
+      const atBottom = feet >= l.bottom - 1;
+      const jumpOff = it.jump;
+      const leave = jumpOff || (atTop && up) || (atBottom && (down || it.move !== 0));
       p.body.reset(l.x, feet - (p.def.feetY - p.def.frame / 2));
       p.sprite.anims.timeScale = up || down ? 1.4 : 0;
-      if (leave) {
-        this.climbing = undefined;
-        p.zipping = false;
-        p.body.moves = true;
-        p.sprite.anims.timeScale = 1;
-        if (feet <= l.top) {
-          // No topo: passa para o lado onde há chão nessa altura.
-          const lvl = this.host.level;
-          const dx = lvl.landingY(l.x + 48, l.top - 4, l.top + 4) !== null ? 48 : lvl.landingY(l.x - 48, l.top - 4, l.top + 4) !== null ? -48 : p.facing * 6;
-          p.body.reset(l.x + dx, l.top - 2 - (p.def.feetY - p.def.frame / 2));
+      if (!leave) return;
+      this.climbing = undefined;
+      p.zipping = false;
+      p.body.moves = true;
+      p.sprite.anims.timeScale = 1;
+      if (atTop && up && !jumpOff) {
+        // No alto: passa para o chão mais perto nessa altura (procura dos dois lados).
+        const lvl = this.host.level;
+        let dx = 0;
+        for (let d = 32; d <= 180 && !dx; d += 16) {
+          for (const sgn of [p.facing, -p.facing]) {
+            if (!dx && lvl.landingY(l.x + sgn * d, l.top - 4, l.top + 4) !== null) dx = sgn * (d + 8);
+          }
         }
-        p.body.setVelocity(it.move * 160, feet <= l.top ? -120 : 0);
+        const fy = l.top - 2 - (p.def.feetY - p.def.frame / 2);
+        if (dx) {
+          // Passo em arco do alto da escada até a plataforma (sem depender do controle).
+          p.facing = dx > 0 ? 1 : -1;
+          p.zipping = true;
+          p.body.moves = false;
+          s.tweens.addCounter({
+            from: 0,
+            to: 1,
+            duration: 260,
+            ease: 'Sine.easeOut',
+            onUpdate: (tw) => {
+              const t = tw.getValue() ?? 0;
+              if (p.alive) p.body.reset(l.x + dx * t, fy - Math.sin(Math.PI * t) * 40);
+            },
+            onComplete: () => {
+              p.zipping = false;
+              p.body.moves = true;
+              if (p.alive) {
+                p.body.reset(l.x + dx, fy);
+                p.body.setVelocity(0, 0);
+              }
+            },
+          });
+        } else p.body.setVelocity(0, -300);
+        return;
       }
+      if (jumpOff) p.body.setVelocity(it.move * 220, -520);
+      else p.body.setVelocity(it.move * 160, 0);
       return;
     }
-    if (!p.alive || p.zipping || (!up && !down)) return;
-    for (const l of this.ladders) {
-      if (Math.abs(p.x - l.x) > 26) continue;
-      const canUp = up && p.feet > l.top + 6 && p.feet <= l.bottom + 4;
-      const canDown = down && Math.abs(p.feet - l.top) < 10;
-      if (!canUp && !canDown) continue;
-      this.climbing = l;
-      p.zipping = true;
-      p.body.setVelocity(0, 0);
-      p.body.moves = false;
-      if (canDown) p.body.reset(l.x, l.top + 8 - (p.def.feetY - p.def.frame / 2));
-      return;
-    }
+    const near = this.ladderFor(p);
+    // Seta sobre a escada: ▲ no pé, ▼ no alto.
+    if (near && !p.zipping) {
+      if (!this.ladderHint) {
+        this.ladderHint = s.add
+          .text(0, 0, '', { fontFamily: FONT, fontSize: '34px', color: '#ffe066', stroke: '#1d1a2b', strokeThickness: 8 })
+          .setOrigin(0.5)
+          .setDepth(DEPTH.fx + 1);
+      }
+      const bob = Math.sin(s.time.now / 140) * 5;
+      this.ladderHint
+        .setText(near.dir === 'up' ? '▲' : '▼')
+        .setPosition(near.x, near.dir === 'up' ? p.feet - p.labelHeight - 40 + bob : p.feet + 34 + bob)
+        .setVisible(true);
+    } else this.ladderHint?.setVisible(false);
+    if (!near || p.zipping) return;
+    const canUp = near.dir === 'up' && up;
+    const canDown = near.dir === 'down' && down;
+    if (!canUp && !canDown) return;
+    this.climbing = { x: near.x, top: near.top, bottom: near.bottom };
+    p.zipping = true;
+    p.body.setVelocity(0, 0);
+    p.body.moves = false;
+    if (canDown) p.body.reset(near.x, near.top + 8 - (p.def.feetY - p.def.frame / 2));
   }
 
   // ---------- carregar ----------

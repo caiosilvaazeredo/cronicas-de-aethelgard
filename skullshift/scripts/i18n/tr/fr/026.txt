@@ -1,0 +1,2 @@
+2177	Zone bonus : clé, porte et 3 cadeaux qui valent de l'or.   {0} retour · Entrée / A / appui : entrer
+2178	{0}   {1} {2} · ◀ ▶ choisir · Entrée / A / appui : entrer · Échap : monde

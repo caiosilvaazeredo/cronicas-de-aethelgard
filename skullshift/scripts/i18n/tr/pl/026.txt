@@ -1,0 +1,2 @@
+2177	Obszar bonusowy: klucz, drzwi i 3 prezenty warte złoto.   {0} wróć · Enter / A / dotyk: wejdź
+2178	{0}   {1} {2} · ◀ ▶ wybierz · Enter / A / dotyk: wejdź · Esc: świat

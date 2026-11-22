@@ -1,0 +1,2 @@
+2177	Bonusbereich: Schlüssel, Tür und 3 Geschenke, die Gold wert sind.   {0} zurück · Enter / A / Tippen: betreten
+2178	{0}   {1} {2} · ◀ ▶ wählen · Enter / A / Tippen: betreten · Esc: Welt

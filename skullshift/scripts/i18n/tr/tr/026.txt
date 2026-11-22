@@ -1,0 +1,2 @@
+2177	Bonus alanı: anahtar, kapı ve altın değerinde 3 hediye.   {0} geri · Enter / A / dokunuş: gir
+2178	{0}   {1} {2} · ◀ ▶ seç · Enter / A / dokunuş: gir · Esc: dünya

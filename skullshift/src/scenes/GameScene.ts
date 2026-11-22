@@ -610,6 +610,13 @@ export class GameScene extends Phaser.Scene {
       const hanging = this.hangers.some((h) => h.f === e.f && h.state !== 'free');
       e.f.intent = active && !hanging ? e.ai.read() : emptyIntent();
     }
+    // Escadas: perto de uma, o ▲ do toque aparece e "para cima" sobe em vez de pular.
+    if (this.puzzle && this.players[0]) {
+      const p0 = this.players[0];
+      const lad = this.puzzle.ladderFor(p0);
+      this.ui?.pads[0]?.showClimb(!!lad || this.puzzle.isClimbing);
+      if (p0.intent.climb && (lad?.dir === 'up' || this.puzzle.isClimbing)) p0.intent = { ...p0.intent, jump: false, jumpHeld: false };
+    }
     this.updateHangers();
     this.updateWebTraps();
     this.updateRoot(time);

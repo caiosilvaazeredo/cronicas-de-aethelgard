@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { settings } from './settings';
 import { DEPTH, FONT, VIEW, W, portraitPanelTop } from '../config';
 
-type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick' | 'stick';
+type ButtonId = 'left' | 'right' | 'crouch' | 'jump' | 'guard' | 'attack' | 'pick' | 'stick' | 'up';
 
 interface Button {
   id: ButtonId;
@@ -26,6 +26,8 @@ export interface TouchState {
   jumpHeld: boolean;
   /** Manche de voo puxado para cima. */
   up: boolean;
+  /** Botão ▲ (só aparece perto de uma escada): subir. */
+  climb: boolean;
 }
 
 type Spec = [ButtonId, number, number, number, string];
@@ -39,6 +41,7 @@ const LABELS: Record<ButtonId, string> = {
   attack: 'ATQ',
   pick: 'PEGA',
   stick: '',
+  up: '▲',
 };
 
 /** Fases de voo: manche analógico à esquerda e botão de TIRO à direita. */
@@ -62,6 +65,7 @@ const LANDSCAPE_FULL: Spec[] = [
   ['jump', 1110, 530, 54, ''],
   ['attack', 1190, 650, 64, ''],
   ['pick', 880, 650, 46, ''],
+  ['up', 160, 500, 44, ''],
 ];
 const LANDSCAPE_HALF: Spec[] = [
   ['left', 58, 610, 46, ''],
@@ -82,6 +86,7 @@ const PORTRAIT_FULL: Spec[] = [
   ['guard', 0.62, 0.66, 0.08, ''],
   ['jump', 0.84, 0.28, 0.09, ''],
   ['attack', 0.85, 0.66, 0.11, ''],
+  ['up', 0.25, 0.14, 0.075, ''],
 ];
 /** Em pé, versus: cada jogador usa metade da largura (P2 espelhado). */
 const PORTRAIT_HALF: Spec[] = [
@@ -248,6 +253,11 @@ export class TouchPad {
         .setAlpha(Math.max(0.35, op))
         .setRotation(flip ? Math.PI : 0);
       this.buttons.push({ id, x, y, r, bg, label, down: false });
+      // ▲ só aparece perto de uma escada (showClimb).
+      if (id === 'up') {
+        bg.setVisible(false);
+        label.setVisible(false);
+      }
       if (id === 'stick') {
         // Bolinha do manche (segue o dedo) e marcas das 4 direções.
         this.knob = scene.add.circle(x, y, r * 0.42, tint, 0.55 * op).setStrokeStyle(4, 0x10223a, 0.8).setDepth(DEPTH.hud + 6);
@@ -265,18 +275,33 @@ export class TouchPad {
   private knob?: Phaser.GameObjects.Arc;
   private stickDir = { x: 0, y: 0 };
 
+  private climbShown = false;
+
+  /** Mostra ou esconde o botão ▲ de subir (perto de uma escada). */
+  showClimb(v: boolean): void {
+    if (v === this.climbShown) return;
+    this.climbShown = v;
+    const b = this.buttons.find((bb) => bb.id === 'up');
+    if (!b) return;
+    const on = v && this.visible;
+    b.bg.setVisible(on);
+    b.label.setVisible(on);
+    if (on) this.scene.tweens.add({ targets: [b.bg, b.label], scale: { from: 0.4, to: 1 }, duration: 180, ease: 'Back.easeOut' });
+  }
+
   setVisible(v: boolean): void {
     this.visible = v;
     for (const b of this.buttons) {
-      b.bg.setVisible(v);
-      b.label.setVisible(v);
+      const on = v && (b.id !== 'up' || this.climbShown);
+      b.bg.setVisible(on);
+      b.label.setVisible(on);
     }
     this.knob?.setVisible(v);
   }
 
   /** Algum botão sob este ponto da tela? (para o toque não virar "andar até lá"). */
   hits(x: number, y: number): boolean {
-    return this.visible && this.buttons.some((b) => Phaser.Math.Distance.Between(x, y, b.x, b.y) <= b.r * 1.25);
+    return this.visible && this.buttons.some((b) => (b.id !== 'up' || this.climbShown) && Phaser.Math.Distance.Between(x, y, b.x, b.y) <= b.r * 1.25);
   }
 
   /** Objetos desenhados (para câmeras separadas de interface). */
@@ -305,6 +330,7 @@ export class TouchPad {
         let best: Button | undefined;
         let bestD = Infinity;
         for (const b of this.buttons) {
+          if (b.id === 'up' && !this.climbShown) continue;
           const d = Math.hypot(x - b.x, y - b.y) / b.r;
           if (d <= (b.id === 'stick' ? 1.7 : 1.25) && d < bestD) {
             best = b;
@@ -340,6 +366,7 @@ export class TouchPad {
       guard: get('guard'),
       crouch: get('crouch') || sy > 0.35,
       up: sy < -0.35,
+      climb: get('up'),
       jumpPressed: jump && !this.prevJump,
       attackPressed: attack && !this.prevAttack,
       attackHeld: attack,

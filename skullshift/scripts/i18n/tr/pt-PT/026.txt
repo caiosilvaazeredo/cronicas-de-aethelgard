@@ -1,0 +1,2 @@
+2177	Área bónus: chave, porta e 3 presentes que valem ouro.   {0} voltar · Enter / A / toque: entrar
+2178	{0}   {1} {2} · ◀ ▶ escolher · Enter / A / toque: entrar · Esc: mundo

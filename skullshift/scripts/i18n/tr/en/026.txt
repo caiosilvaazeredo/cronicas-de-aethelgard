@@ -1,0 +1,2 @@
+2177	Bonus area: key, door and 3 gifts worth gold.   {0} back · Enter / A / tap: enter
+2178	{0}   {1} {2} · ◀ ▶ choose · Enter / A / tap: enter · Esc: world

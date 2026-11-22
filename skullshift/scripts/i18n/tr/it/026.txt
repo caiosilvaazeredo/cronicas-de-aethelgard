@@ -1,0 +1,2 @@
+2177	Area bonus: chiave, porta e 3 regali che valgono oro.   {0} indietro · Invio / A / tocco: entra
+2178	{0}   {1} {2} · ◀ ▶ scegli · Invio / A / tocco: entra · Esc: mondo

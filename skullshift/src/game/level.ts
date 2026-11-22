@@ -30,7 +30,6 @@ const BUILDING_FOOT: Record<string, number> = { castle: 249 / 256, tower: 230 / 
 /** Prédios a mais no fundo de algumas fases: [cenário, tipo]. */
 const EXTRA_BUILDINGS: Record<string, Array<[number, DecoKind]>> = {
   crabs: [[2, 'house']],
-  hightide: [[3, 'archery']],
   floodgates: [[2, 'barracks']],
   reef: [[0, 'house']],
   sharkking: [[0, 'castle']],

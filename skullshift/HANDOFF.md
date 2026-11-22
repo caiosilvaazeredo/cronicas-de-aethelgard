@@ -293,11 +293,16 @@ originais (extraídas com PIL do PNG).
   - Ao mudar de parte, o chefe pisca vermelho (`enrage`) e, antes do próximo padrão, para e ruge (`stageRoar`).
   - O chefe das fases de voo (`shmup.ts`) segue a mesma divisão.
   - Para trocar a divisão de um chefe, sobrescreva `stagePatterns(stage)`.
-- **Forma de aranha com 2 poderes**:
-  - ATAQUE é o golpe; ▼ + ATAQUE no chão lança teia (`Fighter.webShot`, recarga de 0,9 s, projétil `PLAYER_WEB`).
-  - A teia gruda até no escudo: o alvo fica tonto 2,6 s num casulo (`GameScene.webWrap`), sem morrer.
-  - Vale também para as variantes da aranha. A dica "▼ + ATAQUE: TEIA" aparece a cada transformação.
 - **Aranha pendurada** (`addHanger`/`unflipHanger`):
   - De cabeça para baixo, o corpo físico agora acompanha o desenho virado (antes ficava ~70 px abaixo).
   - Ao soltar do fio, desvira sem o desenho pular. Era o "teletransporte" ao bater nela.
   - `clearSpawnArea` não mexe mais nas aranhas penduradas (antes podia jogá-las para o chão).
+
+## Teia desfeita e renascimento na maré
+- A teia da forma de aranha (▼ + ATAQUE) foi removida a pedido: a aranha volta a ter só o golpe.
+  - A string "▼ + ATAQUE: TEIA" ficou sem uso em `strings.json`.
+- **`safeSpawnX`** (maré):
+  - Se o ponto de volta está seco agora (`deathY - 20`) ou mesmo com a maré cheia, renasce nele.
+  - Senão, procura só no cenário atual: o chão seco mais perto, com andar para a frente custando o dobro de voltar. Sem chão seco, usa o chão mais alto do cenário.
+  - Antes a busca ia para a fase inteira e jogava a caveira até ~400 px para a frente sem precisar.
+- **`updateCheckpoint`**: em fase de maré, o checkpoint só avança para chão que fica seco com a maré cheia.

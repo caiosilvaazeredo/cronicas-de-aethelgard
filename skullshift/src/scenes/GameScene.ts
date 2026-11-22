@@ -10,7 +10,7 @@ import { announceAchievements } from '../game/achievements';
 import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game/finale';
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
-import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ProjectileDef, type ItemId } from '../game/characters';
+import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
@@ -78,8 +78,6 @@ interface Projectile {
 }
 
 const ITEM_RESPAWN = 8000;
-/** Teia lançada pela caveira-aranha (▼ + ATACAR): reta, cai devagar. */
-const PLAYER_WEB: ProjectileDef = { release: 4, tex: 'web_ball', speed: 620, angle: 0, spin: false, arc: { vy: -60, g: 220 } };
 /** Caverna Submarina: quanto a água sobe (a superfície fica lá no alto). */
 const UNDERSEA_TIDE = 400;
 /** Aranha pendurada: altura dos pés enquanto está na teia. */
@@ -766,6 +764,10 @@ export class GameScene extends Phaser.Scene {
     const p = this.players[0];
     if (!p.alive || !p.onGround || this.transitioning) return;
     // Avança o checkpoint conforme o jogador progride dentro do cenário.
+    // Maré: o checkpoint só avança para chão que fica seco mesmo com a maré cheia.
+    const tide = LEVELS[this.levelIndex].sea?.tide;
+    const gy = this.level.groundY(p.x);
+    if (tide && (gy === null || gy >= DEATH_Y - tide.high - 12)) return;
     if (p.x > this.checkpointX + 320 && this.level.screenOf(p.x) === this.screen && this.level.isGround(p.x)) {
       this.checkpointX = p.x;
     }
@@ -1419,8 +1421,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnProjectile(f: Fighter): void {
-    // Forma de aranha do jogador: ▼ + ATACAR lança teia (prende em vez de derrubar).
-    const pd = f.webShot ? PLAYER_WEB : f.def.projectile;
+    const pd = f.def.projectile;
     if (!pd) return;
     // Altura do peito: quem está agachado escapa por baixo.
     const s = this.add.sprite(f.x + f.facing * 30, f.feet - 42, pd.tex).setDepth(DEPTH.projectiles);
@@ -1546,11 +1547,7 @@ export class GameScene extends Phaser.Scene {
           p.sprite.setFlipX(!p.sprite.flipX).setTint(b.color ?? 0xffe066);
           break;
         }
-        if (p.effect === 'net' && this.players.includes(p.owner)) {
-          // Teia da caveira-aranha: gruda até no escudo; o alvo fica enrolado num casulo, parado.
-          this.webWrap(b);
-          p.life = 0;
-        } else if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
+        if (b.blocksFrom(b.x - Math.sign(p.vx) * 10)) {
           this.sparks(p.sprite.x, p.sprite.y);
           this.deflect(p);
         } else if (p.effect === 'net' && b === this.players[0] && this.mode === 'story') {
@@ -1572,28 +1569,6 @@ export class GameScene extends Phaser.Scene {
       p.sprite.destroy();
       p.glow?.destroy();
       return false;
-    });
-  }
-
-  /** Enrola o alvo na teia: fica tonto ~2,6 s dentro de um casulo que treme e se desfaz. */
-  private webWrap(b: Fighter): void {
-    const ms = 2600;
-    b.stun(ms);
-    b.body.setVelocityX(0);
-    sfx('pick');
-    const head = b.def.head;
-    const c = this.add.image(b.x, b.feet - head * 0.45, 'web_ball').setScale(0.4).setAlpha(0.9).setDepth(DEPTH.fighters + 0.4);
-    this.tweens.add({ targets: c, scale: Math.max(1.6, head / 45), duration: 160, ease: 'Back.easeOut' });
-    this.popText(b.x, b.feet - head - 30, 'PRESO NA TEIA!', '#eef6f8');
-    const follow = () => {
-      if (!b.alive || !b.sprite.active) return void c.destroy();
-      c.setPosition(b.x, b.feet - head * 0.45);
-    };
-    this.events.on('update', follow);
-    this.time.delayedCall(ms, () => {
-      this.events.off('update', follow);
-      if (!c.active) return;
-      this.tweens.add({ targets: c, alpha: 0, scale: c.scale * 1.3, duration: 220, onComplete: () => c.destroy() });
     });
   }
 
@@ -1782,22 +1757,33 @@ export class GameScene extends Phaser.Scene {
     p.reviveGraceUntil = this.time.now + 1000;
   }
 
+  /**
+   * Maré: renasce em terra firme, mas perto de onde morreu. Procura só no cenário atual,
+   * preferindo voltar um pouco a avançar. Se nenhum chão do cenário fica acima da maré cheia
+   * (fases de maré muito alta), usa o chão mais alto do cenário. Antes a busca ia para a fase
+   * inteira e podia jogar a caveira muito para a frente.
+   */
   private safeSpawnX(x: number): number {
     const tide = LEVELS[this.levelIndex].sea?.tide;
     if (!tide) return x;
     const limit = DEATH_Y - tide.high - 12;
-    const dry = (cx: number) => {
-      const gy = this.level.groundY(cx);
-      return gy !== null && gy < limit;
-    };
-    if (dry(x)) return x;
-    const pick = (a: number, b: number) => {
-      let best: number | undefined;
-      for (let cx = a; cx <= b; cx += 16) if (dry(cx) && (best === undefined || Math.abs(cx - x) < Math.abs(best - x))) best = cx;
-      return best;
-    };
     const a = Math.floor(x / W) * W;
-    return pick(a + 48, a + W - 48) ?? pick(48, this.level.width - 48) ?? x;
+    const ground: Array<[number, number]> = [];
+    for (let cx = a + 48; cx <= a + W - 48; cx += 16) {
+      const gy = this.level.groundY(cx);
+      if (gy !== null) ground.push([cx, gy]);
+    }
+    // O ponto de volta já está em terra firme agora (ou mesmo com a maré cheia): fica nele.
+    const gx = this.level.groundY(x);
+    if (gx !== null && (gx < limit || gx < this.level.deathY - 20)) return x;
+    // Andar para a frente "custa" o dobro de voltar.
+    const cost = (cx: number) => (cx > x ? (cx - x) * 2 : x - cx);
+    const best = (list: Array<[number, number]>) => list.reduce<[number, number] | undefined>((b, c) => (!b || cost(c[0]) < cost(b[0]) ? c : b), undefined)?.[0];
+    const dry = best(ground.filter(([, gy]) => gy < limit));
+    if (dry !== undefined) return dry;
+    if (!ground.length) return x;
+    const top = Math.min(...ground.map(([, gy]) => gy));
+    return best(ground.filter(([, gy]) => gy <= top + 8)) ?? x;
   }
 
   private revive(pi: number, spawnX: () => number): void {
@@ -2389,14 +2375,6 @@ export class GameScene extends Phaser.Scene {
 
   /** Primeira transformação: o Xamã explica. Depois, cada forma nova ganha um comentário. */
   private firstShift(p: Fighter, char: CharId): void {
-    // Aranha: lembra o segundo poder (teia) a cada transformação.
-    if ((CHARS[char]?.base ?? char) === 'spider') {
-      const t = this.add
-        .text(p.x, p.feet - p.labelHeight - 20, '▼ + ATAQUE: TEIA', { fontFamily: FONT, fontSize: '22px', color: '#eef6f8', stroke: '#10223a', strokeThickness: 6 })
-        .setOrigin(0.5)
-        .setDepth(DEPTH.fx + 2);
-      this.tweens.add({ targets: t, y: t.y - 40, alpha: { from: 1, to: 0 }, delay: 1800, duration: 900, onComplete: () => t.destroy() });
-    }
     if (!hasSeen('first-shift')) {
       markSeen('first-shift');
       markSeen(`shift-${char}`);

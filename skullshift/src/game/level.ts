@@ -57,7 +57,7 @@ const EXTRA_BUILDINGS: Record<string, Array<[number, DecoKind]>> = {
   stairs: [[0, 'monastery']],
 };
 
-export type DecoKind = 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold' | 'bush' | 'stone' | 'house' | 'hut' | 'tower' | 'castle' | 'monastery' | 'barracks' | 'archery';
+export type DecoKind = 'fish_hut' | 'pirate_tower' | 'goblin_hut' | 'gnome_hut' | 'gnome_tower' | 'cave_mouth' | 'tree' | 'dead_tree' | 'rock1' | 'rock2' | 'stump' | 'bones' | 'skull_spike' | 'crystal' | 'gold' | 'bush' | 'stone' | 'house' | 'hut' | 'tower' | 'castle' | 'monastery' | 'barracks' | 'archery';
 export type Theme = 'shore' | 'cave' | 'volcano' | 'sky' | 'haunted';
 
 /** A fase como é jogada no modo escolhido (na história, o último cenário pode virar arena de chefe). */
@@ -3181,6 +3181,57 @@ const NEW_BEASTS: Record<string, Array<[screen: number, who: EnemyId]>> = {
   wingguard: [[2, 'bear_polar']],
 };
 
+/** Construções do Enemy Pack como decoração, cada uma no seu mundo: [cenário, tipo]. */
+const NEW_DECO: Record<string, Array<[screen: number, kind: DecoKind]>> = {
+  // Maré: cabanas de pescador e torres de vigia dos tubarões piratas.
+  crabs: [[1, 'fish_hut']],
+  wreck: [[2, 'pirate_tower']],
+  deck: [[1, 'pirate_tower']],
+  reef: [[1, 'fish_hut']],
+  // Pradaria: o acampamento dos goblins montados.
+  farm: [[2, 'goblin_hut']],
+  caravan: [[1, 'goblin_hut']],
+  // Lagoa: palafitas de pescador.
+  swampedge: [[1, 'fish_hut']],
+  fisherman: [[1, 'fish_hut'], [3, 'fish_hut']],
+  lizardvillage: [[1, 'fish_hut']],
+  // Caverna e Minas: entradas de caverna e cabanas goblin.
+  cave: [[1, 'cave_mouth']],
+  darkcave: [[1, 'cave_mouth']],
+  mineentry: [[1, 'goblin_hut'], [3, 'cave_mouth']],
+  goldvein: [[1, 'goblin_hut']],
+  // Bosque: casas e torres dos gnomos.
+  woods: [[1, 'gnome_hut']],
+  mushrooms: [[3, 'gnome_tower']],
+  gnomevillage: [[1, 'gnome_hut'], [2, 'gnome_tower'], [3, 'gnome_hut']],
+};
+
+function placeDeco(levels: LevelDef[]): void {
+  for (const [id, list] of Object.entries(NEW_DECO)) {
+    const l = levels.find((x) => x.id === id);
+    if (!l || l.shmup || l.chase || l.undersea) continue;
+    for (const [si, kind] of list) {
+      const sc = l.screens[si];
+      if (!sc) continue;
+      const near = [...(sc.deco ?? []).map(([t]) => t), ...(sc.sign ? [sc.sign[0]] : [])];
+      let best = -1;
+      let bestScore = -1;
+      for (const [a, n] of sc.segments) {
+        if (n < 3) continue;
+        for (let t = a + 1; t <= a + n - 2; t++) {
+          if (near.some((u) => Math.abs(u - t) < 3)) continue;
+          const score = n * 10 - Math.abs(t - (a + n / 2));
+          if (score > bestScore) {
+            best = t;
+            bestScore = score;
+          }
+        }
+      }
+      if (best >= 0) sc.deco = [...(sc.deco ?? []), [best, kind]];
+    }
+  }
+}
+
 /** Põe o bicho no meio de um chão do cenário (o mais largo livre), longe de outros inimigos. */
 function placeBeasts(levels: LevelDef[]): void {
   for (const [id, list] of Object.entries(NEW_BEASTS)) {
@@ -3396,6 +3447,7 @@ export const LEVELS: LevelDef[] = [
   ...TRIAL_LEVELS,
 ];
 placeBeasts(LEVELS);
+placeDeco(LEVELS);
 
 export class Level {
   readonly def: LevelDef;
@@ -4385,6 +4437,25 @@ export class Level {
         break;
       case 'dead_tree':
         s.add.image(x, base + 30, 'dead_tree').setOrigin(0.5, 1).setScale(0.62).setDepth(DEPTH.deco);
+        break;
+      // Construções do Enemy Pack (a base do desenho na linha do chão; algumas animadas).
+      case 'fish_hut':
+        s.add.sprite(x, base + 8, 'x_fish_hut').setOrigin(0.5, 179 / 192).setDepth(DEPTH.deco).play({ key: 'x_fish_hut', startFrame: seed % 8 });
+        break;
+      case 'pirate_tower':
+        s.add.image(x, base + 8, 'x_pirate_tower').setOrigin(0.5, 179 / 192).setScale(1.1).setDepth(DEPTH.deco);
+        break;
+      case 'goblin_hut':
+        s.add.sprite(x, base + 8, 'x_goblin_hut').setOrigin(0.5, 241 / 256).setScale(0.55).setDepth(DEPTH.deco).setTint(tint).play({ key: 'x_goblin_hut', startFrame: seed % 4 });
+        break;
+      case 'gnome_hut':
+        s.add.image(x, base + 8, 'x_gnome_hut').setOrigin(0.5, 148 / 192).setDepth(DEPTH.deco);
+        break;
+      case 'gnome_tower':
+        s.add.image(x, base + 8, 'x_gnome_tower').setOrigin(0.5, 230 / 256).setDepth(DEPTH.deco);
+        break;
+      case 'cave_mouth':
+        s.add.sprite(x, base + 8, 'x_cave_mouth').setOrigin(0.5, 173 / 192).setScale(1.1).setDepth(DEPTH.deco).setTint(tint).play({ key: 'x_cave_mouth', startFrame: seed % 8 });
         break;
       case 'skull_spike':
         s.add.image(x, base + 10, 'skull_spike').setOrigin(0.5, 1).setDepth(DEPTH.deco);

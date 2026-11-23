@@ -74,8 +74,14 @@ export interface CharDef {
   idle: AnimDef;
   run: AnimDef;
   attack: AnimDef;
-  /** Animação própria de defesa (só o esqueleto tem). */
+  /** Animação própria de defesa (esqueleto, tartaruga, panda, minotauro). */
   guard?: AnimDef;
+  /** A defesa para no último quadro (a tartaruga fica dentro do casco). */
+  guardHold?: boolean;
+  /** Animação de morte (o troll cai). */
+  dead?: AnimDef;
+  /** Quadros de quem leva golpe (gnoll e lagarto). */
+  hit?: AnimDef;
   /** Ataque montado de várias folhas (ex.: início, repetição, fim). */
   attackSheets?: Array<{ key: string; n: number }>;
   /** Altura da cabeça acima dos pés (etiqueta e aura). */
@@ -130,6 +136,7 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 7, fps: 10 },
     run: { n: 6, fps: 12 },
     attack: { n: 9, fps: 16 },
+    hit: { n: 2, fps: 10 },
     speed: 235,
     melee: { from: 2, to: 6, reach: 72, back: 64 },
     swim: true,
@@ -144,6 +151,7 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 6, fps: 10 },
     run: { n: 8, fps: 14 },
     attack: { n: 8, fps: 16 },
+    hit: { n: 2, fps: 10 },
     speed: 225,
     projectile: { release: 5, tex: 'bone', speed: 520, angle: 0, spin: true, item: 'bone', arc: { vy: -150, g: 430 } },
     drops: 'bone',
@@ -260,6 +268,7 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 16, fps: 12 },
     run: { n: 8, fps: 10 },
     attack: { n: 12, fps: 14 },
+    guard: { n: 11, fps: 14 },
     speed: 200,
     // Marretada de pedra: lenta, mas de alcance enorme.
     melee: { from: 6, to: 8, reach: 100, back: 0 },
@@ -314,6 +323,7 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 10, fps: 10 },
     run: { n: 6, fps: 12 },
     attack: { n: 13, fps: 18 },
+    guard: { n: 8, fps: 12 },
     speed: 215,
     // Nunchaku: golpe longo que gira para os dois lados.
     melee: { from: 4, to: 10, reach: 100, back: 64 },
@@ -353,6 +363,7 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 12, fps: 10 },
     run: { n: 10, fps: 10 },
     attack: { n: 6, fps: 10 },
+    dead: { n: 10, fps: 12 },
     speed: 140,
     // Clava: lenta, alcance enorme.
     melee: { from: 2, to: 4, reach: 120, back: 30 },
@@ -366,6 +377,8 @@ export const CHARS: Record<CharId, CharDef> = {
     idle: { n: 10, fps: 10 },
     run: { n: 7, fps: 9 },
     attack: { n: 10, fps: 14 },
+    guard: { n: 6, fps: 14 },
+    guardHold: true,
     speed: 140,
     melee: { from: 4, to: 7, reach: 100, back: 20 },
   },

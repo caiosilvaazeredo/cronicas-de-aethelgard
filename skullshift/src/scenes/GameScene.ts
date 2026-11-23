@@ -1706,7 +1706,7 @@ export class GameScene extends Phaser.Scene {
 
     const pi = this.players.indexOf(victim);
     if (pi === -1) {
-      this.time.delayedCall(700, () => {
+      this.time.delayedCall(victim.deathMs, () => {
         for (const e of this.enemies) if (e.f === victim) e.acc?.forEach(({ img }) => img.destroy());
         this.enemies = this.enemies.filter((e) => e.f !== victim);
         victim.destroy();

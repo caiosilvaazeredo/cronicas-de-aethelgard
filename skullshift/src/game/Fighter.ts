@@ -304,6 +304,12 @@ export class Fighter {
   knockback(dir: number, power = 320): void {
     this.knockT = 0.16;
     this.knockV = dir * power;
+    // Gnoll e lagarto: quadros próprios de quem levou o golpe.
+    const hitKey = `${this.def.id}_hit`;
+    if (this.alive && this.state !== 'attack' && this.scene.anims.exists(hitKey)) {
+      this.sprite.play(hitKey);
+      this.hitUntil = this.scene.time.now + 260;
+    }
     if (this.isPlayer) {
       this.squash(1.2, 0.82, 220);
       this.onHurt?.(this);
@@ -779,8 +785,17 @@ export class Fighter {
     else this.sprite.play(this.crouching && this.hasCrouchPose ? `${this.def.id}_crouch_attack` : `${this.def.id}_attack`);
   }
 
+  /** Até quando os quadros de golpe sofrido seguram a animação. */
+  private hitUntil = 0;
+  /** Quanto tempo o corpo fica na tela depois de cair (morte animada é mais longa). */
+  deathMs = 700;
+
   private setState(s: State): void {
     const id = this.def.id;
+    if (this.scene.time.now < this.hitUntil) {
+      this.state = s;
+      return;
+    }
     let anim = `${id}_idle`;
     if (s === 'run') anim = `${id}_run`;
     if (s === 'guard') anim = this.def.guard ? `${id}_guard` : `${id}_idle`;
@@ -816,6 +831,16 @@ export class Fighter {
         duration: 900,
         ease: 'Quad.easeOut',
       });
+      return;
+    }
+    // Quem tem animação de morte (o troll) cai no chão e some devagar.
+    const deadKey = `${this.def.id}_dead`;
+    if (this.scene.anims.exists(deadKey)) {
+      this.sprite.play(deadKey);
+      this.sprite.setTint(0xff9a9a);
+      this.scene.time.delayedCall(160, () => this.sprite.active && this.sprite.clearTint());
+      this.scene.tweens.add({ targets: this.sprite, alpha: 0, delay: 1300, duration: 450 });
+      this.deathMs = 1800;
       return;
     }
     this.sprite.anims.stop();

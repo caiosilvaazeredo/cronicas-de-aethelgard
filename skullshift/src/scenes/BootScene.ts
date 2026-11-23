@@ -52,6 +52,8 @@ export class BootScene extends Phaser.Scene {
       this.load.spritesheet(`${id}_run`, `chars/${id}_run.png`, fs);
       if (d.attackSheets) for (const p of d.attackSheets) this.load.spritesheet(p.key, `chars/${p.key}.png`, fs);
       else this.load.spritesheet(`${id}_attack`, `chars/${id}_attack.png`, fs);
+      // Folhas extras: defesa, morte e golpe sofrido (a defesa do esqueleto é carregada à parte).
+      if (id !== 'skull') for (const part of ['guard', 'dead', 'hit'] as const) if (d[part]) this.load.spritesheet(`${id}_${part}`, `chars/${id}_${part}.png`, fs);
       if (id !== 'villager') this.load.image(`${id}_avatar`, `chars/${id}_avatar.png`);
     }
     // Free Pack: construções (mapa do mundo e cenários), pedras e arbustos animados.
@@ -78,6 +80,13 @@ export class BootScene extends Phaser.Scene {
     this.load.image('bones', 'terrain/bones.png');
     this.load.spritesheet('tree', 'terrain/tree.png', { frameWidth: 192, frameHeight: 256 });
     this.load.image('dead_tree', 'terrain/dead_tree.png');
+    // Construções do Enemy Pack usadas como decoração (algumas animadas).
+    this.load.spritesheet('x_fish_hut', 'extra/fish_hut.png', { frameWidth: 192, frameHeight: 192 });
+    this.load.image('x_pirate_tower', 'extra/pirate_tower.png');
+    this.load.spritesheet('x_goblin_hut', 'extra/goblin_hut.png', { frameWidth: 768, frameHeight: 256 });
+    this.load.image('x_gnome_hut', 'extra/gnome_hut.png');
+    this.load.image('x_gnome_tower', 'extra/gnome_tower.png');
+    this.load.spritesheet('x_cave_mouth', 'extra/cave_mouth.png', { frameWidth: 192, frameHeight: 192 });
     this.load.image('rock1', 'terrain/rock1.png');
     // Recursos (Tiny Swords): ferramentas das habilidades, presentes e objetos das fases de chave.
     for (const k of ['tool_hammer', 'tool_axe', 'tool_sword', 'tool_pickaxe', 'meat', 'wood', 'gold', 'gold_stone', 'gold_stone_big', 'stump']) this.load.image(k, `res/${k}.png`);
@@ -119,9 +128,9 @@ export class BootScene extends Phaser.Scene {
       },
       () => {
         // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
-        for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
+        for (const k of ['idle', 'run', 'attack', 'guard']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
         // O Troll também (é o maior desenho do Enemy Pack).
-        for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `troll_${k}`, 384, 384, TROLL_SCALE, CHARS.troll.feetY);
+        for (const k of ['idle', 'run', 'attack', 'dead']) shrinkSheet(this, `troll_${k}`, 384, 384, TROLL_SCALE, CHARS.troll.feetY);
       },
       () => {
         for (const id of Object.keys(CHARS) as CharId[]) {
@@ -137,6 +146,9 @@ export class BootScene extends Phaser.Scene {
               repeat: 0,
             });
           } else this.anim(`${id}_attack`, d.attack.n, d.attack.fps, 0);
+          if (d.guard && id !== 'skull') this.anim(`${id}_guard`, d.guard.n, d.guard.fps, d.guardHold ? 0 : -1);
+          if (d.dead) this.anim(`${id}_dead`, d.dead.n, d.dead.fps, 0);
+          if (d.hit) this.anim(`${id}_hit`, d.hit.n, d.hit.fps, 0);
         }
       },
       () => {
@@ -171,6 +183,9 @@ export class BootScene extends Phaser.Scene {
         this.anim('shaman_idle', 8, 10, -1);
         this.anim('shaman_attack', 10, 14, 0);
         this.anim('water_foam', 16, 10, -1);
+        this.anim('x_fish_hut', 8, 8, -1);
+        this.anim('x_goblin_hut', 4, 6, -1);
+        this.anim('x_cave_mouth', 8, 8, -1);
       },
       () => {
         this.makeSky();

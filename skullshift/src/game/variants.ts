@@ -369,17 +369,20 @@ function makeVariant(scene: Phaser.Scene, v: (typeof VARIANTS)[number]): void {
   {
     const b = CHARS[v.base];
     const k = v.scale ?? 1;
-    for (const part of ['idle', 'run', 'attack'] as const) {
+    // As folhas extras do personagem base (defesa, morte, golpe sofrido) também ganham a cor da variante.
+    const extra = (['guard', 'dead', 'hit'] as const).filter((part) => b[part] && scene.textures.exists(`${v.base}_${part}`));
+    for (const part of ['idle', 'run', 'attack', ...extra] as const) {
       const src = `${v.base}_${part}`;
       const dst = `${v.id}_${part}`;
       recolorSheet(scene, src, dst, b.frame, b.frame, v.palette ?? {});
       if (k !== 1) shrinkSheet(scene, dst, b.frame, b.frame, k, b.feetY);
-      const a = b[part];
+      const a = b[part]!;
+      const once = part === 'attack' || part === 'dead' || part === 'hit' || (part === 'guard' && b.guardHold);
       scene.anims.create({
         key: dst,
         frames: scene.anims.generateFrameNumbers(dst, { start: 0, end: a.n - 1 }),
         frameRate: a.fps,
-        repeat: part === 'attack' ? 0 : -1,
+        repeat: once ? 0 : -1,
       });
     }
     const def: CharDef = {

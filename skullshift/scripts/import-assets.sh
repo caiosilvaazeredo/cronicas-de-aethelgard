@@ -43,6 +43,22 @@ char thief    'Thief'           'Thief'           Idle Run  Attack
 char troll    'Troll'           'Troll'           Idle Walk Attack
 char turtle   'Turtle'          'Turtle'          Idle Walk Attack
 char gnome    'Gnome'           'Gnome'           Idle Run  Attack
+# Animações extras: morte do troll, defesa (tartaruga no casco, panda, minotauro), golpe sofrido.
+cp "$E/Extra/Troll Dead/Troll_Dead.png" "$A/chars/troll_dead.png"
+cp "$E/Extra/Turtle Guard/Turtle_Guard_In.png" "$A/chars/turtle_guard.png"
+cp "$E/Extra/Panda Guard/Panda_Guard.png" "$A/chars/panda_guard.png"
+cp "$E/Extra/Minotaur Guard/Minotaur_Guard.png" "$A/chars/minotaur_guard.png"
+cp "$E/Extra/Gnoll Hit/Gnoll_Hit.png" "$A/chars/gnoll_hit.png"
+cp "$E/Extra/Lizard Hit/Lizard_Hit.png" "$A/chars/lizard_hit.png"
+# Construções do Enemy Pack (decoração nos mundos): cabana de pescador, torre pirata, cabana goblin,
+# casa e torre de gnomo, entrada de caverna.
+mkdir -p "$A/extra"
+cp "$E/Extra/Fish Hut/Fish Hut.png" "$A/extra/fish_hut.png"
+cp "$E/Extra/Pirate Tower/Pirate Tower_Ground.png" "$A/extra/pirate_tower.png"
+cp "$E/Extra/Goblin Hut/Goblin Hut.png" "$A/extra/goblin_hut.png"
+cp "$E/Extra/Gnome Buildings/Gnome Hut.png" "$A/extra/gnome_hut.png"
+cp "$E/Extra/Gnome Buildings/Gnome Tower.png" "$A/extra/gnome_tower.png"
+cp "$E/Extra/Cave/Cave_Idle.png" "$A/extra/cave_mouth.png"
 # Porco e goblin montado ficam em Extra e não têm avatar: o avatar sai do 1º quadro.
 cp "$E/Extra/Pig/Pig_Idle.png" "$A/chars/pig_idle.png"
 cp "$E/Extra/Pig/Pig_Run.png" "$A/chars/pig_run.png"

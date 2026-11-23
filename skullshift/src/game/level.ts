@@ -2962,9 +2962,11 @@ export const LEVEL_WINGGUARD: LevelDef = {
 // ---------- Prólogo: Vila dos Ossos (sonhos guiados do Xamã, um por mundo) ----------
 
 /**
- * Cada sonho tem 4 cenários curtos: chão firme para a conversa com o Xamã, um vão pequeno,
- * degraus e a chegada. Os inimigos são poucos e fracos; o objeto da criatura do mundo aparece
- * no caminho (para voltar à forma depois de cair).
+ * Cada sonho tem 6 cenários: chão firme para a conversa com o Xamã (cenário 0), quatro
+ * desafios do poder ensinado e a chegada. Nos poderes de movimento o desafio é obrigatório
+ * (canais só a nado, paredes só escalando, abismos só voando, galeria escura com a tocha); nos
+ * de combate, a barreira de fogo só abre limpando a área, com inimigos no alto (tiros em arco
+ * ou de longe) ou com armadura (golpe forte). O objeto da criatura aparece no caminho.
  */
 function dream(
   id: string,
@@ -2974,11 +2976,12 @@ function dream(
   char: CharId,
   world: string,
   item: ItemId | undefined,
-  foes: [EnemyId, EnemyId, EnemyId],
-  deco: DecoKind[],
-  sign: string,
+  screens: ScreenDef[],
+  extra: Partial<LevelDef> & { first?: ScreenDef } = {},
 ): LevelDef {
-  const [d0, d1, d2] = [deco[0] ?? 'tree', deco[1] ?? deco[0] ?? 'rock1', deco[2] ?? deco[0] ?? 'bush'];
+  const open = look.theme === 'shore';
+  const { first = { segments: [[0, 20, 0]], deco: [[1, open ? 'tree' : 'rock2'], [17, open ? 'rock1' : look.theme === 'sky' ? 'crystal' : 'skull_spike']] }, ...rest } = extra;
+  const list = screens.map((sc, i) => (item && i === 1 ? { ...sc, storyItems: [...(sc.storyItems ?? []), [2, item] as [number, ItemId]] } : sc));
   return {
     id,
     name,
@@ -2986,29 +2989,112 @@ function dream(
     winText: 'O sonho se desfaz...',
     ...look,
     prologue: { world, char },
-    screens: [
-      { segments: [[0, 20, 0]], deco: [[1, d0], [17, d1]] },
-      { segments: [[0, 9, 0], [11, 9, 0]], floats: [[14, 3, 3]], deco: [[2, d2], [18, d0]], enemies: [[15, foes[0]]], sign: [4, sign], storyItems: item ? [[15, item, 3]] : [] },
-      { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], floats: [[8, 2, 3]], deco: [[13, d1]], enemies: [[16, foes[1]]], storyItems: item ? [[2, item]] : [] },
-      { segments: [[0, 20, 0]], deco: [[3, d0], [12, d2], [18, d1]], enemies: [[10, foes[2]]] },
-    ],
+    screens: [first, ...list],
     storyStart: [0, 3],
     versusStart: [1, 16],
+    ...rest,
   };
 }
 
 const P_SHORE = { theme: 'shore' as const, tiles: 'tilemap' };
 export const PROLOGUE_LEVELS: LevelDef[] = [
-  dream('p_vila', 'O Despertar', 'A Vila dos Ossos. Um sino toca, e alguém chama pelo teu nome.', P_SHORE, 'skull', 'pradaria', undefined, ['goblin', 'goblin', 'gnoll'], ['house', 'tree', 'bones'], 'ATACAR golpeia.\\nDEFESA segura o golpe.'),
-  dream('p_mare', 'Sonho da Maré', 'Hex sopra fumaça roxa. Quando ela some, há areia sob os teus pés.', P_SHORE, 'shark', 'mare', 'harpoon', ['lizard', 'goblin', 'goblin'], ['tree', 'rock2', 'stump'], 'Tubarão: ATACAR\\natira o arpão.'),
-  dream('p_pradaria', 'Sonho da Pradaria', 'Capim alto e ossos velhos. O vento traz o cheiro de caça.', { theme: 'shore', tiles: 'tiles_prairie' }, 'gnoll', 'pradaria', 'bone', ['goblin', 'gnoll', 'gnoll'], ['bush', 'bones', 'tree'], 'Gnoll: o osso\\nvoa em arco.'),
-  dream('p_lagoa', 'Sonho da Lagoa', 'Água parada e musgo. Algo nada por baixo das folhas.', { ...SWAMP }, 'lizard', 'lagoa', 'crest', ['lizard', 'lizard_poison', 'lizard'], ['dead_tree', 'bush', 'stone'], 'Lagarto: nada!\\nPique dá arrancada.'),
-  dream('p_teias', 'Sonho das Teias', 'Escuro, úmido, e o teto se mexe. São teias. Muitas.', { theme: 'cave', tiles: 'tiles_cave' }, 'spider', 'teias', 'web', ['bat', 'spider', 'torchgob'], ['rock2', 'skull_spike', 'rock1'], 'Aranha: gruda\\nnas paredes.'),
-  dream('p_forja', 'Sonho da Forja', 'O chão é quente. Ao longe, martelos batem no ritmo de um coração.', { ...VOLC }, 'minotaur', 'forja', 'horn', ['imp', 'imp', 'torchgob'], ['rock2', 'skull_spike', 'rock1'], 'Minotauro: golpe\\nlento e forte.'),
-  dream('p_bosque', 'Sonho do Bosque', 'Árvores altas como torres. Risadinhas entre as folhas.', { ...WOOD }, 'sgnome', 'bosque', 'acorn', ['sgnome', 'goblin', 'sgnome'], ['tree', 'bush', 'stump'], 'Gnomo: a bolota\\nquica em arco.'),
-  dream('p_minas', 'Sonho das Minas', 'Trilhos, ouro e o eco de picaretas no fundo da terra.', { ...MINE }, 'torchgob', 'minas', 'torch', ['torchgob', 'bat', 'torchgob'], ['gold', 'rock1', 'gold'], 'Goblin da Tocha:\\no fogo ilumina.'),
-  dream('p_fogo', 'Sonho das Terras de Fogo', 'Nuvens vermelhas, brasas subindo. O céu inteiro arde.', { theme: 'sky', tiles: 'tiles_volcano', ember: true }, 'imp', 'ceu', 'ember', ['bee', 'imp', 'sgnome'], ['crystal', 'skull_spike', 'crystal'], 'Diabrete: golpe\\nem chamas.'),
-  dream('p_asas', 'Sonho das Asas', 'Um castelo nas nuvens. Asas batem lá no alto.', { ...WINGS }, 'bat', 'reino', 'wing', ['bee', 'bat', 'bee'], ['crystal', 'skull_spike', 'crystal'], 'Morcego: segure\\nPULAR para voar.'),
+  // O básico como caveira: pulos, degraus, defesa contra osso, contra-ataque e vãos largos.
+  dream('p_vila', 'O Despertar', 'A Vila dos Ossos. Um sino toca, e alguém chama pelo teu nome.', P_SHORE, 'skull', 'pradaria', undefined, [
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[2, 'bush'], [17, 'tree']], enemies: [[16, 'goblin']], sign: [3, 'ATACAR golpeia.\nDEFESA segura o golpe.'] },
+    { segments: [[0, 20, 0]], deco: [[3, 'bones'], [18, 'house']], enemies: [[11, 'gnoll'], [16, 'goblin']], sign: [5, 'DEFESA: segure o botão.\nATAQUE bem na hora\ndo golpe: CONTRA!'] },
+    { segments: [[0, 4, 0], [4, 2, 1], [6, 2, 2], [8, 2, 3], [12, 8, 0]], floats: [[10, 2, 2]], deco: [[16, 'tree']], enemies: [[15, 'goblin']] },
+    { segments: [[0, 6, 0], [9, 4, 0], [16, 4, 0]], deco: [[2, 'rock2']], enemies: [[11, 'gnoll']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'house'], [12, 'bones'], [18, 'tree']], enemies: [[10, 'goblin'], [14, 'gnoll']] },
+  ], { first: { segments: [[0, 20, 0]], deco: [[1, 'house'], [17, 'tree']] } }),
+  // Tubarão: inimigos em plataformas altas e tubarões arpoando de volta.
+  dream('p_mare', 'Sonho da Maré', 'Hex sopra fumaça roxa. Quando ela some, há areia sob os teus pés.', P_SHORE, 'shark', 'mare', 'harpoon', [
+    { segments: [[0, 8, 0], [10, 10, 3]], floats: [[8, 2, 1]], deco: [[3, 'rock2']], enemies: [[13, 'goblin'], [17, 'gnoll']], sign: [4, 'Tubarão: ATACAR\natira o arpão.'] },
+    { segments: [[0, 4, 3], [4, 4, 0], [10, 10, 0]], floats: [[8, 2, 1]], deco: [[16, 'tree']], enemies: [[14, 'shark'], [18, 'shark']] },
+    { segments: [[0, 6, 0], [6, 2, 2], [8, 6, 0], [14, 2, 2], [16, 4, 0]], enemies: [[7, 'gnoll'], [15, 'gnoll']] },
+    { segments: [[0, 5, 0], [7, 6, 2], [15, 5, 0]], floats: [[5, 2, 1]], deco: [[18, 'stump']], enemies: [[9, 'gnoll'], [12, 'goblin'], [18, 'shark']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'tree'], [16, 'rock1']], enemies: [[12, 'shark_hammer']] },
+  ], { clearToAdvance: true }),
+  // Gnoll: muros e morros com inimigos atrás (o osso em arco passa por cima).
+  dream('p_pradaria', 'Sonho da Pradaria', 'Capim alto e ossos velhos. O vento traz o cheiro de caça.', { theme: 'shore', tiles: 'tiles_prairie' }, 'gnoll', 'pradaria', 'bone', [
+    { segments: [[0, 9, 0], [9, 1, 2], [10, 10, 0]], deco: [[3, 'bush']], enemies: [[13, 'goblin'], [16, 'gnoll']], sign: [4, 'Gnoll: o osso\nvoa em arco.'] },
+    { segments: [[0, 6, 0], [6, 8, 2], [14, 6, 0]], deco: [[17, 'bones']], enemies: [[9, 'gnoll'], [12, 'gnoll_hunter']] },
+    { segments: [[0, 5, 0], [5, 1, 2], [6, 5, 0], [11, 1, 2], [12, 8, 0]], enemies: [[8, 'goblin'], [15, 'gnoll']] },
+    { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 0]], deco: [[18, 'tree']], enemies: [[11, 'gnoll'], [17, 'gnoll_hunter']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'house'], [16, 'bush']], enemies: [[11, 'gnoll_brute']] },
+  ], { clearToAdvance: true }),
+  // Lagarto: canais largos demais para pular (só a nado) e arrancadas.
+  dream('p_lagoa', 'Sonho da Lagoa', 'Água parada e musgo. Algo nada por baixo das folhas.', { ...SWAMP }, 'lizard', 'lagoa', 'crest', [
+    { segments: [[0, 7, 0], [14, 6, 0]], deco: [[2, 'dead_tree']], enemies: [[17, 'lizard']], sign: [3, 'Lagarto: nada!\nPique dá arrancada.'] },
+    { segments: [[0, 5, 0], [12, 8, 0]], deco: [[15, 'bush']], enemies: [[16, 'lizard_poison']] },
+    { segments: [[0, 4, 0], [11, 3, 1], [18, 2, 0]], enemies: [[12, 'lizard']] },
+    { segments: [[0, 3, 0], [11, 9, 0]], deco: [[16, 'stone']], enemies: [[14, 'lizard'], [18, 'lizard_poison']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'dead_tree'], [16, 'bush']], enemies: [[10, 'lizard']] },
+  ]),
+  // Aranha: paredes altas demais para pular (só escalando) e aranhas penduradas.
+  dream('p_teias', 'Sonho das Teias', 'Escuro, úmido, e o teto se mexe. São teias. Muitas.', { theme: 'cave', tiles: 'tiles_cave' }, 'spider', 'teias', 'web', [
+    { segments: [[0, 10, 0], [10, 10, 4]], deco: [[3, 'rock2']], enemies: [[15, 'spider']], sign: [5, 'Aranha: gruda\nnas paredes.'] },
+    { segments: [[0, 8, 4], [8, 4, 1], [12, 8, 5]], hangers: [10], enemies: [[16, 'torchgob']] },
+    { segments: [[0, 6, 5], [6, 6, 0], [12, 3, 4], [15, 5, 0]], deco: [[8, 'skull_spike']], enemies: [[8, 'spider'], [17, 'bat']] },
+    { segments: [[0, 5, 0], [5, 3, 3], [8, 3, 6], [11, 9, 2]], hangers: [15], enemies: [[16, 'torchgob']] },
+    { segments: [[0, 20, 2]], deco: [[3, 'rock1'], [17, 'skull_spike']], enemies: [[10, 'spider']] },
+  ]),
+  // Minotauro: inimigos com armadura e o Minotauro de verdade (golpe lento e forte).
+  dream('p_forja', 'Sonho da Forja', 'O chão é quente. Ao longe, martelos batem no ritmo de um coração.', { ...VOLC }, 'minotaur', 'forja', 'horn', [
+    { segments: [[0, 8, 0], [10, 10, 0]], deco: [[3, 'rock2']], enemies: [[14, 'imp'], [17, 'gnoll_brute']], sign: [4, 'Minotauro: golpe\nlento e forte.'] },
+    { segments: [[0, 6, 0], [6, 8, 1], [16, 4, 0]], enemies: [[9, 'minotaur'], [13, 'imp']] },
+    { segments: [[0, 5, 0], [7, 6, 0], [15, 5, 0]], floats: [[5, 2, 1], [13, 2, 1]], enemies: [[10, 'gnoll_brute'], [17, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[2, 'skull_spike']], enemies: [[8, 'torchgob_chief'], [14, 'imp']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'rock1'], [17, 'skull_spike']], enemies: [[12, 'minotaur']] },
+  ], { clearToAdvance: true }),
+  // Gnomo: inimigos em morros e pirâmides (a bolota em arco alto acerta lá em cima).
+  dream('p_bosque', 'Sonho do Bosque', 'Árvores altas como torres. Risadinhas entre as folhas.', { ...WOOD }, 'sgnome', 'bosque', 'acorn', [
+    { segments: [[0, 8, 0], [8, 4, 2], [12, 8, 0]], deco: [[3, 'tree']], enemies: [[10, 'sgnome'], [16, 'goblin']], sign: [4, 'Gnomo: a bolota\nquica em arco.'] },
+    { segments: [[0, 5, 0], [5, 3, 1], [8, 3, 3], [11, 3, 1], [14, 6, 0]], deco: [[17, 'tree']], enemies: [[9, 'sgnome_red'], [17, 'sgnome']] },
+    { segments: [[0, 7, 0], [9, 3, 3], [14, 6, 0]], floats: [[7, 2, 1], [12, 2, 1]], enemies: [[10, 'sgnome'], [16, 'goblin']] },
+    { segments: [[0, 6, 0], [6, 4, 2], [10, 10, 0]], floats: [[13, 3, 3]], deco: [[18, 'bush']], enemies: [[8, 'sgnome_red'], [16, 'sgnome']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'house'], [12, 'tree'], [18, 'tree']], enemies: [[12, 'sgnome_elder']] },
+  ], { clearToAdvance: true }),
+  // Goblin da Tocha: galeria escura; a tocha dele ilumina longe. Duas tochas grandes abrem a saída.
+  dream('p_minas', 'Sonho das Minas', 'Trilhos, ouro e o eco de picaretas no fundo da terra.', { ...MINE }, 'torchgob', 'minas', 'torch', [
+    { segments: [[0, 9, 0], [11, 9, 0]], deco: [[3, 'gold']], enemies: [[15, 'torchgob']], sign: [5, 'Goblin da Tocha:\no fogo ilumina.'] },
+    { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], floats: [[9, 2, 2]], hangers: [13], enemies: [[17, 'bat']] },
+    { segments: [[0, 5, 0], [7, 3, 2], [12, 8, 0]], floats: [[10, 2, 3]], deco: [[16, 'gold']], enemies: [[15, 'torchgob_miner']] },
+    { segments: [[0, 7, 0], [9, 2, 1], [13, 7, 0]], enemies: [[4, 'spider'], [16, 'torchgob']] },
+    { segments: [[0, 20, 0]], deco: [[4, 'gold'], [13, 'gold']], enemies: [[8, 'torchgob_blue']] },
+  ], {
+    haunt: {
+      dark: true,
+      torches: true,
+      candles: [
+        { screen: 0, tile: 1 },
+        { screen: 1, tile: 4 },
+        { screen: 1, tile: 16, big: true },
+        { screen: 2, tile: 2 },
+        { screen: 3, tile: 3 },
+        { screen: 3, tile: 14 },
+        { screen: 4, tile: 2 },
+        { screen: 4, tile: 17, big: true },
+        { screen: 5, tile: 4 },
+      ],
+      doors: [{ id: 'saida', screen: 5, tile: 17, exit: true }],
+    },
+  }),
+  // Diabrete: ilhas no céu (cair é cair até o fim) e abelhas voando; o golpe dele alcança longe.
+  dream('p_fogo', 'Sonho das Terras de Fogo', 'Nuvens vermelhas, brasas subindo. O céu inteiro arde.', { theme: 'sky', tiles: 'tiles_volcano', ember: true }, 'imp', 'ceu', 'ember', [
+    { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 0]], deco: [[3, 'crystal']], enemies: [[11, 'bee'], [17, 'imp']], sign: [4, 'Diabrete: golpe\nem chamas.'] },
+    { segments: [[0, 4, 0], [7, 3, 1], [13, 2, 2], [15, 5, 0]], floats: [[4, 3, 1], [10, 3, 2]], enemies: [[8, 'imp'], [16, 'bee']] },
+    { segments: [[0, 5, 0], [8, 3, 1], [14, 6, 0]], floats: [[5, 3, 0], [11, 3, 2], [9, 2, 4]], enemies: [[9, 'sgnome'], [16, 'imp']] },
+    { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], floats: [[6, 2, 0]], deco: [[17, 'crystal']], enemies: [[10, 'bee'], [16, 'bee_ember']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'crystal'], [17, 'crystal']], enemies: [[10, 'imp']] },
+  ], { clearToAdvance: true }),
+  // Morcego: abismos largos demais para pular (só voando).
+  dream('p_asas', 'Sonho das Asas', 'Um castelo nas nuvens. Asas batem lá no alto.', { ...WINGS }, 'bat', 'reino', 'wing', [
+    { segments: [[0, 7, 0], [13, 7, 0]], deco: [[3, 'crystal']], enemies: [[16, 'bee']], sign: [4, 'Morcego: segure\nPULAR para voar.'] },
+    { segments: [[0, 4, 0], [11, 3, 2], [18, 2, 1]], enemies: [[12, 'bat']] },
+    { segments: [[0, 3, 1], [10, 4, 3], [18, 2, 0]], enemies: [[12, 'bee']] },
+    { segments: [[0, 4, 0], [12, 8, 0]], floats: [[7, 2, 3]], deco: [[17, 'crystal']], enemies: [[15, 'bee'], [18, 'bat']] },
+    { segments: [[0, 20, 0]], deco: [[3, 'crystal'], [17, 'skull_spike']], enemies: [[10, 'bee']] },
+  ]),
 ];
 
 export const LEVELS: LevelDef[] = [

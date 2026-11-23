@@ -1,0 +1,10 @@
+2338	ATAK uderza.\nGARDA zatrzymuje cios.
+2339	Rekin: ATAK\nrzuca harpun.
+2340	Gnoll: kość\nleci łukiem.
+2341	Jaszczur: pływa!\nSprint to zryw.
+2342	Pająk: przykleja\nsię do ścian.
+2343	Minotaur: cios\npowolny i mocny.
+2344	Gnom: żołądź\nskacze łukiem.
+2345	Goblin z Pochodnią:\nogień oświetla.
+2346	Chochlik: cios\nw płomieniach.
+2347	Nietoperz: trzymaj\nSKOK, by latać.

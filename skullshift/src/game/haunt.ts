@@ -363,9 +363,18 @@ export class HauntSystem {
       rt.erase(brush, x - rt.x, y - rt.y);
     };
     const flick = Math.sin(time / 90) * 4 + Math.sin(time / 37) * 2;
-    if (p.alive || p.reviving) hole(p.x, p.feet - 50, PLAYER_LIGHT + flick);
+    // A tocha do Goblin da Tocha ilumina bem mais longe; durante uma conversa, o Xamã também
+    // fica visível (a cena abre um círculo maior em volta da caveira).
+    const torch = (p.def.base ?? p.def.id) === 'torchgob';
+    const talk = (this.host.scene as unknown as { cutscene?: boolean }).cutscene;
+    if (p.alive || p.reviving) hole(p.x, p.feet - 50, (talk ? 360 : torch ? 300 : PLAYER_LIGHT) + flick);
     for (const c of this.candles) if (c.lit) hole(c.x, c.y - 50, (c.big ? 260 : 180) + flick);
     for (const d of this.doors) if (d.def.exit) hole(d.x, d.floor - 60, 70);
+  }
+
+  /** Esconde a escuridão (o Xamã conversando no prólogo precisa ser visto). */
+  setDarkVisible(v: boolean): void {
+    this.dark?.setVisible(v);
   }
 
   destroy(): void {

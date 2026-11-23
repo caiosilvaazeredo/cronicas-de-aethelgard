@@ -1,0 +1,10 @@
+2338	SALDIR vurur.\nSAVUNMA darbeyi tutar.
+2339	Köpekbalığı: SALDIR\nzıpkın atar.
+2340	Gnoll: kemik\nyay çizerek uçar.
+2341	Kertenkele: yüzer!\nKoşu atılma verir.
+2342	Örümcek: duvarlara\nyapışır.
+2343	Minotor: yavaş ve\ngüçlü darbe.
+2344	Cüce: palamut\nyay çizerek seker.
+2345	Meşaleli Goblin:\nateş aydınlatır.
+2346	İblis: alevli\ndarbe.
+2347	Yarasa: uçmak için\nZIPLA'yı basılı tut.

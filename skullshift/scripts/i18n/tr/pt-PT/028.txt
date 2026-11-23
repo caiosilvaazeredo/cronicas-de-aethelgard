@@ -1,0 +1,10 @@
+2338	ATACAR golpeia.\nDEFESA segura o golpe.
+2339	Tubarão: ATACAR\natira o arpão.
+2340	Gnoll: o osso\nvoa em arco.
+2341	Lagarto: nada!\nCorrida dá arranque.
+2342	Aranha: agarra-se\nàs paredes.
+2343	Minotauro: golpe\nlento e forte.
+2344	Gnomo: a bolota\nsalta em arco.
+2345	Goblin da Tocha:\no fogo ilumina.
+2346	Diabrete: golpe\nem chamas.
+2347	Morcego: segura\nSALTAR para voar.

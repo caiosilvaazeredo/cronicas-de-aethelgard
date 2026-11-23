@@ -1,0 +1,10 @@
+2338	ANGRIFF schlägt.\nDECKUNG hält den Schlag.
+2339	Hai: ANGRIFF\nwirft die Harpune.
+2340	Gnoll: Der Knochen\nfliegt im Bogen.
+2341	Echse: schwimmt!\nSprint = Sprung nach vorn.
+2342	Spinne: haftet\nan Wänden.
+2343	Minotaurus: Schlag\nlangsam und stark.
+2344	Gnom: Die Eichel\nhüpft im Bogen.
+2345	Fackelgoblin:\nDas Feuer leuchtet.
+2346	Kobold: Schlag\nin Flammen.
+2347	Fledermaus: SPRINGEN\nhalten zum Fliegen.

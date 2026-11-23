@@ -1,0 +1,10 @@
+2338	ATTAQUER frappe.\nGARDE arrête le coup.
+2339	Requin : ATTAQUER\nlance le harpon.
+2340	Gnoll : l'os\nvole en arc.
+2341	Lézard : il nage !\nSprint = ruée.
+2342	Araignée : se colle\naux murs.
+2343	Minotaure : coup\nlent et puissant.
+2344	Gnome : le gland\nrebondit en arc.
+2345	Gobelin à la Torche :\nle feu éclaire.
+2346	Diablotin : coup\nen flammes.
+2347	Chauve-souris : maintiens\nSAUTER pour voler.

@@ -2442,6 +2442,8 @@ export class GameScene extends Phaser.Scene {
     this.prevSkip = true;
     this.physics.world.pause();
     this.quip?.close();
+    // Galeria escura: a escuridão some enquanto o Xamã fala (e volta quando ele vai embora).
+    this.haunt?.setDarkVisible(false);
     p.facing = 1;
     p.sprite.setFlipX(false);
     const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
@@ -2494,6 +2496,7 @@ export class GameScene extends Phaser.Scene {
     await this.tweenP({ targets: rig, x: hx + 500, y: hy - 300, alpha: 0, duration: 800, ease: 'Sine.easeIn' });
     bob.stop();
     rig.destroy();
+    this.haunt?.setDarkVisible(true);
     this.physics.world.resume();
     this.cutscene = false;
   }

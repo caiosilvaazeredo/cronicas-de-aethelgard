@@ -349,3 +349,29 @@ originais (extraídas com PIL do PNG).
   - Título "VILA DOS OSSOS". Estacas com caveiras, montinhos de ossos e um varal de lanternas.
   - Falas novas com pistas sutis: "o último que o Hex trouxe também se chamava Ossian", "ninguém aqui lembra de ter nascido", a ponte com lanternas do bardo, "o Hex nunca atrasa".
 - Traduções em `scripts/i18n/tr/*/027.txt` (159 textos).
+
+## Prólogo mais longo, com desafios do poder
+- Cada sonho tem 6 cenários (`dream()` em `level.ts`):
+  - o cenário 0 é a conversa com o Xamã (rochas no lugar de árvores fora da praia);
+  - os cenários 1 a 4 são desafios do poder ensinado;
+  - o 5 é a chegada.
+  - O objeto da criatura aparece no 2º cenário.
+- **Movimento (obrigatório):**
+  - Lagoa: canais de 7 a 8 tiles, só a nado.
+  - Teias: paredes de 4 a 6 tiles, só escalando.
+  - Asas: abismos de 6 a 8 tiles, só voando.
+  - Minas: galeria escura (`haunt.dark`) com 2 tochas grandes que abrem a porta de saída. A tocha do Goblin da Tocha ilumina 300 px, contra 140 da caveira.
+- **Combate (`clearToAdvance`):** a barreira de fogo só abre limpando o cenário.
+  - Maré: inimigos no alto e tubarões arpoando.
+  - Pradaria: inimigos atrás de muros e morros, para o osso em arco.
+  - Forja: inimigos com armadura e minotauros.
+  - Bosque: gnomos em morros e pirâmides, para a bolota.
+  - Terras de Fogo: ilhas no céu e abelhas.
+- O Despertar ensina, como caveira: pulos, defesa contra osso, contra-ataque, degraus e vãos largos.
+- A aranha do jogador também gruda andando contra a parede (`Fighter.updateClimb`, só jogador). Antes precisava pular na parede.
+- Durante a conversa do prólogo, a escuridão das Minas some (`HauntSystem.setDarkVisible`).
+- `scripts/check-reach.cjs` simula a forma ensinada nas fases do prólogo:
+  - escalar sobe qualquer parede colada;
+  - voar cruza até 540 px;
+  - nadar liga chãos baixos numa fase com água.
+- As placas do prólogo agora têm quebra de linha real (antes mostravam "\n"). Traduções em `028.txt`.

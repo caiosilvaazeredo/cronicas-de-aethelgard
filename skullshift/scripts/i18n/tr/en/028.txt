@@ -1,0 +1,10 @@
+2338	ATTACK strikes.\nGUARD stops the blow.
+2339	Shark: ATTACK\nthrows the harpoon.
+2340	Gnoll: the bone\nflies in an arc.
+2341	Lizard: it swims!\nSprint gives a dash.
+2342	Spider: sticks\nto walls.
+2343	Minotaur: slow,\nstrong blow.
+2344	Gnome: the acorn\nbounces in an arc.
+2345	Torch Goblin:\nthe fire lights up.
+2346	Imp: a blow\nof flames.
+2347	Bat: hold\nJUMP to fly.

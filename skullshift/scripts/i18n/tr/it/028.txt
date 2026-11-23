@@ -1,0 +1,10 @@
+2338	ATTACCA colpisce.\nDIFESA ferma il colpo.
+2339	Squalo: ATTACCA\nlancia l'arpione.
+2340	Gnoll: l'osso\nvola ad arco.
+2341	Lucertola: nuota!\nCorsa = scatto.
+2342	Ragno: si attacca\nai muri.
+2343	Minotauro: colpo\nlento e forte.
+2344	Gnomo: la ghianda\nrimbalza ad arco.
+2345	Goblin della Torcia:\nil fuoco illumina.
+2346	Diavoletto: colpo\ninfuocato.
+2347	Pipistrello: tieni\nSALTA per volare.

@@ -617,7 +617,9 @@ export class Fighter {
       return;
     }
     const wall = b.blocked.left ? -1 : b.blocked.right ? 1 : 0;
-    if (!grounded && wall !== 0) {
+    // No chão, o jogador também gruda andando contra a parede (sem precisar pular).
+    const push = grounded && this.isPlayer && this.intent.move === wall;
+    if ((!grounded || push) && wall !== 0) {
       this.climbDir = wall;
       this.facing = wall as 1 | -1;
       b.setVelocity(wall * 60, -260);

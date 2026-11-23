@@ -1,0 +1,10 @@
+2338	ATACAR golpea.\nDEFENSA para el golpe.
+2339	Tiburón: ATACAR\nlanza el arpón.
+2340	Gnoll: el hueso\nvuela en arco.
+2341	Lagarto: ¡nada!\nCarrera da acometida.
+2342	Araña: se pega\na las paredes.
+2343	Minotauro: golpe\nlento y fuerte.
+2344	Gnomo: la bellota\nrebota en arco.
+2345	Goblin de la Antorcha:\nel fuego ilumina.
+2346	Diablillo: golpe\nen llamas.
+2347	Murciélago: mantén\nSALTAR para volar.

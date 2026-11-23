@@ -23,7 +23,10 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
         d.getRun().__area = A[k % A.length];
         window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: idx });
       }, lv);
-    } else await p.evaluate((lv) => { window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv }); }, lv);
+    } else await p.evaluate(async (lv) => {
+      window.__chars = (await import('/src/game/characters.ts')).CHARS;
+      window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv });
+    }, lv);
     await p.waitForTimeout(700);
     const r = await p.evaluate(() => {
       const s = window.__skullshift.scene.getScene('game');
@@ -64,9 +67,14 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
         }
         return m;
       };
+      // Prólogo: a fase é jogada na forma ensinada (o Ossian renasce nela). Nadar atravessa canais
+      // entre chãos baixos; escalar sobe qualquer parede colada; voar cruza abismos largos.
+      const C = def.prologue ? (window.__chars ?? {})[def.prologue.char] ?? {} : {};
       const canJump = (D, H, boost = 0) => {
         // D distância horizontal (>=0), H subida (positiva para cima). boost: altura extra (mola).
         if (boost) return H <= boost && D <= 380;
+        if (C.climb && D <= 70) return true;
+        if (C.fly && D <= 540 && H <= 220) return true;
         // Dá para andar mais devagar: vale qualquer instante a partir de D/vx (até ~1,2 s depois).
         const t0 = D / vx;
         let m = -1e9;
@@ -93,6 +101,7 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
           const D = Math.max(0, Math.max(A.x0, B.x0) - Math.min(A.x1, B.x1));
           const H = A.y - B.y;
           let ok = canJump(D, H);
+          if (C.swim && L.hasWater && A.kind === 'seg' && B.kind === 'seg' && A.y >= FLOOR - 64 && B.y >= FLOOR - 64) ok = true;
           // molas/escadas/cogumelos sobre A
           for (const l of lifts) if (l.x >= A.x0 - 10 && l.x <= A.x1 + 10 && Math.abs(l.from - A.y) < 8) {
             const D2 = Math.max(0, Math.max(l.x - 40, B.x0) - Math.min(l.x + 40, B.x1));

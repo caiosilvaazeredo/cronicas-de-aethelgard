@@ -1,0 +1,159 @@
+2179	Il Risveglio
+2180	Il Villaggio delle Ossa. Una campana suona, e qualcuno chiama il tuo nome.
+2181	Svegliati, Ossian. Piano. La campana del villaggio ha suonato per te.
+2182	Ossian? È... è il mio nome?
+2183	Certo che lo è. Sei nato qui, nel Villaggio delle Ossa. Sei cresciuto correndo tra queste case.
+2184	Non ricordo niente. Solo luci... lanterne sopra un fiume.
+2185	Sogni. Qui non c'è nessun fiume, solo la marea. Non importa: ricordo io per te.
+2186	Gli anziani aspettavano questo giorno. Tu sei il prescelto, Ossian. Colui che riunirà la Corona delle Ossa.
+2187	Prescelto? Riesco a malapena a camminare con queste gambe.
+2188	Allora cominciamo da lì. Vieni. Gli altri stanno guardando.
+2189	Sogno della Marea
+2190	Il primo sogno guidato: le Isole della Marea e gli Squali Arpione.
+2191	Siediti. Chiudi gli occhi. Ti mostrerò i regni là fuori, uno per uno, in sogno.
+2192	In sogno? Non è pericoloso?
+2193	Se cadi in un sogno, ti svegli qui, con me. Sempre.
+2194	Prima, le Isole della Marea. Il Re Squalo Arpione custodisce lì il primo frammento della corona.
+2195	Ho già visto quelle isole. Ne sono sicuro.
+2196	Davvero? ...Certo. Tuo padre ti ci portava a pescare quando eri piccolo. Ricordi?
+2197	...Credo di sì. Adesso che me lo dici.
+2198	Sogno della Prateria
+2199	Erba alta, ossa vecchie e Gnoll che cacciano in branco.
+2200	La Prateria delle Ossa. Erba alta, e gli Gnoll cacciano in branco.
+2201	Prateria delle Ossa, Villaggio delle Ossa... ci sono tante ossa in questo mondo.
+2202	È un mondo onesto: alla fine, tutti diventano ossa.
+2203	Tuo nonno affrontò il Re Gnoll. Ricordi la cicatrice sulla sua spalla?
+2204	Io... ricordo. Credo di ricordare.
+2205	Sogno della Laguna
+2206	Acqua ferma, muschio e lucertole che non temono l'acqua.
+2207	La Laguna delle Lucertole. Acqua ferma, muschio e veleno.
+2208	L'acqua... non mi piace l'acqua. Non so perché.
+2209	Non piace a nessuno. Per questo la lucertola è così utile.
+2210	È più che non piacermi. È come se fossi già... affondato.
+2211	Paura da bambino. È passata. Guarda le lucertole.
+2212	Sogno delle Ragnatele
+2213	Una grotta umida dove il soffitto si muove. La Regina Ragno vive laggiù in fondo.
+2214	La Caverna delle Ragnatele. Laggiù vive la Regina Ragno.
+2215	Hex... a volte, quando chiudo gli occhi, vedo nomi incisi su una pietra.
+2216	Incubo da bambino. Ne avevi tanti. Tua madre lasciava una candela accesa.
+2217	Mia madre...
+2218	Una santa. Andiamo.
+2219	Sogno della Fucina
+2220	Lava, martelli e il Minotauro Scarlatto.
+2221	La Fucina Vulcanica. Lava, martelli e il Minotauro Scarlatto.
+2222	Troppo caldo per delle ossa.
+2223	Per questo andrai da Minotauro. Niente abbatte un Minotauro.
+2224	Niente?
+2225	Quasi niente. Io ne ho abbattuto uno, una volta. Ma questa è un'altra storia.
+2226	Sogno del Bosco
+2227	Alberi alti come torri e gnomi con la fionda.
+2228	Il Bosco degli Gnomi. Alberi enormi e gnomi con la fionda.
+2229	Avevo una fionda. Di legno, con il manico incrinato.
+2230	Sì, l'avevi. L'ho fatta io, per il tuo compleanno.
+2231	Ma ricordo che me l'ha regalata mia sorella.
+2232	Sorella? Sei figlio unico, Ossian. La memoria si confonde dopo un sonno così lungo.
+2233	Sogno delle Miniere
+2234	Binari, oro e buio sotto la montagna.
+2235	Le Miniere dei Goblin. Oro, binari e buio.
+2236	Il buio non mi spaventa.
+2237	Ti spaventava. Piangevi quando la candela si spegneva.
+2238	Hai detto che era mia madre a lasciare la candela accesa.
+2239	L'ho detto? Allora era lei. Non importa chi teneva la candela.
+2240	Sogno delle Terre di Fuoco
+2241	Isole nel cielo sopra il vulcano, dove perfino le nuvole bruciano.
+2242	Le Terre di Fuoco, nel cielo sopra il vulcano. Lì regna il Diavoletto Gigante.
+2243	Un cielo che prende fuoco?
+2244	Un cielo intero. Il Diavoletto ha bruciato le nuvole per restare solo.
+2245	Conosci tutti questi re?
+2246	Li conosco tutti. E tutti conoscono me.
+2247	Sogno delle Ali
+2248	L'ultimo sogno: il Regno delle Ali, dove api e pipistrelli si contendono il cielo.
+2249	Per ultimo, il Regno delle Ali. Api e pipistrelli lottano per il cielo.
+2250	Hex, perché mi mostri tutto questo?
+2251	Perché un giorno attraverserai ognuno di questi regni, e voglio che tu li conosca già.
+2252	Riunisci i frammenti, apri il Portale della Marea, e tutto torna com'è giusto.
+2253	Giusto per chi?
+2254	Per tutti noi, Ossian. Per tutti noi.
+2255	Adesso è vero. Il primo frammento della corona brilla in fondo alla spiaggia.
+2256	Svegliati, Ossian. Non è più un sogno: queste sono le vere Isole della Marea.
+2257	Sembrano più vere che nel sogno. E l'acqua... laggiù in fondo c'è una luce.
+2258	Non seguire le luci in fondo all'acqua. Ricorda ciò che ti ho insegnato.
+2259	Mi hai insegnato tante cose in così poco tempo.
+2260	Te le ho insegnate per tutta la vita. Sei tu che hai dimenticato.
+2261	Tocca l'oggetto di una creatura e ne prenderai la forma. Se cadi, vengo a prenderti con la mia nuvola.
+2262	E il villaggio? Gli altri?
+2263	Aspettano che il prescelto torni con la corona. Va'. Il primo frammento è in fondo alle isole.
+2264	Prima dei regni, le basi. Osserva.
+2265	Vedi? Uno di voi. Ossa leggere, spada corta e uno scudo. Nessuno sospetta di uno scheletro.
+2266	◀ ▶ per camminare, SALTA per saltare. ATTACCA colpisce con la spada.
+2267	Tieni DIFESA per parare. E se premi ATTACCA proprio quando arriva il loro colpo: contrattacco!
+2268	Perché combatti come uno di noi?
+2269	Ho insegnato a generazioni di questo villaggio. Va', fino in fondo al sentiero.
+2270	Sulle isole, gli Squali Arpione camminano eretti e cacciano da lontano.
+2271	Fai attenzione, perché questo è il mio dono: prendere la forma di qualunque creatura.
+2272	Così. Un arpione in mano, e nessuno si avvicina.
+2273	Ora tu. ATTACCA scaglia l'arpione, quasi in linea retta.
+2274	Ogni creatura lascia un oggetto quando cade. Raccogli l'oggetto e ne prenderai la forma.
+2275	Se cadi, torni a essere solo ossa. Ma io vengo sempre a prenderti.
+2276	Gli Gnoll non si avvicinano: lanciano ossa da lontano.
+2277	L'osso sale e scende ad arco. Utile contro chi si nasconde dietro una roccia.
+2278	ATTACCA lancia l'osso ad arco. Mira un po' davanti al bersaglio.
+2279	L'osso caduto diventa un oggetto: raccoglilo e lancialo di nuovo.
+2280	Le lucertole sono le uniche a non temere l'acqua.
+2281	Squame, coda, e l'acqua non mi fa affondare.
+2282	Da lucertola nuoti: ▼ si immerge, SALTA esce dall'acqua.
+2283	Tocca due volte la direzione e tieni premuto: scatto!
+2284	Nella grotta comanda chi si arrampica sui muri.
+2285	Otto zampe, e nessun muro è troppo alto.
+2286	Tocca un muro e il ragno si attacca e sale da solo.
+2287	E guarda in alto: i cugini appesi al soffitto saltano su chi passa sotto.
+2288	Nella Fucina restano in piedi solo i forti.
+2289	Corna e braccia da incudine. Lento... ma quando colpisce, colpisce.
+2290	Il colpo del Minotauro è lento a partire, ma arriva lontano. Colpisci prima che il nemico si avvicini.
+2291	E non toccare mai la lava. Nemmeno da Minotauro.
+2292	Gli gnomi sono piccoli, ma colpiscono da lontano.
+2293	La ghianda sale in alto e cade rimbalzando.
+2294	ATTACCA tira la ghianda ad arco alto. Ottima per colpire chi sta in alto.
+2295	Nelle miniere, chi porta il fuoco ci vede.
+2296	Una torcia accesa. Chi vede nel buio sceglie lo scontro.
+2297	Il Goblin della Torcia colpisce col fuoco e illumina le grotte buie.
+2298	Lassù, il Diavoletto e la sua famiglia volano tra le braci.
+2299	Piccolo, veloce, e la mano incandescente.
+2300	Il colpo del Diavoletto arriva lontano. Attento ai vuoti: cadere dal cielo è cadere fino in fondo.
+2301	Nel Regno delle Ali, chi non vola può solo guardare in alto.
+2302	Ali di cuoio. Il vento fa il resto.
+2303	Da pipistrello, tieni SALTA in aria per volare un po'.
+2304	Quando finisce il fiato, scende: scegli bene dove atterrare.
+2305	I sogni sono finiti, Ossian. Quando ti sveglierai, il viaggio comincerà davvero.
+2306	Villaggio delle Ossa
+2307	Dove Ossian si risveglia tra i suoi. In sogni guidati, Hex mostra la via per ogni regno.
+2308	Prologo
+2309	Il sogno si dissolve...
+2310	ATTACCA colpisce.\nDIFESA ferma il colpo.
+2311	Hex soffia fumo viola. Quando si dirada, c'è sabbia sotto i tuoi piedi.
+2312	Squalo: ATTACCA\nlancia l'arpione.
+2313	Erba alta e ossa vecchie. Il vento porta l'odore della caccia.
+2314	Gnoll: l'osso\nvola ad arco.
+2315	Acqua ferma e muschio. Qualcosa nuota sotto le foglie.
+2316	Lucertola: nuota!\nCorsa = scatto.
+2317	Buio, umido, e il soffitto si muove. Ragnatele. Tantissime.
+2318	Ragno: si attacca\nai muri.
+2319	Il terreno scotta. In lontananza, martelli battono al ritmo di un cuore.
+2320	Minotauro: colpo\nlento e forte.
+2321	Alberi alti come torri. Risatine tra le foglie.
+2322	Gnomo: la ghianda\nrimbalza ad arco.
+2323	Binari, oro e l'eco dei picconi nel profondo della terra.
+2324	Goblin della Torcia:\nil fuoco illumina.
+2325	Nuvole rosse, braci che salgono. Tutto il cielo brucia.
+2326	Diavoletto: colpo\ninfuocato.
+2327	Un castello tra le nuvole. Ali che battono lassù.
+2328	Pipistrello: tieni\nSALTA per volare.
+2329	Buongiorno, ossicino! Tutto il villaggio parla del prescelto.
+2330	Ossian... buffo. L'ultimo che Hex ha portato si chiamava così anche lui.
+2331	Pipo, l'ossicino
+2332	Sei tu il prescelto? Posso contarti le costole?
+2333	Non ricordo di essere nato. E tu? La mamma dice che qui nessuno se lo ricorda.
+2334	Sto componendo su un ponte pieno di lanterne. Non so da dove mi sia venuto. Non ho mai visto un fiume.
+2335	Hex arriva sempre quando qualcuno cade. Sempre. Mai un minuto di ritardo.
+2336	VILLAGGIO DELLE OSSA
+2337	Una zona ancora coperta di nebbia. Completa il prologo nel Villaggio delle Ossa per arrivarci.

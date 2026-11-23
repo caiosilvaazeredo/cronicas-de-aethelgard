@@ -322,3 +322,30 @@ originais (extraídas com PIL do PNG).
   - ↑/↓ (W/S, direcional) levam o esqueleto até a área bônus e de volta; ENTRAR entra nela.
   - ◀ ▶ a partir da área bônus voltam à trilha principal.
   - O painel mostra o nome da área bônus.
+
+## Prólogo na Vila dos Ossos (tutorial + história)
+- **Área nova `PROLOGUE`** (`areas.ts`), fora de `AREAS` como o Santuário (não tem rei nem fragmento). `areaTier` = 0.
+  - `unlock: 'start'`, e as Ilhas da Maré passaram a `after-prologo`. Saves antigos que já têm fase da Maré vencida continuam com ela aberta.
+  - Sem selo de rei e sem botão de dungeon no mapa.
+  - No mapa do mundo, o nó fica na própria vila (`pos` [360,392]): a plaquinha "VILA DOS OSSOS", cercas com caveiras e ossos. A vila em si continua no botão VILA do alto.
+  - Jogo novo (`HowToScene`) vai direto para o mapa do prólogo.
+- **10 fases** `p_vila … p_asas` (`PROLOGUE_LEVELS` em `level.ts`, no fim de `LEVELS` para não mudar índices de saves):
+  - Feitas com `dream()`: 4 cenários curtos, a aparência do mundo, poucos inimigos fracos e o objeto da criatura no caminho.
+  - Novo campo `LevelDef.prologue = { world, char }`: `world` escolhe a música, `char` é a forma ensinada.
+  - Mundos e formas: Vila (caveira), Maré (tubarão), Pradaria (gnoll), Lagoa (lagarto), Teias (aranha), Forja (minotauro), Bosque (gnomo), Minas (goblin da tocha), Terras de Fogo (diabrete), Asas (morcego).
+- **Cena dentro da fase** (`GameScene.prologueScene`, textos em `PROLOGUE_SCENES` no `lore.ts`):
+  - O Xamã desce na nuvem e fala do mundo (`before`).
+  - Num estalo de fumaça roxa ele vira a criatura e mostra o que ela faz (`self`).
+  - Um raio roxo transforma o Ossian (`ossian`: como jogar e a piada da forma). Depois Hex volta a ser Hex e vai embora.
+  - A cena marca `first-shift` como visto, para a explicação genérica da 1ª transformação não aparecer depois.
+  - No prólogo, ao renascer, o Ossian volta direto para a forma da lição.
+  - Em `p_vila`, cinco esqueletos coloridos da vila assistem à cena.
+- **Narrativa** (capítulos `p_*` em `CHAPTER_BY_ID`, na visual novel antes de cada fase):
+  - Hex trata Ossian como o escolhido nascido na Vila dos Ossos e planta memórias falsas: o pai pescador, o avô contra o Rei Gnoll, a mãe da vela, o estilingue feito por Hex, "tu és filho único".
+  - As memórias falsas falham de leve: o estilingue que a irmã deu, quem deixava a vela acesa, o medo de água "como se tivesse afundado".
+  - A fala da praia (`shore`) foi reescrita para depois do prólogo, já que o nome Ossian é dado na vila.
+- **Vila dos Ossos** (`VillageScene`):
+  - Todo morador virou esqueleto, cada um de uma cor (`npc()` sempre usa `skull`; o "gnominho" virou Pipo, o ossinho, menor).
+  - Título "VILA DOS OSSOS". Estacas com caveiras, montinhos de ossos e um varal de lanternas.
+  - Falas novas com pistas sutis: "o último que o Hex trouxe também se chamava Ossian", "ninguém aqui lembra de ter nascido", a ponte com lanternas do bardo, "o Hex nunca atrasa".
+- Traduções em `scripts/i18n/tr/*/027.txt` (159 textos).

@@ -33,39 +33,40 @@ const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
   farmer: {
     name: 'Dona Margarida',
     lines: [
-      'Bom dia, ossudinho! A vila anda tranquila desde que você chegou.',
+      'Bom dia, ossudinho! A vila inteira fala do escolhido.',
       'Dizem que as dungeons mudam toda vez que alguém entra. Eu é que não vou conferir.',
-      'Quem treina com o Mestre Rufo sobe de nível rapidinho. Ou cai rapidinho.',
+      'Ossian... engraçado. O último que o Hex trouxe também se chamava assim.',
     ],
   },
   kid: {
-    name: 'Pipo, o gnominho',
+    name: 'Pipo, o ossinho',
     lines: [
-      'Você é um esqueleto de verdade? Posso contar suas costelas?',
+      'Você é o escolhido? Posso contar suas costelas?',
       'Fiz a Corrida do Goblin em menos de vinte segundos! Duvido você.',
-      'As ovelhas fogem de você porque você é muito magro. Minha mãe disse.',
+      'Eu não lembro de ter nascido. Você lembra? A mamãe diz que ninguém aqui lembra.',
     ],
   },
   bard: {
     name: 'Bardo Teodoro',
     lines: [
       'Toda dungeon tem um guardião no fim. Toda canção também.',
+      'Ando compondo sobre uma ponte cheia de lanternas. Não sei de onde tirei isso. Nunca vi um rio.',
       'Desistir de uma dungeon não é vergonha. Perder tudo lá dentro é só... caro.',
-      'Os acampamentos das dungeons são os melhores lugares para compor. E para não morrer.',
     ],
   },
   walker: {
     name: 'Seu Joaquim',
     lines: [
       'Lá na Pradaria os gnolls ficaram mais fortes. Ou eu fiquei mais velho.',
-      'Nas dungeons, os dados decidem muita coisa. A sorte ajuda quem tem nível.',
+      'O Hex sempre aparece quando alguém cai. Sempre. Nunca atrasa nem um minuto.',
       'Precisando de ouro? O Mestre Rufo paga por inimigo derrubado na arena.',
     ],
   },
 };
 
 /**
- * A Vila: um lugar pacífico, andável, entre as aventuras. A caveira anda pela rua (setas/A-D,
+ * A Vila dos Ossos: onde Ossian desperta, entre outros esqueletos (cada morador de uma cor).
+ * Um lugar pacífico, andável, entre as aventuras. A caveira anda pela rua (setas/A-D,
  * pulo, E para usar; no toque, toca onde quer ir) e encontra: a placa do mapa, o Empório, o
  * treinador (nível, XP e a arena), o lago, o portal das dungeons, a barraca da corrida do Goblin,
  * o curral das ovelhas, a estalagem, o ferreiro e moradores para conversar.
@@ -232,7 +233,7 @@ export class VillageScene extends Phaser.Scene {
 
     // 3) Treinador (nível e XP).
     stand(1000, 'bld_blue_barracks', 240 / 256, 0.75);
-    this.npc(1090, 'gnoll', undefined, true);
+    this.npc(1090, 'gnoll', 0xff9a6a, true);
     this.label(1000, 'TREINO');
     this.addSpot(1060, 'MESTRE RUFO', () => this.trainer());
 
@@ -256,7 +257,7 @@ export class VillageScene extends Phaser.Scene {
 
     // 6) Barraca do Goblin (a corrida).
     stand(2290, 'bld_yellow_archery', 240 / 256, 0.75);
-    this.npc(2380, 'goblin', undefined, true);
+    this.npc(2380, 'goblin', 0x9ae07a, true);
     this.label(2290, 'CORRIDA');
     this.addSpot(2340, 'CORRIDA DO GOBLIN', () => this.raceDesk());
 
@@ -286,11 +287,11 @@ export class VillageScene extends Phaser.Scene {
     stand(3260, 'bld_red_house1', 173 / 192, 0.9);
     this.label(3260, 'ESTALAGEM');
     this.bard = this.talker(3160, 'bard', 'villager', 0xe0b0ff);
-    this.talker(3360, 'kid', 'sgnome', undefined);
+    this.talker(3360, 'kid', 'sgnome', 0xffe066);
     this.talker(780, 'farmer', 'villager', 0xffe0a0);
     // Morador que passeia pela rua.
     const w = this.npc(2100, 'villager', 0xb0e0c0, false);
-    w.play('villager_run');
+    w.play('skull_run');
     this.walkers.push({ spr: w, min: 2000, max: 2600, dir: 1 });
     this.addSpot(2100, 'CONVERSAR', () => this.talk('walker'), () => w.x);
     this.dressStreet();
@@ -322,8 +323,12 @@ export class VillageScene extends Phaser.Scene {
 
   /** Personagem parado (ou andando) na rua. */
   private npc(x: number, id: string, tint: number | undefined, flip: boolean): Phaser.GameObjects.Sprite {
-    const s = this.add.sprite(x, GY, `${id}_idle`).setOrigin(0.5, CHARS[id as CharId].feetY / CHARS[id as CharId].frame).setScale(0.62).setDepth(6).setFlipX(flip).play(`${id}_idle`);
-    if (tint !== undefined) s.setTint(tint);
+    // Vila dos Ossos: todo morador é um esqueleto como o Ossian; a cor diferencia cada um.
+    // (O id antigo só decide o tamanho: o gnominho virou uma criança-esqueleto.)
+    const small = id === 'sgnome';
+    id = 'skull';
+    const s = this.add.sprite(x, GY, `${id}_idle`).setOrigin(0.5, CHARS[id as CharId].feetY / CHARS[id as CharId].frame).setScale(small ? 0.46 : 0.62).setDepth(6).setFlipX(flip).play({ key: `${id}_idle`, startFrame: Math.floor(x / 97) % 8 });
+    s.setTint(tint ?? 0xffffff);
     this.lookers.push({ spr: s, flip });
     return s;
   }
@@ -358,6 +363,32 @@ export class VillageScene extends Phaser.Scene {
       this.birds.push({ spr: b, home: [x, y], away: false });
       // Bica o chão de vez em quando.
       this.tweens.add({ targets: b, angle: { from: 0, to: b.flipX ? -18 : 18 }, duration: 140, yoyo: true, repeat: -1, repeatDelay: Phaser.Math.Between(900, 2400) });
+    }
+    // Vila dos Ossos: estacas com caveiras e montinhos de ossos pela rua.
+    for (const x of [120, 400, 1560, 2580, 3480, 3900]) {
+      this.add.image(x - 22, GY + 6, 'skull_spike').setOrigin(0.5, 1).setScale(0.62).setDepth(4.8);
+      this.add.image(x + 22, GY + 6, 'skull_spike').setOrigin(0.5, 1).setScale(0.62).setDepth(4.8).setFlipX(true);
+    }
+    for (const x of [330, 1200, 1720, 2240, 3060]) this.add.image(x, GY + 8, 'bones').setOrigin(0.5, 1).setScale(0.9).setDepth(6.4);
+    // Varal de lanternas de osso entre a estalagem e o ferreiro.
+    const line = this.add.graphics().setDepth(5.2);
+    line.lineStyle(2, 0x3a2412, 1);
+    const [lx0, lx1, ly] = [3120, 3560, GY - 150];
+    line.beginPath();
+    for (let k = 0; k <= 20; k++) {
+      const t = k / 20;
+      const xx = lx0 + (lx1 - lx0) * t;
+      const yy = ly + Math.sin(Math.PI * t) * 40;
+      if (k === 0) line.moveTo(xx, yy);
+      else line.lineTo(xx, yy);
+    }
+    line.strokePath();
+    for (let k = 1; k < 8; k++) {
+      const t = k / 8;
+      const xx = lx0 + (lx1 - lx0) * t;
+      const yy = ly + Math.sin(Math.PI * t) * 40;
+      const lamp = this.add.ellipse(xx, yy + 14, 16, 20, [0xffd84a, 0xb46bff, 0xff9a6a][k % 3], 0.95).setStrokeStyle(2, INK).setDepth(5.3);
+      this.tweens.add({ targets: lamp, angle: { from: -8, to: 8 }, duration: 900 + k * 60, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
     // Tochas na porta da estalagem e na forja.
     for (const x of [3175, 3345, 3600]) {
@@ -507,7 +538,7 @@ export class VillageScene extends Phaser.Scene {
     const k = P ? 2 : 1;
     const top = P ? 80 + PORTRAIT.topPad : 36;
     if (P) this.add.rectangle(0, 0, W, PORTRAIT.hudH, INK).setOrigin(0);
-    const title = this.add.text(P ? 432 : W / 2, P ? 80 + PORTRAIT.topPad : 34, 'A VILA', { fontFamily: FONT, fontSize: P ? '50px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
+    const title = this.add.text(P ? 432 : W / 2, P ? 80 + PORTRAIT.topPad : 34, 'VILA DOS OSSOS', { fontFamily: FONT, fontSize: P ? '50px' : '32px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 9 }).setOrigin(0.5);
     if (P && title.width > 260) title.setScale(260 / title.width);
     pillButton(this, P ? 150 : 100, top, '◀ MUNDO', () => this.toWorld(), 180).setScale(0.75 * k);
     // Nível e barra de XP, e o ouro.

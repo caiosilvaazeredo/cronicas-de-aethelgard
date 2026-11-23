@@ -1,0 +1,159 @@
+2179	Le Réveil
+2180	Le Village des Os. Une cloche sonne, et quelqu'un appelle ton nom.
+2181	Réveille-toi, Ossian. Doucement. La cloche du village a sonné pour toi.
+2182	Ossian ? C'est... c'est mon nom ?
+2183	Bien sûr. Tu es né ici, au Village des Os. Tu as grandi en courant entre ces maisons.
+2184	Je ne me souviens de rien. Seulement de lumières... des lanternes au-dessus d'une rivière.
+2185	Des rêves. Ici, il n'y a pas de rivière, seulement la marée. Peu importe : je me souviens pour toi.
+2186	Les anciens attendaient ce jour. Tu es l'élu, Ossian. Celui qui réunira la Couronne des Os.
+2187	L'élu ? J'arrive à peine à marcher avec ces jambes.
+2188	Alors commençons par là. Viens. Les autres regardent.
+2189	Rêve de la Marée
+2190	Le premier rêve guidé : les Îles de la Marée et les Requins-Harpons.
+2191	Assieds-toi. Ferme les yeux. Je vais te montrer les royaumes du dehors, un par un, en rêve.
+2192	En rêve ? Ce n'est pas dangereux ?
+2193	Si tu tombes dans un rêve, tu te réveilles ici, avec moi. Toujours.
+2194	D'abord, les Îles de la Marée. Le Roi Requin-Harpon y garde le premier fragment de la couronne.
+2195	J'ai déjà vu ces îles. J'en suis sûr.
+2196	Vraiment ? ...Bien sûr. Ton père t'y emmenait pêcher quand tu étais petit. Tu te souviens ?
+2197	...Je crois que oui. Maintenant que tu le dis.
+2198	Rêve de la Prairie
+2199	Herbes hautes, vieux os et Gnolls qui chassent en meute.
+2200	La Prairie des Os. Herbes hautes, et les Gnolls chassent en meute.
+2201	Prairie des Os, Village des Os... il y a beaucoup d'os dans ce monde.
+2202	C'est un monde honnête : à la fin, tout le monde devient os.
+2203	Ton grand-père a affronté le Roi Gnoll. Tu te souviens de la cicatrice sur son épaule ?
+2204	Je... me souviens. Je crois que je me souviens.
+2205	Rêve de la Lagune
+2206	Eau dormante, mousse et lézards qui ne craignent pas l'eau.
+2207	La Lagune des Lézards. Eau dormante, mousse et poison.
+2208	L'eau... je n'aime pas l'eau. Je ne sais pas pourquoi.
+2209	Personne ne l'aime. C'est pour ça que le lézard est si utile.
+2210	C'est plus que ne pas aimer. C'est comme si j'avais déjà... coulé.
+2211	Une peur d'enfant. C'est passé. Regarde les lézards.
+2212	Rêve des Toiles
+2213	Une grotte humide où le plafond bouge. La Reine Araignée vit tout au fond.
+2214	La Caverne des Toiles. En bas vit la Reine Araignée.
+2215	Hex... parfois, quand je ferme les yeux, je vois des noms gravés sur une pierre.
+2216	Un cauchemar d'enfant. Tu en avais beaucoup. Ta mère laissait une bougie allumée.
+2217	Ma mère...
+2218	Une sainte. Allons-y.
+2219	Rêve de la Forge
+2220	Lave, marteaux et le Minotaure Écarlate.
+2221	La Forge Volcanique. Lave, marteaux et le Minotaure Écarlate.
+2222	Trop chaud pour des os.
+2223	C'est pour ça que tu iras en Minotaure. Rien ne renverse un Minotaure.
+2224	Rien ?
+2225	Presque rien. J'en ai renversé un, une fois. Mais c'est une autre histoire.
+2226	Rêve du Bois
+2227	Des arbres hauts comme des tours et des gnomes au lance-pierre.
+2228	Le Bois des Gnomes. Des arbres immenses et des gnomes au lance-pierre.
+2229	J'avais un lance-pierre. En bois, avec le manche fendu.
+2230	Oui, tu en avais un. Je l'ai fait moi-même, pour ton anniversaire.
+2231	Mais je me souviens que c'est ma sœur qui me l'a donné.
+2232	Ta sœur ? Tu es fils unique, Ossian. La mémoire se trouble après un si long sommeil.
+2233	Rêve des Mines
+2234	Rails, or et ténèbres sous la montagne.
+2235	Les Mines des Gobelins. Or, rails et ténèbres.
+2236	Le noir ne me fait pas peur.
+2237	Il te faisait peur. Tu pleurais quand la bougie s'éteignait.
+2238	Tu as dit que c'était ma mère qui laissait la bougie allumée.
+2239	J'ai dit ça ? Alors c'était elle. Peu importe qui tenait la bougie.
+2240	Rêve des Terres de Feu
+2241	Des îles dans le ciel au-dessus du volcan, où même les nuages brûlent.
+2242	Les Terres de Feu, dans le ciel au-dessus du volcan. Le Diablotin Géant y règne.
+2243	Un ciel qui prend feu ?
+2244	Un ciel entier. Le Diablotin a brûlé les nuages pour rester seul.
+2245	Tu connais tous ces rois ?
+2246	Je les connais tous. Et tous me connaissent.
+2247	Rêve des Ailes
+2248	Le dernier rêve : le Royaume des Ailes, où abeilles et chauves-souris se disputent le ciel.
+2249	Enfin, le Royaume des Ailes. Abeilles et chauves-souris se battent pour le ciel.
+2250	Hex, pourquoi tu me montres tout ça ?
+2251	Parce qu'un jour tu traverseras chacun de ces royaumes, et je veux que tu les connaisses déjà.
+2252	Tu réunis les fragments, tu ouvres le Portail de la Marée, et tout redevient comme il se doit.
+2253	Comme il se doit pour qui ?
+2254	Pour nous tous, Ossian. Pour nous tous.
+2255	Cette fois, c'est pour de vrai. Le premier fragment de la couronne brille au bout de la plage.
+2256	Réveille-toi, Ossian. Ce n'est plus un rêve : voici les vraies Îles de la Marée.
+2257	Elles semblent plus réelles que dans le rêve. Et l'eau... tout au fond, il y a une lumière.
+2258	Ne suis pas les lumières au fond de l'eau. Souviens-toi de ce que je t'ai appris.
+2259	Tu m'as appris tant de choses en si peu de temps.
+2260	Je t'ai appris toute ta vie. C'est toi qui as oublié.
+2261	Touche l'objet d'une créature et tu prendras sa forme. Si tu tombes, je viens te chercher sur mon nuage.
+2262	Et le village ? Les autres ?
+2263	Ils attendent que l'élu revienne avec la couronne. Va. Le premier fragment est au bout des îles.
+2264	Avant les royaumes, les bases. Observe.
+2265	Tu vois ? L'un des vôtres. Os légers, épée courte et bouclier. Personne ne se méfie d'un squelette.
+2266	◀ ▶ pour marcher, SAUTER pour sauter. ATTAQUER frappe avec l'épée.
+2267	Maintiens GARDE pour bloquer. Et si tu appuies sur ATTAQUER pile au moment de leur coup : contre-attaque !
+2268	Pourquoi tu te bats comme l'un de nous ?
+2269	J'ai formé des générations de ce village. Va, jusqu'au bout du chemin.
+2270	Sur les îles, les Requins-Harpons marchent debout et chassent de loin.
+2271	Fais attention, car voici mon don : prendre la forme de n'importe quelle créature.
+2272	Comme ça. Un harpon en main, et personne n'approche.
+2273	À toi. ATTAQUER lance le harpon, presque en ligne droite.
+2274	Chaque créature laisse un objet en tombant. Ramasse l'objet et tu prendras sa forme.
+2275	Si tu tombes, tu redeviens simple os. Mais je viens toujours te chercher.
+2276	Les Gnolls n'approchent pas : ils lancent des os de loin.
+2277	L'os monte et retombe en arc. Pratique contre quelqu'un caché derrière un rocher.
+2278	ATTAQUER lance l'os en arc. Vise un peu devant la cible.
+2279	L'os qui tombe devient un objet : ramasse-le et relance-le.
+2280	Les lézards sont les seuls à ne pas craindre l'eau.
+2281	Écailles, queue, et l'eau ne me fait pas couler.
+2282	En lézard, tu nages : ▼ plonge, SAUTER sort de l'eau.
+2283	Touche deux fois la direction et maintiens : ruée !
+2284	Dans la grotte, celui qui grimpe aux murs commande.
+2285	Huit pattes, et aucun mur n'est trop haut.
+2286	Touche un mur et l'araignée s'y colle et grimpe toute seule.
+2287	Et regarde en haut : les cousines pendues au plafond sautent sur qui passe dessous.
+2288	Dans la Forge, seuls les forts restent debout.
+2289	Des cornes et des bras d'enclume. Lent... mais quand ça frappe, ça frappe.
+2290	Le coup du Minotaure est lent à partir, mais il porte loin. Frappe avant que l'ennemi n'approche.
+2291	Et ne touche jamais la lave. Même en Minotaure.
+2292	Les gnomes sont petits, mais ils touchent de loin.
+2293	Le gland monte haut et retombe en rebondissant.
+2294	ATTAQUER tire le gland en arc haut. Idéal pour toucher ceux qui sont en hauteur.
+2295	Dans les mines, qui porte le feu voit clair.
+2296	Une torche allumée. Qui voit dans le noir choisit le combat.
+2297	Le Gobelin à la Torche frappe avec le feu et éclaire les grottes sombres.
+2298	Là-haut, le Diablotin et sa famille volent parmi les braises.
+2299	Petit, rapide, et la main en braise.
+2300	Le coup du Diablotin porte loin. Attention aux trous : tomber du ciel, c'est tomber jusqu'au bout.
+2301	Au Royaume des Ailes, qui ne vole pas ne fait que lever les yeux.
+2302	Des ailes de cuir. Le vent fait le reste.
+2303	En chauve-souris, maintiens SAUTER en l'air pour voler un peu.
+2304	Quand le souffle manque, elle redescend : choisis bien où te poser.
+2305	Les rêves sont finis, Ossian. À ton réveil, le voyage commence pour de vrai.
+2306	Village des Os
+2307	Là où Ossian s'éveille parmi les siens. En rêves guidés, Hex montre le chemin de chaque royaume.
+2308	Prologue
+2309	Le rêve se dissipe...
+2310	ATTAQUER frappe.\nGARDE arrête le coup.
+2311	Hex souffle une fumée violette. Quand elle se dissipe, il y a du sable sous tes pieds.
+2312	Requin : ATTAQUER\nlance le harpon.
+2313	Herbes hautes et vieux os. Le vent porte l'odeur de la chasse.
+2314	Gnoll : l'os\nvole en arc.
+2315	Eau dormante et mousse. Quelque chose nage sous les feuilles.
+2316	Lézard : il nage !\nSprint = ruée.
+2317	Sombre, humide, et le plafond bouge. Des toiles. Beaucoup.
+2318	Araignée : se colle\naux murs.
+2319	Le sol est brûlant. Au loin, des marteaux battent au rythme d'un cœur.
+2320	Minotaure : coup\nlent et puissant.
+2321	Des arbres hauts comme des tours. Des gloussements dans les feuilles.
+2322	Gnome : le gland\nrebondit en arc.
+2323	Rails, or et l'écho des pioches au fond de la terre.
+2324	Gobelin à la Torche :\nle feu éclaire.
+2325	Nuages rouges, braises qui montent. Le ciel entier brûle.
+2326	Diablotin : coup\nen flammes.
+2327	Un château dans les nuages. Des ailes battent là-haut.
+2328	Chauve-souris : maintiens\nSAUTER pour voler.
+2329	Bonjour, mon petit tas d'os ! Tout le village parle de l'élu.
+2330	Ossian... c'est drôle. Le dernier que Hex a amené s'appelait comme ça aussi.
+2331	Pipo, le petit os
+2332	C'est toi l'élu ? Je peux compter tes côtes ?
+2333	Je ne me souviens pas d'être né. Et toi ? Maman dit que personne ici ne s'en souvient.
+2334	Je compose sur un pont plein de lanternes. Je ne sais pas d'où ça me vient. Je n'ai jamais vu de rivière.
+2335	Hex arrive toujours quand quelqu'un tombe. Toujours. Jamais une minute de retard.
+2336	VILLAGE DES OS
+2337	Une zone encore couverte de brume. Termine le prologue au Village des Os pour l'atteindre.

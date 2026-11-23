@@ -356,7 +356,11 @@ export class HowToScene extends Phaser.Scene {
   private play(): void {
     // História: mapa de fases (com a visual novel antes de cada uma). Versus: direto para a partida.
     // História: depois da primeira fase, o ponto de partida é a Vila.
-    if (this.mode === 'story') this.scene.start(completedCount() > 0 ? 'village' : 'world', { devices: this.devices });
+    // Jogo novo: direto para o prólogo, na Vila dos Ossos.
+    if (this.mode === 'story') {
+      if (completedCount() > 0) this.scene.start('village', { devices: this.devices });
+      else this.scene.start('map', { devices: this.devices, area: 'prologo' });
+    }
     // Versus: antes da partida, cada um escolhe as habilidades que vai usar.
     else this.scene.start('loadout', { devices: this.devices, level: this.level });
   }

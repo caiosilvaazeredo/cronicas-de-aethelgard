@@ -1,0 +1,159 @@
+2179	Przebudzenie
+2180	Wioska Kości. Dzwoni dzwon i ktoś woła twoje imię.
+2181	Obudź się, Ossian. Powoli. Wioskowy dzwon zadzwonił dla ciebie.
+2182	Ossian? To... to moje imię?
+2183	Oczywiście. Urodziłeś się tutaj, w Wiosce Kości. Dorastałeś, biegając między tymi domami.
+2184	Nic nie pamiętam. Tylko światła... lampiony nad rzeką.
+2185	Sny. Tu nie ma rzeki, jest tylko przypływ. To bez znaczenia: ja pamiętam za ciebie.
+2186	Starszyzna czekała na ten dzień. Jesteś wybrańcem, Ossian. Tym, który złoży Koronę Kości.
+2187	Wybrańcem? Ledwo umiem chodzić na tych nogach.
+2188	To od tego zaczniemy. Chodź. Inni patrzą.
+2189	Sen o Przypływie
+2190	Pierwszy prowadzony sen: Wyspy Przypływu i Rekiny Harpunniki.
+2191	Usiądź. Zamknij oczy. Pokażę ci królestwa tam na zewnątrz, jedno po drugim, we śnie.
+2192	We śnie? Czy to nie niebezpieczne?
+2193	Jeśli upadniesz we śnie, obudzisz się tutaj, przy mnie. Zawsze.
+2194	Najpierw Wyspy Przypływu. Król Rekinów Harpunników strzeże tam pierwszego fragmentu korony.
+2195	Widziałem już te wyspy. Jestem pewien.
+2196	Widziałeś? ...Oczywiście. Ojciec zabierał cię tam na ryby, gdy byłeś mały. Pamiętasz?
+2197	...Chyba tak. Teraz, gdy o tym mówisz.
+2198	Sen o Prerii
+2199	Wysoka trawa, stare kości i Gnolle polujące stadami.
+2200	Preria Kości. Wysoka trawa, a Gnolle polują stadami.
+2201	Preria Kości, Wioska Kości... dużo kości na tym świecie.
+2202	To uczciwy świat: na końcu wszyscy stają się kośćmi.
+2203	Twój dziadek walczył z Królem Gnolli. Pamiętasz bliznę na jego ramieniu?
+2204	Ja... pamiętam. Chyba pamiętam.
+2205	Sen o Lagunie
+2206	Stojąca woda, mech i jaszczury, które nie boją się wody.
+2207	Laguna Jaszczurów. Stojąca woda, mech i trucizna.
+2208	Woda... nie lubię wody. Nie wiem dlaczego.
+2209	Nikt nie lubi. Dlatego jaszczur jest taki przydatny.
+2210	To więcej niż nielubienie. Jakbym już kiedyś... zatonął.
+2211	Dziecięcy strach. Minął. Spójrz na jaszczury.
+2212	Sen o Pajęczynach
+2213	Wilgotna jaskinia, w której rusza się sufit. Na samym dnie mieszka Pajęcza Królowa.
+2214	Jaskinia Pajęczyn. Tam w dole mieszka Pajęcza Królowa.
+2215	Hex... czasem, gdy zamykam oczy, widzę imiona wydrapane na kamieniu.
+2216	Dziecięcy koszmar. Miałeś ich wiele. Twoja matka zostawiała zapaloną świecę.
+2217	Moja matka...
+2218	Święta kobieta. Chodźmy.
+2219	Sen o Kuźni
+2220	Lawa, młoty i Szkarłatny Minotaur.
+2221	Wulkaniczna Kuźnia. Lawa, młoty i Szkarłatny Minotaur.
+2222	Za gorąco dla kości.
+2223	Dlatego pójdziesz jako Minotaur. Nic nie przewróci Minotaura.
+2224	Nic?
+2225	Prawie nic. Ja jednego przewróciłem, raz. Ale to inna historia.
+2226	Sen o Lesie
+2227	Drzewa wysokie jak wieże i gnomy z procami.
+2228	Las Gnomów. Ogromne drzewa i gnomy z procami.
+2229	Miałem procę. Drewnianą, z pękniętą rączką.
+2230	Miałeś, tak. Sam ją zrobiłem, na twoje urodziny.
+2231	Ale pamiętam, że dała mi ją siostra.
+2232	Siostra? Jesteś jedynakiem, Ossian. Pamięć się myli po tak długim śnie.
+2233	Sen o Kopalniach
+2234	Tory, złoto i ciemność pod górą.
+2235	Kopalnie Goblinów. Złoto, tory i ciemność.
+2236	Ciemność mnie nie straszy.
+2237	Kiedyś straszyła. Płakałeś, gdy gasła świeca.
+2238	Mówiłeś, że to matka zostawiała zapaloną świecę.
+2239	Mówiłem? To była ona. Nieważne, kto trzymał świecę.
+2240	Sen o Ziemiach Ognia
+2241	Wyspy na niebie nad wulkanem, gdzie płoną nawet chmury.
+2242	Ziemie Ognia, na niebie nad wulkanem. Rządzi tam Olbrzymi Chochlik.
+2243	Niebo, które się zapala?
+2244	Całe niebo. Chochlik spalił chmury, żeby zostać sam.
+2245	Znasz wszystkich tych królów?
+2246	Znam ich wszystkich. I wszyscy znają mnie.
+2247	Sen o Skrzydłach
+2248	Ostatni sen: Królestwo Skrzydeł, gdzie pszczoły i nietoperze walczą o niebo.
+2249	Na koniec Królestwo Skrzydeł. Pszczoły i nietoperze biją się o niebo.
+2250	Hex, czemu mi to wszystko pokazujesz?
+2251	Bo pewnego dnia przejdziesz każde z tych królestw, a chcę, żebyś już je znał.
+2252	Zbierzesz fragmenty, otworzysz Bramę Przypływu i wszystko będzie tak, jak powinno.
+2253	Jak powinno – dla kogo?
+2254	Dla nas wszystkich, Ossian. Dla nas wszystkich.
+2255	Teraz naprawdę. Pierwszy fragment korony lśni na końcu plaży.
+2256	Obudź się, Ossian. To już nie sen: to prawdziwe Wyspy Przypływu.
+2257	Wydają się bardziej prawdziwe niż we śnie. A woda... tam na dnie jest światło.
+2258	Nie idź za światłami na dnie wody. Pamiętaj, czego cię nauczyłem.
+2259	Nauczyłeś mnie tak wiele w tak krótkim czasie.
+2260	Uczyłem cię całe życie. To ty zapomniałeś.
+2261	Dotknij przedmiotu stworzenia, a przyjmiesz jego postać. Jeśli upadniesz, przylecę po ciebie na chmurze.
+2262	A wioska? Inni?
+2263	Czekają, aż wybraniec wróci z koroną. Idź. Pierwszy fragment jest na końcu wysp.
+2264	Przed królestwami – podstawy. Patrz.
+2265	Widzisz? Jeden z was. Lekkie kości, krótki miecz i tarcza. Nikt nie podejrzewa szkieletu.
+2266	◀ ▶ by chodzić, SKOK by skakać. ATAK uderza mieczem.
+2267	Przytrzymaj GARDĘ, by blokować. A jeśli wciśniesz ATAK dokładnie, gdy trafia ich cios: kontra!
+2268	Czemu walczysz jak jeden z nas?
+2269	Uczyłem pokolenia tej wioski. Idź, aż do końca ścieżki.
+2270	Na wyspach Rekiny Harpunniki chodzą wyprostowane i polują z daleka.
+2271	Uważaj, bo oto mój dar: przybieranie postaci każdego stworzenia.
+2272	O tak. Harpun w dłoni i nikt się nie zbliża.
+2273	Teraz ty. ATAK rzuca harpun, prawie prosto.
+2274	Każde stworzenie zostawia przedmiot, gdy pada. Podnieś go, a przyjmiesz jego postać.
+2275	Jeśli upadniesz, znów będziesz tylko kośćmi. Ale zawsze po ciebie przyjdę.
+2276	Gnolle się nie zbliżają: rzucają kośćmi z daleka.
+2277	Kość leci w górę i spada łukiem. Dobre na kogoś schowanego za kamieniem.
+2278	ATAK rzuca kość łukiem. Celuj trochę przed cel.
+2279	Spadła kość staje się przedmiotem: podnieś ją i rzuć znowu.
+2280	Jaszczury jako jedyne nie boją się wody.
+2281	Łuski, ogon, a woda mnie nie topi.
+2282	Jako jaszczur pływasz: ▼ nurkuje, SKOK wychodzi z wody.
+2283	Stuknij dwa razy w kierunek i przytrzymaj: zryw!
+2284	W jaskini rządzi ten, kto wspina się po ścianach.
+2285	Osiem nóg i żadna ściana nie jest za wysoka.
+2286	Dotknij ściany, a pająk przyklei się i wejdzie sam.
+2287	I patrz w górę: kuzynki wiszące u sufitu skaczą na każdego, kto przechodzi pod spodem.
+2288	W Kuźni na nogach zostają tylko silni.
+2289	Rogi i ramiona jak kowadła. Powolny... ale jak trafi, to trafi.
+2290	Cios Minotaura wychodzi powoli, ale sięga daleko. Uderz, zanim wróg podejdzie.
+2291	I nigdy nie dotykaj lawy. Nawet jako Minotaur.
+2292	Gnomy są małe, ale trafiają z daleka.
+2293	Żołądź leci wysoko i spada, odbijając się.
+2294	ATAK strzela żołędziem wysokim łukiem. Dobry na tych, co stoją wysoko.
+2295	W kopalniach widzi ten, kto niesie ogień.
+2296	Zapalona pochodnia. Kto widzi w ciemności, ten wybiera walkę.
+2297	Goblin z Pochodnią uderza ogniem i oświetla ciemne jaskinie.
+2298	Tam w górze Chochlik i jego rodzina latają wśród żaru.
+2299	Mały, szybki, z rozżarzoną dłonią.
+2300	Cios Chochlika sięga daleko. Uważaj na przepaście: spaść z nieba to spaść do samego końca.
+2301	W Królestwie Skrzydeł ten, kto nie lata, może tylko patrzeć w górę.
+2302	Skórzane skrzydła. Resztę robi wiatr.
+2303	Jako nietoperz przytrzymaj SKOK w powietrzu, by chwilę polatać.
+2304	Gdy skończy się oddech, opada: wybierz dobrze, gdzie wylądować.
+2305	Sny się skończyły, Ossian. Gdy się obudzisz, podróż zacznie się naprawdę.
+2306	Wioska Kości
+2307	Tu Ossian budzi się wśród swoich. W prowadzonych snach Hex pokazuje drogę do każdego królestwa.
+2308	Prolog
+2309	Sen się rozwiewa...
+2310	ATAK uderza.\nGARDA zatrzymuje cios.
+2311	Hex wydmuchuje fioletowy dym. Gdy znika, pod stopami jest piasek.
+2312	Rekin: ATAK\nrzuca harpun.
+2313	Wysoka trawa i stare kości. Wiatr niesie zapach polowania.
+2314	Gnoll: kość\nleci łukiem.
+2315	Stojąca woda i mech. Coś pływa pod liśćmi.
+2316	Jaszczur: pływa!\nSprint to zryw.
+2317	Ciemno, wilgotno, a sufit się rusza. Pajęczyny. Mnóstwo.
+2318	Pająk: przykleja\nsię do ścian.
+2319	Ziemia jest gorąca. W oddali młoty biją w rytm serca.
+2320	Minotaur: cios\npowolny i mocny.
+2321	Drzewa wysokie jak wieże. Chichoty wśród liści.
+2322	Gnom: żołądź\nskacze łukiem.
+2323	Tory, złoto i echo kilofów głęboko w ziemi.
+2324	Goblin z Pochodnią:\nogień oświetla.
+2325	Czerwone chmury, wznoszący się żar. Płonie całe niebo.
+2326	Chochlik: cios\nw płomieniach.
+2327	Zamek w chmurach. Wysoko biją skrzydła.
+2328	Nietoperz: trzymaj\nSKOK, by latać.
+2329	Dzień dobry, kościotrupku! Cała wioska mówi o wybrańcu.
+2330	Ossian... zabawne. Ostatni, którego przyprowadził Hex, też się tak nazywał.
+2331	Pipo, kosteczka
+2332	Jesteś wybrańcem? Mogę policzyć twoje żebra?
+2333	Nie pamiętam, jak się urodziłem. A ty? Mama mówi, że nikt tu tego nie pamięta.
+2334	Komponuję o moście pełnym lampionów. Nie wiem, skąd mi to przyszło. Nigdy nie widziałem rzeki.
+2335	Hex zawsze się zjawia, gdy ktoś upada. Zawsze. Nigdy nie spóźnia się ani minuty.
+2336	WIOSKA KOŚCI
+2337	Obszar wciąż spowity mgłą. Ukończ prolog w Wiosce Kości, by tam dotrzeć.

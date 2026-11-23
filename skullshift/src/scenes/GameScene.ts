@@ -36,7 +36,7 @@ import { MausoleumSystem } from '../game/mausoleum';
 import { ABILITIES, hasAbility } from '../game/abilities';
 import { playerName } from '../game/names';
 import { settings, sfx } from '../game/settings';
-import { FIRST_SHIFT, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
+import { FIRST_SHIFT, PROLOGUE_SCENES, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 import { noTr, tr } from '../i18n';
@@ -261,7 +261,7 @@ export class GameScene extends Phaser.Scene {
     if (this.mode !== 'story') playMusic('versus');
     else if (def.shmup) playMusic('flight', def.id);
     else if (def.village) playMusic('pradaria' as Track, def.village.kind === 'arena' ? 'dungeon' : 'vila');
-    else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
+    else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? def.prologue?.world ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
@@ -295,6 +295,27 @@ export class GameScene extends Phaser.Scene {
       });
       // Trono do Xamã: a caveira, de volta ao corpo, é o aldeão.
       if (def.finale) this.time.delayedCall(10, () => this.becomeMinion(this.players[0], true));
+      // Prólogo: o Xamã desce e ensina a forma deste mundo.
+      if (def.prologue) this.time.delayedCall(900, () => void this.prologueScene());
+      // O Despertar: outros esqueletos da vila assistem ao escolhido (cada um de uma cor).
+      if (def.id === 'p_vila') {
+        const tints = [0xffd0a0, 0xa0d8ff, 0xc8ffb0, 0xffb0d8, 0xe0c8ff];
+        [[7, -1], [11, -1], [14, 1], [23, -1], [27, 1]].forEach(([t, dir], k) => {
+          const x = this.level.tileX(0, 0) + t * 64 + 32;
+          const feet = this.level.groundY(x);
+          if (feet === null) return;
+          const d = CHARS.skull;
+          const sk = this.add
+            .sprite(x, feet - (d.feetY - d.frame / 2), 'skull_idle')
+            .play({ key: 'skull_idle', startFrame: k })
+            .setTint(tints[k])
+            .setFlipX(dir < 0)
+            .setAlpha(0.95)
+            .setDepth(DEPTH.fighters - 3);
+          // De vez em quando um deles acena (pulinho).
+          this.tweens.add({ targets: sk, y: sk.y - 10, duration: 180, yoyo: true, repeat: -1, repeatDelay: 1800 + k * 700, delay: k * 400 });
+        });
+      }
       // Caverna Submarina: tudo debaixo d'água e a caveira vira Tubarão (nada livre).
       if (def.undersea) {
         this.level.tide = UNDERSEA_TIDE;
@@ -1856,6 +1877,9 @@ export class GameScene extends Phaser.Scene {
               p.respawn(rig.x, this.level.groundY(rig.x) ?? floor);
               if (LEVELS[this.levelIndex].undersea && this.mode === 'story') this.becomeShark(p);
               if (LEVELS[this.levelIndex].finale && this.mode === 'story') this.becomeMinion(p, false);
+              // Prólogo: renasce já na forma que está aprendendo.
+              const lesson = LEVELS[this.levelIndex].prologue?.char;
+              if (this.mode === 'story' && pi === 0 && lesson && lesson !== 'skull') this.time.delayedCall(450, () => p.alive && p.def.id !== lesson && this.transform(0, lesson));
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
@@ -2399,6 +2423,79 @@ export class GameScene extends Phaser.Scene {
       b.close();
       if (this.quip === b) this.quip = undefined;
     });
+  }
+
+  /**
+   * Prólogo: o Xamã desce na nuvem e fala do mundo, vira a criatura de lá (num estalo de fumaça
+   * roxa), transforma o Ossian nela e explica como jogar. Depois volta à forma dele e vai embora.
+   */
+  private async prologueScene(): Promise<void> {
+    const def = LEVELS[this.levelIndex];
+    const pr = def.prologue;
+    const sc = PROLOGUE_SCENES[def.id];
+    const p = this.players[0];
+    if (!pr || !sc || !p?.alive || this.mode !== 'story') return;
+    // A primeira transformação acontece aqui, guiada (sem a explicação genérica depois).
+    markSeen('first-shift');
+    markSeen(`shift-${pr.char}`);
+    this.cutscene = true;
+    this.prevSkip = true;
+    this.physics.world.pause();
+    this.quip?.close();
+    p.facing = 1;
+    p.sprite.setFlipX(false);
+    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
+    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(false);
+    const hx = p.x + 210;
+    const hy = p.feet - 150;
+    const rig = this.add.container(hx + 500, hy - 260, [cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
+    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    await this.tweenP({ targets: rig, x: hx, y: hy, alpha: 1, duration: 800, ease: 'Sine.easeOut' });
+    let asShaman = true;
+    const say = async (lines: Line[]) => {
+      for (const line of lines) {
+        if (!this.scene.isActive()) return;
+        const shamanLine = line.who === 'shaman';
+        const bubble = shamanLine
+          ? new SpeechBubble(this, () => ({ x: rig.x, y: rig.y - 84 }), line.text, SPEAKER_NAME.shaman, 0x9b6bf0)
+          : new SpeechBubble(this, () => ({ x: p.x, y: p.feet - p.labelHeight - 56 }), line.text, SPEAKER_NAME.skull, PLAYER_TINT[0]);
+        if (shamanLine && asShaman) shaman.play('shaman_attack').once('animationcomplete', () => asShaman && shaman.play('shaman_idle'));
+        await this.lineWait(Math.max(2400, line.text.length * 60));
+        bubble.close();
+        await this.waitP(140);
+      }
+    };
+    // Estalo de fumaça roxa no Xamã: troca de forma.
+    const poof = (to: string, feetY: number, frame: number) => {
+      this.smokeBurst(rig.x, rig.y + 10, 0xb46bff, 1);
+      sfx('pick');
+      shaman.setTexture(to).play(to).setFlipX(to !== 'shaman_idle');
+      shaman.setY(to === 'shaman_idle' ? -6 : 34 - (feetY - frame / 2));
+    };
+    await say(sc.before);
+    const cd = CHARS[pr.char];
+    asShaman = false;
+    poof(`${pr.char}_idle`, cd.feetY, cd.frame);
+    await this.waitP(500);
+    await say(sc.self);
+    if (pr.char !== 'skull') {
+      // Um raio roxo do Xamã até o Ossian: a transformação dele.
+      const ray = this.add.graphics().setDepth(DEPTH.fx);
+      ray.lineStyle(8, 0xb46bff, 0.6).lineBetween(rig.x, rig.y, p.x, p.feet - 50);
+      ray.lineStyle(3, 0xf0e0ff, 1).lineBetween(rig.x, rig.y, p.x, p.feet - 50);
+      this.tweens.add({ targets: ray, alpha: 0, duration: 500, onComplete: () => ray.destroy() });
+      this.transform(0, pr.char);
+      await this.waitP(1100);
+    }
+    await say(sc.ossian);
+    poof('shaman_idle', 0, 0);
+    asShaman = true;
+    await this.waitP(450);
+    await this.tweenP({ targets: rig, x: hx + 500, y: hy - 300, alpha: 0, duration: 800, ease: 'Sine.easeIn' });
+    bob.stop();
+    rig.destroy();
+    this.physics.world.resume();
+    this.cutscene = false;
   }
 
   /** O Xamã desce na nuvem, conversa em balões com o jogo congelado e vai embora. */

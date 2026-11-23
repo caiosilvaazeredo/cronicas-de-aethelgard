@@ -1,0 +1,159 @@
+2179	The Awakening
+2180	The Village of Bones. A bell rings, and someone calls your name.
+2181	Wake up, Ossian. Slowly. The village bell rang for you.
+2182	Ossian? Is... is that my name?
+2183	Of course it is. You were born here, in the Village of Bones. You grew up running between these houses.
+2184	I don't remember anything. Only lights... lanterns over a river.
+2185	Dreams. There is no river here, only the tide. It doesn't matter: I remember for you.
+2186	The elders waited for this day. You are the chosen one, Ossian. The one who will rebuild the Crown of Bones.
+2187	Chosen? I can barely walk on these legs.
+2188	Then that's where we start. Come. The others are watching.
+2189	Dream of the Tide
+2190	The first guided dream: the Tide Isles and the Harpoon Sharks.
+2191	Sit. Close your eyes. I'll show you the kingdoms out there, one by one, in a dream.
+2192	In a dream? Isn't that dangerous?
+2193	If you fall in a dream, you wake up here, with me. Always.
+2194	First, the Tide Isles. The Harpoon Shark King keeps the first fragment of the crown there.
+2195	I've seen those isles before. I'm sure of it.
+2196	Have you? ...Of course. Your father took you fishing there when you were small. Remember?
+2197	...I think so. Now that you mention it.
+2198	Dream of the Prairie
+2199	Tall grass, old bones and Gnolls that hunt in packs.
+2200	The Bone Prairie. Tall grass, and the Gnolls hunt in packs.
+2201	Bone Prairie, Village of Bones... this world has a lot of bones.
+2202	It's an honest world: in the end, everyone turns to bone.
+2203	Your grandfather faced the Gnoll King. Remember the scar on his shoulder?
+2204	I... remember. I think I remember.
+2205	Dream of the Lagoon
+2206	Still water, moss and lizards that don't fear the water.
+2207	The Lizard Lagoon. Still water, moss and poison.
+2208	Water... I don't like water. I don't know why.
+2209	Nobody does. That's why the lizard is so useful.
+2210	It's more than not liking it. It's as if I had already... sunk.
+2211	A child's fear. It's gone. Look at the lizards.
+2212	Dream of the Webs
+2213	A damp cave where the ceiling moves. The Spider Queen lives down at the bottom.
+2214	The Web Cavern. Down there lives the Spider Queen.
+2215	Hex... sometimes, when I close my eyes, I see names scratched into a stone.
+2216	A child's nightmare. You had many. Your mother left a candle burning.
+2217	My mother...
+2218	A saint. Let's go.
+2219	Dream of the Forge
+2220	Lava, hammers and the Crimson Minotaur.
+2221	The Volcanic Forge. Lava, hammers and the Crimson Minotaur.
+2222	Too hot for bones.
+2223	That's why you're going as a Minotaur. Nothing knocks down a Minotaur.
+2224	Nothing?
+2225	Almost nothing. I knocked one down, once. But that's another story.
+2226	Dream of the Woods
+2227	Trees as tall as towers and slingshot gnomes.
+2228	The Gnome Woods. Huge trees and gnomes with slingshots.
+2229	I had a slingshot. A wooden one, with a cracked handle.
+2230	You did. I made it myself, for your birthday.
+2231	But I remember my sister giving it to me.
+2232	Sister? You're an only child, Ossian. Memory gets confused after such a long sleep.
+2233	Dream of the Mines
+2234	Rails, gold and darkness under the mountain.
+2235	The Goblin Mines. Gold, rails and darkness.
+2236	The dark doesn't scare me.
+2237	It used to. You cried when the candle went out.
+2238	You said it was my mother who left the candle burning.
+2239	Did I? Then it was her. It doesn't matter who held the candle.
+2240	Dream of the Lands of Fire
+2241	Islands in the sky above the volcano, where even the clouds burn.
+2242	The Lands of Fire, in the sky above the volcano. The Giant Imp rules there.
+2243	A sky that catches fire?
+2244	A whole sky. The Imp burned the clouds so he could be alone.
+2245	Do you know all these kings?
+2246	I know them all. And they all know me.
+2247	Dream of the Wings
+2248	The last dream: the Kingdom of Wings, where bees and bats fight over the sky.
+2249	Last of all, the Kingdom of Wings. Bees and bats fight over the sky.
+2250	Hex, why are you showing me all this?
+2251	Because one day you'll cross each of these kingdoms, and I want you to know them already.
+2252	Gather the fragments, open the Tide Gate, and everything goes back to how it should be.
+2253	How it should be for whom?
+2254	For all of us, Ossian. For all of us.
+2255	Now it's for real. The first fragment of the crown shines at the end of the beach.
+2256	Wake up, Ossian. This is no dream: these are the real Tide Isles.
+2257	They seem more real than in the dream. And the water... deep down there's a light.
+2258	Don't follow lights at the bottom of the water. Remember what I taught you.
+2259	You taught me so much in so little time.
+2260	I taught you your whole life. You're the one who forgot.
+2261	Touch a creature's object and you'll take its form. If you fall, I'll fetch you on my cloud.
+2262	And the village? The others?
+2263	They're waiting for the chosen one to come back with the crown. Go. The first fragment is at the end of the isles.
+2264	Before the kingdoms, the basics. Watch.
+2265	See? One of you. Light bones, a short sword and a shield. Nobody suspects a skeleton.
+2266	◀ ▶ to walk, JUMP to jump. ATTACK strikes with the sword.
+2267	Hold GUARD to block. And if you press ATTACK right as their blow lands: counterattack!
+2268	Why do you fight like one of us?
+2269	I've taught generations of this village. Go, to the end of the path.
+2270	On the isles, the Harpoon Sharks walk upright and hunt from afar.
+2271	Pay attention, for this is my gift: taking the form of any creature.
+2272	Like this. A harpoon in hand, and nobody comes near.
+2273	Now you. ATTACK throws the harpoon, almost in a straight line.
+2274	Every creature leaves an object when it falls. Pick up the object and you'll take its form.
+2275	If you fall, you go back to being just bone. But I always come for you.
+2276	Gnolls don't come close: they throw bones from afar.
+2277	The bone rises and falls in an arc. Good for someone hiding behind a rock.
+2278	ATTACK throws the bone in an arc. Aim a little ahead of the target.
+2279	A fallen bone becomes an item: pick it up and throw it again.
+2280	Lizards are the only ones who don't fear the water.
+2281	Scales, a tail, and the water doesn't sink me.
+2282	As a lizard, you swim: ▼ dives, JUMP gets out of the water.
+2283	Tap the direction twice and hold: dash!
+2284	In the cave, whoever climbs walls is in charge.
+2285	Eight legs, and no wall is too tall.
+2286	Touch a wall and the spider sticks to it and climbs on its own.
+2287	And look up: the cousins hanging from the ceiling jump on whoever passes below.
+2288	In the Forge, only the strong stay standing.
+2289	Horns and anvil arms. Slow... but when it hits, it hits.
+2290	The Minotaur's blow is slow to come out, but it reaches far. Strike before the enemy gets close.
+2291	And never touch the lava. Not even as a Minotaur.
+2292	Gnomes are small, but they hit from afar.
+2293	The acorn flies high and lands bouncing.
+2294	ATTACK fires the acorn in a high arc. Good for hitting whoever is up high.
+2295	In the mines, whoever carries fire can see.
+2296	A lit torch. Whoever sees in the dark picks the fight.
+2297	The Torch Goblin strikes with fire and lights up dark caves.
+2298	Up there, the Imp and his family fly among the embers.
+2299	Small, fast, and a burning hand.
+2300	The Imp's blow reaches far. Watch out for the gaps: falling from the sky is falling all the way.
+2301	In the Kingdom of Wings, whoever can't fly can only look up.
+2302	Leather wings. The wind does the rest.
+2303	As a bat, hold JUMP in the air to fly for a while.
+2304	When the breath runs out, it comes down: choose well where to land.
+2305	The dreams are over, Ossian. When you wake up, the journey truly begins.
+2306	Village of Bones
+2307	Where Ossian awakens among his own. In guided dreams, Hex shows the way to each kingdom.
+2308	Prologue
+2309	The dream fades away...
+2310	ATTACK strikes.\nGUARD stops the blow.
+2311	Hex blows purple smoke. When it clears, there is sand under your feet.
+2312	Shark: ATTACK\nthrows the harpoon.
+2313	Tall grass and old bones. The wind carries the smell of the hunt.
+2314	Gnoll: the bone\nflies in an arc.
+2315	Still water and moss. Something swims under the leaves.
+2316	Lizard: it swims!\nSprint gives a dash.
+2317	Dark, damp, and the ceiling moves. Webs. Lots of them.
+2318	Spider: sticks\nto walls.
+2319	The ground is hot. Far away, hammers beat to the rhythm of a heart.
+2320	Minotaur: slow,\nstrong blow.
+2321	Trees as tall as towers. Giggles among the leaves.
+2322	Gnome: the acorn\nbounces in an arc.
+2323	Rails, gold and the echo of pickaxes deep in the earth.
+2324	Torch Goblin:\nthe fire lights up.
+2325	Red clouds, rising embers. The whole sky is burning.
+2326	Imp: a blow\nof flames.
+2327	A castle in the clouds. Wings beat high above.
+2328	Bat: hold\nJUMP to fly.
+2329	Good morning, bony! The whole village is talking about the chosen one.
+2330	Ossian... funny. The last one Hex brought was called that too.
+2331	Pipo, the little bone
+2332	Are you the chosen one? Can I count your ribs?
+2333	I don't remember being born. Do you? Mom says nobody here remembers.
+2334	I've been composing about a bridge full of lanterns. I don't know where I got that. I've never seen a river.
+2335	Hex always shows up when someone falls. Always. Never even a minute late.
+2336	VILLAGE OF BONES
+2337	An area still covered in fog. Finish the prologue in the Village of Bones to get there.

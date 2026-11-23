@@ -4,7 +4,7 @@ import { announceAchievements } from '../game/achievements';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
-import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
+import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, PROLOGUE, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
 import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins, getLevel } from '../game/progress';
 import { MEMORIES } from '../data/lore';
 import { pillButton } from '../ui/devices';
@@ -286,17 +286,11 @@ export class WorldScene extends Phaser.Scene {
     this.add.image(x, y + 4, 'bld_yellow_house2').setOrigin(0.5, 178 / 192).setScale(0.5).setDepth(6 + y / 1000);
     const sheep = this.add.sprite(x + 40, y + 6, 'sheep_idle').setScale(0.42).setOrigin(0.5, 0.8).setFlipX(true).setDepth(6.5).play('sheep_idle');
     this.tweens.add({ targets: sheep, y: y + 2, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-    const txt = this.add.text(x, y + 26, 'VILA', { fontFamily: FONT, fontSize: '14px', color: '#3a2412' }).setOrigin(0.5).setDepth(12);
-    const plate = this.add.graphics().setDepth(11);
-    plate.fillStyle(INK, 1).fillRoundedRect(txt.x - txt.width / 2 - 10, txt.y - 12, txt.width + 20, 24, 6);
-    plate.fillStyle(0xdcb06e, 1).fillRoundedRect(txt.x - txt.width / 2 - 7, txt.y - 9, txt.width + 14, 18, 5);
+    // Vila dos Ossos: cerquinha de ossos e caveiras nas estacas (o nome vem da área do prólogo).
+    for (const dx of [-62, 58]) this.add.image(x + dx, y + 12, 'skull_spike').setOrigin(0.5, 1).setScale(0.32).setDepth(6.6);
+    this.add.image(x - 8, y + 16, 'bones').setScale(0.5).setDepth(6.6);
     const coin = this.add.image(x + 30, y - 58, 'gold').setScale(0.35).setDepth(12);
     this.tweens.add({ targets: coin, y: y - 64, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-    this.add
-      .zone(x, y - 20, 100, 100)
-      .setInteractive({ useHandCursor: true })
-      .setDepth(16)
-      .on('pointerdown', () => !this.busy && this.village());
   }
 
   private journal(): void {
@@ -354,6 +348,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private lockedHint(a: AreaDef): string {
+    if (a.unlock === 'after-prologo') return 'Uma área ainda coberta de névoa. Termine o prólogo na Vila dos Ossos para chegar até ela.';
     if (a.unlock === 'after-mare') return 'Uma área ainda coberta de névoa. Vença as Ilhas da Maré para chegar até ela.';
     if (a.unlock === 'pact') return 'Um reino que só aparece depois do acordo com os Príncipes (na Caverna das Teias).';
     if (a.unlock === 'all') return 'O Santuário do Xamã. Ele só abre quando todos os fragmentos da coroa estiverem reunidos.';
@@ -690,7 +685,7 @@ export class WorldScene extends Phaser.Scene {
         break;
     }
     // Rei da área (silhueta enquanto trancada).
-    if (a !== CENTER && !isLink(a)) {
+    if (a !== CENTER && a !== PROLOGUE && !isLink(a)) {
       const t = areaTitle(a);
       const k = this.add.sprite(x + 56, y - 34, t.kingAnim).setScale(0.55).setFlipX(true).setDepth(8).play(t.kingAnim);
       if (!open) k.setTintFill(0x10223a).setAlpha(0.5);
@@ -731,7 +726,7 @@ export class WorldScene extends Phaser.Scene {
     // Plaquinha com o nome.
     const t = areaTitle(a);
     const label = open ? t.name.toUpperCase() : '???';
-    const txt = this.add.text(x, y + (a === CENTER ? 76 : 66), label, { fontFamily: FONT, fontSize: '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
+    const txt = this.add.text(x, y + (a === CENTER ? 76 : a === PROLOGUE ? 40 : 66), label, { fontFamily: FONT, fontSize: '17px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5).setDepth(12);
     const plate = this.add.graphics().setDepth(11);
     plate.fillStyle(INK, 1).fillRoundedRect(txt.x - txt.width / 2 - 12, txt.y - 15, txt.width + 24, 30, 10);
     plate.fillStyle(open ? t.color : 0x5f6872, 1).fillRoundedRect(txt.x - txt.width / 2 - 9, txt.y - 12, txt.width + 18, 24, 8);
@@ -741,7 +736,7 @@ export class WorldScene extends Phaser.Scene {
       this.tweens.add({ targets: st, angle: 360, duration: 4000, repeat: -1 });
     }
     // Toque/clique: escolhe; de novo, entra.
-    const zone = this.add.zone(x, y, 230, 170).setInteractive({ useHandCursor: true }).setDepth(15);
+    const zone = this.add.zone(x, y - (a === PROLOGUE ? 20 : 0), a === PROLOGUE ? 140 : 230, a === PROLOGUE ? 110 : 170).setInteractive({ useHandCursor: true }).setDepth(15);
     zone.on('pointerdown', () => {
       if (this.busy) return;
       if (this.sel === i) this.enter();

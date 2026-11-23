@@ -1,0 +1,159 @@
+2179	Das Erwachen
+2180	Das Knochendorf. Eine Glocke läutet, und jemand ruft deinen Namen.
+2181	Wach auf, Ossian. Langsam. Die Dorfglocke hat für dich geläutet.
+2182	Ossian? Ist... ist das mein Name?
+2183	Natürlich. Du wurdest hier geboren, im Knochendorf. Du bist zwischen diesen Häusern aufgewachsen.
+2184	Ich erinnere mich an nichts. Nur an Lichter... Laternen über einem Fluss.
+2185	Träume. Hier gibt es keinen Fluss, nur die Gezeiten. Egal: Ich erinnere mich für dich.
+2186	Die Ältesten haben auf diesen Tag gewartet. Du bist der Auserwählte, Ossian. Der die Krone der Knochen wieder vereint.
+2187	Auserwählt? Ich kann mit diesen Beinen kaum laufen.
+2188	Dann fangen wir damit an. Komm. Die anderen schauen zu.
+2189	Traum der Gezeiten
+2190	Der erste geführte Traum: die Gezeiteninseln und die Harpunenhaie.
+2191	Setz dich. Schließ die Augen. Ich zeige dir die Reiche da draußen, eines nach dem anderen, im Traum.
+2192	Im Traum? Ist das nicht gefährlich?
+2193	Wenn du im Traum fällst, wachst du hier auf, bei mir. Immer.
+2194	Zuerst die Gezeiteninseln. Der Harpunenhai-König hütet dort das erste Fragment der Krone.
+2195	Diese Inseln habe ich schon gesehen. Da bin ich sicher.
+2196	Wirklich? ...Natürlich. Dein Vater hat dich dort zum Angeln mitgenommen, als du klein warst. Weißt du noch?
+2197	...Ich glaube schon. Jetzt, wo du es sagst.
+2198	Traum der Prärie
+2199	Hohes Gras, alte Knochen und Gnolle, die im Rudel jagen.
+2200	Die Knochenprärie. Hohes Gras, und die Gnolle jagen im Rudel.
+2201	Knochenprärie, Knochendorf... diese Welt hat viele Knochen.
+2202	Es ist eine ehrliche Welt: Am Ende werden alle zu Knochen.
+2203	Dein Großvater hat gegen den Gnollkönig gekämpft. Erinnerst du dich an die Narbe auf seiner Schulter?
+2204	Ich... erinnere mich. Ich glaube, ich erinnere mich.
+2205	Traum der Lagune
+2206	Stilles Wasser, Moos und Echsen, die das Wasser nicht fürchten.
+2207	Die Echsenlagune. Stilles Wasser, Moos und Gift.
+2208	Wasser... ich mag kein Wasser. Ich weiß nicht, warum.
+2209	Niemand mag es. Deshalb ist die Echse so nützlich.
+2210	Es ist mehr als nicht mögen. Es ist, als wäre ich schon einmal... versunken.
+2211	Kinderangst. Vorbei. Sieh dir die Echsen an.
+2212	Traum der Netze
+2213	Eine feuchte Höhle, in der sich die Decke bewegt. Ganz unten lebt die Spinnenkönigin.
+2214	Die Netzhöhle. Dort unten lebt die Spinnenkönigin.
+2215	Hex... manchmal, wenn ich die Augen schließe, sehe ich Namen, in einen Stein geritzt.
+2216	Ein Kinderalbtraum. Du hattest viele. Deine Mutter ließ eine Kerze brennen.
+2217	Meine Mutter...
+2218	Eine Heilige. Gehen wir.
+2219	Traum der Schmiede
+2220	Lava, Hämmer und der Scharlachrote Minotaurus.
+2221	Die Vulkanschmiede. Lava, Hämmer und der Scharlachrote Minotaurus.
+2222	Zu heiß für Knochen.
+2223	Darum gehst du als Minotaurus. Nichts wirft einen Minotaurus um.
+2224	Nichts?
+2225	Fast nichts. Ich habe einmal einen umgeworfen. Aber das ist eine andere Geschichte.
+2226	Traum des Waldes
+2227	Bäume so hoch wie Türme und Gnome mit Schleudern.
+2228	Der Gnomenwald. Riesige Bäume und Gnome mit Schleudern.
+2229	Ich hatte eine Schleuder. Aus Holz, mit einem gesprungenen Griff.
+2230	Ja, die hattest du. Ich habe sie selbst gemacht, zu deinem Geburtstag.
+2231	Aber ich erinnere mich, dass meine Schwester sie mir geschenkt hat.
+2232	Schwester? Du bist ein Einzelkind, Ossian. Nach so langem Schlaf verwirrt sich die Erinnerung.
+2233	Traum der Minen
+2234	Schienen, Gold und Dunkelheit unter dem Berg.
+2235	Die Goblinminen. Gold, Schienen und Dunkelheit.
+2236	Die Dunkelheit macht mir keine Angst.
+2237	Früher schon. Du hast geweint, wenn die Kerze ausging.
+2238	Du hast gesagt, meine Mutter hätte die Kerze brennen lassen.
+2239	Habe ich das? Dann war sie es. Egal, wer die Kerze hielt.
+2240	Traum der Feuerlande
+2241	Inseln im Himmel über dem Vulkan, wo sogar die Wolken brennen.
+2242	Die Feuerlande, im Himmel über dem Vulkan. Dort herrscht der Riesenkobold.
+2243	Ein Himmel, der Feuer fängt?
+2244	Ein ganzer Himmel. Der Kobold hat die Wolken verbrannt, um allein zu sein.
+2245	Kennst du all diese Könige?
+2246	Ich kenne sie alle. Und alle kennen mich.
+2247	Traum der Schwingen
+2248	Der letzte Traum: das Reich der Schwingen, wo Bienen und Fledermäuse um den Himmel streiten.
+2249	Zuletzt das Reich der Schwingen. Bienen und Fledermäuse kämpfen um den Himmel.
+2250	Hex, warum zeigst du mir das alles?
+2251	Weil du eines Tages jedes dieser Reiche durchqueren wirst, und ich will, dass du sie schon kennst.
+2252	Du sammelst die Fragmente, öffnest das Gezeitentor, und alles wird wieder, wie es sein soll.
+2253	Wie es sein soll – für wen?
+2254	Für uns alle, Ossian. Für uns alle.
+2255	Jetzt ist es echt. Das erste Fragment der Krone leuchtet am Ende des Strandes.
+2256	Wach auf, Ossian. Das ist kein Traum mehr: Das sind die echten Gezeiteninseln.
+2257	Sie wirken echter als im Traum. Und das Wasser... ganz unten ist ein Licht.
+2258	Folge keinen Lichtern am Grund des Wassers. Denk an das, was ich dir beigebracht habe.
+2259	Du hast mir so viel in so kurzer Zeit beigebracht.
+2260	Ich habe es dich dein ganzes Leben gelehrt. Du hast es nur vergessen.
+2261	Berühre den Gegenstand einer Kreatur, und du nimmst ihre Gestalt an. Wenn du fällst, hole ich dich auf meiner Wolke.
+2262	Und das Dorf? Die anderen?
+2263	Sie warten darauf, dass der Auserwählte mit der Krone zurückkehrt. Geh. Das erste Fragment liegt am Ende der Inseln.
+2264	Vor den Reichen das Grundlegende. Sieh zu.
+2265	Siehst du? Einer von euch. Leichte Knochen, ein kurzes Schwert und ein Schild. Niemand misstraut einem Skelett.
+2266	◀ ▶ zum Laufen, SPRINGEN zum Springen. ANGRIFF schlägt mit dem Schwert.
+2267	Halte DECKUNG zum Blocken. Und drückst du ANGRIFF genau, wenn ihr Schlag trifft: Konter!
+2268	Warum kämpfst du wie einer von uns?
+2269	Ich habe Generationen dieses Dorfes unterrichtet. Geh, bis ans Ende des Weges.
+2270	Auf den Inseln gehen die Harpunenhaie aufrecht und jagen aus der Ferne.
+2271	Pass auf, denn das ist meine Gabe: die Gestalt jeder Kreatur anzunehmen.
+2272	So. Eine Harpune in der Hand, und niemand kommt näher.
+2273	Jetzt du. ANGRIFF wirft die Harpune, fast geradeaus.
+2274	Jede Kreatur lässt einen Gegenstand fallen, wenn sie fällt. Heb ihn auf, und du nimmst ihre Gestalt an.
+2275	Wenn du fällst, wirst du wieder nur Knochen. Aber ich hole dich immer.
+2276	Gnolle kommen nicht nah heran: Sie werfen Knochen aus der Ferne.
+2277	Der Knochen steigt und fällt im Bogen. Gut gegen jemanden hinter einem Felsen.
+2278	ANGRIFF wirft den Knochen im Bogen. Ziel ein wenig vor das Ziel.
+2279	Ein gefallener Knochen wird zum Gegenstand: Heb ihn auf und wirf erneut.
+2280	Echsen sind die Einzigen, die das Wasser nicht fürchten.
+2281	Schuppen, ein Schwanz, und das Wasser zieht mich nicht hinunter.
+2282	Als Echse schwimmst du: ▼ taucht, SPRINGEN steigt aus dem Wasser.
+2283	Tippe zweimal in die Richtung und halte: Sprint!
+2284	In der Höhle hat das Sagen, wer Wände hochklettert.
+2285	Acht Beine, und keine Wand ist zu hoch.
+2286	Berühre eine Wand, und die Spinne haftet und klettert von selbst.
+2287	Und schau nach oben: Die Cousinen an der Decke springen auf jeden, der darunter vorbeigeht.
+2288	In der Schmiede bleiben nur die Starken stehen.
+2289	Hörner und Arme wie Ambosse. Langsam... aber wenn er trifft, dann richtig.
+2290	Der Schlag des Minotaurus kommt langsam, reicht aber weit. Schlag zu, bevor der Feind herankommt.
+2291	Und berühre niemals die Lava. Nicht einmal als Minotaurus.
+2292	Gnome sind klein, treffen aber aus der Ferne.
+2293	Die Eichel fliegt hoch und landet hüpfend.
+2294	ANGRIFF schießt die Eichel in hohem Bogen. Gut gegen alles, was oben steht.
+2295	In den Minen sieht, wer Feuer trägt.
+2296	Eine brennende Fackel. Wer im Dunkeln sieht, wählt den Kampf.
+2297	Der Fackelgoblin schlägt mit Feuer und erhellt dunkle Höhlen.
+2298	Dort oben fliegen der Kobold und seine Familie zwischen der Glut.
+2299	Klein, schnell, und eine glühende Hand.
+2300	Der Schlag des Kobolds reicht weit. Vorsicht bei Lücken: Wer vom Himmel fällt, fällt bis ganz unten.
+2301	Im Reich der Schwingen kann, wer nicht fliegt, nur nach oben schauen.
+2302	Lederflügel. Der Wind erledigt den Rest.
+2303	Als Fledermaus halte SPRINGEN in der Luft, um eine Weile zu fliegen.
+2304	Wenn der Atem ausgeht, sinkt sie: Wähle gut, wo du landest.
+2305	Die Träume sind vorbei, Ossian. Wenn du aufwachst, beginnt die Reise wirklich.
+2306	Knochendorf
+2307	Wo Ossian unter seinesgleichen erwacht. In geführten Träumen zeigt Hex den Weg in jedes Reich.
+2308	Prolog
+2309	Der Traum zerfließt...
+2310	ANGRIFF schlägt.\nDECKUNG hält den Schlag.
+2311	Hex bläst violetten Rauch. Als er verzieht, ist Sand unter deinen Füßen.
+2312	Hai: ANGRIFF\nwirft die Harpune.
+2313	Hohes Gras und alte Knochen. Der Wind trägt den Geruch der Jagd.
+2314	Gnoll: Der Knochen\nfliegt im Bogen.
+2315	Stilles Wasser und Moos. Etwas schwimmt unter den Blättern.
+2316	Echse: schwimmt!\nSprint = Sprung nach vorn.
+2317	Dunkel, feucht, und die Decke bewegt sich. Netze. Sehr viele.
+2318	Spinne: haftet\nan Wänden.
+2319	Der Boden ist heiß. In der Ferne schlagen Hämmer im Takt eines Herzens.
+2320	Minotaurus: Schlag\nlangsam und stark.
+2321	Bäume hoch wie Türme. Kichern zwischen den Blättern.
+2322	Gnom: Die Eichel\nhüpft im Bogen.
+2323	Schienen, Gold und das Echo von Spitzhacken tief in der Erde.
+2324	Fackelgoblin:\nDas Feuer leuchtet.
+2325	Rote Wolken, aufsteigende Glut. Der ganze Himmel brennt.
+2326	Kobold: Schlag\nin Flammen.
+2327	Ein Schloss in den Wolken. Hoch oben schlagen Flügel.
+2328	Fledermaus: SPRINGEN\nhalten zum Fliegen.
+2329	Guten Morgen, Knöchelchen! Das ganze Dorf spricht vom Auserwählten.
+2330	Ossian... komisch. Der Letzte, den Hex hergebracht hat, hieß auch so.
+2331	Pipo, das Knöchelchen
+2332	Bist du der Auserwählte? Darf ich deine Rippen zählen?
+2333	Ich weiß nicht mehr, wie ich geboren wurde. Und du? Mama sagt, hier erinnert sich niemand daran.
+2334	Ich komponiere über eine Brücke voller Laternen. Ich weiß nicht, woher ich das habe. Ich habe nie einen Fluss gesehen.
+2335	Hex taucht immer auf, wenn jemand fällt. Immer. Nie auch nur eine Minute zu spät.
+2336	KNOCHENDORF
+2337	Ein Gebiet, noch von Nebel bedeckt. Beende den Prolog im Knochendorf, um dorthin zu gelangen.

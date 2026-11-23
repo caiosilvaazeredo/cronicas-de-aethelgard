@@ -1,0 +1,159 @@
+2179	O Despertar
+2180	A Aldeia dos Ossos. Um sino toca, e alguém chama pelo teu nome.
+2181	Acorda, Ossian. Devagar. O sino da aldeia tocou por ti.
+2182	Ossian? É... é o meu nome?
+2183	Claro que é. Nasceste aqui, na Aldeia dos Ossos. Cresceste a correr entre estas casas.
+2184	Não me lembro de nada. Só de luzes... lanternas sobre um rio.
+2185	Sonhos. Aqui não há rio, só a maré. Não tem importância: eu lembro-me por ti.
+2186	Os anciãos esperavam por este dia. Tu és o escolhido, Ossian. Aquele que vai juntar a Coroa dos Ossos.
+2187	Escolhido? Eu mal sei andar com estas pernas.
+2188	Então começamos por aí. Vem. Os outros estão a olhar.
+2189	Sonho da Maré
+2190	O primeiro sonho guiado: as Ilhas da Maré e os Tubarões-Arpão.
+2191	Senta-te. Fecha os olhos. Vou mostrar-te os reinos lá fora, um a um, em sonho.
+2192	Em sonho? Não é perigoso?
+2193	Se caíres num sonho, acordas aqui, comigo. Sempre.
+2194	Primeiro, as Ilhas da Maré. O Rei Tubarão-Arpão guarda ali o primeiro fragmento da coroa.
+2195	Eu já vi estas ilhas. Tenho a certeza.
+2196	Viste? ...Claro. O teu pai levava-te a pescar lá, quando eras pequeno. Lembras-te?
+2197	...Acho que sim. Agora que falaste nisso.
+2198	Sonho da Pradaria
+2199	Erva alta, ossos velhos e Gnolls que caçam em bando.
+2200	A Pradaria dos Ossos. Erva alta, e os Gnolls caçam em bando.
+2201	Pradaria dos Ossos, Aldeia dos Ossos... há muito osso neste mundo.
+2202	É um mundo honesto: no fim, todos viram osso.
+2203	O teu avô enfrentou o Rei Gnoll. Lembras-te da cicatriz no ombro dele?
+2204	Eu... lembro-me. Acho que me lembro.
+2205	Sonho da Lagoa
+2206	Água parada, musgo e lagartos que não temem a água.
+2207	A Lagoa dos Lagartos. Água parada, musgo e veneno.
+2208	Água... não gosto de água. Não sei porquê.
+2209	Ninguém gosta. Por isso o lagarto é tão útil.
+2210	É mais do que não gostar. É como se eu já tivesse... afundado.
+2211	Medo de criança. Passou. Olha os lagartos.
+2212	Sonho das Teias
+2213	Uma caverna húmida onde o tecto se mexe. A Aranha-Rainha vive lá no fundo.
+2214	A Caverna das Teias. Lá em baixo vive a Aranha-Rainha.
+2215	Hex... às vezes, quando fecho os olhos, vejo nomes riscados numa pedra.
+2216	Pesadelo de criança. Tinhas muitos. A tua mãe deixava uma vela acesa.
+2217	A minha mãe...
+2218	Uma santa. Vamos.
+2219	Sonho da Forja
+2220	Lava, martelos e o Minotauro Rubro.
+2221	A Forja Vulcânica. Lava, martelos e o Minotauro Rubro.
+2222	Quente demais para ossos.
+2223	Por isso vais de Minotauro. Nada derruba um Minotauro.
+2224	Nada?
+2225	Quase nada. Eu derrubei um, uma vez. Mas isso é outra história.
+2226	Sonho do Bosque
+2227	Árvores do tamanho de torres e gnomos de fisga.
+2228	O Bosque dos Gnomos. Árvores enormes e gnomos com fisga.
+2229	Eu tinha uma fisga. De madeira, com o cabo rachado.
+2230	Tinhas, sim. Fui eu que a fiz, no teu aniversário.
+2231	Mas lembro-me da minha irmã a dar-ma.
+2232	Irmã? És filho único, Ossian. A memória confunde-se, depois de tanto sono.
+2233	Sonho das Minas
+2234	Carris, ouro e escuridão debaixo da montanha.
+2235	As Minas dos Goblins. Ouro, carris e escuridão.
+2236	O escuro não me assusta.
+2237	Assustava. Choravas quando a vela se apagava.
+2238	Disseste que era a minha mãe quem deixava a vela acesa.
+2239	Disse? Então era ela. Tanto faz quem segurava a vela.
+2240	Sonho das Terras de Fogo
+2241	Ilhas no céu acima do vulcão, onde até as nuvens ardem.
+2242	As Terras de Fogo, no céu acima do vulcão. O Diabrete Gigante reina ali.
+2243	Um céu que pega fogo?
+2244	Um céu inteiro. O Diabrete queimou as nuvens para ficar sozinho.
+2245	Conheces todos estes reis?
+2246	Conheço-os todos. E todos me conhecem.
+2247	Sonho das Asas
+2248	O último sonho: o Reino das Asas, onde abelhas e morcegos disputam o céu.
+2249	Por último, o Reino das Asas. Abelhas e morcegos lutam pelo céu.
+2250	Hex, porque me mostras tudo isto?
+2251	Porque um dia vais atravessar cada um destes reinos, e quero que já os conheças.
+2252	Juntas os fragmentos, abres o Portão da Maré, e tudo volta a ser como deve.
+2253	Como deve para quem?
+2254	Para todos nós, Ossian. Para todos nós.
+2255	Agora é a sério. O primeiro fragmento da coroa brilha no fim da praia.
+2256	Acorda, Ossian. Já não é sonho: estas são as Ilhas da Maré a sério.
+2257	Parecem mais reais do que no sonho. E a água... lá no fundo há uma luz.
+2258	Não sigas luzes no fundo da água. Lembra-te do que te ensinei.
+2259	Ensinaste-me tanta coisa em tão pouco tempo.
+2260	Ensinei-te a vida inteira. Tu é que te esqueceste.
+2261	Toca no objecto de uma criatura e terás a forma dela. Se caíres, vou buscar-te na minha nuvem.
+2262	E a aldeia? Os outros?
+2263	Esperam que o escolhido volte com a coroa. Vai. O primeiro fragmento está no fim das ilhas.
+2264	Antes dos reinos, o básico. Observa.
+2265	Vês? Um de vocês. Ossos leves, espada curta e um escudo. Ninguém desconfia de um esqueleto.
+2266	◀ ▶ para andar, SALTAR para saltar. ATACAR golpeia com a espada.
+2267	Segura DEFESA para bloquear. E se carregares em ATACAR mesmo na hora do golpe deles: contra-ataque!
+2268	Porque lutas como um de nós?
+2269	Ensinei gerações desta aldeia. Vai, até ao fim do caminho.
+2270	Nas ilhas, os Tubarões-Arpão andam de pé e caçam de longe.
+2271	Presta atenção, que este é o meu dom: tomar a forma de qualquer criatura.
+2272	Assim. Um arpão na mão, e ninguém se aproxima.
+2273	Agora tu. ATACAR lança o arpão, quase em linha recta.
+2274	Toda a criatura deixa um objecto quando cai. Apanha o objecto e terás a forma dela.
+2275	Se caíres, voltas a ser só osso. Mas eu vou sempre buscar-te.
+2276	Os Gnolls não se aproximam: atiram ossos de longe.
+2277	O osso sobe e cai em arco. Bom para quem se esconde atrás de uma pedra.
+2278	ATACAR atira o osso em arco. Aponta um pouco antes do alvo.
+2279	O osso que cai vira objecto: apanha e atira outra vez.
+2280	Os lagartos são os únicos que não temem a água.
+2281	Escamas, cauda, e a água não me afunda.
+2282	Como lagarto, nadas: ▼ mergulha, SALTAR sai da água.
+2283	Toca duas vezes na direcção e segura: arranque!
+2284	Na caverna, manda quem sobe pelas paredes.
+2285	Oito pernas, e nenhuma parede é alta demais.
+2286	Encosta-te a uma parede e a aranha agarra-se e sobe sozinha.
+2287	E olha para cima: as primas penduradas no tecto saltam sobre quem passa por baixo.
+2288	Na Forja, só os fortes ficam de pé.
+2289	Chifres e braços de bigorna. Lento... mas quando acerta, acerta.
+2290	O golpe do Minotauro demora a sair, mas chega longe. Bate antes de o inimigo chegar.
+2291	E nunca toques na lava. Nem de Minotauro.
+2292	Os gnomos são pequenos, mas acertam de longe.
+2293	A bolota sobe alto e cai aos saltos.
+2294	ATACAR atira a bolota em arco alto. Boa para acertar em quem está lá em cima.
+2295	Nas minas, quem leva fogo vê.
+2296	Uma tocha acesa. Quem vê no escuro escolhe a luta.
+2297	O Goblin da Tocha golpeia com fogo e ilumina as cavernas escuras.
+2298	Lá em cima, o Diabrete e a família dele voam entre as brasas.
+2299	Pequeno, rápido, e a mão em brasa.
+2300	O golpe do Diabrete chega longe. Cuidado com os buracos: cair do céu é cair até ao fim.
+2301	No Reino das Asas, quem não voa só olha para cima.
+2302	Asas de couro. O vento faz o resto.
+2303	Como morcego, segura SALTAR no ar para voar um pouco.
+2304	Quando o fôlego acaba, ele desce: escolhe bem onde aterrar.
+2305	Acabaram-se os sonhos, Ossian. Quando acordares, a viagem começa a sério.
+2306	Aldeia dos Ossos
+2307	Onde Ossian desperta entre os seus. Em sonhos guiados, Hex mostra o caminho de cada reino.
+2308	Prólogo
+2309	O sonho desfaz-se...
+2310	ATACAR golpeia.\nDEFESA segura o golpe.
+2311	Hex sopra fumo roxo. Quando se dissipa, há areia debaixo dos teus pés.
+2312	Tubarão: ATACAR\natira o arpão.
+2313	Erva alta e ossos velhos. O vento traz o cheiro da caça.
+2314	Gnoll: o osso\nvoa em arco.
+2315	Água parada e musgo. Algo nada por baixo das folhas.
+2316	Lagarto: nada!\nCorrida dá arranque.
+2317	Escuro, húmido, e o tecto mexe-se. São teias. Muitas.
+2318	Aranha: agarra-se\nàs paredes.
+2319	O chão está quente. Ao longe, martelos batem ao ritmo de um coração.
+2320	Minotauro: golpe\nlento e forte.
+2321	Árvores altas como torres. Risinhos entre as folhas.
+2322	Gnomo: a bolota\nsalta em arco.
+2323	Carris, ouro e o eco de picaretas no fundo da terra.
+2324	Goblin da Tocha:\no fogo ilumina.
+2325	Nuvens vermelhas, brasas a subir. O céu inteiro arde.
+2326	Diabrete: golpe\nem chamas.
+2327	Um castelo nas nuvens. Asas batem lá no alto.
+2328	Morcego: segura\nSALTAR para voar.
+2329	Bom dia, ossinho! A aldeia inteira fala do escolhido.
+2330	Ossian... engraçado. O último que o Hex trouxe também se chamava assim.
+2331	Pipo, o ossinho
+2332	És o escolhido? Posso contar as tuas costelas?
+2333	Não me lembro de ter nascido. E tu? A mãe diz que ninguém aqui se lembra.
+2334	Ando a compor sobre uma ponte cheia de lanternas. Não sei de onde tirei isto. Nunca vi um rio.
+2335	O Hex aparece sempre quando alguém cai. Sempre. Nunca se atrasa nem um minuto.
+2336	ALDEIA DOS OSSOS
+2337	Uma área ainda coberta de nevoeiro. Termina o prólogo na Aldeia dos Ossos para lá chegar.

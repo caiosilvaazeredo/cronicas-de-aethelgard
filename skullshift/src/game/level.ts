@@ -180,6 +180,12 @@ export interface LevelDef {
   versusStart: [p1Tile: number, p2Tile: number];
   /** Sala de luta de uma dungeon (gerada): armadura extra dos inimigos, corações por golpe, força da caveira e XP. */
   dungeon?: { kind: string; armor: number; dmg: number; power: number; xp: number };
+  /**
+   * Prólogo (Vila dos Ossos): um "sonho guiado" do Xamã com a cara de um mundo. No começo ele
+   * desce na nuvem, vira a criatura do mundo (`char`), transforma o Ossian nela e ensina a jogar.
+   * `world` escolhe a música.
+   */
+  prologue?: { world: string; char: CharId };
   /** Jogo da vila (arena do Mestre Rufo ou corrida do Goblin): sem vidas; volta para a vila no fim. */
   village?: { kind: 'arena' | 'race' };
 }
@@ -2952,6 +2958,59 @@ export const LEVEL_WINGGUARD: LevelDef = {
   ],
 };
 
+
+// ---------- Prólogo: Vila dos Ossos (sonhos guiados do Xamã, um por mundo) ----------
+
+/**
+ * Cada sonho tem 4 cenários curtos: chão firme para a conversa com o Xamã, um vão pequeno,
+ * degraus e a chegada. Os inimigos são poucos e fracos; o objeto da criatura do mundo aparece
+ * no caminho (para voltar à forma depois de cair).
+ */
+function dream(
+  id: string,
+  name: string,
+  intro: string,
+  look: Pick<LevelDef, 'theme' | 'tiles'> & Partial<LevelDef>,
+  char: CharId,
+  world: string,
+  item: ItemId | undefined,
+  foes: [EnemyId, EnemyId, EnemyId],
+  deco: DecoKind[],
+  sign: string,
+): LevelDef {
+  const [d0, d1, d2] = [deco[0] ?? 'tree', deco[1] ?? deco[0] ?? 'rock1', deco[2] ?? deco[0] ?? 'bush'];
+  return {
+    id,
+    name,
+    intro,
+    winText: 'O sonho se desfaz...',
+    ...look,
+    prologue: { world, char },
+    screens: [
+      { segments: [[0, 20, 0]], deco: [[1, d0], [17, d1]] },
+      { segments: [[0, 9, 0], [11, 9, 0]], floats: [[14, 3, 3]], deco: [[2, d2], [18, d0]], enemies: [[15, foes[0]]], sign: [4, sign], storyItems: item ? [[15, item, 3]] : [] },
+      { segments: [[0, 6, 0], [6, 3, 1], [11, 9, 0]], floats: [[8, 2, 3]], deco: [[13, d1]], enemies: [[16, foes[1]]], storyItems: item ? [[2, item]] : [] },
+      { segments: [[0, 20, 0]], deco: [[3, d0], [12, d2], [18, d1]], enemies: [[10, foes[2]]] },
+    ],
+    storyStart: [0, 3],
+    versusStart: [1, 16],
+  };
+}
+
+const P_SHORE = { theme: 'shore' as const, tiles: 'tilemap' };
+export const PROLOGUE_LEVELS: LevelDef[] = [
+  dream('p_vila', 'O Despertar', 'A Vila dos Ossos. Um sino toca, e alguém chama pelo teu nome.', P_SHORE, 'skull', 'pradaria', undefined, ['goblin', 'goblin', 'gnoll'], ['house', 'tree', 'bones'], 'ATACAR golpeia.\\nDEFESA segura o golpe.'),
+  dream('p_mare', 'Sonho da Maré', 'Hex sopra fumaça roxa. Quando ela some, há areia sob os teus pés.', P_SHORE, 'shark', 'mare', 'harpoon', ['lizard', 'goblin', 'goblin'], ['tree', 'rock2', 'stump'], 'Tubarão: ATACAR\\natira o arpão.'),
+  dream('p_pradaria', 'Sonho da Pradaria', 'Capim alto e ossos velhos. O vento traz o cheiro de caça.', { theme: 'shore', tiles: 'tiles_prairie' }, 'gnoll', 'pradaria', 'bone', ['goblin', 'gnoll', 'gnoll'], ['bush', 'bones', 'tree'], 'Gnoll: o osso\\nvoa em arco.'),
+  dream('p_lagoa', 'Sonho da Lagoa', 'Água parada e musgo. Algo nada por baixo das folhas.', { ...SWAMP }, 'lizard', 'lagoa', 'crest', ['lizard', 'lizard_poison', 'lizard'], ['dead_tree', 'bush', 'stone'], 'Lagarto: nada!\\nPique dá arrancada.'),
+  dream('p_teias', 'Sonho das Teias', 'Escuro, úmido, e o teto se mexe. São teias. Muitas.', { theme: 'cave', tiles: 'tiles_cave' }, 'spider', 'teias', 'web', ['bat', 'spider', 'torchgob'], ['rock2', 'skull_spike', 'rock1'], 'Aranha: gruda\\nnas paredes.'),
+  dream('p_forja', 'Sonho da Forja', 'O chão é quente. Ao longe, martelos batem no ritmo de um coração.', { ...VOLC }, 'minotaur', 'forja', 'horn', ['imp', 'imp', 'torchgob'], ['rock2', 'skull_spike', 'rock1'], 'Minotauro: golpe\\nlento e forte.'),
+  dream('p_bosque', 'Sonho do Bosque', 'Árvores altas como torres. Risadinhas entre as folhas.', { ...WOOD }, 'sgnome', 'bosque', 'acorn', ['sgnome', 'goblin', 'sgnome'], ['tree', 'bush', 'stump'], 'Gnomo: a bolota\\nquica em arco.'),
+  dream('p_minas', 'Sonho das Minas', 'Trilhos, ouro e o eco de picaretas no fundo da terra.', { ...MINE }, 'torchgob', 'minas', 'torch', ['torchgob', 'bat', 'torchgob'], ['gold', 'rock1', 'gold'], 'Goblin da Tocha:\\no fogo ilumina.'),
+  dream('p_fogo', 'Sonho das Terras de Fogo', 'Nuvens vermelhas, brasas subindo. O céu inteiro arde.', { theme: 'sky', tiles: 'tiles_volcano', ember: true }, 'imp', 'ceu', 'ember', ['bee', 'imp', 'sgnome'], ['crystal', 'skull_spike', 'crystal'], 'Diabrete: golpe\\nem chamas.'),
+  dream('p_asas', 'Sonho das Asas', 'Um castelo nas nuvens. Asas batem lá no alto.', { ...WINGS }, 'bat', 'reino', 'wing', ['bee', 'bat', 'bee'], ['crystal', 'skull_spike', 'crystal'], 'Morcego: segure\\nPULAR para voar.'),
+];
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -3062,6 +3121,8 @@ export const LEVELS: LevelDef[] = [
   LEVEL_RETRO,
   LEVEL_HOLLOW,
   ...BONUS_LEVELS,
+  // Prólogo (no fim para não mudar o índice das fases de saves antigos).
+  ...PROLOGUE_LEVELS,
 ];
 
 export class Level {

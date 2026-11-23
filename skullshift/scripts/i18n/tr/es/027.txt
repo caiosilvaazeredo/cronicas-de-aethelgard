@@ -1,0 +1,159 @@
+2179	El Despertar
+2180	La Aldea de los Huesos. Suena una campana y alguien dice tu nombre.
+2181	Despierta, Ossian. Despacio. La campana de la aldea sonó por ti.
+2182	¿Ossian? ¿Es... es mi nombre?
+2183	Claro que lo es. Naciste aquí, en la Aldea de los Huesos. Creciste corriendo entre estas casas.
+2184	No recuerdo nada. Solo luces... farolillos sobre un río.
+2185	Sueños. Aquí no hay río, solo la marea. No importa: yo recuerdo por ti.
+2186	Los ancianos esperaban este día. Tú eres el elegido, Ossian. El que reunirá la Corona de los Huesos.
+2187	¿Elegido? Apenas sé caminar con estas piernas.
+2188	Entonces empezamos por ahí. Ven. Los demás están mirando.
+2189	Sueño de la Marea
+2190	El primer sueño guiado: las Islas de la Marea y los Tiburones Arponeros.
+2191	Siéntate. Cierra los ojos. Te mostraré los reinos de ahí fuera, uno a uno, en sueños.
+2192	¿En sueños? ¿No es peligroso?
+2193	Si caes en un sueño, despiertas aquí, conmigo. Siempre.
+2194	Primero, las Islas de la Marea. El Rey Tiburón Arponero guarda allí el primer fragmento de la corona.
+2195	Ya he visto esas islas. Estoy seguro.
+2196	¿Las viste? ...Claro. Tu padre te llevaba a pescar allí cuando eras pequeño. ¿Recuerdas?
+2197	...Creo que sí. Ahora que lo dices.
+2198	Sueño de la Pradera
+2199	Hierba alta, huesos viejos y Gnolls que cazan en manada.
+2200	La Pradera de los Huesos. Hierba alta, y los Gnolls cazan en manada.
+2201	Pradera de los Huesos, Aldea de los Huesos... hay muchos huesos en este mundo.
+2202	Es un mundo honesto: al final, todos se vuelven hueso.
+2203	Tu abuelo se enfrentó al Rey Gnoll. ¿Recuerdas la cicatriz en su hombro?
+2204	Yo... recuerdo. Creo que recuerdo.
+2205	Sueño de la Laguna
+2206	Agua quieta, musgo y lagartos que no temen al agua.
+2207	La Laguna de los Lagartos. Agua quieta, musgo y veneno.
+2208	Agua... no me gusta el agua. No sé por qué.
+2209	A nadie le gusta. Por eso el lagarto es tan útil.
+2210	Es más que no gustarme. Es como si ya me hubiera... hundido.
+2211	Miedo de niño. Ya pasó. Mira los lagartos.
+2212	Sueño de las Telarañas
+2213	Una cueva húmeda donde el techo se mueve. La Araña Reina vive allá al fondo.
+2214	La Caverna de las Telarañas. Allá abajo vive la Araña Reina.
+2215	Hex... a veces, cuando cierro los ojos, veo nombres rayados en una piedra.
+2216	Pesadilla de niño. Tenías muchas. Tu madre dejaba una vela encendida.
+2217	Mi madre...
+2218	Una santa. Vamos.
+2219	Sueño de la Forja
+2220	Lava, martillos y el Minotauro Carmesí.
+2221	La Forja Volcánica. Lava, martillos y el Minotauro Carmesí.
+2222	Demasiado calor para unos huesos.
+2223	Por eso irás de Minotauro. Nada derriba a un Minotauro.
+2224	¿Nada?
+2225	Casi nada. Yo derribé uno, una vez. Pero esa es otra historia.
+2226	Sueño del Bosque
+2227	Árboles altos como torres y gnomos con tirachinas.
+2228	El Bosque de los Gnomos. Árboles enormes y gnomos con tirachinas.
+2229	Yo tenía un tirachinas. De madera, con el mango rajado.
+2230	Lo tenías, sí. Lo hice yo mismo, para tu cumpleaños.
+2231	Pero recuerdo que me lo dio mi hermana.
+2232	¿Hermana? Eres hijo único, Ossian. La memoria se confunde después de tanto dormir.
+2233	Sueño de las Minas
+2234	Raíles, oro y oscuridad bajo la montaña.
+2235	Las Minas de los Goblins. Oro, raíles y oscuridad.
+2236	La oscuridad no me asusta.
+2237	Te asustaba. Llorabas cuando se apagaba la vela.
+2238	Dijiste que era mi madre quien dejaba la vela encendida.
+2239	¿Lo dije? Entonces era ella. Da igual quién sostenía la vela.
+2240	Sueño de las Tierras de Fuego
+2241	Islas en el cielo sobre el volcán, donde hasta las nubes arden.
+2242	Las Tierras de Fuego, en el cielo sobre el volcán. El Diablillo Gigante reina allí.
+2243	¿Un cielo que se incendia?
+2244	Un cielo entero. El Diablillo quemó las nubes para quedarse solo.
+2245	¿Conoces a todos esos reyes?
+2246	Los conozco a todos. Y todos me conocen.
+2247	Sueño de las Alas
+2248	El último sueño: el Reino de las Alas, donde abejas y murciélagos se disputan el cielo.
+2249	Por último, el Reino de las Alas. Abejas y murciélagos pelean por el cielo.
+2250	Hex, ¿por qué me muestras todo esto?
+2251	Porque un día cruzarás cada uno de estos reinos, y quiero que ya los conozcas.
+2252	Reúnes los fragmentos, abres el Portal de la Marea, y todo vuelve a ser como debe.
+2253	¿Como debe para quién?
+2254	Para todos nosotros, Ossian. Para todos nosotros.
+2255	Ahora es de verdad. El primer fragmento de la corona brilla al final de la playa.
+2256	Despierta, Ossian. Ya no es un sueño: estas son las Islas de la Marea de verdad.
+2257	Parecen más reales que en el sueño. Y el agua... allá al fondo hay una luz.
+2258	No sigas luces en el fondo del agua. Recuerda lo que te enseñé.
+2259	Me enseñaste tantas cosas en tan poco tiempo.
+2260	Te enseñé toda la vida. Eres tú quien lo olvidó.
+2261	Toca el objeto de una criatura y tendrás su forma. Si caes, te busco en mi nube.
+2262	¿Y la aldea? ¿Los demás?
+2263	Esperan que el elegido vuelva con la corona. Ve. El primer fragmento está al final de las islas.
+2264	Antes de los reinos, lo básico. Observa.
+2265	¿Ves? Uno de vosotros. Huesos ligeros, espada corta y un escudo. Nadie sospecha de un esqueleto.
+2266	◀ ▶ para andar, SALTAR para saltar. ATACAR golpea con la espada.
+2267	Mantén DEFENSA para bloquear. Y si pulsas ATACAR justo cuando llega su golpe: ¡contraataque!
+2268	¿Por qué luchas como uno de nosotros?
+2269	He enseñado a generaciones de esta aldea. Ve, hasta el final del camino.
+2270	En las islas, los Tiburones Arponeros caminan erguidos y cazan de lejos.
+2271	Presta atención, que este es mi don: tomar la forma de cualquier criatura.
+2272	Así. Un arpón en la mano, y nadie se acerca.
+2273	Ahora tú. ATACAR lanza el arpón, casi en línea recta.
+2274	Toda criatura deja un objeto al caer. Recoge el objeto y tendrás su forma.
+2275	Si caes, vuelves a ser solo hueso. Pero yo siempre te busco.
+2276	Los Gnolls no se acercan: lanzan huesos de lejos.
+2277	El hueso sube y cae en arco. Bueno para quien se esconde detrás de una piedra.
+2278	ATACAR lanza el hueso en arco. Apunta un poco por delante del objetivo.
+2279	El hueso que cae se vuelve objeto: recógelo y lánzalo otra vez.
+2280	Los lagartos son los únicos que no temen al agua.
+2281	Escamas, cola, y el agua no me hunde.
+2282	Como lagarto, nadas: ▼ bucea, SALTAR sale del agua.
+2283	Toca dos veces la dirección y mantén: ¡acometida!
+2284	En la cueva, manda quien trepa por las paredes.
+2285	Ocho patas, y ninguna pared es demasiado alta.
+2286	Toca una pared y la araña se pega y sube sola.
+2287	Y mira arriba: las primas colgadas del techo saltan sobre quien pasa debajo.
+2288	En la Forja, solo los fuertes siguen en pie.
+2289	Cuernos y brazos de yunque. Lento... pero cuando acierta, acierta.
+2290	El golpe del Minotauro tarda en salir, pero llega lejos. Golpea antes de que el enemigo se acerque.
+2291	Y nunca toques la lava. Ni siquiera de Minotauro.
+2292	Los gnomos son pequeños, pero aciertan de lejos.
+2293	La bellota sube alto y cae rebotando.
+2294	ATACAR dispara la bellota en un arco alto. Buena para acertar a quien está arriba.
+2295	En las minas, quien lleva fuego ve.
+2296	Una antorcha encendida. Quien ve en la oscuridad elige la pelea.
+2297	El Goblin de la Antorcha golpea con fuego e ilumina las cuevas oscuras.
+2298	Allá arriba, el Diablillo y su familia vuelan entre las brasas.
+2299	Pequeño, rápido, y la mano en brasa.
+2300	El golpe del Diablillo llega lejos. Cuidado con los huecos: caer del cielo es caer hasta el fondo.
+2301	En el Reino de las Alas, quien no vuela solo mira hacia arriba.
+2302	Alas de cuero. El viento hace el resto.
+2303	Como murciélago, mantén SALTAR en el aire para volar un poco.
+2304	Cuando se acaba el aliento, baja: elige bien dónde aterrizar.
+2305	Se acabaron los sueños, Ossian. Cuando despiertes, el viaje empieza de verdad.
+2306	Aldea de los Huesos
+2307	Donde Ossian despierta entre los suyos. En sueños guiados, Hex muestra el camino de cada reino.
+2308	Prólogo
+2309	El sueño se deshace...
+2310	ATACAR golpea.\nDEFENSA para el golpe.
+2311	Hex sopla humo morado. Cuando se disipa, hay arena bajo tus pies.
+2312	Tiburón: ATACAR\nlanza el arpón.
+2313	Hierba alta y huesos viejos. El viento trae olor a caza.
+2314	Gnoll: el hueso\nvuela en arco.
+2315	Agua quieta y musgo. Algo nada bajo las hojas.
+2316	Lagarto: ¡nada!\nCarrera da acometida.
+2317	Oscuro, húmedo, y el techo se mueve. Son telarañas. Muchas.
+2318	Araña: se pega\na las paredes.
+2319	El suelo quema. A lo lejos, martillos golpean al ritmo de un corazón.
+2320	Minotauro: golpe\nlento y fuerte.
+2321	Árboles altos como torres. Risitas entre las hojas.
+2322	Gnomo: la bellota\nrebota en arco.
+2323	Raíles, oro y el eco de picos en lo hondo de la tierra.
+2324	Goblin de la Antorcha:\nel fuego ilumina.
+2325	Nubes rojas, brasas que suben. Todo el cielo arde.
+2326	Diablillo: golpe\nen llamas.
+2327	Un castillo en las nubes. Alas que baten allá arriba.
+2328	Murciélago: mantén\nSALTAR para volar.
+2329	¡Buenos días, huesudito! Toda la aldea habla del elegido.
+2330	Ossian... qué curioso. El último que trajo Hex también se llamaba así.
+2331	Pipo, el huesito
+2332	¿Tú eres el elegido? ¿Puedo contarte las costillas?
+2333	No recuerdo haber nacido. ¿Y tú? Mamá dice que aquí nadie lo recuerda.
+2334	Estoy componiendo sobre un puente lleno de farolillos. No sé de dónde lo saqué. Nunca he visto un río.
+2335	Hex siempre aparece cuando alguien cae. Siempre. Nunca llega ni un minuto tarde.
+2336	ALDEA DE LOS HUESOS
+2337	Una zona aún cubierta de niebla. Termina el prólogo en la Aldea de los Huesos para llegar a ella.

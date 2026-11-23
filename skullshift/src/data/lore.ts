@@ -57,20 +57,135 @@ const V = (text: string): Line => ({ who: 'human', side: 'left', text });
 /** Um capítulo por fase, na ordem de LEVELS. */
 /** Capítulos por fase (chave = id da fase em LEVELS). */
 export const CHAPTER_BY_ID: Record<string, Chapter> = {
+  // ---------- Prólogo: Vila dos Ossos (sonhos guiados do Xamã) ----------
+  p_vila: {
+    title: 'O Despertar',
+    blurb: 'A Vila dos Ossos. Um sino toca, e alguém chama pelo teu nome.',
+    lines: [
+      X('Acorda, Ossian. Devagar. O sino da vila tocou por ti.'),
+      S('Ossian? É... é o meu nome?'),
+      X('Claro que é. Nasceste aqui, na Vila dos Ossos. Cresceste correndo entre estas casas.'),
+      S('Não lembro de nada. Só de luzes... lanternas sobre um rio.'),
+      X('Sonhos. Aqui não há rio, só a maré. Não tem importância: eu lembro por ti.'),
+      X('Os anciãos esperavam por este dia. Tu és o escolhido, Ossian. Aquele que vai juntar a Coroa dos Ossos.'),
+      S('Escolhido? Eu mal sei andar com estas pernas.'),
+      X('Então começamos por aí. Vem. Os outros estão olhando.'),
+    ],
+  },
+  p_mare: {
+    title: 'Sonho da Maré',
+    blurb: 'O primeiro sonho guiado: as Ilhas da Maré e os Tubarões-Arpão.',
+    lines: [
+      X('Senta. Fecha os olhos. Vou te mostrar os reinos lá fora, um por um, em sonho.'),
+      S('Em sonho? Não é perigoso?'),
+      X('Se caíres num sonho, acordas aqui, comigo. Sempre.'),
+      X('Primeiro, as Ilhas da Maré. O Rei Tubarão-Arpão guarda ali o primeiro fragmento da coroa.'),
+      S('Eu já vi essas ilhas. Tenho certeza.'),
+      X('Viste? ...Claro. Teu pai te levava para pescar lá, quando eras pequeno. Lembras?'),
+      S('...Acho que sim. Agora que você falou.'),
+    ],
+  },
+  p_pradaria: {
+    title: 'Sonho da Pradaria',
+    blurb: 'Capim alto, ossos velhos e Gnolls que caçam em bando.',
+    lines: [
+      X('A Pradaria dos Ossos. Capim alto, e os Gnolls caçam em bando.'),
+      S('Pradaria dos Ossos, Vila dos Ossos... tem muito osso neste mundo.'),
+      X('É um mundo honesto: no fim, todos viram osso.'),
+      X('Teu avô enfrentou o Rei Gnoll. Lembras da cicatriz no ombro dele?'),
+      S('Eu... lembro. Acho que lembro.'),
+    ],
+  },
+  p_lagoa: {
+    title: 'Sonho da Lagoa',
+    blurb: 'Água parada, musgo e lagartos que não temem a água.',
+    lines: [
+      X('A Lagoa dos Lagartos. Água parada, musgo e veneno.'),
+      S('Água... eu não gosto de água. Não sei por quê.'),
+      X('Ninguém gosta. Por isso o lagarto é tão útil.'),
+      S('É mais do que não gostar. É como se eu já tivesse... afundado.'),
+      X('Medo de criança. Passou. Olha os lagartos.'),
+    ],
+  },
+  p_teias: {
+    title: 'Sonho das Teias',
+    blurb: 'Uma caverna úmida onde o teto se mexe. A Aranha-Rainha vive lá no fundo.',
+    lines: [
+      X('A Caverna das Teias. Lá embaixo vive a Aranha-Rainha.'),
+      S('Hex... às vezes, quando fecho os olhos, vejo nomes riscados numa pedra.'),
+      X('Pesadelo de criança. Tinhas muitos. Tua mãe deixava uma vela acesa.'),
+      S('Minha mãe...'),
+      X('Uma santa. Vamos.'),
+    ],
+  },
+  p_forja: {
+    title: 'Sonho da Forja',
+    blurb: 'Lava, martelos e o Minotauro Rubro.',
+    lines: [
+      X('A Forja Vulcânica. Lava, martelos e o Minotauro Rubro.'),
+      S('Quente demais para ossos.'),
+      X('Por isso vais de Minotauro. Nada derruba um Minotauro.'),
+      S('Nada?'),
+      X('Quase nada. Eu derrubei um, uma vez. Mas isso é outra história.'),
+    ],
+  },
+  p_bosque: {
+    title: 'Sonho do Bosque',
+    blurb: 'Árvores do tamanho de torres e gnomos de estilingue.',
+    lines: [
+      X('O Bosque dos Gnomos. Árvores enormes e gnomos com estilingue.'),
+      S('Eu tinha um estilingue. De madeira, com o cabo rachado.'),
+      X('Tinhas, sim. Eu mesmo o fiz, no teu aniversário.'),
+      S('Mas eu lembro da minha irmã me dando ele.'),
+      X('Irmã? Tu és filho único, Ossian. A memória confunde, depois de tanto sono.'),
+    ],
+  },
+  p_minas: {
+    title: 'Sonho das Minas',
+    blurb: 'Trilhos, ouro e escuridão sob a montanha.',
+    lines: [
+      X('As Minas dos Goblins. Ouro, trilhos e escuridão.'),
+      S('O escuro não me assusta.'),
+      X('Assustava. Choravas quando a vela apagava.'),
+      S('Você disse que era a minha mãe quem deixava a vela acesa.'),
+      X('Eu disse? Então era ela. Tanto faz quem segurava a vela.'),
+    ],
+  },
+  p_fogo: {
+    title: 'Sonho das Terras de Fogo',
+    blurb: 'Ilhas no céu acima do vulcão, onde até as nuvens ardem.',
+    lines: [
+      X('As Terras de Fogo, no céu acima do vulcão. O Diabrete Gigante reina ali.'),
+      S('Um céu que pega fogo?'),
+      X('Um céu inteiro. O Diabrete queimou as nuvens para ficar sozinho.'),
+      S('Você conhece todos esses reis?'),
+      X('Conheço todos. E todos me conhecem.'),
+    ],
+  },
+  p_asas: {
+    title: 'Sonho das Asas',
+    blurb: 'O último sonho: o Reino das Asas, onde abelhas e morcegos disputam o céu.',
+    lines: [
+      X('Por último, o Reino das Asas. Abelhas e morcegos brigam pelo céu.'),
+      S('Hex, por que você me mostra tudo isso?'),
+      X('Porque um dia vais atravessar cada um desses reinos, e quero que já os conheças.'),
+      X('Juntas os fragmentos, abres o Portão da Maré, e tudo volta a ser como deve.'),
+      S('Como deve para quem?'),
+      X('Para todos nós, Ossian. Para todos nós.'),
+    ],
+  },
   shore: {
     title: 'Ilhas da Maré',
-    blurb: 'Onde a caveira desperta. O primeiro fragmento da coroa brilha no fim da praia.',
+    blurb: 'Agora é de verdade. O primeiro fragmento da coroa brilha no fim da praia.',
     lines: [
-      X('Acorda. Devagar... a maré te trouxe de volta à praia. De novo.'),
-      S('De novo? Eu... não lembro de nada. Só de luzes. Lanternas penduradas sobre um rio.'),
-      X('Lanternas, rio... sonhos de viagem. Esquece. Como te chamas?'),
-      S('Eu... não sei. Tinha um nome. Está na ponta da língua. Se eu tivesse língua.'),
-      X('Então serás Ossian. É um bom nome. Já serviu a outros.'),
-      S('A outros?'),
-      X('Ouve: a Coroa dos Ossos foi quebrada em quatro. Inteira, ela abre o Portão da Maré. É o teu caminho para casa.'),
-      X('Empresto-te um dom: toca o objeto de uma criatura e terás a forma dela. E se caíres, eu te busco na minha nuvem.'),
-      S('E por que me ajudas?'),
-      X('Porque é isso que um conselheiro faz. Vai. O primeiro fragmento está no fim das ilhas.'),
+      X('Acorda, Ossian. Já não é sonho: estas são as Ilhas da Maré de verdade.'),
+      S('Parecem mais reais do que no sonho. E a água... lá no fundo tem uma luz.'),
+      X('Não sigas luzes no fundo da água. Lembra o que te ensinei.'),
+      S('Você me ensinou tanta coisa em tão pouco tempo.'),
+      X('Ensinei a vida inteira. Tu é que esqueceste.'),
+      X('Toca o objeto de uma criatura e terás a forma dela. Se caíres, eu te busco na minha nuvem.'),
+      S('E a vila? Os outros?'),
+      X('Esperam o escolhido voltar com a coroa. Vai. O primeiro fragmento está no fim das ilhas.'),
     ],
   },
   cave: {
@@ -1322,4 +1437,84 @@ export const SHIFT_QUIPS: Partial<Record<CharId, string>> = {
   minotaur: 'Chifres, músculos, cheiro de estábulo. Duas de três não é ruim.',
   bee: 'Zumbindo e com ferrão. Se eu tivesse dignidade, ela teria acabado agora.',
   sgnome: 'Um gnomo de estilingue. Ainda assim, mais alto do que eu esperava.',
+};
+
+
+/**
+ * Cena de cada sonho do prólogo, dentro da fase: o Xamã desce na nuvem, fala da criatura do
+ * mundo (`before`), vira ela e mostra o que faz (`self`), transforma o Ossian e ensina a jogar
+ * (`ossian`).
+ */
+export interface PrologueScene {
+  before: Line[];
+  self: Line[];
+  ossian: Line[];
+}
+
+export const PROLOGUE_SCENES: Record<string, PrologueScene> = {
+  p_vila: {
+    before: [X('Antes dos reinos, o básico. Observa.')],
+    self: [X('Vês? Um de vocês. Ossos leves, espada curta e um escudo. Ninguém desconfia de um esqueleto.')],
+    ossian: [
+      X('◀ ▶ para andar, PULAR para pular. ATACAR golpeia com a espada.'),
+      X('Segura DEFESA para bloquear. E se apertares ATACAR bem na hora do golpe deles: contra-ataque!'),
+      S('Por que você luta como um de nós?'),
+      X('Ensinei gerações desta vila. Vai, até o fim do caminho.'),
+    ],
+  },
+  p_mare: {
+    before: [X('Nas ilhas, os Tubarões-Arpão andam de pé e caçam de longe.'), X('Presta atenção, que este é o meu dom: tomar a forma de qualquer criatura.')],
+    self: [X('Assim. Um arpão na mão, e ninguém chega perto.')],
+    ossian: [
+      X('Agora tu. ATACAR arremessa o arpão, quase em linha reta.'),
+      X('Toda criatura deixa um objeto quando cai. Pega o objeto e terás a forma dela.'),
+      X('Se caíres, voltas a ser só osso. Mas eu sempre te busco.'),
+      S('Um tubarão de pé, de arpão na mão. Faz todo o sentido. Nada aqui faz.'),
+    ],
+  },
+  p_pradaria: {
+    before: [X('Os Gnolls não chegam perto: jogam ossos de longe.')],
+    self: [X('O osso sobe e cai em arco. Bom para quem se esconde atrás de uma pedra.')],
+    ossian: [X('ATACAR joga o osso em arco. Mira um pouco antes do alvo.'), X('O osso que cai vira item: pega e joga de novo.'), S('Ótimo, agora eu tenho pulgas. Nem sabia que osso pegava pulga.')],
+  },
+  p_lagoa: {
+    before: [X('Os lagartos são os únicos que não temem a água.')],
+    self: [X('Escamas, rabo, e a água não me afunda.')],
+    ossian: [X('Como lagarto, tu nadas: ▼ mergulha, PULAR sai da água.'), X('Toca duas vezes na direção e segura: arrancada!'), S('Escamas. Finalmente uma pele. Pena que não é a minha.')],
+  },
+  p_teias: {
+    before: [X('Na caverna, quem sobe pelas paredes manda.')],
+    self: [X('Oito pernas, e nenhuma parede é alta demais.')],
+    ossian: [X('Encosta numa parede e a aranha gruda e sobe sozinha.'), X('E olha para cima: as primas penduradas no teto pulam em quem passa embaixo.'), S('Oito pernas. Eu mal sabia o que fazer com duas.')],
+  },
+  p_forja: {
+    before: [X('Na Forja, só os fortes ficam de pé.')],
+    self: [X('Chifres e braços de bigorna. Lento... mas quando acerta, acerta.')],
+    ossian: [X('O golpe do Minotauro demora a sair, mas alcança longe. Bate antes de o inimigo chegar.'), X('E nunca encostes na lava. Nem de Minotauro.'), S('Chifres, músculos, cheiro de estábulo. Duas de três não é ruim.')],
+  },
+  p_bosque: {
+    before: [X('Os gnomos são pequenos, mas acertam de longe.')],
+    self: [X('A bolota sobe alto e cai quicando.')],
+    ossian: [X('ATACAR atira a bolota em arco alto. Boa para acertar quem está lá em cima.'), S('Um gnomo de estilingue. Ainda assim, mais alto do que eu esperava.')],
+  },
+  p_minas: {
+    before: [X('Nas minas, quem carrega fogo enxerga.')],
+    self: [X('Uma tocha acesa. Quem vê no escuro escolhe a briga.')],
+    ossian: [X('O Goblin da Tocha golpeia com fogo e ilumina as cavernas escuras.'), S('Uma tocha no meio da caverna. Que ideia brilhante. Literalmente.')],
+  },
+  p_fogo: {
+    before: [X('Lá em cima, o Diabrete e a família dele voam entre as brasas.')],
+    self: [X('Pequeno, rápido, e a mão em brasa.')],
+    ossian: [X('O golpe do Diabrete alcança longe. Cuidado com os vãos: cair do céu é cair até o fim.'), S('Virei o Diabrete. Se eu me encontrar, prometo me dar um soco.')],
+  },
+  p_asas: {
+    before: [X('No Reino das Asas, quem não voa só olha para cima.')],
+    self: [X('Asas de couro. O vento faz o resto.')],
+    ossian: [
+      X('Como morcego, segura PULAR no ar para voar um pouco.'),
+      X('Quando o fôlego acaba, ele desce: escolhe bem onde pousar.'),
+      S('Morcego. Claro. A coisa mais natural para um esqueleto.'),
+      X('Acabaram os sonhos, Ossian. Quando acordares, a jornada começa de verdade.'),
+    ],
+  },
 };

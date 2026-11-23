@@ -1,0 +1,159 @@
+2179	Uyanış
+2180	Kemikler Köyü. Bir çan çalıyor ve biri adını sesleniyor.
+2181	Uyan, Ossian. Yavaşça. Köyün çanı senin için çaldı.
+2182	Ossian mı? Bu... bu benim adım mı?
+2183	Elbette. Burada, Kemikler Köyü'nde doğdun. Bu evlerin arasında koşarak büyüdün.
+2184	Hiçbir şey hatırlamıyorum. Sadece ışıklar... bir nehrin üstünde fenerler.
+2185	Rüyalar. Burada nehir yok, sadece gelgit var. Önemli değil: ben senin yerine hatırlıyorum.
+2186	Yaşlılar bu günü bekliyordu. Seçilmiş olan sensin, Ossian. Kemik Tacı'nı yeniden birleştirecek olan.
+2187	Seçilmiş mi? Bu bacaklarla zar zor yürüyorum.
+2188	O zaman oradan başlıyoruz. Gel. Diğerleri izliyor.
+2189	Gelgit Rüyası
+2190	İlk rehberli rüya: Gelgit Adaları ve Zıpkıncı Köpekbalıkları.
+2191	Otur. Gözlerini kapat. Dışarıdaki krallıkları sana tek tek, rüyada göstereceğim.
+2192	Rüyada mı? Tehlikeli değil mi?
+2193	Rüyada düşersen burada, yanımda uyanırsın. Her zaman.
+2194	Önce Gelgit Adaları. Zıpkıncı Köpekbalığı Kralı tacın ilk parçasını orada saklıyor.
+2195	O adaları daha önce gördüm. Eminim.
+2196	Gördün mü? ...Elbette. Küçükken baban seni oraya balığa götürürdü. Hatırlıyor musun?
+2197	...Sanırım evet. Sen söyleyince.
+2198	Çayır Rüyası
+2199	Uzun otlar, eski kemikler ve sürüyle avlanan Gnolllar.
+2200	Kemik Çayırı. Uzun otlar ve sürüyle avlanan Gnolllar.
+2201	Kemik Çayırı, Kemikler Köyü... bu dünyada çok kemik var.
+2202	Dürüst bir dünya: sonunda herkes kemiğe döner.
+2203	Deden Gnoll Kral'la savaştı. Omzundaki yarayı hatırlıyor musun?
+2204	Ben... hatırlıyorum. Sanırım hatırlıyorum.
+2205	Lagün Rüyası
+2206	Durgun su, yosun ve sudan korkmayan kertenkeleler.
+2207	Kertenkele Lagünü. Durgun su, yosun ve zehir.
+2208	Su... sudan hoşlanmam. Nedenini bilmiyorum.
+2209	Kimse hoşlanmaz. Kertenkele bu yüzden çok işe yarar.
+2210	Hoşlanmamaktan fazlası. Sanki daha önce... batmışım gibi.
+2211	Çocukluk korkusu. Geçti. Kertenkelelere bak.
+2212	Ağlar Rüyası
+2213	Tavanı kıpırdayan nemli bir mağara. Örümcek Kraliçe en dipte yaşar.
+2214	Ağlar Mağarası. Aşağıda Örümcek Kraliçe yaşar.
+2215	Hex... bazen gözlerimi kapatınca bir taşa kazınmış isimler görüyorum.
+2216	Çocukluk kâbusu. Çok vardı. Annen bir mum yanık bırakırdı.
+2217	Annem...
+2218	Bir aziz. Hadi.
+2219	Demirhane Rüyası
+2220	Lav, çekiçler ve Kızıl Minotor.
+2221	Volkanik Demirhane. Lav, çekiçler ve Kızıl Minotor.
+2222	Kemikler için fazla sıcak.
+2223	Bu yüzden Minotor olarak gideceksin. Hiçbir şey bir Minotoru deviremez.
+2224	Hiçbir şey mi?
+2225	Neredeyse hiçbir şey. Ben bir kez birini devirdim. Ama o başka bir hikâye.
+2226	Koru Rüyası
+2227	Kuleler kadar uzun ağaçlar ve sapanlı cüceler.
+2228	Cüceler Korusu. Dev ağaçlar ve sapanlı cüceler.
+2229	Bir sapanım vardı. Tahtadan, sapı çatlak.
+2230	Vardı, evet. Doğum gününde kendim yaptım.
+2231	Ama onu bana kız kardeşimin verdiğini hatırlıyorum.
+2232	Kız kardeş mi? Sen tek çocuksun, Ossian. Bu kadar uzun bir uykudan sonra hafıza karışır.
+2233	Madenler Rüyası
+2234	Raylar, altın ve dağın altındaki karanlık.
+2235	Goblin Madenleri. Altın, raylar ve karanlık.
+2236	Karanlık beni korkutmaz.
+2237	Korkuturdu. Mum sönünce ağlardın.
+2238	Mumu annemin yanık bıraktığını söylemiştin.
+2239	Öyle mi dedim? O zaman oydu. Mumu kimin tuttuğu önemli değil.
+2240	Ateş Toprakları Rüyası
+2241	Volkanın üstünde gökteki adalar; bulutlar bile yanıyor.
+2242	Ateş Toprakları, volkanın üstündeki gökte. Orada Dev İblis hüküm sürer.
+2243	Alev alan bir gökyüzü mü?
+2244	Koca bir gökyüzü. İblis yalnız kalmak için bulutları yaktı.
+2245	Bütün bu kralları tanıyor musun?
+2246	Hepsini tanırım. Ve hepsi beni tanır.
+2247	Kanatlar Rüyası
+2248	Son rüya: arıların ve yarasaların göğü paylaşamadığı Kanatlar Krallığı.
+2249	Son olarak Kanatlar Krallığı. Arılar ve yarasalar gök için savaşır.
+2250	Hex, bunları bana neden gösteriyorsun?
+2251	Çünkü bir gün bu krallıkların her birinden geçeceksin ve onları şimdiden tanımanı istiyorum.
+2252	Parçaları toplarsın, Gelgit Kapısı'nı açarsın ve her şey olması gerektiği gibi olur.
+2253	Kimin için olması gerektiği gibi?
+2254	Hepimiz için, Ossian. Hepimiz için.
+2255	Şimdi gerçek. Tacın ilk parçası sahilin sonunda parlıyor.
+2256	Uyan, Ossian. Artık rüya değil: bunlar gerçek Gelgit Adaları.
+2257	Rüyadakinden daha gerçek görünüyorlar. Ve su... derinlerde bir ışık var.
+2258	Suyun dibindeki ışıkları takip etme. Sana öğrettiklerimi hatırla.
+2259	Bana bu kadar kısa sürede o kadar çok şey öğrettin.
+2260	Sana bütün hayatın boyunca öğrettim. Unutan sensin.
+2261	Bir yaratığın eşyasına dokun ve onun şeklini al. Düşersen seni bulutumla almaya gelirim.
+2262	Peki köy? Diğerleri?
+2263	Seçilmiş olanın tacı getirmesini bekliyorlar. Git. İlk parça adaların sonunda.
+2264	Krallıklardan önce temeller. İzle.
+2265	Gördün mü? Sizden biri. Hafif kemikler, kısa kılıç ve kalkan. Kimse bir iskeletten şüphelenmez.
+2266	Yürümek için ◀ ▶, zıplamak için ZIPLA. SALDIR kılıçla vurur.
+2267	Engellemek için SAVUNMA'yı basılı tut. Darbeleri tam gelirken SALDIR'a basarsan: karşı saldırı!
+2268	Neden bizden biri gibi dövüşüyorsun?
+2269	Bu köyün nesillerine öğrettim. Git, yolun sonuna kadar.
+2270	Adalarda Zıpkıncı Köpekbalıkları dik yürür ve uzaktan avlanır.
+2271	Dikkat et, çünkü bu benim armağanım: herhangi bir yaratığın şeklini almak.
+2272	İşte böyle. Elde bir zıpkın ve kimse yaklaşmaz.
+2273	Şimdi sen. SALDIR zıpkını neredeyse düz fırlatır.
+2274	Her yaratık düşünce bir eşya bırakır. Eşyayı al ve onun şeklini al.
+2275	Düşersen yine sadece kemik olursun. Ama seni her zaman almaya gelirim.
+2276	Gnolllar yaklaşmaz: uzaktan kemik fırlatırlar.
+2277	Kemik yükselir ve yay çizerek düşer. Kayanın arkasına saklanana karşı iyidir.
+2278	SALDIR kemiği yay çizerek fırlatır. Hedefin biraz önüne nişan al.
+2279	Düşen kemik eşyaya dönüşür: al ve yeniden fırlat.
+2280	Sudan korkmayan tek yaratık kertenkelelerdir.
+2281	Pullar, kuyruk ve su beni batırmıyor.
+2282	Kertenkeleyken yüzersin: ▼ dalar, ZIPLA sudan çıkar.
+2283	Yöne iki kez dokun ve basılı tut: atılma!
+2284	Mağarada duvarlara tırmanan sözü geçer.
+2285	Sekiz bacak ve hiçbir duvar fazla yüksek değil.
+2286	Bir duvara değ, örümcek yapışıp kendi kendine tırmanır.
+2287	Ve yukarı bak: tavanda asılı kuzenler altından geçenin üstüne atlar.
+2288	Demirhanede sadece güçlüler ayakta kalır.
+2289	Boynuzlar ve örs gibi kollar. Yavaş... ama vurunca tam vurur.
+2290	Minotor'un darbesi geç çıkar ama uzağa ulaşır. Düşman yaklaşmadan vur.
+2291	Ve asla lava dokunma. Minotor olsan bile.
+2292	Cüceler küçüktür ama uzaktan vururlar.
+2293	Palamut yükseğe çıkar ve sekerek düşer.
+2294	SALDIR palamudu yüksek bir yayla atar. Yukarıdakileri vurmak için iyi.
+2295	Madenlerde ateş taşıyan görür.
+2296	Yanan bir meşale. Karanlıkta gören kavgayı seçer.
+2297	Meşaleli Goblin ateşle vurur ve karanlık mağaraları aydınlatır.
+2298	Yukarıda İblis ve ailesi korların arasında uçar.
+2299	Küçük, hızlı ve kor gibi bir el.
+2300	İblis'in darbesi uzağa ulaşır. Boşluklara dikkat: gökten düşmek sonuna kadar düşmektir.
+2301	Kanatlar Krallığı'nda uçamayan sadece yukarı bakar.
+2302	Deri kanatlar. Gerisini rüzgâr yapar.
+2303	Yarasayken biraz uçmak için havada ZIPLA'yı basılı tut.
+2304	Nefesi bitince alçalır: nereye ineceğini iyi seç.
+2305	Rüyalar bitti, Ossian. Uyandığında yolculuk gerçekten başlıyor.
+2306	Kemikler Köyü
+2307	Ossian'ın kendi türü arasında uyandığı yer. Rehberli rüyalarda Hex her krallığın yolunu gösterir.
+2308	Önsöz
+2309	Rüya dağılıyor...
+2310	SALDIR vurur.\nSAVUNMA darbeyi tutar.
+2311	Hex mor duman üfler. Dağılınca ayaklarının altında kum vardır.
+2312	Köpekbalığı: SALDIR\nzıpkın atar.
+2313	Uzun otlar ve eski kemikler. Rüzgâr av kokusu getiriyor.
+2314	Gnoll: kemik\nyay çizerek uçar.
+2315	Durgun su ve yosun. Yaprakların altında bir şey yüzüyor.
+2316	Kertenkele: yüzer!\nKoşu atılma verir.
+2317	Karanlık, nemli ve tavan kıpırdıyor. Ağlar. Çok sayıda.
+2318	Örümcek: duvarlara\nyapışır.
+2319	Zemin sıcak. Uzakta çekiçler bir kalbin ritmiyle vuruyor.
+2320	Minotor: yavaş ve\ngüçlü darbe.
+2321	Kuleler kadar uzun ağaçlar. Yaprakların arasında kıkırdamalar.
+2322	Cüce: palamut\nyay çizerek seker.
+2323	Raylar, altın ve yerin derinliklerinde kazma yankısı.
+2324	Meşaleli Goblin:\nateş aydınlatır.
+2325	Kırmızı bulutlar, yükselen korlar. Bütün gök yanıyor.
+2326	İblis: alevli\ndarbe.
+2327	Bulutlarda bir şato. Yukarıda kanatlar çırpıyor.
+2328	Yarasa: uçmak için\nZIPLA'yı basılı tut.
+2329	Günaydın, kemikçik! Bütün köy seçilmiş olandan bahsediyor.
+2330	Ossian... ne tuhaf. Hex'in getirdiği sonuncunun adı da buydu.
+2331	Kemikçik Pipo
+2332	Seçilmiş olan sen misin? Kaburgalarını sayabilir miyim?
+2333	Doğduğumu hatırlamıyorum. Sen hatırlıyor musun? Annem burada kimsenin hatırlamadığını söylüyor.
+2334	Fenerlerle dolu bir köprü üstüne beste yapıyorum. Bunu nereden bulduğumu bilmiyorum. Hiç nehir görmedim.
+2335	Biri düştüğünde Hex hep gelir. Hep. Bir dakika bile gecikmez.
+2336	KEMİKLER KÖYÜ
+2337	Hâlâ sisle kaplı bir bölge. Oraya ulaşmak için Kemikler Köyü'ndeki önsözü bitir.

@@ -5,7 +5,7 @@ import { chapterFor } from '../data/lore';
 import type { DeviceId } from '../game/controls';
 import { currentSlot, getPact, giftsOf, hasPact, hasSecret, isDone, isFreePlay, isSecretDone } from '../game/progress';
 import { LEVELS, type LevelDef } from '../game/level';
-import { AREAS, AREA_GOAL, CENTER, areaById, areaCleared, areaOfLevel, areaTitle, kingSealed, levelIndex, levelUnlocked, recommendedLevel, type AreaDef } from '../game/areas';
+import { AREAS, AREA_GOAL, CENTER, PROLOGUE, areaById, areaCleared, areaOfLevel, areaTitle, kingSealed, levelIndex, levelUnlocked, recommendedLevel, type AreaDef } from '../game/areas';
 import { getRun, startRun } from '../game/dungeon';
 import { getLevel, isDungeonDone } from '../game/progress';
 import { unlockedBy } from '../game/abilities';
@@ -101,7 +101,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   create(): void {
-    playMusic(this.area.id as Track);
+    playMusic((this.area === PROLOGUE ? 'world' : this.area.id) as Track);
     const cam = this.cameras.main;
     cam.setBackgroundColor('#39b5fd');
     // O mapa é uma faixa larga: a câmera acompanha o esqueleto na horizontal.
@@ -152,7 +152,7 @@ export class MapScene extends Phaser.Scene {
     );
     ui(pillButton(this, MW - 170, MH - 70 + offY, 'ENTRAR  ▶', () => this.enter(), 240, 0xffe066).setDepth(30)).y -= offY;
     ui(pillButton(this, 110, 40 + offY, '◀ MUNDO', () => this.toWorld(), 170).setScale(0.75).setDepth(30)).y -= offY;
-    if (this.area !== CENTER) ui(pillButton(this, MW - 170, 100 + offY, this.dungeonLabel(), () => this.enterDungeon(), 330, 0xc8a8ff).setScale(0.75).setDepth(30)).y -= offY;
+    if (this.area !== CENTER && this.area !== PROLOGUE) ui(pillButton(this, MW - 170, 100 + offY, this.dungeonLabel(), () => this.enterDungeon(), 330, 0xc8a8ff).setScale(0.75).setDepth(30)).y -= offY;
     this.updateInfo();
 
     const kb = this.input.keyboard!;
@@ -207,7 +207,7 @@ export class MapScene extends Phaser.Scene {
     this.add.rectangle(0, 0, MW, 250 + top, 0x10223a).setOrigin(0);
     this.add.text(MW / 2, 175 + top, this.headerText(), { fontFamily: FONT, fontSize: '52px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 10 }).setOrigin(0.5);
     pillButton(this, 150, 80 + top, '◀ MUNDO', () => this.toWorld(), 200).setScale(1.1);
-    if (this.area !== CENTER) pillButton(this, MW - 250, 80 + top, this.dungeonLabel(), () => this.enterDungeon(), 360, 0xc8a8ff).setScale(1.1);
+    if (this.area !== CENTER && this.area !== PROLOGUE) pillButton(this, MW - 250, 80 + top, this.dungeonLabel(), () => this.enterDungeon(), 360, 0xc8a8ff).setScale(1.1);
     const mapBottom = this.cameras.main.y + this.cameras.main.height;
     this.add.rectangle(0, mapBottom, MW, H - mapBottom, 0x10223a).setOrigin(0);
     const g = this.add.graphics();

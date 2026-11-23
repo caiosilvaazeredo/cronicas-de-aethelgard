@@ -24,7 +24,7 @@ export interface AreaDef {
   levels: string[];
   /** Posição no mapa do mundo (1280×720). */
   pos: [number, number];
-  unlock: 'start' | 'after-mare' | 'after-pradaria' | 'pact' | 'all';
+  unlock: 'start' | 'after-prologo' | 'after-mare' | 'after-pradaria' | 'pact' | 'all';
   /** Região do mapa-múndi: 'fire' = Terras de Fogo (mapa à parte, como no Super Mario World). */
   region?: 'fire';
 }
@@ -42,7 +42,7 @@ export const AREAS: AreaDef[] = [
     color: 0x2f86e0,
     levels: ['shore', 'crabs', 'hightide', 'wreck', 'deck', 'undersea', 'floodgates', 'masts', 'reef', 'sharkking'],
     pos: [210, 490],
-    unlock: 'start',
+    unlock: 'after-prologo',
   },
   {
     id: 'pradaria',
@@ -152,7 +152,24 @@ export const CENTER: AreaDef = {
   unlock: 'all',
 };
 
-export const ALL_AREAS: AreaDef[] = [...AREAS, CENTER];
+/**
+ * Prólogo: a Vila dos Ossos, onde Ossian desperta entre outros esqueletos. Em "sonhos guiados",
+ * o Xamã mostra um pedaço de cada mundo, vira a criatura de lá e ensina a jogar com ela.
+ * Fica fora de AREAS (não tem rei nem fragmento), como o Santuário.
+ */
+export const PROLOGUE: AreaDef = {
+  id: 'prologo',
+  name: 'Vila dos Ossos',
+  blurb: 'Onde Ossian desperta entre os seus. Em sonhos guiados, Hex mostra o caminho de cada reino.',
+  king: 'Prólogo',
+  kingAnim: 'shaman_idle',
+  color: 0xc9b8a0,
+  levels: ['p_vila', 'p_mare', 'p_pradaria', 'p_lagoa', 'p_teias', 'p_forja', 'p_bosque', 'p_minas', 'p_fogo', 'p_asas'],
+  pos: [360, 392],
+  unlock: 'start',
+};
+
+export const ALL_AREAS: AreaDef[] = [PROLOGUE, ...AREAS, CENTER];
 
 /** Nome e rei do reino das asas mudam conforme o acordo. */
 export function areaTitle(a: AreaDef): { name: string; king: string; kingAnim: string; color: number } {
@@ -187,6 +204,9 @@ export function areaUnlocked(a: AreaDef): boolean {
   switch (a.unlock) {
     case 'start':
       return true;
+    case 'after-prologo':
+      // Saves de antes do prólogo (já com fases da Maré vencidas) continuam abertos.
+      return areaCleared(PROLOGUE) || mare.levels.some((id) => isDone(id));
     case 'after-mare':
       return areaCleared(mare);
     case 'after-pradaria':
@@ -211,13 +231,13 @@ export function levelUnlocked(a: AreaDef, i: number): boolean {
  * Saves em que o rei já caiu continuam livres.
  */
 export function kingSealed(a: AreaDef, i: number): boolean {
-  if (isFreePlay() || a === CENTER || i !== a.levels.length - 1) return false;
+  if (isFreePlay() || a === CENTER || a === PROLOGUE || i !== a.levels.length - 1) return false;
   return !isDungeonDone(a.id) && !isDone(a.levels[i]);
 }
 
 /** Ordem da área (0 = Ilhas da Maré): base da dificuldade das dungeons e do XP. */
 export function areaTier(a: AreaDef | undefined): number {
-  if (!a) return 0;
+  if (!a || a === PROLOGUE) return 0;
   const i = AREAS.indexOf(a);
   return i < 0 ? AREAS.length : i;
 }

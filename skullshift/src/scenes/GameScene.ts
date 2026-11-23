@@ -36,7 +36,7 @@ import { MausoleumSystem } from '../game/mausoleum';
 import { ABILITIES, hasAbility } from '../game/abilities';
 import { playerName } from '../game/names';
 import { settings, sfx } from '../game/settings';
-import { FIRST_SHIFT, PROLOGUE_SCENES, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
+import { CRACKS, FIRST_SHIFT, PROLOGUE_SCENES, REVIVE_LINES, SHIFT_QUIPS, SPEAKER_NAME, type Line } from '../data/lore';
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 import { noTr, tr } from '../i18n';
@@ -250,6 +250,9 @@ export class GameScene extends Phaser.Scene {
     this.level = new Level(this, def);
     this.reserveOn = !def.shmup && !def.finale && !def.undersea && !def.secret;
     this.beatsLeft = this.mode === 'story' ? [...(BEATS[def.id] ?? [])] : [];
+    // Rachadura na memória: só para quem viu o sonho (e uma vez só).
+    const crack = CRACKS[def.id];
+    if (this.mode === 'story' && crack && isDone(crack.dream) && !hasSeen(`crack-${def.id}`)) this.beatsLeft.push([crack.screen, 'c', crack.text]);
     this.beatQueue = [];
     this.beatBusyUntil = 0;
     this.beatT0 = this.time.now;
@@ -261,7 +264,7 @@ export class GameScene extends Phaser.Scene {
     if (this.mode !== 'story') playMusic('versus');
     else if (def.shmup) playMusic('flight', def.id);
     else if (def.village) playMusic('pradaria' as Track, def.village.kind === 'arena' ? 'dungeon' : 'vila');
-    else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? def.prologue?.world ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
+    else playMusic(((def.dungeon ? getRun()?.area : undefined) ?? def.prologue?.world ?? def.trial?.world ?? areaOfLevel(this.levelIndex)?.id ?? 'mare') as Track, def.dungeon ? 'dungeon' : def.id);
     this.physics.world.setBounds(0, -400, this.level.width, H + 800);
     this.physics.world.setBoundsCollision(true, true, false, false);
     this.input.addPointer(4); // multitoque
@@ -297,6 +300,8 @@ export class GameScene extends Phaser.Scene {
       if (def.finale) this.time.delayedCall(10, () => this.becomeMinion(this.players[0], true));
       // Prólogo: o Xamã desce e ensina a forma deste mundo.
       if (def.prologue) this.time.delayedCall(900, () => void this.prologueScene());
+      // Prova de domínio: já começa na forma da prova.
+      if (def.trial && def.trial.char !== 'skull' && this.mode === 'story') this.time.delayedCall(250, () => this.players[0]?.alive && this.transform(0, def.trial!.char));
       // O Despertar: outros esqueletos da vila assistem ao escolhido (cada um de uma cor).
       if (def.id === 'p_vila') {
         const tints = [0xffd0a0, 0xa0d8ff, 0xc8ffb0, 0xffb0d8, 0xe0c8ff];
@@ -582,6 +587,7 @@ export class GameScene extends Phaser.Scene {
   nextLevel(): void {
     // A última fase do Santuário (ilha central) leva ao epílogo.
     if (LEVELS[this.levelIndex].id === CENTER.levels[CENTER.levels.length - 1]) this.scene.start('vn', { devices: this.devices, epilogue: true });
+    else if (LEVELS[this.levelIndex].trial) this.scene.start('village', { devices: this.devices });
     else this.scene.start('map', { devices: this.devices, justCompleted: this.levelIndex });
   }
 
@@ -1103,8 +1109,9 @@ export class GameScene extends Phaser.Scene {
     const [, kind, text] = this.beatQueue.shift()!;
     const ms = Math.max(2800, text.length * 58);
     this.beatBusyUntil = time + ms + 900;
-    if (kind === 'f') {
-      this.memoryFlash(text, ms);
+    if (kind === 'f' || kind === 'c') {
+      if (kind === 'c') markSeen(`crack-${LEVELS[this.levelIndex].id}`);
+      this.memoryFlash(text, ms, kind === 'c');
       return;
     }
     const view = this.cameras.main.worldView;
@@ -1120,7 +1127,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   /** Lampejo de memória: a tela fica sépia por um instante e a caveira lembra de algo da vida de antes. */
-  private memoryFlash(text: string, ms: number): void {
+  private memoryFlash(text: string, ms: number, crack = false): void {
     const cam = this.cameras.main;
     const p = this.players[0];
     const w = cam.width;
@@ -1132,7 +1139,7 @@ export class GameScene extends Phaser.Scene {
     const sepia = this.add.rectangle(w / 2, h / 2, w * 3, h * 3, 0xd9b478).setScrollFactor(0).setDepth(D).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
     const dim = this.add.rectangle(w / 2, h / 2, w * 3, h * 3, 0x2a1a0c).setScrollFactor(0).setDepth(D).setAlpha(0);
     const label = this.add
-      .text(w / 2, h * 0.24, '· LEMBRANÇA ·', { fontFamily: FONT, fontSize: '20px', color: '#ffe9b8', stroke: '#2a1a0c', strokeThickness: 6 })
+      .text(w / 2, h * 0.24, crack ? '· ALGO NÃO BATE ·' : '· LEMBRANÇA ·', { fontFamily: FONT, fontSize: '20px', color: '#ffe9b8', stroke: '#2a1a0c', strokeThickness: 6 })
       .setOrigin(0.5)
       .setScrollFactor(0)
       .setDepth(D + 1)
@@ -1150,7 +1157,31 @@ export class GameScene extends Phaser.Scene {
         : undefined;
     const follow = () => ghost?.setPosition(p.x, p.feet).setFlipX(p.facing < 0);
     this.events.on('update', follow);
-    const all = [sepia, dim, label, body];
+    const all: Phaser.GameObjects.GameObject[] = [sepia, dim, label, body];
+    // Rachadura: a lembrança trinca, com linhas brancas partindo de um canto.
+    if (crack) {
+      label.setColor('#e8d8ff');
+      const g = this.add.graphics().setScrollFactor(0).setDepth(D + 0.5).setAlpha(0);
+      const ox = w * 0.82;
+      const oy = h * 0.12;
+      for (let k = 0; k < 6; k++) {
+        let x = ox;
+        let y = oy;
+        const ang = Math.PI * (0.45 + k * 0.17);
+        g.lineStyle(k % 2 ? 2 : 3, 0xffffff, 0.85).beginPath().moveTo(x, y);
+        for (let seg = 0; seg < 5; seg++) {
+          const len = Phaser.Math.Between(50, 110);
+          const a = ang + Phaser.Math.FloatBetween(-0.35, 0.35);
+          x += Math.cos(a) * len;
+          y += Math.sin(a) * len;
+          g.lineTo(x, y);
+        }
+        g.strokePath();
+      }
+      all.push(g);
+      this.tweens.add({ targets: g, alpha: 1, duration: 120, delay: 200 });
+      this.time.delayedCall(200, () => this.cameras.main.shake(180, 0.006));
+    }
     this.tweens.add({ targets: sepia, alpha: 0.85, duration: 260 });
     this.tweens.add({ targets: dim, alpha: 0.22, duration: 260 });
     this.tweens.add({ targets: [label, body], alpha: 1, duration: 320, delay: 120 });
@@ -1878,7 +1909,7 @@ export class GameScene extends Phaser.Scene {
               if (LEVELS[this.levelIndex].undersea && this.mode === 'story') this.becomeShark(p);
               if (LEVELS[this.levelIndex].finale && this.mode === 'story') this.becomeMinion(p, false);
               // Prólogo: renasce já na forma que está aprendendo.
-              const lesson = LEVELS[this.levelIndex].prologue?.char;
+              const lesson = LEVELS[this.levelIndex].prologue?.char ?? LEVELS[this.levelIndex].trial?.char;
               if (this.mode === 'story' && pi === 0 && lesson && lesson !== 'skull') this.time.delayedCall(450, () => p.alive && p.def.id !== lesson && this.transform(0, lesson));
               p.sprite.setTintFill(0xffffff);
               this.time.delayedCall(140, () => p.sprite.clearTint());
@@ -3040,6 +3071,7 @@ export class GameScene extends Phaser.Scene {
   /** "Ilhas da Maré 3": a área e o número da fase dentro dela. */
   private levelTag(): string {
     const a = areaOfLevel(this.levelIndex);
+    if (LEVELS[this.levelIndex].trial) return 'Prova de domínio';
     if (!a) return `Fase ${this.levelIndex + 1}`;
     if (LEVELS[this.levelIndex].bonus) return `${areaTitle(a).name} · Área bônus`;
     return `${areaTitle(a).name} ${a.levels.indexOf(LEVELS[this.levelIndex].id) + 1}`;
@@ -3258,6 +3290,16 @@ export class GameScene extends Phaser.Scene {
     const ups = addXp(xp);
     sub = `${sub}   ·   +${xp} XP`;
     if (ups > 0) levelUpBanner(this.ui ?? this, getLevel(), 900);
+    // Prova de domínio: ouro na primeira vez e medalha (mais ouro) abaixo da meta de tempo.
+    if (def.trial) {
+      const medal = Number(secs) <= def.trial.par;
+      if (first) addCoins(60);
+      if (medal && !hasSeen(`medal-${def.id}`)) {
+        markSeen(`medal-${def.id}`);
+        addCoins(40);
+      }
+      sub = medal ? `MEDALHA!   ·   ${sub}` : `Meta da medalha: ${def.trial.par}s   ·   ${sub}`;
+    }
     completeLevel(this.levelIndex);
     this.time.delayedCall(600, () => announceAchievements(this.ui ?? this));
     addCoins(LEVELS[this.levelIndex].boss ? 15 : 5);

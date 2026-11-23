@@ -1,0 +1,85 @@
+2348	Necesitaba a alguien
+2349	Hex dijo que mi padre me traía aquí a pescar. Pero nadie pesca en estas islas: los tiburones no lo permiten. Nunca lo permitieron.
+2350	El abuelo de la cicatriz, que se enfrentó al Rey Gnoll... Los gnolls juran que nadie se acercó jamás al rey y volvió.
+2351	"Miedo de niño", dijo. Pero el frío del agua que recuerdo no es de niño. Es de ahora.
+2352	Nombres rayados en la piedra. Los mismos de mi "pesadilla de niño". No era una pesadilla. Yo estuve aquí. Ellos también.
+2353	El viejo herrero habló de un hechicero morado que encerró toda la forja. Hex dijo que derribó a un minotauro. No dijo que los encerró a todos.
+2354	Un tirachinas con el mango rajado, tirado en una rama. Igual que el mío. "Hijo único", dijo. Mentira.
+2355	En la oscuridad, quien encendía la vela no era mi madre. Ni Hex. Era una niña. Mi hermana.
+2356	"Todos me conocen", dijo. Los diablillos lo conocen, sí: huyen con solo oír su nombre.
+2357	En el sueño, el Portal de la Marea estaba en el mar. Aquí nadie ha oído hablar nunca de ningún portal.
+2358	Y los sueños en la Aldea de los Huesos. El padre pescador, el abuelo de la cicatriz, la madre de la vela. Nada de eso cuadraba con lo que vi ahí fuera.
+2359	Te diste cuenta. Los otros nunca se daban cuenta.
+2360	Y antes de que preguntes: los sueños de la Aldea de los Huesos también fui yo.
+2361	Un elegido necesita un pasado. El tuyo de verdad solo estorbaba, así que te di otro, un sueño cada vez.
+2362	El tirachinas con el mango rajado... me lo dio mi hermana. Ella existe.
+2363	Existe. Y todavía te espera en el puente.
+2364	¿Y los esqueletos de la aldea? ¿Los de colores distintos?
+2365	Otros que cayeron del puente. Otros elegidos. Ninguno llegó tan lejos como tú.
+2366	Primer Sueño
+2367	Termina un sueño del prólogo.
+2368	El Elegido
+2369	Termina todos los sueños de la Aldea de los Huesos.
+2370	Puedo Demostrarlo
+2371	Gana una prueba de la Piedra de las Pruebas.
+2372	Maestro de las Formas
+2373	Gana todas las pruebas de dominio.
+2374	Oro en Todo
+2375	Consigue la medalla en todas las pruebas.
+2376	Algo No Cuadra
+2377	Encuentra las nueve grietas en los recuerdos de los sueños.
+2378	Agua demasiado honda:\n¡hazte lagarto y nada!
+2379	Paredón: la araña\ntrepa. La caja\nguarda al lagarto.
+2380	Abismo ancho:\n¡vuela con las alas!
+2381	Muralla: ¡trepa\ncon la araña!
+2382	Vuela, trepa, vuela:\n¡la caja guarda\nla forma anterior!
+2383	Prueba de la Calavera
+2384	Prueba del Tiburón
+2385	Prueba del Gnoll
+2386	Prueba del Lagarto
+2387	Prueba de la Araña
+2388	Prueba del Minotauro
+2389	Prueba del Gnomo
+2390	Prueba del Goblin de la Antorcha
+2391	Prueba del Diablillo
+2392	Prueba del Murciélago
+2393	Prueba de dominio: todo el nivel en una sola forma. Termina en menos de {0}s para ganar la medalla.
+2394	¡Prueba superada!
+2398	Creación, guion y programación
+2399	Estudio
+2400	Ossian, la calavera
+2401	Hex, el Chamán
+2402	El aldeano de la casa azul
+2403	Los nueve reyes
+2404	Los vecinos de la Aldea de los Huesos
+2405	Tiny Swords (Free Pack y Enemy Pack) — Pixel Frog
+2406	Muestras FluidR3_GM — Frank Wen
+2409	Lilita One y Rubik (Google Fonts)
+2410	Hecho con
+2411	TypeScript y Vite
+2412	Agradecimientos
+2413	A quienes probaron cada nivel
+2414	Y a ti, que jugaste hasta aquí
+2415	¡Gracias por jugar!
+2416	mantén para acelerar · Esc para saltar
+2417	· ALGO NO CUADRA ·
+2418	Prueba de dominio
+2419	¡MEDALLA!   ·   {0}
+2420	Meta de la medalla: {0}s   ·   {1}
+2421	✕ SALIR
+2422	⬇ INSTALAR
+2423	Para instalar: toca Compartir\ny luego "Añadir a pantalla de inicio".
+2424	Resolución de la ventana
+2425	Tamaño de la ventana del juego en el ordenador (fuera de pantalla completa).
+2426	ACTUAL
+2427	PRUEBAS
+2428	PIEDRA DE LAS PRUEBAS
+2429	¡Medalla! Meta: {0}s
+2430	Superada. Medalla por debajo de {0}s.
+2431	1.ª vez: 60 de oro · medalla por debajo de {0}s: +40
+2432	Página {0} de {1}
+2433	Más pruebas.
+2434	SIGUIENTE ▶
+2435	Piedra de las Pruebas
+2436	Pruebas superadas: {0} de {1}. Cada sueño del prólogo abre la prueba de su forma.
+2437	Termina los sueños de la Aldea de los Huesos para abrir las pruebas.

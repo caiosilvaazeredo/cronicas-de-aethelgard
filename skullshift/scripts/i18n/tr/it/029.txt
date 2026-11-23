@@ -1,0 +1,85 @@
+2348	Avevo bisogno di qualcuno
+2349	Hex ha detto che mio padre mi portava qui a pescare. Ma nessuno pesca su queste isole: gli squali non lo permettono. Non l'hanno mai permesso.
+2350	Il nonno con la cicatrice, che affrontò il Re Gnoll... Gli gnoll giurano che nessuno si è mai avvicinato al re ed è tornato.
+2351	"Paura da bambino", ha detto. Ma il freddo dell'acqua che ricordo non è da bambino. È di adesso.
+2352	Nomi graffiati nella pietra. Gli stessi del mio "incubo da bambino". Non era un incubo. Io sono stato qui. Anche loro.
+2353	Il vecchio fabbro ha parlato di uno stregone viola che ha imprigionato l'intera forgia. Hex ha detto di aver abbattuto un minotauro. Non ha detto di averli imprigionati tutti.
+2354	Una fionda col manico crepato, lasciata su un ramo. Uguale alla mia. "Figlio unico", ha detto. Bugia.
+2355	Nel buio, chi accendeva la candela non era mia madre. Né Hex. Era una bambina. Mia sorella.
+2356	"Tutti mi conoscono", ha detto. I diavoletti lo conoscono, sì: scappano solo a sentirne il nome.
+2357	Nel sogno, il Portale della Marea era in mare. Qui nessuno ha mai sentito parlare di alcun portale.
+2358	E i sogni al Villaggio delle Ossa. Il padre pescatore, il nonno con la cicatrice, la madre della candela. Niente di tutto ciò tornava con quello che ho visto là fuori.
+2359	Te ne sei accorto. Gli altri non se ne accorgevano mai.
+2360	E prima che tu chieda: anche i sogni del Villaggio delle Ossa ero io.
+2361	Un prescelto ha bisogno di un passato. Il tuo vero era solo d'intralcio, così te ne ho dato un altro, un sogno alla volta.
+2362	La fionda col manico crepato... me l'ha regalata mia sorella. Lei esiste.
+2363	Esiste. E ti aspetta sul ponte ancora oggi.
+2364	E gli scheletri del villaggio? Quelli di colori diversi?
+2365	Altri caduti dal ponte. Altri prescelti. Nessuno è arrivato lontano quanto te.
+2366	Primo Sogno
+2367	Completa un sogno del prologo.
+2368	Il Prescelto
+2369	Completa tutti i sogni del Villaggio delle Ossa.
+2370	Posso Dimostrarlo
+2371	Vinci una prova della Pietra delle Prove.
+2372	Maestro delle Forme
+2373	Vinci tutte le prove di maestria.
+2374	Oro Ovunque
+2375	Ottieni la medaglia in tutte le prove.
+2376	Qualcosa Non Torna
+2377	Trova le nove crepe nei ricordi dei sogni.
+2378	Acqua troppo profonda:\ndiventa lucertola e nuota!
+2379	Muraglia: il ragno\nsi arrampica. La scatola\ntiene la lucertola.
+2380	Abisso largo:\nvola con le ali!
+2381	Muro alto: arrampicati\ncol ragno!
+2382	Vola, arrampicati, vola:\nla scatola tiene\nla forma di prima!
+2383	Prova del Teschio
+2384	Prova dello Squalo
+2385	Prova dello Gnoll
+2386	Prova della Lucertola
+2387	Prova del Ragno
+2388	Prova del Minotauro
+2389	Prova dello Gnomo
+2390	Prova del Goblin della Torcia
+2391	Prova del Diavoletto
+2392	Prova del Pipistrello
+2393	Prova di maestria: tutto il livello in un'unica forma. Finisci in meno di {0}s per ottenere la medaglia.
+2394	Prova superata!
+2398	Ideazione, testi e programmazione
+2399	Studio
+2400	Ossian, il teschio
+2401	Hex, lo Sciamano
+2402	Il paesano della casa blu
+2403	I nove re
+2404	Gli abitanti del Villaggio delle Ossa
+2405	Tiny Swords (Free Pack ed Enemy Pack) — Pixel Frog
+2406	Campioni FluidR3_GM — Frank Wen
+2409	Lilita One e Rubik (Google Fonts)
+2410	Realizzato con
+2411	TypeScript e Vite
+2412	Ringraziamenti
+2413	A chi ha provato ogni livello
+2414	E a te, che hai giocato fin qui
+2415	Grazie per aver giocato!
+2416	tieni premuto per accelerare · Esc per saltare
+2417	· QUALCOSA NON TORNA ·
+2418	Prova di maestria
+2419	MEDAGLIA!   ·   {0}
+2420	Obiettivo medaglia: {0}s   ·   {1}
+2421	✕ ESCI
+2422	⬇ INSTALLA
+2423	Per installare: tocca Condividi\ne poi "Aggiungi alla schermata Home".
+2424	Risoluzione della finestra
+2425	Dimensione della finestra di gioco sul computer (fuori dallo schermo intero).
+2426	ATTUALE
+2427	PROVE
+2428	PIETRA DELLE PROVE
+2429	Medaglia! Obiettivo: {0}s
+2430	Superata. Medaglia sotto i {0}s.
+2431	1ª volta: 60 d'oro · medaglia sotto i {0}s: +40
+2432	Pagina {0} di {1}
+2433	Altre prove.
+2434	AVANTI ▶
+2435	Pietra delle Prove
+2436	Prove superate: {0} su {1}. Ogni sogno del prologo apre la prova della sua forma.
+2437	Completa i sogni del Villaggio delle Ossa per aprire le prove.

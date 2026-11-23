@@ -1,0 +1,85 @@
+2348	Birine ihtiyacım vardı
+2349	Hex, babamın beni buraya balık tutmaya getirdiğini söyledi. Ama bu adalarda kimse balık tutmaz: köpekbalıkları izin vermez. Hiç vermediler.
+2350	Gnoll Kral'a karşı duran yaralı dede... Gnoll'lar, krala yaklaşıp geri dönen kimsenin olmadığına yemin ediyor.
+2351	"Çocukluk korkusu," dedi. Ama hatırladığım suyun soğuğu çocukluktan değil. Şimdiden.
+2352	Taşa kazınmış isimler. "Çocukluk kâbusumdaki" isimlerin aynısı. Kâbus değildi. Ben buradaydım. Onlar da.
+2353	Yaşlı demirci, bütün demirhaneyi hapseden mor bir büyücüden söz etti. Hex bir minotoru devirdiğini söylemişti. Hepsini hapsettiğini söylememişti.
+2354	Sapı çatlak bir sapan, bir dala bırakılmış. Tıpkı benimki gibi. "Tek çocuk," demişti. Yalan.
+2355	Karanlıkta mumu yakan annem değildi. Hex de değil. Küçük bir kızdı. Kız kardeşim.
+2356	"Herkes beni tanır," demişti. İblisler tanıyor, evet: adını duyar duymaz kaçıyorlar.
+2357	Rüyada Gelgit Kapısı denizdeydi. Burada kimse böyle bir kapı duymamış.
+2358	Ya Kemikler Köyü'ndeki rüyalar? Balıkçı baba, yaralı dede, mumlu anne. Hiçbiri dışarıda gördüklerimle uyuşmadı.
+2359	Fark ettin. Diğerleri hiç fark etmezdi.
+2360	Ve sormadan söyleyeyim: Kemikler Köyü'ndeki rüyalar da bendim.
+2361	Seçilmiş birinin bir geçmişi olmalı. Gerçeği sadece ayak bağıydı, ben de sana başka bir tane verdim, rüya rüya.
+2362	Sapı çatlak sapan... onu bana kız kardeşim vermişti. O gerçek.
+2363	Gerçek. Ve bugün hâlâ köprüde bekliyor.
+2364	Ya köydeki iskeletler? Farklı renklerdeki?
+2365	Köprüden düşen başkaları. Başka seçilmişler. Hiçbiri senin kadar ileri gidemedi.
+2366	İlk Rüya
+2367	Önsözden bir rüyayı bitir.
+2368	Seçilmiş
+2369	Kemikler Köyü'ndeki bütün rüyaları bitir.
+2370	Kanıtlayabilirim
+2371	Sınav Taşı'nda bir sınav kazan.
+2372	Biçimlerin Ustası
+2373	Bütün ustalık sınavlarını kazan.
+2374	Her Yerde Altın
+2375	Bütün sınavlarda madalya kazan.
+2376	Bir Şeyler Tutmuyor
+2377	Rüya anılarındaki dokuz çatlağı bul.
+2378	Su çok derin:\nkertenkele ol ve yüz!
+2379	Yüksek duvar: örümcek\ntırmanır. Kutu\nkertenkeleyi saklar.
+2380	Geniş uçurum:\nkanatlarla uç!
+2381	Sur: örümcekle\ntırman!
+2382	Uç, tırman, uç:\nkutu önceki\nbiçimi saklar!
+2383	Kafatası Sınavı
+2384	Köpekbalığı Sınavı
+2385	Gnoll Sınavı
+2386	Kertenkele Sınavı
+2387	Örümcek Sınavı
+2388	Minotor Sınavı
+2389	Cüce Sınavı
+2390	Meşaleli Goblin Sınavı
+2391	İblis Sınavı
+2392	Yarasa Sınavı
+2393	Ustalık sınavı: bütün bölüm tek bir biçimde. Madalya için {0} saniyeden kısa sürede bitir.
+2394	Sınav kazanıldı!
+2398	Fikir, senaryo ve programlama
+2399	Stüdyo
+2400	Ossian, kafatası
+2401	Hex, Şaman
+2402	Mavi evdeki köylü
+2403	Dokuz kral
+2404	Kemikler Köyü'nün sakinleri
+2405	Tiny Swords (Free Pack ve Enemy Pack) — Pixel Frog
+2406	FluidR3_GM örnekleri — Frank Wen
+2409	Lilita One ve Rubik (Google Fonts)
+2410	Yapım araçları
+2411	TypeScript ve Vite
+2412	Teşekkürler
+2413	Her bölümü test edenlere
+2414	Ve buraya kadar oynayan sana
+2415	Oynadığın için teşekkürler!
+2416	hızlandırmak için basılı tut · atlamak için Esc
+2417	· BİR ŞEYLER TUTMUYOR ·
+2418	Ustalık sınavı
+2419	MADALYA!   ·   {0}
+2420	Madalya hedefi: {0}sn   ·   {1}
+2421	✕ ÇIK
+2422	⬇ YÜKLE
+2423	Yüklemek için: Paylaş'a dokun\nsonra "Ana Ekrana Ekle".
+2424	Pencere çözünürlüğü
+2425	Bilgisayarda oyun penceresinin boyutu (tam ekran dışında).
+2426	ŞU ANKİ
+2427	SINAVLAR
+2428	SINAV TAŞI
+2429	Madalya! Hedef: {0}sn
+2430	Kazanıldı. Madalya {0}sn altında.
+2431	İlk kez: 60 altın · {0}sn altında madalya: +40
+2432	Sayfa {0}/{1}
+2433	Daha fazla sınav.
+2434	SONRAKİ ▶
+2435	Sınav Taşı
+2436	Kazanılan sınavlar: {0}/{1}. Önsözdeki her rüya kendi biçiminin sınavını açar.
+2437	Sınavları açmak için Kemikler Köyü'ndeki rüyaları bitir.

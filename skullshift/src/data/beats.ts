@@ -12,7 +12,8 @@
  * alguém de roxo na ponte, a água gelada. Aqui são só cacos: um cheiro, uma voz, uma cor.
  * O Xamã continua gentil — e continua escorregando nas palavras.
  */
-export type BeatKind = 's' | 'x' | 'f';
+/** 'c' = rachadura: um detalhe que desmente um sonho do prólogo (ver CRACKS em lore.ts). */
+export type BeatKind = 's' | 'x' | 'f' | 'c';
 export type Beat = [screen: number, kind: BeatKind, text: string];
 
 export const BEATS: Record<string, Beat[]> = {

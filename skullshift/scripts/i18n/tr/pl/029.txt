@@ -1,0 +1,85 @@
+2348	Potrzebowałem kogoś
+2349	Hex mówił, że ojciec zabierał mnie tu na ryby. Ale na tych wyspach nikt nie łowi: rekiny nie pozwalają. Nigdy nie pozwalały.
+2350	Dziadek z blizną, który stanął przeciw Królowi Gnolli... Gnolle przysięgają, że nikt nigdy nie zbliżył się do króla i nie wrócił.
+2351	„Dziecięcy strach”, powiedział. Ale chłód wody, który pamiętam, nie jest z dzieciństwa. Jest z teraz.
+2352	Imiona wydrapane w kamieniu. Te same, co w moim „dziecięcym koszmarze”. To nie był koszmar. Byłem tutaj. Oni też.
+2353	Stary kowal mówił o fioletowym czarowniku, który uwięził całą kuźnię. Hex mówił, że powalił minotaura. Nie mówił, że uwięził wszystkich.
+2354	Proca z pękniętą rączką, zostawiona na gałęzi. Taka sama jak moja. „Jedynak”, powiedział. Kłamstwo.
+2355	W ciemności świecę zapalała nie moja matka. Ani Hex. Dziewczynka. Moja siostra.
+2356	„Wszyscy mnie znają”, powiedział. Chochliki go znają, owszem: uciekają na sam dźwięk jego imienia.
+2357	We śnie Brama Przypływu stała w morzu. Tutaj nikt nigdy nie słyszał o żadnej bramie.
+2358	I sny w Wiosce Kości. Ojciec rybak, dziadek z blizną, matka ze świecą. Nic z tego nie zgadzało się z tym, co widziałem na zewnątrz.
+2359	Zauważyłeś. Inni nigdy nie zauważali.
+2360	I zanim zapytasz: sny w Wiosce Kości to też byłem ja.
+2361	Wybraniec potrzebuje przeszłości. Twoja prawdziwa tylko przeszkadzała, więc dałem ci inną, sen po śnie.
+2362	Proca z pękniętą rączką... dała mi ją siostra. Ona istnieje.
+2363	Istnieje. I do dziś czeka na moście.
+2364	A szkielety w wiosce? Te w różnych kolorach?
+2365	Inni, którzy spadli z mostu. Inni wybrańcy. Żaden nie zaszedł tak daleko jak ty.
+2366	Pierwszy Sen
+2367	Ukończ sen z prologu.
+2368	Wybraniec
+2369	Ukończ wszystkie sny w Wiosce Kości.
+2370	Mogę To Udowodnić
+2371	Wygraj próbę przy Kamieniu Prób.
+2372	Mistrz Postaci
+2373	Wygraj wszystkie próby mistrzostwa.
+2374	Złoto Wszędzie
+2375	Zdobądź medal we wszystkich próbach.
+2376	Coś Się Nie Zgadza
+2377	Znajdź dziewięć pęknięć we wspomnieniach ze snów.
+2378	Za głęboka woda:\nzmień się w jaszczura i płyń!
+2379	Wysoki mur: pająk\nsię wspina. Pudełko\nprzechowa jaszczura.
+2380	Szeroka przepaść:\nleć na skrzydłach!
+2381	Mur: wspinaj się\njako pająk!
+2382	Leć, wspinaj się, leć:\npudełko przechowa\npoprzednią postać!
+2383	Próba Czaszki
+2384	Próba Rekina
+2385	Próba Gnolla
+2386	Próba Jaszczura
+2387	Próba Pająka
+2388	Próba Minotaura
+2389	Próba Gnoma
+2390	Próba Goblina z Pochodnią
+2391	Próba Chochlika
+2392	Próba Nietoperza
+2393	Próba mistrzostwa: cały poziom w jednej postaci. Skończ w mniej niż {0}s, aby zdobyć medal.
+2394	Próba zaliczona!
+2398	Pomysł, scenariusz i programowanie
+2399	Studio
+2400	Ossian, czaszka
+2401	Hex, Szaman
+2402	Wieśniak z niebieskiego domu
+2403	Dziewięciu królów
+2404	Mieszkańcy Wioski Kości
+2405	Tiny Swords (Free Pack i Enemy Pack) — Pixel Frog
+2406	Próbki FluidR3_GM — Frank Wen
+2409	Lilita One i Rubik (Google Fonts)
+2410	Stworzono przy użyciu
+2411	TypeScript i Vite
+2412	Podziękowania
+2413	Wszystkim, którzy testowali każdy poziom
+2414	I tobie, że grałeś aż dotąd
+2415	Dzięki za grę!
+2416	przytrzymaj, by przyspieszyć · Esc, by pominąć
+2417	· COŚ SIĘ NIE ZGADZA ·
+2418	Próba mistrzostwa
+2419	MEDAL!   ·   {0}
+2420	Cel medalu: {0}s   ·   {1}
+2421	✕ WYJDŹ
+2422	⬇ ZAINSTALUJ
+2423	Aby zainstalować: stuknij Udostępnij\na potem „Do ekranu początkowego”.
+2424	Rozdzielczość okna
+2425	Rozmiar okna gry na komputerze (poza pełnym ekranem).
+2426	OBECNA
+2427	PRÓBY
+2428	KAMIEŃ PRÓB
+2429	Medal! Cel: {0}s
+2430	Zaliczona. Medal poniżej {0}s.
+2431	1. raz: 60 złota · medal poniżej {0}s: +40
+2432	Strona {0} z {1}
+2433	Więcej prób.
+2434	DALEJ ▶
+2435	Kamień Prób
+2436	Zaliczone próby: {0} z {1}. Każdy sen z prologu otwiera próbę swojej postaci.
+2437	Ukończ sny w Wiosce Kości, aby otworzyć próby.

@@ -12,7 +12,10 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
   // DUNGEON=n: em vez das fases, gera n salas de dungeon (todas as áreas, tipos variados) e checa cada uma.
   const dungeon = Number(process.env.DUNGEON || 0);
   const total = dungeon || (await p.evaluate(async () => (await import('/src/game/level.ts')).LEVELS.length));
+  // Com nomes na linha de comando, só essas fases (mais rápido).
+  const pick = only && !dungeon ? await p.evaluate(async (ids) => (await import('/src/game/level.ts')).LEVELS.map((l, i) => (ids.includes(l.id) ? i : -1)).filter((i) => i >= 0), only) : null;
   for (let lv = 0; lv < total; lv++) {
+    if (pick && !pick.includes(lv)) continue;
     if (dungeon) {
       await p.evaluate(async (k) => {
         const d = await import('/src/game/dungeon.ts');
@@ -23,15 +26,18 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
         d.getRun().__area = A[k % A.length];
         window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: idx });
       }, lv);
-    } else await p.evaluate(async (lv) => {
-      window.__chars = (await import('/src/game/characters.ts')).CHARS;
+    } else await p.evaluate(async ([lv, np]) => {
+      const ch = await import('/src/game/characters.ts');
+      window.__chars = ch.CHARS;
+      window.__itemChar = ch.ITEM_TO_CHAR;
+      window.__noPower = np;
       window.__skullshift.scene.getScenes(true)[0].scene.start('game', { mode: 'story', devices: ['kb-full'], level: lv });
-    }, lv);
+    }, [lv, !!process.env.NOPOWER]);
     await p.waitForTimeout(700);
     const r = await p.evaluate(() => {
       const s = window.__skullshift.scene.getScene('game');
       const L = s.level, def = L.def;
-      if (def.shmup || def.undersea || def.chase || (def.secret && !def.bonus && !def.dungeon)) return { id: def.id, skip: true };
+      if (def.shmup || def.undersea || def.chase || (def.secret && !def.bonus && !def.dungeon && !def.trial)) return { id: def.id, skip: true };
       const T = 64, FLOOR = 472, top = (h) => FLOOR - h * T;
       const X = (sc, t) => sc * 1280 + t * T + T / 2;
       const surf = [];
@@ -69,12 +75,25 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
       };
       // Prólogo: a fase é jogada na forma ensinada (o Ossian renasce nela). Nadar atravessa canais
       // entre chãos baixos; escalar sobe qualquer parede colada; voar cruza abismos largos.
-      const C = def.prologue ? (window.__chars ?? {})[def.prologue.char] ?? {} : {};
+      const form = def.prologue?.char ?? def.trial?.char;
+      const C0 = form ? (window.__chars ?? {})[form] ?? {} : {};
+      // Objetos de forma no caminho (fases que misturam poderes): depois de passar por um, o
+      // poder dele vale dali em diante (a caixa de reserva guarda a forma anterior).
+      const powers = [];
+      if (!window.__noPower) def.screens.forEach((sc, si) => (sc.storyItems || []).forEach(([t, it]) => {
+        const c = (window.__chars ?? {})[(window.__itemChar ?? {})[it]];
+        if (c && (c.climb || c.fly || c.swim)) powers.push({ x: X(si, t), c });
+      }));
+      let C = C0;
+      const at = (A) => {
+        const got = powers.filter((pw) => pw.x <= A.x1 + 32);
+        return got.length ? { climb: C0.climb || got.some((g) => g.c.climb), fly: C0.fly || got.some((g) => g.c.fly), swim: C0.swim || got.some((g) => g.c.swim) } : C0;
+      };
       const canJump = (D, H, boost = 0) => {
         // D distância horizontal (>=0), H subida (positiva para cima). boost: altura extra (mola).
         if (boost) return H <= boost && D <= 380;
         if (C.climb && D <= 70) return true;
-        if (C.fly && D <= 540 && H <= 220) return true;
+        if (C.fly && D <= 760 && H <= 220) return true;
         // Dá para andar mais devagar: vale qualquer instante a partir de D/vx (até ~1,2 s depois).
         const t0 = D / vx;
         let m = -1e9;
@@ -95,6 +114,7 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
       while (q.length) {
         const i = q.shift();
         const A = surf[i];
+        C = at(A);
         for (let j = 0; j < n; j++) {
           if (seen[j]) continue;
           const B = surf[j];
@@ -126,6 +146,7 @@ const only = process.argv[2] ? process.argv[2].split(',') : null;
       const firstMiss = surf.filter((u, i) => !seen[i] && u.kind === 'seg').sort((a, b) => a.x0 - b.x0)[0];
       return { id: def.dungeon ? `dungeon:${def.tiles}:${def.dungeon.kind}` : def.id, reached, maxX: Math.round(maxX), goalX: Math.round(goalX), miss: firstMiss ? [Math.floor(firstMiss.x0 / 1280), Math.round((firstMiss.x0 % 1280) / 64), (FLOOR - firstMiss.y) / 64] : null };
     });
+    if (process.env.DEBUG) console.log(lv, JSON.stringify(r));
     if (only && !only.includes(r.id)) continue;
     results.push(r);
   }

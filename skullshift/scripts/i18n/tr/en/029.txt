@@ -1,0 +1,85 @@
+2348	I needed someone
+2349	Hex said my father used to bring me here to fish. But nobody fishes on these islands: the sharks won't let them. They never have.
+2350	Grandpa with the scar, who faced the Gnoll King... The gnolls swear nobody ever got close to the king and came back.
+2351	"Childhood fear," he said. But the cold water I remember isn't from childhood. It's from now.
+2352	Names scratched into the stone. The same ones from my "childhood nightmare." It wasn't a nightmare. I was here. So were they.
+2353	The old smith spoke of a purple sorcerer who imprisoned the whole forge. Hex said he brought down a minotaur. He didn't say he imprisoned them all.
+2354	A slingshot with a cracked handle, left on a branch. Just like mine. "Only child," he said. A lie.
+2355	In the dark, the one who lit the candle wasn't my mother. Nor Hex. It was a girl. My sister.
+2356	"Everyone knows me," he said. The imps know him, all right: they flee at the mere sound of his name.
+2357	In the dream, the Tide Gate was out at sea. Here nobody has ever heard of any gate.
+2358	And the dreams in the Village of Bones. The fisherman father, the scarred grandpa, the candle mother. None of it matched what I saw out there.
+2359	You noticed. The others never did.
+2360	And before you ask: the dreams in the Village of Bones were me as well.
+2361	A chosen one needs a past. Your real one only got in the way, so I gave you another, one dream at a time.
+2362	The slingshot with the cracked handle... my sister gave it to me. She exists.
+2363	She exists. And she still waits on the bridge to this day.
+2364	And the skeletons in the village? The ones in different colors?
+2365	Others who fell from the bridge. Other chosen ones. None got as far as you.
+2366	First Dream
+2367	Finish a dream of the prologue.
+2368	The Chosen One
+2369	Finish every dream in the Village of Bones.
+2370	I Can Prove It
+2371	Win a trial at the Trial Stone.
+2372	Master of Forms
+2373	Win every mastery trial.
+2374	Gold Everywhere
+2375	Earn the medal in every trial.
+2376	Something's Off
+2377	Find the nine cracks in the dream memories.
+2378	Water too deep:\nbecome a lizard and swim!
+2379	Big wall: the spider\nclimbs. The box\nkeeps the lizard.
+2380	Wide abyss:\nfly with the wings!
+2381	High wall: climb\nas the spider!
+2382	Fly, climb, fly:\nthe box keeps\nthe previous form!
+2383	Skull Trial
+2384	Shark Trial
+2385	Gnoll Trial
+2386	Lizard Trial
+2387	Spider Trial
+2388	Minotaur Trial
+2389	Gnome Trial
+2390	Torch Goblin Trial
+2391	Imp Trial
+2392	Bat Trial
+2393	Mastery trial: the whole level in a single form. Finish in under {0}s to earn the medal.
+2394	Trial won!
+2398	Creation, writing and programming
+2399	Studio
+2400	Ossian, the skull
+2401	Hex, the Shaman
+2402	The villager from the blue house
+2403	The nine kings
+2404	The villagers of the Village of Bones
+2405	Tiny Swords (Free Pack and Enemy Pack) — Pixel Frog
+2406	FluidR3_GM samples — Frank Wen
+2409	Lilita One and Rubik (Google Fonts)
+2410	Made with
+2411	TypeScript and Vite
+2412	Thanks
+2413	To everyone who tested each level
+2414	And to you, who played this far
+2415	Thanks for playing!
+2416	hold to speed up · Esc to skip
+2417	· SOMETHING'S OFF ·
+2418	Mastery trial
+2419	MEDAL!   ·   {0}
+2420	Medal target: {0}s   ·   {1}
+2421	✕ QUIT
+2422	⬇ INSTALL
+2423	To install: tap Share\nthen "Add to Home Screen".
+2424	Window resolution
+2425	Size of the game window on the computer (outside fullscreen).
+2426	CURRENT
+2427	TRIALS
+2428	TRIAL STONE
+2429	Medal! Target: {0}s
+2430	Won. Medal under {0}s.
+2431	1st time: 60 gold · medal under {0}s: +40
+2432	Page {0} of {1}
+2433	More trials.
+2434	NEXT ▶
+2435	Trial Stone
+2436	Trials won: {0} of {1}. Each prologue dream opens the trial of its form.
+2437	Finish the dreams of the Village of Bones to open the trials.

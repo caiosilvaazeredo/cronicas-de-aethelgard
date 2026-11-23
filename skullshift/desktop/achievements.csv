@@ -1,6 +1,10 @@
 api,nome,descricao
 "ACH_DREAM1","Primeiro Sonho","Termine um sonho do prólogo."
 "ACH_CHOSEN","O Escolhido","Termine todos os sonhos da Vila dos Ossos."
+"ACH_TRIAL1","Posso Provar","Vença uma prova da Pedra das Provas."
+"ACH_TRIALALL","Mestre das Formas","Vença todas as provas de domínio."
+"ACH_MEDALALL","Ouro em Tudo","Ganhe a medalha em todas as provas."
+"ACH_CRACKS","Algo Não Bate","Encontre as nove rachaduras nas memórias dos sonhos."
 "ACH_WAKE","Despertar","Termine a primeira fase."
 "ACH_SEAL1","Primeiro Selo","Derrote o primeiro rei."
 "ACH_SEAL5","Metade da Coroa","Derrote cinco reis."

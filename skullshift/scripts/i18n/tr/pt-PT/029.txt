@@ -1,0 +1,26 @@
+2349	O Hex disse que o meu pai me trazia aqui para pescar. Mas ninguém pesca nestas ilhas: os tubarões não deixam. Nunca deixaram.
+2352	Nomes riscados na pedra. Os mesmos do meu "pesadelo de criança". Não era pesadelo. Eu estive cá. Eles também.
+2353	O ferreiro velho falou de um feiticeiro roxo que prendeu a forja inteira. O Hex disse que derrubou um minotauro. Não disse que prendeu todos.
+2355	No escuro, quem acendia a vela não era a minha mãe. Nem o Hex. Era uma menina. A minha irmã.
+2358	E os sonhos na Aldeia dos Ossos. O pai pescador, o avô da cicatriz, a mãe da vela. Nada disso batia certo com o que eu vi lá fora.
+2360	E antes que perguntes: os sonhos da Aldeia dos Ossos também fui eu.
+2364	E os esqueletos da aldeia? Os de cores diferentes?
+2369	Termina todos os sonhos da Aldeia dos Ossos.
+2367	Termina um sonho do prólogo.
+2371	Vence uma prova da Pedra das Provas.
+2373	Vence todas as provas de domínio.
+2375	Ganha a medalha em todas as provas.
+2377	Encontra as nove rachaduras nas memórias dos sonhos.
+2378	Água funda demais:\ntransforma-te em lagarto e nada!
+2380	Abismo largo:\nvoa com as asas!
+2381	Muralha: escala\ncom a aranha!
+2382	Voa, escala, voa:\na caixa guarda\na forma anterior!
+2393	Prova de domínio: o nível inteiro numa forma só. Termina em menos de {0}s para ganhar a medalha.
+2404	Os moradores da Aldeia dos Ossos
+2413	A quem testou cada nível
+2414	E a ti, que jogaste até aqui
+2416	mantém premido para acelerar · Esc para saltar
+2423	Para instalar: toca em Partilhar\ne depois em "Adicionar ao ecrã principal".
+2425	Tamanho da janela do jogo no computador (fora do ecrã inteiro).
+2436	Provas vencidas: {0} de {1}. Cada sonho do prólogo abre a prova da sua forma.
+2437	Termina os sonhos da Aldeia dos Ossos para abrir as provas.

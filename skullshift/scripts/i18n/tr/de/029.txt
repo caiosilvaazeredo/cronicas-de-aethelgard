@@ -1,0 +1,85 @@
+2348	Ich brauchte jemanden
+2349	Hex sagte, mein Vater hätte mich zum Angeln hierher mitgenommen. Aber auf diesen Inseln angelt niemand: Die Haie lassen es nicht zu. Haben es nie.
+2350	Der Großvater mit der Narbe, der dem Gnollkönig gegenübertrat... Die Gnolls schwören, dass nie jemand dem König nahe kam und zurückkehrte.
+2351	„Kinderangst“, sagte er. Aber die Kälte des Wassers, an die ich mich erinnere, ist nicht aus der Kindheit. Sie ist von jetzt.
+2352	Namen, in den Stein geritzt. Dieselben wie in meinem „Kindheitsalbtraum“. Es war kein Albtraum. Ich war hier. Sie auch.
+2353	Der alte Schmied erzählte von einem violetten Zauberer, der die ganze Schmiede eingesperrt hat. Hex sagte, er hätte einen Minotaurus besiegt. Nicht, dass er alle eingesperrt hat.
+2354	Eine Schleuder mit gesprungenem Griff, auf einem Ast liegen gelassen. Genau wie meine. „Einzelkind“, sagte er. Gelogen.
+2355	Im Dunkeln war es nicht meine Mutter, die die Kerze anzündete. Auch nicht Hex. Es war ein Mädchen. Meine Schwester.
+2356	„Alle kennen mich“, sagte er. Die Kobolde kennen ihn, ja: Sie fliehen schon, wenn sie seinen Namen hören.
+2357	Im Traum lag das Gezeitentor im Meer. Hier hat noch nie jemand von einem Tor gehört.
+2358	Und die Träume im Knochendorf. Der Fischer-Vater, der Großvater mit der Narbe, die Mutter mit der Kerze. Nichts davon passte zu dem, was ich draußen gesehen habe.
+2359	Du hast es bemerkt. Die anderen haben es nie bemerkt.
+2360	Und bevor du fragst: Die Träume im Knochendorf waren auch ich.
+2361	Ein Auserwählter braucht eine Vergangenheit. Deine echte war nur im Weg, also gab ich dir eine andere, einen Traum nach dem anderen.
+2362	Die Schleuder mit dem gesprungenen Griff... die hat mir meine Schwester geschenkt. Es gibt sie.
+2363	Es gibt sie. Und sie wartet bis heute auf der Brücke.
+2364	Und die Skelette im Dorf? Die in den verschiedenen Farben?
+2365	Andere, die von der Brücke gefallen sind. Andere Auserwählte. Keiner kam so weit wie du.
+2366	Erster Traum
+2367	Beende einen Traum des Prologs.
+2368	Der Auserwählte
+2369	Beende alle Träume im Knochendorf.
+2370	Ich Kann Es Beweisen
+2371	Gewinne eine Prüfung am Prüfungsstein.
+2372	Meister der Gestalten
+2373	Gewinne alle Meisterprüfungen.
+2374	Überall Gold
+2375	Hol dir in jeder Prüfung die Medaille.
+2376	Irgendwas Stimmt Nicht
+2377	Finde die neun Risse in den Traumerinnerungen.
+2378	Wasser zu tief:\nwerde Echse und schwimm!
+2379	Hohe Wand: Die Spinne\nklettert. Die Box\nbehält die Echse.
+2380	Breiter Abgrund:\nflieg mit den Flügeln!
+2381	Mauer: Kletter\nals Spinne!
+2382	Flieg, kletter, flieg:\nDie Box behält\ndie vorige Gestalt!
+2383	Prüfung des Schädels
+2384	Prüfung des Hais
+2385	Prüfung des Gnolls
+2386	Prüfung der Echse
+2387	Prüfung der Spinne
+2388	Prüfung des Minotaurus
+2389	Prüfung des Gnoms
+2390	Prüfung des Fackelgoblins
+2391	Prüfung des Kobolds
+2392	Prüfung der Fledermaus
+2393	Meisterprüfung: das ganze Level in einer einzigen Gestalt. Schaffe es in unter {0}s für die Medaille.
+2394	Prüfung bestanden!
+2398	Idee, Text und Programmierung
+2399	Studio
+2400	Ossian, der Schädel
+2401	Hex, der Schamane
+2402	Der Dorfbewohner aus dem blauen Haus
+2403	Die neun Könige
+2404	Die Bewohner des Knochendorfs
+2405	Tiny Swords (Free Pack und Enemy Pack) — Pixel Frog
+2406	FluidR3_GM-Samples — Frank Wen
+2409	Lilita One und Rubik (Google Fonts)
+2410	Gemacht mit
+2411	TypeScript und Vite
+2412	Danke
+2413	An alle, die jedes Level getestet haben
+2414	Und an dich, der bis hierher gespielt hat
+2415	Danke fürs Spielen!
+2416	halten zum Beschleunigen · Esc zum Überspringen
+2417	· IRGENDWAS STIMMT NICHT ·
+2418	Meisterprüfung
+2419	MEDAILLE!   ·   {0}
+2420	Medaillenziel: {0}s   ·   {1}
+2421	✕ BEENDEN
+2422	⬇ INSTALLIEREN
+2423	Zum Installieren: tippe auf Teilen\nund dann auf „Zum Home-Bildschirm“.
+2424	Fensterauflösung
+2425	Größe des Spielfensters am Computer (außerhalb des Vollbilds).
+2426	AKTUELL
+2427	PRÜFUNGEN
+2428	PRÜFUNGSSTEIN
+2429	Medaille! Ziel: {0}s
+2430	Bestanden. Medaille unter {0}s.
+2431	1. Mal: 60 Gold · Medaille unter {0}s: +40
+2432	Seite {0} von {1}
+2433	Weitere Prüfungen.
+2434	WEITER ▶
+2435	Prüfungsstein
+2436	Bestandene Prüfungen: {0} von {1}. Jeder Traum des Prologs öffnet die Prüfung seiner Gestalt.
+2437	Beende die Träume im Knochendorf, um die Prüfungen zu öffnen.

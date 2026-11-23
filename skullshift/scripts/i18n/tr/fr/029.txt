@@ -1,0 +1,85 @@
+2348	J'avais besoin de quelqu'un
+2349	Hex a dit que mon père m'emmenait pêcher ici. Mais personne ne pêche sur ces îles : les requins ne laissent pas faire. Jamais.
+2350	Le grand-père à la cicatrice, qui a affronté le Roi Gnoll... Les gnolls jurent que personne n'a jamais approché le roi et n'en est revenu.
+2351	« Une peur d'enfant », a-t-il dit. Mais le froid de l'eau dont je me souviens n'est pas d'enfant. Il est d'aujourd'hui.
+2352	Des noms gravés dans la pierre. Les mêmes que dans mon « cauchemar d'enfant ». Ce n'était pas un cauchemar. J'étais ici. Eux aussi.
+2353	Le vieux forgeron a parlé d'un sorcier violet qui a emprisonné toute la forge. Hex a dit qu'il avait abattu un minotaure. Il n'a pas dit qu'il les avait tous emprisonnés.
+2354	Un lance-pierre au manche fendu, abandonné sur une branche. Comme le mien. « Fils unique », a-t-il dit. Mensonge.
+2355	Dans le noir, celle qui allumait la bougie, ce n'était pas ma mère. Ni Hex. C'était une fillette. Ma sœur.
+2356	« Tout le monde me connaît », a-t-il dit. Les diablotins le connaissent, oui : ils fuient rien qu'à entendre son nom.
+2357	Dans le rêve, le Portail de la Marée était en mer. Ici, personne n'a jamais entendu parler d'un portail.
+2358	Et les rêves au Village des Os. Le père pêcheur, le grand-père à la cicatrice, la mère à la bougie. Rien de tout ça ne collait avec ce que j'ai vu dehors.
+2359	Tu as remarqué. Les autres ne remarquaient jamais.
+2360	Et avant que tu ne demandes : les rêves du Village des Os, c'était moi aussi.
+2361	Un élu a besoin d'un passé. Le vrai ne faisait que gêner, alors je t'en ai donné un autre, un rêve à la fois.
+2362	Le lance-pierre au manche fendu... c'est ma sœur qui me l'a donné. Elle existe.
+2363	Elle existe. Et elle t'attend encore sur le pont.
+2364	Et les squelettes du village ? Ceux de toutes les couleurs ?
+2365	D'autres qui sont tombés du pont. D'autres élus. Aucun n'est allé aussi loin que toi.
+2366	Premier Rêve
+2367	Termine un rêve du prologue.
+2368	L'Élu
+2369	Termine tous les rêves du Village des Os.
+2370	Je Peux le Prouver
+2371	Remporte une épreuve de la Pierre des Épreuves.
+2372	Maître des Formes
+2373	Remporte toutes les épreuves de maîtrise.
+2374	De l'Or Partout
+2375	Obtiens la médaille dans toutes les épreuves.
+2376	Quelque Chose Cloche
+2377	Trouve les neuf fissures dans les souvenirs des rêves.
+2378	Eau trop profonde :\ndeviens lézard et nage !
+2379	Grand mur : l'araignée\ngrimpe. La boîte\ngarde le lézard.
+2380	Large abîme :\nvole avec les ailes !
+2381	Muraille : grimpe\navec l'araignée !
+2382	Vole, grimpe, vole :\nla boîte garde\nla forme d'avant !
+2383	Épreuve du Crâne
+2384	Épreuve du Requin
+2385	Épreuve du Gnoll
+2386	Épreuve du Lézard
+2387	Épreuve de l'Araignée
+2388	Épreuve du Minotaure
+2389	Épreuve du Gnome
+2390	Épreuve du Gobelin à la Torche
+2391	Épreuve du Diablotin
+2392	Épreuve de la Chauve-souris
+2393	Épreuve de maîtrise : tout le niveau sous une seule forme. Termine en moins de {0}s pour gagner la médaille.
+2394	Épreuve réussie !
+2398	Création, scénario et programmation
+2399	Studio
+2400	Ossian, le crâne
+2401	Hex, le Chaman
+2402	Le villageois de la maison bleue
+2403	Les neuf rois
+2404	Les habitants du Village des Os
+2405	Tiny Swords (Free Pack et Enemy Pack) — Pixel Frog
+2406	Échantillons FluidR3_GM — Frank Wen
+2409	Lilita One et Rubik (Google Fonts)
+2410	Fait avec
+2411	TypeScript et Vite
+2412	Remerciements
+2413	À ceux qui ont testé chaque niveau
+2414	Et à toi, qui as joué jusqu'ici
+2415	Merci d'avoir joué !
+2416	maintiens pour accélérer · Échap pour passer
+2417	· QUELQUE CHOSE CLOCHE ·
+2418	Épreuve de maîtrise
+2419	MÉDAILLE !   ·   {0}
+2420	Objectif médaille : {0}s   ·   {1}
+2421	✕ QUITTER
+2422	⬇ INSTALLER
+2423	Pour installer : touche Partager\npuis « Sur l'écran d'accueil ».
+2424	Résolution de la fenêtre
+2425	Taille de la fenêtre du jeu sur l'ordinateur (hors plein écran).
+2426	ACTUELLE
+2427	ÉPREUVES
+2428	PIERRE DES ÉPREUVES
+2429	Médaille ! Objectif : {0}s
+2430	Réussie. Médaille en moins de {0}s.
+2431	1re fois : 60 d'or · médaille en moins de {0}s : +40
+2432	Page {0} sur {1}
+2433	Plus d'épreuves.
+2434	SUIVANTE ▶
+2435	Pierre des Épreuves
+2436	Épreuves réussies : {0} sur {1}. Chaque rêve du prologue ouvre l'épreuve de sa forme.
+2437	Termine les rêves du Village des Os pour ouvrir les épreuves.

@@ -186,6 +186,8 @@ export interface LevelDef {
    * `world` escolhe a música.
    */
   prologue?: { world: string; char: CharId };
+  /** Prova de domínio (Vila dos Ossos): a fase inteira numa forma, com meta de tempo para a medalha. */
+  trial?: { world: string; char: CharId; par: number };
   /** Jogo da vila (arena do Mestre Rufo ou corrida do Goblin): sem vidas; volta para a vila no fim. */
   village?: { kind: 'arena' | 'race' };
 }
@@ -2096,6 +2098,10 @@ export const LEVEL_MOSS: LevelDef = {
     { segments: [[0, 7, 0], [9, 4, 1], [15, 5, 1]], enemies: [[5, 'sgnome_moss'], [11, 'sgnome_red']] },
     { segments: [[0, 5, 0], [5, 3, 2], [8, 12, 0]], floats: [[14, 2, 3]], enemies: [[10, 'sgnome_moss'], [13, 'sgnome_moss'], [17, 'sgnome']] },
     { segments: [[0, 6, 0], [8, 12, 0]], deco: [[2, 'tree']], enemies: [[3, 'sgnome_moss'], [11, 'sgnome_elder']] },
+    // Misturando poderes: canal largo (lagarto nada) e paredão (aranha escala). A caixa de
+    // reserva guarda a forma anterior; cada objeto aparece logo antes do seu desafio.
+    { segments: [[0, 5, 0], [16, 4, 0]], storyItems: [[2, 'crest']], deco: [[18, 'bush']], enemies: [[18, 'sgnome_moss']], sign: [3, 'Água funda demais:\nvire lagarto e nade!'] },
+    { segments: [[0, 9, 0], [9, 11, 5]], storyItems: [[4, 'web']], enemies: [[15, 'sgnome_red']], sign: [6, 'Paredão: a aranha\nescala. A caixa\nguarda o lagarto.'] },
     { segments: [[0, 20, 0]], deco: [[8, 'bush'], [15, 'tree']], enemies: [[6, 'sgnome_moss'], [10, 'sgnome_moss'], [14, 'sgnome_red']] },
   ],
 };
@@ -2741,6 +2747,9 @@ export const LEVEL_CLOUDCASTLE: LevelDef = {
     { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], deco: [[3, 'tower']], enemies: [[10, 'imp'], [16, 'imp']] },
     { segments: [[0, 20, 0]], deco: [[6, 'tower'], [15, 'tower']], enemies: [[11, 'bee_storm']] },
     { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], deco: [[2, 'tower']], enemies: [[9, 'imp'], [12, 'bee_ember'], [17, 'imp']] },
+    // Misturando poderes: abismo largo (morcego voa) e muralha (aranha escala).
+    { segments: [[0, 6, 0], [17, 3, 0]], storyItems: [[3, 'wing']], enemies: [[18, 'imp']], sign: [4, 'Abismo largo:\nvoe com as asas!'] },
+    { segments: [[0, 8, 0], [8, 12, 5]], storyItems: [[4, 'web']], deco: [[16, 'tower']], enemies: [[13, 'imp']], sign: [5, 'Muralha: escale\ncom a aranha!'] },
     { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'bee_storm'], [13, 'imp'], [16, 'bee_ember']] },
   ],
 };
@@ -2954,6 +2963,11 @@ export const LEVEL_WINGGUARD: LevelDef = {
     { segments: [[0, 6, 0], [8, 4, 1], [14, 6, 0]], enemies: [[10, 'wing_fast'], [16, 'wing_elite']] },
     { segments: [[0, 20, 0]], floats: [[6, 3, 3], [12, 3, 3]], enemies: [[9, 'wing_elite'], [15, 'wing_fast']] },
     { segments: [[0, 5, 0], [7, 6, 1], [15, 5, 0]], enemies: [[9, 'wing'], [12, 'wing_elite'], [17, 'wing_fast']] },
+    // Voar, escalar e voar de novo: a aranha sobe a torre e, lá em cima, as asas de novo
+    // (ou as da caixa de reserva) cruzam o último abismo.
+    { segments: [[0, 6, 0], [17, 3, 0]], storyItems: [[3, 'wing']], enemies: [[18, 'wing']], sign: [4, 'Voe, escale, voe:\na caixa guarda\na forma anterior!'] },
+    { segments: [[0, 20, 0]], storyItems: [[12, 'web']], enemies: [[8, 'wing_fast']] },
+    { segments: [[0, 4, 0], [4, 3, 5], [18, 2, 3]], storyItems: [[5, 'wing', 5]], enemies: [[19, 'wing_elite']] },
     { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'wing_elite'], [12, 'wing_elite'], [16, 'wing_fast']] },
   ],
 };
@@ -3097,6 +3111,76 @@ export const PROLOGUE_LEVELS: LevelDef[] = [
   ]),
 ];
 
+// ---------- Provas de domínio (Pedra das Provas, na Vila dos Ossos) ----------
+
+/** Nome de cada prova (frase inteira, para traduzir bem). */
+export const TRIAL_TITLES: Record<string, string> = {
+  skull: 'Prova da Caveira',
+  shark: 'Prova do Tubarão',
+  gnoll: 'Prova do Gnoll',
+  lizard: 'Prova do Lagarto',
+  spider: 'Prova da Aranha',
+  minotaur: 'Prova do Minotauro',
+  sgnome: 'Prova do Gnomo',
+  torchgob: 'Prova do Goblin da Tocha',
+  imp: 'Prova do Diabrete',
+  bat: 'Prova do Morcego',
+};
+
+/** Espelha um cenário (a volta do percurso): o que estava à direita vai para a esquerda. */
+function mirrorScreen(sc: ScreenDef): ScreenDef {
+  const seg = (l?: Segment[]) => l?.map(([a, n, h]) => [20 - a - n, n, h] as Segment);
+  return {
+    segments: seg(sc.segments)!,
+    floats: seg(sc.floats),
+    deco: sc.deco?.map(([t, k]) => [19 - t, k] as [number, DecoKind]),
+    enemies: sc.enemies?.map(([t, e]) => [19 - t, e] as [number, EnemyId]),
+    hangers: sc.hangers?.map((t) => 19 - t),
+  };
+}
+
+/**
+ * Cada prova sai do sonho da mesma forma, mais longa e mais difícil: os quatro desafios na ida
+ * e de novo, espelhados, na volta (10 cenários), sem placas, sem o Xamã e sem o objeto (você já
+ * começa transformado). Morrer renasce na mesma forma. Terminar abaixo da meta dá a medalha.
+ */
+function trialOf(d: LevelDef): LevelDef {
+  const char = d.prologue!.char;
+  const plain = (sc: ScreenDef): ScreenDef => ({ ...sc, sign: undefined, storyItems: undefined });
+  const [first, ...rest] = d.screens;
+  const arrival = rest[rest.length - 1];
+  const mid = rest.slice(0, -1).map(plain);
+  const screens = [plain(first), ...mid, ...[...mid].reverse().map(mirrorScreen), plain(arrival)];
+  const last = screens.length - 1;
+  // Casa escura (Minas): velas e tochas grandes também na volta; a porta de saída no último cenário.
+  let haunt = d.haunt;
+  if (haunt) {
+    const back = (sc: number) => last - sc; // cenário 1 → 9 - 1 = 8 ...
+    haunt = {
+      ...haunt,
+      candles: (haunt.candles ?? []).flatMap((c) =>
+        c.screen === 0 ? [c] : c.screen >= mid.length + 1 ? [{ ...c, screen: last }] : [c, { ...c, screen: back(c.screen), tile: 19 - c.tile }],
+      ),
+      doors: haunt.doors?.map((dr) => (dr.exit ? { ...dr, screen: last } : dr)),
+    };
+  }
+  const par = Math.round(screens.length * (d.clearToAdvance ? 13 : 8));
+  return {
+    ...d,
+    id: `t_${char}`,
+    name: TRIAL_TITLES[char] ?? char,
+    intro: `Prova de domínio: a fase inteira numa forma só. Termine em menos de ${par}s para ganhar a medalha.`,
+    winText: 'Prova vencida!',
+    secret: true,
+    prologue: undefined,
+    trial: { world: d.prologue!.world, char, par },
+    screens,
+    haunt,
+  };
+}
+
+export const TRIAL_LEVELS: LevelDef[] = PROLOGUE_LEVELS.map(trialOf);
+
 export const LEVELS: LevelDef[] = [
   LEVEL_1,
   LEVEL_2,
@@ -3209,6 +3293,7 @@ export const LEVELS: LevelDef[] = [
   ...BONUS_LEVELS,
   // Prólogo (no fim para não mudar o índice das fases de saves antigos).
   ...PROLOGUE_LEVELS,
+  ...TRIAL_LEVELS,
 ];
 
 export class Level {

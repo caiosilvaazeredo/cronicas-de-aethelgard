@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaCleared } from './areas';
-import { LEVELS } from './level';
-import { MEMORIES } from '../data/lore';
+import { LEVELS, TRIAL_LEVELS } from './level';
+import { CRACKS, MEMORIES } from '../data/lore';
 import { getCoins, getEnding, getPact, getStat, giftsOf, hasPact, hasSeen, isDone, isSecretDone, ownedUpgrades, unlockAch, hasAch } from './progress';
 import { UPGRADES } from './upgrades';
 import { sfx } from './settings';
@@ -23,6 +23,10 @@ const puzzleLevels = () => LEVELS.filter((l) => l.puzzle && !l.secret);
 export const ACHIEVEMENTS: Achievement[] = [
   { id: 'dream1', name: 'Primeiro Sonho', desc: 'Termine um sonho do prólogo.', check: () => PROLOGUE.levels.some((id) => isDone(id)) },
   { id: 'chosen', name: 'O Escolhido', desc: 'Termine todos os sonhos da Vila dos Ossos.', check: () => PROLOGUE.levels.every((id) => isDone(id)) },
+  { id: 'trial1', name: 'Posso Provar', desc: 'Vença uma prova da Pedra das Provas.', check: () => TRIAL_LEVELS.some((l) => isSecretDone(l.id)) },
+  { id: 'trialall', name: 'Mestre das Formas', desc: 'Vença todas as provas de domínio.', check: () => TRIAL_LEVELS.every((l) => isSecretDone(l.id)) },
+  { id: 'medalall', name: 'Ouro em Tudo', desc: 'Ganhe a medalha em todas as provas.', check: () => TRIAL_LEVELS.every((l) => hasSeen(`medal-${l.id}`)) },
+  { id: 'cracks', name: 'Algo Não Bate', desc: 'Encontre as nove rachaduras nas memórias dos sonhos.', check: () => Object.keys(CRACKS).every((id) => hasSeen(`crack-${id}`)) },
   { id: 'wake', name: 'Despertar', desc: 'Termine a primeira fase.', check: () => isDone('shore') },
   { id: 'seal1', name: 'Primeiro Selo', desc: 'Derrote o primeiro rei.', check: () => AREAS.some(areaCleared) },
   { id: 'seal5', name: 'Metade da Coroa', desc: 'Derrote cinco reis.', check: () => AREAS.filter(areaCleared).length >= 5 },

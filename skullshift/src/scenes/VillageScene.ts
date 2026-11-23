@@ -10,7 +10,8 @@ import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaTitle, areaUnlocked, recommendedLevel } from '../game/areas';
 import { getRun, heartsFor, startRun } from '../game/dungeon';
 import { musicNotesSince, playMusic } from '../game/music';
-import { buySmith, getCoins, getLevel, isDungeonDone, levelProgress, smithLevel } from '../game/progress';
+import { buySmith, getCoins, getLevel, hasSeen, isDone, isDungeonDone, isFreePlay, isSecretDone, levelProgress, smithLevel } from '../game/progress';
+import { LEVELS, PROLOGUE_LEVELS, TRIAL_LEVELS } from '../game/level';
 import { buzz, sfx } from '../game/settings';
 import { rollNumber } from '../ui/juice';
 import { pillButton } from '../ui/devices';
@@ -246,6 +247,12 @@ export class VillageScene extends Phaser.Scene {
     this.tweens.add({ targets: shine, alpha: 0.2, duration: 1200, yoyo: true, repeat: -1 });
     this.npc(1310, 'villager', 0xa0c8ff, false);
     this.label(1400, 'LAGO');
+
+    // 4b) Pedra das Provas: as provas de domínio de cada forma (depois do sonho dela).
+    this.add.image(1610, GY + 6, 'stone4').setOrigin(0.5, 1).setScale(2.2).setDepth(4.9);
+    this.add.image(1610, GY - 52, 'skull_avatar').setScale(0.22).setDepth(4.95);
+    this.label(1610, 'PROVAS');
+    this.addSpot(1610, 'PEDRA DAS PROVAS', () => this.trials());
 
     // 5) Portal das dungeons, com o Xamã cuidando dele.
     this.portal(1840);
@@ -665,6 +672,40 @@ export class VillageScene extends Phaser.Scene {
         { label: 'SAIR', act: () => this.closeDialog() },
       ],
     );
+  }
+
+  /**
+   * Pedra das Provas: uma prova por forma, aberta depois do sonho dela no prólogo. Mostra 5 por
+   * página (a última linha passa a página), com a meta de tempo e a medalha.
+   */
+  private trials(page = 0, sel = 0): void {
+    const all = TRIAL_LEVELS.filter((_t, i) => isFreePlay() || isDone(PROLOGUE_LEVELS[i].id));
+    const won = TRIAL_LEVELS.filter((t) => isSecretDone(t.id)).length;
+    const medals = TRIAL_LEVELS.filter((t) => hasSeen(`medal-${t.id}`)).length;
+    const per = 5;
+    const pages = Math.max(1, Math.ceil(all.length / per));
+    page = Phaser.Math.Wrap(page, 0, pages);
+    const rows: PanelRow[] = all.slice(page * per, page * per + per).map((t) => {
+      const medal = hasSeen(`medal-${t.id}`);
+      const done = isSecretDone(t.id);
+      return {
+        name: tr(t.name) + (medal ? ' ★' : done ? ' ✓' : ''),
+        desc: medal ? trf('Medalha! Meta: {0}s', t.trial!.par) : done ? trf('Vencida. Medalha abaixo de {0}s.', t.trial!.par) : trf('1ª vez: 60 de ouro · medalha abaixo de {0}s: +40', t.trial!.par),
+        btn: tr('JOGAR'),
+        color: medal ? 0xcfe8c0 : 0xffe066,
+        act: () => this.scene.start('loading', { next: 'game', data: { mode: 'story', devices: soloDevices(this), level: LEVELS.indexOf(t) } }),
+      };
+    });
+    if (pages > 1) rows.push({ name: trf('Página {0} de {1}', page + 1, pages), desc: tr('Mais provas.'), btn: tr('PRÓXIMA ▶'), color: 0xe7eef2, act: () => this.trials(page + 1, 0) });
+    this.listPanel({
+      title: tr('Pedra das Provas'),
+      right: trf('★ {0}/{1}', medals, TRIAL_LEVELS.length),
+      sub: all.length ? trf('Provas vencidas: {0} de {1}. Cada sonho do prólogo abre a prova da sua forma.', won, TRIAL_LEVELS.length) : tr('Termine os sonhos da Vila dos Ossos para abrir as provas.'),
+      rows,
+      sel,
+      rowMinP: 210,
+      reopen: (n) => this.trials(page, n),
+    });
   }
 
   /** Barraca do Goblin: a corrida contra o relógio. */

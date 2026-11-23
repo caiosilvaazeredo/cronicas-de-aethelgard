@@ -1,6 +1,6 @@
 import type { CharId } from '../game/characters';
 import { LEVELS } from '../game/level';
-import { getPact, hasPact } from '../game/progress';
+import { getPact, hasPact, hasSeen, isDone } from '../game/progress';
 /**
  * Lore do Skullshift — "O Barqueiro de Nuvens".
  *
@@ -1264,9 +1264,17 @@ export const CHAPTERS: Chapter[] = LEVELS.map((l) => CHAPTER_BY_ID[l.id] ?? { ti
  */
 export function chapterFor(i: number): Chapter {
   const id = LEVELS[i]?.id;
-  if (id === 'finale') return REVELATION;
+  if (id === 'finale') return revelation();
   const variant = hasPact() && getPact() === 'bee' ? CHAPTER_BY_ID[`${id}_bee`] : undefined;
   return variant ?? CHAPTERS[i];
+}
+
+/** O Trono, com a confissão dos sonhos (para quem passou pelo prólogo). */
+function revelation(): Chapter {
+  const cracks = Object.keys(CRACKS).filter((id) => hasSeen(`crack-${id}`)).length;
+  if (!isDone('p_vila') && !cracks) return REVELATION;
+  const at = REVELATION.lines.findIndex((l) => l.text.startsWith('Eu precisava de alguém')) + 1;
+  return { ...REVELATION, lines: [...REVELATION.lines.slice(0, at), ...dreamReveal(cracks), ...REVELATION.lines.slice(at)] };
 }
 
 // ---------- memórias (uma a cada fragmento recuperado, na ordem em que vêm) ----------
@@ -1403,6 +1411,45 @@ export const EPILOGUE: Chapter = {
     S('...'),
   ],
 };
+
+/**
+ * Rachaduras: em cada mundo, um detalhe desmente uma das memórias que o Xamã plantou nos sonhos
+ * da Vila dos Ossos. Aparecem uma vez (com a tela rachando), só para quem viu o sonho.
+ */
+export interface Crack {
+  dream: string;
+  screen: number;
+  text: string;
+}
+export const CRACKS: Record<string, Crack> = {
+  wreck: { dream: 'p_mare', screen: 2, text: 'Hex disse que meu pai me trazia aqui para pescar. Mas ninguém pesca nestas ilhas: os tubarões não deixam. Nunca deixaram.' },
+  boneyard: { dream: 'p_pradaria', screen: 2, text: 'O avô da cicatriz, que enfrentou o Rei Gnoll... Os gnolls juram que ninguém nunca chegou perto do rei e voltou.' },
+  deeplagoon: { dream: 'p_lagoa', screen: 2, text: '"Medo de criança", ele disse. Mas o frio da água que eu lembro não é de criança. É de agora.' },
+  cocoons: { dream: 'p_teias', screen: 2, text: 'Nomes riscados na pedra. Os mesmos do meu "pesadelo de criança". Não era pesadelo. Eu estive aqui. Eles também.' },
+  anvil: { dream: 'p_forja', screen: 2, text: 'O ferreiro velho falou de um feiticeiro roxo que prendeu a forja inteira. Hex disse que derrubou um minotauro. Não disse que prendeu todos.' },
+  treetops: { dream: 'p_bosque', screen: 2, text: 'Um estilingue com o cabo rachado, largado num galho. Igual ao meu. "Filho único", ele disse. Mentira.' },
+  darkmine: { dream: 'p_minas', screen: 2, text: 'No escuro, quem acendia a vela não era minha mãe. Nem Hex. Era uma menina. Minha irmã.' },
+  firewinds: { dream: 'p_fogo', screen: 2, text: '"Todos me conhecem", ele disse. Os diabretes conhecem, sim: fogem só de ouvir o nome dele.' },
+  wingkey: { dream: 'p_asas', screen: 2, text: 'No sonho, o Portão da Maré ficava no mar. Aqui ninguém nunca ouviu falar de portão nenhum.' },
+};
+
+/**
+ * No Trono, depois da ponte: o Xamã admite que plantou os sonhos. Quem achou 5 rachaduras ou
+ * mais acusa primeiro; quem não achou ouve dele.
+ */
+export function dreamReveal(cracks: number): Line[] {
+  const open = cracks >= 5
+    ? [V('E os sonhos na Vila dos Ossos. O pai pescador, o avô da cicatriz, a mãe da vela. Nada disso bateu com o que eu vi lá fora.'), X('Percebeste. Os outros nunca percebiam.')]
+    : [X('E antes que perguntes: os sonhos da Vila dos Ossos também fui eu.')];
+  return [
+    ...open,
+    X('Um escolhido precisa de um passado. O teu verdadeiro só atrapalhava, então te dei outro, um sonho de cada vez.'),
+    V('O estilingue com o cabo rachado... foi a minha irmã que me deu. Ela existe.'),
+    X('Existe. E espera na ponte até hoje.'),
+    V('E os esqueletos da vila? Os de cores diferentes?'),
+    X('Outros que caíram da ponte. Outros escolhidos. Nenhum chegou tão longe quanto tu.'),
+  ];
+}
 
 /** O que o Xamã murmura quando busca a caveira na nuvem (modo história). */
 export const REVIVE_LINES = [

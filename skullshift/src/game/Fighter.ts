@@ -711,10 +711,13 @@ export class Fighter {
       const want = it.move * this.def.speed * (diving ? 0.7 : 0.85);
       b.setVelocityX(Phaser.Math.Linear(b.velocity.x, want, Math.min(1, dt * 5)));
       if (it.move !== 0) this.facing = it.move > 0 ? 1 : -1;
-      // Salto para fora d'água (perto da superfície).
-      if (it.jump && this.feet < wy + 70) {
+      // Salto para fora d'água (perto da superfície); nadando contra a margem,
+      // o jogador sobe nela sozinho, sem precisar apertar pular.
+      const shore = this.isPlayer && it.move !== 0 && (it.move > 0 ? b.blocked.right : b.blocked.left);
+      if ((it.jump || shore) && this.feet < wy + 70) {
         b.setAllowGravity(true);
         b.setVelocityY(-JUMP_V * 1.08);
+        if (shore) b.setVelocityX(it.move * this.def.speed * 0.6);
         this.swimming = false;
         this.jumps = 1;
         this.sprite.setAngle(0);

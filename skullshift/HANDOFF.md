@@ -375,3 +375,7 @@ originais (extraídas com PIL do PNG).
   - voar cruza até 540 px;
   - nadar liga chãos baixos numa fase com água.
 - As placas do prólogo agora têm quebra de linha real (antes mostravam "\n"). Traduções em `028.txt`.
+
+## Nado: sair pela margem sem pular
+- `Fighter.updateSwim`: o jogador que nada contra uma parede/margem (`body.blocked` na direção do movimento) perto da superfície salta para fora sozinho, como se apertasse PULAR. Só vale para jogadores; inimigos nadadores não mudam.
+- Testado no sonho da Lagoa: segurando só ➡ o lagarto cruza os dois canais e sobe nas margens.

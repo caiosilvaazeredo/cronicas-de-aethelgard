@@ -4,6 +4,8 @@ import { langInfo, noTr } from '../i18n';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, PORTRAIT, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
+import { isDesktop, quitGame } from '../game/platform';
+import { canInstall, install, iosHint, onInstallChange } from '../game/pwa';
 import { CHARS, type CharId } from '../game/characters';
 import { SHAMAN_ORB_OFFSET } from '../game/sheets';
 import { LEVELS } from '../game/level';
@@ -255,6 +257,10 @@ export class MenuScene extends Phaser.Scene {
       // Em maiúsculas: a fonte do título não tem minúsculas ("Deutsch" saía miúdo, na fonte de reserva).
       const langT = noTr(langBtn.list[1] as Phaser.GameObjects.Text).setText(langInfo().name.toUpperCase());
       if (langT.width > 300) langT.setScale(300 / langT.width);
+      // Versão de computador (Steam): botão para fechar o jogo.
+      // Celular/navegador: instalar como app (abre sem barra e funciona sem internet).
+      if (!isDesktop()) this.installButton(P ? W - 190 : W - 120, P ? 250 + tp : 104, P ? 1.75 : 0.85);
+      if (isDesktop()) pillButton(this, P ? W - 190 : W - 120, P ? 250 + tp : 104, '✕ SAIR', () => quitGame(), 190, 0xe7eef2).setScale(P ? 1.75 : 0.85);
       pillButton(this, P ? 190 : 120, P ? 110 + tp : 50, 'CRÉDITOS', () => this.scene.start('credits', { next: 'menu', data: {} }), 190).setScale(P ? 1.75 : 0.85);
       this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.add
@@ -679,5 +685,39 @@ export class MenuScene extends Phaser.Scene {
   private onUpdate(fn: (time: number, dt: number) => void): void {
     this.events.on('update', fn);
     this.events.once('shutdown', () => this.events.off('update', fn));
+  }
+
+  /** Botão "INSTALAR": aparece quando o navegador oferece instalar (ou no iPhone, com a dica). */
+  private installButton(x: number, y: number, sc: number): void {
+    let btn: Phaser.GameObjects.Container | undefined;
+    const draw = () => {
+      btn?.destroy();
+      btn = undefined;
+      if (!this.sys.isActive()) return;
+      if (!canInstall() && !iosHint()) return;
+      btn = pillButton(this, x, y, '⬇ INSTALAR', () => {
+        if (canInstall()) void install();
+        else this.iosTip();
+      }, 190, 0x9be37a).setScale(sc);
+    };
+    draw();
+    const off = onInstallChange(draw);
+    this.events.once('shutdown', off);
+  }
+
+  private iosTip(): void {
+    const P = VIEW.portrait;
+    const t = this.add
+      .text(W / 2, this.scale.height / 2, 'Para instalar: toque em Compartilhar\ne depois em "Adicionar à Tela de Início".', {
+        fontFamily: BODY_FONT,
+        fontSize: P ? '40px' : '24px',
+        color: '#fff7dc',
+        align: 'center',
+        backgroundColor: '#10223ae6',
+        padding: { x: 30, y: 20 },
+      })
+      .setOrigin(0.5)
+      .setDepth(9999);
+    this.time.delayedCall(4500, () => t.destroy());
   }
 }

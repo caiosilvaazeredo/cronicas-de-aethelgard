@@ -31,6 +31,8 @@ export interface Settings {
   motionFx: boolean;
   /** Transição simples (só escurecer) em vez das temáticas. */
   simpleTransition: boolean;
+  /** Janela do computador (versão Steam): 0 atual · 1 720p · 2 900p · 3 1080p · 4 1440p. */
+  resolution: number;
 }
 
 export const DEFAULTS: Settings = {
@@ -49,6 +51,7 @@ export const DEFAULTS: Settings = {
   vibrate: true,
   motionFx: true,
   simpleTransition: false,
+  resolution: 0,
 };
 
 const KEY = 'skullshift.settings.v1';

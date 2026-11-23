@@ -22,11 +22,14 @@ import { MemoryScene } from './scenes/MemoryScene';
 import { StoryScene } from './scenes/StoryScene';
 import { SlotsScene } from './scenes/SlotsScene';
 import { SettingsScene } from './scenes/SettingsScene';
-import { applySettings } from './game/settings';
+import { applySettings, settings } from './game/settings';
+import { applyResolution } from './game/platform';
+import { initPwa } from './game/pwa';
 import { LanguageScene } from './scenes/LanguageScene';
 import { hookText, initI18n, langInfo } from './i18n';
 
 Object.assign(VIEW, computeView());
+initPwa();
 
 /** Carrega a fonte antes de desenhar qualquer texto (sem ela, usa a reserva). */
 async function loadFace(family: string, url: string): Promise<void> {
@@ -66,7 +69,11 @@ function boot(): void {
   });
   installTransitions(game);
   (window as unknown as { __skullshift: Phaser.Game }).__skullshift = game;
-  game.events.once('ready', () => applySettings());
+  game.events.once('ready', () => {
+    document.getElementById('boot')?.remove();
+    applySettings();
+    applyResolution(settings().resolution);
+  });
 }
 initI18n()
   .then(() => {

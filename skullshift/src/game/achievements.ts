@@ -3,9 +3,11 @@ import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaCleared } from './areas';
 import { LEVELS } from './level';
 import { MEMORIES } from '../data/lore';
-import { getCoins, getEnding, getPact, getStat, giftsOf, hasPact, hasSeen, isDone, isSecretDone, ownedUpgrades, unlockAch } from './progress';
+import { getCoins, getEnding, getPact, getStat, giftsOf, hasPact, hasSeen, isDone, isSecretDone, ownedUpgrades, unlockAch, hasAch } from './progress';
 import { UPGRADES } from './upgrades';
 import { sfx } from './settings';
+import { steamAchievement } from './platform';
+import { PROLOGUE } from './areas';
 
 /** Conquistas: conferidas a partir do save; cada uma aparece num aviso quando é ganha. */
 export interface Achievement {
@@ -19,6 +21,8 @@ const bonusLevels = () => LEVELS.filter((l) => l.bonus);
 const puzzleLevels = () => LEVELS.filter((l) => l.puzzle && !l.secret);
 
 export const ACHIEVEMENTS: Achievement[] = [
+  { id: 'dream1', name: 'Primeiro Sonho', desc: 'Termine um sonho do prólogo.', check: () => PROLOGUE.levels.some((id) => isDone(id)) },
+  { id: 'chosen', name: 'O Escolhido', desc: 'Termine todos os sonhos da Vila dos Ossos.', check: () => PROLOGUE.levels.every((id) => isDone(id)) },
   { id: 'wake', name: 'Despertar', desc: 'Termine a primeira fase.', check: () => isDone('shore') },
   { id: 'seal1', name: 'Primeiro Selo', desc: 'Derrote o primeiro rei.', check: () => AREAS.some(areaCleared) },
   { id: 'seal5', name: 'Metade da Coroa', desc: 'Derrote cinco reis.', check: () => AREAS.filter(areaCleared).length >= 5 },
@@ -47,7 +51,18 @@ export const ACHIEVEMENTS: Achievement[] = [
 
 /** Confere tudo; devolve as conquistas novas (já marcadas no save). */
 export function checkAchievements(): Achievement[] {
-  return ACHIEVEMENTS.filter((a) => a.check() && unlockAch(a.id));
+  syncSteam();
+  const fresh = ACHIEVEMENTS.filter((a) => a.check() && unlockAch(a.id));
+  fresh.forEach((a) => steamAchievement(a.id));
+  return fresh;
+}
+
+let synced = false;
+/** Uma vez por sessão: repassa à Steam as conquistas que o save já tem (ganhas sem a Steam aberta). */
+function syncSteam(): void {
+  if (synced) return;
+  synced = true;
+  ACHIEVEMENTS.filter((a) => hasAch(a.id)).forEach((a) => steamAchievement(a.id));
 }
 
 /** Confere e mostra um aviso no alto da tela para cada conquista nova (um depois do outro). */

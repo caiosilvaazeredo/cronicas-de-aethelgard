@@ -1,0 +1,30 @@
+{
+  "name": "skullshift-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Skullshift para computador (Electron + Steamworks)",
+  "main": "main.cjs",
+  "scripts": {
+    "copy": "node copy-game.cjs",
+    "start": "npm run copy && electron .",
+    "dist": "npm run copy && electron-builder --win --linux",
+    "dist:mac": "npm run copy && electron-builder --mac"
+  },
+  "dependencies": {
+    "steamworks.js": "^0.4.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.sapopapao.skullshift",
+    "productName": "Skullshift",
+    "files": ["main.cjs", "preload.cjs", "game/**/*"],
+    "extraFiles": ["steam_appid.txt"],
+    "asarUnpack": ["node_modules/steamworks.js/dist/**"],
+    "win": { "target": "dir" },
+    "linux": { "target": "dir" },
+    "mac": { "target": "dir" }
+  }
+}

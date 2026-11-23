@@ -4,6 +4,7 @@ import { DEFAULTS, resetSettings, setSetting, settings, sfx, type Settings } fro
 import { backdrop } from '../ui/backdrop';
 import { pillButton } from '../ui/devices';
 import { noTr, tr } from '../i18n';
+import { applyResolution, isDesktop } from '../game/platform';
 
 const INK = 0x1d1a2b;
 /** Em pé: altura da primeira linha de abas e distância entre as linhas. */
@@ -13,7 +14,7 @@ const TAB_STEP = 140;
 type Row =
   | { key: keyof Settings; label: string; help: string; kind: 'slider'; min: number; max: number; fmt?: (v: number) => string }
   | { key: keyof Settings; label: string; help: string; kind: 'toggle' }
-  | { key: keyof Settings; label: string; help: string; kind: 'choice'; options: string[] }
+  | { key: keyof Settings; label: string; help: string; kind: 'choice'; options: string[]; desktop?: boolean }
   | { key: 'fullscreen'; label: string; help: string; kind: 'fullscreen' };
 
 const TABS: Array<{ name: string; rows: Row[] }> = [
@@ -29,6 +30,7 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
     name: 'TELA',
     rows: [
       { key: 'fullscreen', label: 'Tela cheia', help: 'Liga ou desliga a tela cheia.', kind: 'fullscreen' },
+      { key: 'resolution', label: 'Resolução da janela', help: 'Tamanho da janela do jogo no computador (fora da tela cheia).', kind: 'choice', options: ['ATUAL', '1280 × 720', '1600 × 900', '1920 × 1080', '2560 × 1440'], desktop: true },
       { key: 'brightness', label: 'Brilho', help: 'Clareia ou escurece a imagem do jogo.', kind: 'slider', min: 5, max: 15, fmt: (v) => `${v * 10}%` },
     ],
   },
@@ -59,6 +61,9 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
     ],
   },
 ];
+
+// Opções só da versão de computador (resolução da janela) somem no navegador e no celular.
+for (const t of TABS) t.rows = t.rows.filter((r) => !('desktop' in r && r.desktop) || isDesktop());
 
 /**
  * Configurações: abas na lateral (Jogo, Tela, Áudio, Controles, Acessibilidade) e, à direita,
@@ -197,7 +202,10 @@ export class SettingsScene extends Phaser.Scene {
       this.time.delayedCall(250, () => this.drawPanel());
     } else if (r.kind === 'toggle') setSetting(r.key, !settings()[r.key] as never);
     else if (r.kind === 'slider') setSetting(r.key, Phaser.Math.Clamp((settings()[r.key] as number) + d, r.min, r.max) as never);
-    else setSetting(r.key, Phaser.Math.Wrap((settings()[r.key] as number) + d, 0, r.options.length) as never);
+    else {
+      setSetting(r.key, Phaser.Math.Wrap((settings()[r.key] as number) + d, 0, r.options.length) as never);
+      if (r.key === 'resolution') applyResolution(settings().resolution);
+    }
     this.row = row;
     sfx('select');
     this.drawPanel();

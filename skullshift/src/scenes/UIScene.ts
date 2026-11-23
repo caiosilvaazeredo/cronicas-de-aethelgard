@@ -1,5 +1,6 @@
 import { flyCoins, rollNumber } from '../ui/juice';
 import { noTr } from '../i18n';
+import { say } from '../game/buttons';
 import { endRun, getRun } from '../game/dungeon';
 import Phaser from 'phaser';
 import { RESERVE_LABEL } from '../game/controls';
@@ -168,8 +169,8 @@ export class UIScene extends Phaser.Scene {
   private bannerFace(text: string, ms: number, sub?: string): void {
     if (sub) {
       // Frase de abertura (a narrativa da fase), embaixo do nome.
-      const st = this.add
-        .text(W / 2, this.worldMidY - (VIEW.portrait ? 150 : 176), sub, {
+      const st = noTr(this.add
+        .text(W / 2, this.worldMidY - (VIEW.portrait ? 150 : 176), '', {
           fontFamily: BODY_FONT,
           // Em pé a tela é estreita e o texto fica minúsculo: letra maior.
           fontSize: VIEW.portrait ? '40px' : '24px',
@@ -179,6 +180,7 @@ export class UIScene extends Phaser.Scene {
           align: 'center',
           wordWrap: { width: VIEW.portrait ? W - 120 : 1000 },
         })
+        ).setText(say(sub))
         .setOrigin(0.5)
         .setDepth(DEPTH.hud);
       this.tweens.add({ targets: st, alpha: 0, delay: ms + 1400, duration: 600, onComplete: () => st.destroy() });

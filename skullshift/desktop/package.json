@@ -20,11 +20,27 @@
   "build": {
     "appId": "com.sapopapao.skullshift",
     "productName": "Skullshift",
-    "files": ["main.cjs", "preload.cjs", "game/**/*"],
-    "extraFiles": ["steam_appid.txt"],
-    "asarUnpack": ["node_modules/steamworks.js/dist/**"],
-    "win": { "target": "dir" },
-    "linux": { "target": "dir" },
-    "mac": { "target": "dir" }
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "game/**/*"
+    ],
+    "extraFiles": [
+      "steam_appid.txt"
+    ],
+    "asarUnpack": [
+      "node_modules/steamworks.js/dist/**"
+    ],
+    "win": {
+      "target": "dir"
+    },
+    "linux": {
+      "target": "dir",
+      "executableName": "skullshift"
+    },
+    "mac": {
+      "target": "dir"
+    },
+    "publish": null
   }
 }

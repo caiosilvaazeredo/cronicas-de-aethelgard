@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, H, VIEW, W } from '../config';
 import type { DeviceId } from '../game/controls';
-import { MEMORIES } from '../data/lore';
-import { AREAS, areaCleared, areaTitle, areaUnlocked } from '../game/areas';
+import { CRACKS, MEMORIES } from '../data/lore';
+import { AREAS, areaCleared, areaOfLevel, areaTitle, areaUnlocked, levelIndex } from '../game/areas';
 import { LEVELS } from '../game/level';
 import { getCoins, giftsOf, hasAch, hasSeen, isDone, isFreePlay, isSecretDone, ownedUpgrades } from '../game/progress';
 import { ABILITIES, hasAbility } from '../game/abilities';
@@ -34,12 +34,23 @@ export class JournalScene extends Phaser.Scene {
     const HH = this.scale.height;
     // Em pé a largura virtual é 1280, mas o celular é estreito: letras bem maiores.
     const s = P ? 2 : 1;
-    // Página 2: conquistas. Em pé, os dois botões ficam lado a lado no rodapé.
+    // Páginas: 0 diário, 1 sonhos (rachaduras), 2 conquistas. Em pé, os botões ficam lado a lado no rodapé.
     const page = this.lastData.page ?? 0;
-    pillButton(this, P ? W / 2 - 250 : W - 150, P ? HH - 110 : 52, page ? '◀ DIÁRIO' : 'CONQUISTAS ▶', () => this.scene.restart({ ...this.lastData, page: page ? 0 : 1 }), 260, 0xffe066).setScale(P ? 1.55 : 0.7).setDepth(5);
+    const go = (d: number) => this.scene.restart({ ...this.lastData, page: Phaser.Math.Wrap(page + d, 0, 3) });
+    const next = ['SONHOS ▶', 'CONQUISTAS ▶', '◀ DIÁRIO'][page];
+    pillButton(this, P ? W / 2 - 250 : W - 150, P ? HH - 110 : 52, next, () => go(1), 260, 0xffe066).setScale(P ? 1.55 : 0.7).setDepth(5);
     const kb0 = this.input.keyboard!;
-    for (const k of ['RIGHT', 'LEFT', 'TAB']) kb0.on(`keydown-${k}`, () => this.scene.restart({ ...this.lastData, page: page ? 0 : 1 }));
-    if (page) {
+    kb0.on('keydown-RIGHT', () => go(1));
+    kb0.on('keydown-TAB', () => go(1));
+    kb0.on('keydown-LEFT', () => go(-1));
+    if (page === 1) {
+      backdrop(this, 'SONHOS');
+      this.drawDreams(P, HH, s);
+      pillButton(this, P ? W / 2 + 280 : W / 2, P ? HH - 110 : 675, '◀  MAPA', () => this.back(), 220).setScale(P ? 1.55 : 0.85);
+      for (const k of ['ESC', 'L', 'ENTER']) kb0.on(`keydown-${k}`, () => this.back());
+      return;
+    }
+    if (page === 2) {
       backdrop(this, 'CONQUISTAS');
       this.drawAchievements(P, HH, s);
       pillButton(this, P ? W / 2 + 280 : W / 2, P ? HH - 110 : 675, '◀  MAPA', () => this.back(), 220).setScale(P ? 1.55 : 0.85);
@@ -140,13 +151,54 @@ export class JournalScene extends Phaser.Scene {
     void H;
   }
 
+  /**
+   * Sonhos: cada memória que o Xamã plantou no prólogo, ao lado do que o mundo de verdade mostrou
+   * (a rachadura). O que ainda não foi visto aparece como ???.
+   */
+  private drawDreams(P: boolean, HH: number, s: number): void {
+    const list = Object.entries(CRACKS);
+    const found = list.filter(([id]) => hasSeen(`crack-${id}`)).length;
+    const y0 = P ? 300 : 128;
+    this.add.text(W / 2, y0 - (P ? 60 : 22), trf('Rachaduras encontradas: {0}/{1}', found, list.length), { fontFamily: FONT, fontSize: `${Math.round((P ? 16 : 18) * s)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);
+    const rowH = P ? Phaser.Math.Clamp((HH - y0 - 260) / list.length, 120, 190) : (HH - y0 - 96) / list.length;
+    const w = P ? W - 80 : W - 80;
+    const x = 40;
+    const half = P ? w : (w - 200) / 2;
+    list.forEach(([id, c], i) => {
+      const y = y0 + i * rowH;
+      const a = areaOfLevel(levelIndex(id));
+      const t = a ? areaTitle(a) : undefined;
+      const dreamt = isDone(c.dream) || isFreePlay();
+      const seen = hasSeen(`crack-${id}`) || isFreePlay();
+      const g = this.add.graphics();
+      g.fillStyle(0x10223a, 0.92).fillRoundedRect(x, y, w, rowH - 6, 8);
+      g.fillStyle(t?.color ?? 0x3a4656, 1).fillRect(x, y, 8, rowH - 6);
+      const fs = `${Math.round((P ? 13 : 12.5) * s)}px`;
+      // Já traduzidos aqui (o texto do sonho/rachadura entra no molde inteiro).
+      const line = (tx: number, ty: number, text: string, color: string, ww: number) => noTr(this.add.text(tx, ty, '', { fontFamily: BODY_FONT, fontSize: fs, color, wordWrap: { width: ww } })).setText(text);
+      const dreamTxt = dreamt ? trf('Sonho: {0}', tr(c.said)) : tr('Sonho: ???');
+      const seenTxt = seen ? trf('Lá fora: {0}', tr(c.text)) : tr('Lá fora: ???');
+      if (P) {
+        noTr(this.add.text(x + 22, y + 10, '', { fontFamily: FONT, fontSize: '26px', color: '#fff7dc' })).setText(t ? tr(t.name).toUpperCase() : '');
+        line(x + 22, y + 44, dreamTxt, '#c8b8ff', w - 40);
+        line(x + 22, y + 44 + (rowH - 60) / 2, seenTxt, seen ? '#ffe9b8' : '#6a7888', w - 40);
+        return;
+      }
+      const nm = noTr(this.add.text(x + 22, y + (rowH - 6) / 2, '', { fontFamily: FONT, fontSize: '15px', color: '#fff7dc', wordWrap: { width: 170 } }).setOrigin(0, 0.5)).setText(t ? tr(t.name).toUpperCase() : '');
+      if (nm.height > rowH - 10) nm.setScale((rowH - 10) / nm.height);
+      const fit = (o: Phaser.GameObjects.Text) => o.height > rowH - 10 && o.setScale((rowH - 10) / o.height);
+      fit(line(x + 200, y + (rowH - 6) / 2, dreamTxt, '#c8b8ff', half - 20).setOrigin(0, 0.5));
+      fit(line(x + 200 + half, y + (rowH - 6) / 2, seenTxt, seen ? '#ffe9b8' : '#6a7888', half - 10).setOrigin(0, 0.5));
+    });
+  }
+
   private drawAchievements(P: boolean, HH: number, s: number): void {
     const cols = P ? 2 : 3;
     const cw = P ? 580 : 380;
     const y0 = P ? 280 : 124;
     // Em pé os cartões dividem a altura livre (até o rodapé com os botões).
     const rows = Math.ceil(ACHIEVEMENTS.length / cols);
-    const ch = P ? Phaser.Math.Clamp((HH - y0 - 240) / rows - 8, 110, 190) : 52;
+    const ch = P ? Phaser.Math.Clamp((HH - y0 - 240) / rows - 8, 100, 190) : Math.min(52, (HH - y0 - 92) / rows - 8);
     const x0 = W / 2 - (cols * (cw + 12) - 12) / 2;
     const got = ACHIEVEMENTS.filter((a) => hasAch(a.id)).length;
     this.add.text(W / 2, y0 - (P ? 44 : 14), `${got}/${ACHIEVEMENTS.length} conquistadas`, { fontFamily: FONT, fontSize: `${Math.round((P ? 16 : 18) * s)}px`, color: '#ffe066', stroke: '#10223a', strokeThickness: 6 }).setOrigin(0.5);

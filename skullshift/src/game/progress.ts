@@ -26,7 +26,7 @@ export interface SaveData {
   /** Acordo feito na luta dos Príncipes: quem voa com a caveira. */
   pact?: 'bat' | 'bee';
   /** Final visto: 'free' (enfrentou e venceu o Xamã) ou 'home' (voltou para casa com ele). */
-  ending?: 'free' | 'home';
+  ending?: 'free' | 'home' | 'chosen';
   /** Item guardado na caixa de reserva (como no Mario), entre fases. */
   reserve?: string;
   /** Ouro para gastar no Empório e aprimoramentos comprados. */
@@ -105,7 +105,7 @@ export function loadSlot(n: number): SaveData | null {
       secrets: Array.isArray(d.secrets) ? d.secrets : [],
       secretDone: Array.isArray(d.secretDone) ? d.secretDone : [],
       pact: d.pact === 'bat' || d.pact === 'bee' ? d.pact : undefined,
-      ending: d.ending === 'free' || d.ending === 'home' ? d.ending : undefined,
+      ending: d.ending === 'free' || d.ending === 'home' || d.ending === 'chosen' ? d.ending : undefined,
       reserve: typeof d.reserve === 'string' ? d.reserve : undefined,
       coins: Math.max(0, Number(d.coins) || 0),
       upgrades: Array.isArray(d.upgrades) ? d.upgrades : [],
@@ -225,15 +225,18 @@ export function getPact(): 'bat' | 'bee' {
   return current().pact ?? 'bat';
 }
 
-export function getEnding(): 'free' | 'home' | undefined {
+export function getEnding(): 'free' | 'home' | 'chosen' | undefined {
   return current().ending;
 }
 
-export function setEnding(e: 'free' | 'home'): void {
+export function setEnding(e: 'free' | 'home' | 'chosen'): void {
   const d = current();
   d.ending = e;
   if (!free) saveSlot(currentSlot(), d);
 }
+
+/** O mundo ficou livre do Xamã (final livre ou o final secreto dos escolhidos). */
+export const worldFree = (): boolean => getEnding() === 'free' || getEnding() === 'chosen';
 
 export function getCoins(): number {
   return current().coins ?? 0;
@@ -304,6 +307,13 @@ export function setPact(p: 'bat' | 'bee'): void {
 /** Falas que só aparecem uma vez (primeira transformação, primeira vez em cada forma). */
 export function hasSeen(key: string): boolean {
   return current().seen.includes(key);
+}
+
+export function unmarkSeen(key: string): void {
+  const d = current();
+  if (!d.seen.includes(key)) return;
+  d.seen = d.seen.filter((k) => k !== key);
+  if (!free) saveSlot(currentSlot(), d);
 }
 
 export function markSeen(key: string): void {

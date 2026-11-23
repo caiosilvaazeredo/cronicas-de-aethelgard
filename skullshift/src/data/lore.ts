@@ -1395,6 +1395,28 @@ export const ENDING_HOME: Chapter = {
   ],
 };
 
+/**
+ * Final secreto (as 9 rachaduras e todas as memórias): depois de vencer o Xamã, a coroa não
+ * devolve o corpo de Ossian, e sim os nomes de todos os escolhidos da Vila dos Ossos.
+ */
+export const ENDING_CHOSEN: Chapter = {
+  title: 'Os Nomes',
+  blurb: 'Os escolhidos lembram quem foram.',
+  lines: [
+    X('Tu... venceste. Os selos voltam. E tu voltas a ser osso.'),
+    V('Ainda não. A coroa ainda está comigo. Ela devolve o que a ponte levou.'),
+    X('Ela devolve UM. A ti. É a tua casa, a tua irmã.'),
+    V('Então que devolva os nomes. Não o meu corpo: os nomes de todos que você trouxe para a vila.'),
+    X('Por esqueletos que nem conheces? Estás a jogar fora tudo o que eu te prometi.'),
+    V('Eu conheço todos. Estavam riscados na pedra da caverna.'),
+    S('...Os ossos de novo. Tudo bem. Eu já me acostumei com eles.'),
+    S('Na Vila dos Ossos, os esqueletos coloridos param no meio da rua. Alguém diz um nome. Depois outro.'),
+    S('Eles vão atravessar a luz quando quiserem, lembrando quem foram. Ninguém mais vai puxá-los de volta.'),
+    S('E a minha irmã vai saber, de algum jeito, que eu não caí à toa.'),
+    S('Meu nome? Ossian. Foi o nome que eu escolhi. Desta vez, de verdade.'),
+  ],
+};
+
 /** Depois da última fase: a coroa inteira, o portão aberto, e uma escolha que fica com quem joga. */
 export const EPILOGUE: Chapter = {
   title: 'O Portão da Maré',
@@ -1420,23 +1442,30 @@ export interface Crack {
   dream: string;
   screen: number;
   text: string;
+  /** O que o sonho fez Ossian "lembrar" (página Sonhos do Diário). */
+  said: string;
 }
 export const CRACKS: Record<string, Crack> = {
-  wreck: { dream: 'p_mare', screen: 2, text: 'Hex disse que meu pai me trazia aqui para pescar. Mas ninguém pesca nestas ilhas: os tubarões não deixam. Nunca deixaram.' },
-  boneyard: { dream: 'p_pradaria', screen: 2, text: 'O avô da cicatriz, que enfrentou o Rei Gnoll... Os gnolls juram que ninguém nunca chegou perto do rei e voltou.' },
-  deeplagoon: { dream: 'p_lagoa', screen: 2, text: '"Medo de criança", ele disse. Mas o frio da água que eu lembro não é de criança. É de agora.' },
-  cocoons: { dream: 'p_teias', screen: 2, text: 'Nomes riscados na pedra. Os mesmos do meu "pesadelo de criança". Não era pesadelo. Eu estive aqui. Eles também.' },
-  anvil: { dream: 'p_forja', screen: 2, text: 'O ferreiro velho falou de um feiticeiro roxo que prendeu a forja inteira. Hex disse que derrubou um minotauro. Não disse que prendeu todos.' },
-  treetops: { dream: 'p_bosque', screen: 2, text: 'Um estilingue com o cabo rachado, largado num galho. Igual ao meu. "Filho único", ele disse. Mentira.' },
-  darkmine: { dream: 'p_minas', screen: 2, text: 'No escuro, quem acendia a vela não era minha mãe. Nem Hex. Era uma menina. Minha irmã.' },
-  firewinds: { dream: 'p_fogo', screen: 2, text: '"Todos me conhecem", ele disse. Os diabretes conhecem, sim: fogem só de ouvir o nome dele.' },
-  wingkey: { dream: 'p_asas', screen: 2, text: 'No sonho, o Portão da Maré ficava no mar. Aqui ninguém nunca ouviu falar de portão nenhum.' },
+  wreck: { dream: 'p_mare', screen: 2, text: 'Hex disse que meu pai me trazia aqui para pescar. Mas ninguém pesca nestas ilhas: os tubarões não deixam. Nunca deixaram.', said: 'Meu pai me trazia às Ilhas da Maré para pescar.' },
+  boneyard: { dream: 'p_pradaria', screen: 2, text: 'O avô da cicatriz, que enfrentou o Rei Gnoll... Os gnolls juram que ninguém nunca chegou perto do rei e voltou.', said: 'Meu avô enfrentou o Rei Gnoll e voltou com uma cicatriz.' },
+  deeplagoon: { dream: 'p_lagoa', screen: 2, text: '"Medo de criança", ele disse. Mas o frio da água que eu lembro não é de criança. É de agora.', said: 'Meu medo de água é só um medo de criança.' },
+  cocoons: { dream: 'p_teias', screen: 2, text: 'Nomes riscados na pedra. Os mesmos do meu "pesadelo de criança". Não era pesadelo. Eu estive aqui. Eles também.', said: 'Os nomes riscados na pedra eram um pesadelo de criança.' },
+  anvil: { dream: 'p_forja', screen: 2, text: 'O ferreiro velho falou de um feiticeiro roxo que prendeu a forja inteira. Hex disse que derrubou um minotauro. Não disse que prendeu todos.', said: 'Hex derrubou um minotauro na Forja, uma vez.' },
+  treetops: { dream: 'p_bosque', screen: 2, text: 'Um estilingue com o cabo rachado, largado num galho. Igual ao meu. "Filho único", ele disse. Mentira.', said: 'Hex fez o meu estilingue. Eu sou filho único.' },
+  darkmine: { dream: 'p_minas', screen: 2, text: 'No escuro, quem acendia a vela não era minha mãe. Nem Hex. Era uma menina. Minha irmã.', said: 'Minha mãe deixava uma vela acesa no escuro.' },
+  firewinds: { dream: 'p_fogo', screen: 2, text: '"Todos me conhecem", ele disse. Os diabretes conhecem, sim: fogem só de ouvir o nome dele.', said: 'Todos os reis conhecem Hex.' },
+  wingkey: { dream: 'p_asas', screen: 2, text: 'No sonho, o Portão da Maré ficava no mar. Aqui ninguém nunca ouviu falar de portão nenhum.', said: 'O Portão da Maré fica no mar e devolve tudo ao que era.' },
 };
 
 /**
  * No Trono, depois da ponte: o Xamã admite que plantou os sonhos. Quem achou 5 rachaduras ou
  * mais acusa primeiro; quem não achou ouve dele.
  */
+/** Pode escolher libertar os escolhidos: achou as 9 rachaduras e recuperou todas as memórias. */
+export function canFreeChosen(): boolean {
+  return Object.keys(CRACKS).every((id) => hasSeen(`crack-${id}`)) && MEMORIES.every((_, i) => hasSeen(`memory-${i + 1}`));
+}
+
 export function dreamReveal(cracks: number): Line[] {
   const open = cracks >= 5
     ? [V('E os sonhos na Vila dos Ossos. O pai pescador, o avô da cicatriz, a mãe da vela. Nada disso bateu com o que eu vi lá fora.'), X('Percebeste. Os outros nunca percebiam.')]

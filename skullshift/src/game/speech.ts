@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import { say } from './buttons';
+import { noTr } from '../i18n';
 import { BODY_FONT, DEPTH, FONT } from '../config';
 
 const INK = 0x1d1a2b;
@@ -18,8 +20,8 @@ export class SpeechBubble {
     name: string,
     color: number,
   ) {
-    const body = scene.add
-      .text(0, 0, text, { fontFamily: BODY_FONT, fontSize: '17px', color: '#1d1a2b', lineSpacing: 4, wordWrap: { width: 300 } })
+    const body = noTr(scene.add.text(0, 0, '', { fontFamily: BODY_FONT, fontSize: '17px', color: '#1d1a2b', lineSpacing: 4, wordWrap: { width: 300 } }))
+      .setText(say(text))
       .setOrigin(0.5, 1);
     const w = Math.max(160, body.width + 28);
     const h = body.height + 26;

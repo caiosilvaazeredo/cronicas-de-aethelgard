@@ -2,8 +2,8 @@ import Phaser from 'phaser';
 import { noTr, tr } from '../i18n';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
-import { ENDING_FREE, ENDING_HOME, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
-import { completeLevel, setEnding } from '../game/progress';
+import { ENDING_CHOSEN, ENDING_FREE, ENDING_HOME, canFreeChosen, chapterFor, SPEAKER_NAME, type Line, type Speaker } from '../data/lore';
+import { completeLevel, hasSeen, markSeen, setEnding, unmarkSeen } from '../game/progress';
 import { areaOfLevel, areaTitle } from '../game/areas';
 import { CHARS } from '../game/characters';
 import type { DeviceId } from '../game/controls';
@@ -71,7 +71,7 @@ export class StoryScene extends Phaser.Scene {
     this.ending = undefined;
     this.chose = false;
     // Epílogo (depois de vencer o Xamã): o final em que o mundo fica livre.
-    this.lines = (this.epilogue ? ENDING_FREE : chapterFor(this.level))?.lines ?? [];
+    this.lines = (this.epilogue ? this.endingChapter : chapterFor(this.level))?.lines ?? [];
     this.index = -1;
     this.slots = { left: {}, right: {} };
     this.prevPad = { a: true, b: true };
@@ -87,7 +87,7 @@ export class StoryScene extends Phaser.Scene {
     shade.fillGradientStyle(0x0b1626, 0x0b1626, 0x0b1626, 0x0b1626, 0, 0, 0.75, 0.75).fillRect(0, H * 0.35, W, H * 0.65);
 
     // Título do capítulo no alto.
-    const ch = this.epilogue ? ENDING_FREE : chapterFor(this.level);
+    const ch = this.epilogue ? this.endingChapter : chapterFor(this.level);
     // Título: área e número da fase dentro dela (as áreas têm ordem livre).
     const area = areaOfLevel(this.level);
     const k = area ? area.levels.indexOf(LEVELS[this.level].id) + 1 : this.level + 1;
@@ -262,6 +262,11 @@ export class StoryScene extends Phaser.Scene {
   }
 
   /** Trono do Xamã: depois da revelação, a escolha (enfrentar ou voltar para casa). */
+  /** Depois de vencer o Xamã: o final livre, ou o dos escolhidos se foi essa a escolha. */
+  private get endingChapter() {
+    return hasSeen('ending-chosen-path') ? ENDING_CHOSEN : ENDING_FREE;
+  }
+
   private get isFinale(): boolean {
     return LEVELS[this.level]?.id === 'finale' && !this.epilogue;
   }
@@ -272,10 +277,15 @@ export class StoryScene extends Phaser.Scene {
     const P = VIEW.portrait;
     const opts = ['ENFRENTAR O XAMÃ', 'VOLTAR PARA CASA COM A AJUDA DELE'];
     const sub = ['Se vencer, o mundo fica livre... e você volta a ser osso.', 'Você volta inteiro para casa. O mundo fica com o Xamã.'];
+    // Final secreto: quem achou todas as rachaduras e memórias sabe dos outros escolhidos.
+    if (canFreeChosen()) {
+      opts.push('LIBERTAR OS ESCOLHIDOS');
+      sub.push('Vença o Xamã e use a coroa para devolver os nomes a todos da vila.');
+    }
     const items: Phaser.GameObjects.GameObject[] = [this.add.rectangle(0, 0, W * 2, H * 3, 0x07040c, 0.7).setInteractive()];
     const pw = P ? 1000 : 820;
     const rh = P ? 170 : 116;
-    const ph = rh * 2 + (P ? 200 : 150);
+    const ph = rh * opts.length + (P ? 200 : 150);
     const g = this.add.graphics();
     g.fillStyle(INK, 1).fillRoundedRect(-pw / 2 - 6, -ph / 2 - 6, pw + 12, ph + 12, 26);
     g.fillStyle(0x10223a, 0.97).fillRoundedRect(-pw / 2, -ph / 2, pw, ph, 22);
@@ -325,7 +335,15 @@ export class StoryScene extends Phaser.Scene {
     if (!box) return;
     this.choiceBox = undefined;
     box.destroy();
+    if (this.choiceSel === 2) {
+      // Libertar os escolhidos: a mesma luta final; o epílogo depois dela é o secreto.
+      markSeen('ending-chosen-path');
+      this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });
+      return;
+    }
     if (this.choiceSel === 0) {
+      // Quem enfrenta pelo final livre não leva o secreto (se mudou de ideia numa tentativa anterior).
+      unmarkSeen('ending-chosen-path');
       // Enfrentar: a luta final (o final livre vem depois da vitória).
       this.scene.start('game', { mode: 'story', devices: this.devices, level: this.level });
       return;
@@ -344,7 +362,7 @@ export class StoryScene extends Phaser.Scene {
     if (this.isFinale && !this.chose) return this.showChoice();
     if (this.ending === 'home' || this.epilogue) {
       // Fim: a tela some num branco morno e volta ao mapa do mundo (agora livre ou dominado).
-      if (this.epilogue) setEnding('free');
+      if (this.epilogue) setEnding(hasSeen('ending-chosen-path') ? 'chosen' : 'free');
       this.cameras.main.fadeOut(1600, 255, 247, 220);
       this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('credits', { next: 'world', data: { devices: this.devices, ending: true } }));
       return;

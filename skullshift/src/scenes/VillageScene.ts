@@ -10,7 +10,7 @@ import { BODY_FONT, FONT, PORTRAIT, VIEW, W } from '../config';
 import { AREAS, areaTitle, areaUnlocked, recommendedLevel } from '../game/areas';
 import { getRun, heartsFor, startRun } from '../game/dungeon';
 import { musicNotesSince, playMusic } from '../game/music';
-import { buySmith, getCoins, getLevel, hasSeen, isDone, isDungeonDone, isFreePlay, isSecretDone, levelProgress, smithLevel } from '../game/progress';
+import { buySmith, getCoins, getEnding, getLevel, hasSeen, isDone, isDungeonDone, isFreePlay, isSecretDone, levelProgress, smithLevel } from '../game/progress';
 import { LEVELS, PROLOGUE_LEVELS, TRIAL_LEVELS } from '../game/level';
 import { buzz, sfx } from '../game/settings';
 import { rollNumber } from '../ui/juice';
@@ -30,6 +30,14 @@ interface Spot {
 }
 
 /** Falas dos moradores (rodam a cada conversa). */
+/** Depois do final secreto: cada morador diz o nome que lembrou. */
+const CHOSEN_LINES: Record<string, { name: string; line: string }> = {
+  farmer: { name: 'Dona Margarida', line: 'Margarida era o nome que o Hex me deu. O meu é Teresa. Eu tinha uma horta perto do rio, sabia?' },
+  kid: { name: 'Pipo, o ossinho', line: 'Eu lembrei! Eu me chamo Davi, e eu caí da ponte correndo atrás de uma pipa. Obrigado, Ossian.' },
+  bard: { name: 'Bardo Teodoro', line: 'Escrevi uma canção nova. Ela tem nove nomes, e o último é o seu.' },
+  walker: { name: 'Seu Joaquim', line: 'Vou atravessar a luz amanhã. Hoje eu só quero andar pela vila lembrando quem eu fui.' },
+};
+
 const NPC_LINES: Record<string, { name: string; lines: string[] }> = {
   farmer: {
     name: 'Dona Margarida',
@@ -654,6 +662,11 @@ export class VillageScene extends Phaser.Scene {
   // ---------- lugares ----------
 
   private talk(who: string): void {
+    // Final secreto: os moradores lembram os próprios nomes (e falam disso primeiro).
+    if (getEnding() === 'chosen' && CHOSEN_LINES[who] && !this.talkIndex[`chosen-${who}`]) {
+      this.talkIndex[`chosen-${who}`] = 1;
+      return this.openDialog(CHOSEN_LINES[who].name, CHOSEN_LINES[who].line);
+    }
     const n = NPC_LINES[who];
     const i = this.talkIndex[who] ?? 0;
     this.talkIndex[who] = (i + 1) % n.lines.length;

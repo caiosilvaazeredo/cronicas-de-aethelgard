@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import { say } from './buttons';
+import { noTr } from '../i18n';
 import { BODY_FONT, DEATH_Y, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
 import type { CharId, EnemyId, ItemId } from './characters';
 import type { PuzzleDef } from './puzzle';
@@ -2967,7 +2969,7 @@ export const LEVEL_WINGGUARD: LevelDef = {
     // (ou as da caixa de reserva) cruzam o último abismo.
     { segments: [[0, 6, 0], [17, 3, 0]], storyItems: [[3, 'wing']], enemies: [[18, 'wing']], sign: [4, 'Voe, escale, voe:\na caixa guarda\na forma anterior!'] },
     { segments: [[0, 20, 0]], storyItems: [[12, 'web']], enemies: [[8, 'wing_fast']] },
-    { segments: [[0, 4, 0], [4, 3, 5], [18, 2, 3]], storyItems: [[5, 'wing', 5]], enemies: [[19, 'wing_elite']] },
+    { segments: [[0, 4, 0], [4, 3, 5], [16, 4, 6]], storyItems: [[5, 'wing', 5]], enemies: [[18, 'wing_elite']] },
     { segments: [[0, 20, 0]], deco: [[4, 'tower'], [16, 'tower']], enemies: [[8, 'wing_elite'], [12, 'wing_elite'], [16, 'wing_fast']] },
   ],
 };
@@ -4224,8 +4226,9 @@ export class Level {
   /** Placa de madeira em pixel art (poste, tábuas com veio e pregos) com a dica escrita. */
   private addSign(x: number, ground: number, text: string): void {
     const s = this.scene;
-    const label = s.add
-      .text(0, 0, text, { fontFamily: BODY_FONT, fontSize: '14px', color: '#fff7dc', align: 'center', lineSpacing: 2, stroke: '#3a2416', strokeThickness: 3 })
+    // A ação vira o botão do controle em uso ("segure [ESPAÇO]...").
+    const label = noTr(s.add.text(0, 0, '', { fontFamily: BODY_FONT, fontSize: '14px', color: '#fff7dc', align: 'center', lineSpacing: 2, stroke: '#3a2416', strokeThickness: 3 }))
+      .setText(say(text))
       .setOrigin(0.5);
     const w = Math.ceil((label.width + 24) / 4) * 4;
     const h = Math.ceil((label.height + 16) / 4) * 4;

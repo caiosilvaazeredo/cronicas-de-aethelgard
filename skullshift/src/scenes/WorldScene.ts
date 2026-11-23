@@ -5,7 +5,7 @@ import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
 import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, PROLOGUE, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
-import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins, getLevel } from '../game/progress';
+import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins, getLevel, worldFree } from '../game/progress';
 import { MEMORIES } from '../data/lore';
 import { pillButton } from '../ui/devices';
 
@@ -310,6 +310,7 @@ export class WorldScene extends Phaser.Scene {
     const e = getEnding();
     if (e === 'home') return 'O MUNDO PERTENCE AO XAMÃ';
     if (e === 'free') return 'O MUNDO ESTÁ LIVRE';
+    if (e === 'chosen') return 'OS ESCOLHIDOS LEMBRAM SEUS NOMES';
     if (this.region === 'fire') return `TERRAS DE FOGO · NÍVEL ${getLevel()}`;
     return `${isFreePlay() ? 'MODO LIVRE' : `SAVE ${currentSlot()}`} · NÍVEL ${getLevel()} · FRAGMENTOS ${sealsBroken()}/${n}`;
   }
@@ -751,10 +752,10 @@ export class WorldScene extends Phaser.Scene {
     const g = this.add.graphics().setDepth(1.5);
     this.chainG = g;
     // Final livre: os selos voltaram (correntes inteiras de novo).
-    for (const a of AREAS) if (!a.region) this.chain(g, a, areaCleared(a) && getEnding() !== 'free');
+    for (const a of AREAS) if (!a.region) this.chain(g, a, areaCleared(a) && !worldFree());
     // As Terras de Fogo ficam num mapa à parte: a corrente vai até a passagem.
     const fire = AREAS.filter((a) => a.region === 'fire');
-    this.chain(g, LINK_FIRE, fire.every(areaCleared) && getEnding() !== 'free');
+    this.chain(g, LINK_FIRE, fire.every(areaCleared) && !worldFree());
   }
 
   private chain(g: Phaser.GameObjects.Graphics, a: AreaDef, broken: boolean): void {
@@ -784,7 +785,7 @@ export class WorldScene extends Phaser.Scene {
         .setDepth(13);
       return;
     }
-    if (getEnding() === 'free') return;
+    if (worldFree()) return;
     const n = sealsBroken();
     if (!n) return;
     const g = this.add.graphics().setDepth(2.5);

@@ -11,6 +11,7 @@ import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
+import { setButtonDevice } from '../game/buttons';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
@@ -244,6 +245,8 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     // Padrões do chefe que ainda estejam no meio param quando a cena sai (ou reinicia).
     this.events.once('shutdown', () => this.boss?.destroy());
+    // Placas e falas citam o botão do controle do jogador (só com um jogador; no versus, o nome da ação).
+    setButtonDevice(this.mode === 'story' && this.devices.length === 1 ? this.devices[0] : undefined);
     const raw = levelFor(LEVELS[this.levelIndex], this.mode === 'story');
     // Luta final: a arena é o mundo da vez (chão, céu e clima daquele mundo).
     const def = raw.finale && this.mode === 'story' ? finaleWorldDef(raw, this.finalePhase) : raw;
@@ -1915,6 +1918,9 @@ export class GameScene extends Phaser.Scene {
               this.time.delayedCall(140, () => p.sprite.clearTint());
               this.ui?.hud?.setChar(pi, p.def.id);
               this.announce(pi);
+              // História: os objetos de forma da fase voltam (sem isso, quem morria depois de usar o
+              // objeto de um desafio obrigatório — canal, paredão, abismo — ficava sem como passar).
+              if (this.mode === 'story' && pi === 0) this.restoreStoryItems();
               // Renasceu: o item da reserva cai sozinho (como no Mario ao levar dano).
               if (this.reserves[pi]) this.time.delayedCall(700, () => this.dropReserve(pi));
               if (this.hasPerk(pi, 'cloak')) p.protect(INVULN_TIME * 2);
@@ -2350,6 +2356,17 @@ export class GameScene extends Phaser.Scene {
       glow.setFillStyle(tint, 0.45);
     }
     this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0, form });
+  }
+
+  /** Reativa os objetos fixos da fase que já foram pegos (modo história, ao renascer). */
+  private restoreStoryItems(): void {
+    for (const it of this.items) {
+      if (!it.home || it.active) continue;
+      it.active = true;
+      it.sprite.setVisible(true).setAlpha(0);
+      it.glow.setVisible(true);
+      this.tweens.add({ targets: it.sprite, alpha: 1, duration: 400 });
+    }
   }
 
   /**

@@ -1,0 +1,66 @@
+2438	The Names
+2439	The chosen ones remember who they were.
+2440	You... won. The seals are coming back. And you go back to bone.
+2441	Not yet. The crown is still mine. It gives back what the bridge took.
+2442	It gives back ONE. You. Your home, your sister.
+2443	Then let it give back the names. Not my body: the names of everyone you brought to the village.
+2444	For skeletons you don't even know? You're throwing away everything I promised you.
+2445	I know all of them. They were scratched into the cave stone.
+2446	...Bones again. That's fine. I'm used to them by now.
+2447	In the Village of Bones, the colored skeletons stop in the middle of the street. Someone says a name. Then another.
+2448	They'll cross the light whenever they want, remembering who they were. No one will pull them back again.
+2449	And somehow my sister will know I didn't fall for nothing.
+2450	My name? Ossian. It's the name I chose. This time, for real.
+2451	My father used to bring me to the Tide Islands to fish.
+2452	My grandpa faced the Gnoll King and came back with a scar.
+2453	My fear of water is just a childhood fear.
+2454	The names scratched into the stone were a childhood nightmare.
+2455	Hex once brought down a minotaur at the Forge.
+2456	Hex made my slingshot. I'm an only child.
+2457	My mother left a candle burning in the dark.
+2458	Every king knows Hex.
+2459	The Tide Gate is out at sea and puts everything back the way it was.
+2460	The Names Return
+2461	Free the chosen ones of the Village of Bones.
+2496	SPACE
+2498	Bear
+2499	Bomb Fish
+2500	Paddle Shark
+2501	Panda
+2502	Snake
+2503	Thief
+2504	Troll
+2505	Turtle
+2506	Ember Gnome
+2507	Pig
+2508	Pig Rider Goblin
+2509	Black Bear
+2510	Polar Bear
+2511	Pufferfish
+2512	Pirate Paddle Shark
+2513	Red Panda
+2514	Panda Master
+2515	Coral Snake
+2516	Sand Snake
+2517	Shadow Thief
+2518	Swamp Troll
+2519	Cave Troll
+2520	Lava Troll
+2521	Sea Turtle
+2522	Armored Turtle
+2523	Frost Gnome
+2524	Boar
+2525	DREAMS ▶
+2526	DREAMS
+2527	Cracks found: {0}/{1}
+2528	Dream: {0}
+2529	Dream: ???
+2530	Out there: {0}
+2531	Out there: ???
+2532	FREE THE CHOSEN ONES
+2533	Defeat the Shaman and use the crown to give everyone in the village their names back.
+2534	Margarida was the name Hex gave me. Mine is Teresa. I had a garden by the river, you know?
+2535	I remember! My name is Davi, and I fell off the bridge chasing a kite. Thank you, Ossian.
+2536	I wrote a new song. It has nine names, and the last one is yours.
+2537	I'll cross the light tomorrow. Today I just want to walk around the village remembering who I was.
+2538	THE CHOSEN REMEMBER THEIR NAMES

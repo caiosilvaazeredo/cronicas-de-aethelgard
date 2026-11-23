@@ -105,6 +105,33 @@ const BEE_EMBER = { 0xefe054: 0xff6a3a, 0xb28d5a: 0xa01e30, 0x9f866e: 0x6a1020, 
 const BEE_STORM = { 0xefe054: 0xc8c8e0, 0xb28d5a: 0x4a4a6a, 0x9f866e: 0x2a2a4a, 0x6c554b: 0x1a1a2a, 0xdad9bb: 0xe0f0ff, 0xc6b799: 0x9ab0ff };
 const GNOLL_WRECK = { 0xefe054: 0xb8c8a0, 0xaf8c58: 0x7a8a6a, 0xb492a7: 0x4a8a9a, 0x6d5e51: 0x4a5a5a, 0x514744: 0x2e3a3a };
 
+// ---------- bichos novos (cores originais medidas nas folhas; contorno 161c2e fica) ----------
+/** Urso: pelo 7a624c/584c51, focinho 9f8e6c. */
+const BEAR_BLACK = { 0x7a624c: 0x3e383e, 0x584c51: 0x26232c, 0x9f8e6c: 0x7a6e7a };
+const BEAR_POLAR = { 0x7a624c: 0xe8eef4, 0x584c51: 0xb4c2d0, 0x9f8e6c: 0xffffff };
+/** Peixe-Bomba: corpo e6d579/be7a42, nadadeiras 945656/b98664. */
+const BOMBFISH_PUFFER = { 0xe6d579: 0x9ad8ff, 0xbe7a42: 0x3a7ad0, 0x945656: 0x2a4a8a, 0xb98664: 0x6aa0e0, 0xc4a05c: 0x5a8ac8 };
+/** Tubarão do Remo: pele 6f9193/365862, remo a79158, barriga b9cbc4. */
+const PSHARK_PIRATE = { 0x6f9193: 0x5a7a5a, 0x365862: 0x2e4a36, 0xa79158: 0x7a3a22, 0xb9cbc4: 0xd8c8a0, 0x6d5e51: 0x3a2a20 };
+/** Panda: branco faf1cd/d7bca3, preto 2d3047/435060, chapéu dab667/b3845f. */
+const PANDA_RED = { 0xfaf1cd: 0xe8763a, 0xd7bca3: 0xb8522a, 0x2d3047: 0x5a2416, 0x435060: 0x7a3420 };
+const PANDA_MASTER = { 0xdab667: 0x9a6ad8, 0xb3845f: 0x5a3a9a, 0xf0e792: 0xd0b0ff };
+/** Cobra: escamas ffb13e/ffea94, listras 7a5f74/b97091. */
+const SNAKE_CORAL = { 0xffb13e: 0xe8383a, 0xffea94: 0xfff4d8, 0x7a5f74: 0x24202a, 0xb97091: 0xf0d050 };
+const SNAKE_SAND = { 0xffb13e: 0xd8b070, 0xffea94: 0xfff1c0, 0x7a5f74: 0x8a6a40, 0xb97091: 0xb08a58 };
+/** Ladrão: capa 3a4859/596975/352945. */
+const THIEF_SHADOW = { 0x3a4859: 0x3a2a5a, 0x596975: 0x6a4a9a, 0x352945: 0x1a1030, 0xaaab90: 0xc8b0ff };
+/** Troll: pele 718f5a/597557/4e5c56, cinto e0bf6d. */
+const TROLL_CAVE = { 0x718f5a: 0x8a96a4, 0x597557: 0x5e6a78, 0x4e5c56: 0x3e4a56, 0x99a676: 0xb0bac4 };
+const TROLL_LAVA = { 0x718f5a: 0xc8642e, 0x597557: 0x8a3a1e, 0x4e5c56: 0x5a2416, 0x99a676: 0xffa060, 0xe0bf6d: 0xffd36b };
+/** Tartaruga: pele 5b8243/94a35c/375c46, casco 665a47/7e7b55/4f3939. */
+const TURTLE_SEA = { 0x5b8243: 0x3a9a8a, 0x94a35c: 0x6ad0b0, 0x375c46: 0x1f5f5a, 0x665a47: 0x3a5a6a, 0x7e7b55: 0x5a8a9a, 0x4f3939: 0x23384a };
+const TURTLE_ARMORED = { 0x665a47: 0x7a7a8a, 0x7e7b55: 0xaab0c0, 0x4f3939: 0x40404e, 0xa7ab7a: 0xe0e4f0 };
+/** Gnomo: chapéu em brasa ef6735, roupa 975454. */
+const GNOME_FROST = { 0xef6735: 0x7fd8ff, 0x975454: 0x2a5a9a, 0xf7bd90: 0xd0f0ff };
+/** Porco: pele db8594/a76883/815773, focinho ebb39f. */
+const PIG_WILD = { 0xdb8594: 0x8a5a3a, 0xa76883: 0x6a4028, 0x815773: 0x4a2a1a, 0xebb39f: 0xb08060 };
+
 export const VARIANTS: VariantDef[] = [
   { id: 'shark_hammer', base: 'shark', name: 'Tubarão-Martelo', palette: SHARK_HAMMER, ability: 'charge', speedMul: 1.25 },
   { id: 'shark_coral', base: 'shark', name: 'Tubarão de Coral', palette: SHARK_CORAL, ability: 'triple' },
@@ -134,10 +161,32 @@ export const VARIANTS: VariantDef[] = [
   { id: 'bee_storm', base: 'bee', name: 'Abelha da Tempestade', palette: BEE_STORM, scale: 1.3, hp: 3 },
   { id: 'gnoll_hunter', base: 'gnoll', name: 'Gnoll Caçador', palette: GNOLL_HUNTER, ability: 'boomerang', speedMul: 1.1 },
   { id: 'gnoll_stalker', base: 'gnoll', name: 'Gnoll Espreitador', palette: GNOLL_STALKER, ability: 'burrow', mound: [0x5a8a3a, 0x9ac85a] },
+  { id: 'bear_black', base: 'bear', name: 'Urso Negro', palette: BEAR_BLACK, ability: 'charge', speedMul: 1.15 },
+  { id: 'bear_polar', base: 'bear', name: 'Urso Polar', palette: BEAR_POLAR, scale: 1.2, hp: 3 },
+  { id: 'bombfish_puffer', base: 'bombfish', name: 'Baiacu', palette: BOMBFISH_PUFFER, ability: 'spit' },
+  { id: 'pshark_pirate', base: 'pshark', name: 'Tubarão Pirata do Remo', palette: PSHARK_PIRATE, ability: 'charge', speedMul: 1.15 },
+  { id: 'panda_red', base: 'panda', name: 'Panda-Vermelho', palette: PANDA_RED, ability: 'charge', speedMul: 1.2 },
+  { id: 'panda_master', base: 'panda', name: 'Mestre Panda', palette: PANDA_MASTER, scale: 1.2, hp: 3 },
+  { id: 'snake_coral', base: 'snake', name: 'Cobra-Coral', palette: SNAKE_CORAL, ability: 'poison' },
+  { id: 'snake_sand', base: 'snake', name: 'Cobra da Areia', palette: SNAKE_SAND, ability: 'burrow', mound: [0xa07a40, 0xd8b070] },
+  { id: 'thief_shadow', base: 'thief', name: 'Ladrão das Sombras', palette: THIEF_SHADOW, ability: 'charge', speedMul: 1.15 },
+  { id: 'troll_swamp', base: 'troll', name: 'Troll do Pântano', hp: 4, speedMul: 0.95 },
+  { id: 'troll_cave', base: 'troll', name: 'Troll das Cavernas', palette: TROLL_CAVE, hp: 4 },
+  { id: 'troll_lava', base: 'troll', name: 'Troll de Lava', palette: TROLL_LAVA, hp: 4, ability: 'fire' },
+  { id: 'turtle_sea', base: 'turtle', name: 'Tartaruga Marinha', palette: TURTLE_SEA, ability: 'spit' },
+  { id: 'turtle_armored', base: 'turtle', name: 'Tartaruga Couraçada', palette: TURTLE_ARMORED, scale: 1.15, hp: 4, speedMul: 0.85 },
+  { id: 'gnome_frost', base: 'gnome', name: 'Gnomo de Gelo', palette: GNOME_FROST, ability: 'charge', speedMul: 1.1 },
+  { id: 'pig_wild', base: 'pig', name: 'Javali', palette: PIG_WILD, scale: 1.15, hp: 2, ability: 'charge', speedMul: 1.15 },
   { id: 'gnoll_brute', base: 'gnoll', name: 'Gnoll Brutamontes', palette: GNOLL_BRUTE, scale: 1.35, hp: 3, speedMul: 0.85, accessories: ['horns'] },
 ];
 
 export const variantOf = (id: string): VariantDef | undefined => VARIANTS.find((v) => v.id === id);
+
+/** Bichos que já nascem com habilidade (sem ser variante): o porco e o goblin montado investem. */
+const BASE_ABILITY: Partial<Record<CharId, Ability>> = { pig: 'charge', pigrider: 'charge', thief: 'charge' };
+
+/** Habilidade de quem aparece numa fase (da variante, ou do próprio bicho). */
+export const abilityOf = (id: string): Ability | undefined => variantOf(id)?.ability ?? BASE_ABILITY[id as CharId];
 
 /** Personagem original de uma ficha (a própria, se não for variante). */
 export const baseOf = (def: CharDef): CharId => def.base ?? def.id;

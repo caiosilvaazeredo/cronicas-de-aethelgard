@@ -3,7 +3,9 @@ export type CharId =
   | 'spider' | 'bat' | 'torchgob' // fase 2 (caverna)
   | 'imp' | 'minotaur' // fase 3 (vulcão)
   | 'bee' | 'sgnome' // fase 4 (céu)
-  | 'villager'; // final: a forma humana da caveira (aldeão do Free Pack)
+  | 'villager' // final: a forma humana da caveira (aldeão do Free Pack)
+  // Bichos do Enemy Pack que só aparecem como inimigos, espalhados pelos mundos.
+  | 'bear' | 'bombfish' | 'pshark' | 'panda' | 'snake' | 'thief' | 'troll' | 'turtle' | 'gnome' | 'pig' | 'pigrider';
 /** Variantes de inimigos (src/game/variants.ts): paleta, tamanho, acessórios e habilidade. */
 export type VariantId =
   | 'shark_hammer' | 'shark_coral' | 'shark_elite'
@@ -16,7 +18,10 @@ export type VariantId =
   | 'sgnome_red' | 'sgnome_moss' | 'sgnome_elder'
   | 'torchgob_blue' | 'torchgob_miner' | 'torchgob_chief'
   | 'lizard_poison' | 'lizard_croc'
-  | 'bee_ember' | 'bee_storm';
+  | 'bee_ember' | 'bee_storm'
+  | 'bear_black' | 'bear_polar' | 'bombfish_puffer' | 'pshark_pirate' | 'panda_red' | 'panda_master'
+  | 'snake_coral' | 'snake_sand' | 'thief_shadow' | 'troll_swamp' | 'troll_cave' | 'troll_lava'
+  | 'turtle_sea' | 'turtle_armored' | 'gnome_frost' | 'pig_wild';
 /**
  * Reino das Asas: inimigos que dependem do acordo dos Príncipes ('wing' vira abelha ou morcego,
  * 'wing_fast' a variante rápida, 'wing_elite' a elite do reino inimigo).
@@ -260,6 +265,148 @@ export const CHARS: Record<CharId, CharDef> = {
     melee: { from: 6, to: 8, reach: 100, back: 0 },
     drops: 'horn',
   },
+  // ---------- Bichos novos (só inimigos: não soltam objeto de forma) ----------
+  bear: {
+    id: 'bear',
+    head: 92,
+    name: 'Urso',
+    frame: 256,
+    feetY: 173,
+    idle: { n: 8, fps: 10 },
+    run: { n: 5, fps: 10 },
+    attack: { n: 9, fps: 14 },
+    speed: 205,
+    // Patada pesada.
+    melee: { from: 4, to: 6, reach: 96, back: 20 },
+  },
+  bombfish: {
+    id: 'bombfish',
+    head: 68,
+    name: 'Peixe-Bomba',
+    frame: 192,
+    feetY: 131,
+    idle: { n: 8, fps: 10 },
+    run: { n: 6, fps: 12 },
+    attack: { n: 7, fps: 14 },
+    speed: 190,
+    // Joga bombas em arco que explodem ao cair.
+    projectile: { release: 4, tex: 'bomb', speed: 330, angle: 0, spin: false, arc: { vy: -420, g: 900 } },
+  },
+  pshark: {
+    id: 'pshark',
+    head: 70,
+    name: 'Tubarão do Remo',
+    frame: 192,
+    feetY: 130,
+    idle: { n: 8, fps: 10 },
+    run: { n: 6, fps: 12 },
+    attack: { n: 6, fps: 14 },
+    speed: 230,
+    // Remada larga, acerta na frente e um pouco atrás.
+    melee: { from: 2, to: 4, reach: 96, back: 36 },
+  },
+  panda: {
+    id: 'panda',
+    head: 94,
+    name: 'Panda',
+    frame: 256,
+    feetY: 168,
+    idle: { n: 10, fps: 10 },
+    run: { n: 6, fps: 12 },
+    attack: { n: 13, fps: 18 },
+    speed: 215,
+    // Nunchaku: golpe longo que gira para os dois lados.
+    melee: { from: 4, to: 10, reach: 100, back: 64 },
+  },
+  snake: {
+    id: 'snake',
+    head: 52,
+    name: 'Cobra',
+    frame: 192,
+    feetY: 119,
+    idle: { n: 8, fps: 10 },
+    run: { n: 8, fps: 14 },
+    attack: { n: 6, fps: 16 },
+    speed: 245,
+    // Bote rápido e baixo.
+    melee: { from: 2, to: 4, reach: 86, back: 10 },
+  },
+  thief: {
+    id: 'thief',
+    head: 70,
+    name: 'Ladrão',
+    frame: 192,
+    feetY: 128,
+    idle: { n: 6, fps: 10 },
+    run: { n: 6, fps: 14 },
+    attack: { n: 6, fps: 18 },
+    speed: 285,
+    melee: { from: 2, to: 3, reach: 84, back: 20 },
+  },
+  troll: {
+    id: 'troll',
+    // Desenho encolhido para 62% ao carregar (ver TROLL_SCALE), com os pés no lugar.
+    head: 128,
+    name: 'Troll',
+    frame: 384,
+    feetY: 293,
+    idle: { n: 12, fps: 10 },
+    run: { n: 10, fps: 10 },
+    attack: { n: 6, fps: 10 },
+    speed: 140,
+    // Clava: lenta, alcance enorme.
+    melee: { from: 2, to: 4, reach: 120, back: 30 },
+  },
+  turtle: {
+    id: 'turtle',
+    head: 84,
+    name: 'Tartaruga',
+    frame: 320,
+    feetY: 204,
+    idle: { n: 10, fps: 10 },
+    run: { n: 7, fps: 9 },
+    attack: { n: 10, fps: 14 },
+    speed: 140,
+    melee: { from: 4, to: 7, reach: 100, back: 20 },
+  },
+  gnome: {
+    id: 'gnome',
+    head: 62,
+    name: 'Gnomo de Brasa',
+    frame: 192,
+    feetY: 123,
+    idle: { n: 8, fps: 10 },
+    run: { n: 6, fps: 12 },
+    attack: { n: 7, fps: 16 },
+    speed: 240,
+    melee: { from: 3, to: 5, reach: 80, back: 20 },
+  },
+  pig: {
+    id: 'pig',
+    head: 48,
+    name: 'Porco',
+    frame: 192,
+    feetY: 130,
+    idle: { n: 10, fps: 10 },
+    run: { n: 4, fps: 12 },
+    // Sem golpe próprio: a cabeçada é a corrida (folha de corrida repetida).
+    attack: { n: 4, fps: 14 },
+    speed: 250,
+    melee: { from: 1, to: 3, reach: 64, back: 10 },
+  },
+  pigrider: {
+    id: 'pigrider',
+    head: 140,
+    name: 'Goblin no Porco',
+    frame: 256,
+    feetY: 162,
+    idle: { n: 8, fps: 10 },
+    run: { n: 4, fps: 12 },
+    attack: { n: 7, fps: 16 },
+    speed: 300,
+    // Lança montada: avança em disparada.
+    melee: { from: 3, to: 5, reach: 120, back: 30 },
+  },
   sgnome: {
     id: 'sgnome',
     head: 64,
@@ -309,3 +456,5 @@ export const ITEM_TEXTURE: Record<ItemId, string> = {
 
 /** O Minotauro comum é desenhado menor que a folha original. */
 export const MINO_SCALE = 0.72;
+/** O Troll do Enemy Pack é enorme: encolhe para 62% ao carregar. */
+export const TROLL_SCALE = 0.62;

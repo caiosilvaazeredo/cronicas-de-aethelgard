@@ -33,6 +33,32 @@ char bat      'Giant Bat'       'Giant Bat'       Idle Move Attack
 char torchgob 'Torch Goblin'    'Torch Goblin'    Idle Run  Attack
 char bee      'Bumblebee'       'Bumblebee'       Idle Move Attack
 char sgnome   'Slingshot Gnome' 'Slingshot Gnome' Idle Run  Shoot
+# Bichos que só aparecem como inimigos (espalhados pelos mundos).
+char bear     'Bear'            'Bear'            Idle Run  Attack
+char bombfish 'Bomb Fish'       'Bomb Fish'       Idle Run  Shoot
+char pshark   'Paddle Shark'    'Paddle Shark'    Idle Run  Attack
+char panda    'Panda'           'Panda'           Idle Run  Attack
+char snake    'Snake'           'Snake'           Idle Run  Attack
+char thief    'Thief'           'Thief'           Idle Run  Attack
+char troll    'Troll'           'Troll'           Idle Walk Attack
+char turtle   'Turtle'          'Turtle'          Idle Walk Attack
+char gnome    'Gnome'           'Gnome'           Idle Run  Attack
+# Porco e goblin montado ficam em Extra e não têm avatar: o avatar sai do 1º quadro.
+cp "$E/Extra/Pig/Pig_Idle.png" "$A/chars/pig_idle.png"
+cp "$E/Extra/Pig/Pig_Run.png" "$A/chars/pig_run.png"
+cp "$E/Extra/Pig/Pig_Run.png" "$A/chars/pig_attack.png"
+cp "$E/Extra/Pig Rider Spear Goblin/Pig Rider_Idle.png" "$A/chars/pigrider_idle.png"
+cp "$E/Extra/Pig Rider Spear Goblin/Pig Rider_Run.png" "$A/chars/pigrider_run.png"
+cp "$E/Extra/Pig Rider Spear Goblin/Pig Rider_Attack.png" "$A/chars/pigrider_attack.png"
+python3 - "$A/chars" <<'PY'
+import sys
+from PIL import Image
+d = sys.argv[1]
+for k in ('pig', 'pigrider'):
+    im = Image.open(f'{d}/{k}_idle.png')
+    f = im.size[1]
+    im.crop((0, 0, f, f)).resize((256, 256), Image.NEAREST).save(f'{d}/{k}_avatar.png')
+PY
 cp "$E/Imp/Imp_Idle.png" "$A/chars/imp_idle.png"
 cp "$E/Imp/Imp_Move.png" "$A/chars/imp_run.png"
 cp "$E/Imp/Imp_Avatar.png" "$A/chars/imp_avatar.png"

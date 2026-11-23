@@ -1,0 +1,66 @@
+2438	Imiona
+2439	Wybrańcy pamiętają, kim byli.
+2440	Ty... wygrałeś. Pieczęcie wracają. A ty znów stajesz się kośćmi.
+2441	Jeszcze nie. Korona wciąż jest moja. Oddaje to, co zabrał most.
+2442	Oddaje JEDNO. Ciebie. Twój dom, twoją siostrę.
+2443	To niech odda imiona. Nie moje ciało: imiona wszystkich, których przyprowadziłeś do wioski.
+2444	Dla szkieletów, których nawet nie znasz? Wyrzucasz wszystko, co ci obiecałem.
+2445	Znam ich wszystkich. Byli wydrapani w kamieniu jaskini.
+2446	...Znowu kości. Trudno. Już się przyzwyczaiłem.
+2447	W Wiosce Kości kolorowe szkielety zatrzymują się na środku ulicy. Ktoś mówi imię. Potem kolejne.
+2448	Przejdą przez światło, kiedy zechcą, pamiętając, kim byli. Nikt ich już nie ściągnie z powrotem.
+2449	A moja siostra jakoś się dowie, że nie spadłem na próżno.
+2450	Moje imię? Ossian. To imię, które sam wybrałem. Tym razem naprawdę.
+2451	Ojciec zabierał mnie na ryby na Wyspy Przypływu.
+2452	Mój dziadek stanął przeciw Królowi Gnolli i wrócił z blizną.
+2453	Mój strach przed wodą to tylko dziecięcy strach.
+2454	Imiona wydrapane w kamieniu to był dziecięcy koszmar.
+2455	Hex kiedyś powalił minotaura w Kuźni.
+2456	Hex zrobił moją procę. Jestem jedynakiem.
+2457	Moja matka zostawiała w ciemności zapaloną świecę.
+2458	Wszyscy królowie znają Hexa.
+2459	Brama Przypływu stoi w morzu i przywraca wszystko do dawnego stanu.
+2460	Imiona Wracają
+2461	Uwolnij wybrańców z Wioski Kości.
+2496	SPACJA
+2498	Niedźwiedź
+2499	Ryba-Bomba
+2500	Rekin z Wiosłem
+2501	Panda
+2502	Wąż
+2503	Złodziej
+2504	Troll
+2505	Żółw
+2506	Żarowy Gnom
+2507	Świnia
+2508	Goblin na Świni
+2509	Czarny Niedźwiedź
+2510	Niedźwiedź Polarny
+2511	Rozdymka
+2512	Piracki Rekin z Wiosłem
+2513	Panda Czerwona
+2514	Mistrz Panda
+2515	Wąż Koralowy
+2516	Wąż Piaskowy
+2517	Złodziej Cieni
+2518	Troll z Bagien
+2519	Troll Jaskiniowy
+2520	Troll Lawy
+2521	Żółw Morski
+2522	Żółw Pancerny
+2523	Lodowy Gnom
+2524	Dzik
+2525	SNY ▶
+2526	SNY
+2527	Znalezione pęknięcia: {0}/{1}
+2528	Sen: {0}
+2529	Sen: ???
+2530	Na zewnątrz: {0}
+2531	Na zewnątrz: ???
+2532	UWOLNIJ WYBRAŃCÓW
+2533	Pokonaj Szamana i użyj korony, by oddać imiona całej wiosce.
+2534	Margarida to imię od Hexa. Moje to Teresa. Miałam ogródek nad rzeką, wiesz?
+2535	Przypomniałem sobie! Mam na imię Davi, spadłem z mostu, goniąc latawiec. Dziękuję, Ossian.
+2536	Napisałem nową piosenkę. Ma dziewięć imion, a ostatnie jest twoje.
+2537	Jutro przejdę przez światło. Dziś chcę tylko pochodzić po wiosce, pamiętając, kim byłem.
+2538	WYBRAŃCY PAMIĘTAJĄ SWOJE IMIONA

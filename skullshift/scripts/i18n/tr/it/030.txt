@@ -1,0 +1,66 @@
+2438	I Nomi
+2439	I prescelti ricordano chi erano.
+2440	Tu... hai vinto. I sigilli tornano. E tu torni a essere osso.
+2441	Non ancora. La corona è ancora mia. Restituisce ciò che il ponte si è preso.
+2442	Ne restituisce UNO. Te. La tua casa, tua sorella.
+2443	Allora che restituisca i nomi. Non il mio corpo: i nomi di tutti quelli che hai portato al villaggio.
+2444	Per scheletri che nemmeno conosci? Stai buttando via tutto ciò che ti ho promesso.
+2445	Li conosco tutti. Erano graffiati nella pietra della caverna.
+2446	...Di nuovo ossa. Va bene. Ormai ci sono abituato.
+2447	Al Villaggio delle Ossa, gli scheletri colorati si fermano in mezzo alla strada. Qualcuno dice un nome. Poi un altro.
+2448	Attraverseranno la luce quando vorranno, ricordando chi erano. Nessuno li tirerà più indietro.
+2449	E mia sorella saprà, in qualche modo, che non sono caduto per niente.
+2450	Il mio nome? Ossian. È il nome che ho scelto. Stavolta, davvero.
+2451	Mio padre mi portava a pescare alle Isole della Marea.
+2452	Mio nonno affrontò il Re Gnoll e tornò con una cicatrice.
+2453	La mia paura dell'acqua è solo una paura da bambino.
+2454	I nomi graffiati nella pietra erano un incubo da bambino.
+2455	Hex una volta abbatté un minotauro alla Forgia.
+2456	Hex ha fatto la mia fionda. Sono figlio unico.
+2457	Mia madre lasciava una candela accesa al buio.
+2458	Tutti i re conoscono Hex.
+2459	Il Portale della Marea è in mare e rimette tutto com'era.
+2460	I Nomi Ritrovati
+2461	Libera i prescelti del Villaggio delle Ossa.
+2496	SPAZIO
+2498	Orso
+2499	Pesce Bomba
+2500	Squalo del Remo
+2501	Panda
+2502	Serpente
+2503	Ladro
+2504	Troll
+2505	Tartaruga
+2506	Gnomo di Brace
+2507	Maiale
+2508	Goblin sul Maiale
+2509	Orso Nero
+2510	Orso Polare
+2511	Pesce Palla
+2512	Squalo Pirata del Remo
+2513	Panda Rosso
+2514	Maestro Panda
+2515	Serpente Corallo
+2516	Serpente delle Sabbie
+2517	Ladro delle Ombre
+2518	Troll della Palude
+2519	Troll delle Caverne
+2520	Troll di Lava
+2521	Tartaruga Marina
+2522	Tartaruga Corazzata
+2523	Gnomo di Ghiaccio
+2524	Cinghiale
+2525	SOGNI ▶
+2526	SOGNI
+2527	Crepe trovate: {0}/{1}
+2528	Sogno: {0}
+2529	Sogno: ???
+2530	Là fuori: {0}
+2531	Là fuori: ???
+2532	LIBERA I PRESCELTI
+2533	Sconfiggi lo Sciamano e usa la corona per restituire i nomi a tutto il villaggio.
+2534	Margarida era il nome che mi ha dato Hex. Il mio è Teresa. Avevo un orto vicino al fiume, sai?
+2535	Mi sono ricordato! Mi chiamo Davi, e sono caduto dal ponte correndo dietro a un aquilone. Grazie, Ossian.
+2536	Ho scritto una nuova canzone. Ha nove nomi, e l'ultimo è il tuo.
+2537	Domani attraverserò la luce. Oggi voglio solo camminare per il villaggio ricordando chi ero.
+2538	I PRESCELTI RICORDANO I LORO NOMI

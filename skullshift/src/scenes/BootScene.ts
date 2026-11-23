@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { crouchTasks } from '../game/crouch';
 import { BAT_KING_PALETTE, BAT_PRINCE_PALETTE, BEE_KING_PALETTE, BEE_PRINCE_PALETTE, MINO_BOSS_PALETTE, SPIDER_QUEEN_PALETTE, recolorSheet, shrinkSheet, swimSheet, makeShamanOrb } from '../game/sheets';
-import { MINO_SCALE } from '../game/characters';
+import { MINO_SCALE, TROLL_SCALE } from '../game/characters';
 import { variantTasks } from '../game/variants';
 import { makeSeaArt, makeSeaTiles } from '../game/sea';
 import { makeFieldArt, makeFieldTiles } from '../game/field';
@@ -120,6 +120,8 @@ export class BootScene extends Phaser.Scene {
       () => {
         // O Minotauro comum fica menor (72%), com os pés no mesmo lugar.
         for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `minotaur_${k}`, 320, 320, MINO_SCALE, CHARS.minotaur.feetY);
+        // O Troll também (é o maior desenho do Enemy Pack).
+        for (const k of ['idle', 'run', 'attack']) shrinkSheet(this, `troll_${k}`, 384, 384, TROLL_SCALE, CHARS.troll.feetY);
       },
       () => {
         for (const id of Object.keys(CHARS) as CharId[]) {

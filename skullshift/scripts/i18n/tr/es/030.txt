@@ -1,0 +1,66 @@
+2438	Los Nombres
+2439	Los elegidos recuerdan quiénes fueron.
+2440	Tú... venciste. Los sellos vuelven. Y tú vuelves a ser hueso.
+2441	Todavía no. La corona sigue siendo mía. Devuelve lo que el puente se llevó.
+2442	Devuelve UNO. A ti. Tu casa, tu hermana.
+2443	Entonces que devuelva los nombres. No mi cuerpo: los nombres de todos los que trajiste a la aldea.
+2444	¿Por esqueletos que ni conoces? Estás tirando todo lo que te prometí.
+2445	Los conozco a todos. Estaban rayados en la piedra de la cueva.
+2446	...Huesos otra vez. Está bien. Ya me acostumbré a ellos.
+2447	En la Aldea de los Huesos, los esqueletos de colores se detienen en medio de la calle. Alguien dice un nombre. Luego otro.
+2448	Cruzarán la luz cuando quieran, recordando quiénes fueron. Nadie volverá a tirar de ellos.
+2449	Y mi hermana sabrá, de algún modo, que no caí en vano.
+2450	¿Mi nombre? Ossian. Es el nombre que elegí. Esta vez, de verdad.
+2451	Mi padre me traía a las Islas de la Marea a pescar.
+2452	Mi abuelo se enfrentó al Rey Gnoll y volvió con una cicatriz.
+2453	Mi miedo al agua es solo un miedo de niño.
+2454	Los nombres rayados en la piedra eran una pesadilla de niño.
+2455	Hex derribó una vez a un minotauro en la Forja.
+2456	Hex hizo mi tirachinas. Soy hijo único.
+2457	Mi madre dejaba una vela encendida en la oscuridad.
+2458	Todos los reyes conocen a Hex.
+2459	El Portal de la Marea está en el mar y devuelve todo a como era.
+2460	Los Nombres de Vuelta
+2461	Libera a los elegidos de la Aldea de los Huesos.
+2496	ESPACIO
+2498	Oso
+2499	Pez Bomba
+2500	Tiburón del Remo
+2501	Panda
+2502	Serpiente
+2503	Ladrón
+2504	Trol
+2505	Tortuga
+2506	Gnomo de Brasa
+2507	Cerdo
+2508	Goblin en Cerdo
+2509	Oso Negro
+2510	Oso Polar
+2511	Pez Globo
+2512	Tiburón Pirata del Remo
+2513	Panda Rojo
+2514	Maestro Panda
+2515	Serpiente Coral
+2516	Serpiente de Arena
+2517	Ladrón de las Sombras
+2518	Trol del Pantano
+2519	Trol de las Cavernas
+2520	Trol de Lava
+2521	Tortuga Marina
+2522	Tortuga Acorazada
+2523	Gnomo de Hielo
+2524	Jabalí
+2525	SUEÑOS ▶
+2526	SUEÑOS
+2527	Grietas encontradas: {0}/{1}
+2528	Sueño: {0}
+2529	Sueño: ???
+2530	Ahí fuera: {0}
+2531	Ahí fuera: ???
+2532	LIBERAR A LOS ELEGIDOS
+2533	Vence al Chamán y usa la corona para devolverle el nombre a toda la aldea.
+2534	Margarida era el nombre que me dio Hex. El mío es Teresa. Tenía un huerto junto al río, ¿sabes?
+2535	¡Me acordé! Me llamo Davi, y me caí del puente corriendo detrás de una cometa. Gracias, Ossian.
+2536	Escribí una canción nueva. Tiene nueve nombres, y el último es el tuyo.
+2537	Mañana cruzaré la luz. Hoy solo quiero pasear por la aldea recordando quién fui.
+2538	LOS ELEGIDOS RECUERDAN SUS NOMBRES

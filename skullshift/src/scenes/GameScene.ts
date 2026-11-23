@@ -23,7 +23,7 @@ import { SharkKingBoss } from '../game/sharkking';
 import { ShamanBoss } from '../game/shamanboss';
 import { GnollKingBoss } from '../game/gnollking';
 import { GnomeKingBoss, GoblinKingBoss, LizardKingBoss } from '../game/kings';
-import { accessoryOffset, baseOf, variantColor, variantOf, variantTexture, type Accessory } from '../game/variants';
+import { abilityOf, accessoryOffset, baseOf, variantColor, variantOf, variantTexture, type Accessory } from '../game/variants';
 import { CENTER, areaOfLevel, areaTier, areaTitle } from '../game/areas';
 import { levelUpBanner } from '../ui/levelup';
 import { smithLevel, addCoins, addStat, addXp, completeLevel, isDone, isSecretDone, getLevel, deathLimit, findSecret, getPact, getReserve, ownedUpgrades, setReserve, giftsOf, hasSecret, hasSeen, markGift, markSeen, setPact } from '../game/progress';
@@ -294,7 +294,7 @@ export class GameScene extends Phaser.Scene {
           this.physics.add.collider(f.sprite, this.level.ground);
           // Casa assombrada: os inimigos são assombrações (lilás e translúcidos).
           if (def.haunt && def.theme === 'haunted') f.sprite.setTint(0xc8b8ff);
-          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
+          this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, abilityOf(char), variantOf(char)?.mound), acc: this.setupVariant(f) });
           this.dungeonArmor(f);
         }
         for (const [t, kind, h] of s.storyItems ?? []) this.spawnItem(this.level.tileX(si, t), kind, true, 0, h);
@@ -3282,7 +3282,7 @@ export class GameScene extends Phaser.Scene {
     f.facing = -1;
     f.onProjectile = (ff) => this.spawnProjectile(ff);
     this.physics.add.collider(f.sprite, this.level.ground);
-    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, variantOf(char)?.ability, variantOf(char)?.mound), acc: this.setupVariant(f) });
+    this.enemies.push({ f, ai: new EnemyAI(f, () => this.players[0], this.level, abilityOf(char), variantOf(char)?.mound), acc: this.setupVariant(f) });
     this.dungeonArmor(f);
     this.smokeBurst(x, feet, 0x8a6ad0, 0.7);
     return f;

@@ -3113,6 +3113,104 @@ export const PROLOGUE_LEVELS: LevelDef[] = [
   ]),
 ];
 
+// ---------- Bichos novos nos mundos de sempre ----------
+
+/**
+ * Os outros animais do Enemy Pack (e suas variações) entram nas fases que já existem, cada um no
+ * mundo em que faz sentido: tubarão do remo, peixe-bomba e tartarugas na Maré; porcos, javalis,
+ * goblins montados e ursos na Pradaria; cobras, tartarugas e o troll do pântano na Lagoa; trolls
+ * e ursos negros na Caverna; trolls de lava e gnomos de brasa na Forja; pandas e ursos no Bosque;
+ * ladrões e trolls nas Minas; ladrões das sombras e gnomos no Céu de Brasa; gnomos de gelo e o
+ * urso polar no Reino das Asas. [cenário, quem]; o lugar é escolhido no chão do cenário.
+ */
+const NEW_BEASTS: Record<string, Array<[screen: number, who: EnemyId]>> = {
+  // Ilhas da Maré
+  crabs: [[2, 'pshark']],
+  wreck: [[1, 'pshark'], [3, 'pshark_pirate']],
+  deck: [[2, 'bombfish']],
+  masts: [[2, 'bombfish_puffer']],
+  floodgates: [[3, 'turtle_sea']],
+  reef: [[2, 'turtle_sea'], [3, 'bombfish']],
+  // Pradaria dos Ossos
+  road: [[2, 'pig']],
+  stampede: [[1, 'pig_wild'], [3, 'pig']],
+  farm: [[1, 'pig'], [3, 'pigrider']],
+  tallgrass: [[3, 'bear']],
+  caravan: [[2, 'pigrider'], [4, 'pig_wild']],
+  windmill: [[3, 'bear_black']],
+  boneyard: [[3, 'pigrider']],
+  // Lagoa dos Lagartos
+  swampedge: [[2, 'snake']],
+  lilypads: [[3, 'turtle']],
+  poisonmarsh: [[2, 'snake_coral']],
+  fisherman: [[3, 'turtle']],
+  deeplagoon: [[3, 'snake_sand']],
+  mangrove: [[4, 'troll_swamp']],
+  lizardvillage: [[2, 'snake_coral'], [4, 'turtle_armored']],
+  // Caverna das Teias
+  cave: [[3, 'troll_cave']],
+  nest: [[2, 'bear_black']],
+  cocoons: [[3, 'snake']],
+  darkcave: [[3, 'thief']],
+  // Forja Vulcânica
+  forgegate: [[2, 'gnome']],
+  geysers: [[3, 'troll_lava']],
+  obsidian: [[2, 'gnome'], [4, 'troll_lava']],
+  anvil: [[3, 'gnome']],
+  // Bosque dos Gnomos
+  woods: [[2, 'panda']],
+  mushrooms: [[2, 'gnome']],
+  treetops: [[3, 'panda_red']],
+  logriver: [[2, 'bear']],
+  moss: [[3, 'panda_red']],
+  gnomevillage: [[2, 'panda'], [4, 'panda_master']],
+  // Minas dos Goblins
+  mineentry: [[2, 'thief']],
+  cavein: [[3, 'troll_cave']],
+  darkmine: [[3, 'thief_shadow']],
+  goldvein: [[2, 'thief']],
+  treasury: [[2, 'thief_shadow'], [4, 'troll_cave']],
+  // Céu de Brasa
+  sky: [[2, 'thief_shadow']],
+  meteor: [[2, 'gnome']],
+  firewinds: [[3, 'troll_lava']],
+  // Reino das Asas
+  wingsgate: [[2, 'gnome_frost']],
+  wingcastle: [[3, 'bear_polar']],
+  wingwinds: [[2, 'gnome_frost']],
+  wingguard: [[2, 'bear_polar']],
+};
+
+/** Põe o bicho no meio de um chão do cenário (o mais largo livre), longe de outros inimigos. */
+function placeBeasts(levels: LevelDef[]): void {
+  for (const [id, list] of Object.entries(NEW_BEASTS)) {
+    const l = levels.find((x) => x.id === id);
+    if (!l || l.shmup || l.chase || l.undersea || l.boss || l.finale || l.mausoleum) continue;
+    for (const [si, who] of list) {
+      const sc = l.screens[si];
+      if (!sc) continue;
+      const taken = (sc.enemies ?? []).map(([t]) => t);
+      const free = (t: number) => taken.every((u) => Math.abs(u - t) >= 3) && !(sc.storyItems ?? []).some(([u]) => Math.abs(u - t) < 2);
+      let best = -1;
+      let bestScore = -1;
+      for (const [a, n] of sc.segments) {
+        if (n < 3) continue;
+        for (let t = a + 1; t <= a + n - 2; t++) {
+          if (!free(t)) continue;
+          // Prefere o meio de chãos largos.
+          const score = n * 10 - Math.abs(t - (a + n / 2));
+          if (score > bestScore) {
+            best = t;
+            bestScore = score;
+          }
+        }
+      }
+      if (best < 0) continue;
+      sc.enemies = [...(sc.enemies ?? []), [best, who]];
+    }
+  }
+}
+
 // ---------- Provas de domínio (Pedra das Provas, na Vila dos Ossos) ----------
 
 /** Nome de cada prova (frase inteira, para traduzir bem). */
@@ -3297,6 +3395,7 @@ export const LEVELS: LevelDef[] = [
   ...PROLOGUE_LEVELS,
   ...TRIAL_LEVELS,
 ];
+placeBeasts(LEVELS);
 
 export class Level {
   readonly def: LevelDef;

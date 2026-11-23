@@ -1,0 +1,66 @@
+2438	Die Namen
+2439	Die Auserwählten erinnern sich, wer sie waren.
+2440	Du... hast gewonnen. Die Siegel kehren zurück. Und du wirst wieder zu Knochen.
+2441	Noch nicht. Die Krone gehört noch mir. Sie gibt zurück, was die Brücke genommen hat.
+2442	Sie gibt EINEN zurück. Dich. Dein Zuhause, deine Schwester.
+2443	Dann soll sie die Namen zurückgeben. Nicht meinen Körper: die Namen von allen, die du ins Dorf gebracht hast.
+2444	Für Skelette, die du nicht einmal kennst? Du wirfst alles weg, was ich dir versprochen habe.
+2445	Ich kenne sie alle. Sie waren in den Stein der Höhle geritzt.
+2446	...Wieder Knochen. Schon gut. Ich habe mich daran gewöhnt.
+2447	Im Knochendorf bleiben die bunten Skelette mitten auf der Straße stehen. Jemand sagt einen Namen. Dann noch einen.
+2448	Sie werden durch das Licht gehen, wann sie wollen, und sich erinnern, wer sie waren. Niemand zieht sie mehr zurück.
+2449	Und meine Schwester wird irgendwie wissen, dass ich nicht umsonst gefallen bin.
+2450	Mein Name? Ossian. Den Namen habe ich mir ausgesucht. Diesmal wirklich.
+2451	Mein Vater hat mich zum Angeln zu den Gezeiteninseln mitgenommen.
+2452	Mein Großvater trat dem Gnollkönig gegenüber und kam mit einer Narbe zurück.
+2453	Meine Angst vor Wasser ist nur eine Kinderangst.
+2454	Die Namen im Stein waren ein Kindheitsalbtraum.
+2455	Hex hat einmal in der Schmiede einen Minotaurus besiegt.
+2456	Hex hat meine Schleuder gemacht. Ich bin ein Einzelkind.
+2457	Meine Mutter ließ im Dunkeln eine Kerze brennen.
+2458	Alle Könige kennen Hex.
+2459	Das Gezeitentor liegt im Meer und macht alles wieder, wie es war.
+2460	Die Namen kehren zurück
+2461	Befreie die Auserwählten des Knochendorfs.
+2496	LEERTASTE
+2498	Bär
+2499	Bombenfisch
+2500	Paddelhai
+2501	Panda
+2502	Schlange
+2503	Dieb
+2504	Troll
+2505	Schildkröte
+2506	Glutgnom
+2507	Schwein
+2508	Schweinereiter-Goblin
+2509	Schwarzbär
+2510	Eisbär
+2511	Kugelfisch
+2512	Piraten-Paddelhai
+2513	Roter Panda
+2514	Panda-Meister
+2515	Korallenschlange
+2516	Sandschlange
+2517	Schattendieb
+2518	Sumpftroll
+2519	Höhlentroll
+2520	Lavatroll
+2521	Meeresschildkröte
+2522	Panzerschildkröte
+2523	Frostgnom
+2524	Wildschwein
+2525	TRÄUME ▶
+2526	TRÄUME
+2527	Gefundene Risse: {0}/{1}
+2528	Traum: {0}
+2529	Traum: ???
+2530	Draußen: {0}
+2531	Draußen: ???
+2532	DIE AUSERWÄHLTEN BEFREIEN
+2533	Besiege den Schamanen und gib mit der Krone dem ganzen Dorf seine Namen zurück.
+2534	Margarida war der Name, den Hex mir gab. Meiner ist Teresa. Ich hatte einen Garten am Fluss, weißt du?
+2535	Ich weiß es wieder! Ich heiße Davi und bin von der Brücke gefallen, als ich einem Drachen nachgelaufen bin. Danke, Ossian.
+2536	Ich habe ein neues Lied geschrieben. Es hat neun Namen, und der letzte ist deiner.
+2537	Morgen gehe ich durch das Licht. Heute will ich nur durchs Dorf laufen und mich erinnern, wer ich war.
+2538	DIE AUSERWÄHLTEN KENNEN IHRE NAMEN

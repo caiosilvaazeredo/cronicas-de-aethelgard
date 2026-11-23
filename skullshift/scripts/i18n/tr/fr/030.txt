@@ -1,0 +1,66 @@
+2438	Les Noms
+2439	Les élus se souviennent de qui ils étaient.
+2440	Tu... as gagné. Les sceaux reviennent. Et toi, tu redeviens os.
+2441	Pas encore. La couronne est toujours à moi. Elle rend ce que le pont a pris.
+2442	Elle en rend UN. Toi. Ta maison, ta sœur.
+2443	Alors qu'elle rende les noms. Pas mon corps : les noms de tous ceux que tu as amenés au village.
+2444	Pour des squelettes que tu ne connais même pas ? Tu jettes tout ce que je t'ai promis.
+2445	Je les connais tous. Ils étaient gravés dans la pierre de la caverne.
+2446	...Des os, encore. Ça va. J'ai l'habitude maintenant.
+2447	Au Village des Os, les squelettes colorés s'arrêtent au milieu de la rue. Quelqu'un dit un nom. Puis un autre.
+2448	Ils traverseront la lumière quand ils voudront, en se souvenant de qui ils étaient. Personne ne les retiendra plus.
+2449	Et ma sœur saura, d'une façon ou d'une autre, que je ne suis pas tombé pour rien.
+2450	Mon nom ? Ossian. C'est le nom que j'ai choisi. Cette fois, pour de vrai.
+2451	Mon père m'emmenait pêcher aux Îles de la Marée.
+2452	Mon grand-père a affronté le Roi Gnoll et en est revenu avec une cicatrice.
+2453	Ma peur de l'eau n'est qu'une peur d'enfant.
+2454	Les noms gravés dans la pierre étaient un cauchemar d'enfant.
+2455	Hex a abattu un minotaure à la Forge, une fois.
+2456	Hex a fabriqué mon lance-pierre. Je suis fils unique.
+2457	Ma mère laissait une bougie allumée dans le noir.
+2458	Tous les rois connaissent Hex.
+2459	Le Portail de la Marée est en mer et remet tout comme avant.
+2460	Les Noms Retrouvés
+2461	Libère les élus du Village des Os.
+2496	ESPACE
+2498	Ours
+2499	Poisson-Bombe
+2500	Requin à Pagaie
+2501	Panda
+2502	Serpent
+2503	Voleur
+2504	Troll
+2505	Tortue
+2506	Gnome de Braise
+2507	Cochon
+2508	Gobelin à Cochon
+2509	Ours Noir
+2510	Ours Polaire
+2511	Poisson-Globe
+2512	Requin Pirate à Pagaie
+2513	Panda Roux
+2514	Maître Panda
+2515	Serpent Corail
+2516	Serpent des Sables
+2517	Voleur des Ombres
+2518	Troll des Marais
+2519	Troll des Cavernes
+2520	Troll de Lave
+2521	Tortue Marine
+2522	Tortue Cuirassée
+2523	Gnome de Givre
+2524	Sanglier
+2525	RÊVES ▶
+2526	RÊVES
+2527	Fissures trouvées : {0}/{1}
+2528	Rêve : {0}
+2529	Rêve : ???
+2530	Dehors : {0}
+2531	Dehors : ???
+2532	LIBÉRER LES ÉLUS
+2533	Bats le Chaman et utilise la couronne pour rendre leurs noms à tout le village.
+2534	Margarida, c'est le nom que Hex m'a donné. Le mien, c'est Teresa. J'avais un potager près de la rivière, tu sais ?
+2535	Je me souviens ! Je m'appelle Davi, et je suis tombé du pont en courant après un cerf-volant. Merci, Ossian.
+2536	J'ai écrit une nouvelle chanson. Elle a neuf noms, et le dernier, c'est le tien.
+2537	Je traverserai la lumière demain. Aujourd'hui, je veux juste me promener dans le village en me souvenant de qui j'étais.
+2538	LES ÉLUS SE SOUVIENNENT DE LEURS NOMS

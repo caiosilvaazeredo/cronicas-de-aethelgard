@@ -1,0 +1,66 @@
+2438	İsimler
+2439	Seçilmişler kim olduklarını hatırlıyor.
+2440	Sen... kazandın. Mühürler geri dönüyor. Sen de yeniden kemik oluyorsun.
+2441	Henüz değil. Taç hâlâ bende. Köprünün aldığını geri verir.
+2442	BİRİNİ geri verir. Seni. Evini, kız kardeşini.
+2443	O zaman isimleri geri versin. Bedenimi değil: köye getirdiğin herkesin isimlerini.
+2444	Tanımadığın iskeletler için mi? Sana söz verdiğim her şeyi çöpe atıyorsun.
+2445	Hepsini tanıyorum. Mağaranın taşına kazınmışlardı.
+2446	...Yine kemik. Olsun. Artık alıştım.
+2447	Kemikler Köyü'nde renkli iskeletler sokağın ortasında duruyor. Biri bir isim söylüyor. Sonra bir başkası.
+2448	İstedikleri zaman ışıktan geçecekler, kim olduklarını hatırlayarak. Artık kimse onları geri çekmeyecek.
+2449	Ve kız kardeşim bir şekilde boşuna düşmediğimi bilecek.
+2450	Adım mı? Ossian. Kendi seçtiğim isim. Bu sefer gerçekten.
+2451	Babam beni Gelgit Adaları'na balık tutmaya götürürdü.
+2452	Dedem Gnoll Kral'a karşı durdu ve bir yarayla döndü.
+2453	Su korkum sadece bir çocukluk korkusu.
+2454	Taşa kazınmış isimler bir çocukluk kâbusuydu.
+2455	Hex bir keresinde Demirhane'de bir minotoru devirdi.
+2456	Sapanımı Hex yaptı. Ben tek çocuğum.
+2457	Annem karanlıkta bir mum yanık bırakırdı.
+2458	Bütün krallar Hex'i tanır.
+2459	Gelgit Kapısı denizde ve her şeyi eskisi gibi yapar.
+2460	İsimler Geri Döndü
+2461	Kemikler Köyü'nün seçilmişlerini özgür bırak.
+2496	BOŞLUK
+2498	Ayı
+2499	Bomba Balığı
+2500	Kürekli Köpekbalığı
+2501	Panda
+2502	Yılan
+2503	Hırsız
+2504	Trol
+2505	Kaplumbağa
+2506	Kor Cücesi
+2507	Domuz
+2508	Domuz Binicisi Goblin
+2509	Kara Ayı
+2510	Kutup Ayısı
+2511	Balon Balığı
+2512	Korsan Kürekli Köpekbalığı
+2513	Kızıl Panda
+2514	Usta Panda
+2515	Mercan Yılanı
+2516	Kum Yılanı
+2517	Gölge Hırsızı
+2518	Bataklık Trolü
+2519	Mağara Trolü
+2520	Lav Trolü
+2521	Deniz Kaplumbağası
+2522	Zırhlı Kaplumbağa
+2523	Buz Cücesi
+2524	Yaban Domuzu
+2525	RÜYALAR ▶
+2526	RÜYALAR
+2527	Bulunan çatlaklar: {0}/{1}
+2528	Rüya: {0}
+2529	Rüya: ???
+2530	Dışarıda: {0}
+2531	Dışarıda: ???
+2532	SEÇİLMİŞLERİ ÖZGÜR BIRAK
+2533	Şaman'ı yen ve tacı kullanarak bütün köye isimlerini geri ver.
+2534	Margarida, Hex'in bana verdiği isimdi. Benimki Teresa. Nehir kenarında bir bahçem vardı, biliyor musun?
+2535	Hatırladım! Adım Davi, bir uçurtmanın peşinden koşarken köprüden düştüm. Teşekkürler, Ossian.
+2536	Yeni bir şarkı yazdım. Dokuz isim var, sonuncusu senin.
+2537	Yarın ışıktan geçeceğim. Bugün sadece köyde dolaşıp kim olduğumu hatırlamak istiyorum.
+2538	SEÇİLMİŞLER İSİMLERİNİ HATIRLIYOR

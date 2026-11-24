@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { say } from './buttons';
+import { settings } from './settings';
 import { noTr } from '../i18n';
 import { HOUSE_SPECS, drawHouse, houseWidth, type HouseDoor } from './houses';
 import { BODY_FONT, DEATH_Y, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
@@ -30,6 +31,13 @@ const BUILDING_COLOR: Record<string, string> = {
 };
 /** Onde fica a base de cada construção dentro do desenho (fração da altura). */
 const BUILDING_FOOT: Record<string, number> = { castle: 249 / 256, tower: 230 / 256, house1: 173 / 192, house2: 178 / 192, house3: 172 / 192, monastery: 310 / 320, barracks: 245 / 256, archery: 240 / 256 };
+/** Estilo de profundidade das casas (protótipo; `window.__houseStyle` troca para comparar). */
+export type HouseStyle = 'atual' | 'borda' | 'camadas' | 'patio';
+export function houseStyle(): HouseStyle {
+  const forced = typeof window !== 'undefined' ? (window as unknown as { __houseStyle?: HouseStyle }).__houseStyle : undefined;
+  return forced ?? (['atual', 'borda', 'camadas', 'patio'] as const)[settings().houseStyle] ?? 'camadas';
+}
+
 /** Prédios a mais no fundo de algumas fases: [cenário, tipo]. */
 const EXTRA_BUILDINGS: Record<string, Array<[number, DecoKind]>> = {
   crabs: [[2, 'house']],
@@ -4446,8 +4454,47 @@ export class Level {
     const texW = (this.scene.textures.get(key).getSourceImage() as HTMLImageElement).width;
     const w = houseWidth('house1', texW);
     const cx = doorX - ((sp.door[0] + sp.door[2]) / 2 - texW / 2) * sp.scale;
+    const style = houseStyle();
+    if (style !== 'atual') {
+      let base = ground - 30;
+      let scale = sp.scale;
+      if (style === 'camadas') {
+        this.backLedge(cx, w + 120, ground - 52, 0);
+        base = ground - 82;
+        scale *= 0.9;
+      }
+      const d = drawHouse(this.scene, key, 'house1', cx, base, { doorAt: doorX, tint, scale, depth: DEPTH.terrain - 0.2 });
+      if (style === 'patio') this.yardPath(d, ground);
+      d.ground = ground;
+      return d;
+    }
     this.backLedge(cx, w, ground);
     return drawHouse(this.scene, key, 'house1', cx, ground, { doorAt: doorX, tint });
+  }
+
+  /**
+   * Pátio: um caminho de terra em perspectiva, da porta (estreito, lá no fundo) até a borda de
+   * baixo da grama da frente (largo, perto de quem joga). Lê como chão visto de cima.
+   */
+  private yardPath(d: HouseDoor, ground: number): void {
+    const g = this.scene.add.graphics().setDepth(DEPTH.terrain + 0.3);
+    const y0 = d.bottom - 2;
+    const y1 = ground - 2;
+    const w0 = d.w * 0.95;
+    const w1 = d.w * 2.1;
+    g.fillStyle(0x1d1a2b, 0.9).fillPoints([{ x: d.x - w0 / 2 - 3, y: y0 }, { x: d.x + w0 / 2 + 3, y: y0 }, { x: d.x + w1 / 2 + 3, y: y1 + 3 }, { x: d.x - w1 / 2 - 3, y: y1 + 3 }], true);
+    g.fillStyle(0xb88a5a, 1).fillPoints([{ x: d.x - w0 / 2, y: y0 }, { x: d.x + w0 / 2, y: y0 }, { x: d.x + w1 / 2, y: y1 }, { x: d.x - w1 / 2, y: y1 }], true);
+    // Pedras do caminho, maiores perto de quem joga.
+    for (let k = 0; k < 6; k++) {
+      const t = (k + 0.5) / 6;
+      const yy = y0 + (y1 - y0) * t;
+      const ww = w0 + (w1 - w0) * t;
+      for (const sx of [-0.22, 0.22]) {
+        const px = d.x + sx * ww + (k % 2 ? 6 : -6) * t;
+        g.fillStyle(0x8a6a48, 1).fillEllipse(px, yy, 10 + 14 * t, 4 + 5 * t);
+        g.fillStyle(0xd8b888, 1).fillEllipse(px - 1, yy - 1, 8 + 10 * t, 2 + 3 * t);
+      }
+    }
   }
 
   /** Casas com porta (para bater ou entrar), na ordem em que aparecem. */
@@ -4551,6 +4598,26 @@ export class Level {
         const limit = DEATH_Y - high - 24;
         const lift = high && ground > limit ? Math.ceil((ground - limit) / TILE) * TILE : 0;
         ground -= lift;
+        // Estilo de profundidade (protótipos para comparar; ver houseStyle()).
+        const style = houseStyle();
+        if (spec && style !== 'atual') {
+          let base = ground - 30;
+          let scale = sc;
+          if (style === 'camadas') {
+            // Estilo LittleBigPlanet: um patamar de fundo mais alto (outra camada de terreno), com a
+            // frente dele visível acima da grama da frente; a casa fica em cima dessa camada.
+            const DY = 52;
+            this.backLedge(x, w + 120, ground - DY, 0);
+            base = ground - DY - 30;
+            scale = sc * 0.9;
+          }
+          const door = drawHouse(s, key, name, x, base, { scale, tint, depth: DEPTH.terrain - 0.2 });
+          if (style === 'patio') this.yardPath(door, ground);
+          // Bate e entra pelo chão da frente.
+          door.ground = ground;
+          if (!lift && sc >= spec.scale * 0.85) this.houses.push(door);
+          break;
+        }
         this.backLedge(x, w, ground, lift);
         if (spec) {
           const door = drawHouse(s, key, name, x, ground, { scale: sc, tint });

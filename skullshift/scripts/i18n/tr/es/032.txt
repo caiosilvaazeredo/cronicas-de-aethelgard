@@ -1,0 +1,5 @@
+2558	Casas (prueba)
+2559	Cómo quedan las casas en el escenario. Se aplica desde el próximo nivel.
+2560	EN EL BORDE
+2561	CAPAS
+2562	PATIO

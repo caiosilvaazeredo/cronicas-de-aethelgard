@@ -1,0 +1,5 @@
+2558	Domy (test)
+2559	Jak domy wyglądają w scenerii. Działa od następnego poziomu.
+2560	NA KRAWĘDZI
+2561	WARSTWY
+2562	PODWÓRKO

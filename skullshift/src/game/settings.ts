@@ -33,6 +33,8 @@ export interface Settings {
   simpleTransition: boolean;
   /** Janela do computador (versão Steam): 0 atual · 1 720p · 2 900p · 3 1080p · 4 1440p. */
   resolution: number;
+  /** Profundidade das casas (teste): 0 atual · 1 na borda · 2 camadas · 3 pátio. */
+  houseStyle: number;
 }
 
 export const DEFAULTS: Settings = {
@@ -52,6 +54,7 @@ export const DEFAULTS: Settings = {
   motionFx: true,
   simpleTransition: false,
   resolution: 0,
+  houseStyle: 2,
 };
 
 const KEY = 'skullshift.settings.v1';

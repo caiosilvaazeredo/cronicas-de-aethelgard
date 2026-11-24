@@ -31,6 +31,7 @@ const TABS: Array<{ name: string; rows: Row[] }> = [
     rows: [
       { key: 'fullscreen', label: 'Tela cheia', help: 'Liga ou desliga a tela cheia.', kind: 'fullscreen' },
       { key: 'resolution', label: 'Resolução da janela', help: 'Tamanho da janela do jogo no computador (fora da tela cheia).', kind: 'choice', options: ['ATUAL', '1280 × 720', '1600 × 900', '1920 × 1080', '2560 × 1440'], desktop: true },
+      { key: 'houseStyle', label: 'Casas (teste)', help: 'Como as casas ficam no cenário. Vale a partir da próxima fase.', kind: 'choice', options: ['ATUAL', 'NA BORDA', 'CAMADAS', 'PÁTIO'] },
       { key: 'brightness', label: 'Brilho', help: 'Clareia ou escurece a imagem do jogo.', kind: 'slider', min: 5, max: 15, fmt: (v) => `${v * 10}%` },
     ],
   },

@@ -1,0 +1,5 @@
+2558	Case (prova)
+2559	Come stanno le case nello scenario. Vale dal prossimo livello.
+2560	SUL BORDO
+2561	STRATI
+2562	CORTILE

@@ -47,7 +47,7 @@ export function houseWidth(name: string, texW: number, scale?: number): number {
  * Desenha a casa com a base no chão e devolve a porta. `doorAt`: centraliza a PORTA nesse x
  * (em vez da casa), como na casa de saída das fases de chave.
  */
-export function drawHouse(scene: Phaser.Scene, key: string, name: string, x: number, ground: number, opts: { scale?: number; tint?: number; doorAt?: number } = {}): HouseDoor {
+export function drawHouse(scene: Phaser.Scene, key: string, name: string, x: number, ground: number, opts: { scale?: number; tint?: number; doorAt?: number; depth?: number } = {}): HouseDoor {
   const sp = HOUSE_SPECS[name];
   const img = scene.add.image(0, 0, key);
   const sc = opts.scale ?? sp.scale;
@@ -58,9 +58,9 @@ export function drawHouse(scene: Phaser.Scene, key: string, name: string, x: num
   const midPx = cx0 + cw / 2;
   const doorMid = (sp.door[0] + sp.door[2]) / 2;
   const cx = opts.doorAt !== undefined ? opts.doorAt - (doorMid - midPx) * sc : x;
-  img.setOrigin(midPx / W, sp.foot / img.height).setPosition(cx, ground + 6).setScale(sc).setDepth(DEPTH.deco - 0.2);
+  img.setOrigin(midPx / W, sp.foot / img.height).setPosition(cx, ground + 6).setScale(sc).setDepth(opts.depth ?? DEPTH.deco - 0.2);
   if (opts.tint !== undefined) img.setTint(opts.tint);
-  scene.add.ellipse(cx, ground + 2, cw * sc * 0.8, 18, 0x10223a, 0.22).setDepth(DEPTH.deco - 0.25);
+  scene.add.ellipse(cx, ground + 2, cw * sc * 0.8, 18, 0x10223a, 0.22).setDepth((opts.depth ?? DEPTH.deco - 0.2) - 0.05);
   const doorX = cx + (doorMid - midPx) * sc;
   return {
     x: doorX,

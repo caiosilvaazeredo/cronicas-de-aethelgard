@@ -1,0 +1,5 @@
+2558	Häuser (Test)
+2559	Wie die Häuser in der Kulisse stehen. Gilt ab dem nächsten Level.
+2560	AM RAND
+2561	EBENEN
+2562	HOF

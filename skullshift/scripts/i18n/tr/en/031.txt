@@ -1,0 +1,19 @@
+2539	Bouncy bushes and ladders. Take the key to the door, no rush.
+2540	We're not buying anything! Least of all bones.
+2541	I already have a skeleton in my closet, thanks.
+2542	If it's Hex again, tell him I'm not home!
+2543	Wipe your feet! ...Oh, you don't have feet. Still no.
+2544	Closed to skulls. Open to people with skin.
+2545	The owner is out. This is the door talking.
+2546	Who's there? Nobody? Then go away, nobody.
+2547	Only folks with meat on their bones come in here.
+2548	Shhh! The baby just fell asleep. Knock next door.
+2549	A skeleton at the door is seven years of bad luck. Shoo!
+2550	Leave the mail under the doormat. And go.
+2551	If it's the vaccine, I've had it. If it's the end of the world, I know.
+2552	With the key you can't\ndouble jump:\nstep on the PINK BUSH.
+2553	The imps' vault. Carry the key across the islands, bouncing on the pink bushes and using the color lever.
+2554	The royal chamber. Carry the key over the pink bushes and up the ladders to the door.
+2555	▲ enter
+2556	▲ knock
+2557	Resident

@@ -1,0 +1,19 @@
+2539	Zıplayan çalılar ve merdivenler. Anahtarı kapıya götür, acele etme.
+2540	Hiçbir şey almıyoruz! Hele kemik hiç.
+2541	Dolabımda zaten bir iskelet var, sağ ol.
+2542	Yine Hex ise, evde olmadığımı söyle!
+2543	Ayaklarını sil! ...Ah, ayağın yok. Yine de hayır.
+2544	Kafataslarına kapalı. Derisi olanlara açık.
+2545	Ev sahibi dışarıda. Konuşan kapı.
+2546	Kim o? Kimse mi? O zaman git, kimse.
+2547	Buraya sadece kemiğinde eti olan girer.
+2548	Şşş! Bebek yeni uyudu. Komşunun kapısını çal.
+2549	Kapıda iskelet yedi yıl uğursuzluk getirir. Hoşt!
+2550	Mektupları paspasın altına bırak. Ve git.
+2551	Aşı için geldiysen, oldum. Kıyamet için geldiysen, biliyorum.
+2552	Anahtarla çift\nzıplama yok:\nPEMBE ÇALIYA bas.
+2553	İblislerin hazinesi. Anahtarı adalar boyunca taşı, pembe çalılarda zıpla ve renk kolunu kullan.
+2554	Kraliyet odası. Anahtarı pembe çalılardan ve merdivenlerden kapıya götür.
+2555	▲ gir
+2556	▲ kapıyı çal
+2557	Ev sahibi

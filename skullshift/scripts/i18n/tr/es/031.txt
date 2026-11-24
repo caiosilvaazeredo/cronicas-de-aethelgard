@@ -1,0 +1,19 @@
+2539	Arbustos que saltan y escaleras. Lleva la llave a la puerta, sin prisa.
+2540	¡No compramos nada! Y menos huesos.
+2541	Ya tengo un esqueleto en el armario, gracias.
+2542	Si es Hex otra vez, ¡dile que no estoy!
+2543	¡Límpiate los pies! ...Ah, no tienes pies. Aun así, no.
+2544	Cerrado para calaveras. Abierto para gente con piel.
+2545	El dueño salió. Quien habla es la puerta.
+2546	¿Quién es? ¿Nadie? Entonces vete, nadie.
+2547	Aquí solo entra quien tiene carne en los huesos.
+2548	¡Shhh! El bebé se acaba de dormir. Toca en la casa del vecino.
+2549	Un esqueleto en la puerta son siete años de mala suerte. ¡Fuera!
+2550	Deja el correo debajo del felpudo. Y vete.
+2551	Si es la vacuna, ya me la puse. Si es el fin del mundo, ya lo sé.
+2552	Con la llave no hay\ndoble salto:\npisa el ARBUSTO ROSA.
+2553	La cámara de los diablillos. Lleva la llave por las islas, saltando en los arbustos rosas y usando la palanca de color.
+2554	La cámara real. Lleva la llave por los arbustos rosas y las escaleras hasta la puerta.
+2555	▲ entrar
+2556	▲ tocar
+2557	Vecino

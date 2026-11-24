@@ -1178,7 +1178,7 @@ export const CHAPTER_BY_ID: Record<string, Chapter> = {
     blurb: 'A câmara real, trancada.',
     lines: [
       S('Uma câmara trancada no alto da torre.'),
-      X('Molas e escadas. Leva a chave até a porta, sem pressa.'),
+      X('Moitas que pulam e escadas. Leva a chave até a porta, sem pressa.'),
       S('Mais uma chave. Já abri tanta porta por você, Hex.'),
       X('Por nós. E esta é quase a última.'),
     ],

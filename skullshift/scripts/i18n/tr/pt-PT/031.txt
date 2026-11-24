@@ -1,0 +1,13 @@
+2539	Moitas que saltam e escadas. Leva a chave até à porta, sem pressa.
+2541	Já tenho um esqueleto no armário, obrigado.
+2542	Se for o Hex outra vez, diz que não estou!
+2543	Limpa os pés! ...Ah, não tens pés. Mesmo assim, não.
+2546	Quem é? Ninguém? Então vai-te embora, ninguém.
+2548	Chiu! O bebé acabou de adormecer. Bate no vizinho.
+2550	Deixa o correio debaixo do tapete. E vai-te.
+2551	Se é a vacina, já levei. Se é o fim do mundo, já sei.
+2552	Com a chave não dá\npara salto duplo:\npisa a MOITA ROSA.
+2553	O cofre dos diabretes. Leva a chave pelas ilhas, a saltar nas moitas cor-de-rosa e a usar a alavanca de cor.
+2554	A câmara real. Leva a chave pelas moitas cor-de-rosa e escadas até à porta.
+2555	▲ entrar
+2556	▲ bater

@@ -184,6 +184,9 @@ export class BootScene extends Phaser.Scene {
         this.anim('shaman_attack', 10, 14, 0);
         this.anim('water_foam', 16, 10, -1);
         this.anim('x_fish_hut', 8, 8, -1);
+        // Moita-mola: a moita do Free Pack recolorida para rosa (folhas verdes → rosa, mesmo brilho).
+        pinkSheet(this, 'bush1', 'bush_pink', 128);
+        this.anim('bush_pink', 8, 8, -1);
         this.anim('x_goblin_hut', 4, 6, -1);
         this.anim('x_cave_mouth', 8, 8, -1);
       },
@@ -788,4 +791,34 @@ export class BootScene extends Phaser.Scene {
     g.generateTexture('spark', 16, 16);
     g.destroy();
   }
+}
+
+/** Copia uma folha trocando os tons verdes por rosa (mantém o claro/escuro de cada pixel). */
+function pinkSheet(scene: Phaser.Scene, src: string, dst: string, frame: number): void {
+  if (scene.textures.exists(dst)) return;
+  const img = scene.textures.get(src).getSourceImage() as HTMLImageElement;
+  const c = document.createElement('canvas');
+  c.width = img.width;
+  c.height = img.height;
+  const ctx = c.getContext('2d')!;
+  ctx.drawImage(img, 0, 0);
+  const id = ctx.getImageData(0, 0, c.width, c.height);
+  const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i + 3] === 0) continue;
+    const r = d[i] / 255;
+    const g = d[i + 1] / 255;
+    const b = d[i + 2] / 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    // Só o que é verde (folhas); contorno e sombras escuras ficam.
+    if (g < r || g < b || max - min < 0.08) continue;
+    const l = (max + min) / 2;
+    const col = Phaser.Display.Color.HSLToColor(0.9, 0.75, Math.min(0.85, l * 1.15));
+    d[i] = col.red;
+    d[i + 1] = col.green;
+    d[i + 2] = col.blue;
+  }
+  ctx.putImageData(id, 0, 0);
+  scene.textures.addSpriteSheet(dst, c as unknown as HTMLImageElement, { frameWidth: frame, frameHeight: frame });
 }

@@ -1,0 +1,19 @@
+2539	Hüpfbüsche und Leitern. Bring den Schlüssel zur Tür, ganz in Ruhe.
+2540	Wir kaufen nichts! Erst recht keine Knochen.
+2541	Ich habe schon ein Skelett im Schrank, danke.
+2542	Wenn das wieder Hex ist, ich bin nicht da!
+2543	Füße abtreten! ...Ach, du hast keine Füße. Trotzdem nein.
+2544	Geschlossen für Schädel. Geöffnet für Leute mit Haut.
+2545	Der Besitzer ist nicht da. Hier spricht die Tür.
+2546	Wer ist da? Niemand? Dann geh, Niemand.
+2547	Hier kommt nur rein, wer Fleisch auf den Knochen hat.
+2548	Pssst! Das Baby ist gerade eingeschlafen. Klopf beim Nachbarn.
+2549	Ein Skelett an der Tür bringt sieben Jahre Pech. Husch!
+2550	Leg die Post unter die Fußmatte. Und geh.
+2551	Wenn's um die Impfung geht: hab ich schon. Wenn's der Weltuntergang ist: weiß ich schon.
+2552	Mit dem Schlüssel gibt es\nkeinen Doppelsprung:\nspring auf den ROSA BUSCH.
+2553	Die Schatzkammer der Kobolde. Trag den Schlüssel über die Inseln, hüpf auf den rosa Büschen und benutze den Farbhebel.
+2554	Die königliche Kammer. Trag den Schlüssel über die rosa Büsche und Leitern bis zur Tür.
+2555	▲ hinein
+2556	▲ klopfen
+2557	Bewohner

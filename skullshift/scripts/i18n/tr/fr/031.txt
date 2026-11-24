@@ -1,0 +1,19 @@
+2539	Des buissons qui rebondissent et des échelles. Porte la clé jusqu'à la porte, sans te presser.
+2540	On n'achète rien ! Surtout pas des os.
+2541	J'ai déjà un squelette dans le placard, merci.
+2542	Si c'est encore Hex, dis-lui que je ne suis pas là !
+2543	Essuie-toi les pieds ! ...Ah, tu n'as pas de pieds. C'est quand même non.
+2544	Fermé aux crânes. Ouvert aux gens qui ont de la peau.
+2545	Le propriétaire est sorti. C'est la porte qui parle.
+2546	Qui est là ? Personne ? Alors va-t'en, personne.
+2547	Ici, n'entre que qui a de la viande sur les os.
+2548	Chut ! Le bébé vient de s'endormir. Frappe chez le voisin.
+2549	Un squelette à la porte, c'est sept ans de malheur. Ouste !
+2550	Laisse le courrier sous le paillasson. Et file.
+2551	Si c'est pour le vaccin, je l'ai eu. Si c'est la fin du monde, je suis au courant.
+2552	Avec la clé, pas de\ndouble saut :\nsaute sur le BUISSON ROSE.
+2553	La salle des diablotins. Porte la clé à travers les îles en rebondissant sur les buissons roses et en utilisant le levier de couleur.
+2554	La chambre royale. Porte la clé par les buissons roses et les échelles jusqu'à la porte.
+2555	▲ entrer
+2556	▲ frapper
+2557	Habitant

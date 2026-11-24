@@ -403,3 +403,12 @@ originais (extraídas com PIL do PNG).
 - **Construções do Extra como decoração** (`NEW_DECO` + `placeDeco`, tipos `fish_hut`, `pirate_tower`, `goblin_hut`, `gnome_hut`, `gnome_tower`, `cave_mouth`): cabanas de pescador e torres piratas na Maré e na Lagoa, vila goblin (folha de 4 quadros de 768 px) na Pradaria e nas Minas, casas e torres de gnomo no Bosque, entradas de caverna na Caverna e nas Minas. 19 peças em 15 fases.
 - Ainda não usados: golpe forte do goblin, barcos (cavalo-marinho e o do tubarão remando), canhão e cerca do Extra.
 - Traduções em `scripts/i18n/tr/*/030.txt`.
+
+## Casas de verdade, moita-mola e prédios no chão
+- **Prédios inteiros no chão**: `Level.groundSpan` acha o trecho de chão contínuo; o prédio se encaixa nele (ou encolhe se o trecho for estreito). A **arquearia** (desenhada vista de cima: o pátio com cerca e alvos parecia pendurado no ar) agora é desenhada como casa comum.
+- **Casas na proporção do Ossian** (`src/game/houses.ts`): casa e quartel com a porta do tamanho dele (casa ×2, quartel ×1,75; porta medida nos pixels do desenho, `HOUSE_SPECS`). `Level.houses` guarda cada porta.
+- **Casas trancadas**: na porta aparece "▲ bater"; ↑/W, ▲ do toque ou PEGAR bate (perto da porta, "para cima" não pula). A casa treme e o morador responde num balão com uma das 12 desculpas (`GRUMPY_LINES`, sem repetir a anterior).
+- **Casa de saída**: numa fase comum, a casa no fim (último 60% de tela) vira a saída — "▲ entrar", a porta abre escura por dentro e o Ossian entra; a nuvem do Hex não aparece nessas fases. Nas **fases de chave**, a porta trancada é a porta de uma casa de verdade (`Level.drawExitHouse`), com o cadeado nela; a casa de enfeite que ficava atrás é pulada.
+- **Moita-mola** no lugar do trampolim (`bush_pink`, recolorida pixel a pixel em `pinkSheet`): amassa e devolve o pulo, soltando folhinhas. Placas e textos falam em "moita rosa".
+- O estado das casas é zerado em `create()` (a cena é reaproveitada; um texto destruído quebrava a fase seguinte).
+- Traduções em `scripts/i18n/tr/*/031.txt`.

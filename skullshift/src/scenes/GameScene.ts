@@ -11,7 +11,8 @@ import { FINALE_WORLDS, allyId, finaleWorldDef, makeFinaleAllies } from '../game
 import { DEPTH, FLOOR_Y, GRAVITY, INVULN_TIME, BODY_FONT, FONT, H, PORTRAIT, RESPAWN_DELAY, SPLIT, TILE, VIEW, W, WATER_Y, computeSplit } from '../config';
 import { EnemyAI } from '../game/ai';
 import { CHARS, CHAR_TO_ITEM, ITEM_TEXTURE, ITEM_TO_CHAR, type CharId, type EnemyId, type ItemId } from '../game/characters';
-import { setButtonDevice } from '../game/buttons';
+import { say, setButtonDevice } from '../game/buttons';
+import { GRUMPY_LINES, openDoor, type HouseDoor } from '../game/houses';
 import { PICK_LABEL, PlayerController, emptyIntent, type Controller, type DeviceId } from '../game/controls';
 import { Fighter, type HitBox } from '../game/Fighter';
 import { LEVELS, Level, SKY_FALL_Y, levelFor } from '../game/level';
@@ -243,6 +244,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    // Estado das casas é por fase (a cena é reaproveitada ao reiniciar).
+    this.housePrompt = undefined;
+    this.houseBubble = undefined;
+    this.enteringHouse = false;
+    this.prevHouseKey = true;
+    this.houseCd = 0;
     // Padrões do chefe que ainda estejam no meio param quando a cena sai (ou reinicia).
     this.events.once('shutdown', () => this.boss?.destroy());
     // Placas e falas citam o botão do controle do jogador (só com um jogador; no versus, o nome da ação).
@@ -647,6 +654,7 @@ export class GameScene extends Phaser.Scene {
       this.ui?.pads[0]?.showClimb(!!lad || this.puzzle.isClimbing);
       if (p0.intent.climb && (lad?.dir === 'up' || this.puzzle.isClimbing)) p0.intent = { ...p0.intent, jump: false, jumpHeld: false };
     }
+    if (this.mode === 'story') this.updateHouses(time);
     this.updateHangers();
     this.updateWebTraps();
     this.updateRoot(time);
@@ -2358,6 +2366,80 @@ export class GameScene extends Phaser.Scene {
     this.items.push({ kind, sprite, glow, prompt, floor, home, active: true, respawnAt: 0, expireAt: ttl ? this.time.now + ttl : 0, form });
   }
 
+  // ---------- casas: bater na porta (o morador expulsa) ou entrar (saída da fase) ----------
+
+  private houseCd = 0;
+  private prevHouseKey = true;
+  private housePrompt?: Phaser.GameObjects.Text;
+  private houseBubble?: SpeechBubble;
+  private enteringHouse = false;
+  private lastGrumpy = -1;
+
+  private updateHouses(time: number): void {
+    const p = this.players[0];
+    if (!p || !this.level.houses.length) return;
+    const h = p.alive && p.onGround && !this.ended && !this.cutscene && !this.enteringHouse
+      ? this.level.houses.find((d) => Math.abs(p.x - d.x) < d.w / 2 + 16 && Math.abs(p.feet - d.ground) < 26)
+      : undefined;
+    if (!this.housePrompt) {
+      this.housePrompt = noTr(this.add.text(0, 0, '', { fontFamily: FONT, fontSize: '18px', color: '#fff7dc', stroke: '#10223a', strokeThickness: 6 }))
+        .setOrigin(0.5)
+        .setDepth(DEPTH.fx + 3);
+    }
+    if (h) {
+      this.housePrompt.setText(say(h.exit ? '▲ entrar' : '▲ bater')).setPosition(h.x, h.top - 22 + Math.sin(time / 200) * 3).setVisible(true);
+      // Perto da porta, "para cima" bate/entra em vez de pular (como nas escadas).
+      if (p.intent.climb) p.intent = { ...p.intent, jump: false, jumpHeld: false };
+    } else this.housePrompt.setVisible(false);
+    // O ▲ do toque aparece na porta também (perto de escada ele já aparece).
+    if (h) this.ui?.pads[0]?.showClimb(true);
+    else if (!this.puzzle) this.ui?.pads[0]?.showClimb(false);
+    const press = !!(p.intent.climb || p.intent.pick);
+    if (h && press && !this.prevHouseKey && time > this.houseCd) {
+      this.houseCd = time + 1600;
+      if (h.exit) this.enterHouse(h);
+      else this.knock(h);
+    }
+    this.prevHouseKey = press;
+  }
+
+  /** Bate na porta: a casa treme e o morador manda o Ossian embora (cada vez uma desculpa). */
+  private knock(h: HouseDoor): void {
+    sfx('door');
+    sfx('clack');
+    this.tweens.add({ targets: h.img, x: h.img.x + 3, duration: 50, yoyo: true, repeat: 3 });
+    let i = Phaser.Math.Between(0, GRUMPY_LINES.length - 1);
+    if (i === this.lastGrumpy) i = (i + 1) % GRUMPY_LINES.length;
+    this.lastGrumpy = i;
+    const text = GRUMPY_LINES[i];
+    this.time.delayedCall(280, () => {
+      this.houseBubble?.close();
+      const b = new SpeechBubble(this, () => ({ x: h.x, y: h.top - 6 }), text, tr('Morador'), 0x8a6a4a);
+      this.houseBubble = b;
+      this.time.delayedCall(Math.max(2400, text.length * 55), () => {
+        b.close();
+        if (this.houseBubble === b) this.houseBubble = undefined;
+      });
+    });
+  }
+
+  /** Casa de saída: a porta abre, o Ossian entra e a fase termina. */
+  private enterHouse(h: HouseDoor): void {
+    const p = this.players[0];
+    this.enteringHouse = true;
+    this.housePrompt?.setVisible(false);
+    openDoor(this, h);
+    sfx('door');
+    p.body.setVelocity(0, 0);
+    p.body.setEnable(false);
+    this.tweens.add({ targets: p.sprite, x: h.x, alpha: 0, duration: 520, delay: 160 });
+    this.time.delayedCall(820, () => {
+      p.sprite.setAlpha(1);
+      p.body.setEnable(true);
+      this.storyWin('');
+    });
+  }
+
   /** Reativa os objetos fixos da fase que já foram pegos (modo história, ao renascer). */
   private restoreStoryItems(): void {
     for (const it of this.items) {
@@ -3347,6 +3429,11 @@ export class GameScene extends Phaser.Scene {
     const [p1, p2] = this.players;
     if (this.mode === 'story' && (LEVELS[this.levelIndex].dungeon || LEVELS[this.levelIndex].village)) {
       if (p1.alive && p1.x >= end - 20) this.storyWin('');
+      return;
+    }
+    // Casa no fim da fase: a saída é entrar nela (sem a nuvem do Hex).
+    if (this.mode === 'story' && this.level.houses.some((h) => h.exit)) {
+      if (p1.alive && p1.x >= end - 20 && !this.enteringHouse) this.storyWin('');
       return;
     }
     if (this.mode === 'story') {

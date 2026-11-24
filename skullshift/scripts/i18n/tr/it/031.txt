@@ -1,0 +1,19 @@
+2539	Cespugli che rimbalzano e scale. Porta la chiave alla porta, senza fretta.
+2540	Non compriamo niente! Men che meno ossa.
+2541	Ho già uno scheletro nell'armadio, grazie.
+2542	Se è di nuovo Hex, digli che non ci sono!
+2543	Pulisciti i piedi! ...Ah, non hai piedi. Comunque no.
+2544	Chiuso ai teschi. Aperto a chi ha la pelle.
+2545	Il padrone è uscito. A parlare è la porta.
+2546	Chi è? Nessuno? Allora vattene, nessuno.
+2547	Qui entra solo chi ha carne sulle ossa.
+2548	Sss! Il bambino si è appena addormentato. Bussa dal vicino.
+2549	Uno scheletro alla porta porta sette anni di sfortuna. Sciò!
+2550	Lascia la posta sotto lo zerbino. E vai.
+2551	Se è per il vaccino, l'ho già fatto. Se è la fine del mondo, lo so già.
+2552	Con la chiave niente\ndoppio salto:\nsalta sul CESPUGLIO ROSA.
+2553	Il caveau dei diavoletti. Porta la chiave tra le isole, rimbalzando sui cespugli rosa e usando la leva colorata.
+2554	La camera reale. Porta la chiave tra i cespugli rosa e le scale fino alla porta.
+2555	▲ entra
+2556	▲ bussa
+2557	Abitante

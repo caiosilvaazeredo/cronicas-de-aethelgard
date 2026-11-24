@@ -1,0 +1,19 @@
+2539	Skaczące krzaki i drabiny. Zanieś klucz do drzwi, bez pośpiechu.
+2540	Niczego nie kupujemy! A już na pewno nie kości.
+2541	Mam już szkielet w szafie, dziękuję.
+2542	Jeśli to znowu Hex, powiedz, że mnie nie ma!
+2543	Wytrzyj nogi! ...A, nie masz nóg. I tak nie.
+2544	Zamknięte dla czaszek. Otwarte dla ludzi ze skórą.
+2545	Właściciela nie ma. Mówią drzwi.
+2546	Kto tam? Nikt? To idź sobie, nikt.
+2547	Wchodzi tu tylko ten, kto ma mięso na kościach.
+2548	Ciii! Dziecko właśnie zasnęło. Zapukaj do sąsiada.
+2549	Szkielet w drzwiach to siedem lat pecha. A kysz!
+2550	Zostaw pocztę pod wycieraczką. I idź.
+2551	Jeśli to szczepionka, już mam. Jeśli koniec świata, już wiem.
+2552	Z kluczem nie ma\npodwójnego skoku:\nwskocz na RÓŻOWY KRZAK.
+2553	Skarbiec chochlików. Nieś klucz przez wyspy, skacząc po różowych krzakach i używając kolorowej dźwigni.
+2554	Komnata królewska. Zanieś klucz po różowych krzakach i drabinach do drzwi.
+2555	▲ wejdź
+2556	▲ zapukaj
+2557	Mieszkaniec

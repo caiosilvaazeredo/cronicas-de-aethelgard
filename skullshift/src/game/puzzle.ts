@@ -4,6 +4,7 @@ import type { Fighter } from './Fighter';
 import type { Level } from './level';
 import { sfx } from './settings';
 import { Px } from '../ui/pixelart';
+import { openDoor, type HouseDoor } from './houses';
 
 type At = [screen: number, tile: number, h: number];
 
@@ -125,7 +126,7 @@ export class PuzzleSystem {
   private keyHome: [number, number];
   private sheep: Phaser.Physics.Arcade.Sprite[] = [];
   private held?: Phaser.Physics.Arcade.Sprite;
-  private door: Phaser.GameObjects.Image;
+  private house: HouseDoor;
   private lock?: Phaser.GameObjects.Graphics;
   private doorX: number;
   private doorFloor: number;
@@ -133,7 +134,7 @@ export class PuzzleSystem {
   private gifts: Array<{ img: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Image; x: number; y: number; got: boolean }> = [];
   private ladders: Array<{ x: number; top: number; bottom: number }> = [];
   private climbing?: { x: number; top: number; bottom: number };
-  private springs: Array<{ x: number; top: number; img: Phaser.GameObjects.Image }> = [];
+  private springs: Array<{ x: number; top: number; img: Phaser.GameObjects.Sprite }> = [];
   private switches: Array<{ x: number; floor: number; img: Phaser.GameObjects.Image }> = [];
   private blocks: Block[] = [];
   private stones: Block[] = [];
@@ -167,7 +168,8 @@ export class PuzzleSystem {
     const [ds, dt, dh] = def.door;
     this.doorX = X(ds, dt);
     this.doorFloor = topOf(dh);
-    this.door = s.add.image(this.doorX, this.doorFloor + 2, 'door_exit').setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.5);
+    // A saída é a porta de uma casa de verdade, na proporção do Ossian.
+    this.house = lvl.drawExitHouse(this.doorX, this.doorFloor);
     // Cadeado na porta (antes era uma chave translúcida, que parecia uma segunda chave por cima
     // da verdadeira quando a caveira chegava com ela). Abre e cai quando a porta destranca.
     const lock = s.add.graphics().setDepth(DEPTH.deco + 0.6);
@@ -178,11 +180,11 @@ export class PuzzleSystem {
     lock.fillStyle(0xd8a530, 1).fillRoundedRect(-14, -6, 28, 22, 5);
     lock.fillStyle(0xffe066, 1).fillRect(-12, -4, 24, 4);
     lock.fillStyle(INKC, 1).fillCircle(0, 3, 3.5).fillRect(-1.5, 3, 3, 8);
-    lock.setPosition(this.doorX, this.doorFloor - 50);
+    lock.setPosition(this.doorX, (this.house.top + this.house.bottom) / 2);
     s.tweens.add({ targets: lock, angle: { from: -6, to: 6 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.lock = lock;
     this.prompt = s.add
-      .text(this.doorX, this.doorFloor - 160, '', { fontFamily: BODY_FONT, fontSize: '16px', color: '#ffffff', backgroundColor: `${INK}cc`, padding: { x: 8, y: 4 } })
+      .text(this.doorX, this.house.top - 40, '', { fontFamily: BODY_FONT, fontSize: '16px', color: '#ffffff', backgroundColor: `${INK}cc`, padding: { x: 8, y: 4 } })
       .setOrigin(0.5)
       .setDepth(DEPTH.fx + 3)
       .setVisible(false);
@@ -216,7 +218,11 @@ export class PuzzleSystem {
     }
     for (const [sc, t, h] of def.springs ?? []) {
       const x = X(sc, t);
-      const img = s.add.image(x, topOf(h) + 2, 'spring', 0).setOrigin(0.5, 1).setDepth(DEPTH.deco + 0.5);
+      // Moita-mola: uma moita cor-de-rosa e fofa (no lugar do trampolim). Ao pisar, ela amassa e
+      // devolve o pulo bem mais alto, soltando folhinhas.
+      const img = s.add.sprite(x, topOf(h) + 4, 'bush_pink', 0).setOrigin(0.5, 79 / 128).setScale(1.1, 1).setDepth(DEPTH.deco + 0.5).play({ key: 'bush_pink', startFrame: t % 8 });
+      const glow = s.add.ellipse(x, topOf(h) + 2, 70, 12, 0xff86d6, 0.35).setDepth(DEPTH.deco + 0.4);
+      s.tweens.add({ targets: glow, alpha: 0.12, duration: 800, yoyo: true, repeat: -1 });
       this.springs.push({ x, top: topOf(h) - 30, img });
     }
     for (const [sc, t, h, len] of def.trees ?? []) {
@@ -508,8 +514,18 @@ export class PuzzleSystem {
       const bounce = (body: Phaser.Physics.Arcade.Body, x: number, bottom: number, v: number) => {
         if (body.velocity.y <= 0 || Math.abs(x - sp.x) > 30 || bottom < sp.top - 10 || bottom > sp.top + 34) return false;
         body.setVelocityY(-v);
-        sp.img.setFrame(1);
-        sp.img.setData('until', time + 160);
+        if (time > ((sp.img.getData('until') as number) ?? 0)) {
+          // Amassa e volta com um quique; folhinhas rosa voam.
+          const sc = this.host.scene;
+          sc.tweens.killTweensOf(sp.img);
+          sp.img.setScale(1.45, 0.45);
+          sc.tweens.add({ targets: sp.img, scaleX: 1.1, scaleY: 1, duration: 380, ease: 'Back.easeOut' });
+          for (let i = 0; i < 6; i++) {
+            const leaf = sc.add.image(sp.x + Phaser.Math.Between(-24, 24), sp.top + 18, 'spark').setTint(i % 2 ? 0xff86d6 : 0x9be37a).setScale(0.3).setDepth(DEPTH.fx);
+            sc.tweens.add({ targets: leaf, x: leaf.x + Phaser.Math.Between(-40, 40), y: leaf.y - Phaser.Math.Between(30, 70), alpha: 0, angle: 180, duration: 600, onComplete: () => leaf.destroy() });
+          }
+        }
+        sp.img.setData('until', time + 200);
         return true;
       };
       if (p.alive && !p.zipping && bounce(p.body, p.x, p.feet, 1080)) sfx('jump');
@@ -517,7 +533,6 @@ export class PuzzleSystem {
         const b = o.body as Phaser.Physics.Arcade.Body;
         if (b.enable) bounce(b, o.x, b.bottom, 900);
       }
-      if (time > ((sp.img.getData('until') as number) ?? 0)) sp.img.setFrame(0);
     }
   }
 
@@ -821,9 +836,9 @@ export class PuzzleSystem {
     this.prompt.setVisible(false);
     this.dropHeld(false);
     this.key.setVisible(false);
-    this.door.setTexture('door_open');
-    sfx('door');
     const s = this.host.scene;
+    openDoor(s, this.house);
+    sfx('door');
     // O cadeado abre e cai girando.
     const lk = this.lock;
     if (lk) {

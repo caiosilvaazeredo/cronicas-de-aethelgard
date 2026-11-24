@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { say } from './buttons';
 import { noTr } from '../i18n';
+import { HOUSE_SPECS, drawHouse, houseWidth, type HouseDoor } from './houses';
 import { BODY_FONT, DEATH_Y, DEPTH, FLOOR_Y, GRASS_Y, H, TILE, W, WATER_Y } from '../config';
 import type { CharId, EnemyId, ItemId } from './characters';
 import type { PuzzleDef } from './puzzle';
@@ -687,7 +688,7 @@ export const LEVEL_KEY1: LevelDef = {
   winText: 'A chave abriu a porta!',
   screens: [
     { segments: [[0, 20, 0]], floats: [[7, 4, 3]], sign: [3, 'PEGAR levanta a chave.\nLeve até a PORTA.\n↑ sobe a escada.'] },
-    { segments: [[0, 5, 0], [9, 11, 0]], floats: [[12, 2, 3]], sign: [2, 'Com a chave não dá\npara pulo duplo:\nuse a MOLA.'] },
+    { segments: [[0, 5, 0], [9, 11, 0]], floats: [[12, 2, 3]], sign: [2, 'Com a chave não dá\npara pulo duplo:\npise na MOITA ROSA.'] },
   ],
   puzzle: {
     key: [0, 9, 3],
@@ -2782,7 +2783,7 @@ export const LEVEL_SKYKEY: LevelDef = {
   ...EMBER,
   id: 'skykey',
   name: 'Cofre das Nuvens',
-  intro: 'O cofre dos diabretes. Leve a chave pelas ilhas, usando as molas e a alavanca de cor.',
+  intro: 'O cofre dos diabretes. Leve a chave pelas ilhas, pulando nas moitas rosa e usando a alavanca de cor.',
   winText: 'O cofre das nuvens abriu!',
   puzzle: {
     key: [1, 8, 3],
@@ -2878,7 +2879,7 @@ export const LEVEL_WINGKEY: LevelDef = {
   ...WINGS,
   id: 'wingkey',
   name: 'Câmara Real',
-  intro: 'A câmara real. Leve a chave pelas molas e escadas até a porta.',
+  intro: 'A câmara real. Leve a chave pelas moitas rosa e escadas até a porta.',
   winText: 'A câmara real se abriu!',
   puzzle: {
     key: [1, 8, 3],
@@ -4162,8 +4163,11 @@ export class Level {
       this.addFloatZone(start, n, h);
     }
 
+    // Porta das fases de chave: a própria casa de saída é desenhada pelo puzzle.
+    const pz = this.def.puzzle?.door;
     this.def.screens.forEach((sc, i) => {
       for (const [tile, kind] of sc.deco ?? []) {
+        if (pz && (kind === 'house' || kind === 'hut') && pz[0] === i && Math.abs(pz[1] - tile) < 5) continue;
         const x = this.tileX(i, tile);
         this.addDeco(x, kind, tile, this.groundY(x) ?? FLOOR_Y);
       }
@@ -4171,7 +4175,7 @@ export class Level {
       // vão no trecho de chão mais largo do cenário, se couberem.
       for (const [scr, kind] of EXTRA_BUILDINGS[this.def.id] ?? []) {
         if (scr !== i) continue;
-        const need = kind === 'castle' ? 6 : 4;
+        const need = ({ castle: 6, barracks: 6, house: 5, hut: 5, archery: 4, monastery: 4, tower: 3 } as Record<string, number>)[kind] ?? 4;
         const spot = this.segments
           .filter(([a, n]) => Math.floor(a / 20) === i && n >= need)
           .sort((p, q) => q[1] - p[1])[0];
@@ -4189,6 +4193,12 @@ export class Level {
         this.addSign(x, this.groundY(x) ?? FLOOR_Y, sc.sign[1]);
       }
     });
+
+    // Fase comum com uma casa no fim: ela é a saída (entra-se nela em vez de ir até a nuvem).
+    const d = this.def;
+    const plain = !d.puzzle && !d.boss && !d.haunt && !d.shmup && !d.chase && !d.village && !d.dungeon && !d.finale && !d.mausoleum && !d.sea && !d.undersea;
+    const last = this.houses[this.houses.length - 1];
+    if (plain && last && last.x > this.width - W * 0.6) last.exit = true;
 
     // Marcos de chegada nas duas pontas.
     for (const x of [TILE / 2 + 8, this.width - TILE / 2 - 8]) {
@@ -4427,6 +4437,37 @@ export class Level {
     }
   }
 
+  /** Casa de saída das fases de chave: a porta fica exatamente no x pedido. */
+  drawExitHouse(doorX: number, ground: number): HouseDoor {
+    const color = BUILDING_COLOR[this.def.tiles ?? 'tilemap'] ?? 'blue';
+    const key = `bld_${color}_house1`;
+    const tint = this.theme === 'cave' ? 0x9fb7bd : 0xffffff;
+    const sp = HOUSE_SPECS.house1;
+    const texW = (this.scene.textures.get(key).getSourceImage() as HTMLImageElement).width;
+    const w = houseWidth('house1', texW);
+    const cx = doorX - ((sp.door[0] + sp.door[2]) / 2 - texW / 2) * sp.scale;
+    this.backLedge(cx, w, ground);
+    return drawHouse(this.scene, key, 'house1', cx, ground, { doorAt: doorX, tint });
+  }
+
+  /** Casas com porta (para bater ou entrar), na ordem em que aparecem. */
+  readonly houses: HouseDoor[] = [];
+
+  /** Trecho de chão contínuo (mesma altura) que contém x: [início, fim] em px. */
+  private groundSpan(x: number, ground: number): [number, number] | null {
+    const t = Math.floor(x / TILE);
+    const level = (h?: number) => FLOOR_Y - (h ?? 0) * TILE;
+    const segs = this.segments.filter(([, , h]) => Math.abs(level(h) - ground) < 4).sort((a, b) => a[0] - b[0]);
+    const i = segs.findIndex(([a, n]) => t >= a && t < a + n);
+    if (i < 0) return null;
+    // Junta trechos vizinhos colados na mesma altura.
+    let a0 = segs[i][0];
+    let a1 = segs[i][0] + segs[i][1];
+    for (let k = i - 1; k >= 0 && segs[k][0] + segs[k][1] === a0; k--) a0 = segs[k][0];
+    for (let k = i + 1; k < segs.length && segs[k][0] === a1; k++) a1 = segs[k][0] + segs[k][1];
+    return [a0 * TILE, a1 * TILE];
+  }
+
   private addDeco(x: number, kind: DecoKind, seed: number, ground: number): void {
     const s = this.scene;
     const base = ground - 6; // um pouco atrás da linha dos pés
@@ -4486,17 +4527,40 @@ export class Level {
         const color = BUILDING_COLOR[this.def.tiles ?? 'tilemap'] ?? 'blue';
         // Só a casa de frente: a house2 é desenhada na diagonal (parecia torta) e a house3 é de
         // palafita (parecia flutuar).
-        const name = kind === 'house' || kind === 'hut' ? 'house1' : kind;
-        const img = s.add.image(x, 0, `bld_${kind === 'tower' && color === 'blue' ? 'black' : color}_${name}`);
-        const foot = BUILDING_FOOT[name] ?? 0.9;
-        const sc = kind === 'castle' ? 0.95 : 0.85;
+        // A arquearia é vista de cima (o pátio parecia pendurado no ar): vira uma casa comum.
+        const name = kind === 'house' || kind === 'hut' || kind === 'archery' ? 'house1' : kind;
+        const key = `bld_${kind === 'tower' && color === 'blue' ? 'black' : color}_${name}`;
+        const texW = (s.textures.get(key).getSourceImage() as HTMLImageElement).width;
+        // Casas, quartel e arquearia: porta do tamanho do Ossian (dá para bater ou entrar).
+        const spec = HOUSE_SPECS[name];
+        let sc = spec ? spec.scale : kind === 'castle' ? 0.95 : 0.85;
+        let w = spec ? houseWidth(name, texW, sc) : texW * sc * 0.92;
+        // Inteiro em cima do chão: encaixa no trecho onde está (antes metade podia ficar no ar);
+        // se o trecho for estreito demais, o prédio encolhe para caber.
+        const span = this.groundSpan(x, ground);
+        if (span) {
+          const room = span[1] - span[0] - 12;
+          if (w > room) {
+            sc *= room / w;
+            w = room;
+          }
+          x = Phaser.Math.Clamp(x, span[0] + 6 + w / 2, span[1] - 6 - w / 2);
+        }
         // Com maré: o patamar de fundo sobe acima da água mais alta, e o prédio fica em cima dele.
         const high = this.def.sea?.tide?.high ?? 0;
         const limit = DEATH_Y - high - 24;
         const lift = high && ground > limit ? Math.ceil((ground - limit) / TILE) * TILE : 0;
         ground -= lift;
-        this.backLedge(x, img.width * sc, ground, lift);
-        s.add.ellipse(x, ground + 2, img.width * sc * 0.8, 18, 0x10223a, 0.22).setDepth(DEPTH.deco - 0.25);
+        this.backLedge(x, w, ground, lift);
+        if (spec) {
+          const door = drawHouse(s, key, name, x, ground, { scale: sc, tint });
+          // Encolhida demais (trecho estreito) ou suspensa pela maré: só enfeite.
+          if (!lift && sc >= spec.scale * 0.85) this.houses.push(door);
+          break;
+        }
+        const img = s.add.image(x, 0, key);
+        const foot = BUILDING_FOOT[name] ?? 0.9;
+        s.add.ellipse(x, ground + 2, w * 0.85, 18, 0x10223a, 0.22).setDepth(DEPTH.deco - 0.25);
         img.setOrigin(0.5, foot).setPosition(x, ground + 6).setScale(sc).setDepth(DEPTH.deco - 0.2).setTint(tint);
         break;
       }

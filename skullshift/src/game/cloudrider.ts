@@ -5,10 +5,10 @@ import Phaser from 'phaser';
  * camada da nuvem (só a metade de baixo, com a borda de cima em montinhos) passa na frente das
  * pernas. Assim ele não parece em pé em cima de um travesseiro.
  */
-const FRONT = 'cloud_05_front';
+export const FRONT = 'cloud_05_front';
 
 /** Gera (uma vez) a metade da frente da nuvem, com a borda de cima fofa. */
-function ensureFront(scene: Phaser.Scene): void {
+export function ensureFront(scene: Phaser.Scene): void {
   if (scene.textures.exists(FRONT)) return;
   const src = scene.textures.get('cloud_05').getSourceImage() as HTMLImageElement;
   const W = src.width;

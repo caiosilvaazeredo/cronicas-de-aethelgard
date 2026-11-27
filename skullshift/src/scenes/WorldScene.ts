@@ -4,6 +4,7 @@ import { announceAchievements } from '../game/achievements';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, PORTRAIT, VIEW } from '../config';
 import type { DeviceId } from '../game/controls';
+import { FRONT, ensureFront } from '../game/cloudrider';
 import { ALL_AREAS, AREAS, AREA_GOAL, CENTER, PROLOGUE, areaCleared, areaTitle, areaUnlocked, sealsBroken, type AreaDef } from '../game/areas';
 import { currentSlot, getEnding, hasSeen, isDone, isFreePlay, getCoins, getLevel, worldFree } from '../game/progress';
 import { MEMORIES } from '../data/lore';
@@ -557,12 +558,19 @@ export class WorldScene extends Phaser.Scene {
       .setDepth(4.9);
   }
 
-  /** Ilha de nuvem com as nuvens em pixel do Tiny Swords (mesmo estilo do céu das fases). */
-  private cloudIsland(cx: number, cy: number, _rim: number, top: number): void {
-    const tint = top === 0xffb090 ? 0xffb497 : 0xffffff;
-    const cl = (key: string, dx: number, dy: number, sc: number) => this.add.image(cx + dx, cy + dy, key).setScale(sc).setTint(tint).setDepth(4);
-    const puffs = [cl('cloud_02', -78, 14, 0.36), cl('cloud_03', 84, 16, 0.38), cl('cloud_05', 0, 10, 0.48)];
-    this.tweens.add({ targets: puffs, y: '-=5', duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+  /**
+   * Ilha de nuvem com as nuvens em pixel do Tiny Swords (mesmo estilo do céu das fases), com o
+   * castelo afundado nela (como o Xamã/Lakitu): a metade da frente da nuvem cobre a base dele e
+   * tudo balança junto.
+   */
+  private cloudIsland(cx: number, cy: number, ember: boolean, castle: string): void {
+    ensureFront(this);
+    const tint = ember ? 0xffb497 : 0xffffff;
+    const cl = (key: string, dx: number, dy: number, sc: number, d = 4) => this.add.image(cx + dx, cy + dy, key).setScale(sc).setTint(tint).setDepth(d);
+    const parts = [cl('cloud_02', -78, 14, 0.36), cl('cloud_03', 84, 16, 0.38), cl('cloud_05', 0, 10, 0.48)];
+    parts.push(this.add.image(cx, cy + 30, castle).setOrigin(0.5, 1).setScale(0.34).setDepth(4.5));
+    parts.push(cl(FRONT, 0, 10, 0.48, 5), cl('cloud_03', 70, 26, 0.3, 5));
+    this.tweens.add({ targets: parts, y: '-=5', duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 
   private drawArea(a: AreaDef, i: number): void {
@@ -631,8 +639,7 @@ export class WorldScene extends Phaser.Scene {
         // Céu de Brasa: brilho vermelho, nuvem em brasa e um castelo vermelho em cima.
         const glow = this.add.graphics().setDepth(3.5);
         for (let k = 0; k < 4; k++) glow.fillStyle(0xff4a2a, 0.08).fillCircle(x, y - 10, 150 - k * 28);
-        this.cloudIsland(x, y, 0xd84a3a, 0xffb090);
-        deco('bld_red_castle', 0, 0, 0.34);
+        this.cloudIsland(x, y, true, 'bld_red_castle');
         this.add
           .particles(x, y + 20, 'spark', { x: { min: -100, max: 100 }, speedY: { min: -40, max: -20 }, lifespan: 1600, scale: { start: 0.25, end: 0 }, tint: [0xffe066, 0xff7a1a, 0xff4a2a], frequency: 160 })
           .setDepth(5);
@@ -643,8 +650,7 @@ export class WorldScene extends Phaser.Scene {
         const moon = this.add.graphics().setDepth(3);
         moon.fillStyle(0xfff7dc, 0.25).fillCircle(x + 92, y - 26, 40);
         moon.fillStyle(0xf4f0d0, 1).fillCircle(x + 92, y - 26, 24);
-        this.cloudIsland(x, y, t.color, 0xe8e0f8);
-        deco(t.kingAnim.includes('bee') ? 'bld_yellow_castle' : 'bld_black_castle', 0, 0, 0.34);
+        this.cloudIsland(x, y, false, t.kingAnim.includes('bee') ? 'bld_yellow_castle' : 'bld_black_castle');
         break;
       }
       case 'link-fire': {

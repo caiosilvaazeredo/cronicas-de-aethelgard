@@ -421,3 +421,4 @@ originais (extraídas com PIL do PNG).
 - Mapa das áreas (`MapScene.drawIsland`): fases do céu (Céu de Brasa, Reino das Asas e os sonhos 9 e 10 do prólogo) agora ficam em ilhas feitas com as nuvens em pixel do Tiny Swords (`cloud_02/03/05`, tom de brasa no Céu de Brasa, torre roxa na primeira), no lugar das nuvens desenhadas por código.
 - Modo livre não começa mais no prólogo: `HowToScene.play` vai direto ao mapa do mundo e `WorldScene.firstOpen` pula a Vila dos Ossos (cursor nas Ilhas da Maré). No modo história continua igual (jogo novo → prólogo).
 - Mapa do mundo: `cloudIsland` (Reino das Asas e Céu de Brasa) também usa as nuvens em pixel.
+- `cloudIsland(cx, cy, ember, castle)`: o castelo do Reino das Asas e do Céu de Brasa fica afundado na nuvem (como o Xamã), com `FRONT` (exportado de `cloudrider.ts`) cobrindo a base, e balança junto com as nuvens.

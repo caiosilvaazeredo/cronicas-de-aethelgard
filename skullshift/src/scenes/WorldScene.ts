@@ -614,7 +614,6 @@ export class WorldScene extends Phaser.Scene {
       }
       case 'forja':
         this.drawLavaPool(x + 10, y + 24);
-        this.add.image(x + 10, y + 30, 'map_volcano').setOrigin(0.5, 1).setScale(0.4).setDepth(5);
         deco('stone3', -80, 30, 0.7);
         break;
       case 'bosque':

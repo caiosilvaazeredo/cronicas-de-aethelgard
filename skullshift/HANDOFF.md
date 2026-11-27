@@ -422,3 +422,4 @@ originais (extraídas com PIL do PNG).
 - Modo livre não começa mais no prólogo: `HowToScene.play` vai direto ao mapa do mundo e `WorldScene.firstOpen` pula a Vila dos Ossos (cursor nas Ilhas da Maré). No modo história continua igual (jogo novo → prólogo).
 - Mapa do mundo: `cloudIsland` (Reino das Asas e Céu de Brasa) também usa as nuvens em pixel.
 - `cloudIsland(cx, cy, ember, castle)`: o castelo do Reino das Asas e do Céu de Brasa fica afundado na nuvem (como o Xamã), com `FRONT` (exportado de `cloudrider.ts`) cobrindo a base, e balança junto com as nuvens.
+- Terras de Fogo: a Forja Vulcânica no mapa é só o poço de lava (sem o vulcão).

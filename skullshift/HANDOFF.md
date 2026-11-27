@@ -418,3 +418,4 @@ originais (extraídas com PIL do PNG).
 
 - `src/game/cloudrider.ts`: `cloudRider()` monta o Xamã na nuvem como o Lakitu: nuvem de fundo, Xamã afundado até a cintura e `cloud_05_front` (a metade de baixo da nuvem, com a borda em montinhos, gerada uma vez em canvas) na frente das pernas. Usado no renascer, nas conversas de transformação, na nuvem de chegada das fases, na Vila e no menu. Para animar, use `parts` (as três peças juntas).
 - Menu deitado: idioma e instalar/sair desceram para y 124 (antes cobriam CRÉDITOS/AJUSTES).
+- Mapa das áreas (`MapScene.drawIsland`): fases do céu (Céu de Brasa, Reino das Asas e os sonhos 9 e 10 do prólogo) agora ficam em ilhas feitas com as nuvens em pixel do Tiny Swords (`cloud_02/03/05`, tom de brasa no Céu de Brasa, torre roxa na primeira), no lugar das nuvens desenhadas por código.

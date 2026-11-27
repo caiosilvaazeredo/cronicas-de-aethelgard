@@ -368,19 +368,13 @@ export class MapScene extends Phaser.Scene {
       return;
     }
     if (l.theme === 'sky') {
-      const c = this.add.graphics().setDepth(4);
-      const tint = l.ember ? 0xff9a7a : l.id === 'sky' ? 0xb9a6ee : 0xf4f8ff;
-      c.fillStyle(l.ember ? 0xff5a2a : 0xb27cff, l.id === 'sky' || l.ember ? 0.22 : 0).fillRoundedRect(x - 130, y - 40, 260, 92, 30);
-      c.fillStyle(tint, 1).fillRoundedRect(x - 120, y - 20, 240, 62, 24);
-      const top = l.ember ? 0xffd0b0 : 0xffffff;
-      c.fillStyle(top, 1).fillRoundedRect(x - 116, y - 26, 232, 58, 22);
-      for (let k = x - 102; k <= x + 102; k += 24) c.fillStyle(top, 1).fillCircle(k, y - 24, 13);
-      this.tweens.add({ targets: c, y: -6, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-      if (l.id === 'sky') {
-        const t = this.add.graphics().setDepth(5);
-        t.fillStyle(0xb9a6ee, 1).fillRect(x - 50, y - 76, 18, 50).fillRect(x + 38, y - 64, 16, 38).fillCircle(x, y - 44, 26);
-        t.fillTriangle(x - 54, y - 76, x - 28, y - 76, x - 41, y - 102).fillTriangle(x + 34, y - 64, x + 58, y - 64, x + 46, y - 86);
-      }
+      // Ilha de nuvem com as nuvens em pixel do Tiny Swords (as mesmas do céu das fases).
+      const tint = l.ember ? 0xffb497 : 0xffffff;
+      const cl = (key: string, dx: number, dy: number, sc: number) => this.add.image(x + dx, y + dy, key).setScale(sc).setTint(tint).setDepth(4);
+      const puffs = [cl('cloud_02', -96, 8, 0.42), cl('cloud_03', 100, 12, 0.42), cl('cloud_05', 0, 6, 0.56)];
+      if (l.ember) puffs.unshift(this.add.image(x, y + 4, 'aura').setTint(0xff5a2a).setBlendMode(Phaser.BlendModes.ADD).setScale(2.2, 0.9).setAlpha(0.35).setDepth(3.9));
+      this.tweens.add({ targets: puffs, y: '-=6', duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      if (l.id === 'sky') this.add.image(x - 70, y - 4, 'bld_purple_tower').setOrigin(0.5, 0.86).setScale(0.42).setDepth(5);
       if (l.winds) {
         this.add
           .particles(x, y + 40, 'streak', { x: { min: -30, max: 30 }, speedY: { min: -160, max: -110 }, lifespan: 900, scaleX: 0.15, scaleY: 0.8, rotate: 90, alpha: { start: 0.8, end: 0 }, frequency: 120 })

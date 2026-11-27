@@ -1,4 +1,4 @@
-import { completedCount } from '../game/progress';
+import { completedCount, isFreePlay } from '../game/progress';
 import Phaser from 'phaser';
 import { BODY_FONT, FONT, VIEW, W } from '../config';
 import { DEVICES, type DeviceId } from '../game/controls';
@@ -357,8 +357,10 @@ export class HowToScene extends Phaser.Scene {
     // História: mapa de fases (com a visual novel antes de cada uma). Versus: direto para a partida.
     // História: depois da primeira fase, o ponto de partida é a Vila.
     // Jogo novo: direto para o prólogo, na Vila dos Ossos.
+    // Modo livre: começa no mapa do mundo inteiro (o prólogo fica opcional).
     if (this.mode === 'story') {
-      if (completedCount() > 0) this.scene.start('village', { devices: this.devices });
+      if (isFreePlay()) this.scene.start('world', { devices: this.devices });
+      else if (completedCount() > 0) this.scene.start('village', { devices: this.devices });
       else this.scene.start('map', { devices: this.devices, area: 'prologo' });
     }
     // Versus: antes da partida, cada um escolhe as habilidades que vai usar.

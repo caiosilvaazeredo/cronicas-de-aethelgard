@@ -79,8 +79,12 @@ export class WorldScene extends Phaser.Scene {
 
   /** Área sugerida: a primeira aberta e ainda não vencida. */
   private firstOpen(): number {
-    const i = this.list.findIndex((a) => areaUnlocked(a) && a.levels.length > 0 && !areaCleared(a));
-    return i >= 0 ? i : 0;
+    // No modo livre o prólogo é opcional: o cursor começa na primeira área do mundo.
+    const ok = (a: AreaDef) => areaUnlocked(a) && a.levels.length > 0 && !areaCleared(a) && !(isFreePlay() && a === PROLOGUE);
+    const i = this.list.findIndex(ok);
+    if (i >= 0) return i;
+    const j = this.list.findIndex((a) => a !== PROLOGUE && a.levels.length > 0);
+    return isFreePlay() && j >= 0 ? j : 0;
   }
 
   create(): void {
@@ -553,14 +557,12 @@ export class WorldScene extends Phaser.Scene {
       .setDepth(4.9);
   }
 
-  private cloudIsland(cx: number, cy: number, rim: number, top: number): Phaser.GameObjects.Graphics {
-    const c = this.add.graphics().setDepth(4);
-    c.fillStyle(INK, 1).fillRoundedRect(cx - 104, cy - 30, 208, 70, 26);
-    c.fillStyle(rim, 1).fillRoundedRect(cx - 100, cy - 26, 200, 62, 24);
-    c.fillStyle(top, 1).fillRoundedRect(cx - 96, cy - 30, 192, 54, 22);
-    for (let k = cx - 80; k <= cx + 80; k += 24) c.fillStyle(top, 1).fillCircle(k, cy - 30, 13);
-    this.tweens.add({ targets: c, y: -5, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-    return c;
+  /** Ilha de nuvem com as nuvens em pixel do Tiny Swords (mesmo estilo do céu das fases). */
+  private cloudIsland(cx: number, cy: number, _rim: number, top: number): void {
+    const tint = top === 0xffb090 ? 0xffb497 : 0xffffff;
+    const cl = (key: string, dx: number, dy: number, sc: number) => this.add.image(cx + dx, cy + dy, key).setScale(sc).setTint(tint).setDepth(4);
+    const puffs = [cl('cloud_02', -78, 14, 0.36), cl('cloud_03', 84, 16, 0.38), cl('cloud_05', 0, 10, 0.48)];
+    this.tweens.add({ targets: puffs, y: '-=5', duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 
   private drawArea(a: AreaDef, i: number): void {

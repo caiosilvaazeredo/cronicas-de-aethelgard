@@ -15,6 +15,7 @@ import { LEVELS, PROLOGUE_LEVELS, TRIAL_LEVELS } from '../game/level';
 import { buzz, sfx } from '../game/settings';
 import { rollNumber } from '../ui/juice';
 import { pillButton } from '../ui/devices';
+import { cloudRider } from '../game/cloudrider';
 
 const INK = 0x10223a;
 /** Largura da vila (3 telas). */
@@ -264,9 +265,11 @@ export class VillageScene extends Phaser.Scene {
 
     // 5) Portal das dungeons, com o Xamã cuidando dele.
     this.portal(1840);
-    const cloud = this.add.image(1960, GY - 150, 'cloud_05').setScale(0.3).setDepth(5);
-    const hex = this.add.sprite(1960, GY - 196, 'shaman_idle').setFlipX(true).setDepth(5.1).play('shaman_idle');
-    this.tweens.add({ targets: [cloud, hex], y: '-=8', duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const ride = cloudRider(this, { x: 1960, y: GY - 150, flip: true });
+    ride.cloud.setDepth(5);
+    ride.shaman.setDepth(5.05);
+    ride.front.setDepth(5.1);
+    this.tweens.add({ targets: ride.parts, y: '-=8', duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.label(1840, 'PORTAL DAS DUNGEONS');
     this.addSpot(1860, 'PORTAL', () => this.dungeonList());
 

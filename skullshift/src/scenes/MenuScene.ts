@@ -1,6 +1,7 @@
 import { drawMountains } from '../ui/props';
 import Phaser from 'phaser';
 import { langInfo, noTr } from '../i18n';
+import { cloudRider } from '../game/cloudrider';
 import { playMusic } from '../game/music';
 import { BODY_FONT, FONT, H, PORTRAIT, VIEW, W } from '../config';
 import { pillButton } from '../ui/devices';
@@ -189,9 +190,9 @@ export class MenuScene extends Phaser.Scene {
       const sx = P ? W - 230 : 990;
       const sy = P ? Math.round(HH * 0.4) : 205;
       const glow = this.add.image(0, -10, 'aura').setTint(0x9b6bf0).setBlendMode(Phaser.BlendModes.ADD).setScale(1.5, 1.3).setAlpha(0.6);
-      const cl = this.add.image(0, 52, 'cloud_05').setScale(0.34);
-      const sh = this.add.sprite(0, 0, 'shaman_idle').play('shaman_idle').setFlipX(true);
-      const rig = this.add.container(sx, sy, [glow, cl, sh]).setScale(P ? 1.5 : 1).setDepth(5);
+      const ride = cloudRider(this, { y: 52, scale: 0.34, flip: true });
+      const sh = ride.shaman;
+      const rig = this.add.container(sx, sy, [glow, ...ride.parts]).setScale(P ? 1.5 : 1).setDepth(5);
       this.tweens.add({ targets: rig, y: sy - 12, duration: 1500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.tweens.add({ targets: glow, alpha: 0.3, duration: 900, yoyo: true, repeat: -1 });
       let k = 0;
@@ -253,14 +254,14 @@ export class MenuScene extends Phaser.Scene {
       // Engrenagem: configurações direto da tela inicial.
       pillButton(this, P ? W - 190 : W - 120, P ? 110 + tp : 50, '⚙ AJUSTES', () => this.scene.start('settings', { from: 'menu' }), 190).setScale(P ? 1.75 : 0.85);
       // Idioma: o botão mostra o nome da língua atual (sem bandeira, sem tradução nem encolher).
-      const langBtn = pillButton(this, P ? W / 2 : 172, P ? 110 + tp : 104, '', () => this.scene.start('language'), 330).setScale(P ? 1.45 : 0.85);
+      const langBtn = pillButton(this, P ? W / 2 : 180, P ? 110 + tp : 124, '', () => this.scene.start('language'), 330).setScale(P ? 1.45 : 0.85);
       // Em maiúsculas: a fonte do título não tem minúsculas ("Deutsch" saía miúdo, na fonte de reserva).
       const langT = noTr(langBtn.list[1] as Phaser.GameObjects.Text).setText(langInfo().name.toUpperCase());
       if (langT.width > 300) langT.setScale(300 / langT.width);
       // Versão de computador (Steam): botão para fechar o jogo.
       // Celular/navegador: instalar como app (abre sem barra e funciona sem internet).
-      if (!isDesktop()) this.installButton(P ? W - 190 : W - 120, P ? 250 + tp : 104, P ? 1.75 : 0.85);
-      if (isDesktop()) pillButton(this, P ? W - 190 : W - 120, P ? 250 + tp : 104, '✕ SAIR', () => quitGame(), 190, 0xe7eef2).setScale(P ? 1.75 : 0.85);
+      if (!isDesktop()) this.installButton(P ? W - 190 : W - 120, P ? 250 + tp : 124, P ? 1.75 : 0.85);
+      if (isDesktop()) pillButton(this, P ? W - 190 : W - 120, P ? 250 + tp : 124, '✕ SAIR', () => quitGame(), 190, 0xe7eef2).setScale(P ? 1.75 : 0.85);
       pillButton(this, P ? 190 : 120, P ? 110 + tp : 50, 'CRÉDITOS', () => this.scene.start('credits', { next: 'menu', data: {} }), 190).setScale(P ? 1.75 : 0.85);
       this.tweens.add({ targets: play, scale: play.scale * 1.06, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       this.add

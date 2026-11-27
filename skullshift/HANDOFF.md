@@ -413,3 +413,8 @@ originais (extraídas com PIL do PNG).
 - O estado das casas é zerado em `create()` (a cena é reaproveitada; um texto destruído quebrava a fase seguinte).
 - Traduções em `scripts/i18n/tr/*/031.txt`.
 - **Teste de profundidade das casas** (`houseStyle()` em level.ts; Ajustes → Tela → "Casas (teste)", padrão CAMADAS; `window.__houseStyle` força nos testes): ATUAL (base na linha dos pés, por cima da grama), NA BORDA (base na borda de trás da grama, atrás do terreno), CAMADAS (estilo LittleBigPlanet: um patamar de fundo mais alto com a frente visível, casa a 90% em cima dele) e PÁTIO (na borda + caminho de terra em perspectiva da porta até a frente, `yardPath`). A casa de saída das fases de chave segue o mesmo estilo. Escolhido o estilo, tirar a opção dos Ajustes.
+
+## Xamã dentro da nuvem e menu sem sobreposição
+
+- `src/game/cloudrider.ts`: `cloudRider()` monta o Xamã na nuvem como o Lakitu: nuvem de fundo, Xamã afundado até a cintura e `cloud_05_front` (a metade de baixo da nuvem, com a borda em montinhos, gerada uma vez em canvas) na frente das pernas. Usado no renascer, nas conversas de transformação, na nuvem de chegada das fases, na Vila e no menu. Para animar, use `parts` (as três peças juntas).
+- Menu deitado: idioma e instalar/sair desceram para y 124 (antes cobriam CRÉDITOS/AJUSTES).

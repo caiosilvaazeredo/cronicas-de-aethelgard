@@ -42,6 +42,7 @@ import { CRACKS, FIRST_SHIFT, PROLOGUE_SCENES, REVIVE_LINES, SHIFT_QUIPS, SPEAKE
 import { PLAYER_HEX, PLAYER_TINT } from '../ui/devices';
 import type { UIScene, VictoryInfo } from './UIScene';
 import { noTr, tr } from '../i18n';
+import { cloudRider } from '../game/cloudrider';
 
 type Mode = 'story' | 'versus';
 
@@ -1874,11 +1875,11 @@ export class GameScene extends Phaser.Scene {
     const ghost = this.add.sprite(0, ghostY, `${p.baseChar}_idle`).play(`${p.baseChar}_idle`);
     ghost.setAlpha(0.6).setTint(0xcfefff).setFlipX(from > 0);
     const glow = this.add.image(0, ghostY - 10, 'aura').setTint(color).setScale(0.9, 1).setAlpha(0.6);
-    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
-    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(from > 0);
+    const ride = cloudRider(this, { flip: from > 0 });
+    const shaman = ride.shaman;
     // Atrás dos personagens: o xamã nunca cobre ninguém.
-    const rig = this.add.container(x + from * 420, hoverY - 300, [rope, glow, ghost, cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
-    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const rig = this.add.container(x + from * 420, hoverY - 300, [rope, glow, ghost, ...ride.parts]).setDepth(DEPTH.fighters - 2).setAlpha(0);
+    const bob = this.tweens.add({ targets: ride.parts, y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: [ghost, glow], angle: { from: -6, to: 6 }, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
 
     // 1) Chega planando.
@@ -2576,12 +2577,12 @@ export class GameScene extends Phaser.Scene {
     this.haunt?.setDarkVisible(false);
     p.facing = 1;
     p.sprite.setFlipX(false);
-    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
-    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(false);
+    const ride = cloudRider(this);
+    const shaman = ride.shaman;
     const hx = p.x + 210;
     const hy = p.feet - 150;
-    const rig = this.add.container(hx + 500, hy - 260, [cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
-    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const rig = this.add.container(hx + 500, hy - 260, ride.parts).setDepth(DEPTH.fighters - 2).setAlpha(0);
+    const bob = this.tweens.add({ targets: ride.parts, y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     await this.tweenP({ targets: rig, x: hx, y: hy, alpha: 1, duration: 800, ease: 'Sine.easeOut' });
     let asShaman = true;
     const say = async (lines: Line[]) => {
@@ -2638,12 +2639,12 @@ export class GameScene extends Phaser.Scene {
     this.physics.world.pause();
     this.quip?.close();
     const side = p.facing; // chega à frente da caveira
-    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.3);
-    const shaman = this.add.sprite(0, -6, 'shaman_idle').play('shaman_idle').setFlipX(side > 0);
+    const ride = cloudRider(this, { flip: side > 0 });
+    const shaman = ride.shaman;
     const hx = p.x + side * 170;
     const hy = p.feet - 150;
-    const rig = this.add.container(hx + side * 500, hy - 260, [cloud, shaman]).setDepth(DEPTH.fighters - 2).setAlpha(0);
-    const bob = this.tweens.add({ targets: [cloud, shaman], y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    const rig = this.add.container(hx + side * 500, hy - 260, ride.parts).setDepth(DEPTH.fighters - 2).setAlpha(0);
+    const bob = this.tweens.add({ targets: ride.parts, y: '+=6', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     await this.tweenP({ targets: rig, x: hx, y: hy, alpha: 1, duration: 800, ease: 'Sine.easeOut' });
 
     const lines: Line[] = [...FIRST_SHIFT];
@@ -3491,9 +3492,9 @@ export class GameScene extends Phaser.Scene {
     const x = this.level.width - 240;
     const floor = this.level.groundY(x) ?? this.level.groundY(x - 120) ?? FLOOR_Y;
     const glow = this.add.image(0, 10, 'aura').setTint(0x9b6bf0).setBlendMode(Phaser.BlendModes.ADD).setScale(2, 1).setAlpha(0.45);
-    const cloud = this.add.image(0, 46, 'cloud_05').setScale(0.42);
-    const shaman = this.add.sprite(44, -6, 'shaman_idle').play('shaman_idle').setFlipX(true);
-    const rig = this.add.container(x, floor - 112, [glow, cloud, shaman]).setDepth(DEPTH.fighters - 0.5);
+    const ride = cloudRider(this, { scale: 0.42, flip: true, dx: 30 });
+    const shaman = ride.shaman;
+    const rig = this.add.container(x, floor - 112, [glow, ...ride.parts]).setDepth(DEPTH.fighters - 0.5);
     this.tweens.add({ targets: rig, y: rig.y - 10, duration: 1300, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     this.tweens.add({ targets: glow, alpha: 0.2, duration: 900, yoyo: true, repeat: -1 });
     // De vez em quando o Hex acena, chamando.

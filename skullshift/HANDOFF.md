@@ -423,3 +423,8 @@ originais (extraídas com PIL do PNG).
 - Mapa do mundo: `cloudIsland` (Reino das Asas e Céu de Brasa) também usa as nuvens em pixel.
 - `cloudIsland(cx, cy, ember, castle)`: o castelo do Reino das Asas e do Céu de Brasa fica afundado na nuvem (como o Xamã), com `FRONT` (exportado de `cloudrider.ts`) cobrindo a base, e balança junto com as nuvens.
 - Terras de Fogo: a Forja Vulcânica no mapa é só o poço de lava (sem o vulcão).
+
+## Memórias (Diário) como cenas de filme antigo
+
+- `MemoryScene` refeita: faixas de cinema (texto na de baixo), cartão de título que sobe, grão/riscos/tremulação de projetor, câmera lenta (o container `world` aproxima e desliza), fundo com cordilheira achatada + morros (`drawMountains`/`drawHills`), céu noturno com lua e estrelas (ou nuvens pesadas na chuva).
+- `beat(scene, i)`: cada fala dispara uma ação. Casa: a janela acende e ele vai até a porta. Lenha: golpes com lascas, depois o cheiro subindo. Ovelhas: a irmã segue, o sol se põe e eles voltam. Vila: ele atravessa e a câmera vai até a ponte. Lanternas: soltam lanternas, a luz quente enche a tela. Chuva: escorrega e o raio mostra a irmã. Roxo: a figura surge, estende a mão, clarão e queda. Água: afunda e a nuvem roxa desce. Nome: as letras de OSSIAN caem e fica a "?".
